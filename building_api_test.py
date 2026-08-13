@@ -4,14 +4,14 @@ from dotenv import load_dotenv
 
 
 # --------------------------------------------------
-# 1. .env 읽기
+# 1. .env 파일 읽기
 # --------------------------------------------------
 
 load_dotenv()
 
 
 # --------------------------------------------------
-# 2. API 인증키 읽기
+# 2. API 인증키 가져오기
 # --------------------------------------------------
 
 api_key = os.getenv("DATA_API_KEY")
@@ -26,14 +26,14 @@ print("API 인증키를 정상적으로 읽었습니다.")
 
 
 # --------------------------------------------------
-# 3. 건축HUB API 주소
+# 3. 건축HUB getBrTitleInfo 요청 URL
 # --------------------------------------------------
 
-url = "https://apis.data.go.kr/1613000/BldRgstHubService/getBrTitleInfo"
+url = "http://apis.data.go.kr/1613000/BldRgstHubService/getBrTitleInfo"
 
 
 # --------------------------------------------------
-# 4. 요청 파라미터
+# 4. PDF의 REST 요청 예제와 동일한 조건
 # --------------------------------------------------
 
 params = {
@@ -42,9 +42,6 @@ params = {
     "bun": "0012",
     "ji": "0000",
     "serviceKey": api_key,
-    "_type": "json",
-    "numOfRows": "10",
-    "pageNo": "1",
 }
 
 
@@ -54,13 +51,12 @@ params = {
 
 response = requests.get(
     url,
-    params=params,
-    timeout=30
+    params=params
 )
 
 
 # --------------------------------------------------
-# 6. HTTP 상태
+# 6. HTTP 상태 확인
 # --------------------------------------------------
 
 print()
@@ -68,26 +64,18 @@ print("HTTP 상태 코드:", response.status_code)
 
 
 # --------------------------------------------------
-# 7. 실제 요청 URL 확인
+# 7. 실제 요청된 URL 확인
 # --------------------------------------------------
 
 print()
 print("실제로 요청된 URL:")
-
-# 인증키가 화면에 노출되지 않도록 가려서 출력
-safe_url = response.url
-
-if api_key in safe_url:
-    safe_url = safe_url.replace(api_key, "********")
-
-print(safe_url)
+print(response.url)
 
 
 # --------------------------------------------------
-# 8. API 응답
+# 8. 서버 응답 확인
 # --------------------------------------------------
 
 print()
 print("API 응답:")
-
 print(response.text)
