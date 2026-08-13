@@ -40,7 +40,7 @@ params = {
     "ji": "0000",
     "serviceKey": api_key,
     "_type": "json",
-    "numOfRows": "1",
+    "numOfRows": "100",
     "pageNo": "1",
 }
 
@@ -214,93 +214,21 @@ print(
 # 16. 건축물 정보 출력
 # ==================================================
 
+print()
+print("현재 받은 건축물 수:", len(items))
+
+print()
+print("건축물 목록")
+print("------------------------------")
+
 for i, building in enumerate(items, start=1):
 
-    print()
-    print(f"건축물 {i}")
-    print("------------------------------")
-
     print(
-        "대지위치     :",
-        building.get("platPlc")
-    )
-
-    print(
-        "도로명주소   :",
-        building.get("newPlatPlc")
-    )
-
-    print(
-        "건물명       :",
-        building.get("bldNm")
-    )
-
-    print(
-        "대지면적     :",
-        building.get("platArea")
-    )
-
-    print(
-        "건축면적     :",
-        building.get("archArea")
-    )
-
-    print(
-        "건폐율       :",
-        building.get("bcRat")
-    )
-
-    print(
-        "연면적       :",
-        building.get("totArea")
-    )
-
-    print(
-        "용적률산정면적:",
-        building.get("vlRatEstmTotArea")
-    )
-
-    print(
-        "용적률       :",
-        building.get("vlRat")
-    )
-
-    print(
-        "지상층수     :",
-        building.get("grndFlrCnt")
-    )
-
-    print(
-        "지하층수     :",
-        building.get("ugrndFlrCnt")
-    )
-
-    print(
-        "주용도       :",
+        i,
+        "|",
+        building.get("dongNm"),
+        "|",
+        building.get("bldNm"),
+        "|",
         building.get("mainPurpsCdNm")
-    )
-
-    print(
-        "기타용도     :",
-        building.get("etcPurps")
-    )
-
-    print(
-        "구조         :",
-        building.get("strctCdNm")
-    )
-
-    print(
-        "높이         :",
-        building.get("heit")
-    )
-
-    print(
-        "세대수       :",
-        building.get("hhldCnt")
-    )
-
-    print(
-        "사용승인일   :",
-        building.get("useAprDay")
     )
