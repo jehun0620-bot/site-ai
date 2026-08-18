@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 
+
 @dataclass
 class Building:
     """
@@ -31,6 +32,23 @@ class Building:
 
 
 @dataclass
+class Land:
+    """
+    우리 시스템에서 사용하는 하나의 토지 데이터
+    """
+
+    land_area: float = 0.0
+
+    land_category: str = ""
+
+    zoning: str = ""
+
+    district: str = ""
+
+    land_use_regulation: str = ""
+
+
+@dataclass
 class Site:
     """
     우리 시스템에서 사용하는 하나의 대지 데이터
@@ -45,5 +63,7 @@ class Site:
     bjdong_cd: str = ""
     bun: str = ""
     ji: str = ""
+
+    land: Optional[Land] = None
 
     buildings: List[Building] = field(default_factory=list)
