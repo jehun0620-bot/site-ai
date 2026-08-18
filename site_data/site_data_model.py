@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 
+from .regulation_model import Regulation
 
 @dataclass
 class Building:
@@ -65,5 +66,7 @@ class Site:
     ji: str = ""
 
     land: Optional[Land] = None
+
+    regulation: Optional[Regulation] = None
 
     buildings: List[Building] = field(default_factory=list)
