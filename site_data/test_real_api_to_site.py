@@ -20,6 +20,7 @@ sys.path.append(str(BASE_DIR / "site_data"))
 # --------------------------------------------------
 
 from site_builder import create_site
+from site_analyzer import analyze_site
 
 
 # --------------------------------------------------
@@ -181,6 +182,7 @@ print(
 # --------------------------------------------------
 
 site = create_site(items)
+analysis = analyze_site(site)
 
 
 if site is None:
@@ -216,6 +218,21 @@ print("부번:", site.ji)
 print()
 print("건축물 수:", len(site.buildings))
 
+print()
+print("토지 데이터")
+print("--------------------------------")
+
+if site.land:
+
+    print(f"토지면적: {site.land.land_area}")
+    print(f"지목: {site.land.land_category}")
+    print(f"용도지역: {site.land.zoning}")
+    print(f"지구: {site.land.district}")
+    print(f"토지이용규제: {site.land.land_use_regulation}")
+
+else:
+
+    print("토지정보가 없습니다.")
 
 print()
 print("건축물 목록")
@@ -232,4 +249,86 @@ for index, building in enumerate(
         f"{building.dong_name:15s} | "
         f"{building.building_name:25s} | "
         f"{building.main_use}"
+    )
+
+# --------------------------------------------------
+# 통합 대지분석 결과
+# --------------------------------------------------
+
+print()
+print("통합 대지분석 결과")
+print("========================================")
+
+print()
+print("대지 분석")
+print("--------------------------------")
+
+print(
+    f"대지면적: {analysis['land_area']}"
+)
+
+print(
+    f"지목: {analysis['land_category']}"
+)
+
+print(
+    f"용도지역: {analysis['zoning']}"
+)
+
+print(
+    f"지구: {analysis['district']}"
+)
+
+print(
+    f"토지이용규제: {analysis['land_use_regulation']}"
+)
+
+
+print()
+print("건축물 분석")
+print("--------------------------------")
+
+print(
+    f"총 건축물 수: {analysis['building_count']}"
+)
+
+print(
+    f"총 건축면적: {analysis['total_building_area']}"
+)
+
+print(
+    f"총 연면적: {analysis['total_floor_area']}"
+)
+
+print(
+    f"현황 건폐율: "
+    f"{analysis['current_building_coverage_ratio']:.2f}%"
+)
+
+print(
+    f"현황 용적률: "
+    f"{analysis['current_floor_area_ratio']:.2f}%"
+)
+
+print(
+    f"최고 지상층수: {analysis['max_ground_floor_count']}"
+)
+
+print(
+    f"최대 지하층수: {analysis['max_underground_floor_count']}"
+)
+
+print(
+    f"총 세대수: {analysis['total_household_count']}"
+)
+
+
+print()
+print("용도별 건축물 수")
+print("--------------------------------")
+
+for use, count in analysis["use_count"].items():
+
+    print(
+        f"{use} : {count}"
     )

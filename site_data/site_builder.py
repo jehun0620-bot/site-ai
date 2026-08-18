@@ -1,5 +1,13 @@
 from site_data_model import Site
 from building_converter import convert_building
+from land_converter import (
+    select_latest_land_record,
+    convert_land_record,
+)
+from vworld_api import (
+    create_pnu,
+    get_land_characteristics,
+)
 
 
 def create_site(api_items):
@@ -47,11 +55,57 @@ def create_site(api_items):
         ).strip(),
     )
 
-    # 건축물 1개씩 변환
+    # ========================================================
+    # 건축물 변환
+    # ========================================================
+
     for api_data in api_items:
 
         building = convert_building(api_data)
 
         site.buildings.append(building)
+
+    # ========================================================
+    # 토지 PNU 생성
+    # ========================================================
+
+    try:
+
+        pnu = create_pnu(
+            site.sigungu_cd,
+            site.bjdong_cd,
+            site.bun,
+            site.ji,
+        )
+
+        # ====================================================
+        # VWorld 토지특성정보 조회
+        # ====================================================
+
+        land_records = get_land_characteristics(pnu)
+
+        # ====================================================
+        # 최신 토지정보 선택
+        # ====================================================
+
+        latest_land_record = select_latest_land_record(
+            land_records
+        )
+
+        # ====================================================
+        # Land 객체 생성
+        # ====================================================
+
+        if latest_land_record:
+
+            site.land = convert_land_record(
+                latest_land_record
+            )
+
+    except Exception as e:
+
+        print()
+        print("WARNING: 토지정보를 가져오지 못했습니다.")
+        print(f"오류 내용: {e}")
 
     return site
