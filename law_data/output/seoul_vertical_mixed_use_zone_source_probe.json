@@ -1,0 +1,819 @@
+{
+  "step": "STEP 17-21-C-9-2-6A 입체복합구역 서울시 공식 Source 탐색 / 의미 검증",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000",
+    "sigungu_code": "11680",
+    "zoning": null
+  },
+  "source_snapshot_loaded": true,
+  "catalog": {
+    "service": "SearchCatalogService",
+    "success": true,
+    "total_count": 8250,
+    "row_count": 8250
+  },
+  "candidate_count": 155,
+  "top_candidates": [
+    {
+      "score": 60,
+      "reasons": [
+        "LAND_USE_AREA_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21135",
+        "INF_NM": "서울시 용도구역(도시자연공원구역) 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "File,Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21135/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 60,
+      "reasons": [
+        "LAND_USE_AREA_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21132",
+        "INF_NM": "서울시 기타용도구역 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "File,Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21132/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 60,
+      "reasons": [
+        "LAND_USE_AREA_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21123",
+        "INF_NM": "서울시 용도구역(개발제한구역) 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "File,Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21123/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 55,
+      "reasons": [
+        "LAND_USE_DISTRICT_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21127",
+        "INF_NM": "서울시 용도지구(경관지구) 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "File,Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21127/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 55,
+      "reasons": [
+        "LAND_USE_DISTRICT_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21162",
+        "INF_NM": "서울시 용도지구(취락지구) 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "File,Api,Sheet",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21162/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 55,
+      "reasons": [
+        "LAND_USE_DISTRICT_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21128",
+        "INF_NM": "서울시 용도지구(고도지구) 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "File,Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21128/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 55,
+      "reasons": [
+        "LAND_USE_DISTRICT_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21133",
+        "INF_NM": "서울시 기타용도지구 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "File,Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21133/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 55,
+      "reasons": [
+        "LAND_USE_DISTRICT_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21143",
+        "INF_NM": "서울시 용도지구(보호지구) 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "Sheet,File,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21143/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 55,
+      "reasons": [
+        "LAND_USE_DISTRICT_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21140",
+        "INF_NM": "서울시 용도지구(방화지구) 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "File,Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21140/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 55,
+      "reasons": [
+        "LAND_USE_DISTRICT_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21165",
+        "INF_NM": "서울시 용도지구(특정용도제한지구) 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "Sheet,Api,File",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21165/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 55,
+      "reasons": [
+        "LAND_USE_DISTRICT_DATASET",
+        "URBAN_PLANNING",
+        "SPATIAL_DATASET"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-21124",
+        "INF_NM": "서울시 용도지구(개발진흥지구) 공간정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "도시관리",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+        "LINK_DESC": "서울도시공간포털",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-8339",
+        "CHNG_LOAD_NM": "월간",
+        "DATA_LT_NM": "2026-08-07",
+        "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+        "SRV_TYPE": "File,Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21124/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 50,
+      "reasons": [
+        "CONTAINS_입체"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-2223",
+        "INF_NM": "서울시 도로변/입체대기 측정소별 실시간 대기환경 현황",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "환경",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "기후환경본부 대기정책과",
+        "LINK_DESC": "기후대기환경정보 서비스",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-3665",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "기후대기환경정보 서비스(http://cleanair.seoul.go.kr)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-2223/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 50,
+      "reasons": [
+        "CONTAINS_입체"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-2224",
+        "INF_NM": "서울시 도로변/입체대기 기간별 일평균 대기환경 현황",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "환경",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "기후환경본부 대기정책과",
+        "LINK_DESC": "기후대기환경정보 서비스",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-3665",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2025-11-04",
+        "LINK_INFO": "기후대기환경정보 서비스(http://cleanair.seoul.go.kr)",
+        "SRV_TYPE": "Sheet,Api,File",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-2224/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16749",
+        "INF_NM": "서울시 성북구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "성북구",
+        "MNG_STATION_NAME": "데이터전략과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2241-3114",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16749/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16740",
+        "INF_NM": "서울시 송파구 복합영상물제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "송파구",
+        "MNG_STATION_NAME": "데이터전략과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2147-2000",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154937/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16740/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16759",
+        "INF_NM": "서울시 금천구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "금천구",
+        "MNG_STATION_NAME": "금천구 문화환경국 문화체육과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2627-1454",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16759/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16748",
+        "INF_NM": "서울시 중랑구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "자치구 및 자치구산하",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "중랑구",
+        "MNG_STATION_NAME": "중랑구 보건소 위생과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2094-0783",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.jungnang.go.kr/openinf/sheetview.jsp?infId=OA-16748"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16766",
+        "INF_NM": "서울시 강동구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "강동구",
+        "MNG_STATION_NAME": "데이터전략과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-1577-1188",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16766/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16738",
+        "INF_NM": "서울시 서초구 복합영상물제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "서초구",
+        "MNG_STATION_NAME": "데이터전략과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2155-6114",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154937/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16738/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16720",
+        "INF_NM": "서울시 성동구 복합영상물제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "성동구",
+        "MNG_STATION_NAME": "데이터전략과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2286-5114",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154937/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16720/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16734",
+        "INF_NM": "서울시 금천구 복합영상물제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "금천구",
+        "MNG_STATION_NAME": "금천구 문화환경국 문화체육과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2627-1454",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154937/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16734/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16763",
+        "INF_NM": "서울시 서초구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "서초구",
+        "MNG_STATION_NAME": "데이터전략과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2155-6114",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16763/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16753",
+        "INF_NM": "서울시 은평구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "은평구",
+        "MNG_STATION_NAME": "은평구 교육문화국 문화관광과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-351-6526",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16753/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16016",
+        "INF_NM": "서울시 복합영상물제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "서울특별시",
+        "MNG_STATION_NAME": "디지털도시국 데이터전략과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2133-4273",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154937/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16016/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16764",
+        "INF_NM": "서울시 강남구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "강남구",
+        "MNG_STATION_NAME": "데이터전략과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-3423-5114",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16764/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16726",
+        "INF_NM": "서울시 도봉구 복합영상물제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "도봉구",
+        "MNG_STATION_NAME": "데이터전략과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2091-2120",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154937/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16726/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16757",
+        "INF_NM": "서울시 강서구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "자치구 및 자치구산하",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "강서구",
+        "MNG_STATION_NAME": "강서구 행정문화국 체육관광과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2600-6552",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.gangseo.seoul.kr/openinf/sheetview.jsp?infId=OA-16757"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16761",
+        "INF_NM": "서울시 동작구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "동작구",
+        "MNG_STATION_NAME": "동작구 생활경제국 문화정책과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-820-2944",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16761/S/1/datasetView.do"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16744",
+        "INF_NM": "서울시 용산구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "자치구 및 자치구산하",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "용산구",
+        "MNG_STATION_NAME": "용산구 문화경제국 관광체육과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-2199-7554",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.yongsan.go.kr/openinf/sheetview.jsp?infId=OA-16744"
+      }
+    },
+    {
+      "score": 40,
+      "reasons": [
+        "CONTAINS_복합"
+      ],
+      "exact_keyword": false,
+      "exact_name": false,
+      "catalog": {
+        "INF_ID": "OA-16754",
+        "INF_NM": "서울시 서대문구 복합유통게임제공업 인허가 정보",
+        "CATE_NM": "공공데이터",
+        "DITC_NM": "서울시(본청)",
+        "MAP_CATE_NM": "문화/관광",
+        "MNG_ORGAN_NAME": "서대문구",
+        "MNG_STATION_NAME": "데이터전략과",
+        "LINK_DESC": "공공데이터포털(지방행정 인허가정보)",
+        "MANAGER_NAME": "",
+        "MANAGER_PHONE": "02-330-1114",
+        "CHNG_LOAD_NM": "수시",
+        "DATA_LT_NM": "2026-08-19",
+        "LINK_INFO": "공공데이터포털(지방행정 인허가정보)(https://www.data.go.kr/data/15154945/openapi.do)",
+        "SRV_TYPE": "Sheet,Api",
+        "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-16754/S/1/datasetView.do"
+      }
+    }
+  ],
+  "source_result": {
+    "source_status": "SOURCE_NOT_CONFIRMED",
+    "source_role": null,
+    "reason": "서울시 공식 열린데이터 카탈로그에서 입체복합구역 전용 공간정보 source를 직접 확정하지 못함. 이 결과만으로 SITE를 FALSE로 판정하지 않음",
+    "selected_catalog": null
+  },
+  "site_resolution": {
+    "query_status": "NOT_QUERIED",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "입체복합구역의 공식 공간 geometry source를 아직 확정하지 못했으므로 대상 필지를 TRUE/FALSE로 판정하지 않고 UNKNOWN으로 유지함"
+  },
+  "checks": {
+    "서울 OpenAPI Key 존재": true,
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "서울 카탈로그 조회 실행": true,
+    "카탈로그 row 확보": true,
+    "입체복합구역 source 탐색 실행": true,
+    "source 후보만으로 SITE TRUE 금지": true,
+    "source 후보만으로 SITE FALSE 금지": true,
+    "공간교차 전 UNKNOWN 유지": true,
+    "query_status 허용값": true,
+    "resolution 허용값": true,
+    "confidence 허용값": true
+  },
+  "all_pass": true
+}

@@ -1,0 +1,260 @@
+{
+  "step": "STEP 17-21-C-9-2-8A 복합용도구역 UQQ904 MapPlan 실제 공간교차 검증",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "target": {
+    "name": "복합용도구역",
+    "code": "UQQ904",
+    "layer": "AC"
+  },
+  "source_verification": {
+    "matches": [
+      {
+        "tag": "li",
+        "class": [
+          "typeAC_UQQ904"
+        ],
+        "title": "복합용도구역",
+        "text": "복합용도구역"
+      },
+      {
+        "tag": "li",
+        "class": [
+          "typeMiniAC_UQQ904"
+        ],
+        "title": "복합용도구역",
+        "text": "복합용도구역"
+      }
+    ],
+    "code_present": true,
+    "name_present": true,
+    "direct_verified": true
+  },
+  "mapplan": {
+    "server": "https://www.eum.ne.kr:9002/MapPlan",
+    "endpoint": "https://www.eum.ne.kr:9002/MapPlan/MapPlan",
+    "version": "20260614"
+  },
+  "parcel_bbox_epsg5179": [
+    962170.4865538419,
+    1943690.920233938,
+    962741.8650744666,
+    1944251.3866923628
+  ],
+  "mapplan_analysis": {
+    "http_status": 200,
+    "content_type": "application/json;charset=utf-8",
+    "is_json": true,
+    "analysis": {
+      "layers": [
+        {
+          "name": "AA",
+          "codes": [
+            {
+              "code": "UQA123",
+              "area": 120945.65329115915
+            },
+            {
+              "code": "UQA122",
+              "area": 0.08740045142309505
+            },
+            {
+              "code": "UQA121",
+              "area": 1.340175614848683e-07
+            },
+            {
+              "code": "UQA01X",
+              "area": 120945.6532916037
+            }
+          ]
+        },
+        {
+          "name": "AC",
+          "codes": [
+            {
+              "code": "UQQ300",
+              "area": 120945.48190180371
+            }
+          ]
+        },
+        {
+          "name": "DA",
+          "codes": [
+            {
+              "code": "UQQ301",
+              "area": 120927.65338757048
+            }
+          ]
+        },
+        {
+          "name": "CA",
+          "codes": [
+            {
+              "code": "UQV200",
+              "area": 0.050374909212422554
+            },
+            {
+              "code": "UQV700",
+              "area": 0.029615582091828685
+            },
+            {
+              "code": "UQY120",
+              "area": 0.008125190111286429
+            },
+            {
+              "code": "UQS100",
+              "area": 0.004315763740551759
+            },
+            {
+              "code": "UQW100",
+              "area": 0.03200044953598713
+            }
+          ]
+        },
+        {
+          "name": "BA",
+          "codes": [
+            {
+              "code": "UBA100",
+              "area": 120945.6532916037
+            },
+            {
+              "code": "UQQ600",
+              "area": 120945.65474989987
+            },
+            {
+              "code": "UMK600",
+              "area": 13044.127141089517
+            },
+            {
+              "code": "UJB100",
+              "area": 0.2854048866930984
+            },
+            {
+              "code": "UOA110",
+              "area": 8427.690713629101
+            },
+            {
+              "code": "UOA120",
+              "area": 100131.66233748592
+            }
+          ]
+        },
+        {
+          "name": "CB",
+          "codes": [
+            {
+              "code": "UQT210",
+              "area": 1.0001431456515975
+            },
+            {
+              "code": "UQW115",
+              "area": 14.52512370674812
+            },
+            {
+              "code": "UQW190",
+              "area": 14.71662819895272
+            },
+            {
+              "code": "UQS190",
+              "area": 5.634638949845964
+            },
+            {
+              "code": "UQV290",
+              "area": 0.10622418327599803
+            },
+            {
+              "code": "UQT390",
+              "area": 0.25278876888341983
+            }
+          ]
+        },
+        {
+          "name": "DC",
+          "codes": [
+            {
+              "code": "UQ164_PW",
+              "area": 233.81315001192863
+            }
+          ]
+        }
+      ],
+      "layer_count": 7,
+      "code_count": 24
+    },
+    "positive_control": {
+      "found": true,
+      "count": 1,
+      "area": 120945.48190180371,
+      "hits": [
+        {
+          "code": "UQQ300",
+          "area": 120945.48190180371
+        }
+      ]
+    },
+    "target": {
+      "found": false,
+      "count": 0,
+      "area": 0,
+      "hits": []
+    }
+  },
+  "parcel_geometry": {
+    "http_status": 200,
+    "geojson_valid": true,
+    "feature_count": 1,
+    "geometry_types": [
+      "Polygon"
+    ]
+  },
+  "target_geometry": {
+    "http_status": 200,
+    "geojson_valid": true,
+    "feature_count": 0,
+    "geometry_types": []
+  },
+  "intersection": {
+    "parcel_area": 120945.65223377591,
+    "target_area": 0.0,
+    "intersection_area": 0.0,
+    "intersection_ratio": 0.0,
+    "has_area_intersection": false
+  },
+  "site_resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "FALSE",
+    "confidence": "HIGH",
+    "evidence_state": "POSITIVE_CONTROL_VALID_TARGET_ANALYSIS_NEGATIVE_NO_AREA_INTERSECTION",
+    "reason": "동일 MapPlan req=analysis 체계에서 AC 계열 양성대조 UQQ300이 정상 검출되어 요청 의미가 유효함을 확인했고, 대상 PNU에서 UQQ904은 analysis에 검출되지 않았으며 UQQ904 geometry 정상조회 결과에서도 대상 Parcel과 실제 면적 교차가 확인되지 않아 복합용도구역이 아닌 것으로 판정함"
+  },
+  "validation": {
+    "SITE ID 존재": true,
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "토지이음 지도 초기화": true,
+    "복합용도구역 명칭 확인": true,
+    "UQQ904 코드 확인": true,
+    "복합용도구역 UQQ904 직접 연결": true,
+    "MapPlan server 복원": true,
+    "MapPlan version 복원": true,
+    "EPSG:5179 BBOX 존재": true,
+    "MapPlan analysis 실행": true,
+    "UQQ300 양성대조 검사": true,
+    "UQQ904 analysis 검사": true,
+    "Parcel Geometry 요청 실행": true,
+    "UQQ904 Geometry 요청 실행": true,
+    "Polygon intersection 실행": true,
+    "TRUE는 실제 면적교차 필요": true,
+    "FALSE는 양성대조 필요": true,
+    "FALSE는 UQQ904 analysis 음성 필요": true,
+    "FALSE는 실제 교차 없음 필요": true,
+    "HTTP 403을 FALSE 근거로 사용 안 함": true,
+    "query_status 허용값": true,
+    "resolution 허용값": true,
+    "confidence 허용값": true
+  }
+}

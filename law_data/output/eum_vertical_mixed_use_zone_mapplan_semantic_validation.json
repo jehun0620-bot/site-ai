@@ -1,0 +1,62 @@
+{
+  "step": "STEP 17-21-C-9-2-6A-7-1 토지이음 MapPlan HTTP 403 보정 / UQQ905 의미 양성대조 검증",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "mapplan": {
+    "endpoint": "https://www.eum.ne.kr:9002/MapPlan",
+    "version": "20260614",
+    "mbr": "962170.4865538419,1943690.920233938,962741.8650744666,1944251.3866923628"
+  },
+  "http_profile_probe": [
+    {
+      "profile": "MINIMAL",
+      "headers": {},
+      "http_status": 403,
+      "content_type": "text/html",
+      "valid_json": false,
+      "error": null
+    },
+    {
+      "profile": "USER_AGENT_ONLY",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+      },
+      "http_status": 403,
+      "content_type": "text/html",
+      "valid_json": false,
+      "error": null
+    },
+    {
+      "profile": "UA_ACCEPT",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "application/json,*/*;q=0.8"
+      },
+      "http_status": 403,
+      "content_type": "text/html",
+      "valid_json": false,
+      "error": null
+    },
+    {
+      "profile": "UA_REFERER",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "application/json,*/*;q=0.8",
+        "Referer": "https://www.eum.go.kr/web/mp/mpMapDet.jsp"
+      },
+      "http_status": 403,
+      "content_type": "text/html",
+      "valid_json": false,
+      "error": null
+    }
+  ],
+  "site_resolution": {
+    "query_status": "QUERY_FAILED",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "A-6에서는 동일 MapPlan endpoint에서 HTTP 200 응답을 확인했으나 현재 실행에서는 최소 헤더를 포함한 모든 접근 profile이 정상 JSON 응답을 재현하지 못함. 이는 UQQ905 공간조건 음성을 의미하지 않으며 HTTP 접근 상태 회귀이므로 UNKNOWN 유지"
+  }
+}

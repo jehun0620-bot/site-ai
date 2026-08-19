@@ -1,0 +1,848 @@
+{
+  "step": "STEP 17-21-C-9-2-7A 도시혁신구역 공식 Source / 관리코드 탐색",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000",
+    "sigungu_code": "11680",
+    "zoning": null
+  },
+  "target": {
+    "name": "도시혁신구역",
+    "legend_code": "UQQ903",
+    "candidate_mapplan_layer": "AC"
+  },
+  "seoul_catalog": {
+    "service": "SearchCatalogService",
+    "success": true,
+    "total_count": 8250,
+    "row_count": 8250,
+    "candidates": [
+      {
+        "score": 165,
+        "score_reasons": [
+          "LAND_USE_AREA_DATASET",
+          "OTHER_LAND_USE_AREA",
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21132",
+          "INF_NM": "서울시 기타용도구역 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21132/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 115,
+        "score_reasons": [
+          "LAND_USE_AREA_DATASET",
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21123",
+          "INF_NM": "서울시 용도구역(개발제한구역) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21123/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 115,
+        "score_reasons": [
+          "LAND_USE_AREA_DATASET",
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21135",
+          "INF_NM": "서울시 용도구역(도시자연공원구역) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21135/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-15527",
+          "INF_NM": "서울시 생활권계획 생활권경계 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "수시",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,Api,File",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-15527/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-15528",
+          "INF_NM": "서울시 생활권계획 시설(공원제외) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "수시",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,Api,File",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-15528/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-15529",
+          "INF_NM": "서울시 생활권계획 시설(공원) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "수시",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,Api,File",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-15529/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-15530",
+          "INF_NM": "서울시 생활권계획 소외지역 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "수시",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,Api,File",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-15530/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21124",
+          "INF_NM": "서울시 용도지구(개발진흥지구) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21124/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21125",
+          "INF_NM": "서울시 개발행위허가제한지역 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21125/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21126",
+          "INF_NM": "서울시 생태현황도(개별비오톱 평가도) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21126/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21127",
+          "INF_NM": "서울시 용도지구(경관지구) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21127/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21128",
+          "INF_NM": "서울시 용도지구(고도지구) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21128/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21129",
+          "INF_NM": "서울시 도시계획시설(공간시설) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21129/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21130",
+          "INF_NM": "서울시 도시계획시설(교통시설_도로외) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21130/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21133",
+          "INF_NM": "서울시 기타용도지구 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21133/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21134",
+          "INF_NM": "서울시 도시계획시설(도로) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,Api,File",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21134/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21136",
+          "INF_NM": "서울시 용도지역(도시지역) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,Api,File",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21136/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21137",
+          "INF_NM": "서울시 문화재지정구역 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21137/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21138",
+          "INF_NM": "서울시 문화재지정구역(선형) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21138/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21140",
+          "INF_NM": "서울시 용도지구(방화지구) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "File,Sheet,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21140/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21141",
+          "INF_NM": "서울시 도시계획시설(보건위생시설) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21141/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21142",
+          "INF_NM": "서울시 보전산지지역 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21142/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21143",
+          "INF_NM": "서울시 용도지구(보호지구) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21143/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21145",
+          "INF_NM": "서울시 생태현황도(비오톱유형/평가도) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21145/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21149",
+          "INF_NM": "서울시 생활권계획 시설(버퍼) 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21149/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21152",
+          "INF_NM": "서울시 양서파충류개별종분포 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21152/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21153",
+          "INF_NM": "서울시 양서파충류보호종분포 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21153/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21154",
+          "INF_NM": "서울시 양서파충류출현현황 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21154/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21155",
+          "INF_NM": "서울시 어류개별종분포 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21155/S/1/datasetView.do"
+        }
+      },
+      {
+        "score": 55,
+        "score_reasons": [
+          "SPATIAL_DATASET",
+          "URBAN_PLANNING"
+        ],
+        "explicit_target": false,
+        "row": {
+          "INF_ID": "OA-21156",
+          "INF_NM": "서울시 어류보호종분포 공간정보",
+          "CATE_NM": "공공데이터",
+          "DITC_NM": "서울시(본청)",
+          "MAP_CATE_NM": "도시관리",
+          "MNG_ORGAN_NAME": "서울특별시",
+          "MNG_STATION_NAME": "도시공간본부 도시계획상임기획과",
+          "LINK_DESC": "서울도시공간포털",
+          "MANAGER_NAME": "",
+          "MANAGER_PHONE": "02-2133-8339",
+          "CHNG_LOAD_NM": "월간",
+          "DATA_LT_NM": "2026-08-07",
+          "LINK_INFO": "서울도시공간포털(http://urban.seoul.go.kr)",
+          "SRV_TYPE": "Sheet,File,Api",
+          "SHORT_URL": "https://data.seoul.go.kr/dataList/OA-21156/S/1/datasetView.do"
+        }
+      }
+    ]
+  },
+  "eum": {
+    "url": "https://www.eum.go.kr/web/mp/mpMapDet.jsp?add=land&pnu=1168010300100120000",
+    "http_status": 200,
+    "reachable": true,
+    "target_name_found": true,
+    "target_code_found": true,
+    "direct_pair_found": true,
+    "contexts": [
+      {
+        "keyword": "도시혁신구역",
+        "context": "ss=\"typeAC_UQQ902\" style=\"display: none;\" title=\"성장관리계획구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(160,90,40);\"></span>성장관리계획구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeAC_UQQ903\" style=\"display: none;\" title=\"도시혁신구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,60,10);\"></span>도시혁신구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeAC_UQQ904\" style=\"display: none;\" title=\"복합용도구역\"><em class=\"\"></em><span style=\"background:rgb(255,2"
+      },
+      {
+        "keyword": "도시혁신구역",
+        "context": ",255,255);border:2px solid rgb(160,90,40);\"></span>성장관리계획구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeAC_UQQ903\" style=\"display: none;\" title=\"도시혁신구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,60,10);\"></span>도시혁신구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeAC_UQQ904\" style=\"display: none;\" title=\"복합용도구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,75,25);\"></span>복합용도구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t "
+      },
+      {
+        "keyword": "도시혁신구역",
+        "context": "an>기반시설부담구역</li><li><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,60,10);\"></span>입지규제최소구역</li><li><span style=\"background:rgb(255,255,255);border:2px solid rgb(160,90,40);\"></span>성장관리계획구역</li><li><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,60,10);\"></span>도시혁신구역</li><li><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,75,25);\"></span>복합용도구역</li><li><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,95,40);\"></span>도시군계획시설입체복합구역</li><li><span style=\"background:rgb(255,255,255);border:2px solid rgb(90,90,90);\"></span>용도구역미분류</"
+      },
+      {
+        "keyword": "도시혁신구역",
+        "context": "MiniAC_UQQ902\" style=\"display: none;\" title=\"성장관리계획구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(160,90,40);\"></span>성장관리계획구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeMiniAC_UQQ903\" style=\"display: none;\" title=\"도시혁신구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,60,10);\"></span>도시혁신구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeMiniAC_UQQ904\" style=\"display: none;\" title=\"복합용도구역\"><em class=\"\"></em><span style=\"background:rgb(2"
+      },
+      {
+        "keyword": "도시혁신구역",
+        "context": ",255);border:2px solid rgb(160,90,40);\"></span>성장관리계획구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeMiniAC_UQQ903\" style=\"display: none;\" title=\"도시혁신구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,60,10);\"></span>도시혁신구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeMiniAC_UQQ904\" style=\"display: none;\" title=\"복합용도구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,75,25);\"></span>복합용도구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t"
+      },
+      {
+        "keyword": "UQQ903",
+        "context": "\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeAC_UQQ902\" style=\"display: none;\" title=\"성장관리계획구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(160,90,40);\"></span>성장관리계획구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeAC_UQQ903\" style=\"display: none;\" title=\"도시혁신구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,60,10);\"></span>도시혁신구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeAC_UQQ904\" style=\"display: none;\" title=\"복합용도구역\"><em class=\"\">"
+      },
+      {
+        "keyword": "UQQ903",
+        "context": "\t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeMiniAC_UQQ902\" style=\"display: none;\" title=\"성장관리계획구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(160,90,40);\"></span>성장관리계획구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeMiniAC_UQQ903\" style=\"display: none;\" title=\"도시혁신구역\"><em class=\"\"></em><span style=\"background:rgb(255,255,255);border:2px solid rgb(120,60,10);\"></span>도시혁신구역</li>  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t  \t\t\t\t\t\t\t\t\t\t\t<li class=\"typeMiniAC_UQQ904\" style=\"display: none;\" title=\"복합용도구역\"><em class"
+      }
+    ]
+  },
+  "previous_mapplan": {
+    "file_exists": true,
+    "previous_resolution": "UNKNOWN",
+    "evidence_state": "POSITIVE_CONTROL_VALID_TARGET_DOUBLE_NEGATIVE",
+    "mapplan_structure_reusable": true
+  },
+  "source_resolution": {
+    "source_status": "EUM_LEGEND_CODE_VERIFIED",
+    "source_role": "CLASSIFICATION_CODE",
+    "reason": "토지이음 공식 지도 HTML에서 '도시혁신구역' 명칭과 UQQ903 범례 코드의 직접 연결을 확인함. 기존 입체복합구역 조사에서 동일 UQQ 계열의 MapPlan layer AC 요청 구조를 확보했으므로 다음 단계에서 UQQ903에 대해 실제 req=analysis / req=search geometry 요청을 검증할 수 있음"
+  },
+  "site_resolution": {
+    "query_status": "NOT_QUERIED",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "현재 단계는 도시혁신구역의 공식 source와 관리코드의 의미를 검증하는 단계이며 대상 Parcel Polygon과 UQQ903 geometry 사이의 실제 공간교차를 아직 수행하지 않았으므로 TRUE/FALSE를 판정하지 않음"
+  },
+  "validation": {
+    "서울 OpenAPI Key 존재": true,
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "서울 카탈로그 조회 실행": true,
+    "카탈로그 row 확보": true,
+    "도시혁신구역 source 탐색 실행": true,
+    "토지이음 지도 조회 실행": true,
+    "UQQ903 코드 자동추측 없음": true,
+    "source 후보만으로 SITE TRUE 금지": true,
+    "source 후보만으로 SITE FALSE 금지": true,
+    "공간교차 전 UNKNOWN 유지": true,
+    "query_status 허용값": true,
+    "resolution 허용값": true,
+    "confidence 허용값": true
+  }
+}

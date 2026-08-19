@@ -1,0 +1,130 @@
+{
+  "step": "STEP 17-21-C-9-2-6A-1 입체복합구역 서울시 기타용도구역 UQ145 Schema 탐색",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000",
+    "sigungu_code": "11680",
+    "zoning": null
+  },
+  "previous_probe_loaded": true,
+  "dataset": {
+    "provider": "서울특별시",
+    "name": "서울시 기타용도구역 공간정보",
+    "code": "UQ145",
+    "crs": "EPSG:5174",
+    "expected_file": "UQ145_기타용도구역_202602.zip"
+  },
+  "openapi": {
+    "selected_service": "upisCUq145",
+    "probe_results": [
+      {
+        "service": "upisCUq145",
+        "http_status": 200,
+        "service_found": true,
+        "success": true,
+        "result_code": "INFO-000",
+        "result_message": "정상 처리되었습니다",
+        "total_count": 1,
+        "rows": [
+          {
+            "OBJT_ID": 2573.0,
+            "STUT_FIG_MNG_NO": "11590UQ151PS202101229994",
+            "FIG_LCLSF_CD": "UQS122",
+            "FIG_MCLSF_CD": " ",
+            "FIG_SCLSF_CD": " ",
+            "FIG_ATRB_CD": "UQS122",
+            "FIG_RPT_MNG_CD": "11590URZ202007230001",
+            "DCSN_ANCMNT_MNG_CD": "11590NTC202007230001",
+            "LBL_NM": "소로3류",
+            "SGG_CD": " ",
+            "FLRPLN_NO": "소로3-",
+            "STUT_FIG_CRT_DT": "2021-01-22 00:00:00.0",
+            "AREA": 312.92217206,
+            "LEN": 201.45420675
+          }
+        ],
+        "error": null
+      },
+      {
+        "service": "upiSCUq145",
+        "http_status": 200,
+        "service_found": false,
+        "success": false,
+        "result_code": null,
+        "result_message": null,
+        "total_count": 0,
+        "rows": [],
+        "error": null
+      },
+      {
+        "service": "upisCUQ145",
+        "http_status": 200,
+        "service_found": false,
+        "success": false,
+        "result_code": null,
+        "result_message": null,
+        "total_count": 0,
+        "rows": [],
+        "error": null
+      },
+      {
+        "service": "upiSCUQ145",
+        "http_status": 200,
+        "service_found": false,
+        "success": false,
+        "result_code": null,
+        "result_message": null,
+        "total_count": 0,
+        "rows": [],
+        "error": null
+      }
+    ],
+    "fields": [
+      "AREA",
+      "DCSN_ANCMNT_MNG_CD",
+      "FIG_ATRB_CD",
+      "FIG_LCLSF_CD",
+      "FIG_MCLSF_CD",
+      "FIG_RPT_MNG_CD",
+      "FIG_SCLSF_CD",
+      "FLRPLN_NO",
+      "LBL_NM",
+      "LEN",
+      "OBJT_ID",
+      "SGG_CD",
+      "STUT_FIG_CRT_DT",
+      "STUT_FIG_MNG_NO"
+    ],
+    "target_match_count": 0,
+    "target_matches": []
+  },
+  "spatial_files": [],
+  "shapefile": null,
+  "source_result": {
+    "source_status": "PARENT_LAYER_VERIFIED_TARGET_NOT_FOUND",
+    "source_role": "PARENT_LAYER",
+    "dataset_code": "UQ145",
+    "reason": "서울시 공식 기타용도구역 UQ145 source 자체는 확인했으나 현재 조회한 Feature 속성에서 입체복합구역을 명시적으로 확인하지 못함. UQ145 미포함 가능성과 별도 신규 layer 가능성을 구분해야 하므로 SITE는 UNKNOWN 유지"
+  },
+  "site_resolution": {
+    "query_status": "NOT_QUERIED",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "현재 단계는 입체복합구역 source 및 Feature 의미 검증 단계이며 대상 PNU Parcel Polygon과 입체복합구역 Polygon 사이의 실제 공간교차를 수행하지 않았으므로 TRUE/FALSE를 판정하지 않음"
+  },
+  "checks": {
+    "서울 OpenAPI Key 존재": true,
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "서울 기타용도구역 코드 UQ145": true,
+    "OpenAPI 후보 조회 실행": true,
+    "UQ145 source만으로 SITE TRUE 금지": true,
+    "UQ145 source만으로 SITE FALSE 금지": true,
+    "공간교차 전 UNKNOWN 유지": true,
+    "query_status 허용값": true,
+    "resolution 허용값": true,
+    "confidence 허용값": true
+  },
+  "all_pass": true
+}

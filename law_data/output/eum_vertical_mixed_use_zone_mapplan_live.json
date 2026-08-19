@@ -1,0 +1,129 @@
+{
+  "step": "STEP 17-21-C-9-2-6A-6 토지이음 UQQ905 실제 MapPlan 요청 / Geometry 조회 테스트",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "target": {
+    "name": "도시군계획시설입체복합구역",
+    "code": "UQQ905",
+    "layer": "AC"
+  },
+  "setinit_calls": [
+    {
+      "raw": "'1168010300100120000','','','https://www.eum.ne.kr:9002/MapPlan','PC'"
+    }
+  ],
+  "server_candidates": [
+    "https://www.eum.ne.kr:9002/MapPlan"
+  ],
+  "versions": [
+    "20260614",
+    "20260414",
+    "20260114",
+    "20251014",
+    "20250718",
+    "20250415",
+    "20250107",
+    "20241014",
+    "20240709",
+    "20240417",
+    "20240115",
+    "20231010",
+    "20230710",
+    "20230410",
+    "20230109",
+    "20221011",
+    "20220711",
+    "20220407",
+    "20220110",
+    "20211006",
+    "20210622",
+    "20210228",
+    "20201130"
+  ],
+  "selected_version": "20260614",
+  "parcel_bbox": {
+    "source": "D:\\site-ai\\law_data\\output\\seoul_natural_landscape_district_intersection_test.json",
+    "epsg4326": [
+      127.07240240227819,
+      37.49198725375971,
+      127.0781619622408,
+      37.49647755722794
+    ],
+    "epsg5179": [
+      962200.4865538419,
+      1943720.920233938,
+      962711.8650744666,
+      1944221.3866923628
+    ],
+    "search_epsg5179": [
+      962170.4865538419,
+      1943690.920233938,
+      962741.8650744666,
+      1944251.3866923628
+    ],
+    "buffer_meter": 30.0
+  },
+  "mapplan_search": [
+    {
+      "server": "https://www.eum.ne.kr:9002/MapPlan",
+      "url": "https://www.eum.ne.kr:9002/MapPlan/MapPlan",
+      "params": {
+        "req": "search",
+        "version": "20260614",
+        "layer": "AC",
+        "mbr": "962170.4865538419,1943690.920233938,962741.8650744666,1944251.3866923628",
+        "code": "UQQ905"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "geojson": {
+        "is_geojson": true,
+        "feature_count": 0,
+        "geometry_types": []
+      },
+      "preview": "{\"features\":[],\"type\":\"FeatureCollection\"}"
+    }
+  ],
+  "mapplan_analysis": [
+    {
+      "server": "https://www.eum.ne.kr:9002/MapPlan",
+      "url": "https://www.eum.ne.kr:9002/MapPlan/MapPlan",
+      "params": {
+        "req": "analysis",
+        "version": "20260614",
+        "pnus": "1168010300100120000"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "target_hits": [],
+      "preview": "{\n  \"layer\": [\n    {\n      \"name\": \"aa\",\n      \"codes\": [\n        {\n          \"code\": \"UQA123\",\n          \"area\": 120945.65329115915\n        },\n        {\n          \"code\": \"UQA122\",\n          \"area\": 0.08740045142309505\n        },\n        {\n          \"code\": \"UQA121\",\n          \"area\": 1.340175614848683E-7\n        },\n        {\n          \"code\": \"UQA01X\",\n          \"area\": 120945.6532916037\n        }\n      ]\n    },\n    {\n      \"name\": \"ac\",\n      \"codes\": [\n        {\n          \"code\": \"UQQ300\",\n          \"area\": 120945.48190180371\n        }\n      ]\n    },\n    {\n      \"name\": \"da\",\n      \"codes\": [\n        {\n          \"code\": \"UQQ301\",\n          \"area\": 120927.65338757048\n        }\n      ]\n    },\n    {\n      \"name\": \"ca\",\n      \"codes\": [\n        {\n          \"code\": \"UQV200\",\n          \"area\": 0.050374909212422554\n        },\n        {\n          \"code\": \"UQV700\",\n          \"area\": 0.029615582091828685\n        },\n        {\n          \"code\": \"UQY120\",\n          \"area\": 0.008125190111286429\n        },\n        {\n          \"code\": \"UQS100\",\n          \"area\": 0.004315763740551759\n        },\n        {\n          \"code\": \"UQW100\",\n          \"area\": 0.03200044953598713\n        }\n      ]\n    },\n    {\n      \"name\": \"ba\",\n      \"codes\": [\n        {\n          \"code\": \"UBA100\",\n          \"area\": 120945.6532916037\n        },\n        {\n          \"code\": \"UQQ600\",\n          \"area\": 120945.65474989987\n        },\n        {\n          \"code\": \"UMK600\",\n          \"area\": 13044.127141089517\n        },\n        {\n          \"code\": \"UJB100\",\n          \"area\": 0.2854048866930984\n        },\n        {\n          \"code\": \"UOA110\",\n          \"area\": 8427.690713629101\n        },\n        {\n          \"code\": \"UOA120\",\n          \"area\": 100131.66233748592\n        }\n      ]\n    },\n    {\n      \"name\": \"cb\",\n      \"codes\": [\n        {\n          \"code\": \"UQT210\",\n          \"area\": 1.0001431456515975\n        },\n        {\n          \"code\": \"UQW115\",\n          \"area\": 14.52512370674812\n        },\n        {\n          \"code\": \"UQW190\",\n          \"area\": 14.71662819895272\n        },\n        {\n          \"code\": \"UQS190\",\n          \"area\": 5.634638949845964\n        },\n        {\n          \"code\": \"UQV290\",\n          \"area\": 0.10622418327599803\n        },\n        {\n          \"code\": \"UQT390\",\n          \"area\": 0.25278876888341983\n        }\n      ]\n    },\n    {\n      \"name\": \"dc\",\n      \"codes\": [\n        {\n          \"code\": \"UQ164_PW\",\n          \"area\": 233.81315001192863\n        }\n      ]\n    }\n  ]\n}"
+    }
+  ],
+  "site_resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "geometry_feature_count": 0,
+    "analysis_target_hits": 0,
+    "reason": "대상 Parcel 주변 BBOX에 대해 UQQ905 MapPlan geometry 조회가 정상 수행되었으나 현재 응답 Feature가 0개임. BBOX 범위조회만으로 즉시 FALSE를 확정하지 않고 전체 조회 의미와 Parcel intersection 조건을 다음 단계에서 검증해야 함"
+  },
+  "validation": {
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "토지이음 지도 초기화": true,
+    "setinitData 호출 탐색": true,
+    "MapPlan version 탐색": true,
+    "UQQ905 요청규칙 검증": true,
+    "layer AC 복원": true,
+    "code UQQ905 복원": true,
+    "EPSG:5179 BBOX 생성": true,
+    "MapPlan search 실행": true,
+    "MapPlan analysis 실행": true,
+    "Feature 존재만으로 TRUE 금지": true,
+    "부분 BBOX 무교차만으로 FALSE 금지": true,
+    "intersection 전 UNKNOWN 유지": true
+  }
+}
