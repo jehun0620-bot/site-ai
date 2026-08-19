@@ -1,0 +1,214 @@
+{
+  "step": "STEP 17-21-C-9-2-5C-2",
+  "condition": "자연경관지구",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "zoning": "-",
+    "pnu": "1168010300100120000"
+  },
+  "parcel": {
+    "dataset": "LP_PA_CBND_BUBUN",
+    "feature_id": "LP_PA_CBND_BUBUN.803130",
+    "geometry_type": "MultiPolygon",
+    "bounds": [
+      127.07240240227819,
+      37.49198725375971,
+      127.0781619622408,
+      37.49647755722794
+    ],
+    "representative_point": {
+      "x": 127.07539280356858,
+      "y": 37.494197498186885
+    }
+  },
+  "uq121_source": {
+    "code": "UQ121",
+    "file": "D:\\site-ai\\law_data\\input\\UQ121_용도지구(경관지구)_202602.zip",
+    "feature_count": 41,
+    "original_crs": "EPSG:5174",
+    "normalized_crs": "EPSG:4326",
+    "crs_source": "FILE_METADATA",
+    "columns": [
+      "PRESENT_SN",
+      "LCLAS_CL",
+      "MLSFC_CL",
+      "SCLAS_CL",
+      "ATRB_SE",
+      "WTNNC_SN",
+      "NTFC_SN",
+      "DGM_NM",
+      "DGM_AR",
+      "DGM_LT",
+      "SIGNGU_SE",
+      "DRAWING_NO",
+      "CREATE_DAT",
+      "SHAPE_AREA",
+      "SHAPE_LEN",
+      "geometry"
+    ]
+  },
+  "schema": {
+    "column_mapping": {
+      "PRESENT_SN": {
+        "exists": true,
+        "openapi_equivalent": "STUT_FIG_MNG_NO"
+      },
+      "LCLAS_CL": {
+        "exists": true,
+        "openapi_equivalent": "FIG_LCLSF_CD"
+      },
+      "MLSFC_CL": {
+        "exists": true,
+        "openapi_equivalent": "FIG_MCLSF_CD"
+      },
+      "SCLAS_CL": {
+        "exists": true,
+        "openapi_equivalent": "FIG_SCLSF_CD"
+      },
+      "ATRB_SE": {
+        "exists": true,
+        "openapi_equivalent": "FIG_ATRB_CD"
+      },
+      "WTNNC_SN": {
+        "exists": true,
+        "openapi_equivalent": "FIG_RPT_MNG_CD"
+      },
+      "NTFC_SN": {
+        "exists": true,
+        "openapi_equivalent": "DCSN_ANCMNT_MNG_CD"
+      },
+      "DGM_NM": {
+        "exists": true,
+        "openapi_equivalent": "LBL_NM"
+      },
+      "DGM_AR": {
+        "exists": true,
+        "openapi_equivalent": "AREA"
+      },
+      "DGM_LT": {
+        "exists": true,
+        "openapi_equivalent": "LEN"
+      },
+      "SIGNGU_SE": {
+        "exists": true,
+        "openapi_equivalent": "SGG_CD"
+      },
+      "DRAWING_NO": {
+        "exists": true,
+        "openapi_equivalent": "FLRPLN_NO"
+      },
+      "CREATE_DAT": {
+        "exists": true,
+        "openapi_equivalent": "STUT_FIG_CRT_DT"
+      }
+    },
+    "actual_columns": [
+      "PRESENT_SN",
+      "LCLAS_CL",
+      "MLSFC_CL",
+      "SCLAS_CL",
+      "ATRB_SE",
+      "WTNNC_SN",
+      "NTFC_SN",
+      "DGM_NM",
+      "DGM_AR",
+      "DGM_LT",
+      "SIGNGU_SE",
+      "DRAWING_NO",
+      "CREATE_DAT",
+      "SHAPE_AREA",
+      "SHAPE_LEN",
+      "geometry"
+    ]
+  },
+  "feature_filter": {
+    "status": "VERIFIED",
+    "method": "DGM_NM_EXPLICIT_TEXT",
+    "column": "DGM_NM",
+    "value": "자연경관지구",
+    "feature_count": 6,
+    "diagnostics": {
+      "DGM_NM_exists": true,
+      "ATRB_SE_exists": true,
+      "LCLAS_CL_exists": true,
+      "target_label": "자연경관지구",
+      "target_attribute_code": "UQF110",
+      "target_lclass_code": "UQF110",
+      "DGM_NM_target_count": 6,
+      "DGM_NM_unique_values": [
+        "경관지구",
+        "경관지구(금호지구)",
+        "광장지구",
+        "남산지구",
+        "능동지구",
+        "마포지구",
+        "본동지구",
+        "서강지구",
+        "시가지경관지구(일반)",
+        "안산지구",
+        "안암지구",
+        "역사문화특화경관지구",
+        "자연경관지구",
+        "조망가로특화경관지구",
+        "평창지구",
+        "풍치지구",
+        "행당지구",
+        "효창지구"
+      ],
+      "ATRB_SE_target_count": 20,
+      "ATRB_SE_unique_values": [
+        "UQF110",
+        "UQF132",
+        "UQF142",
+        "UQF143"
+      ],
+      "LCLAS_CL_target_count": 20,
+      "LCLAS_CL_unique_values": [
+        "UQF110",
+        "UQF130",
+        "UQF142",
+        "UQF143"
+      ],
+      "code_consistency": {
+        "ATRB_SE_all_UQF110": true,
+        "LCLAS_CL_all_UQF110": true
+      }
+    }
+  },
+  "intersection": {
+    "bbox_candidate_count": 0,
+    "intersection_count": 0,
+    "max_intersection_ratio": 0.0,
+    "features": []
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "FALSE",
+    "confidence": "HIGH",
+    "reason": "서울시 공식 UQ121 경관지구 공간레이어 전체를 정상 로드하고 자연경관지구 Feature를 검증된 SHP 속성 DGM_NM/UQF110 체계로 식별한 뒤 대상 PNU Parcel Polygon과 공간교차를 수행했으나 실제 면적 교차 Feature가 확인되지 않음",
+    "max_intersection_ratio": 0.0
+  },
+  "validation": {
+    "VWORLD API Key 존재": true,
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "Parcel query 성공": true,
+    "Parcel PNU 직접 검증": true,
+    "Parcel Polygon geometry": true,
+    "UQ121 공식 코드": true,
+    "UQ121 Feature 존재": true,
+    "UQ121 EPSG:4326 정규화": true,
+    "DGM_NM 컬럼 확인": true,
+    "ATRB_SE 컬럼 확인": true,
+    "LCLAS_CL 컬럼 확인": true,
+    "자연경관지구 식별 성공": true,
+    "자연경관지구 Feature 존재": true,
+    "검증된 SHP 식별규칙 사용": true,
+    "TRUE는 실제 면적 교차 존재": true,
+    "FALSE는 전체 레이어 정상 + 교차 없음": true,
+    "query_status 허용값": true,
+    "resolution 허용값": true,
+    "confidence 허용값": true
+  }
+}

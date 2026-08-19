@@ -1,0 +1,77 @@
+{
+  "step": "STEP 17-21-C-9-2-2B-2",
+  "site": {
+    "site_id": "",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000",
+    "parcel_key": "11680-10300-0012-0000"
+  },
+  "dataset": "LT_C_UPISUQ161",
+  "dataset_verified": true,
+  "coordinate": {
+    "x": 127.07539280356858,
+    "y": 37.494197498186885,
+    "crs": "EPSG:4326",
+    "source": "VWorld address search"
+  },
+  "api": {
+    "http_status": 200,
+    "vworld_status": "OK",
+    "error_code": "",
+    "error_text": ""
+  },
+  "feature_collection_count": 1,
+  "feature_count": 1,
+  "geometry_analysis": {
+    "feature_count": 1,
+    "supported_geometry_count": 1,
+    "point_inside_count": 1,
+    "features": [
+      {
+        "index": 1,
+        "feature_id": "LT_C_UPISUQ161.1154",
+        "geometry_type": "MultiPolygon",
+        "point_inside": true,
+        "properties": {
+          "present_sn": "11000UQ161PS202005260028",
+          "lclas_cl": "UQQ301",
+          "mlsfc_cl": "",
+          "sclas_cl": "",
+          "atrb_se": "UQQ301",
+          "wtnnc_sn": "11000UTZ199603300736",
+          "ntfc_sn": "11000NTC199603305909",
+          "dgm_nm": "대치택지개발지구",
+          "dgm_ar": "239675",
+          "dgm_lt": "2106",
+          "signgu_se": "11000",
+          "sig_nam": "11",
+          "lcl_nam": "미분류",
+          "mls_nam": "미분류",
+          "scl_nam": "미분류",
+          "atr_nam": "미분류",
+          "pmi_nam": "",
+          "exc_nam": ""
+        }
+      }
+    ]
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "TRUE",
+    "confidence": "HIGH",
+    "reason": "VWorld 지구단위계획 LT_C_UPISUQ161 공간조회에서 대상 SITE 대표좌표를 포함하는 Polygon/MultiPolygon Feature가 확인됨"
+  },
+  "validations": {
+    "VWORLD API Key 존재": true,
+    "검증된 dataset 사용": true,
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "대표 좌표 획득": true,
+    "Data API HTTP 200": true,
+    "VWorld Data API 정상 응답": true,
+    "resolution 허용값": true,
+    "query_status 허용값": true,
+    "API 실패 시 TRUE/FALSE 금지": true
+  },
+  "all_pass": true
+}

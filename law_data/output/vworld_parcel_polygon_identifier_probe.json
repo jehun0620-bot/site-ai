@@ -1,0 +1,361 @@
+{
+  "step": "STEP 17-21-C-9-2-2B-3A",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "zone": "제3종일반주거지역",
+    "pnu": "1168010300100120000",
+    "point": {
+      "x": 127.07539280356858,
+      "y": 37.494197498186885,
+      "crs": "EPSG:4326"
+    }
+  },
+  "candidate_count": 12,
+  "probe_results": [
+    {
+      "dataset": "LP_PA_CBND_BUBUN",
+      "http_status": 200,
+      "vworld_status": "OK",
+      "classification": "QUERY_SUCCESS",
+      "error": {
+        "level": "",
+        "code": "",
+        "text": ""
+      },
+      "feature_count": 1,
+      "polygon_feature_count": 1,
+      "analysis": {
+        "feature_count": 1,
+        "polygon_count": 1,
+        "pnu_polygon_match_count": 1,
+        "features": [
+          {
+            "index": 1,
+            "id": "LP_PA_CBND_BUBUN.803130",
+            "geometry_type": "MultiPolygon",
+            "is_polygon": true,
+            "pnu_property_key": "pnu",
+            "feature_pnu": "1168010300100120000",
+            "target_pnu": "1168010300100120000",
+            "pnu_match": true,
+            "properties": {
+              "gosi_year": "2025",
+              "pnu": "1168010300100120000",
+              "jibun": "12 대",
+              "bonbun": "12",
+              "bubun": "",
+              "addr": "서울특별시 강남구 개포동 12",
+              "gosi_month": "01",
+              "jiga": "16130000"
+            }
+          }
+        ],
+        "pnu_polygon_matches": [
+          {
+            "index": 1,
+            "id": "LP_PA_CBND_BUBUN.803130",
+            "geometry_type": "MultiPolygon",
+            "is_polygon": true,
+            "pnu_property_key": "pnu",
+            "feature_pnu": "1168010300100120000",
+            "target_pnu": "1168010300100120000",
+            "pnu_match": true,
+            "properties": {
+              "gosi_year": "2025",
+              "pnu": "1168010300100120000",
+              "jibun": "12 대",
+              "bonbun": "12",
+              "bubun": "",
+              "addr": "서울특별시 강남구 개포동 12",
+              "gosi_month": "01",
+              "jiga": "16130000"
+            }
+          }
+        ]
+      },
+      "usable_as_parcel_polygon": true,
+      "strict_pnu_verified": true,
+      "score": 160
+    },
+    {
+      "dataset": "LP_PA_CBND_BONBUN",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LP_PA_CBND_BONBUN"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    },
+    {
+      "dataset": "LT_C_LANDINFO",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LT_C_LANDINFO"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    },
+    {
+      "dataset": "LT_C_LANDINFO_1",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LT_C_LANDINFO_1"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    },
+    {
+      "dataset": "LT_C_LANDINFO_2",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LT_C_LANDINFO_2"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    },
+    {
+      "dataset": "LT_C_LANDINFO_BUBUN",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LT_C_LANDINFO_BUBUN"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    },
+    {
+      "dataset": "LT_C_LANDINFO_BONBUN",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LT_C_LANDINFO_BONBUN"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    },
+    {
+      "dataset": "LT_C_PARCEL",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LT_C_PARCEL"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    },
+    {
+      "dataset": "LT_C_CADASTRAL",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LT_C_CADASTRAL"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    },
+    {
+      "dataset": "LT_C_JIJUK",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LT_C_JIJUK"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    },
+    {
+      "dataset": "LT_C_JIJUK_BUBUN",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LT_C_JIJUK_BUBUN"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    },
+    {
+      "dataset": "LT_C_JIJUK_BONBUN",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "classification": "INVALID_DATA_IDENTIFIER",
+      "error": {
+        "level": "1",
+        "code": "INVALID_RANGE",
+        "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : LT_C_JIJUK_BONBUN"
+      },
+      "feature_count": 0,
+      "polygon_feature_count": 0,
+      "analysis": {
+        "feature_count": 0,
+        "polygon_count": 0,
+        "pnu_polygon_match_count": 0,
+        "features": [],
+        "pnu_polygon_matches": []
+      },
+      "usable_as_parcel_polygon": false,
+      "strict_pnu_verified": false,
+      "score": 0
+    }
+  ],
+  "polygon_candidates": [
+    {
+      "dataset": "LP_PA_CBND_BUBUN",
+      "strict_pnu_verified": true,
+      "score": 160,
+      "feature_count": 1,
+      "polygon_count": 1,
+      "pnu_polygon_match_count": 1
+    }
+  ],
+  "selected": {
+    "dataset": "LP_PA_CBND_BUBUN",
+    "strict_pnu_verified": true,
+    "status": "VERIFIED"
+  },
+  "validations": {
+    "VWORLD API Key 존재": true,
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "대표 좌표 획득": true,
+    "후보 전체 조회 실행": true,
+    "각 후보 응답 분류 완료": true,
+    "QUERY_SUCCESS만으로 parcel 확정하지 않음": true,
+    "선택 dataset geometry 검증": true
+  },
+  "all_pass": true
+}

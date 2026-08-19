@@ -1,0 +1,80 @@
+{
+  "step": "STEP 17-21-C-9-2-4A-1",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000",
+    "zone": "제3종일반주거지역"
+  },
+  "previous_seoul_resolution": {
+    "condition": "개발밀도관리구역",
+    "query_group": "URBAN_PLANNING_ZONE",
+    "query_status": "NOT_CONNECTED",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "서울시 공식 공간정보 목록 및 데이터 카탈로그에서 개발밀도관리구역 전용 source가 확정되지 않아 실제 공간조회를 수행하지 않음"
+  },
+  "target_condition": "개발밀도관리구역",
+  "search_keywords": [
+    "개발밀도관리구역",
+    "개발밀도관리",
+    "밀도관리구역"
+  ],
+  "official_source_probes": [
+    {
+      "name": "토지이음 검색",
+      "provider": "국토교통부",
+      "base_url": "https://www.eum.go.kr",
+      "http_status": 200,
+      "reachable": true,
+      "keyword_hits": [],
+      "error": ""
+    },
+    {
+      "name": "국가공간정보포털",
+      "provider": "국토교통부",
+      "base_url": "https://www.nsdi.go.kr",
+      "http_status": null,
+      "reachable": false,
+      "keyword_hits": [],
+      "error": "HTTPSConnectionPool(host='www.nsdi.go.kr', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.nsdi.go.kr', port=443): Failed to resolve 'www.nsdi.go.kr' ([Errno 11001] getaddrinfo failed)\"))"
+    }
+  ],
+  "national_source_candidates": [
+    {
+      "provider": "국토교통부",
+      "source": "토지이음",
+      "purpose": "지역ㆍ지구 명칭/행위제한/법령 체계 확인",
+      "source_type": "LAND_USE_REGULATION",
+      "geometry_verified": false,
+      "status": "CANDIDATE"
+    },
+    {
+      "provider": "국토교통부",
+      "source": "국가공간정보포털",
+      "purpose": "지역ㆍ지구 공간 레이어 / 메타데이터 탐색",
+      "source_type": "SPATIAL_METADATA",
+      "geometry_verified": false,
+      "status": "CANDIDATE"
+    }
+  ],
+  "site_resolution": {
+    "condition": "개발밀도관리구역",
+    "query_group": "URBAN_PLANNING_ZONE",
+    "query_status": "NOT_CONNECTED",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "서울시 공식 카탈로그에서 개발밀도관리구역 전용 source를 확인하지 못해 국가 단위 토지이용규제/공간정보 source로 탐색 범위를 확장했으나, 아직 개발밀도관리구역의 정확한 국가 관리코드 및 geometry source를 확정하지 않았으므로 TRUE/FALSE 판정을 수행하지 않음"
+  },
+  "validations": {
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "서울 탐색 UNKNOWN 승계": true,
+    "국가 공식 source 접근 실행": true,
+    "코드번호 추측 없음": true,
+    "geometry 미확정 TRUE 금지": true,
+    "geometry 미확정 FALSE 금지": true,
+    "UNKNOWN 유지": true
+  },
+  "all_pass": true
+}

@@ -1,0 +1,244 @@
+{
+  "step": "STEP 17-21-C-9-2-2B-1A",
+  "site": {
+    "site_id": "",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000",
+    "parcel_key": "11680-10300-0012-0000"
+  },
+  "vworld": {
+    "api_key_present": true,
+    "address_search": {
+      "http_status": 200,
+      "vworld_status": "OK",
+      "x": 127.07539280356858,
+      "y": 37.494197498186885
+    },
+    "district_unit_plan": {
+      "dataset": "upisuq161",
+      "http_status": 200,
+      "vworld_status": "ERROR",
+      "error_code": "INVALID_RANGE",
+      "error_text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : UPISUQ161",
+      "feature_count": null,
+      "query_status": "QUERY_FAILED"
+    }
+  },
+  "resolution": {
+    "condition": "지구단위계획",
+    "status": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "지구단위계획 실제 공간조회가 성공적으로 완료되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음"
+  },
+  "validations": {
+    "VWORLD API Key 존재": true,
+    "SITE Query Context 정상": true,
+    "주소검색 HTTP 200": true,
+    "주소검색 VWorld OK": true,
+    "주소검색 좌표 획득": true,
+    "지구단위계획 API HTTP 200": true,
+    "지구단위계획 API 정상 응답": false,
+    "INVALID_RANGE 제거": false
+  },
+  "all_pass": false,
+  "raw": {
+    "address_search": {
+      "status_code": 200,
+      "content_type": "application/json;charset=UTF-8",
+      "url": "https://api.vworld.kr/req/search?service=search&request=search&version=2.0&crs=EPSG%3A4326&size=10&page=1&query=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EA%B0%95%EB%82%A8%EA%B5%AC+%EA%B0%9C%ED%8F%AC%EB%8F%99+12%EB%B2%88%EC%A7%80&type=address&category=parcel&format=json&errorformat=json&key=B3795EEA-B66E-3924-B263-EFA4B68F319B",
+      "text_preview": "{\"response\" : {\"service\" : {\"name\" : \"search\", \"version\" : \"2.0\", \"operation\" : \"search\", \"time\" : \"17(ms)\"}, \"status\" : \"OK\", \"record\" : {\"total\" : \"13\", \"current\" : \"10\"}, \"page\" : {\"total\" : \"2\", \"current\" : \"1\", \"size\" : \"10\"}, \"result\" : {\"crs\" : \"EPSG:4326\", \"type\" : \"address\", \"items\" : [{\"id\" : \"1168010300100120000\", \"address\" : {\"zipcode\" : \"06334\", \"category\" : \"parcel\", \"road\" : \"개포로109길 21\", \"parcel\" : \"서울특별시 강남구 개포동 12\", \"bldnm\" : \"대청아파트302동\"}, \"point\" : {\"x\" : \"127.07539280356858\", \"y\" : \"37.494197498186885\"}}, {\"id\" : \"1168010300100120001\", \"address\" : {\"zipcode\" : \"\", \"category\" : \"parcel\", \"road\" : \"\", \"parcel\" : \"서울특별시 강남구 개포동 12-1\", \"bldnm\" : \"\"}, \"point\" : {\"x\" : \"127.07641403290125\", \"y\" : \"37.49678351136913\"}}, {\"id\" : \"1168010300100120010\", \"address\" : {\"zipcode\" : \"06335\", \"category\" : \"parcel\", \"road\" : \"개포로 605\", \"parcel\" : \"서울특별시 강남구 개포동 12-10\", \"bldnm\" : \"\"}, \"point\" : {\"x\" : \"127.07346273126076\", \"y\" : \"37.49199527218451\"}}, {\"id\" : \"1168010300100120011\", \"address\" : {\"zipcode\" : \"\", \"category\" : \"parcel\", \"road\" : \"\", \"parcel\" : \"서울특별시 강남구 개포동 12-11\", \"bldnm\" : \"\"}, \"point\" : {\"x\" : \"127.0728452316902\", \"y\" : \"37.49182454871398\"}}, {\"id\" : \"11680103001...",
+      "json": {
+        "response": {
+          "service": {
+            "name": "search",
+            "version": "2.0",
+            "operation": "search",
+            "time": "17(ms)"
+          },
+          "status": "OK",
+          "record": {
+            "total": "13",
+            "current": "10"
+          },
+          "page": {
+            "total": "2",
+            "current": "1",
+            "size": "10"
+          },
+          "result": {
+            "crs": "EPSG:4326",
+            "type": "address",
+            "items": [
+              {
+                "id": "1168010300100120000",
+                "address": {
+                  "zipcode": "06334",
+                  "category": "parcel",
+                  "road": "개포로109길 21",
+                  "parcel": "서울특별시 강남구 개포동 12",
+                  "bldnm": "대청아파트302동"
+                },
+                "point": {
+                  "x": "127.07539280356858",
+                  "y": "37.494197498186885"
+                }
+              },
+              {
+                "id": "1168010300100120001",
+                "address": {
+                  "zipcode": "",
+                  "category": "parcel",
+                  "road": "",
+                  "parcel": "서울특별시 강남구 개포동 12-1",
+                  "bldnm": ""
+                },
+                "point": {
+                  "x": "127.07641403290125",
+                  "y": "37.49678351136913"
+                }
+              },
+              {
+                "id": "1168010300100120010",
+                "address": {
+                  "zipcode": "06335",
+                  "category": "parcel",
+                  "road": "개포로 605",
+                  "parcel": "서울특별시 강남구 개포동 12-10",
+                  "bldnm": ""
+                },
+                "point": {
+                  "x": "127.07346273126076",
+                  "y": "37.49199527218451"
+                }
+              },
+              {
+                "id": "1168010300100120011",
+                "address": {
+                  "zipcode": "",
+                  "category": "parcel",
+                  "road": "",
+                  "parcel": "서울특별시 강남구 개포동 12-11",
+                  "bldnm": ""
+                },
+                "point": {
+                  "x": "127.0728452316902",
+                  "y": "37.49182454871398"
+                }
+              },
+              {
+                "id": "1168010300100120013",
+                "address": {
+                  "zipcode": "",
+                  "category": "parcel",
+                  "road": "",
+                  "parcel": "서울특별시 강남구 개포동 12-13",
+                  "bldnm": ""
+                },
+                "point": {
+                  "x": "127.07370559362556",
+                  "y": "37.491907997754836"
+                }
+              },
+              {
+                "id": "1168010300100120002",
+                "address": {
+                  "zipcode": "06334",
+                  "category": "parcel",
+                  "road": "개포로109길 69",
+                  "parcel": "서울특별시 강남구 개포동 12-2",
+                  "bldnm": "개포자이"
+                },
+                "point": {
+                  "x": "127.07662495509604",
+                  "y": "37.49629354642009"
+                }
+              },
+              {
+                "id": "1168010300100120003",
+                "address": {
+                  "zipcode": "06334",
+                  "category": "parcel",
+                  "road": "남부순환로 3142-30",
+                  "parcel": "서울특별시 강남구 개포동 12-3",
+                  "bldnm": ""
+                },
+                "point": {
+                  "x": "127.07580234444637",
+                  "y": "37.496035842785055"
+                }
+              },
+              {
+                "id": "1168010300100120004",
+                "address": {
+                  "zipcode": "06335",
+                  "category": "parcel",
+                  "road": "개포로 615",
+                  "parcel": "서울특별시 강남구 개포동 12-4",
+                  "bldnm": "석탑프라자"
+                },
+                "point": {
+                  "x": "127.07561820785372",
+                  "y": "37.49267058063717"
+                }
+              },
+              {
+                "id": "1168010300100120005",
+                "address": {
+                  "zipcode": "06335",
+                  "category": "parcel",
+                  "road": "개포로 613",
+                  "parcel": "서울특별시 강남구 개포동 12-5",
+                  "bldnm": ""
+                },
+                "point": {
+                  "x": "127.0750392675179",
+                  "y": "37.49250088850316"
+                }
+              },
+              {
+                "id": "1168010300100120006",
+                "address": {
+                  "zipcode": "",
+                  "category": "parcel",
+                  "road": "",
+                  "parcel": "서울특별시 강남구 개포동 12-6",
+                  "bldnm": ""
+                },
+                "point": {
+                  "x": "127.0737195578223",
+                  "y": "37.49210515858992"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "request_success": true,
+      "exception": null
+    },
+    "district_unit_plan": {
+      "status_code": 200,
+      "content_type": "application/json;charset=UTF-8",
+      "url": "https://api.vworld.kr/req/data?service=data&request=GetFeature&data=upisuq161&key=B3795EEA-B66E-3924-B263-EFA4B68F319B&domain=localhost&geometry=true&attribute=true&size=100&page=1&format=json&crs=EPSG%3A4326&geomFilter=POINT%28127.07539280356858+37.494197498186885%29",
+      "text_preview": "{\"response\" : {\"service\" : {\"name\" : \"data\", \"version\" : \"2.0\", \"operation\" : \"GetFeature\", \"time\" : \"4(ms)\"}, \"status\" : \"ERROR\", \"error\" : {\"level\" : \"1\", \"code\" : \"INVALID_RANGE\", \"text\" : \"data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : UPISUQ161\"}}}",
+      "json": {
+        "response": {
+          "service": {
+            "name": "data",
+            "version": "2.0",
+            "operation": "GetFeature",
+            "time": "4(ms)"
+          },
+          "status": "ERROR",
+          "error": {
+            "level": "1",
+            "code": "INVALID_RANGE",
+            "text": "data 파라미터의 값이 유효한 범위를 넘었습니다. 유효한 파라미터 값의 범위 : 데이터목록 참고, 입력한 파라미터 값 : UPISUQ161"
+          }
+        }
+      },
+      "request_success": true,
+      "exception": null
+    }
+  }
+}

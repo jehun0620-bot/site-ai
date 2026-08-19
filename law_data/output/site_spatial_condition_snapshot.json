@@ -1,0 +1,180 @@
+{
+  "step": "STEP 17-21-C-9-1A",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "road_address": "",
+    "zone": "제3종일반주거지역"
+  },
+  "required_site_conditions": [
+    "개발밀도관리구역",
+    "개발진흥지구",
+    "도시지역편입해제구역",
+    "산업단지",
+    "수산자원보호구역",
+    "입체복합구역",
+    "자연경관지구",
+    "자연공원",
+    "지구단위계획",
+    "취락지구"
+  ],
+  "summary": {
+    "total": 10,
+    "true": 0,
+    "false": 0,
+    "unknown": 10
+  },
+  "query_groups": {
+    "URBAN_PLANNING_ZONE": [
+      "개발밀도관리구역",
+      "개발진흥지구",
+      "수산자원보호구역",
+      "입체복합구역",
+      "자연경관지구",
+      "지구단위계획",
+      "취락지구"
+    ],
+    "HISTORY": [
+      "도시지역편입해제구역"
+    ],
+    "THEMATIC_LAYER": [
+      "산업단지",
+      "자연공원"
+    ]
+  },
+  "validations": {
+    "C-8 SITE 조건 전부 생성": true,
+    "상태값 TRUE/FALSE/UNKNOWN 한정": true,
+    "근거 없는 FALSE 없음": true,
+    "근거 없는 TRUE 없음": true,
+    "UNKNOWN을 FALSE로 자동 변환하지 않음": true,
+    "법규 문자열만으로 TRUE 판정 없음": true,
+    "참고 문자열은 판정 근거로 사용하지 않음": true
+  },
+  "all_pass": true,
+  "conditions": [
+    {
+      "name": "개발밀도관리구역",
+      "status": "UNKNOWN",
+      "confidence": "NONE",
+      "source_type": null,
+      "source_name": null,
+      "reason": "기존 SITE snapshot에는 실제 필지 공간교차 판정값이 없음. 법규명ㆍ조문명ㆍ검토 필요 문구의 문자열 출현은 SITE 해당 여부의 근거로 사용하지 않음",
+      "evidence": [],
+      "reference_mentions": [
+        "개발밀도관리구역의 지정기준 및 관리방법"
+      ],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "개발진흥지구",
+      "status": "UNKNOWN",
+      "confidence": "NONE",
+      "source_type": null,
+      "source_name": null,
+      "reason": "기존 SITE snapshot에는 실제 필지 공간교차 판정값이 없음. 법규명ㆍ조문명ㆍ검토 필요 문구의 문자열 출현은 SITE 해당 여부의 근거로 사용하지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "도시지역편입해제구역",
+      "status": "UNKNOWN",
+      "confidence": "NONE",
+      "source_type": null,
+      "source_name": null,
+      "reason": "기존 SITE snapshot에는 실제 필지 공간교차 판정값이 없음. 법규명ㆍ조문명ㆍ검토 필요 문구의 문자열 출현은 SITE 해당 여부의 근거로 사용하지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "HISTORY"
+    },
+    {
+      "name": "산업단지",
+      "status": "UNKNOWN",
+      "confidence": "NONE",
+      "source_type": null,
+      "source_name": null,
+      "reason": "기존 SITE snapshot에는 실제 필지 공간교차 판정값이 없음. 법규명ㆍ조문명ㆍ검토 필요 문구의 문자열 출현은 SITE 해당 여부의 근거로 사용하지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "THEMATIC_LAYER"
+    },
+    {
+      "name": "수산자원보호구역",
+      "status": "UNKNOWN",
+      "confidence": "NONE",
+      "source_type": null,
+      "source_name": null,
+      "reason": "기존 SITE snapshot에는 실제 필지 공간교차 판정값이 없음. 법규명ㆍ조문명ㆍ검토 필요 문구의 문자열 출현은 SITE 해당 여부의 근거로 사용하지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "입체복합구역",
+      "status": "UNKNOWN",
+      "confidence": "NONE",
+      "source_type": null,
+      "source_name": null,
+      "reason": "기존 SITE snapshot에는 실제 필지 공간교차 판정값이 없음. 법규명ㆍ조문명ㆍ검토 필요 문구의 문자열 출현은 SITE 해당 여부의 근거로 사용하지 않음",
+      "evidence": [],
+      "reference_mentions": [
+        "도시ㆍ군계획시설입체복합구역의 지정"
+      ],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "자연경관지구",
+      "status": "UNKNOWN",
+      "confidence": "NONE",
+      "source_type": null,
+      "source_name": null,
+      "reason": "기존 SITE snapshot에는 실제 필지 공간교차 판정값이 없음. 법규명ㆍ조문명ㆍ검토 필요 문구의 문자열 출현은 SITE 해당 여부의 근거로 사용하지 않음",
+      "evidence": [],
+      "reference_mentions": [
+        "자연경관지구 안에서의 건축제한",
+        "자연경관지구"
+      ],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "자연공원",
+      "status": "UNKNOWN",
+      "confidence": "NONE",
+      "source_type": null,
+      "source_name": null,
+      "reason": "기존 SITE snapshot에는 실제 필지 공간교차 판정값이 없음. 법규명ㆍ조문명ㆍ검토 필요 문구의 문자열 출현은 SITE 해당 여부의 근거로 사용하지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "THEMATIC_LAYER"
+    },
+    {
+      "name": "지구단위계획",
+      "status": "UNKNOWN",
+      "confidence": "NONE",
+      "source_type": null,
+      "source_name": null,
+      "reason": "기존 SITE snapshot에는 실제 필지 공간교차 판정값이 없음. 법규명ㆍ조문명ㆍ검토 필요 문구의 문자열 출현은 SITE 해당 여부의 근거로 사용하지 않음",
+      "evidence": [],
+      "reference_mentions": [
+        "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요",
+        "지구단위계획",
+        "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+        "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
+        "역세권 복합개발 지구단위계획 수립"
+      ],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "취락지구",
+      "status": "UNKNOWN",
+      "confidence": "NONE",
+      "source_type": null,
+      "source_name": null,
+      "reason": "기존 SITE snapshot에는 실제 필지 공간교차 판정값이 없음. 법규명ㆍ조문명ㆍ검토 필요 문구의 문자열 출현은 SITE 해당 여부의 근거로 사용하지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "URBAN_PLANNING_ZONE"
+    }
+  ]
+}

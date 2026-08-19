@@ -1,0 +1,17 @@
+{
+  "step": "STEP 17-21-C-9-2-2B-3B",
+  "site": {
+    "site_id": "",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "zone": "제3종일반주거지역",
+    "pnu": "1168010300100120000"
+  },
+  "parcel_dataset": "LP_PA_CBND_BUBUN",
+  "district_dataset": "LT_C_UPISUQ161",
+  "resolution": {
+    "query_status": "QUERY_FAILED",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "PNU 직접 일치 parcel Polygon geometry를 확보하지 못함"
+  }
+}

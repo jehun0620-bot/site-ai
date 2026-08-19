@@ -1,0 +1,46 @@
+{
+  "step": "STEP 17-21-C-9-2-2A",
+  "query_context": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "road_address": "",
+    "zone": "제3종일반주거지역",
+    "sigungu_code": "11680",
+    "bjdong_code": "10300",
+    "mountain_flag": "1",
+    "main_no": "0012",
+    "sub_no": "0000",
+    "parcel_key": "11680-10300-0012-0000",
+    "pnu": "1168010300100120000",
+    "source": {
+      "sigungu_code": "site_id",
+      "bjdong_code": "site_id",
+      "main_no": "site_id",
+      "sub_no": "site_id"
+    }
+  },
+  "validations": {
+    "parcel key 생성": true,
+    "시군구코드 5자리": true,
+    "법정동코드 5자리": true,
+    "본번 4자리": true,
+    "부번 4자리": true,
+    "산여부 코드": true,
+    "PNU 19자리": true,
+    "개포동 12번지 기준값": true
+  },
+  "all_pass": true,
+  "next_source_plan": {
+    "primary": {
+      "provider": "국토교통부 / VWorld",
+      "dataset": "지구단위계획",
+      "purpose": "실제 도형 기반 공간조회"
+    },
+    "secondary": {
+      "provider": "서울특별시 열린데이터광장",
+      "service": "upisCUq161",
+      "purpose": "서울시 지구단위계획구역 속성 교차검증"
+    }
+  },
+  "source_registry_step": "STEP 17-21-C-9-2-1"
+}

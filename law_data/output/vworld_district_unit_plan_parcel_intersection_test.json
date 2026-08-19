@@ -1,0 +1,84 @@
+{
+  "step": "STEP 17-21-C-9-2-2B-3B-1",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "zone": "",
+    "pnu": "1168010300100120000"
+  },
+  "datasets": {
+    "parcel": "LP_PA_CBND_BUBUN",
+    "district_unit_plan": "LT_C_UPISUQ161"
+  },
+  "representative_point": {
+    "x": 127.07539280356858,
+    "y": 37.494197498186885
+  },
+  "parcel_query": {
+    "http_status": 200,
+    "vworld_status": "OK",
+    "feature_count": 1,
+    "pnu_match_count": 1,
+    "selected_feature": {
+      "id": "LP_PA_CBND_BUBUN.803130",
+      "pnu": "1168010300100120000",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        127.07240240227819,
+        37.49198725375971,
+        127.0781619622408,
+        37.49647755722794
+      ]
+    }
+  },
+  "district_query": {
+    "http_status": 200,
+    "vworld_status": "OK",
+    "feature_count": 1,
+    "geometry_feature_count": 1,
+    "features": [
+      {
+        "id": "LT_C_UPISUQ161.1154",
+        "geometry_type": "MultiPolygon",
+        "dgm_nm": "대치택지개발지구",
+        "present_sn": "11000UQ161PS202005260028",
+        "wtnnc_sn": "11000UTZ199603300736",
+        "ntfc_sn": "11000NTC199603305909"
+      }
+    ]
+  },
+  "intersection_results": [
+    {
+      "index": 1,
+      "feature_id": "LT_C_UPISUQ161.1154",
+      "district_name": "대치택지개발지구",
+      "geometry_type": "MultiPolygon",
+      "intersects": true,
+      "intersection_area_degree2": 1.2330227643441263e-05,
+      "parcel_area_degree2": 1.2332177696696282e-05,
+      "intersection_ratio": 0.9998418727573524
+    }
+  ],
+  "query_status": "QUERY_SUCCESS",
+  "resolution": "TRUE",
+  "confidence": "HIGH",
+  "reason": "대상 PNU와 직접 일치하는 Parcel Polygon과 VWorld 지구단위계획 Polygon 사이에 실제 면적 교차가 확인됨",
+  "validations": {
+    "VWORLD API Key 존재": true,
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "Parcel dataset 검증값 사용": true,
+    "District dataset 검증값 사용": true,
+    "대표좌표 획득": true,
+    "Parcel API HTTP 200": true,
+    "Parcel PNU 직접 검증": true,
+    "Parcel geometry 검증": true,
+    "District API HTTP 200": true,
+    "resolution 허용값": true,
+    "query_status 허용값": true,
+    "API 실패 시 TRUE/FALSE 금지": true,
+    "PNU 불일치 Parcel 사용 금지": true
+  },
+  "all_pass": true,
+  "max_intersection_ratio": 0.9998418727573524
+}

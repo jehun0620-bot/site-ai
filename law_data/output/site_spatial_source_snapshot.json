@@ -1,0 +1,584 @@
+{
+  "step": "STEP 17-21-C-9-2-1",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "road_address": "",
+    "sigungu_code": "",
+    "bjdong_code": "",
+    "main_no": "",
+    "sub_no": "",
+    "zone": "제3종일반주거지역"
+  },
+  "summary": {
+    "total": 10,
+    "query_status": {
+      "NOT_CONNECTED": 10,
+      "NOT_QUERIED": 0,
+      "QUERY_FAILED": 0,
+      "QUERY_SUCCESS": 0
+    },
+    "resolution_status": {
+      "FALSE": 0,
+      "TRUE": 0,
+      "UNKNOWN": 10
+    },
+    "query_groups": {
+      "URBAN_PLANNING_ZONE": 7,
+      "THEMATIC_LAYER": 2,
+      "HISTORY": 1
+    }
+  },
+  "validations": {
+    "C-9-1A 공간조건 10개 유지": true,
+    "모든 조건 Source Registry 등록": true,
+    "query status 허용값 준수": true,
+    "resolution status TRUE/FALSE/UNKNOWN 한정": true,
+    "confidence 허용값 준수": true,
+    "NOT_CONNECTED는 UNKNOWN 유지": true,
+    "실제 조회 없이 FALSE 판정 없음": true,
+    "실제 조회 없이 TRUE 판정 없음": true,
+    "HISTORY 조건 별도 조회 구조": true
+  },
+  "all_pass": true,
+  "source_registry": {
+    "지구단위계획": {
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "district_unit_plan",
+      "description": "대상 필지가 지구단위계획구역에 포함되는지 판정",
+      "source_candidates": [
+        "국가공간정보/토지이용계획 공간정보",
+        "서울시 도시계획 공간정보",
+        "지자체 도시관리계획 GIS"
+      ],
+      "preferred_method": "PARCEL_POLYGON_INTERSECTION",
+      "priority": 1,
+      "connection_status": "NOT_CONNECTED"
+    },
+    "개발진흥지구": {
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "development_promotion_district",
+      "description": "대상 필지가 개발진흥지구에 포함되는지 판정",
+      "source_candidates": [
+        "국가공간정보 용도지구 공간정보",
+        "서울시 도시계획 용도지구 GIS"
+      ],
+      "preferred_method": "PARCEL_POLYGON_INTERSECTION",
+      "priority": 2,
+      "connection_status": "NOT_CONNECTED"
+    },
+    "개발밀도관리구역": {
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "development_density_control_area",
+      "description": "대상 필지가 개발밀도관리구역에 포함되는지 판정",
+      "source_candidates": [
+        "도시관리계획 구역 공간정보",
+        "지자체 도시계획 GIS"
+      ],
+      "preferred_method": "PARCEL_POLYGON_INTERSECTION",
+      "priority": 3,
+      "connection_status": "NOT_CONNECTED"
+    },
+    "자연경관지구": {
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "natural_landscape_district",
+      "description": "대상 필지가 자연경관지구에 포함되는지 판정",
+      "source_candidates": [
+        "국가공간정보 용도지구 공간정보",
+        "서울시 도시계획 용도지구 GIS"
+      ],
+      "preferred_method": "PARCEL_POLYGON_INTERSECTION",
+      "priority": 4,
+      "connection_status": "NOT_CONNECTED"
+    },
+    "입체복합구역": {
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "three_dimensional_complex_zone",
+      "description": "대상 필지가 도시ㆍ군계획시설입체복합구역에 포함되는지 판정",
+      "source_candidates": [
+        "도시ㆍ군관리계획 공간정보",
+        "지자체 도시계획 GIS"
+      ],
+      "preferred_method": "PARCEL_POLYGON_INTERSECTION",
+      "priority": 5,
+      "connection_status": "NOT_CONNECTED"
+    },
+    "수산자원보호구역": {
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "fishery_resource_protection_zone",
+      "description": "대상 필지가 수산자원보호구역에 포함되는지 판정",
+      "source_candidates": [
+        "국토계획 용도구역 공간정보",
+        "해양ㆍ수산 관련 공간정보"
+      ],
+      "preferred_method": "PARCEL_POLYGON_INTERSECTION",
+      "priority": 6,
+      "connection_status": "NOT_CONNECTED"
+    },
+    "취락지구": {
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "settlement_district",
+      "description": "대상 필지가 취락지구에 포함되는지 판정",
+      "source_candidates": [
+        "국가공간정보 용도지구 공간정보",
+        "지자체 도시계획 GIS"
+      ],
+      "preferred_method": "PARCEL_POLYGON_INTERSECTION",
+      "priority": 7,
+      "connection_status": "NOT_CONNECTED"
+    },
+    "산업단지": {
+      "query_group": "THEMATIC_LAYER",
+      "query_key": "industrial_complex",
+      "description": "대상 필지가 산업단지 경계 안에 포함되는지 판정",
+      "source_candidates": [
+        "산업입지 공간정보",
+        "산업단지 경계 GIS",
+        "국가공간정보 산업단지 주제도"
+      ],
+      "preferred_method": "PARCEL_POLYGON_INTERSECTION",
+      "priority": 8,
+      "connection_status": "NOT_CONNECTED"
+    },
+    "자연공원": {
+      "query_group": "THEMATIC_LAYER",
+      "query_key": "natural_park",
+      "description": "대상 필지가 자연공원 구역에 포함되는지 판정",
+      "source_candidates": [
+        "자연공원 공간정보",
+        "국립공원/도립공원/군립공원 경계 GIS"
+      ],
+      "preferred_method": "PARCEL_POLYGON_INTERSECTION",
+      "priority": 9,
+      "connection_status": "NOT_CONNECTED"
+    },
+    "도시지역편입해제구역": {
+      "query_group": "HISTORY",
+      "query_key": "urban_area_conversion_history",
+      "description": "개발제한구역ㆍ시가화조정구역ㆍ녹지지역ㆍ공원 해제 또는 도시지역 신규 편입 이력 판정",
+      "source_candidates": [
+        "도시관리계획 결정ㆍ변경 이력",
+        "용도지역ㆍ구역 변경 이력",
+        "도시계획 고시 이력"
+      ],
+      "preferred_method": "PARCEL_HISTORY_LOOKUP",
+      "priority": 10,
+      "connection_status": "NOT_CONNECTED"
+    }
+  },
+  "results": [
+    {
+      "condition": "지구단위계획",
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "district_unit_plan",
+      "priority": 1,
+      "description": "대상 필지가 지구단위계획구역에 포함되는지 판정",
+      "source": {
+        "source_name": null,
+        "source_type": null,
+        "endpoint": null,
+        "dataset": null,
+        "connected": false,
+        "candidates": [
+          "국가공간정보/토지이용계획 공간정보",
+          "서울시 도시계획 공간정보",
+          "지자체 도시관리계획 GIS"
+        ]
+      },
+      "query": {
+        "method": "PARCEL_POLYGON_INTERSECTION",
+        "status": "NOT_CONNECTED",
+        "context": {
+          "site_id": "11680-10300-0012-0000",
+          "address": "서울특별시 강남구 개포동 12번지",
+          "road_address": "",
+          "sigungu_code": "",
+          "bjdong_code": "",
+          "main_no": "",
+          "sub_no": "",
+          "parcel_key": ""
+        },
+        "request": null,
+        "response": null,
+        "error": null
+      },
+      "resolution": {
+        "status": "UNKNOWN",
+        "confidence": "NONE",
+        "reason": "실제 공간정보 조회 source가 아직 연결되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음",
+        "evidence": []
+      }
+    },
+    {
+      "condition": "개발진흥지구",
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "development_promotion_district",
+      "priority": 2,
+      "description": "대상 필지가 개발진흥지구에 포함되는지 판정",
+      "source": {
+        "source_name": null,
+        "source_type": null,
+        "endpoint": null,
+        "dataset": null,
+        "connected": false,
+        "candidates": [
+          "국가공간정보 용도지구 공간정보",
+          "서울시 도시계획 용도지구 GIS"
+        ]
+      },
+      "query": {
+        "method": "PARCEL_POLYGON_INTERSECTION",
+        "status": "NOT_CONNECTED",
+        "context": {
+          "site_id": "11680-10300-0012-0000",
+          "address": "서울특별시 강남구 개포동 12번지",
+          "road_address": "",
+          "sigungu_code": "",
+          "bjdong_code": "",
+          "main_no": "",
+          "sub_no": "",
+          "parcel_key": ""
+        },
+        "request": null,
+        "response": null,
+        "error": null
+      },
+      "resolution": {
+        "status": "UNKNOWN",
+        "confidence": "NONE",
+        "reason": "실제 공간정보 조회 source가 아직 연결되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음",
+        "evidence": []
+      }
+    },
+    {
+      "condition": "개발밀도관리구역",
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "development_density_control_area",
+      "priority": 3,
+      "description": "대상 필지가 개발밀도관리구역에 포함되는지 판정",
+      "source": {
+        "source_name": null,
+        "source_type": null,
+        "endpoint": null,
+        "dataset": null,
+        "connected": false,
+        "candidates": [
+          "도시관리계획 구역 공간정보",
+          "지자체 도시계획 GIS"
+        ]
+      },
+      "query": {
+        "method": "PARCEL_POLYGON_INTERSECTION",
+        "status": "NOT_CONNECTED",
+        "context": {
+          "site_id": "11680-10300-0012-0000",
+          "address": "서울특별시 강남구 개포동 12번지",
+          "road_address": "",
+          "sigungu_code": "",
+          "bjdong_code": "",
+          "main_no": "",
+          "sub_no": "",
+          "parcel_key": ""
+        },
+        "request": null,
+        "response": null,
+        "error": null
+      },
+      "resolution": {
+        "status": "UNKNOWN",
+        "confidence": "NONE",
+        "reason": "실제 공간정보 조회 source가 아직 연결되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음",
+        "evidence": []
+      }
+    },
+    {
+      "condition": "자연경관지구",
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "natural_landscape_district",
+      "priority": 4,
+      "description": "대상 필지가 자연경관지구에 포함되는지 판정",
+      "source": {
+        "source_name": null,
+        "source_type": null,
+        "endpoint": null,
+        "dataset": null,
+        "connected": false,
+        "candidates": [
+          "국가공간정보 용도지구 공간정보",
+          "서울시 도시계획 용도지구 GIS"
+        ]
+      },
+      "query": {
+        "method": "PARCEL_POLYGON_INTERSECTION",
+        "status": "NOT_CONNECTED",
+        "context": {
+          "site_id": "11680-10300-0012-0000",
+          "address": "서울특별시 강남구 개포동 12번지",
+          "road_address": "",
+          "sigungu_code": "",
+          "bjdong_code": "",
+          "main_no": "",
+          "sub_no": "",
+          "parcel_key": ""
+        },
+        "request": null,
+        "response": null,
+        "error": null
+      },
+      "resolution": {
+        "status": "UNKNOWN",
+        "confidence": "NONE",
+        "reason": "실제 공간정보 조회 source가 아직 연결되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음",
+        "evidence": []
+      }
+    },
+    {
+      "condition": "입체복합구역",
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "three_dimensional_complex_zone",
+      "priority": 5,
+      "description": "대상 필지가 도시ㆍ군계획시설입체복합구역에 포함되는지 판정",
+      "source": {
+        "source_name": null,
+        "source_type": null,
+        "endpoint": null,
+        "dataset": null,
+        "connected": false,
+        "candidates": [
+          "도시ㆍ군관리계획 공간정보",
+          "지자체 도시계획 GIS"
+        ]
+      },
+      "query": {
+        "method": "PARCEL_POLYGON_INTERSECTION",
+        "status": "NOT_CONNECTED",
+        "context": {
+          "site_id": "11680-10300-0012-0000",
+          "address": "서울특별시 강남구 개포동 12번지",
+          "road_address": "",
+          "sigungu_code": "",
+          "bjdong_code": "",
+          "main_no": "",
+          "sub_no": "",
+          "parcel_key": ""
+        },
+        "request": null,
+        "response": null,
+        "error": null
+      },
+      "resolution": {
+        "status": "UNKNOWN",
+        "confidence": "NONE",
+        "reason": "실제 공간정보 조회 source가 아직 연결되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음",
+        "evidence": []
+      }
+    },
+    {
+      "condition": "수산자원보호구역",
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "fishery_resource_protection_zone",
+      "priority": 6,
+      "description": "대상 필지가 수산자원보호구역에 포함되는지 판정",
+      "source": {
+        "source_name": null,
+        "source_type": null,
+        "endpoint": null,
+        "dataset": null,
+        "connected": false,
+        "candidates": [
+          "국토계획 용도구역 공간정보",
+          "해양ㆍ수산 관련 공간정보"
+        ]
+      },
+      "query": {
+        "method": "PARCEL_POLYGON_INTERSECTION",
+        "status": "NOT_CONNECTED",
+        "context": {
+          "site_id": "11680-10300-0012-0000",
+          "address": "서울특별시 강남구 개포동 12번지",
+          "road_address": "",
+          "sigungu_code": "",
+          "bjdong_code": "",
+          "main_no": "",
+          "sub_no": "",
+          "parcel_key": ""
+        },
+        "request": null,
+        "response": null,
+        "error": null
+      },
+      "resolution": {
+        "status": "UNKNOWN",
+        "confidence": "NONE",
+        "reason": "실제 공간정보 조회 source가 아직 연결되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음",
+        "evidence": []
+      }
+    },
+    {
+      "condition": "취락지구",
+      "query_group": "URBAN_PLANNING_ZONE",
+      "query_key": "settlement_district",
+      "priority": 7,
+      "description": "대상 필지가 취락지구에 포함되는지 판정",
+      "source": {
+        "source_name": null,
+        "source_type": null,
+        "endpoint": null,
+        "dataset": null,
+        "connected": false,
+        "candidates": [
+          "국가공간정보 용도지구 공간정보",
+          "지자체 도시계획 GIS"
+        ]
+      },
+      "query": {
+        "method": "PARCEL_POLYGON_INTERSECTION",
+        "status": "NOT_CONNECTED",
+        "context": {
+          "site_id": "11680-10300-0012-0000",
+          "address": "서울특별시 강남구 개포동 12번지",
+          "road_address": "",
+          "sigungu_code": "",
+          "bjdong_code": "",
+          "main_no": "",
+          "sub_no": "",
+          "parcel_key": ""
+        },
+        "request": null,
+        "response": null,
+        "error": null
+      },
+      "resolution": {
+        "status": "UNKNOWN",
+        "confidence": "NONE",
+        "reason": "실제 공간정보 조회 source가 아직 연결되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음",
+        "evidence": []
+      }
+    },
+    {
+      "condition": "산업단지",
+      "query_group": "THEMATIC_LAYER",
+      "query_key": "industrial_complex",
+      "priority": 8,
+      "description": "대상 필지가 산업단지 경계 안에 포함되는지 판정",
+      "source": {
+        "source_name": null,
+        "source_type": null,
+        "endpoint": null,
+        "dataset": null,
+        "connected": false,
+        "candidates": [
+          "산업입지 공간정보",
+          "산업단지 경계 GIS",
+          "국가공간정보 산업단지 주제도"
+        ]
+      },
+      "query": {
+        "method": "PARCEL_POLYGON_INTERSECTION",
+        "status": "NOT_CONNECTED",
+        "context": {
+          "site_id": "11680-10300-0012-0000",
+          "address": "서울특별시 강남구 개포동 12번지",
+          "road_address": "",
+          "sigungu_code": "",
+          "bjdong_code": "",
+          "main_no": "",
+          "sub_no": "",
+          "parcel_key": ""
+        },
+        "request": null,
+        "response": null,
+        "error": null
+      },
+      "resolution": {
+        "status": "UNKNOWN",
+        "confidence": "NONE",
+        "reason": "실제 공간정보 조회 source가 아직 연결되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음",
+        "evidence": []
+      }
+    },
+    {
+      "condition": "자연공원",
+      "query_group": "THEMATIC_LAYER",
+      "query_key": "natural_park",
+      "priority": 9,
+      "description": "대상 필지가 자연공원 구역에 포함되는지 판정",
+      "source": {
+        "source_name": null,
+        "source_type": null,
+        "endpoint": null,
+        "dataset": null,
+        "connected": false,
+        "candidates": [
+          "자연공원 공간정보",
+          "국립공원/도립공원/군립공원 경계 GIS"
+        ]
+      },
+      "query": {
+        "method": "PARCEL_POLYGON_INTERSECTION",
+        "status": "NOT_CONNECTED",
+        "context": {
+          "site_id": "11680-10300-0012-0000",
+          "address": "서울특별시 강남구 개포동 12번지",
+          "road_address": "",
+          "sigungu_code": "",
+          "bjdong_code": "",
+          "main_no": "",
+          "sub_no": "",
+          "parcel_key": ""
+        },
+        "request": null,
+        "response": null,
+        "error": null
+      },
+      "resolution": {
+        "status": "UNKNOWN",
+        "confidence": "NONE",
+        "reason": "실제 공간정보 조회 source가 아직 연결되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음",
+        "evidence": []
+      }
+    },
+    {
+      "condition": "도시지역편입해제구역",
+      "query_group": "HISTORY",
+      "query_key": "urban_area_conversion_history",
+      "priority": 10,
+      "description": "개발제한구역ㆍ시가화조정구역ㆍ녹지지역ㆍ공원 해제 또는 도시지역 신규 편입 이력 판정",
+      "source": {
+        "source_name": null,
+        "source_type": null,
+        "endpoint": null,
+        "dataset": null,
+        "connected": false,
+        "candidates": [
+          "도시관리계획 결정ㆍ변경 이력",
+          "용도지역ㆍ구역 변경 이력",
+          "도시계획 고시 이력"
+        ]
+      },
+      "query": {
+        "method": "PARCEL_HISTORY_LOOKUP",
+        "status": "NOT_CONNECTED",
+        "context": {
+          "site_id": "11680-10300-0012-0000",
+          "address": "서울특별시 강남구 개포동 12번지",
+          "road_address": "",
+          "sigungu_code": "",
+          "bjdong_code": "",
+          "main_no": "",
+          "sub_no": "",
+          "parcel_key": ""
+        },
+        "request": null,
+        "response": null,
+        "error": null
+      },
+      "resolution": {
+        "status": "UNKNOWN",
+        "confidence": "NONE",
+        "reason": "실제 공간정보 조회 source가 아직 연결되지 않았으므로 TRUE 또는 FALSE로 판정하지 않음",
+        "evidence": []
+      }
+    }
+  ]
+}

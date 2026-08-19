@@ -1,0 +1,871 @@
+{
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "district": "서울특별시 강남구",
+    "land_area": 121040.4,
+    "land_category": "대",
+    "zone": "제3종일반주거지역"
+  },
+  "base_values": {
+    "building_coverage_ratio": 50.0,
+    "floor_area_ratio": 250.0
+  },
+  "condition_snapshot": {
+    "공공시설제공": {
+      "value": "PROJECT_REQUIRED",
+      "source": null,
+      "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건",
+      "condition_type": "PROJECT"
+    },
+    "공공주택": {
+      "value": "PROJECT_REQUIRED",
+      "source": null,
+      "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건",
+      "condition_type": "PROJECT"
+    },
+    "공동주택": {
+      "value": "PROJECT_REQUIRED",
+      "source": null,
+      "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건",
+      "condition_type": "PROJECT"
+    },
+    "기부채납": {
+      "value": "PROJECT_REQUIRED",
+      "source": null,
+      "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건",
+      "condition_type": "PROJECT"
+    },
+    "도시계획위원회심의": {
+      "value": "PROCEDURE_REQUIRED",
+      "source": null,
+      "reason": "법규 적용결과에 따라 심의 / 허가 절차 발생 여부를 판정해야 함",
+      "condition_type": "PROCEDURE"
+    },
+    "임대주택": {
+      "value": "PROJECT_REQUIRED",
+      "source": null,
+      "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건",
+      "condition_type": "PROJECT"
+    },
+    "주거복합": {
+      "value": "PROJECT_REQUIRED",
+      "source": null,
+      "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건",
+      "condition_type": "PROJECT"
+    },
+    "지구단위계획": {
+      "value": "UNKNOWN",
+      "source": null,
+      "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요",
+      "condition_type": "SITE"
+    }
+  },
+  "required_data": {
+    "SITE": [
+      "지구단위계획"
+    ],
+    "PROJECT": [
+      "공공시설제공",
+      "공공주택",
+      "공동주택",
+      "기부채납",
+      "임대주택",
+      "주거복합"
+    ],
+    "PROCEDURE": [
+      "도시계획위원회심의"
+    ]
+  },
+  "rule_data_status": {
+    "건폐율": [
+      {
+        "category": "건폐율",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "건폐율의 완화",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "DIRECT",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "도시계획위원회심의",
+            "condition_type": "PROCEDURE",
+            "value": "PROCEDURE_REQUIRED",
+            "reason": "법규 적용결과에 따라 심의 / 허가 절차 발생 여부를 판정해야 함"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "건폐율",
+        "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+        "level": 4,
+        "rule_name": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "GENERAL",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "공공시설제공",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "임대주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공공주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "건폐율",
+        "law_name": "국토의 계획 및 이용에 관한 법률",
+        "level": 3,
+        "rule_name": "용도지역의 건폐율",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "GENERAL",
+        "condition_evaluations": [
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          }
+        ],
+        "data_status": {
+          "status": "SITE_DATA_READY",
+          "reason": "현재 추출된 조건에 대한 SITE 데이터 확보 완료"
+        }
+      },
+      {
+        "category": "건폐율",
+        "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+        "level": 4,
+        "rule_name": "생산녹지지역 등에서 기존 공장의 건폐율",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "POSSIBLE",
+        "condition_evaluations": [
+          {
+            "condition": "기존공장",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "공장",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "도시계획위원회심의",
+            "condition_type": "PROCEDURE",
+            "value": "PROCEDURE_REQUIRED",
+            "reason": "법규 적용결과에 따라 심의 / 허가 절차 발생 여부를 판정해야 함"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "건폐율",
+        "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+        "level": 4,
+        "rule_name": "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "POSSIBLE",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "공동주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "건폐율",
+        "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+        "level": 4,
+        "rule_name": "기존 공장에 대한 특례",
+        "effect_type": "exception",
+        "target_zone_relevance": "POSSIBLE",
+        "condition_evaluations": [
+          {
+            "condition": "기존공장",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "공장",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "도시계획위원회심의",
+            "condition_type": "PROCEDURE",
+            "value": "PROCEDURE_REQUIRED",
+            "reason": "법규 적용결과에 따라 심의 / 허가 절차 발생 여부를 판정해야 함"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "건폐율",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "그 밖의 건폐율",
+        "effect_type": "restriction",
+        "target_zone_relevance": "NONE",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "건폐율",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "건폐율의 강화",
+        "effect_type": "restriction",
+        "target_zone_relevance": "NONE",
+        "condition_evaluations": [
+          {
+            "condition": "도시계획위원회심의",
+            "condition_type": "PROCEDURE",
+            "value": "PROCEDURE_REQUIRED",
+            "reason": "법규 적용결과에 따라 심의 / 허가 절차 발생 여부를 판정해야 함"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "건폐율",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "자연경관지구 안에서의 건축제한",
+        "effect_type": "exception",
+        "target_zone_relevance": "NONE",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "공장",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "자연경관지구",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "도시계획위원회심의",
+            "condition_type": "PROCEDURE",
+            "value": "PROCEDURE_REQUIRED",
+            "reason": "법규 적용결과에 따라 심의 / 허가 절차 발생 여부를 판정해야 함"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "건폐율",
+        "law_name": "국토의 계획 및 이용에 관한 법률",
+        "level": 3,
+        "rule_name": "성장관리계획의 수립 등",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "NONE",
+        "condition_evaluations": [
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          }
+        ],
+        "data_status": {
+          "status": "SITE_DATA_READY",
+          "reason": "현재 추출된 조건에 대한 SITE 데이터 확보 완료"
+        }
+      }
+    ],
+    "용적률": [
+      {
+        "category": "용적률",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "용적률의 완화",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "DIRECT",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "공공시설제공",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "기부채납",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "임대주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공공주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공동주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "주거복합",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "도시계획위원회심의",
+            "condition_type": "PROCEDURE",
+            "value": "PROCEDURE_REQUIRED",
+            "reason": "법규 적용결과에 따라 심의 / 허가 절차 발생 여부를 판정해야 함"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "그 밖의 용적률",
+        "effect_type": "conditional",
+        "target_zone_relevance": "DIRECT",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "건폐율의 완화",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "DIRECT",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "도시계획위원회심의",
+            "condition_type": "PROCEDURE",
+            "value": "PROCEDURE_REQUIRED",
+            "reason": "법규 적용결과에 따라 심의 / 허가 절차 발생 여부를 판정해야 함"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+        "level": 4,
+        "rule_name": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "GENERAL",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "공공시설제공",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "임대주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공공주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "국토의 계획 및 이용에 관한 법률",
+        "level": 3,
+        "rule_name": "용도지역에서의 용적률",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "GENERAL",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "기부채납",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+        "level": 4,
+        "rule_name": "개발밀도관리구역의 지정기준 및 관리방법",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "POSSIBLE",
+        "condition_evaluations": [],
+        "data_status": {
+          "status": "NO_CONDITION",
+          "reason": "추출된 적용조건 없음"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+        "level": 4,
+        "rule_name": "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "POSSIBLE",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "공동주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+        "level": 4,
+        "rule_name": "개발밀도의 강화범위 등",
+        "effect_type": "restriction",
+        "target_zone_relevance": "POSSIBLE",
+        "condition_evaluations": [],
+        "data_status": {
+          "status": "NO_CONDITION",
+          "reason": "추출된 적용조건 없음"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "국토의 계획 및 이용에 관한 법률",
+        "level": 3,
+        "rule_name": "도시ㆍ군계획시설입체복합구역의 지정",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "POSSIBLE",
+        "condition_evaluations": [],
+        "data_status": {
+          "status": "NO_CONDITION",
+          "reason": "추출된 적용조건 없음"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "상업지역 안에서 주거복합건물의 용도 비율 및 용적률(별표 8 제1호가목, 별표 9 제1호나목, 별표 10 제1호가목, 제50조제1호 관련)",
+        "effect_type": "exception",
+        "target_zone_relevance": "NONE",
+        "condition_evaluations": [
+          {
+            "condition": "임대주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공공주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "주거복합",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "용적률의 강화",
+        "effect_type": "restriction",
+        "target_zone_relevance": "NONE",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "공공시설제공",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "임대주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공공주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공동주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "주거복합",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공장",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+        "effect_type": "conditional",
+        "target_zone_relevance": "NONE",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "기부채납",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "임대주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공공주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공동주택",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "공장",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "역세권 복합개발 지구단위계획 수립",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "NONE",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "공공시설제공",
+            "condition_type": "PROJECT",
+            "value": "PROJECT_REQUIRED",
+            "reason": "토지 고유조건이 아니라 향후 건축 / 사업계획에 따라 결정되는 조건"
+          },
+          {
+            "condition": "역세권",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "서울특별시 도시계획 조례",
+        "level": 2,
+        "rule_name": "자연경관지구 안에서의 건축제한",
+        "effect_type": "exception",
+        "target_zone_relevance": "NONE",
+        "condition_evaluations": [
+          {
+            "condition": "지구단위계획",
+            "condition_type": "SITE",
+            "value": "UNKNOWN",
+            "reason": "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요"
+          },
+          {
+            "condition": "공장",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "자연경관지구",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          },
+          {
+            "condition": "도시계획위원회심의",
+            "condition_type": "PROCEDURE",
+            "value": "PROCEDURE_REQUIRED",
+            "reason": "법규 적용결과에 따라 심의 / 허가 절차 발생 여부를 판정해야 함"
+          }
+        ],
+        "data_status": {
+          "status": "NEEDS_MORE_DATA",
+          "reason": "SITE / PROJECT / PROCEDURE 추가 조건 확인 필요"
+        }
+      },
+      {
+        "category": "용적률",
+        "law_name": "국토의 계획 및 이용에 관한 법률",
+        "level": 3,
+        "rule_name": "성장관리계획의 수립 등",
+        "effect_type": "relaxation",
+        "target_zone_relevance": "NONE",
+        "condition_evaluations": [
+          {
+            "condition": "녹지지역",
+            "condition_type": null,
+            "value": null,
+            "reason": null
+          }
+        ],
+        "data_status": {
+          "status": "SITE_DATA_READY",
+          "reason": "현재 추출된 조건에 대한 SITE 데이터 확보 완료"
+        }
+      }
+    ]
+  }
+}

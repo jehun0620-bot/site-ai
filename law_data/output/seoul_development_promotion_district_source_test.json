@@ -1,0 +1,75 @@
+{
+  "step": "STEP 17-21-C-9-2-3A-3",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000",
+    "zone": "제3종일반주거지역",
+    "sigungu_code": "11680",
+    "bjdong_code": "10300"
+  },
+  "source": {
+    "provider": "서울특별시",
+    "source_type": "SEOUL_OPEN_DATA",
+    "dataset_name": "서울시 용도지구(개발진흥지구) 공간정보",
+    "dataset_code": "UQ129",
+    "service_name": "upiSCUq129",
+    "spatial_crs": "EPSG:5174",
+    "spatial_file_pattern": "UQ129_용도지구(개발진흥지구)_*.zip",
+    "vworld_guess_probe": "STOPPED"
+  },
+  "api": {
+    "environment_variable": "SEOUL_OPEN_API_KEY",
+    "http_status": 200,
+    "query_status": "QUERY_SUCCESS",
+    "result_code": "INFO-000",
+    "result_message": "정상 처리되었습니다",
+    "list_total_count": 12,
+    "received_rows": 12,
+    "schema_fields": [
+      "AREA",
+      "DCSN_ANCMNT_MNG_CD",
+      "FIG_ATRB_CD",
+      "FIG_LCLSF_CD",
+      "FIG_MCLSF_CD",
+      "FIG_RPT_MNG_CD",
+      "FIG_SCLSF_CD",
+      "FLRPLN_NO",
+      "LBL_NM",
+      "LEN",
+      "OBJT_ID",
+      "SGG_CD",
+      "STUT_FIG_CRT_DT",
+      "STUT_FIG_MNG_NO"
+    ],
+    "geometry_available": false
+  },
+  "target_sigungu": {
+    "sigungu_code": "11680",
+    "row_count": 0,
+    "rows": []
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "서울 열린데이터광장 개발진흥지구 전용 UQ129 OpenAPI source 연결 및 속성정보 조회에 성공했으나, 현재 OpenAPI 응답만으로 대상 Parcel Polygon과 개발진흥지구 Polygon의 실제 공간교차를 검증하지 않았으므로 SITE TRUE/FALSE를 확정하지 않음"
+  },
+  "validations": {
+    "서울 OpenAPI Key 존재": true,
+    "SITE 주소 존재": true,
+    "PNU 19자리": true,
+    "개발진흥지구 공식 dataset 코드 UQ129": true,
+    "서울 OpenAPI service upiSCUq129": true,
+    "서울 OpenAPI HTTP 200": true,
+    "서울 OpenAPI service 객체 확인": true,
+    "서울 OpenAPI 정상 결과": true,
+    "개발진흥지구 row 확보": true,
+    "공식 schema 주요 필드 확인": true,
+    "OpenAPI geometry 없으면 공간판정 금지": true,
+    "현재 SITE TRUE/FALSE 미확정": true,
+    "resolution 허용값": true,
+    "query_status 허용값": true
+  },
+  "all_pass": true
+}
