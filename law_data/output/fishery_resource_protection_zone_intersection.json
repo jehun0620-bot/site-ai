@@ -1,0 +1,133 @@
+{
+  "step": "STEP 17-21-C-9-2-9B 수산자원보호구역 공식 WFS GML / Parcel Polygon 실제 공간교차 검증",
+  "condition": "수산자원보호구역",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "source": {
+    "provider": "해양수산부",
+    "dataset": "수산자원보호구역",
+    "endpoint": "http://apis.data.go.kr/1192000/apVhdService_FshrsrcPzn/getOpnFshrsrcPznWFS",
+    "api_type": "WFS / GML 3.1.1",
+    "crs": "EPSG:5179",
+    "authentication": {
+      "environment_variable": "FISHERY_RESOURCE_API_KEY",
+      "env_value_format": "URL_ENCODED",
+      "requests_value_format": "URL_DECODED_BY_UNQUOTE"
+    }
+  },
+  "parcel": {
+    "provider": "VWorld",
+    "dataset": "LP_PA_CBND_BUBUN",
+    "feature_id": "LP_PA_CBND_BUBUN.803130",
+    "pnu_direct_match": true,
+    "original_crs": "EPSG:4326",
+    "intersection_crs": "EPSG:5179",
+    "geometry_type": "MultiPolygon",
+    "area": 120945.65335996401,
+    "bounds": [
+      962201.0252411397,
+      1943722.5856673452,
+      962711.0609810656,
+      1944220.169145455
+    ]
+  },
+  "positive_control": {
+    "name": "영광보전지역",
+    "http_status": 200,
+    "feature_count": 10,
+    "geometry_feature_count": 10,
+    "crs_values": [
+      "EPSG:5179"
+    ],
+    "first_feature": {
+      "code": "FSH001",
+      "name": "영광보전지역",
+      "declared_area": "0.0283395261625",
+      "geometry_type": "Polygon",
+      "geometry_valid": true,
+      "geometry_area": 286378148.2681966,
+      "bounds": [
+        882786.92313039,
+        1670177.54617257,
+        906771.02872835,
+        1696032.98996833
+      ]
+    }
+  },
+  "bbox_positive_control": {
+    "query_bbox": [
+      882776.92313039,
+      1670167.54617257,
+      906781.02872835,
+      1696042.98996833
+    ],
+    "http_status": 200,
+    "feature_count": 1,
+    "intersection": {
+      "bbox_candidate_count": 1,
+      "intersection_count": 1,
+      "positive_area_intersection_count": 1,
+      "max_intersection_ratio": 1.0000000000000002,
+      "features": [
+        {
+          "index": 0,
+          "code": "FSH001",
+          "name": "영광보전지역",
+          "intersects": true,
+          "intersection_area": 286378148.26819664,
+          "parcel_intersection_ratio": 1.0000000000000002,
+          "boundary_only": false
+        }
+      ]
+    },
+    "verified": true
+  },
+  "site_bbox_query": {
+    "query_bbox": [
+      962196.0252411397,
+      1943717.5856673452,
+      962716.0609810656,
+      1944225.169145455
+    ],
+    "http_status": 200,
+    "number_of_features": "0",
+    "parsed_feature_count": 0,
+    "crs_values": [],
+    "features": []
+  },
+  "intersection": {
+    "bbox_candidate_count": 0,
+    "intersection_count": 0,
+    "positive_area_intersection_count": 0,
+    "max_intersection_ratio": 0.0,
+    "features": []
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "FALSE",
+    "confidence": "HIGH",
+    "reason": "해양수산부 공식 수산자원보호구역 WFS를 정상 조회하고 EPSG:5179 geometry 및 bbox 공간필터를 양성대조로 검증한 뒤 대상 PNU Parcel Polygon과 공간교차를 수행했으나 실제 면적교차가 확인되지 않음",
+    "max_intersection_ratio": 0.0
+  },
+  "validation": {
+    "FISHERY_RESOURCE_API_KEY 존재": true,
+    "인증키 unquote 적용": true,
+    "VWORLD_API_KEY 존재": true,
+    "PNU 19자리": true,
+    "Parcel query 성공": true,
+    "Parcel PNU 직접 검증": true,
+    "Parcel Polygon geometry": true,
+    "양성대조 HTTP 200": true,
+    "양성대조 geometry 존재": true,
+    "공식 EPSG:5179 확인": true,
+    "BBOX 양성 공간대조 성공": true,
+    "SITE BBOX HTTP 200": true,
+    "TRUE는 실제 면적교차 필요": true,
+    "경계접촉만으로 TRUE 금지": true,
+    "FALSE는 정상조회 및 양성대조 필요": true
+  },
+  "next_step": "수산자원보호구역 판정 확정 후 다음 미해결 공간조건으로 진행"
+}

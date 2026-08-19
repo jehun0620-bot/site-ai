@@ -1,0 +1,108 @@
+{
+  "step": "STEP 17-21-C-9-2-10A 서울시 취락지구 UQ128 공식 source / schema probe",
+  "condition": "취락지구",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "official_source": {
+    "provider": "서울특별시",
+    "dataset": "서울시 용도지구(취락지구) 공간정보",
+    "dataset_code": "UQ128",
+    "openapi_service": "upisCUq128",
+    "official_crs": "EPSG:5174",
+    "official_encoding": "windows-949"
+  },
+  "openapi": {
+    "query_status": "QUERY_SUCCESS",
+    "http_status": 200,
+    "result_code": "INFO-000",
+    "result_message": "정상 처리되었습니다",
+    "total_count": 38,
+    "received_rows": 38,
+    "label_values": [
+      "부암1",
+      "부암2",
+      "집단취락지구",
+      "취락지구",
+      "평창",
+      "홍지"
+    ],
+    "lclass_values": [
+      "UQM120"
+    ],
+    "attribute_values": [
+      "UQM120"
+    ],
+    "sample_columns": [
+      "AREA",
+      "DCSN_ANCMNT_MNG_CD",
+      "FIG_ATRB_CD",
+      "FIG_LCLSF_CD",
+      "FIG_MCLSF_CD",
+      "FIG_RPT_MNG_CD",
+      "FIG_SCLSF_CD",
+      "FLRPLN_NO",
+      "LBL_NM",
+      "LEN",
+      "OBJT_ID",
+      "SGG_CD",
+      "STUT_FIG_CRT_DT",
+      "STUT_FIG_MNG_NO"
+    ]
+  },
+  "local_spatial_source": {
+    "found_files": [
+      "D:\\site-ai\\law_data\\input\\UQ128_용도지구(취락지구)_202602.zip"
+    ],
+    "selected": {
+      "load_success": true,
+      "source_path": "D:\\site-ai\\law_data\\input\\UQ128_용도지구(취락지구)_202602.zip",
+      "shp_path": "C:\\Users\\agroup26\\AppData\\Local\\Temp\\tmpclqcr1v8\\934_UQ128_용도지구(취락지구)_202602\\shp파일\\UPIS_C_UQ128.shp",
+      "feature_count": 38,
+      "original_crs": "EPSG:5174",
+      "columns": [
+        "PRESENT_SN",
+        "LCLAS_CL",
+        "MLSFC_CL",
+        "SCLAS_CL",
+        "ATRB_SE",
+        "WTNNC_SN",
+        "NTFC_SN",
+        "DGM_NM",
+        "DGM_AR",
+        "DGM_LT",
+        "SIGNGU_SE",
+        "DRAWING_NO",
+        "CREATE_DAT",
+        "SHAPE_AREA",
+        "SHAPE_LEN",
+        "geometry"
+      ],
+      "label_values": [
+        "부암1",
+        "부암2",
+        "집단취락지구",
+        "취락지구",
+        "평창",
+        "홍지"
+      ]
+    }
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "reason": "서울시 공식 UQ128 OpenAPI와 공간파일을 정상 확인함. 다음 단계에서 대상 Parcel Polygon과 실제 공간교차 필요"
+  },
+  "next_step": "STEP 17-21-C-9-2-10B UQ128 Parcel Polygon 실제 공간교차",
+  "validation": {
+    "SEOUL_OPEN_API_KEY 존재": true,
+    "공식 UQ128 코드 사용": true,
+    "공식 upisCUq128 서비스 사용": true,
+    "문자열만으로 SITE 판정 금지": true,
+    "geometry 전 TRUE 금지": true,
+    "geometry 전 FALSE 금지": true
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "step": "STEP 17-21-C-9-2-9A 수산자원보호구역 공식 WFS source / geometry probe",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "source": {
+    "provider": "해양수산부",
+    "dataset": "수산자원보호구역",
+    "api_type": "WFS",
+    "endpoint": "http://apis.data.go.kr/1192000/apVhdService_FshrsrcPzn/getOpnFshrsrcPznWFS",
+    "environment_variable": "FISHERY_RESOURCE_API_KEY",
+    "official_request_fields": [
+      "serviceKey",
+      "bbox",
+      "maxFeatures",
+      "fshrsr_pzn_nm"
+    ],
+    "official_response_fields": [
+      "fshrsrc_pzn_cd",
+      "fshrsrc_pzn_nm",
+      "fshrsrc_pzn_ar",
+      "geom"
+    ]
+  },
+  "parcel_bbox": {
+    "crs_candidate": "EPSG:5179",
+    "source": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_mapplan_live.json",
+    "search_bbox": [
+      962170.4865538419,
+      1943690.920233938,
+      962741.8650744666,
+      1944251.3866923628
+    ]
+  },
+  "positive_control": {
+    "name": "영광보전지역",
+    "request": {
+      "params": {
+        "serviceKey": "[HIDDEN]",
+        "fshrsr_pzn_nm": "영광보전지역",
+        "maxFeatures": 100
+      }
+    },
+    "http": {
+      "status": 403,
+      "content_type": "application/xml",
+      "url": "http://apis.data.go.kr/1192000/apVhdService_FshrsrcPzn/getOpnFshrsrcPznWFS?serviceKey=[HIDDEN]&fshrsr_pzn_nm=%EC%98%81%EA%B4%91%EB%B3%B4%EC%A0%84%EC%A7%80%EC%97%AD&maxFeatures=100",
+      "error": null
+    },
+    "response": {
+      "format": "XML",
+      "meta": {
+        "xml_parse_success": true,
+        "result_code": null,
+        "result_msg": null,
+        "total_count": null
+      },
+      "feature_count": 0,
+      "features": [],
+      "raw_preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OpenAPI_ServiceResponse>\n<cmmMsgHeader>\n  <errMsg>SERVICE_KEY_IS_NOT_REGISTERED_ERROR</errMsg>\n  <returnAuthMsg>등록되지 않은 서비스키</returnAuthMsg>\n  <returnReasonCode>30</returnReasonCode>\n</cmmMsgHeader>\n</OpenAPI_ServiceResponse>\n"
+    }
+  },
+  "site_bbox_query": {
+    "request": {
+      "params": {
+        "serviceKey": "[HIDDEN]",
+        "bbox": "962170.4865538419,1943690.920233938,962741.8650744666,1944251.3866923628",
+        "maxFeatures": 100
+      }
+    },
+    "http": {
+      "status": 403,
+      "content_type": "application/xml",
+      "url": "http://apis.data.go.kr/1192000/apVhdService_FshrsrcPzn/getOpnFshrsrcPznWFS?serviceKey=[HIDDEN]&bbox=962170.4865538419%2C1943690.920233938%2C962741.8650744666%2C1944251.3866923628&maxFeatures=100",
+      "error": null
+    },
+    "response": {
+      "format": "XML",
+      "meta": {
+        "xml_parse_success": true,
+        "result_code": null,
+        "result_msg": null,
+        "total_count": null
+      },
+      "feature_count": 0,
+      "features": [],
+      "raw_preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OpenAPI_ServiceResponse>\n<cmmMsgHeader>\n  <errMsg>SERVICE_KEY_IS_NOT_REGISTERED_ERROR</errMsg>\n  <returnAuthMsg>등록되지 않은 서비스키</returnAuthMsg>\n  <returnReasonCode>30</returnReasonCode>\n</cmmMsgHeader>\n</OpenAPI_ServiceResponse>\n"
+    }
+  },
+  "crs_validation": {
+    "status": "UNVERIFIED",
+    "reason": "양성대조 geometry bounds를 확보하지 못해 CRS 호환성을 검증할 수 없음"
+  },
+  "site_resolution": {
+    "query_status": "QUERY_FAILED",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "공식 API 양성대조에서 정상 geometry evidence를 확보하지 못했으므로 SITE TRUE/FALSE 판정을 진행하지 않음"
+  },
+  "validation": {
+    "FISHERY_RESOURCE_API_KEY 로드": true,
+    "SITE PNU 19자리": true,
+    "기존 EPSG:5179 BBOX 복원": true,
+    "공식 API 양성대조 HTTP 성공": false,
+    "양성대조 Feature 존재": false,
+    "양성대조 geometry 파싱": false,
+    "SITE BBOX HTTP 성공": false,
+    "SITE BBOX 결과만으로 FALSE 금지": true,
+    "Parcel intersection 전 TRUE 금지": true,
+    "CRS 미확정 시 UNKNOWN 유지": true
+  },
+  "next_step": "STEP 17-21-C-9-2-9B: 응답 CRS/geometry 확정 후 Parcel Polygon 실제 intersection"
+}
