@@ -1,0 +1,53 @@
+{
+  "step": "STEP 17-21-C-10-3B-5B 학교이적지 candidate resolution",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "pnu": "1168010300100120000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "dong": "개포동",
+    "bonbun": "12"
+  },
+  "known_gaepo_school_relocation": {
+    "notice": "서울특별시 고시 제2015-10호",
+    "notice_date": "2015-01-15",
+    "target_address": "서울특별시 강남구 개포동 153번지 일대",
+    "target_dong": "개포동",
+    "target_bonbun": "153",
+    "classification": "학교이적지",
+    "official_context": "서울특별시 도시계획조례에 의한 학교이적지로 지형도면 고시"
+  },
+  "evidence": {
+    "announcement_database_complete": true,
+    "direct_school_history_count": 0,
+    "strong_candidate_count": 1,
+    "gaepo_school_history_count": 1,
+    "notice_2015_10_found": true,
+    "candidate_matches_site": false
+  },
+  "affected_clause_count": 7,
+  "current_resolution": {
+    "status": "FALSE",
+    "confidence": "HIGH",
+    "reason": "서울시 공식 upisAnnouncement 43,508건 전수검색에서 현재 SITE 주소/PNU와 학교이적지 또는 학교이전 이력이 결합된 직접 evidence는 0건이었다. 개포동에서 확인된 유일한 strong 학교이적지 후보는 서울특별시 고시 제2015-10호이며, 공식 고시상 대상은 개포동 153번지 일대로 현재 SITE 개포동 12번지와 명확히 다른 필지다. 따라서 현재 SITE의 학교이적지 여부를 FALSE / HIGH로 판정한다."
+  },
+  "expected_overlay": {
+    "condition": "학교이적지",
+    "state": "FALSE",
+    "confidence": "HIGH",
+    "affected_clause_count": 7
+  },
+  "validations": {
+    "announcement DB complete": true,
+    "direct school history 0": true,
+    "strong candidate 1": true,
+    "Gaepo school history 1": true,
+    "2015-10 candidate found": true,
+    "known candidate 153": true,
+    "SITE 12": true,
+    "candidate does not match SITE": true,
+    "affected clauses 7": true,
+    "학교이적지 FALSE": true,
+    "confidence HIGH": true
+  },
+  "all_pass": true
+}

@@ -1,0 +1,3503 @@
+{
+  "step": "STEP 17-21-C-10-2A-9 numeric semantic override finalize",
+  "summary": {
+    "candidate_count": 28,
+    "semantic_override_count": 8,
+    "calculable_now": 9,
+    "conditional_effect": 15,
+    "unknown_effect": 3,
+    "non_effect": 1,
+    "semantic_unresolved": 0
+  },
+  "applicability_summary": {
+    "APPLICABLE": 9,
+    "CONDITIONAL": 15,
+    "UNKNOWN": 4
+  },
+  "semantic_summary": {
+    "RANGE": 2,
+    "BASE_RATIO_MULTIPLIER": 14,
+    "ABSOLUTE_MAX": 8,
+    "MAX_LIMIT_REDUCTION_RATIO": 1,
+    "ABSOLUTE_CEILING": 1,
+    "NON_EFFECT_THRESHOLD": 1,
+    "MAX_LIMIT_MULTIPLIER": 1
+  },
+  "effect_class_summary": {
+    "CALCULABLE_NOW": 9,
+    "CONDITIONAL_EFFECT": 15,
+    "UNKNOWN_EFFECT": 3,
+    "NON_EFFECT": 1
+  },
+  "semantic_overrides": {
+    "20": {
+      "semantic_type": "ABSOLUTE_MAX",
+      "value": 60.0,
+      "unit": "percent",
+      "formula": "max_allowed = 60",
+      "confidence": "HIGH",
+      "reason": "상위 문맥에서 시장정비사업 승인대상 전통시장의 제3종일반주거지역 건폐율은 60퍼센트 이하로 규정"
+    },
+    "61": {
+      "semantic_type": "ABSOLUTE_MAX",
+      "value": 70.0,
+      "unit": "percent",
+      "formula": "max_allowed = 70",
+      "confidence": "HIGH",
+      "reason": "국토계획법상 도시지역 중 주거지역 건폐율 최대한도 70퍼센트 이하"
+    },
+    "121": {
+      "semantic_type": "MAX_LIMIT_REDUCTION_RATIO",
+      "value": 50.0,
+      "factor": 0.5,
+      "unit": "percent_of_max_limit",
+      "formula": "strengthened_limit >= original_max_limit * 0.5",
+      "confidence": "HIGH",
+      "reason": "해당 구역에 적용할 건폐율 최대한도의 50퍼센트까지 낮출 수 있다는 강화 규칙"
+    },
+    "208": {
+      "semantic_type": "ABSOLUTE_CEILING",
+      "value": 880.0,
+      "unit": "percent",
+      "formula": "plan_defined_far <= 880",
+      "confidence": "HIGH",
+      "reason": "서울도심 내 도시정비형 재개발사업에서 880퍼센트 범위 내에서 도시ㆍ주거환경정비 기본계획이 정하는 용적률을 적용"
+    },
+    "227": {
+      "semantic_type": "ABSOLUTE_MAX",
+      "value": 200.0,
+      "unit": "percent",
+      "formula": "max_allowed = 200",
+      "confidence": "HIGH",
+      "reason": "학교이적지의 제3종일반주거지역 용적률은 200퍼센트 이하"
+    },
+    "233": {
+      "semantic_type": "ABSOLUTE_MAX",
+      "value": 500.0,
+      "unit": "percent",
+      "formula": "max_allowed = 500",
+      "confidence": "HIGH",
+      "reason": "법률상 도시지역 중 주거지역의 용적률 최대한도 500퍼센트 이하"
+    },
+    "251": {
+      "semantic_type": "NON_EFFECT_THRESHOLD",
+      "value": 20.0,
+      "unit": "percent",
+      "formula": null,
+      "confidence": "HIGH",
+      "reason": "20퍼센트는 용적률 효과값이 아니라 개발밀도관리구역 지정 여부를 판단하는 용도지역별 도로율 미달 기준"
+    },
+    "262": {
+      "semantic_type": "MAX_LIMIT_MULTIPLIER",
+      "value": 50.0,
+      "factor": 0.5,
+      "unit": "percent_of_max_limit",
+      "formula": "strengthened_max = original_max_limit * 0.5",
+      "confidence": "HIGH",
+      "reason": "개발밀도관리구역에서는 해당 용도지역 용적률 최대한도의 50퍼센트 범위로 강화"
+    }
+  },
+  "calculable_now": [
+    {
+      "clause_index": 3,
+      "applicability": "APPLICABLE",
+      "category": "건폐율",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        80.0,
+        90.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "RANGE",
+        "min": 80.0,
+        "max": 90.0,
+        "unit": "percent",
+        "formula": null,
+        "confidence": "HIGH"
+      },
+      "text": "영 제84조제6항제1호에 따른 건축물 중 지구단위계획을 수립하는 지역의 건축물의 경우에는 건폐율을 80퍼센트 이상 90퍼센트 이하의 범위에서 지구단위계획으로 따로 규정 가능",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 4,
+      "applicability": "APPLICABLE",
+      "category": "건폐율",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "paragraph": "①",
+      "item": "2",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "영 제84조제6항제2호에 따라 완화하는 비율은 해당 용도지역별 건폐율의 120퍼센트 이하",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 50,
+      "applicability": "APPLICABLE",
+      "category": "건폐율",
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "paragraph": "⑩",
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        150.0,
+        200.0
+      ],
+      "conditions": [],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 150.0,
+        "factor": 1.5,
+        "unit": "percent_of_base",
+        "formula": "base * 1.5",
+        "confidence": "HIGH"
+      },
+      "text": "제1항 내지 제4항 및 제7항의 규정에 의하여 완화하여 적용되는 건폐율 및 용적률은 당해 용도지역 또는 용도지구에 적용되는 건폐율의 150퍼센트 및 용적률의 200퍼센트를 각각 초과할 수 없다.",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 61,
+      "applicability": "APPLICABLE",
+      "category": "건폐율",
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역의 건폐율",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": "가",
+      "zone_relevance": "GROUP",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        70.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 70.0,
+        "unit": "percent",
+        "formula": "max_allowed = 70",
+        "confidence": "HIGH",
+        "reason": "국토계획법상 도시지역 중 주거지역 건폐율 최대한도 70퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "주거지역: 70퍼센트 이하",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          70.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 189,
+      "applicability": "APPLICABLE",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "3",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "영 제85조제5항에 따라 완화하는 비율은 해당 용도지역별 용적률의 120퍼센트 이하",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 220,
+      "applicability": "APPLICABLE",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "그 밖의 용적률",
+      "paragraph": "②",
+      "item": "2",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        110.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 110.0,
+        "factor": 1.1,
+        "unit": "percent_of_base",
+        "formula": "base * 1.1",
+        "confidence": "HIGH"
+      },
+      "text": "제48조에 따른 용도지역별 용적률의 110퍼센트 이하 (제48조제2호부터 제10호까지의 지역에 한한다.)",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 233,
+      "applicability": "APPLICABLE",
+      "category": "용적률",
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": "가",
+      "zone_relevance": "GROUP",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        500.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 500.0,
+        "unit": "percent",
+        "formula": "max_allowed = 500",
+        "confidence": "HIGH",
+        "reason": "법률상 도시지역 중 주거지역의 용적률 최대한도 500퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "주거지역: 500퍼센트 이하",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          500.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 244,
+      "applicability": "APPLICABLE",
+      "category": "용적률",
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "paragraph": "③",
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        200.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 200.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "text": "제77조제3항제2호부터 제5호까지의 규정에 해당하는 지역에서의 용적률에 대한 기준은 제1항과 제2항에도 불구하고 200퍼센트 이하의 범위에서 대통령령으로 정하는 기준에 따라 특별시ㆍ광역시ㆍ특별자치시ㆍ특별자치도ㆍ시 또는 군의 조례로 따로 정한다.",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 262,
+      "applicability": "APPLICABLE",
+      "category": "용적률",
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "개발밀도의 강화범위 등",
+      "paragraph": "①",
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        50.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "MAX_LIMIT_MULTIPLIER",
+        "value": 50.0,
+        "factor": 0.5,
+        "unit": "percent_of_max_limit",
+        "formula": "strengthened_max = original_max_limit * 0.5",
+        "confidence": "HIGH",
+        "reason": "개발밀도관리구역에서는 해당 용도지역 용적률 최대한도의 50퍼센트 범위로 강화",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "법 제66조제2항에서 \"대통령령으로 정하는 범위\"란 해당 용도지역에 적용되는 용적률의 최대한도의 50퍼센트를 말한다.",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          50.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "CALCULABLE_NOW"
+    }
+  ],
+  "conditional_effects": [
+    {
+      "clause_index": 20,
+      "applicability": "CONDITIONAL",
+      "category": "건폐율",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "paragraph": "②",
+      "item": "3",
+      "subitem": "나",
+      "zone_relevance": "DIRECT",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        60.0
+      ],
+      "conditions": [],
+      "effective_conditions": [
+        {
+          "name": "시장정비사업대상전통시장",
+          "type": "PROJECT",
+          "field": "market_redevelopment_target_traditional_market",
+          "reason": "시장정비사업 추진계획 승인대상 전통시장에 한해 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "시장정비사업대상전통시장",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 60.0,
+        "unit": "percent",
+        "formula": "max_allowed = 60",
+        "confidence": "HIGH",
+        "reason": "상위 문맥에서 시장정비사업 승인대상 전통시장의 제3종일반주거지역 건폐율은 60퍼센트 이하로 규정",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "제3종일반주거지역: 60퍼센트",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          60.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 121,
+      "applicability": "CONDITIONAL",
+      "category": "건폐율",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 강화",
+      "paragraph": null,
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        50.0
+      ],
+      "conditions": [
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "MAX_LIMIT_REDUCTION_RATIO",
+        "value": 50.0,
+        "factor": 0.5,
+        "unit": "percent_of_max_limit",
+        "formula": "strengthened_limit >= original_max_limit * 0.5",
+        "confidence": "HIGH",
+        "reason": "해당 구역에 적용할 건폐율 최대한도의 50퍼센트까지 낮출 수 있다는 강화 규칙",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "제46조(건폐율의 강화) 영 제84조제5항에 따라 시장은 토지이용의 과밀화를 방지하기 위하여 건폐율을 낮추어야 할 필요가 있는 경우 제44조 및 제45조제1항 규정에도 불구하고 시도시계획위원회의 심의를 거쳐 구역을 정하고, 그 구역에 적용할 건폐율의 최대한도의 50퍼센트까지 낮출 수 있다.",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          50.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 185,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": "가",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        20.0
+      ],
+      "conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 20.0,
+        "factor": 0.2,
+        "unit": "percent_of_base",
+        "formula": "base * 0.2",
+        "confidence": "HIGH"
+      },
+      "text": "임대의무기간이 20년 이상인 경우: 제48조에 따른 용적률의 20퍼센트",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 186,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": "나",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        15.0
+      ],
+      "conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 15.0,
+        "factor": 0.15,
+        "unit": "percent_of_base",
+        "formula": "base * 0.15",
+        "confidence": "HIGH"
+      },
+      "text": "임대의무기간이 10년 이상인 경우: 제48조에 따른 용적률의 15퍼센트",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 187,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": "다",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        10.0
+      ],
+      "conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 10.0,
+        "factor": 0.1,
+        "unit": "percent_of_base",
+        "formula": "base * 0.1",
+        "confidence": "HIGH"
+      },
+      "text": "임대의무기간이 5년 이상인 경우: 제48조에 따른 용적률의 10퍼센트",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 188,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "2",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [],
+      "effective_conditions": [
+        {
+          "name": "감염병대응필요시설",
+          "type": "PROJECT",
+          "field": "infectious_disease_response_facility",
+          "reason": "감염병 대응 등을 위하여 필요한 경우에 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "감염병대응필요시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 120.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "text": "영 제85조제3항제6호에 따라 감염병 대응 등을 위하여 필요한 경우 영 제85조제1항 각 호에 따른 용도지역별 용적률 최대한도의 120퍼센트 이하의 범위에서 완화 가능",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 190,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "4",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        200.0
+      ],
+      "conditions": [
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 200.0,
+        "factor": 2.0,
+        "unit": "percent_of_base",
+        "formula": "base * 2.0",
+        "confidence": "HIGH"
+      },
+      "text": "영 제85조제8항 각 호의 지역ㆍ지구 또는 구역 안에서 건축물을 건축하려는 자가 그 대지의 일부를 공공시설부지로 제공하는 경우 해당 건축물에 대한 용적률은 제48조, 제49조제3항, 제50조 규정에 따른 해당 용적률의 200퍼센트 이하의 범위에서 다음 각 목의 기준에 따라 산출되는 비율 이하로 할 것. 이 경우 α는 공공시설부지로 제공한 후의 대지면적 대 공공시설부지로 제공하는 면적의 비율을 말한다.가. (1+1.3α)×제48조 규정에 따른 용적률나. (1+1.3α)×제49조제3항 규정에 따른 용적률다. (1+1.3α)×제50조 규정에 따른 용적률",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 196,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "6",
+      "subitem": "가",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [
+        {
+          "name": "사회복지시설",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "사회복지시설",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "사회복지시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "제48조에 따른 용적률의 120퍼센트",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 201,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "1",
+      "subitem": "나",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0,
+        130.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "기부채납",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "기부채납",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "기부채납",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "제48조제3호부터 제10호까지의 지역에서 국ㆍ공유지에 「문화예술 진흥법 시행령」 제2조에 따른 문화시설 중 박물관, 도서관, 미술관, 공연장을 건축하여 기부채납하는 경우 영 제85조제1항의 해당 용도지역의 용적률 이하의 범위다. 제48조제6호부터 제10호까지의 지역(서울도심 지역을 포함한다)에서 「관광진흥법 시행령」 제2조제1항제2호 가목, 다목부터 마목까지의 관광호텔업, 한국전통호텔업, 가족호텔업, 호스텔업을 위한 관광숙박시설을 건축할 경우 제48조에 따른 해당 용도지역 용적률의 120퍼센트 이하의 범위. 다만, 관광숙박 특화를 목적으로 지구단위계획을 수립하는 제48조제7호부터 제10호까지의 지역(서울도심 지역을 포함한다)에서는 130퍼센트 이하의 범위에서 완화할 수 있",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 204,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "1",
+      "subitem": "바",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "대학",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "제48조제2호부터 제6호까지에 따른 지역에서 「고등교육법」 제2조에 따른 학교의 학생이 이용하는 다음 어느 하나에 해당하는 기숙사를 건설하는 경우 제48조에 따른 해당 용도지역 용적률의 120퍼센트 이하의 범위에서 용적률 완화 가능1) 다음 어느 하나에 해당하는 자가 도시계획시설인 학교 부지 밖에 건설하는 기숙사가) 국가 또는 지방자치단체나) 「사립학교법」에 따른 학교법인다) 「한국사학진흥재단법」에 따른 한국사학진흥재단라) 「한국장학재단 설립 등에 관한 법률」에 따른 한국장학재단마) 가)부터 라)까지의 어느 하나에 해당하는 자가 단독 또는 공동으로 출자하여 설립한 법인2) 도시계획시설인 학교 부지 안의 기숙사",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 205,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "1",
+      "subitem": "사",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        130.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 130.0,
+        "factor": 1.3,
+        "unit": "percent_of_base",
+        "formula": "base * 1.3",
+        "confidence": "HIGH"
+      },
+      "text": "다목에도 불구하고 제48조제7호부터 제10호까지의 지역(서울도심 지역을 포함한다)에서 다목에 따른 관광숙박시설을 건축하는 경우 다음 항목에서 정하는 범위까지 용적률을 완화할 수 있다.1) 서울도심 외 지역은 해당 용도지역 용적률의 130퍼센트 이하의 범위2) 서울도심 지역은 서울도심 용적률에도 불구하고, 서울도심 외 용적률의 130퍼센트 이하의 범위",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 206,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "2",
+      "subitem": null,
+      "zone_relevance": "DIRECT",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        50.0,
+        300.0,
+        500.0
+      ],
+      "conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "공동주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "주거복합",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "공동주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "주거복합",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "공동주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "주거복합",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "RANGE",
+        "min": 50.0,
+        "max": 300.0,
+        "unit": "percent",
+        "formula": null,
+        "confidence": "HIGH"
+      },
+      "text": "규칙으로 정하는 지역 안에서 「공공주택 특별법 시행령」 제2조제1항제2호의 국민임대주택, 제3호의 행복주택, 제3호의2의 통합공공임대주택이나 제4호의 장기전세주택이 포함된 공동주택 또는 주거복합건물을 건립하는 경우와 제4조제1호의 공공준주택 중「건축법 시행령」별표 1 제2호라목 2)에 따른 임대형기숙사를 건립하는 경우(연면적의 50퍼센트 이상이 기숙사인 경우에 한정함) 제3종일반주거지역은 300퍼센트 이하, 준주거지역은 500퍼센트 이하",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 209,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "5",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "대학",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "도시계획시설인 대학에 세부시설조성계획을 수립하여 고시하는 경우 영 제85조제1항의 해당 용도지역의 용적률 내에서 제48조 각 호에 따른 용도지역별 용적률의 120퍼센트 이하의 범위에서 완화할 수 있고, 이 경우 완화되는 용적률은 세부시설조성계획으로 고시하는 혁신성장 시설을 설치 할 것",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 212,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "8",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "종합의료시설",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "종합의료시설",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "대학",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "종합의료시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "감염병 대응 등을 위하여 도시계획시설인 종합의료시설 부지(도시계획시설 대학 내 의료시설 포함)에 지구단위계획으로 고시하는 경우(대학은 세부시설에 대한 조성계획으로 고시) 영 제85조제1항의 해당 용도지역의 용적률 내에서 제48조 각 호에 따른 용도지역별 용적률의 120퍼센트 이하의 범위에서 완화 가능. 다만, 이 경우 완화되는 용적률의 2분의 1 이상은 지구단위계획으로 정하는 공공이 필요로 하는 의료시설을 설치하여야 한다.",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 250,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "paragraph": "⑦",
+      "item": "2",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 120.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "text": "지구단위계획구역 외의 지역: 제1항 및 제2항에 따라 대통령령으로 정하고 있는 해당 용도지역별 용적률 최대한도의 120퍼센트 이하",
+      "effect_class": "CONDITIONAL_EFFECT"
+    }
+  ],
+  "unknown_effects": [
+    {
+      "clause_index": 116,
+      "applicability": "UNKNOWN",
+      "category": "건폐율",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "그 밖의 건폐율",
+      "paragraph": "②",
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        30.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 30.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "text": "도시계획시설인 학교(유치원은 제외한다) 또는 도시계획시설이 아닌 학교(유치원은 제외한다)로서 학교 전체가 이전하거나 폐교된 부지 또는 학교 기능 축소로 도시계획시설이 일부 해제된 부지(이하 \"학교이적지\"라 한다)의 건폐율은 30퍼센트 이하로 한다. 다만, 다음 각 호의 어느 하나에 해당하는 경우에는 제44조를 적용한다. 1. 이전 후 10년이 경과된 학교이적지 2. 영 제2조제1항제4호에 따른 공공ㆍ문화체육시설로 개발되는 경우 3. 개발이 완료된 학교이적지에 「건축법 시행령」 제34조에 따른 직통계단, 같은 법 시행령 제35조에 따른 피난계단 및 같은 법 시행령 제90조의 비상용승강기를 추가 설치하는 경우(다만, 추가 설치된 부분의 면적에 한정한다) 4. 지구단위계획으로 고시하는 공공필요용도를 설치하는 경우",
+      "effect_class": "UNKNOWN_EFFECT"
+    },
+    {
+      "clause_index": 208,
+      "applicability": "UNKNOWN",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "4",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        880.0
+      ],
+      "conditions": [],
+      "effective_conditions": [
+        {
+          "name": "서울도심",
+          "type": "SITE",
+          "field": "seoul_downtown_area",
+          "reason": "서울도심 내 사업에 한해 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        },
+        {
+          "name": "도시정비형재개발사업",
+          "type": "PROJECT",
+          "field": "urban_redevelopment_project",
+          "reason": "도시정비형 재개발사업으로 시행하는 경우에 한해 적용",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "서울도심",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_BRANCH_PREDICATE_UNRESOLVED"
+        },
+        {
+          "name": "도시정비형재개발사업",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_CEILING",
+        "value": 880.0,
+        "unit": "percent",
+        "formula": "plan_defined_far <= 880",
+        "confidence": "HIGH",
+        "reason": "서울도심 내 도시정비형 재개발사업에서 880퍼센트 범위 내에서 도시ㆍ주거환경정비 기본계획이 정하는 용적률을 적용",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "제48조제8호의 지역에서 서울도심 내 도시정비형 재개발사업으로 시행하는 경우의 용적률은 880퍼센트 범위에서 도시ㆍ주거환경정비 기본계획(도시정비형 재개발사업)에서 정하는 용적률을 적용",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          880.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "UNKNOWN_EFFECT"
+    },
+    {
+      "clause_index": 227,
+      "applicability": "UNKNOWN",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "그 밖의 용적률",
+      "paragraph": "③",
+      "item": null,
+      "subitem": "바",
+      "zone_relevance": "DIRECT",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        200.0
+      ],
+      "conditions": [
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 200.0,
+        "unit": "percent",
+        "formula": "max_allowed = 200",
+        "confidence": "HIGH",
+        "reason": "학교이적지의 제3종일반주거지역 용적률은 200퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "제3종일반주거지역: 200퍼센트",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          200.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "UNKNOWN_EFFECT"
+    }
+  ],
+  "non_effects": [
+    {
+      "clause_index": 251,
+      "applicability": "UNKNOWN",
+      "category": "용적률",
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "paragraph": null,
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        20.0
+      ],
+      "conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "NON_EFFECT_THRESHOLD",
+        "value": 20.0,
+        "unit": "percent",
+        "formula": null,
+        "confidence": "HIGH",
+        "reason": "20퍼센트는 용적률 효과값이 아니라 개발밀도관리구역 지정 여부를 판단하는 용도지역별 도로율 미달 기준",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "제63조(개발밀도관리구역의 지정기준 및 관리방법) 국토교통부장관은 법 제66조제5항에 따라 개발밀도관리구역의 지정기준 및 관리방법을 정할 때에는 다음 각 호의 사항을 종합적으로 고려해야 한다. 1. 개발밀도관리구역은 도로ㆍ수도공급설비ㆍ하수도ㆍ학교 등 기반시설의 용량이 부족할 것으로 예상되는 지역중 기반시설의 설치가 곤란한 지역으로서 다음 각목의 1에 해당하는 지역에 대하여 지정할 수 있도록 할 것 가. 당해 지역의 도로서비스 수준이 매우 낮아 차량통행이 현저하게 지체되는 지역. 이 경우 도로서비스 수준의 측정에 관하여는 「도시교통정비 촉진법」에 따른 교통영향평가의 예에 따른다. 나. 당해 지역의 도로율이 국토교통부령이 정하는 용도지역별 도로율에 20퍼센트 이상 미달하는 지역 다. 향후 2년 이내에 당해 지역의 수도에 대한 수요량이 수도시설의 시설용량을 초과할 것으로 예상되는 지역 라. 향후 2년 이내에 당해 지역의 하수발생량이 하수시설의 시설용량을 초과할 것으로 예상되는 지역 마. 향후 2년 이내에 당해 지역의 학생수가 학교수용능력을 20퍼센트 이상 초과할 것으로 예상되는 지역 2. 개발밀도관리구역의 경계는 도로ㆍ하천 그 밖에 특색 있는 지형지물을 이용하거나 용도지역의 경계선을 따라 설정하는 등 경계선이 분명하게 구분되도록 할 것 3. 용적률의 강화범위는 제62조제1항의 범위에서 제1호 각 목에 따른 기반시설의 부족 정도를 고려하여 결정할 것 4. 개발밀도관리구역안의 기반시설의 변화를 주기적으로 검토하여 용적률을 강화 또는 완화하거나 개발밀도관리구역을 해제하는 등 필요한 조치를 취하도록 할 것",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          20.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "NON_EFFECT"
+    }
+  ],
+  "semantic_unresolved": [],
+  "validations": {
+    "dedup candidate 28개 유지": true,
+    "explicit semantic override 8개 적용": true,
+    "unresolved 8건 semantic 확정": true,
+    "clause 251 NON_EFFECT 분류": true,
+    "clause 20 CONDITIONAL_EFFECT": true,
+    "clause 188 CONDITIONAL_EFFECT": true,
+    "clause 208 UNKNOWN_EFFECT": true,
+    "NON_EFFECT를 BCR/FAR 계산 후보에서 제외": true,
+    "UNKNOWN/CONDITIONAL을 현재 확정값으로 계산하지 않음": true
+  },
+  "all_pass": true,
+  "candidates": [
+    {
+      "clause_index": 3,
+      "applicability": "APPLICABLE",
+      "category": "건폐율",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        80.0,
+        90.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "RANGE",
+        "min": 80.0,
+        "max": 90.0,
+        "unit": "percent",
+        "formula": null,
+        "confidence": "HIGH"
+      },
+      "text": "영 제84조제6항제1호에 따른 건축물 중 지구단위계획을 수립하는 지역의 건축물의 경우에는 건폐율을 80퍼센트 이상 90퍼센트 이하의 범위에서 지구단위계획으로 따로 규정 가능",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 4,
+      "applicability": "APPLICABLE",
+      "category": "건폐율",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "paragraph": "①",
+      "item": "2",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "영 제84조제6항제2호에 따라 완화하는 비율은 해당 용도지역별 건폐율의 120퍼센트 이하",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 20,
+      "applicability": "CONDITIONAL",
+      "category": "건폐율",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "paragraph": "②",
+      "item": "3",
+      "subitem": "나",
+      "zone_relevance": "DIRECT",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        60.0
+      ],
+      "conditions": [],
+      "effective_conditions": [
+        {
+          "name": "시장정비사업대상전통시장",
+          "type": "PROJECT",
+          "field": "market_redevelopment_target_traditional_market",
+          "reason": "시장정비사업 추진계획 승인대상 전통시장에 한해 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "시장정비사업대상전통시장",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 60.0,
+        "unit": "percent",
+        "formula": "max_allowed = 60",
+        "confidence": "HIGH",
+        "reason": "상위 문맥에서 시장정비사업 승인대상 전통시장의 제3종일반주거지역 건폐율은 60퍼센트 이하로 규정",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "제3종일반주거지역: 60퍼센트",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          60.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 50,
+      "applicability": "APPLICABLE",
+      "category": "건폐율",
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "paragraph": "⑩",
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        150.0,
+        200.0
+      ],
+      "conditions": [],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 150.0,
+        "factor": 1.5,
+        "unit": "percent_of_base",
+        "formula": "base * 1.5",
+        "confidence": "HIGH"
+      },
+      "text": "제1항 내지 제4항 및 제7항의 규정에 의하여 완화하여 적용되는 건폐율 및 용적률은 당해 용도지역 또는 용도지구에 적용되는 건폐율의 150퍼센트 및 용적률의 200퍼센트를 각각 초과할 수 없다.",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 61,
+      "applicability": "APPLICABLE",
+      "category": "건폐율",
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역의 건폐율",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": "가",
+      "zone_relevance": "GROUP",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        70.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 70.0,
+        "unit": "percent",
+        "formula": "max_allowed = 70",
+        "confidence": "HIGH",
+        "reason": "국토계획법상 도시지역 중 주거지역 건폐율 최대한도 70퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "주거지역: 70퍼센트 이하",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          70.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 116,
+      "applicability": "UNKNOWN",
+      "category": "건폐율",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "그 밖의 건폐율",
+      "paragraph": "②",
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        30.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 30.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "text": "도시계획시설인 학교(유치원은 제외한다) 또는 도시계획시설이 아닌 학교(유치원은 제외한다)로서 학교 전체가 이전하거나 폐교된 부지 또는 학교 기능 축소로 도시계획시설이 일부 해제된 부지(이하 \"학교이적지\"라 한다)의 건폐율은 30퍼센트 이하로 한다. 다만, 다음 각 호의 어느 하나에 해당하는 경우에는 제44조를 적용한다. 1. 이전 후 10년이 경과된 학교이적지 2. 영 제2조제1항제4호에 따른 공공ㆍ문화체육시설로 개발되는 경우 3. 개발이 완료된 학교이적지에 「건축법 시행령」 제34조에 따른 직통계단, 같은 법 시행령 제35조에 따른 피난계단 및 같은 법 시행령 제90조의 비상용승강기를 추가 설치하는 경우(다만, 추가 설치된 부분의 면적에 한정한다) 4. 지구단위계획으로 고시하는 공공필요용도를 설치하는 경우",
+      "effect_class": "UNKNOWN_EFFECT"
+    },
+    {
+      "clause_index": 121,
+      "applicability": "CONDITIONAL",
+      "category": "건폐율",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 강화",
+      "paragraph": null,
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        50.0
+      ],
+      "conditions": [
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "MAX_LIMIT_REDUCTION_RATIO",
+        "value": 50.0,
+        "factor": 0.5,
+        "unit": "percent_of_max_limit",
+        "formula": "strengthened_limit >= original_max_limit * 0.5",
+        "confidence": "HIGH",
+        "reason": "해당 구역에 적용할 건폐율 최대한도의 50퍼센트까지 낮출 수 있다는 강화 규칙",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "제46조(건폐율의 강화) 영 제84조제5항에 따라 시장은 토지이용의 과밀화를 방지하기 위하여 건폐율을 낮추어야 할 필요가 있는 경우 제44조 및 제45조제1항 규정에도 불구하고 시도시계획위원회의 심의를 거쳐 구역을 정하고, 그 구역에 적용할 건폐율의 최대한도의 50퍼센트까지 낮출 수 있다.",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          50.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 185,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": "가",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        20.0
+      ],
+      "conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 20.0,
+        "factor": 0.2,
+        "unit": "percent_of_base",
+        "formula": "base * 0.2",
+        "confidence": "HIGH"
+      },
+      "text": "임대의무기간이 20년 이상인 경우: 제48조에 따른 용적률의 20퍼센트",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 186,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": "나",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        15.0
+      ],
+      "conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 15.0,
+        "factor": 0.15,
+        "unit": "percent_of_base",
+        "formula": "base * 0.15",
+        "confidence": "HIGH"
+      },
+      "text": "임대의무기간이 10년 이상인 경우: 제48조에 따른 용적률의 15퍼센트",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 187,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": "다",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        10.0
+      ],
+      "conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 10.0,
+        "factor": 0.1,
+        "unit": "percent_of_base",
+        "formula": "base * 0.1",
+        "confidence": "HIGH"
+      },
+      "text": "임대의무기간이 5년 이상인 경우: 제48조에 따른 용적률의 10퍼센트",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 188,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "2",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [],
+      "effective_conditions": [
+        {
+          "name": "감염병대응필요시설",
+          "type": "PROJECT",
+          "field": "infectious_disease_response_facility",
+          "reason": "감염병 대응 등을 위하여 필요한 경우에 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "감염병대응필요시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 120.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "text": "영 제85조제3항제6호에 따라 감염병 대응 등을 위하여 필요한 경우 영 제85조제1항 각 호에 따른 용도지역별 용적률 최대한도의 120퍼센트 이하의 범위에서 완화 가능",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 189,
+      "applicability": "APPLICABLE",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "3",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "영 제85조제5항에 따라 완화하는 비율은 해당 용도지역별 용적률의 120퍼센트 이하",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 190,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "4",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        200.0
+      ],
+      "conditions": [
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 200.0,
+        "factor": 2.0,
+        "unit": "percent_of_base",
+        "formula": "base * 2.0",
+        "confidence": "HIGH"
+      },
+      "text": "영 제85조제8항 각 호의 지역ㆍ지구 또는 구역 안에서 건축물을 건축하려는 자가 그 대지의 일부를 공공시설부지로 제공하는 경우 해당 건축물에 대한 용적률은 제48조, 제49조제3항, 제50조 규정에 따른 해당 용적률의 200퍼센트 이하의 범위에서 다음 각 목의 기준에 따라 산출되는 비율 이하로 할 것. 이 경우 α는 공공시설부지로 제공한 후의 대지면적 대 공공시설부지로 제공하는 면적의 비율을 말한다.가. (1+1.3α)×제48조 규정에 따른 용적률나. (1+1.3α)×제49조제3항 규정에 따른 용적률다. (1+1.3α)×제50조 규정에 따른 용적률",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 196,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "①",
+      "item": "6",
+      "subitem": "가",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [
+        {
+          "name": "사회복지시설",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "사회복지시설",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "사회복지시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "제48조에 따른 용적률의 120퍼센트",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 201,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "1",
+      "subitem": "나",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0,
+        130.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "기부채납",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "기부채납",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "기부채납",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "제48조제3호부터 제10호까지의 지역에서 국ㆍ공유지에 「문화예술 진흥법 시행령」 제2조에 따른 문화시설 중 박물관, 도서관, 미술관, 공연장을 건축하여 기부채납하는 경우 영 제85조제1항의 해당 용도지역의 용적률 이하의 범위다. 제48조제6호부터 제10호까지의 지역(서울도심 지역을 포함한다)에서 「관광진흥법 시행령」 제2조제1항제2호 가목, 다목부터 마목까지의 관광호텔업, 한국전통호텔업, 가족호텔업, 호스텔업을 위한 관광숙박시설을 건축할 경우 제48조에 따른 해당 용도지역 용적률의 120퍼센트 이하의 범위. 다만, 관광숙박 특화를 목적으로 지구단위계획을 수립하는 제48조제7호부터 제10호까지의 지역(서울도심 지역을 포함한다)에서는 130퍼센트 이하의 범위에서 완화할 수 있",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 204,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "1",
+      "subitem": "바",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "대학",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "제48조제2호부터 제6호까지에 따른 지역에서 「고등교육법」 제2조에 따른 학교의 학생이 이용하는 다음 어느 하나에 해당하는 기숙사를 건설하는 경우 제48조에 따른 해당 용도지역 용적률의 120퍼센트 이하의 범위에서 용적률 완화 가능1) 다음 어느 하나에 해당하는 자가 도시계획시설인 학교 부지 밖에 건설하는 기숙사가) 국가 또는 지방자치단체나) 「사립학교법」에 따른 학교법인다) 「한국사학진흥재단법」에 따른 한국사학진흥재단라) 「한국장학재단 설립 등에 관한 법률」에 따른 한국장학재단마) 가)부터 라)까지의 어느 하나에 해당하는 자가 단독 또는 공동으로 출자하여 설립한 법인2) 도시계획시설인 학교 부지 안의 기숙사",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 205,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "1",
+      "subitem": "사",
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        130.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 130.0,
+        "factor": 1.3,
+        "unit": "percent_of_base",
+        "formula": "base * 1.3",
+        "confidence": "HIGH"
+      },
+      "text": "다목에도 불구하고 제48조제7호부터 제10호까지의 지역(서울도심 지역을 포함한다)에서 다목에 따른 관광숙박시설을 건축하는 경우 다음 항목에서 정하는 범위까지 용적률을 완화할 수 있다.1) 서울도심 외 지역은 해당 용도지역 용적률의 130퍼센트 이하의 범위2) 서울도심 지역은 서울도심 용적률에도 불구하고, 서울도심 외 용적률의 130퍼센트 이하의 범위",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 206,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "2",
+      "subitem": null,
+      "zone_relevance": "DIRECT",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        50.0,
+        300.0,
+        500.0
+      ],
+      "conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "공동주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "주거복합",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "공동주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "주거복합",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "공동주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "주거복합",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "RANGE",
+        "min": 50.0,
+        "max": 300.0,
+        "unit": "percent",
+        "formula": null,
+        "confidence": "HIGH"
+      },
+      "text": "규칙으로 정하는 지역 안에서 「공공주택 특별법 시행령」 제2조제1항제2호의 국민임대주택, 제3호의 행복주택, 제3호의2의 통합공공임대주택이나 제4호의 장기전세주택이 포함된 공동주택 또는 주거복합건물을 건립하는 경우와 제4조제1호의 공공준주택 중「건축법 시행령」별표 1 제2호라목 2)에 따른 임대형기숙사를 건립하는 경우(연면적의 50퍼센트 이상이 기숙사인 경우에 한정함) 제3종일반주거지역은 300퍼센트 이하, 준주거지역은 500퍼센트 이하",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 208,
+      "applicability": "UNKNOWN",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "4",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        880.0
+      ],
+      "conditions": [],
+      "effective_conditions": [
+        {
+          "name": "서울도심",
+          "type": "SITE",
+          "field": "seoul_downtown_area",
+          "reason": "서울도심 내 사업에 한해 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        },
+        {
+          "name": "도시정비형재개발사업",
+          "type": "PROJECT",
+          "field": "urban_redevelopment_project",
+          "reason": "도시정비형 재개발사업으로 시행하는 경우에 한해 적용",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "서울도심",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_BRANCH_PREDICATE_UNRESOLVED"
+        },
+        {
+          "name": "도시정비형재개발사업",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_CEILING",
+        "value": 880.0,
+        "unit": "percent",
+        "formula": "plan_defined_far <= 880",
+        "confidence": "HIGH",
+        "reason": "서울도심 내 도시정비형 재개발사업에서 880퍼센트 범위 내에서 도시ㆍ주거환경정비 기본계획이 정하는 용적률을 적용",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "제48조제8호의 지역에서 서울도심 내 도시정비형 재개발사업으로 시행하는 경우의 용적률은 880퍼센트 범위에서 도시ㆍ주거환경정비 기본계획(도시정비형 재개발사업)에서 정하는 용적률을 적용",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          880.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "UNKNOWN_EFFECT"
+    },
+    {
+      "clause_index": 209,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "5",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "대학",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "도시계획시설인 대학에 세부시설조성계획을 수립하여 고시하는 경우 영 제85조제1항의 해당 용도지역의 용적률 내에서 제48조 각 호에 따른 용도지역별 용적률의 120퍼센트 이하의 범위에서 완화할 수 있고, 이 경우 완화되는 용적률은 세부시설조성계획으로 고시하는 혁신성장 시설을 설치 할 것",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 212,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "paragraph": "②",
+      "item": "8",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "종합의료시설",
+          "type": "PROJECT"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "종합의료시설",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "대학",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "종합의료시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "text": "감염병 대응 등을 위하여 도시계획시설인 종합의료시설 부지(도시계획시설 대학 내 의료시설 포함)에 지구단위계획으로 고시하는 경우(대학은 세부시설에 대한 조성계획으로 고시) 영 제85조제1항의 해당 용도지역의 용적률 내에서 제48조 각 호에 따른 용도지역별 용적률의 120퍼센트 이하의 범위에서 완화 가능. 다만, 이 경우 완화되는 용적률의 2분의 1 이상은 지구단위계획으로 정하는 공공이 필요로 하는 의료시설을 설치하여야 한다.",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 220,
+      "applicability": "APPLICABLE",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "그 밖의 용적률",
+      "paragraph": "②",
+      "item": "2",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        110.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 110.0,
+        "factor": 1.1,
+        "unit": "percent_of_base",
+        "formula": "base * 1.1",
+        "confidence": "HIGH"
+      },
+      "text": "제48조에 따른 용도지역별 용적률의 110퍼센트 이하 (제48조제2호부터 제10호까지의 지역에 한한다.)",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 227,
+      "applicability": "UNKNOWN",
+      "category": "용적률",
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "그 밖의 용적률",
+      "paragraph": "③",
+      "item": null,
+      "subitem": "바",
+      "zone_relevance": "DIRECT",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        200.0
+      ],
+      "conditions": [
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 200.0,
+        "unit": "percent",
+        "formula": "max_allowed = 200",
+        "confidence": "HIGH",
+        "reason": "학교이적지의 제3종일반주거지역 용적률은 200퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "제3종일반주거지역: 200퍼센트",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          200.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "UNKNOWN_EFFECT"
+    },
+    {
+      "clause_index": 233,
+      "applicability": "APPLICABLE",
+      "category": "용적률",
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "paragraph": "①",
+      "item": "1",
+      "subitem": "가",
+      "zone_relevance": "GROUP",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        500.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 500.0,
+        "unit": "percent",
+        "formula": "max_allowed = 500",
+        "confidence": "HIGH",
+        "reason": "법률상 도시지역 중 주거지역의 용적률 최대한도 500퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "주거지역: 500퍼센트 이하",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          500.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 244,
+      "applicability": "APPLICABLE",
+      "category": "용적률",
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "paragraph": "③",
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        200.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 200.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "text": "제77조제3항제2호부터 제5호까지의 규정에 해당하는 지역에서의 용적률에 대한 기준은 제1항과 제2항에도 불구하고 200퍼센트 이하의 범위에서 대통령령으로 정하는 기준에 따라 특별시ㆍ광역시ㆍ특별자치시ㆍ특별자치도ㆍ시 또는 군의 조례로 따로 정한다.",
+      "effect_class": "CALCULABLE_NOW"
+    },
+    {
+      "clause_index": 250,
+      "applicability": "CONDITIONAL",
+      "category": "용적률",
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "paragraph": "⑦",
+      "item": "2",
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 120.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "text": "지구단위계획구역 외의 지역: 제1항 및 제2항에 따라 대통령령으로 정하고 있는 해당 용도지역별 용적률 최대한도의 120퍼센트 이하",
+      "effect_class": "CONDITIONAL_EFFECT"
+    },
+    {
+      "clause_index": 251,
+      "applicability": "UNKNOWN",
+      "category": "용적률",
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "paragraph": null,
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        20.0
+      ],
+      "conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ],
+      "semantic": {
+        "semantic_type": "NON_EFFECT_THRESHOLD",
+        "value": 20.0,
+        "unit": "percent",
+        "formula": null,
+        "confidence": "HIGH",
+        "reason": "20퍼센트는 용적률 효과값이 아니라 개발밀도관리구역 지정 여부를 판단하는 용도지역별 도로율 미달 기준",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "제63조(개발밀도관리구역의 지정기준 및 관리방법) 국토교통부장관은 법 제66조제5항에 따라 개발밀도관리구역의 지정기준 및 관리방법을 정할 때에는 다음 각 호의 사항을 종합적으로 고려해야 한다. 1. 개발밀도관리구역은 도로ㆍ수도공급설비ㆍ하수도ㆍ학교 등 기반시설의 용량이 부족할 것으로 예상되는 지역중 기반시설의 설치가 곤란한 지역으로서 다음 각목의 1에 해당하는 지역에 대하여 지정할 수 있도록 할 것 가. 당해 지역의 도로서비스 수준이 매우 낮아 차량통행이 현저하게 지체되는 지역. 이 경우 도로서비스 수준의 측정에 관하여는 「도시교통정비 촉진법」에 따른 교통영향평가의 예에 따른다. 나. 당해 지역의 도로율이 국토교통부령이 정하는 용도지역별 도로율에 20퍼센트 이상 미달하는 지역 다. 향후 2년 이내에 당해 지역의 수도에 대한 수요량이 수도시설의 시설용량을 초과할 것으로 예상되는 지역 라. 향후 2년 이내에 당해 지역의 하수발생량이 하수시설의 시설용량을 초과할 것으로 예상되는 지역 마. 향후 2년 이내에 당해 지역의 학생수가 학교수용능력을 20퍼센트 이상 초과할 것으로 예상되는 지역 2. 개발밀도관리구역의 경계는 도로ㆍ하천 그 밖에 특색 있는 지형지물을 이용하거나 용도지역의 경계선을 따라 설정하는 등 경계선이 분명하게 구분되도록 할 것 3. 용적률의 강화범위는 제62조제1항의 범위에서 제1호 각 목에 따른 기반시설의 부족 정도를 고려하여 결정할 것 4. 개발밀도관리구역안의 기반시설의 변화를 주기적으로 검토하여 용적률을 강화 또는 완화하거나 개발밀도관리구역을 해제하는 등 필요한 조치를 취하도록 할 것",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          20.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "NON_EFFECT"
+    },
+    {
+      "clause_index": 262,
+      "applicability": "APPLICABLE",
+      "category": "용적률",
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "개발밀도의 강화범위 등",
+      "paragraph": "①",
+      "item": null,
+      "subitem": null,
+      "zone_relevance": "UNSPECIFIED",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        50.0
+      ],
+      "conditions": [],
+      "effective_conditions": [],
+      "condition_results": [],
+      "semantic": {
+        "semantic_type": "MAX_LIMIT_MULTIPLIER",
+        "value": 50.0,
+        "factor": 0.5,
+        "unit": "percent_of_max_limit",
+        "formula": "strengthened_max = original_max_limit * 0.5",
+        "confidence": "HIGH",
+        "reason": "개발밀도관리구역에서는 해당 용도지역 용적률 최대한도의 50퍼센트 범위로 강화",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "text": "법 제66조제2항에서 \"대통령령으로 정하는 범위\"란 해당 용도지역에 적용되는 용적률의 최대한도의 50퍼센트를 말한다.",
+      "semantic_before_override": {
+        "semantic_type": "UNKNOWN_NUMERIC_EFFECT",
+        "raw_values": [
+          50.0
+        ],
+        "unit": null,
+        "formula": null,
+        "confidence": "NONE"
+      },
+      "effect_class": "CALCULABLE_NOW"
+    }
+  ]
+}

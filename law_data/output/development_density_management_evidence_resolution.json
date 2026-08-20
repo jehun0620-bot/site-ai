@@ -1,0 +1,77 @@
+{
+  "step": "STEP 17-21-C-10-3B-3 개발밀도관리구역 evidence resolution",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "zone": "제3종일반주거지역"
+  },
+  "condition": "개발밀도관리구역",
+  "legal_character": {
+    "designation_requires_public_notice": true,
+    "current_effect": "지정된 경우 해당 용도지역에 적용되는 용적률 최대한도를 강화할 수 있음"
+  },
+  "evidence": {
+    "announcement_database": {
+      "query_status": "QUERY_SUCCESS",
+      "result_code": "INFO-000",
+      "total_rows": 43508,
+      "received_rows": 43508,
+      "exact_hits": 0,
+      "site_exact_hits": 0,
+      "broad_hits": 0,
+      "negative": true
+    },
+    "uq145_candidate_layer": {
+      "query_success": true,
+      "feature_count": 1,
+      "exact_hits": 0,
+      "contains_hits": 0,
+      "negative": true,
+      "interpretation": "UQ145는 확정 개발밀도관리구역 layer가 아니라 기타용도구역 후보 layer이므로 보조 evidence로만 사용"
+    },
+    "eum_site": {
+      "query_success": true,
+      "http_status": 200,
+      "target_name_present": false,
+      "mapplan_server_found": false,
+      "mapplan_http": null,
+      "mapplan_entry_count": 0,
+      "direct_positive_evidence": false,
+      "negative": true
+    }
+  },
+  "negative_evidence_count": 3,
+  "previous_resolution": null,
+  "current_resolution": {
+    "status": "FALSE",
+    "confidence": "HIGH",
+    "reason": "개발밀도관리구역은 지정 또는 변경 시 고시가 필요한 법정 구역이다. 서울시 공식 upisAnnouncement 전체 43508건을 정상 수집하여 정확 명칭, SITE 관련 명칭 및 광역 문자열을 전수 검색했으나 모두 0건이었다. 또한 토지이음 대상 SITE 페이지에도 개발밀도관리구역 명칭이 존재하지 않았고, 공식 UQ145 기타용도구역 후보 layer에서도 대상 feature가 확인되지 않았다. 세 독립 probe의 음성 결과를 종합하여 현재 SITE의 개발밀도관리구역 해당 여부를 FALSE / HIGH로 판정한다."
+  },
+  "affected_clause_count": 11,
+  "expected_overlay": {
+    "condition": "개발밀도관리구역",
+    "state": "FALSE",
+    "confidence": "HIGH",
+    "affected_clause_count": 11,
+    "expected_effect": "개발밀도관리구역을 필수조건으로 하는 현재 UNKNOWN 조문을 NOT_APPLICABLE로 재평가"
+  },
+  "validations": {
+    "announcement query success": true,
+    "announcement total 43508": true,
+    "announcement received all rows": true,
+    "announcement exact hits 0": true,
+    "announcement site exact hits 0": true,
+    "announcement broad hits 0": true,
+    "UQ145 query success": true,
+    "UQ145 feature 존재": true,
+    "UQ145 exact hits 0": true,
+    "UQ145 contains hits 0": true,
+    "EUM SITE query success": true,
+    "EUM target name 없음": true,
+    "affected clauses 11": true,
+    "negative evidence 3종": true,
+    "resolution FALSE": true,
+    "confidence HIGH": true
+  },
+  "all_pass": true
+}

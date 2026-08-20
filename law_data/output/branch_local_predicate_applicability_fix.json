@@ -1,0 +1,7710 @@
+{
+  "step": "STEP 17-21-C-10-2A-8 branch-local predicate applicability fix",
+  "summary": {
+    "total": 314,
+    "applicable": 58,
+    "not_applicable": 192,
+    "conditional": 43,
+    "unknown": 21
+  },
+  "branch_predicate_usage": {
+    "시장정비사업대상전통시장": 1,
+    "감염병대응필요시설": 1,
+    "서울도심": 1,
+    "도시정비형재개발사업": 1
+  },
+  "branch_registry": {
+    "20": [
+      {
+        "name": "시장정비사업대상전통시장",
+        "type": "PROJECT",
+        "field": "market_redevelopment_target_traditional_market",
+        "reason": "시장정비사업 추진계획 승인대상 전통시장에 한해 적용되는 branch"
+      }
+    ],
+    "188": [
+      {
+        "name": "감염병대응필요시설",
+        "type": "PROJECT",
+        "field": "infectious_disease_response_facility",
+        "reason": "감염병 대응 등을 위하여 필요한 경우에 적용되는 branch"
+      }
+    ],
+    "208": [
+      {
+        "name": "서울도심",
+        "type": "SITE",
+        "field": "seoul_downtown_area",
+        "reason": "서울도심 내 사업에 한해 적용되는 branch"
+      },
+      {
+        "name": "도시정비형재개발사업",
+        "type": "PROJECT",
+        "field": "urban_redevelopment_project",
+        "reason": "도시정비형 재개발사업으로 시행하는 경우에 한해 적용"
+      }
+    ]
+  },
+  "target_fixes": {
+    "20": {
+      "clause_index": 20,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        60.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 시장정비사업대상전통시장",
+      "effective_conditions": [
+        {
+          "name": "시장정비사업대상전통시장",
+          "type": "PROJECT",
+          "field": "market_redevelopment_target_traditional_market",
+          "reason": "시장정비사업 추진계획 승인대상 전통시장에 한해 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "시장정비사업대상전통시장",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ]
+    },
+    "188": {
+      "clause_index": 188,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 감염병대응필요시설",
+      "effective_conditions": [
+        {
+          "name": "감염병대응필요시설",
+          "type": "PROJECT",
+          "field": "infectious_disease_response_facility",
+          "reason": "감염병 대응 등을 위하여 필요한 경우에 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "감염병대응필요시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ]
+    },
+    "208": {
+      "clause_index": 208,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        880.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 서울도심",
+      "effective_conditions": [
+        {
+          "name": "서울도심",
+          "type": "SITE",
+          "field": "seoul_downtown_area",
+          "reason": "서울도심 내 사업에 한해 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        },
+        {
+          "name": "도시정비형재개발사업",
+          "type": "PROJECT",
+          "field": "urban_redevelopment_project",
+          "reason": "도시정비형 재개발사업으로 시행하는 경우에 한해 적용",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "서울도심",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_BRANCH_PREDICATE_UNRESOLVED"
+        },
+        {
+          "name": "도시정비형재개발사업",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ]
+    }
+  },
+  "validations": {
+    "314 clauses 유지": true,
+    "clause 20 APPLICABLE 제거": true,
+    "clause 188 APPLICABLE 제거": true,
+    "clause 208 APPLICABLE 제거": true,
+    "branch predicate registry 4개 적용": true,
+    "parent condition 전체 상속 사용 안 함": true,
+    "branch PROJECT 미입력을 FALSE 처리하지 않음": true,
+    "branch SITE 미확정을 FALSE 처리하지 않음": true
+  },
+  "all_pass": true,
+  "clauses": [
+    {
+      "clause_index": 1,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 2,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        80.0,
+        90.0,
+        120.0,
+        30.0,
+        20.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 3,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        80.0,
+        90.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 4,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 5,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        30.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 6,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 7,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 8,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 9,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        30.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 10,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        30.0
+      ],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 11,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        30.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 12,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 13,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 14,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        30.0,
+        20.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 15,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        70.0,
+        60.0,
+        80.0,
+        90.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 개발진흥지구",
+      "effective_conditions": [
+        {
+          "name": "개발진흥지구",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        },
+        {
+          "name": "시장정비사업심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발진흥지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        },
+        {
+          "name": "시장정비사업심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 16,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 도시계획위원회심의",
+      "effective_conditions": [
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 17,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 개발진흥지구",
+      "effective_conditions": [
+        {
+          "name": "개발진흥지구",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발진흥지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 18,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        70.0,
+        60.0,
+        80.0,
+        90.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 시장정비사업심의",
+      "effective_conditions": [
+        {
+          "name": "시장정비사업심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "시장정비사업심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 19,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        70.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 20,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        60.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 시장정비사업대상전통시장",
+      "effective_conditions": [
+        {
+          "name": "시장정비사업대상전통시장",
+          "type": "PROJECT",
+          "field": "market_redevelopment_target_traditional_market",
+          "reason": "시장정비사업 추진계획 승인대상 전통시장에 한해 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "시장정비사업대상전통시장",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ]
+    },
+    {
+      "clause_index": 21,
+      "rule_title": "건폐율의 완화",
+      "numeric_values": [
+        80.0,
+        90.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 22,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 23,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 24,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 25,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 26,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 27,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 28,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 29,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 30,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 31,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공개공지",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공개공지",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공개공지",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 32,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공개공지",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공개공지",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공개공지",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 33,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공개공지",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "공개공지",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공개공지",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 34,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 35,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 36,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [
+        100.0
+      ],
+      "effect_targets": [],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 한옥",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "한옥",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "한옥",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 37,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 한옥",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "한옥",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "한옥",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 38,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 39,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 40,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 개발진흥지구",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "개발진흥지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "개발진흥지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 41,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 개발진흥지구",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "개발진흥지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "개발진흥지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 42,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 43,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 44,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 45,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 46,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 개발진흥지구",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "개발진흥지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "개발진흥지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 47,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 도시지역편입해제구역",
+      "effective_conditions": [
+        {
+          "name": "도시지역편입해제구역",
+          "type": "SITE"
+        },
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "도시지역편입해제구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 48,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 도시지역편입해제구역",
+      "effective_conditions": [
+        {
+          "name": "도시지역편입해제구역",
+          "type": "SITE"
+        },
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "도시지역편입해제구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 49,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 50,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [
+        150.0,
+        200.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 51,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [
+        140.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 52,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [
+        140.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 53,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [
+        200.0
+      ],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 54,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [
+        140.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 산업단지",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "산업단지",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "산업단지",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 55,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 56,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 57,
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 58,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 59,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        70.0,
+        90.0,
+        20.0,
+        40.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 60,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        70.0,
+        90.0,
+        20.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 61,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        70.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 62,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        90.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 63,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        70.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 64,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 65,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        20.0,
+        40.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 66,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 67,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 68,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        40.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 69,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 70,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 71,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 72,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [
+        80.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 73,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 취락지구",
+      "effective_conditions": [
+        {
+          "name": "취락지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "취락지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 74,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 75,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 수산자원보호구역",
+      "effective_conditions": [
+        {
+          "name": "수산자원보호구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "수산자원보호구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 76,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연공원",
+      "effective_conditions": [
+        {
+          "name": "자연공원",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연공원",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 77,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 78,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 79,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 80,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 81,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 82,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 83,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 84,
+      "rule_title": "용도지역의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 85,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 86,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 87,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [
+        40.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 88,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 89,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [
+        40.0,
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 90,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 91,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 92,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 93,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 94,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 95,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 96,
+      "rule_title": "생산녹지지역 등에서 기존 공장의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 97,
+      "rule_title": "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 98,
+      "rule_title": "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [
+        150.0,
+        200.0,
+        120.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 99,
+      "rule_title": "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 100,
+      "rule_title": "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 101,
+      "rule_title": "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 102,
+      "rule_title": "기존 공장에 대한 특례",
+      "numeric_values": [
+        40.0,
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 103,
+      "rule_title": "기존 공장에 대한 특례",
+      "numeric_values": [
+        40.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 104,
+      "rule_title": "기존 공장에 대한 특례",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 105,
+      "rule_title": "기존 공장에 대한 특례",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 106,
+      "rule_title": "기존 공장에 대한 특례",
+      "numeric_values": [
+        40.0,
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 107,
+      "rule_title": "기존 공장에 대한 특례",
+      "numeric_values": [
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 108,
+      "rule_title": "기존 공장에 대한 특례",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 109,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 110,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [
+        60.0,
+        20.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 111,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [
+        60.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 취락지구",
+      "effective_conditions": [
+        {
+          "name": "취락지구",
+          "type": "SITE"
+        },
+        {
+          "name": "도시지역편입해제구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "취락지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시지역편입해제구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 112,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [
+        20.0,
+        60.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연공원",
+      "effective_conditions": [
+        {
+          "name": "자연공원",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연공원",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 113,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연공원",
+      "effective_conditions": [
+        {
+          "name": "자연공원",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연공원",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 114,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [
+        60.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연공원",
+      "effective_conditions": [
+        {
+          "name": "자연공원",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연공원",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 115,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [
+        60.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 116,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [
+        30.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 학교이적지",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ]
+    },
+    {
+      "clause_index": 117,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 학교이적지",
+      "effective_conditions": [
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ]
+    },
+    {
+      "clause_index": 118,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 학교이적지",
+      "effective_conditions": [
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ]
+    },
+    {
+      "clause_index": 119,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 학교이적지",
+      "effective_conditions": [
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ]
+    },
+    {
+      "clause_index": 120,
+      "rule_title": "그 밖의 건폐율",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 학교이적지",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ]
+    },
+    {
+      "clause_index": 121,
+      "rule_title": "건폐율의 강화",
+      "numeric_values": [
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 도시계획위원회심의",
+      "effective_conditions": [
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 122,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 123,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 124,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 125,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 126,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 127,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 128,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 129,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 130,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 131,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 132,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 133,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 134,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 135,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 136,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 137,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 138,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 139,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 140,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 141,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 142,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 143,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 144,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 145,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 146,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 147,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 148,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [
+        40.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 149,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 150,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 151,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 152,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 153,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 154,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 155,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 156,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 157,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 158,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 159,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 160,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 161,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 162,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 163,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 164,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 165,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 166,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 167,
+      "rule_title": "자연경관지구 안에서의 건축제한",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연경관지구",
+      "effective_conditions": [
+        {
+          "name": "자연경관지구",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연경관지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 168,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 169,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 170,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 171,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 172,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [],
+      "effect_targets": [
+        "height"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 173,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 174,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 175,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [
+        50.0,
+        30.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 176,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [
+        50.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 177,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [
+        30.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 178,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [
+        125.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 179,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 180,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 181,
+      "rule_title": "성장관리계획의 수립 등",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 182,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 183,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        20.0,
+        15.0,
+        10.0,
+        120.0,
+        200.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공, 공공주택, 사회복지시설, 임대주택",
+      "effective_conditions": [
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        },
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "사회복지시설",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "사회복지시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 184,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        20.0,
+        15.0,
+        10.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공주택, 임대주택",
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 185,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공주택, 임대주택",
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 186,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        15.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공주택, 임대주택",
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 187,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        10.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공주택, 임대주택",
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 188,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 감염병대응필요시설",
+      "effective_conditions": [
+        {
+          "name": "감염병대응필요시설",
+          "type": "PROJECT",
+          "field": "infectious_disease_response_facility",
+          "reason": "감염병 대응 등을 위하여 필요한 경우에 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "감염병대응필요시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ]
+    },
+    {
+      "clause_index": 189,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 190,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        200.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 191,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 192,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 193,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 194,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 사회복지시설",
+      "effective_conditions": [
+        {
+          "name": "사회복지시설",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "사회복지시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 195,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 사회복지시설",
+      "effective_conditions": [
+        {
+          "name": "사회복지시설",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "사회복지시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 196,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 사회복지시설",
+      "effective_conditions": [
+        {
+          "name": "사회복지시설",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "사회복지시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 197,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 사회복지시설",
+      "effective_conditions": [
+        {
+          "name": "사회복지시설",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "사회복지시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 198,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        100.0,
+        120.0,
+        130.0,
+        50.0,
+        300.0,
+        500.0,
+        880.0,
+        400.0,
+        450.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 개발진흥지구",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "개발진흥지구",
+          "type": "SITE"
+        },
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "공동주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "기부채납",
+          "type": "PROJECT"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "종합의료시설",
+          "type": "PROJECT"
+        },
+        {
+          "name": "주거복합",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        },
+        {
+          "name": "시장정비사업심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "개발진흥지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "공동주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "기부채납",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "대학",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "종합의료시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "주거복합",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        },
+        {
+          "name": "시장정비사업심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 199,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        100.0,
+        120.0,
+        130.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 200,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        100.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 201,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        120.0,
+        130.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 기부채납, 도시계획위원회심의",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "기부채납",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "기부채납",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 202,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 기부채납, 도시계획위원회심의",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "기부채납",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "기부채납",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 203,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        100.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 개발진흥지구",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "개발진흥지구",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "개발진흥지구",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 204,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 대학, 도시계획위원회심의",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "대학",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 205,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        130.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 도시계획위원회심의",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 206,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        50.0,
+        300.0,
+        500.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공주택, 공동주택, 임대주택, 주거복합",
+      "effective_conditions": [
+        {
+          "name": "공공주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "공동주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "임대주택",
+          "type": "PROJECT"
+        },
+        {
+          "name": "주거복합",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "공동주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "임대주택",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "주거복합",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 207,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        500.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 208,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        880.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 서울도심",
+      "effective_conditions": [
+        {
+          "name": "서울도심",
+          "type": "SITE",
+          "field": "seoul_downtown_area",
+          "reason": "서울도심 내 사업에 한해 적용되는 branch",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        },
+        {
+          "name": "도시정비형재개발사업",
+          "type": "PROJECT",
+          "field": "urban_redevelopment_project",
+          "reason": "도시정비형 재개발사업으로 시행하는 경우에 한해 적용",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "서울도심",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_BRANCH_PREDICATE_UNRESOLVED"
+        },
+        {
+          "name": "도시정비형재개발사업",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": true,
+          "derived_from": "BRANCH_LOCAL_REGISTRY",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "BRANCH_PROJECT_INPUT_REQUIRED"
+        }
+      ]
+    },
+    {
+      "clause_index": 209,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 대학",
+      "effective_conditions": [
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "대학",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 210,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        400.0,
+        450.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 211,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        500.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 212,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 대학, 종합의료시설",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "대학",
+          "type": "PROJECT"
+        },
+        {
+          "name": "종합의료시설",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "대학",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "종합의료시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 213,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 214,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 215,
+      "rule_title": "용적률의 완화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 216,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 217,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        100.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 자연공원",
+      "effective_conditions": [
+        {
+          "name": "자연공원",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "자연공원",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 218,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        110.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 219,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 220,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        110.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 221,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        500.0,
+        320.0,
+        100.0,
+        120.0,
+        160.0,
+        200.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 학교이적지",
+      "effective_conditions": [
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ]
+    },
+    {
+      "clause_index": 222,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        500.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 223,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        320.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 224,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        100.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 225,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 226,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        160.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 227,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        200.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 학교이적지",
+      "effective_conditions": [
+        {
+          "name": "학교이적지",
+          "type": "SITE_HISTORY"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "학교이적지",
+          "declared_type": "SITE_HISTORY",
+          "effective_type": "SITE_HISTORY",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_HISTORY_RESOLUTION_MISSING"
+        }
+      ]
+    },
+    {
+      "clause_index": 228,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 229,
+      "rule_title": "그 밖의 용적률",
+      "numeric_values": [
+        180.0,
+        220.0
+      ],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 230,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 231,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        500.0,
+        1500.0,
+        400.0,
+        100.0,
+        80.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 232,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        500.0,
+        1500.0,
+        400.0,
+        100.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 233,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        500.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 234,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        1500.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 235,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        400.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 236,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        100.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 237,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        80.0,
+        100.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 238,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        80.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 239,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        80.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 240,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        100.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 241,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        80.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 242,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        80.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 243,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 244,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        200.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 245,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 246,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 247,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 기부채납, 사회복지시설",
+      "effective_conditions": [
+        {
+          "name": "기부채납",
+          "type": "PROJECT"
+        },
+        {
+          "name": "사회복지시설",
+          "type": "PROJECT"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "기부채납",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "사회복지시설",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 248,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 도시계획위원회심의",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 249,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 도시계획위원회심의",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 250,
+      "rule_title": "용도지역에서의 용적률",
+      "numeric_values": [
+        120.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 도시계획위원회심의",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        },
+        {
+          "name": "도시계획위원회심의",
+          "declared_type": "PROCEDURE",
+          "effective_type": "PROCEDURE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROCEDURE_PROFILE"
+        }
+      ]
+    },
+    {
+      "clause_index": 251,
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 252,
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 253,
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 254,
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 255,
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 256,
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 257,
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "numeric_values": [
+        20.0
+      ],
+      "effect_targets": [],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 258,
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 259,
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 260,
+      "rule_title": "개발밀도관리구역의 지정기준 및 관리방법",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 261,
+      "rule_title": "개발밀도의 강화범위 등",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 262,
+      "rule_title": "개발밀도의 강화범위 등",
+      "numeric_values": [
+        50.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 263,
+      "rule_title": "개발밀도의 강화범위 등",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "UNKNOWN",
+      "reason": "필수조건 미확정: 개발밀도관리구역",
+      "effective_conditions": [
+        {
+          "name": "개발밀도관리구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "개발밀도관리구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 264,
+      "rule_title": "개발밀도의 강화범위 등",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 265,
+      "rule_title": "도시ㆍ군계획시설입체복합구역의 지정",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 입체복합구역",
+      "effective_conditions": [
+        {
+          "name": "입체복합구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "입체복합구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 266,
+      "rule_title": "도시ㆍ군계획시설입체복합구역의 지정",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 입체복합구역",
+      "effective_conditions": [
+        {
+          "name": "입체복합구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "입체복합구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 267,
+      "rule_title": "도시ㆍ군계획시설입체복합구역의 지정",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 입체복합구역",
+      "effective_conditions": [
+        {
+          "name": "입체복합구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "입체복합구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 268,
+      "rule_title": "도시ㆍ군계획시설입체복합구역의 지정",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 입체복합구역",
+      "effective_conditions": [
+        {
+          "name": "입체복합구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "입체복합구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 269,
+      "rule_title": "도시ㆍ군계획시설입체복합구역의 지정",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 입체복합구역",
+      "effective_conditions": [
+        {
+          "name": "입체복합구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "입체복합구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 270,
+      "rule_title": "도시ㆍ군계획시설입체복합구역의 지정",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 입체복합구역",
+      "effective_conditions": [
+        {
+          "name": "입체복합구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "입체복합구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 271,
+      "rule_title": "도시ㆍ군계획시설입체복합구역의 지정",
+      "numeric_values": [],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio",
+        "height"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 입체복합구역",
+      "effective_conditions": [
+        {
+          "name": "입체복합구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "입체복합구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 272,
+      "rule_title": "도시ㆍ군계획시설입체복합구역의 지정",
+      "numeric_values": [
+        200.0
+      ],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 입체복합구역",
+      "effective_conditions": [
+        {
+          "name": "입체복합구역",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "입체복합구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 273,
+      "rule_title": "도시ㆍ군계획시설입체복합구역의 지정",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "필수조건 FALSE: 입체복합구역",
+      "effective_conditions": [
+        {
+          "name": "입체복합구역",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "입체복합구역",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 274,
+      "rule_title": "상업지역 안에서 주거복합건물의 용도 비율 및 용적률(별표 8 제1호가목, 별표 9 제1호나목, 별표 10 제1호가목, 제50조제1호 관련)",
+      "numeric_values": [
+        10.0,
+        400.0,
+        600.0,
+        500.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 275,
+      "rule_title": "상업지역 안에서 주거복합건물의 용도 비율 및 용적률(별표 8 제1호가목, 별표 9 제1호나목, 별표 10 제1호가목, 제50조제1호 관련)",
+      "numeric_values": [
+        10.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 276,
+      "rule_title": "상업지역 안에서 주거복합건물의 용도 비율 및 용적률(별표 8 제1호가목, 별표 9 제1호나목, 별표 10 제1호가목, 제50조제1호 관련)",
+      "numeric_values": [
+        400.0,
+        600.0,
+        500.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 277,
+      "rule_title": "상업지역 안에서 주거복합건물의 용도 비율 및 용적률(별표 8 제1호가목, 별표 9 제1호나목, 별표 10 제1호가목, 제50조제1호 관련)",
+      "numeric_values": [
+        400.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 278,
+      "rule_title": "상업지역 안에서 주거복합건물의 용도 비율 및 용적률(별표 8 제1호가목, 별표 9 제1호나목, 별표 10 제1호가목, 제50조제1호 관련)",
+      "numeric_values": [
+        600.0,
+        500.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 279,
+      "rule_title": "상업지역 안에서 주거복합건물의 용도 비율 및 용적률(별표 8 제1호가목, 별표 9 제1호나목, 별표 10 제1호가목, 제50조제1호 관련)",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 280,
+      "rule_title": "상업지역 안에서 주거복합건물의 용도 비율 및 용적률(별표 8 제1호가목, 별표 9 제1호나목, 별표 10 제1호가목, 제50조제1호 관련)",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 281,
+      "rule_title": "용적률의 강화",
+      "numeric_values": [
+        250.0,
+        400.0,
+        300.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 282,
+      "rule_title": "용적률의 강화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 283,
+      "rule_title": "용적률의 강화",
+      "numeric_values": [
+        250.0,
+        400.0,
+        300.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 284,
+      "rule_title": "용적률의 강화",
+      "numeric_values": [
+        250.0,
+        400.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 285,
+      "rule_title": "용적률의 강화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 286,
+      "rule_title": "용적률의 강화",
+      "numeric_values": [
+        400.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 287,
+      "rule_title": "용적률의 강화",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 288,
+      "rule_title": "용적률의 강화",
+      "numeric_values": [
+        400.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 289,
+      "rule_title": "용적률의 강화",
+      "numeric_values": [
+        300.0,
+        400.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 290,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [
+        20.0,
+        10.0,
+        30.0,
+        40.0,
+        50.0,
+        265.0,
+        280.0,
+        295.0,
+        310.0,
+        325.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 291,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 292,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 293,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 294,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 295,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [
+        20.0,
+        10.0,
+        30.0,
+        40.0,
+        50.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 296,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [
+        20.0,
+        10.0,
+        30.0,
+        40.0,
+        50.0
+      ],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 297,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 298,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [
+        10.0
+      ],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 299,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 300,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 301,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 302,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 303,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 304,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [
+        20.0,
+        10.0,
+        30.0,
+        40.0,
+        50.0,
+        265.0,
+        280.0,
+        295.0,
+        310.0,
+        325.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 305,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 306,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 307,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [
+        20.0,
+        10.0,
+        30.0,
+        40.0,
+        50.0,
+        265.0,
+        280.0,
+        295.0,
+        310.0,
+        325.0
+      ],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 308,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 309,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 310,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 311,
+      "rule_title": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "NOT_APPLICABLE",
+      "reason": "현재 SITE 용도지역 불일치",
+      "effective_conditions": [],
+      "condition_results": []
+    },
+    {
+      "clause_index": 312,
+      "rule_title": "역세권 복합개발 지구단위계획 수립",
+      "numeric_values": [],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": false,
+          "derived_from": null,
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 313,
+      "rule_title": "역세권 복합개발 지구단위계획 수립",
+      "numeric_values": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "applicability": "CONDITIONAL",
+      "reason": "추가 입력 필요: 공공시설제공",
+      "effective_conditions": [
+        {
+          "name": "공공시설제공",
+          "type": "PROJECT"
+        },
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "공공시설제공",
+          "declared_type": "PROJECT",
+          "effective_type": "PROJECT",
+          "derived": false,
+          "derived_from": null,
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_PROFILE"
+        },
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "clause_index": 314,
+      "rule_title": "역세권 복합개발 지구단위계획 수립",
+      "numeric_values": [
+        70.0
+      ],
+      "effect_targets": [],
+      "applicability": "APPLICABLE",
+      "reason": "모든 필수조건 충족",
+      "effective_conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "condition_results": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ]
+    }
+  ]
+}

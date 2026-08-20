@@ -1,0 +1,241 @@
+{
+  "step": "STEP 17-21-C-10-2B-5 Immediate numeric effect interaction probe",
+  "summary": {
+    "target_count": 3,
+    "same_effect_pair_count": 2
+  },
+  "targets": [
+    {
+      "clause_index": 4,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "path": [
+        "①",
+        "2",
+        ""
+      ],
+      "applicability": "APPLICABLE",
+      "final_role": "DIRECT_RELAXATION",
+      "base_comparison": {
+        "target": "building_coverage_ratio",
+        "base": 50.0,
+        "projected_value": 60.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "conditions": [],
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "text": "영 제84조제6항제2호에 따라 완화하는 비율은 해당 용도지역별 건폐율의 120퍼센트 이하",
+      "inherited_context": "제44조 규정에도 불구하고 영 제84조에 따라 조례로 정하는 사항은 다음 각 호와 같다.",
+      "interaction_hints": [
+        "RELAXATION",
+        "BASE_MULTIPLIER_120",
+        "UPPER_LIMIT"
+      ],
+      "parents": [
+        {
+          "clause_index": 1,
+          "path": [
+            "",
+            "",
+            ""
+          ],
+          "text": "제47조(건폐율의 완화)",
+          "numeric_values": []
+        },
+        {
+          "clause_index": 2,
+          "path": [
+            "①",
+            "",
+            ""
+          ],
+          "text": "제44조 규정에도 불구하고 영 제84조에 따라 조례로 정하는 사항은 다음 각 호와 같다. 1. 영 제84조제6항제1호에 따른 건축물 중 지구단위계획을 수립하는 지역의 건축물의 경우에는 건폐율을 80퍼센트 이상 90퍼센트 이하의 범위에서 지구단위계획으로 따로 규정 가능 2. 영 제84조제6항제2호에 따라 완화하는 비율은 해당 용도지역별 건폐율의 120퍼센트 이하 3. 법 제77조제4항제2호 및 영 제84조제6항제5호에 따라 녹지지역의 건축물로서 다음 각 목의 어느 하나에 해당하는 건축물의 건폐율은 30퍼센트 이하가. 「전통사찰의 보존 및 지원에 관한 법률」 제2조제1호에 따른 전통사찰나. 「문화유산의 보존 및 활용에 관한 법률」제2조제3항에 따른 지정문화유산 또는 같은 조 제4항에 따른 등록문화유산 또는 「자연유산의 보존 및 활용에 관한 법률」 제2조제2호부터 제4호까지에 따른 지정자연유산다. 「건축법 시행령」 제2조제16호에 따른 한옥 4. 영 제84조제6항제7호에 따른 자연녹지지역에서 학교의 건폐율은 30퍼센트 이하 5. 영 제84조제6항제8호에서 조례로 정하는 비율은 30퍼센트임 6. 영 제84조제8항에 따라 생산녹지지역에서 다음 각 목의 어느 하나에 해당하는 건축물의 건폐율은 30퍼센트 이하가. 「농지법」 제32조제1항제1호에 따른 농수산물의 가공ㆍ처리시설 및 농수산업 관련 시험ㆍ연구시설나. 「농지법 시행령」 제29조제5항제1호에 따른 농산물 건조ㆍ보관시설 7. 영 제84조제9항에 따라 자연녹지지역에 설치되는 도시계획시설 중 유원지의 건폐율은 30퍼센트 이하, 공원의 건폐율은 20퍼센트 이하",
+          "numeric_values": [
+            80.0,
+            90.0,
+            120.0,
+            30.0,
+            20.0
+          ]
+        }
+      ],
+      "stacking_resolution": "UNVERIFIED"
+    },
+    {
+      "clause_index": 50,
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "path": [
+        "⑩",
+        "",
+        ""
+      ],
+      "applicability": "APPLICABLE",
+      "final_role": "DIRECT_RELAXATION",
+      "base_comparison": {
+        "target": "building_coverage_ratio",
+        "base": 50.0,
+        "projected_value": 75.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 150.0,
+        "factor": 1.5,
+        "unit": "percent_of_base",
+        "formula": "base * 1.5",
+        "confidence": "HIGH"
+      },
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "declared_type": "SITE",
+          "effective_type": "SITE",
+          "derived": true,
+          "derived_from": "rule_title",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT"
+        }
+      ],
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        150.0,
+        200.0
+      ],
+      "text": "제1항 내지 제4항 및 제7항의 규정에 의하여 완화하여 적용되는 건폐율 및 용적률은 당해 용도지역 또는 용도지구에 적용되는 건폐율의 150퍼센트 및 용적률의 200퍼센트를 각각 초과할 수 없다.",
+      "inherited_context": "",
+      "interaction_hints": [
+        "RELAXATION",
+        "BASE_MULTIPLIER_150",
+        "SEPARATE_RULE_LANGUAGE"
+      ],
+      "parents": [
+        {
+          "clause_index": 22,
+          "path": [
+            "",
+            "",
+            ""
+          ],
+          "text": "제46조(도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용)",
+          "numeric_values": []
+        }
+      ],
+      "stacking_resolution": "UNVERIFIED"
+    },
+    {
+      "clause_index": 189,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "path": [
+        "①",
+        "3",
+        ""
+      ],
+      "applicability": "APPLICABLE",
+      "final_role": "DIRECT_RELAXATION",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": 300.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "conditions": [],
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_values": [
+        120.0
+      ],
+      "text": "영 제85조제5항에 따라 완화하는 비율은 해당 용도지역별 용적률의 120퍼센트 이하",
+      "inherited_context": "제48조 규정에도 불구하고 영 제85조에 따라 조례로 정하는 사항은 다음 각 호와 같다.",
+      "interaction_hints": [
+        "RELAXATION",
+        "BASE_MULTIPLIER_120",
+        "UPPER_LIMIT"
+      ],
+      "parents": [
+        {
+          "clause_index": 182,
+          "path": [
+            "",
+            "",
+            ""
+          ],
+          "text": "제51조(용적률의 완화)",
+          "numeric_values": []
+        },
+        {
+          "clause_index": 183,
+          "path": [
+            "①",
+            "",
+            ""
+          ],
+          "text": "제48조 규정에도 불구하고 영 제85조에 따라 조례로 정하는 사항은 다음 각 호와 같다. 1. 영 제85조제3항제1호에 따라 제48조제1호부터 제6호까지의 지역에서 「공공주택 특별법」 제2조제1호가목, 「민간임대주택에 관한 특별법」 제2조제4호 및 제5호에 따른 임대주택의 임대기간에 따라 임대주택의 추가 건설을 허용할 수 있는 용적률은 다음 각 목을 따를 것. 다만, 임대주택 유형별 임대의무기간에도 불구하고 20년 이상 임대운영할 계획으로 건축하는 임대주택은 가목을 적용할 수 있다.가. 임대의무기간이 20년 이상인 경우: 제48조에 따른 용적률의 20퍼센트나. 임대의무기간이 10년 이상인 경우: 제48조에 따른 용적률의 15퍼센트다. 임대의무기간이 5년 이상인 경우: 제48조에 따른 용적률의 10퍼센트 2. 영 제85조제3항제6호에 따라 감염병 대응 등을 위하여 필요한 경우 영 제85조제1항 각 호에 따른 용도지역별 용적률 최대한도의 120퍼센트 이하의 범위에서 완화 가능 3. 영 제85조제5항에 따라 완화하는 비율은 해당 용도지역별 용적률의 120퍼센트 이하 4. 영 제85조제8항 각 호의 지역ㆍ지구 또는 구역 안에서 건축물을 건축하려는 자가 그 대지의 일부를 공공시설부지로 제공하는 경우 해당 건축물에 대한 용적률은 제48조, 제49조제3항, 제50조 규정에 따른 해당 용적률의 200퍼센트 이하의 범위에서 다음 각 목의 기준에 따라 산출되는 비율 이하로 할 것. 이 경우 α는 공공시설부지로 제공한 후의 대지면적 대 공공시설부지로 제공하는 면적의 비율을 말한다.가. (1+1.3α)×제48조 규정에 따른 용적률나. (1+1.3α)×제49조제3항 규정에 따른 용적률다. (1+1.3α)×제50조 규정에 따른 용적률 5. 영 제85조제10항제3호에 따라 조례가 정하는 사회복지시설이란 「도시ㆍ군계획시설의 결정ㆍ구조 및 설치기준에 관한 규칙」 제107조에 따른 사회복지시설을 말함 6. 영 제85조제11항에 따라 건축물을 건축하려는 자가 그 대지의 일부에 영 제85조제10항에 따른 사회복지시설을 설치하여 기부하는 경우 기부하는 시설의 연면적의 2배 이하 범위에서 영 제42조의3제2항 및 제46조제1항에 따라 용적률을 완화하여 추가 건축 가능. 다만, 해당 용적률은 다음 각 목의 기준을 초과할 수 없다.가. 제48조에 따른 용적률의 120퍼센트나. 영 제85조제1항의 해당 용도지역의 용적률의 범위",
+          "numeric_values": [
+            20.0,
+            15.0,
+            10.0,
+            120.0,
+            200.0
+          ]
+        }
+      ],
+      "stacking_resolution": "UNVERIFIED"
+    }
+  ],
+  "pairs": [
+    {
+      "a": 4,
+      "b": 50,
+      "common_targets": [
+        "building_coverage_ratio"
+      ],
+      "same_law": false,
+      "same_rule_title": false,
+      "explicit_stacking_language": false,
+      "resolution": "UNVERIFIED"
+    },
+    {
+      "a": 50,
+      "b": 189,
+      "common_targets": [
+        "floor_area_ratio"
+      ],
+      "same_law": false,
+      "same_rule_title": false,
+      "explicit_stacking_language": false,
+      "resolution": "UNVERIFIED"
+    }
+  ],
+  "resolution": "CONTEXT_READY"
+}

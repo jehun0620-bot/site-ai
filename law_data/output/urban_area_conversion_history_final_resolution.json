@@ -1,0 +1,91 @@
+{
+  "step": "STEP 17-21-C-10-3B-7 도시지역편입해제구역 final evidence resolution",
+  "condition": {
+    "name": "도시지역편입해제구역",
+    "type": "SITE_HISTORY"
+  },
+  "previous_resolution": {
+    "status": null,
+    "confidence": null
+  },
+  "evidence": {
+    "announcement": {
+      "query_success": true,
+      "total_rows": 43508
+    },
+    "combined_notice": {
+      "candidate_count": 8,
+      "target_candidate_count": 0,
+      "unresolved_count": 0,
+      "all_non_target": true
+    },
+    "direct_notice": {
+      "hit_count": 1,
+      "target_event_count": 0,
+      "not_target_history": true
+    },
+    "current_state": {
+      "urban_positive_area_count": 8,
+      "urban_area": true,
+      "greenbelt_positive_area_count": 0,
+      "greenbelt_absent": true
+    },
+    "historic_chain": {
+      "confirmed": true,
+      "missing_content_count": 1,
+      "has_missing_content": true,
+      "notice_123_identified": true,
+      "notice_534_found": true
+    },
+    "national_archive": {
+      "candidate_count": 10,
+      "public_count": 10,
+      "original_unverified_count": 10,
+      "candidates_confirmed": true,
+      "original_pending": true
+    }
+  },
+  "evidence_summary": {
+    "official_database_negative": true,
+    "current_state_known": true,
+    "positive_history_evidence": false,
+    "unresolved_historic_source": true
+  },
+  "affected_clause_count": 3,
+  "current_resolution": {
+    "status": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "automation_state": "HISTORICAL_SOURCE_PENDING",
+    "reason": "서울시 공식 결정고시 전체 DB와 직접 SITE 고시에서는 도시지역 편입ㆍ해제 target history가 확인되지 않았다. 그러나 대치택지개발 초기 고시 중 원문 미구축 자료가 있고 국가기록원 공식 후보 기록도 원문 UNVERIFIED 상태다. 따라서 negative 검색 결과만으로 과거 이력 부재를 FALSE로 확정하지 않고 UNKNOWN을 유지한다."
+  },
+  "overlay_policy": {
+    "action": "KEEP_UNKNOWN",
+    "rule": "historical source 원문이 미확인된 경우 negative DB 검색만으로 FALSE 처리하지 않는다."
+  },
+  "validations": {
+    "previous checks loaded": true,
+    "announcement DB OK": true,
+    "announcement rows 43508": true,
+    "combined candidates 존재": true,
+    "target candidates 0": true,
+    "combined unresolved 0": true,
+    "combined 전부 non-target 분류": true,
+    "direct notice 존재": true,
+    "direct target history 0": true,
+    "direct notice non-target": true,
+    "current urban TRUE": true,
+    "UQ111 positive": true,
+    "current greenbelt absent": true,
+    "UQ141 positive 0": true,
+    "historic chain 확인": true,
+    "historic missing content 존재": true,
+    "archive candidates 존재": true,
+    "archive original pending": true,
+    "affected clauses 3": true,
+    "status UNKNOWN": true,
+    "confidence MEDIUM": true,
+    "automation historical pending": true,
+    "overlay KEEP_UNKNOWN": true
+  },
+  "all_pass": true
+}

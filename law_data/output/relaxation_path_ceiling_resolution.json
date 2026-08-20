@@ -1,0 +1,124 @@
+{
+  "step": "STEP 17-21-C-10-2B-6 relaxation path / ceiling resolution",
+  "base": {
+    "building_coverage_ratio": 50.0,
+    "floor_area_ratio": 250.0
+  },
+  "role_registry": {
+    "4": {
+      "role": "RELAXATION_PATH",
+      "target": "building_coverage_ratio",
+      "factor": 1.2,
+      "reason": "해당 용도지역별 건폐율의 120퍼센트 이하 완화 규정"
+    },
+    "189": {
+      "role": "RELAXATION_PATH",
+      "target": "floor_area_ratio",
+      "factor": 1.2,
+      "reason": "해당 용도지역별 용적률의 120퍼센트 이하 완화 규정"
+    },
+    "50": {
+      "role": "RELAXATION_CEILING",
+      "targets": {
+        "building_coverage_ratio": {
+          "factor": 1.5
+        },
+        "floor_area_ratio": {
+          "factor": 2.0
+        }
+      },
+      "reason": "완화하여 적용되는 건폐율 및 용적률은 각각 해당 용도지역 기준의 150퍼센트 및 200퍼센트를 초과할 수 없다는 상한 규정"
+    }
+  },
+  "relaxation_paths": {
+    "building_coverage_ratio": {
+      "clause_index": 4,
+      "role": "RELAXATION_PATH",
+      "base": 50.0,
+      "factor": 1.2,
+      "raw_relaxed_value": 60.0,
+      "reason": "해당 용도지역별 건폐율의 120퍼센트 이하 완화 규정"
+    },
+    "floor_area_ratio": {
+      "clause_index": 189,
+      "role": "RELAXATION_PATH",
+      "base": 250.0,
+      "factor": 1.2,
+      "raw_relaxed_value": 300.0,
+      "reason": "해당 용도지역별 용적률의 120퍼센트 이하 완화 규정"
+    }
+  },
+  "ceilings": {
+    "building_coverage_ratio": {
+      "clause_index": 50,
+      "role": "RELAXATION_CEILING",
+      "base": 50.0,
+      "factor": 1.5,
+      "ceiling_value": 75.0,
+      "reason": "완화하여 적용되는 건폐율 및 용적률은 각각 해당 용도지역 기준의 150퍼센트 및 200퍼센트를 초과할 수 없다는 상한 규정"
+    },
+    "floor_area_ratio": {
+      "clause_index": 50,
+      "role": "RELAXATION_CEILING",
+      "base": 250.0,
+      "factor": 2.0,
+      "ceiling_value": 500.0,
+      "reason": "완화하여 적용되는 건폐율 및 용적률은 각각 해당 용도지역 기준의 150퍼센트 및 200퍼센트를 초과할 수 없다는 상한 규정"
+    }
+  },
+  "resolved_candidates": {
+    "building_coverage_ratio": {
+      "base": 50.0,
+      "path_clause": 4,
+      "path_factor": 1.2,
+      "raw_relaxed_value": 60.0,
+      "ceiling_clause": 50,
+      "ceiling_factor": 1.5,
+      "ceiling_value": 75.0,
+      "ceiling_binding": false,
+      "resolved_candidate_value": 60.0,
+      "calculation": "min(60.0, 75.0)",
+      "status": "NUMERIC_PATH_RESOLVED"
+    },
+    "floor_area_ratio": {
+      "base": 250.0,
+      "path_clause": 189,
+      "path_factor": 1.2,
+      "raw_relaxed_value": 300.0,
+      "ceiling_clause": 50,
+      "ceiling_factor": 2.0,
+      "ceiling_value": 500.0,
+      "ceiling_binding": false,
+      "resolved_candidate_value": 300.0,
+      "calculation": "min(300.0, 500.0)",
+      "status": "NUMERIC_PATH_RESOLVED"
+    }
+  },
+  "anti_stacking": {
+    "bcr_wrong_stacked_value": 90.0,
+    "far_wrong_stacked_value": 600.0,
+    "bcr_wrong_stacked_used": false,
+    "far_wrong_stacked_used": false
+  },
+  "interpretation": {
+    "building_coverage_ratio": "clause 4가 base 건폐율의 120% 이하 완화 경로를 제공하고 clause 50은 완화 결과의 150% ceiling을 제공한다. 현재 60%는 ceiling 75% 이하이므로 ceiling은 구속하지 않는다.",
+    "floor_area_ratio": "clause 189가 base 용적률의 120% 이하 완화 경로를 제공하고 clause 50은 완화 결과의 200% ceiling을 제공한다. 현재 300%는 ceiling 500% 이하이므로 ceiling은 구속하지 않는다.",
+    "warning": "resolved_candidate_value는 현재까지 확인된 numeric 법령경로상의 후보값이며 최종 허용값 확정은 추가 적용요건/계획결정 검증 후 수행한다."
+  },
+  "validations": {
+    "clause 4/50/189 존재": true,
+    "BCR base 50": true,
+    "FAR base 250": true,
+    "clause 4 BCR relaxation 60": true,
+    "clause 50 BCR ceiling 75": true,
+    "BCR ceiling 비구속": true,
+    "BCR resolved candidate 60": true,
+    "clause 189 FAR relaxation 300": true,
+    "clause 50 FAR ceiling 500": true,
+    "FAR ceiling 비구속": true,
+    "FAR resolved candidate 300": true,
+    "BCR multiplier 연쇄적용 금지": true,
+    "FAR multiplier 연쇄적용 금지": true
+  },
+  "all_pass": true
+}

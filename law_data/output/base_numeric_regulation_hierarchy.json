@@ -1,0 +1,117 @@
+{
+  "step": "STEP 17-21-C-10-2B-1 Base Regulation / Special Effect hierarchy",
+  "site_zone": "제3종일반주거지역",
+  "current_base_regulation": {
+    "building_coverage_ratio": {
+      "value": 50.0,
+      "unit": "percent",
+      "regulation_level": "LOCAL_ORDINANCE",
+      "source": "서울특별시 도시계획 조례",
+      "article": "제44조",
+      "rule": "제3종일반주거지역 건폐율 50퍼센트 이하",
+      "confidence": "HIGH"
+    },
+    "floor_area_ratio": {
+      "value": 250.0,
+      "unit": "percent",
+      "regulation_level": "LOCAL_ORDINANCE",
+      "source": "서울특별시 도시계획 조례",
+      "article": "제48조",
+      "rule": "제3종일반주거지역 용적률 250퍼센트 이하",
+      "confidence": "HIGH"
+    }
+  },
+  "national_ceiling_reference": {
+    "building_coverage_ratio": {
+      "value": 70.0,
+      "meaning": "도시지역 주거지역 건폐율에 대한 상위법상 광역 최대한도",
+      "use_as_site_base": false
+    },
+    "floor_area_ratio": {
+      "value": 500.0,
+      "meaning": "도시지역 주거지역 용적률에 대한 상위법상 광역 최대한도",
+      "use_as_site_base": false
+    }
+  },
+  "candidate_roles": {
+    "61": {
+      "candidate_exists": true,
+      "applicability": "APPLICABLE",
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 70.0,
+        "unit": "percent",
+        "formula": "max_allowed = 70",
+        "confidence": "HIGH",
+        "reason": "국토계획법상 도시지역 중 주거지역 건폐율 최대한도 70퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "role": "NATIONAL_CEILING",
+      "effect_target": "building_coverage_ratio",
+      "reason": "주거지역 전체에 대한 법률상 건폐율 최대범위이며 서울 제3종일반주거지역 실제 조례 기본값 50%와 다름"
+    },
+    "233": {
+      "candidate_exists": true,
+      "applicability": "APPLICABLE",
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 500.0,
+        "unit": "percent",
+        "formula": "max_allowed = 500",
+        "confidence": "HIGH",
+        "reason": "법률상 도시지역 중 주거지역의 용적률 최대한도 500퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "role": "NATIONAL_CEILING",
+      "effect_target": "floor_area_ratio",
+      "reason": "주거지역 전체에 대한 법률상 용적률 최대범위이며 서울 제3종일반주거지역 실제 조례 기본값 250%와 다름"
+    },
+    "262": {
+      "candidate_exists": true,
+      "applicability": "APPLICABLE",
+      "semantic": {
+        "semantic_type": "MAX_LIMIT_MULTIPLIER",
+        "value": 50.0,
+        "factor": 0.5,
+        "unit": "percent_of_max_limit",
+        "formula": "strengthened_max = original_max_limit * 0.5",
+        "confidence": "HIGH",
+        "reason": "개발밀도관리구역에서는 해당 용도지역 용적률 최대한도의 50퍼센트 범위로 강화",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "role": "CONDITIONAL_STRENGTHENING",
+      "effect_target": "floor_area_ratio",
+      "required_site_condition": "개발밀도관리구역",
+      "reason": "개발밀도관리구역 지정 시 적용되는 용적률 강화범위이므로 해당 SITE condition 확정 전에는 현재 FAR에 적용 불가",
+      "can_apply_to_current_base": false,
+      "site_condition": {
+        "status": "UNKNOWN",
+        "confidence": "MEDIUM"
+      }
+    }
+  },
+  "development_density_management": {
+    "status": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "clause_262_apply_now": false
+  },
+  "calculation_policy": {
+    "base_source": "LOCAL_ORDINANCE",
+    "national_ceiling_is_base": false,
+    "unknown_site_condition_effect_applied": false,
+    "rule": "서울시 조례의 용도지역별 기본값을 base로 사용하고, 특례 및 강화 규칙은 별도 effect layer로 적용한다."
+  },
+  "validations": {
+    "현재 SITE zone 제3종일반주거지역": true,
+    "서울시 기본 건폐율 50": true,
+    "서울시 기본 용적률 250": true,
+    "clause 61 candidate 존재": true,
+    "clause 61을 SITE base로 사용하지 않음": true,
+    "clause 233 candidate 존재": true,
+    "clause 233을 SITE base로 사용하지 않음": true,
+    "clause 262 candidate 존재": true,
+    "개발밀도관리구역 UNKNOWN이면 262 현재 미적용": true,
+    "국가 ceiling과 서울 조례 base 분리": true
+  },
+  "all_pass": true
+}

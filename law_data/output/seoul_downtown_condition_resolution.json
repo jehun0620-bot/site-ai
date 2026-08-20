@@ -1,0 +1,54 @@
+{
+  "step": "STEP 17-21-C-10-3B-1 서울도심 SITE condition resolution",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "sido": "서울특별시",
+    "sigungu": "강남구",
+    "dong": "개포동"
+  },
+  "condition": {
+    "name": "서울도심",
+    "type": "SITE",
+    "status": "FALSE",
+    "confidence": "HIGH",
+    "reason": "현행 「서울특별시 서울도심 정비 및 관리에 관한 조례」는 서울도심을 한양도성과 그 일부지역을 포함하는 별도 구역으로 정의하고 있으며, 2040 서울도시기본계획에서도 서울도심과 강남을 서로 다른 도심으로 구분한다. 대상 SITE는 강남구 개포동 12번지이므로 해당 법령상 서울도심에 포함되지 않는 것으로 판정"
+  },
+  "official_definition": {
+    "source": "서울특별시 서울도심 정비 및 관리에 관한 조례",
+    "article": "제2조제1호",
+    "definition": "한양도성과 그 일부지역을 포함하는 지역으로서 서울특별시 도시계획 조례 시행규칙에서 정한 구역",
+    "planning_context": "2040 서울도시기본계획은 3도심을 서울도심ㆍ여의도ㆍ강남으로 서로 구분"
+  },
+  "previous_state": {
+    "was_unresolved": true,
+    "affected_clause_count": 1
+  },
+  "affected_rules": [
+    {
+      "clause_index": 208,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "previous_applicability": "UNKNOWN",
+      "previous_condition_states": [
+        "UNKNOWN"
+      ],
+      "resolved_condition_state": "FALSE",
+      "expected_applicability_after_overlay": "NOT_APPLICABLE"
+    }
+  ],
+  "next_overlay": {
+    "action": "서울도심 condition을 UNKNOWN -> FALSE로 overlay",
+    "expected_effect": "서울도심을 필요로 하는 조문을 NOT_APPLICABLE로 재평가"
+  },
+  "validations": {
+    "SITE 강남구": true,
+    "SITE 개포동": true,
+    "서울도심 기존 unresolved 확인": true,
+    "서울도심 affected clause 존재": true,
+    "affected clause count 일치": true,
+    "서울도심 FALSE": true,
+    "confidence HIGH": true
+  },
+  "all_pass": true
+}

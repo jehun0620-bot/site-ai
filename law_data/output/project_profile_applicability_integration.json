@@ -1,0 +1,75 @@
+{
+  "step": "STEP 17-21-C-10-1C ProjectProfile × Clause Applicability 통합 검증",
+  "baseline": {
+    "summary": {
+      "total": 314,
+      "applicable": 80,
+      "not_applicable": 173,
+      "conditional": 41,
+      "unknown": 20
+    }
+  },
+  "scenarios": {
+    "multi_family_housing_true": {
+      "summary": {
+        "total": 314,
+        "applicable": 80,
+        "not_applicable": 173,
+        "conditional": 41,
+        "unknown": 20
+      },
+      "change": {
+        "changed_count": 0,
+        "transitions": {},
+        "preview": []
+      },
+      "injection": {
+        "clause_count": 34,
+        "evaluated_count": 2,
+        "matching_state_count": 2,
+        "all_evaluated_match": true
+      }
+    },
+    "multi_family_housing_false": {
+      "summary": {
+        "total": 314,
+        "applicable": 80,
+        "not_applicable": 174,
+        "conditional": 40,
+        "unknown": 20
+      },
+      "change": {
+        "changed_count": 1,
+        "transitions": {
+          "CONDITIONAL -> NOT_APPLICABLE": 1
+        },
+        "preview": [
+          {
+            "clause_index": 206,
+            "rule_title": "용적률의 완화",
+            "before": "CONDITIONAL",
+            "after": "NOT_APPLICABLE"
+          }
+        ]
+      },
+      "injection": {
+        "clause_count": 34,
+        "evaluated_count": 2,
+        "matching_state_count": 2,
+        "all_evaluated_match": true
+      }
+    }
+  },
+  "validations": {
+    "baseline 314 clauses 유지": true,
+    "공동주택 TRUE가 실제 condition_result에 주입됨": true,
+    "공동주택 FALSE가 실제 condition_result에 주입됨": true,
+    "공동주택 FALSE가 최소 1개 clause를 배제함": true,
+    "공동주택 TRUE가 NOT_APPLICABLE을 새로 만들지 않음": true,
+    "TRUE 입력 후 다른 UNSET 조건 때문에 CONDITIONAL 유지 가능": true,
+    "PROJECT 입력으로 OTHER_ZONE 판정이 뒤집히지 않음": true,
+    "기존공장은 ProjectProfile에서 제외됨": true,
+    "기존공장 semantic override=SITE_HISTORY": true
+  },
+  "all_pass": true
+}

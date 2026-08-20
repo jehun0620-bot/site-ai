@@ -1,0 +1,507 @@
+{
+  "step": "STEP 17-21-C-10-2B-2 CALCULABLE_NOW numeric effect role classification",
+  "base": {
+    "building_coverage_ratio": 50.0,
+    "floor_area_ratio": 250.0
+  },
+  "summary": {
+    "calculable_now_input": 9,
+    "active_effect_candidate_count": 3,
+    "reference_only_count": 2,
+    "conditional_strengthening_count": 1,
+    "other_effect_count": 2
+  },
+  "role_summary": {
+    "RELAXATION": 4,
+    "NATIONAL_CEILING": 2,
+    "OTHER_EFFECT": 2,
+    "CONDITIONAL_STRENGTHENING": 1
+  },
+  "active_effect_candidates": [
+    {
+      "clause_index": 4,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "role": "RELAXATION",
+      "role_reason": "조문 제목/본문이 명시적으로 건폐율 또는 용적률 완화를 규정",
+      "role_source": "TEXT_ROLE_CLASSIFIER",
+      "base_comparison": {
+        "target": "building_coverage_ratio",
+        "base": 50.0,
+        "projected_value": 60.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "text": "영 제84조제6항제2호에 따라 완화하는 비율은 해당 용도지역별 건폐율의 120퍼센트 이하"
+    },
+    {
+      "clause_index": 50,
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 150.0,
+        "factor": 1.5,
+        "unit": "percent_of_base",
+        "formula": "base * 1.5",
+        "confidence": "HIGH"
+      },
+      "role": "RELAXATION",
+      "role_reason": "조문 제목/본문이 명시적으로 건폐율 또는 용적률 완화를 규정",
+      "role_source": "TEXT_ROLE_CLASSIFIER",
+      "base_comparison": {
+        "target": "building_coverage_ratio",
+        "base": 50.0,
+        "projected_value": 75.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "text": "제1항 내지 제4항 및 제7항의 규정에 의하여 완화하여 적용되는 건폐율 및 용적률은 당해 용도지역 또는 용도지구에 적용되는 건폐율의 150퍼센트 및 용적률의 200퍼센트를 각각 초과할 수 없다."
+    },
+    {
+      "clause_index": 189,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "role": "RELAXATION",
+      "role_reason": "조문 제목/본문이 명시적으로 건폐율 또는 용적률 완화를 규정",
+      "role_source": "TEXT_ROLE_CLASSIFIER",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": 300.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "text": "영 제85조제5항에 따라 완화하는 비율은 해당 용도지역별 용적률의 120퍼센트 이하"
+    }
+  ],
+  "reference_only": [
+    {
+      "clause_index": 61,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역의 건폐율",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 70.0,
+        "unit": "percent",
+        "formula": "max_allowed = 70",
+        "confidence": "HIGH",
+        "reason": "국토계획법상 도시지역 중 주거지역 건폐율 최대한도 70퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "role": "NATIONAL_CEILING",
+      "role_reason": "주거지역 건폐율 70%는 서울 제3종일반주거지역 실제 기본값 50%가 아니라 상위법 최대범위",
+      "role_source": "EXPLICIT_ROLE_OVERRIDE",
+      "base_comparison": {
+        "target": "building_coverage_ratio",
+        "base": 50.0,
+        "projected_value": null,
+        "changes_base": false,
+        "calculation_status": "REFERENCE_ONLY"
+      },
+      "text": "주거지역: 70퍼센트 이하"
+    },
+    {
+      "clause_index": 233,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 500.0,
+        "unit": "percent",
+        "formula": "max_allowed = 500",
+        "confidence": "HIGH",
+        "reason": "법률상 도시지역 중 주거지역의 용적률 최대한도 500퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "role": "NATIONAL_CEILING",
+      "role_reason": "주거지역 용적률 500%는 서울 제3종일반주거지역 실제 기본값 250%가 아니라 상위법 최대범위",
+      "role_source": "EXPLICIT_ROLE_OVERRIDE",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": null,
+        "changes_base": false,
+        "calculation_status": "REFERENCE_ONLY"
+      },
+      "text": "주거지역: 500퍼센트 이하"
+    }
+  ],
+  "conditional_strengthening": [
+    {
+      "clause_index": 262,
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "개발밀도의 강화범위 등",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "MAX_LIMIT_MULTIPLIER",
+        "value": 50.0,
+        "factor": 0.5,
+        "unit": "percent_of_max_limit",
+        "formula": "strengthened_max = original_max_limit * 0.5",
+        "confidence": "HIGH",
+        "reason": "개발밀도관리구역에서는 해당 용도지역 용적률 최대한도의 50퍼센트 범위로 강화",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "role": "CONDITIONAL_STRENGTHENING",
+      "role_reason": "개발밀도관리구역 지정 시 용적률 최대한도를 50% 수준으로 강화하는 규칙",
+      "role_source": "EXPLICIT_ROLE_OVERRIDE",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": null,
+        "changes_base": null,
+        "calculation_status": "SITE_CONDITION_REQUIRED"
+      },
+      "text": "법 제66조제2항에서 \"대통령령으로 정하는 범위\"란 해당 용도지역에 적용되는 용적률의 최대한도의 50퍼센트를 말한다."
+    }
+  ],
+  "other_effects": [
+    {
+      "clause_index": 220,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "그 밖의 용적률",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 110.0,
+        "factor": 1.1,
+        "unit": "percent_of_base",
+        "formula": "base * 1.1",
+        "confidence": "HIGH"
+      },
+      "role": "OTHER_EFFECT",
+      "role_reason": "기준값 배율은 확인됐으나 현재 base에 대한 완화/강화 역할을 문맥상 안전하게 확정하지 못함",
+      "role_source": "SEMANTIC_FALLBACK",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": 275.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "text": "제48조에 따른 용도지역별 용적률의 110퍼센트 이하 (제48조제2호부터 제10호까지의 지역에 한한다.)"
+    },
+    {
+      "clause_index": 244,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 200.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "role": "OTHER_EFFECT",
+      "role_reason": "현재 정보만으로 BASE/완화/강화 역할을 안전하게 확정하지 않음",
+      "role_source": "SAFE_FALLBACK",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": 200.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "text": "제77조제3항제2호부터 제5호까지의 규정에 해당하는 지역에서의 용적률에 대한 기준은 제1항과 제2항에도 불구하고 200퍼센트 이하의 범위에서 대통령령으로 정하는 기준에 따라 특별시ㆍ광역시ㆍ특별자치시ㆍ특별자치도ㆍ시 또는 군의 조례로 따로 정한다."
+    }
+  ],
+  "all_calculable_now": [
+    {
+      "clause_index": 3,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "RANGE",
+        "min": 80.0,
+        "max": 90.0,
+        "unit": "percent",
+        "formula": null,
+        "confidence": "HIGH"
+      },
+      "role": "RELAXATION",
+      "role_reason": "조문 제목/본문이 명시적으로 건폐율 또는 용적률 완화를 규정",
+      "role_source": "TEXT_ROLE_CLASSIFIER",
+      "base_comparison": {
+        "target": "building_coverage_ratio",
+        "base": 50.0,
+        "projected_value": null,
+        "changes_base": null,
+        "calculation_status": "SEMANTIC_NOT_DIRECTLY_COMPARABLE"
+      },
+      "text": "영 제84조제6항제1호에 따른 건축물 중 지구단위계획을 수립하는 지역의 건축물의 경우에는 건폐율을 80퍼센트 이상 90퍼센트 이하의 범위에서 지구단위계획으로 따로 규정 가능"
+    },
+    {
+      "clause_index": 4,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "role": "RELAXATION",
+      "role_reason": "조문 제목/본문이 명시적으로 건폐율 또는 용적률 완화를 규정",
+      "role_source": "TEXT_ROLE_CLASSIFIER",
+      "base_comparison": {
+        "target": "building_coverage_ratio",
+        "base": 50.0,
+        "projected_value": 60.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "text": "영 제84조제6항제2호에 따라 완화하는 비율은 해당 용도지역별 건폐율의 120퍼센트 이하"
+    },
+    {
+      "clause_index": 50,
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 150.0,
+        "factor": 1.5,
+        "unit": "percent_of_base",
+        "formula": "base * 1.5",
+        "confidence": "HIGH"
+      },
+      "role": "RELAXATION",
+      "role_reason": "조문 제목/본문이 명시적으로 건폐율 또는 용적률 완화를 규정",
+      "role_source": "TEXT_ROLE_CLASSIFIER",
+      "base_comparison": {
+        "target": "building_coverage_ratio",
+        "base": 50.0,
+        "projected_value": 75.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "text": "제1항 내지 제4항 및 제7항의 규정에 의하여 완화하여 적용되는 건폐율 및 용적률은 당해 용도지역 또는 용도지구에 적용되는 건폐율의 150퍼센트 및 용적률의 200퍼센트를 각각 초과할 수 없다."
+    },
+    {
+      "clause_index": 61,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역의 건폐율",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 70.0,
+        "unit": "percent",
+        "formula": "max_allowed = 70",
+        "confidence": "HIGH",
+        "reason": "국토계획법상 도시지역 중 주거지역 건폐율 최대한도 70퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "role": "NATIONAL_CEILING",
+      "role_reason": "주거지역 건폐율 70%는 서울 제3종일반주거지역 실제 기본값 50%가 아니라 상위법 최대범위",
+      "role_source": "EXPLICIT_ROLE_OVERRIDE",
+      "base_comparison": {
+        "target": "building_coverage_ratio",
+        "base": 50.0,
+        "projected_value": null,
+        "changes_base": false,
+        "calculation_status": "REFERENCE_ONLY"
+      },
+      "text": "주거지역: 70퍼센트 이하"
+    },
+    {
+      "clause_index": 189,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "용적률의 완화",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 120.0,
+        "factor": 1.2,
+        "unit": "percent_of_base",
+        "formula": "base * 1.2",
+        "confidence": "HIGH"
+      },
+      "role": "RELAXATION",
+      "role_reason": "조문 제목/본문이 명시적으로 건폐율 또는 용적률 완화를 규정",
+      "role_source": "TEXT_ROLE_CLASSIFIER",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": 300.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "text": "영 제85조제5항에 따라 완화하는 비율은 해당 용도지역별 용적률의 120퍼센트 이하"
+    },
+    {
+      "clause_index": 220,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "그 밖의 용적률",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 110.0,
+        "factor": 1.1,
+        "unit": "percent_of_base",
+        "formula": "base * 1.1",
+        "confidence": "HIGH"
+      },
+      "role": "OTHER_EFFECT",
+      "role_reason": "기준값 배율은 확인됐으나 현재 base에 대한 완화/강화 역할을 문맥상 안전하게 확정하지 못함",
+      "role_source": "SEMANTIC_FALLBACK",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": 275.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "text": "제48조에 따른 용도지역별 용적률의 110퍼센트 이하 (제48조제2호부터 제10호까지의 지역에 한한다.)"
+    },
+    {
+      "clause_index": 233,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 500.0,
+        "unit": "percent",
+        "formula": "max_allowed = 500",
+        "confidence": "HIGH",
+        "reason": "법률상 도시지역 중 주거지역의 용적률 최대한도 500퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "role": "NATIONAL_CEILING",
+      "role_reason": "주거지역 용적률 500%는 서울 제3종일반주거지역 실제 기본값 250%가 아니라 상위법 최대범위",
+      "role_source": "EXPLICIT_ROLE_OVERRIDE",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": null,
+        "changes_base": false,
+        "calculation_status": "REFERENCE_ONLY"
+      },
+      "text": "주거지역: 500퍼센트 이하"
+    },
+    {
+      "clause_index": 244,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 200.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "role": "OTHER_EFFECT",
+      "role_reason": "현재 정보만으로 BASE/완화/강화 역할을 안전하게 확정하지 않음",
+      "role_source": "SAFE_FALLBACK",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": 200.0,
+        "changes_base": true,
+        "calculation_status": "COMPARABLE"
+      },
+      "text": "제77조제3항제2호부터 제5호까지의 규정에 해당하는 지역에서의 용적률에 대한 기준은 제1항과 제2항에도 불구하고 200퍼센트 이하의 범위에서 대통령령으로 정하는 기준에 따라 특별시ㆍ광역시ㆍ특별자치시ㆍ특별자치도ㆍ시 또는 군의 조례로 따로 정한다."
+    },
+    {
+      "clause_index": 262,
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "개발밀도의 강화범위 등",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "semantic": {
+        "semantic_type": "MAX_LIMIT_MULTIPLIER",
+        "value": 50.0,
+        "factor": 0.5,
+        "unit": "percent_of_max_limit",
+        "formula": "strengthened_max = original_max_limit * 0.5",
+        "confidence": "HIGH",
+        "reason": "개발밀도관리구역에서는 해당 용도지역 용적률 최대한도의 50퍼센트 범위로 강화",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "role": "CONDITIONAL_STRENGTHENING",
+      "role_reason": "개발밀도관리구역 지정 시 용적률 최대한도를 50% 수준으로 강화하는 규칙",
+      "role_source": "EXPLICIT_ROLE_OVERRIDE",
+      "base_comparison": {
+        "target": "floor_area_ratio",
+        "base": 250.0,
+        "projected_value": null,
+        "changes_base": null,
+        "calculation_status": "SITE_CONDITION_REQUIRED"
+      },
+      "text": "법 제66조제2항에서 \"대통령령으로 정하는 범위\"란 해당 용도지역에 적용되는 용적률의 최대한도의 50퍼센트를 말한다."
+    }
+  ],
+  "validations": {
+    "CALCULABLE_NOW 9개 유지": true,
+    "clause 61 NATIONAL_CEILING": true,
+    "clause 233 NATIONAL_CEILING": true,
+    "clause 262 conditional strengthening": true,
+    "국가 ceiling을 현재 base로 적용하지 않음": true,
+    "OTHER_EFFECT는 현재값 계산에 포함하지 않음": true,
+    "conditional strengthening은 현재값에 적용하지 않음": true
+  },
+  "all_pass": true
+}

@@ -1,0 +1,109 @@
+{
+  "step": "STEP 17-21-C-10-2B-9 upper relaxation branch resolution",
+  "source_verification": {
+    "national_enforcement_decree_effective": "2026-07-01",
+    "clause_4_upper_branch": "제84조제6항제2호",
+    "clause_189_upper_branch": "제85조제5항"
+  },
+  "resolutions": {
+    "clause_4": {
+      "clause_index": 4,
+      "upper_reference": "국토계획법 시행령 제84조제6항제2호",
+      "effect": "building_coverage_ratio",
+      "base_value": 50.0,
+      "candidate_value": 60.0,
+      "required_zone_groups": [
+        "계획관리지역",
+        "관리지역",
+        "녹지지역",
+        "농림지역",
+        "보전관리지역",
+        "보전녹지지역",
+        "생산관리지역",
+        "생산녹지지역",
+        "자연녹지지역",
+        "자연환경보전지역"
+      ],
+      "site_zone": "제3종일반주거지역",
+      "zone_match": false,
+      "resolution": "NOT_APPLICABLE",
+      "reason": "영 제84조제6항제2호는 녹지지역ㆍ관리지역ㆍ농림지역ㆍ자연환경보전지역의 건축물을 대상으로 하나 현재 SITE는 제3종일반주거지역이므로 적용대상이 아님",
+      "apply_candidate_now": false
+    },
+    "clause_189": {
+      "clause_index": 189,
+      "upper_reference": "국토계획법 시행령 제85조제5항",
+      "effect": "floor_area_ratio",
+      "base_value": 250.0,
+      "candidate_value": 300.0,
+      "national_max_factor": 1.4,
+      "seoul_ordinance_factor": 1.2,
+      "required_zone_groups": [
+        "근린상업지역",
+        "유통상업지역",
+        "일반공업지역",
+        "일반상업지역",
+        "전용공업지역",
+        "제1종일반주거지역",
+        "제1종전용주거지역",
+        "제2종일반주거지역",
+        "제2종전용주거지역",
+        "제3종일반주거지역",
+        "준공업지역",
+        "준주거지역",
+        "중심상업지역"
+      ],
+      "site_zone": "제3종일반주거지역",
+      "zone_match": true,
+      "conditions": [
+        {
+          "name": "방재지구",
+          "type": "SITE",
+          "state": "UNKNOWN",
+          "confidence": "NONE",
+          "source": "SITE_CONDITION_NOT_CONNECTED"
+        },
+        {
+          "name": "재해예방시설",
+          "type": "PROJECT",
+          "state": "UNSET",
+          "value": null,
+          "confidence": "NONE",
+          "source": "PROJECT_INPUT_REQUIRED"
+        }
+      ],
+      "resolution": "UNKNOWN",
+      "reason": "방재지구 SITE 여부가 아직 미확정",
+      "apply_candidate_now": false
+    }
+  },
+  "current_confirmed_regulation": {
+    "building_coverage_ratio": {
+      "confirmed_value": 50.0,
+      "base_value": 50.0,
+      "relaxation_candidate": 60.0,
+      "relaxation_resolution": "NOT_APPLICABLE",
+      "source": "BASE_REGULATION"
+    },
+    "floor_area_ratio": {
+      "confirmed_value": 250.0,
+      "base_value": 250.0,
+      "relaxation_candidate": 300.0,
+      "relaxation_resolution": "UNKNOWN",
+      "source": "BASE_REGULATION"
+    }
+  },
+  "validations": {
+    "제3종일반주거지역은 84조6항2호 대상 아님": true,
+    "clause 4 NOT_APPLICABLE": true,
+    "BCR candidate 60 현재 미적용": true,
+    "제3종일반주거지역은 85조5항 용도지역 범위 포함": true,
+    "clause 189 방재지구 condition 생성": true,
+    "clause 189 재해예방시설 condition 생성": true,
+    "미확정 FAR relaxation을 현재 확정값으로 사용하지 않음": true,
+    "BCR confirmed 50": true,
+    "기존 guard와 BCR 일관": true,
+    "기존 guard와 FAR 일관": true
+  },
+  "all_pass": true
+}

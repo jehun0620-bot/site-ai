@@ -1,0 +1,180 @@
+{
+  "step": "STEP 17-21-C-10-1E Full Clause Applicability 통합 검증",
+  "baseline": {
+    "summary": {
+      "total": 314,
+      "applicable": 80,
+      "not_applicable": 173,
+      "conditional": 41,
+      "unknown": 20
+    }
+  },
+  "scenario_1": {
+    "inputs": {
+      "PROJECT": {
+        "공동주택": true
+      },
+      "PROCEDURE": {
+        "도시계획위원회심의": true
+      }
+    },
+    "summary": {
+      "total": 314,
+      "applicable": 86,
+      "not_applicable": 173,
+      "conditional": 35,
+      "unknown": 20
+    },
+    "change": {
+      "changed_count": 6,
+      "transitions": {
+        "CONDITIONAL -> APPLICABLE": 6
+      },
+      "preview": [
+        {
+          "clause_index": 16,
+          "rule_title": "건폐율의 완화",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 121,
+          "rule_title": "건폐율의 강화",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 205,
+          "rule_title": "용적률의 완화",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 248,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 249,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 250,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        }
+      ]
+    },
+    "project_injection": {
+      "declared_clause_count": 34,
+      "evaluated_count": 2,
+      "matching_count": 2,
+      "all_evaluated_match": true
+    },
+    "procedure_injection": {
+      "declared_clause_count": 26,
+      "evaluated_count": 15,
+      "matching_count": 15,
+      "all_evaluated_match": true
+    }
+  },
+  "scenario_2": {
+    "inputs": {
+      "PROJECT": {
+        "공동주택": true
+      },
+      "PROCEDURE": {
+        "도시계획위원회심의": false
+      }
+    },
+    "summary": {
+      "total": 314,
+      "applicable": 80,
+      "not_applicable": 182,
+      "conditional": 32,
+      "unknown": 20
+    },
+    "change": {
+      "changed_count": 9,
+      "transitions": {
+        "CONDITIONAL -> NOT_APPLICABLE": 9
+      },
+      "preview": [
+        {
+          "clause_index": 16,
+          "rule_title": "건폐율의 완화",
+          "before": "CONDITIONAL",
+          "after": "NOT_APPLICABLE"
+        },
+        {
+          "clause_index": 121,
+          "rule_title": "건폐율의 강화",
+          "before": "CONDITIONAL",
+          "after": "NOT_APPLICABLE"
+        },
+        {
+          "clause_index": 201,
+          "rule_title": "용적률의 완화",
+          "before": "CONDITIONAL",
+          "after": "NOT_APPLICABLE"
+        },
+        {
+          "clause_index": 202,
+          "rule_title": "용적률의 완화",
+          "before": "CONDITIONAL",
+          "after": "NOT_APPLICABLE"
+        },
+        {
+          "clause_index": 204,
+          "rule_title": "용적률의 완화",
+          "before": "CONDITIONAL",
+          "after": "NOT_APPLICABLE"
+        },
+        {
+          "clause_index": 205,
+          "rule_title": "용적률의 완화",
+          "before": "CONDITIONAL",
+          "after": "NOT_APPLICABLE"
+        },
+        {
+          "clause_index": 248,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "NOT_APPLICABLE"
+        },
+        {
+          "clause_index": 249,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "NOT_APPLICABLE"
+        },
+        {
+          "clause_index": 250,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "NOT_APPLICABLE"
+        }
+      ]
+    },
+    "procedure_injection": {
+      "declared_clause_count": 26,
+      "evaluated_count": 15,
+      "matching_count": 15,
+      "all_evaluated_match": true
+    }
+  },
+  "validations": {
+    "baseline 314 clauses 유지": true,
+    "공동주택 TRUE 주입 성공": true,
+    "도시계획위원회심의 TRUE 주입 성공": true,
+    "도시계획위원회심의 FALSE 주입 성공": true,
+    "PROCEDURE FALSE가 최소 하나의 clause를 배제": true,
+    "PROJECT/PROCEDURE 입력으로 OTHER_ZONE 뒤집힘 없음": true,
+    "semantic override 기존공장=SITE_HISTORY": true
+  },
+  "all_pass": true
+}

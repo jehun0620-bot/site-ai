@@ -1,0 +1,448 @@
+{
+  "step": "STEP 17-21-C-10-4B-2D dynamic numeric residual role probe",
+  "summary": {
+    "active_before_guard": 11,
+    "blocked_indexes": [
+      4,
+      189,
+      205
+    ],
+    "active_after_guard": 9,
+    "known_role_count": 8,
+    "residual_role_count": 1,
+    "residual_immediate_risk_count": 0
+  },
+  "active_rules": [
+    {
+      "clause_index": 3,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 완화",
+      "path": {
+        "paragraph": "①",
+        "item": "1",
+        "subitem": null
+      },
+      "applicability": "APPLICABLE",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_effect": {
+        "semantic_type": "RANGE",
+        "min": 80.0,
+        "max": 90.0,
+        "unit": "percent",
+        "formula": null,
+        "confidence": "HIGH"
+      },
+      "known_role": "CONDITIONAL_PLAN_RANGE",
+      "language_hints": [
+        "UPPER_LIMIT_LANGUAGE",
+        "LOWER_LIMIT_LANGUAGE",
+        "DISTRICT_UNIT_PLAN"
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT",
+          "derived": false,
+          "derived_from": null
+        }
+      ],
+      "text": "영 제84조제6항제1호에 따른 건축물 중 지구단위계획을 수립하는 지역의 건축물의 경우에는 건폐율을 80퍼센트 이상 90퍼센트 이하의 범위에서 지구단위계획으로 따로 규정 가능",
+      "inherited_context": "제44조 규정에도 불구하고 영 제84조에 따라 조례로 정하는 사항은 다음 각 호와 같다.",
+      "role_status": "KNOWN"
+    },
+    {
+      "clause_index": 50,
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+      "path": {
+        "paragraph": "⑩",
+        "item": null,
+        "subitem": null
+      },
+      "applicability": "APPLICABLE",
+      "effect_targets": [
+        "building_coverage_ratio",
+        "floor_area_ratio"
+      ],
+      "numeric_effect": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 150.0,
+        "factor": 1.5,
+        "unit": "percent_of_base",
+        "formula": "base * 1.5",
+        "confidence": "HIGH"
+      },
+      "known_role": "DISTRICT_PLAN_CEILING",
+      "language_hints": [
+        "RELAXATION_LANGUAGE",
+        "CEILING_LANGUAGE",
+        "ZONE_REFERENCE"
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT",
+          "derived": true,
+          "derived_from": "rule_title"
+        }
+      ],
+      "text": "제1항 내지 제4항 및 제7항의 규정에 의하여 완화하여 적용되는 건폐율 및 용적률은 당해 용도지역 또는 용도지구에 적용되는 건폐율의 150퍼센트 및 용적률의 200퍼센트를 각각 초과할 수 없다.",
+      "inherited_context": "",
+      "role_status": "KNOWN"
+    },
+    {
+      "clause_index": 61,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역의 건폐율",
+      "path": {
+        "paragraph": "①",
+        "item": "1",
+        "subitem": "가"
+      },
+      "applicability": "APPLICABLE",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_effect": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 70.0,
+        "unit": "percent",
+        "formula": "max_allowed = 70",
+        "confidence": "HIGH",
+        "reason": "국토계획법상 도시지역 중 주거지역 건폐율 최대한도 70퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "known_role": "NATIONAL_CEILING",
+      "language_hints": [
+        "MAX_LIMIT_LANGUAGE",
+        "UPPER_LIMIT_LANGUAGE",
+        "ZONE_REFERENCE",
+        "DELEGATED_STANDARD"
+      ],
+      "conditions": [],
+      "text": "주거지역: 70퍼센트 이하",
+      "inherited_context": "제36조에 따라 지정된 용도지역에서 건폐율의 최대한도는 관할 구역의 면적과 인구 규모, 용도지역의 특성 등을 고려하여 다음 각 호의 범위에서 대통령령으로 정하는 기준에 따라 특별시ㆍ광역시ㆍ특별자치시ㆍ특별자치도ㆍ시 또는 군의 조례로 정한다. 도시지역",
+      "role_status": "KNOWN"
+    },
+    {
+      "clause_index": 121,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "건폐율의 강화",
+      "path": {
+        "paragraph": null,
+        "item": null,
+        "subitem": null
+      },
+      "applicability": "APPLICABLE",
+      "effect_targets": [
+        "building_coverage_ratio"
+      ],
+      "numeric_effect": {
+        "semantic_type": "MAX_LIMIT_REDUCTION_RATIO",
+        "value": 50.0,
+        "factor": 0.5,
+        "unit": "percent_of_max_limit",
+        "formula": "strengthened_limit >= original_max_limit * 0.5",
+        "confidence": "HIGH",
+        "reason": "해당 구역에 적용할 건폐율 최대한도의 50퍼센트까지 낮출 수 있다는 강화 규칙",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "known_role": "CONDITIONAL_STRENGTHENING",
+      "language_hints": [
+        "STRENGTHENING_LANGUAGE",
+        "MAX_LIMIT_LANGUAGE"
+      ],
+      "conditions": [
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE",
+          "state": "TRUE",
+          "confidence": "USER_DECLARED",
+          "source": "DYNAMIC_USER_INPUT",
+          "derived": false,
+          "derived_from": null,
+          "previous_state": "UNSET"
+        }
+      ],
+      "text": "제46조(건폐율의 강화) 영 제84조제5항에 따라 시장은 토지이용의 과밀화를 방지하기 위하여 건폐율을 낮추어야 할 필요가 있는 경우 제44조 및 제45조제1항 규정에도 불구하고 시도시계획위원회의 심의를 거쳐 구역을 정하고, 그 구역에 적용할 건폐율의 최대한도의 50퍼센트까지 낮출 수 있다.",
+      "inherited_context": "",
+      "role_status": "KNOWN"
+    },
+    {
+      "clause_index": 220,
+      "law_name": "서울특별시 도시계획 조례",
+      "rule_title": "그 밖의 용적률",
+      "path": {
+        "paragraph": "②",
+        "item": "2",
+        "subitem": null
+      },
+      "applicability": "APPLICABLE",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_effect": {
+        "semantic_type": "BASE_RATIO_MULTIPLIER",
+        "value": 110.0,
+        "factor": 1.1,
+        "unit": "percent_of_base",
+        "formula": "base * 1.1",
+        "confidence": "HIGH"
+      },
+      "known_role": "DISTRICT_PLAN_CEILING",
+      "language_hints": [
+        "UPPER_LIMIT_LANGUAGE",
+        "DISTRICT_UNIT_PLAN",
+        "ZONE_REFERENCE"
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT",
+          "derived": false,
+          "derived_from": null
+        }
+      ],
+      "text": "제48조에 따른 용도지역별 용적률의 110퍼센트 이하 (제48조제2호부터 제10호까지의 지역에 한한다.)",
+      "inherited_context": "법 제51조와 영 제43조 및 이 조례 제17조에 따라 지정된 지구단위계획구역 안에서의 용적률은 다음 각 호 규정의 범위에서 규칙으로 정한다.",
+      "role_status": "KNOWN"
+    },
+    {
+      "clause_index": 233,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "path": {
+        "paragraph": "①",
+        "item": "1",
+        "subitem": "가"
+      },
+      "applicability": "APPLICABLE",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_effect": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 500.0,
+        "unit": "percent",
+        "formula": "max_allowed = 500",
+        "confidence": "HIGH",
+        "reason": "법률상 도시지역 중 주거지역의 용적률 최대한도 500퍼센트 이하",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "known_role": "NATIONAL_CEILING",
+      "language_hints": [
+        "MAX_LIMIT_LANGUAGE",
+        "UPPER_LIMIT_LANGUAGE",
+        "ZONE_REFERENCE",
+        "DELEGATED_STANDARD"
+      ],
+      "conditions": [],
+      "text": "주거지역: 500퍼센트 이하",
+      "inherited_context": "제36조에 따라 지정된 용도지역에서 용적률의 최대한도는 관할 구역의 면적과 인구 규모, 용도지역의 특성 등을 고려하여 다음 각 호의 범위에서 대통령령으로 정하는 기준에 따라 특별시ㆍ광역시ㆍ특별자치시ㆍ특별자치도ㆍ시 또는 군의 조례로 정한다. 도시지역",
+      "role_status": "KNOWN"
+    },
+    {
+      "clause_index": 244,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "path": {
+        "paragraph": "③",
+        "item": null,
+        "subitem": null
+      },
+      "applicability": "APPLICABLE",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_effect": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 200.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "known_role": "SPECIAL_AREA_REFERENCE",
+      "language_hints": [
+        "UPPER_LIMIT_LANGUAGE",
+        "DELEGATED_STANDARD"
+      ],
+      "conditions": [],
+      "text": "제77조제3항제2호부터 제5호까지의 규정에 해당하는 지역에서의 용적률에 대한 기준은 제1항과 제2항에도 불구하고 200퍼센트 이하의 범위에서 대통령령으로 정하는 기준에 따라 특별시ㆍ광역시ㆍ특별자치시ㆍ특별자치도ㆍ시 또는 군의 조례로 따로 정한다.",
+      "inherited_context": "",
+      "role_status": "KNOWN"
+    },
+    {
+      "clause_index": 250,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "path": {
+        "paragraph": "⑦",
+        "item": "2",
+        "subitem": null
+      },
+      "applicability": "APPLICABLE",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_effect": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 120.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "known_role": null,
+      "language_hints": [
+        "RELAXATION_LANGUAGE",
+        "MAX_LIMIT_LANGUAGE",
+        "UPPER_LIMIT_LANGUAGE",
+        "DISTRICT_UNIT_PLAN",
+        "ZONE_REFERENCE"
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT",
+          "derived": false,
+          "derived_from": null
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE",
+          "state": "TRUE",
+          "confidence": "USER_DECLARED",
+          "source": "DYNAMIC_USER_INPUT",
+          "derived": false,
+          "derived_from": null,
+          "previous_state": "UNSET"
+        }
+      ],
+      "text": "지구단위계획구역 외의 지역: 제1항 및 제2항에 따라 대통령령으로 정하고 있는 해당 용도지역별 용적률 최대한도의 120퍼센트 이하",
+      "inherited_context": "이 법 및 「건축법」 등 다른 법률에 따른 용적률의 완화에 관한 규정은 이 법 및 다른 법률에도 불구하고 다음 각 호의 구분에 따른 범위에서 중첩하여 적용할 수 있다. 다만, 용적률 완화 규정을 중첩 적용하여 완화되는 용적률이 제1항 및 제2항에 따라 대통령령으로 정하고 있는 해당 용도지역별 용적률 최대한도를 초과하는 경우에는 관할 시ㆍ도지사, 시장ㆍ군수 또는 구청장이 제30조제3항 단서 또는 같은 조 제7항에 따른 건축위원회와 도시계획위원회의 공동 심의를 거쳐 기반시설의 설치 및 그에 필요한 용지의 확보가 충분하다고 인정하는 경우에 한정한다.",
+      "role_status": "RESIDUAL",
+      "residual_classification": {
+        "candidate_role": "NUMERIC_REFERENCE_OR_EFFECT",
+        "immediate_effect_possible": false,
+        "reason": "숫자 semantic은 존재하지만 완화 언어가 없어 직접 효과인지 기준/참조인지 문맥 검증 필요"
+      }
+    },
+    {
+      "clause_index": 262,
+      "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+      "rule_title": "개발밀도의 강화범위 등",
+      "path": {
+        "paragraph": "①",
+        "item": null,
+        "subitem": null
+      },
+      "applicability": "APPLICABLE",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_effect": {
+        "semantic_type": "MAX_LIMIT_MULTIPLIER",
+        "value": 50.0,
+        "factor": 0.5,
+        "unit": "percent_of_max_limit",
+        "formula": "strengthened_max = original_max_limit * 0.5",
+        "confidence": "HIGH",
+        "reason": "개발밀도관리구역에서는 해당 용도지역 용적률 최대한도의 50퍼센트 범위로 강화",
+        "source": "EXPLICIT_CONTEXT_OVERRIDE"
+      },
+      "known_role": "CONDITIONAL_STRENGTHENING",
+      "language_hints": [
+        "MAX_LIMIT_LANGUAGE",
+        "ZONE_REFERENCE",
+        "DELEGATED_STANDARD"
+      ],
+      "conditions": [],
+      "text": "법 제66조제2항에서 \"대통령령으로 정하는 범위\"란 해당 용도지역에 적용되는 용적률의 최대한도의 50퍼센트를 말한다.",
+      "inherited_context": "",
+      "role_status": "KNOWN"
+    }
+  ],
+  "residual_rules": [
+    {
+      "clause_index": 250,
+      "law_name": "국토의 계획 및 이용에 관한 법률",
+      "rule_title": "용도지역에서의 용적률",
+      "path": {
+        "paragraph": "⑦",
+        "item": "2",
+        "subitem": null
+      },
+      "applicability": "APPLICABLE",
+      "effect_targets": [
+        "floor_area_ratio"
+      ],
+      "numeric_effect": {
+        "semantic_type": "ABSOLUTE_MAX",
+        "value": 120.0,
+        "unit": "percent",
+        "formula": "min(calculated, value)",
+        "confidence": "HIGH"
+      },
+      "known_role": null,
+      "language_hints": [
+        "RELAXATION_LANGUAGE",
+        "MAX_LIMIT_LANGUAGE",
+        "UPPER_LIMIT_LANGUAGE",
+        "DISTRICT_UNIT_PLAN",
+        "ZONE_REFERENCE"
+      ],
+      "conditions": [
+        {
+          "name": "지구단위계획",
+          "type": "SITE",
+          "state": "TRUE",
+          "confidence": "HIGH",
+          "source": "SITE_CONDITION_SNAPSHOT",
+          "derived": false,
+          "derived_from": null
+        },
+        {
+          "name": "도시계획위원회심의",
+          "type": "PROCEDURE",
+          "state": "TRUE",
+          "confidence": "USER_DECLARED",
+          "source": "DYNAMIC_USER_INPUT",
+          "derived": false,
+          "derived_from": null,
+          "previous_state": "UNSET"
+        }
+      ],
+      "text": "지구단위계획구역 외의 지역: 제1항 및 제2항에 따라 대통령령으로 정하고 있는 해당 용도지역별 용적률 최대한도의 120퍼센트 이하",
+      "inherited_context": "이 법 및 「건축법」 등 다른 법률에 따른 용적률의 완화에 관한 규정은 이 법 및 다른 법률에도 불구하고 다음 각 호의 구분에 따른 범위에서 중첩하여 적용할 수 있다. 다만, 용적률 완화 규정을 중첩 적용하여 완화되는 용적률이 제1항 및 제2항에 따라 대통령령으로 정하고 있는 해당 용도지역별 용적률 최대한도를 초과하는 경우에는 관할 시ㆍ도지사, 시장ㆍ군수 또는 구청장이 제30조제3항 단서 또는 같은 조 제7항에 따른 건축위원회와 도시계획위원회의 공동 심의를 거쳐 기반시설의 설치 및 그에 필요한 용지의 확보가 충분하다고 인정하는 경우에 한정한다.",
+      "role_status": "RESIDUAL",
+      "residual_classification": {
+        "candidate_role": "NUMERIC_REFERENCE_OR_EFFECT",
+        "immediate_effect_possible": false,
+        "reason": "숫자 semantic은 존재하지만 완화 언어가 없어 직접 효과인지 기준/참조인지 문맥 검증 필요"
+      }
+    }
+  ],
+  "residual_immediate_risk": [],
+  "validations": {
+    "active before guard 11": true,
+    "blocked guards include 4": true,
+    "blocked guards include 189": true,
+    "active after guard 9": true,
+    "residual role count 1": true,
+    "residual clause identified": true
+  },
+  "all_pass": true
+}

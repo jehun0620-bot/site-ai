@@ -1,0 +1,64 @@
+{
+  "step": "STEP 17-21-C-10-4B-1S clause 205 tourism branch guard",
+  "site": {
+    "zone": "제3종일반주거지역",
+    "seoul_article_48_number": 5
+  },
+  "clause": {
+    "clause_index": 205,
+    "previous_applicability": "APPLICABLE",
+    "previous_projected_far": 325.0,
+    "text": "다목에도 불구하고 제48조제7호부터 제10호까지의 지역(서울도심 지역을 포함한다)에서 다목에 따른 관광숙박시설을 건축하는 경우 다음 항목에서 정하는 범위까지 용적률을 완화할 수 있다.1) 서울도심 외 지역은 해당 용도지역 용적률의 130퍼센트 이하의 범위2) 서울도심 지역은 서울도심 용적률에도 불구하고, 서울도심 외 용적률의 130퍼센트 이하의 범위"
+  },
+  "branch_conditions": {
+    "zone": {
+      "name": "서울조례제48조7호부터10호지역",
+      "type": "SITE",
+      "state": "FALSE",
+      "confidence": "HIGH",
+      "site_zone": "제3종일반주거지역",
+      "site_article_48_number": 5,
+      "required_article_48_numbers": [
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "tourism_accommodation": {
+      "name": "관광숙박시설",
+      "type": "PROJECT",
+      "state": "UNSET",
+      "confidence": "NONE",
+      "required_for_branch": true,
+      "evaluation_required_now": false
+    }
+  },
+  "resolution": {
+    "applicability": "NOT_APPLICABLE",
+    "confidence": "HIGH",
+    "allow_numeric_effect": false,
+    "numeric_status": "INACTIVE_BY_VERIFIED_BRANCH_GUARD",
+    "reason": "clause 205는 서울특별시 도시계획 조례 제48조제7호부터 제10호까지의 지역에서 관광숙박시설을 건축하는 경우 적용되는 용적률 130% 특례다. 현재 SITE는 제3종일반주거지역으로 제48조제5호에 해당하므로 대상 용도지역 branch가 FALSE이다."
+  },
+  "numeric_reconciliation": {
+    "previous_immediate_count": 1,
+    "final_immediate_count": 0,
+    "final_immediate_candidates": []
+  },
+  "validations": {
+    "clause 205 exists": true,
+    "previous clause205 APPLICABLE": true,
+    "previous projected FAR 325": true,
+    "SITE 제3종일반주거지역": true,
+    "SITE article48 no5": true,
+    "target branch is 7-10": true,
+    "SITE target branch mismatch": true,
+    "text target zone branch detected": true,
+    "text tourism branch detected": true,
+    "clause205 NOT_APPLICABLE": true,
+    "numeric effect inactive": true,
+    "final immediate numeric 0": true
+  },
+  "all_pass": true
+}

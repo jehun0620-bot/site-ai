@@ -1,0 +1,31 @@
+{
+  "step": "STEP 17-21-C-10-2B-10B-1 서울 방재지구 2019 이후 재지정 전수 probe",
+  "official_baseline": {
+    "abolition_notice": "서울특별시 고시 제2019-133호",
+    "abolition_date": "2019-04-25",
+    "baseline_state": "서울시 기존 방재지구 전부 폐지"
+  },
+  "api": {
+    "query_status": "QUERY_SUCCESS",
+    "result_code": "INFO-000",
+    "total_count": 43508,
+    "received_rows": 43508,
+    "post_abolition_rows": 3952
+  },
+  "search": {
+    "target_term": "방재지구",
+    "exact_hit_count": 0,
+    "strong_redesignation_count": 0,
+    "gangnam_gaepo_hit_count": 0,
+    "classification_counts": {},
+    "exact_hits": [],
+    "strong_redesignation_candidates": [],
+    "site_hits": []
+  },
+  "resolution": {
+    "resolution": "NO_REDESIGNATION_EVIDENCE",
+    "confidence": "HIGH",
+    "reason": "서울시 공식 upisAnnouncement 전체 DB에서 2019-04-25 이후 방재지구 관련 고시를 전수 검색했으나 실제 지정 또는 신설로 분류되는 재지정 evidence가 확인되지 않음",
+    "current_state_recommendation": "FALSE_HIGH_READY"
+  }
+}

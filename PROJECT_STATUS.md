@@ -1,21 +1,20 @@
-# AI 대지분석 자동화 시스템 --- PROJECT STATUS
+# AI 대지분석 자동화 시스템 — PROJECT STATUS
 
-*Last updated: 2026-08-19*
+*Last updated: 2026-08-20*
 
 ## 1. 프로젝트 목표
 
-주소 또는 필지를 입력하면 시스템이 자동으로 다음을 수행하는 **AI
-대지분석 자동화 시스템**을 구축한다.
+주소 또는 필지를 입력하면 시스템이 자동으로 다음을 수행하는 **AI 대지분석 자동화 시스템**을 구축한다.
 
-1.  주소 정규화 및 SITE 식별
-2.  PNU / 좌표 / 필지 Polygon 확보
-3.  토지·건축물·도시계획 공간정보 수집
-4.  용도지역·용도지구·용도구역 판정
-5.  관련 법률·시행령·조례 수집
-6.  법령 원문을 조/항/호/목/세부 clause 단위로 구조화
-7.  SITE와 관련 있는 규정만 선별
-8.  SITE / SITE_HISTORY / PROJECT / PROCEDURE 조건 판정
-9.  기본 건폐율·용적률·높이 및 특례·완화·강화 규정 계산
+1. 주소 정규화 및 SITE 식별
+2. PNU / 좌표 / 필지 Polygon 확보
+3. 토지·건축물·도시계획 공간정보 수집
+4. 용도지역·용도지구·용도구역 판정
+5. 관련 법률·시행령·조례 수집
+6. 법령 원문을 조/항/호/목/세부 clause 단위로 구조화
+7. SITE와 관련 있는 규정만 선별
+8. SITE / SITE_HISTORY / PROJECT / PROCEDURE 조건 판정
+9. 기본 건폐율·용적률·높이 및 특례·완화·강화 규정 계산
 10. 최종 대지분석 결과 객체 생성
 11. AI가 규칙엔진의 판정 결과를 설명하고 보고서로 생성
 
@@ -23,24 +22,43 @@
 
 > **Rule Engine이 판정하고, AI는 설명한다.**
 
+---
+
 ## 2. 현재 테스트 SITE
 
--   주소: 서울특별시 강남구 개포동 12번지
--   SITE ID: `11680-10300-0012-0000`
--   PNU: `1168010300100120000`
--   시군구코드: `11680`
--   법정동코드: `10300`
--   본번: `0012`
--   부번: `0000`
--   산여부 코드: `1`
--   용도지역: 제3종일반주거지역
--   대표 좌표:
-    -   X: `127.07539280356858`
-    -   Y: `37.494197498186885`
+- 주소: 서울특별시 강남구 개포동 12번지
+- SITE ID: `11680-10300-0012-0000`
+- PNU: `1168010300100120000`
+- 시군구코드: `11680`
+- 법정동코드: `10300`
+- 본번: `0012`
+- 부번: `0000`
+- 산여부 코드: `1`
+- 용도지역: **제3종일반주거지역**
+- 대표 좌표:
+  - X: `127.07539280356858`
+  - Y: `37.494197498186885`
+
+Parcel Polygon dataset:
+
+```text
+LP_PA_CBND_BUBUN
+```
+
+MapPlan 기준 Parcel:
+
+```text
+geometry: Polygon
+area: 120945.65223377591
+bounds:
+(962201.02522, 1943722.58159, 962711.06096, 1944220.16506)
+```
+
+---
 
 ## 3. 전체 아키텍처
 
-``` text
+```text
 SITE
 │
 ├─ 주소 / SITE ID / PNU / 좌표 / Parcel Polygon
@@ -65,967 +83,1112 @@ SITE
 
 최종 판정 구조:
 
-``` text
+```text
 법규 clause
 + 용도지역 적합성
 + SITE 공간조건
 + SITE_HISTORY 조건
 + PROJECT 조건
 + PROCEDURE 조건
-= 실제 적용 가능성
++ branch-local predicate
++ numeric semantic / guard
+= 실제 적용 가능성 및 최종 수치
 ```
 
-## 4. STEP 1 \~ STEP 16 요약
+---
 
-### STEP 1 \~ STEP 15
+## 4. STEP 1 ~ STEP 16 요약
 
--   주소 기반 SITE 생성
--   SITE ID 생성
--   시군구 / 법정동 / 본번 / 부번 구조화
--   외부 API 연결 기반 구축
--   `.env` 기반 API Key 관리
--   SITE Builder 구축
--   외부 API 응답을 내부 SITE 데이터 구조로 변환
--   테스트 데이터 중심 구조에서 실제 공공 API 기반 구조로 전환
--   환경변수 이름 불일치 문제 수정 및 실제 API Key 로딩 정상화
+### STEP 1 ~ STEP 15
 
-### STEP 16 --- 실제 토지/건축물 데이터 연결
+- 주소 기반 SITE 생성
+- SITE ID 생성
+- 시군구 / 법정동 / 본번 / 부번 구조화
+- 외부 API 연결 기반 구축
+- `.env` 기반 API Key 관리
+- SITE Builder 구축
+- 외부 API 응답을 내부 SITE 데이터 구조로 변환
+- 테스트 데이터 중심 구조에서 실제 공공 API 기반 구조로 전환
+- 환경변수 이름 불일치 문제 수정 및 실제 API Key 로딩 정상화
+
+### STEP 16 — 실제 토지/건축물 데이터 연결
 
 가상 데이터에서 실제 필지 데이터 기반으로 전환하였다.
 
-실제 건축물 API에서 총 34건을 정상 조회하였다.
+실제 건축물 API:
 
-``` text
-가상 SITE
-→ 실제 공공 API 기반 SITE
+```text
+전체 데이터 수: 34
+현재 받은 건축물 수: 34
 ```
 
-## 5. STEP 17 --- 법규 자동분석 엔진
+---
 
-목표:
-
-> 특정 SITE에 실제 적용 가능성이 있는 법규를 자동으로
-> 추출·구조화·판정한다.
+## 5. STEP 17 — 법규 자동분석 엔진
 
 주요 분석 법규:
 
--   국토의 계획 및 이용에 관한 법률
--   국토의 계획 및 이용에 관한 법률 시행령
--   서울특별시 도시계획 조례
+- 국토의 계획 및 이용에 관한 법률
+- 국토의 계획 및 이용에 관한 법률 시행령
+- 서울특별시 도시계획 조례
 
 주요 효과 대상:
 
--   건폐율
--   용적률
--   높이
--   건축제한
--   완화 규정
--   강화 규정
--   예외 규정
--   특례 규정
+- 건폐율
+- 용적률
+- 높이
+- 건축제한
+- 완화 규정
+- 강화 규정
+- 예외 규정
+- 특례 규정
 
-국가법령정보센터 API를 통해 법률/시행령/자치법규 상세조회 JSON 연결을
-검증하였다.
+국가법령정보센터 API를 통해 법률/시행령/자치법규 상세조회 JSON 연결을 검증하였다.
+
+---
 
 ## 6. 특례 조건 모델
 
 ### SITE
 
-현재 필지가 실제로 특정 공간구역에 속하는지 여부.
+현재 필지가 실제 특정 공간구역에 포함되는지 여부.
 
-예: - 지구단위계획 - 개발진흥지구 - 개발밀도관리구역 - 자연경관지구 -
-취락지구 - 수산자원보호구역 - 입체복합구역 - 도시혁신구역 -
-복합용도구역 - 산업단지 - 자연공원
+예:
+
+- 지구단위계획
+- 개발진흥지구
+- 개발밀도관리구역
+- 자연경관지구
+- 취락지구
+- 수산자원보호구역
+- 입체복합구역
+- 도시혁신구역
+- 복합용도구역
+- 산업단지
+- 자연공원
+- 방재지구
+- 서울도심
 
 ### SITE_HISTORY
 
-현재 상태가 아니라 과거의 용도·시설·도시계획 변경 이력이 필요한 조건.
+현재 상태가 아니라 과거 도시계획 또는 시설 변경 이력이 필요한 조건.
 
-예: - 학교이적지 - 도시지역편입해제구역
+예:
+
+- 학교이적지
+- 도시지역편입해제구역
 
 ### PROJECT
 
 사업계획 또는 건축계획에 의해 결정되는 조건.
 
-예: - 공개공지 - 공공시설제공 - 공공주택 - 공동주택 - 기부채납 - 대학 -
-사회복지시설 - 임대주택 - 종합의료시설 - 주거복합 - 한옥
+예:
+
+- 공개공지
+- 공공시설제공
+- 공공주택
+- 공동주택
+- 기부채납
+- 대학
+- 사회복지시설
+- 임대주택
+- 종합의료시설
+- 주거복합
+- 한옥
+- 관광숙박시설
+- 감염병대응필요시설
 
 ### PROCEDURE
 
 심의 또는 행정절차에 관한 조건.
 
-예: - 도시계획위원회심의 - 시장정비사업심의
+예:
 
-## 7. STEP 17-21-C-8 --- 특례 Clause Parser
+- 도시계획위원회심의
+- 시장정비사업심의
 
-법령 원문을 다음 단계로 세분화하는 파서를 개발하였다.
+---
 
-``` text
+## 7. STEP 17-21-C-8 — 특례 Clause Parser
+
+법령 원문을 다음 단계로 세분화하는 파서를 구축하였다.
+
+```text
 조 → 항 → 호 → 목 → 세부 clause
 ```
 
-### C-8-8 최종 검증 완료
+### C-8 최종 핵심 검증
 
-주요 해결 항목:
+- 개정일자 조각 제거
+- 도시지역 외 규정 배제
+- 상업/공업/녹지지역 → 주거지역 오인 방지
+- 용도지역 그룹 substring 중복 제거
+- 도시지역(녹지지역만) 한정 처리
+- 무공백 후속 호 경계 분리
+- DIRECT 규정 내부 다중 목 잔존 제거
+- 문장 종결 `다.`를 `다목`으로 오인하는 문제 해결
+- 제46조 ⑮항 제3종일반주거지역 제외
+- 시장정비사업 제3종일반주거지역 60% 나목 분리
+- 학교이적지 제3종일반주거지역 200% 바목 분리
 
--   개정일자 조각 제거
--   도시지역 외 규정 배제
--   상업/공업/녹지지역 → 주거지역 오인 방지
--   용도지역 그룹 substring 중복 제거
--   도시지역(녹지지역만) 한정 처리
--   무공백 후속 호 경계 분리
--   DIRECT 규정 내부 다중 목 잔존 제거
--   문장 종결 `다.`를 `다목`으로 오인하는 문제 해결
--   제46조 ⑮항 제3종일반주거지역 제외
--   시장정비사업 제3종일반주거지역 60% 나목 분리
--   시장정비사업 상업지역 다목 제외
--   학교이적지 제3종일반주거지역 200% 바목 분리
--   학교이적지 타 용도지역 목 제외
-
-``` text
-C-8 파서 최종 검증: ALL PASS
+```text
+C-8 parser: ALL PASS
 ```
+
+현재 규칙 단위:
+
+```text
+총 clause: 314
+```
+
+---
 
 ## 8. 용도지역 관련성 판정
 
-Clause 상태:
-
--   `DIRECT`: 현재 SITE 용도지역 직접 명시
--   `GROUP`: 현재 용도지역이 상위 그룹에 포함
--   `UNSPECIFIED`: 용도지역이 명확히 특정되지 않음
--   `EXCLUDED`: 다른 용도지역에만 적용
-
 현재 SITE 계층:
 
-``` text
+```text
 제3종일반주거지역
 ⊂ 일반주거지역
 ⊂ 주거지역
 ⊂ 도시지역
 ```
 
-## 9. STEP 17-21-C-9 --- 실제 SITE 공간조건 판정
+Clause 관련성:
 
-C-8에서 추출된 공간조건을 실제 필지와 공간정보 레이어를 교차하여
-`TRUE / FALSE / UNKNOWN`으로 판정한다.
+- `DIRECT`
+- `GROUP`
+- `UNSPECIFIED`
+- `EXCLUDED`
+
+---
+
+## 9. STEP 17-21-C-9 — SITE 공간조건 판정
 
 핵심 원칙:
 
-``` text
+```text
 법규명/조문명/검토문구의 문자열 출현
 ≠
 해당 SITE가 실제 공간구역에 포함됨
 ```
 
-## 10. 공간조건 판정 상태 모델
-
-Resolution: - `TRUE` - `FALSE` - `UNKNOWN`
-
-Query status: - `NOT_CONNECTED` - `NOT_QUERIED` - `QUERY_FAILED` -
-`QUERY_SUCCESS`
-
-Confidence: - `NONE` - `MEDIUM` - `HIGH`
-
 안전 원칙:
 
-``` text
+```text
 조회 실패 → UNKNOWN
 source 미연결 → UNKNOWN
 데이터 없음 → 자동 FALSE 금지
 정상조회 + 유효한 비교근거 + 교차 없음 → FALSE
 실제 면적 교차 확인 → TRUE
 HTTP 403 자체 → TRUE/FALSE 근거로 사용 금지
-기존 정상 HTTP 200 evidence는 후속 접근 실패만으로 폐기하지 않음
+후속 접근 실패만으로 기존 정상 HTTP 200 evidence를 폐기하지 않음
+대표 Point보다 Parcel Polygon intersection 우선
 ```
 
-## 11. SITE Query Context / Parcel
+### C-9 최종 상태
 
-``` text
-SITE ID: 11680-10300-0012-0000
-시군구코드: 11680
-법정동코드: 10300
-산여부: 1
-본번: 0012
-부번: 0000
-Parcel Key: 11680-10300-0012-0000
-PNU: 1168010300100120000
+```text
+STEP 17-21-C-9
+status: COMPLETE_WITH_UNKNOWNS
 ```
 
-VWorld 대표 좌표:
+주요 확정 조건:
 
-``` text
-X: 127.07539280356858
-Y: 37.494197498186885
+| 조건 | 상태 | 신뢰도 |
+|---|---|---|
+| 지구단위계획 | TRUE | HIGH |
+| 개발진흥지구 | FALSE | HIGH |
+| 자연경관지구 | FALSE | HIGH |
+| 입체복합구역 | FALSE | HIGH |
+| 도시혁신구역 | FALSE | HIGH |
+| 복합용도구역 | FALSE | HIGH |
+| 수산자원보호구역 | FALSE | HIGH |
+| 취락지구 | FALSE | HIGH |
+| 산업단지 | FALSE | HIGH |
+| 자연공원 | FALSE | HIGH |
+| 개발밀도관리구역 | 이후 C-10에서 FALSE로 해결 | HIGH |
+| 학교이적지 | 이후 C-10에서 FALSE로 해결 | HIGH |
+| 서울도심 | 이후 C-10에서 FALSE로 해결 | HIGH |
+| 방재지구 | 이후 C-10에서 FALSE로 해결 | HIGH |
+| 도시지역편입해제구역 | UNKNOWN | MEDIUM |
+
+---
+
+## 10. STEP 17-21-C-10 — Rule Applicability / Numeric Evaluation
+
+C-9에서 구축한 SITE / SITE_HISTORY 결과를 실제 314개 clause의 applicability와 numeric effect에 연결하였다.
+
+---
+
+## 11. C-10 SITE Rule Evaluation 완료
+
+최종 SITE 단계:
+
+```text
+SITE stage: COMPLETE_WITH_EXTERNAL_DEPENDENCY
+Rule engine ready: True
+
+APPLICABLE: 58
+NOT_APPLICABLE: 211
+CONDITIONAL: 43
+UNKNOWN: 2
+
+Confirmed BCR: 50.0
+Confirmed FAR: 250.0
 ```
 
-Parcel Polygon dataset:
+일반 SITE unresolved:
 
-``` text
-LP_PA_CBND_BUBUN
+```text
+0
 ```
 
-대상 PNU와 직접 일치하는 Parcel geometry를 확보하였다.
+외부 역사자료 dependency:
 
-MapPlan 기준 Parcel:
-
-``` text
-geometry: Polygon
-area: 120945.65223377591
-bounds:
-(962201.02522, 1943722.58159, 962711.06096, 1944220.16506)
+```text
+1
 ```
 
-## 12. 지구단위계획 --- TRUE / HIGH
+### 해결 완료된 주요 SITE 조건
 
-VWorld dataset:
-
-``` text
-LT_C_UPISUQ161
+```text
+서울도심             FALSE / HIGH
+개발밀도관리구역     FALSE / HIGH
+학교이적지           FALSE / HIGH
+방재지구             FALSE / HIGH
+지구단위계획         TRUE / HIGH
 ```
 
-Parcel Polygon과 지구단위계획 Polygon 실제 교차:
+---
 
-``` text
-intersects: True
-최대 필지 교차 비율: 0.9998418727573524
+## 12. 개발밀도관리구역 — FALSE / HIGH
+
+서울시 공식 고시 DB와 공간/토지이음 자료를 다중 검증하였다.
+
+최종:
+
+```text
+Announcement DB: OK
+Rows: 43508
+Exact hits: 0
+Broad hits: 0
+
+UQ145: OK
+Feature: 1
+Target hits: 0
+
+EUM: OK
+Name present: False
+
+개발밀도관리구역: FALSE / HIGH
+```
+
+Rule overlay:
+
+```text
+Touched rules: 11
+Changed rules: 11
+UNKNOWN -> NOT_APPLICABLE: 11
+```
+
+---
+
+## 13. 학교이적지 — FALSE / HIGH
+
+서울시 공식 고시 DB 전체 검색:
+
+```text
+Total: 43508
+Direct school history: 0
+Strong relocation candidates: 1
+```
+
+개포동 강한 후보:
+
+```text
+서울특별시 고시 제2015-10호
+대상: 강남구 개포동 153번지 일대
+```
+
+현재 SITE:
+
+```text
+강남구 개포동 12번지
+```
+
+주소 불일치가 명확하여:
+
+```text
+학교이적지: FALSE / HIGH
+```
+
+Rule overlay:
+
+```text
+Touched rules: 7
+Changed rules: 7
+UNKNOWN -> NOT_APPLICABLE: 7
+```
+
+---
+
+## 14. 서울도심 — FALSE / HIGH
+
+현재 SITE는 서울도심 범위에 해당하지 않음.
+
+```text
+서울도심: FALSE / HIGH
+```
+
+영향 clause:
+
+```text
+clause 208
+UNKNOWN -> NOT_APPLICABLE
+```
+
+---
+
+## 15. 방재지구 — FALSE / HIGH
+
+서울특별시 고시 제2019-133호의 방재지구 폐지와 이후 재지정 여부를 검증하였다.
+
+후속 고시 DB:
+
+```text
+Post-2019-04-25 notices: 3952
+방재지구 hits: 0
+Strong redesignation: 0
+Gangnam/Gaepo hits: 0
 ```
 
 최종:
 
-``` text
-resolution: TRUE
-confidence: HIGH
+```text
+방재지구: FALSE / HIGH
+NO_REDESIGNATION_EVIDENCE
 ```
 
-## 13. 개발진흥지구 --- FALSE / HIGH
+이에 따라 FAR 300% 후보가 제거되었다.
 
-서울시 공식 source:
+---
 
--   데이터셋: 서울시 용도지구(개발진흥지구) 공간정보
--   공간정보 코드: `UQ129`
--   OpenAPI: `upiSCUq129`
--   SHP CRS: `EPSG:5174`
--   로컬 파일: `UQ129_용도지구(개발진흥지구)_202602.zip`
+## 16. 도시지역편입해제구역 — UNKNOWN / MEDIUM
 
-교차 결과:
+이 조건은 현재 상태가 아니라 과거 도시계획 변경 이력이 필요한 `SITE_HISTORY` 조건이다.
 
-``` text
-전체 UQ129 Feature: 11
-실제 교차 Feature: 0
-최대 교차 비율: 0.0
-```
+검증 자료:
 
-최종:
+```text
+서울시 공식 고시 DB: 43508건
+Combined candidates: 8
+Target candidates: 0
+Direct notices: 1
+Direct target history: 0
 
-``` text
-resolution: FALSE
-confidence: HIGH
-```
+Current urban: True
+Current greenbelt: False
 
-## 14. 개발밀도관리구역 --- UNKNOWN / NONE
-
-토지이음 공식 용어 존재는 확인했으나 아직 다음이 미확정이다.
-
--   공식 지역·지구 공간코드
--   공식 Polygon geometry source
-
-``` text
-resolution: UNKNOWN
-confidence: NONE
-```
-
-UNKNOWN을 의도적으로 보존한다.
-
-## 15. 자연경관지구 --- FALSE / HIGH
-
-서울시 공식 source:
-
--   데이터셋: 서울시 용도지구(경관지구) 공간정보
--   공간정보 코드: `UQ121`
--   OpenAPI: `upisCUq121`
--   SHP CRS: `EPSG:5174`
--   SHP 인코딩: `windows-949`
--   로컬 파일: `UQ121_용도지구(경관지구)_202602.zip`
-
-최종 식별 기준:
-
-``` text
-DGM_NM == 자연경관지구
-```
-
-교차 결과:
-
-``` text
-자연경관지구 Feature: 6
-실제 면적 교차 Feature: 0
-최대 교차 비율: 0.0
+Historic missing content: True
+Archive candidates: 10
+Archive pending: True
 ```
 
 최종:
 
-``` text
-resolution: FALSE
-confidence: HIGH
+```text
+도시지역편입해제구역: UNKNOWN / MEDIUM
+automation_state: HISTORICAL_SOURCE_PENDING
+overlay: KEEP_UNKNOWN
 ```
 
-## 16. 입체복합구역 --- FALSE / HIGH
+핵심 정책:
 
-### STEP 17-21-C-9-2-6A 계열
+> 과거 핵심 원문이 미확인된 상태에서는 negative DB 검색만으로 FALSE를 강제하지 않는다.
 
-토지이음 MapPlan의 UQQ 계열을 조사하여 입체복합구역을 검증하였다.
+이 조건은 외부 역사자료 dependency로 격리한다.
 
-후속 접근에서 HTTP 403이 발생했으나, 이전 A-6 단계에서 확보한 HTTP 200
-정상응답 evidence를 복원하여 판정 근거를 consolidation하였다.
-
-A-6 정상응답 evidence:
-
-``` text
-analysis HTTP: 200
-analysis parse success: True
-analysis layer: AA, AC, BA, CA, CB, DA, DC
+```text
+blocking_site_stage: False
 ```
 
-동일 `AC` layer 양성대조:
+따라서 SITE Rule Evaluation은:
 
-``` text
-UQQ300
-found: True
-count: 1
-area: 120945.48190180371
+```text
+COMPLETE_WITH_EXTERNAL_DEPENDENCY
 ```
 
-입체복합구역 대상 `UQQ905`:
+로 완료 처리한다.
 
-``` text
-PNU analysis:
-found: False
-count: 0
-area: 0
+---
 
-geometry:
-HTTP 200
-GeoJSON 정상
-Feature 수: 0
+## 17. 기본 건폐율 / 용적률 확정
+
+현재 SITE 용도지역:
+
+```text
+제3종일반주거지역
 ```
 
-Evidence consolidation:
+기본 규제값:
 
-``` text
-UQQ300 양성대조 유효
-+ UQQ905 analysis 음성
-+ UQQ905 geometry 음성
-= FALSE 판정 가능
+```text
+Base BCR: 50.0
+Base FAR: 250.0
 ```
 
-최종:
+국가 상한:
 
-``` text
-query_status: QUERY_SUCCESS
-resolution: FALSE
-confidence: HIGH
-evidence_state: POSITIVE_CONTROL_VALID_TARGET_DOUBLE_NEGATIVE
+```text
+National BCR ceiling: 70.0
+National FAR ceiling: 500.0
 ```
 
-중요 원칙:
+현재 확정값:
 
-``` text
-후속 HTTP 403은 접근 상태 회귀로만 처리
-403 자체를 FALSE 근거로 사용하지 않음
-후속 403으로 기존 정상 HTTP 200 evidence를 폐기하지 않음
+```text
+Confirmed BCR: 50.0
+Confirmed FAR: 250.0
 ```
 
-결과 파일:
+---
 
-``` text
-law_data/output/eum_vertical_mixed_use_zone_evidence_consolidation.json
+## 18. Numeric Semantic Engine
+
+Numeric clause:
+
+```text
+Numeric clauses: 124
 ```
 
-## 17. 도시혁신구역 --- FALSE / HIGH
+hierarchy dedup 이후 후보:
 
-### STEP 17-21-C-9-2-7A
-
-서울 열린데이터 카탈로그와 토지이음 공식 지도 HTML을 조사하였다.
-
-토지이음에서 다음 직접 연결을 확인:
-
-``` text
-도시혁신구역 ↔ UQQ903
-candidate MapPlan layer: AC
+```text
+Final numeric candidates: 28
 ```
 
-7A 단계에서는 source/code 의미만 검증하고 공간교차 전이므로 `UNKNOWN`을
-유지하였다.
+주요 semantic type:
 
-### STEP 17-21-C-9-2-7B
+- `RANGE`
+- `BASE_RATIO_MULTIPLIER`
+- `ABSOLUTE_MAX`
+- `MAX_LIMIT_REDUCTION_RATIO`
+- `ABSOLUTE_CEILING`
+- `NON_EFFECT_THRESHOLD`
+- `MAX_LIMIT_MULTIPLIER`
 
-MapPlan 실제 공간교차 검증 완료.
+부모 aggregate clause는 child leaf clause가 존재하면 계산 후보에서 제외한다.
 
-MapPlan:
+---
 
-``` text
-endpoint: https://www.eum.ne.kr:9003/MapPlan/MapPlan
-version: 20260614
-EPSG:5179 BBOX:
-[962170.4865538419, 1943690.920233938, 962741.8650744666, 1944251.3866923628]
+## 19. Numeric-specific SITE guard
+
+단순 applicability만으로 숫자 특례를 적용하지 않는다.
+
+### clause 4 — BCR 60% 후보
+
+```text
+서울특별시 도시계획 조례
+해당 용도지역별 건폐율의 120%
 ```
 
-양성대조 `UQQ300`:
+상위 시행령 branch를 추적한 결과 현재 SITE 용도지역과 불일치.
 
-``` text
-layer: AC
-found: True
-count: 1
-area: 120945.48190180371
+```text
+clause 4: NOT_APPLICABLE
+BCR 60% 적용 금지
 ```
 
-대상 `UQQ903`:
+### clause 189 — FAR 300% 후보
 
-``` text
-analysis:
-found: False
-count: 0
-area: 0
+방재지구 조건이 필수.
 
-geometry:
-HTTP 200
-GeoJSON 정상
-Feature 수: 0
+```text
+방재지구: FALSE / HIGH
+clause 189: NOT_APPLICABLE
+FAR 300% 적용 금지
 ```
 
-Parcel:
+---
 
-``` text
-HTTP 200
-Feature 수: 1
-geometry: Polygon
-area: 120945.65223377591
+## 20. PROJECT / PROCEDURE Profile
+
+PROJECT condition template:
+
+```text
+공개공지
+공공시설제공
+공공주택
+공동주택
+기부채납
+대학
+사회복지시설
+임대주택
+종합의료시설
+주거복합
+한옥
 ```
 
-교차:
+PROCEDURE condition:
 
-``` text
-실제 교차 면적: 0.0
-필지 교차 비율: 0.0
-면적 교차 존재: False
+```text
+도시계획위원회심의
+시장정비사업심의
 ```
 
-최종:
+초기 상태:
 
-``` text
-query_status: QUERY_SUCCESS
-resolution: FALSE
-confidence: HIGH
-evidence_state: POSITIVE_CONTROL_VALID_TARGET_ANALYSIS_NEGATIVE_NO_AREA_INTERSECTION
+```text
+UNSET
 ```
 
-결과 파일:
+---
 
-``` text
-law_data/output/seoul_urban_innovation_zone_mapplan_intersection.json
+## 21. PROJECT / PROCEDURE Dynamic Evaluation
+
+동적 입력을 Rule Engine에 주입하는 구조를 검증하였다.
+
+테스트 scenario:
+
+```text
+PROJECT
+공동주택 = TRUE
+
+PROCEDURE
+도시계획위원회심의 = TRUE
 ```
 
-## 18. 복합용도구역 --- FALSE / HIGH
+결과:
 
-### STEP 17-21-C-9-2-8A
+```text
+Before:
+APPLICABLE: 58
+NOT_APPLICABLE: 211
+CONDITIONAL: 43
+UNKNOWN: 2
 
-토지이음 공식 지도에서 직접 연결 확인:
+After:
+APPLICABLE: 64
+NOT_APPLICABLE: 211
+CONDITIONAL: 37
+UNKNOWN: 2
 
-``` text
-복합용도구역 ↔ UQQ904
-layer: AC
+Touched rules: 16
+Changed rules: 6
+Transitions:
+CONDITIONAL -> APPLICABLE: 6
 ```
 
-MapPlan:
+---
 
-``` text
-server: https://www.eum.ne.kr:9002/MapPlan
-endpoint: https://www.eum.ne.kr:9002/MapPlan/MapPlan
-version: 20260614
+## 22. Dynamic Numeric Guard
+
+동적 입력 이후 잘못 재활성화된 숫자 특례를 별도 guard로 검증하였다.
+
+초기 immediate 후보:
+
+```text
+clause 4   → BCR 60
+clause 189 → FAR 300
+clause 205 → FAR 325
 ```
 
-양성대조 `UQQ300`:
+### clause 4
 
-``` text
-found: True
-count: 1
-area: 120945.48190180371
+```text
+상위 branch 불일치
+→ NOT_APPLICABLE
 ```
 
-대상 `UQQ904`:
+### clause 189
 
-``` text
-analysis:
-found: False
-count: 0
-area: 0
-
-geometry:
-HTTP 200
-GeoJSON 정상
-Feature 수: 0
+```text
+방재지구 FALSE / HIGH
+→ NOT_APPLICABLE
 ```
 
-Parcel:
+### clause 205
 
-``` text
-HTTP 200
-Feature 수: 1
-geometry: Polygon
-area: 120945.65223377591
+본문:
+
+```text
+제48조제7호부터 제10호까지의 지역에서
+관광숙박시설을 건축하는 경우
+용적률 130% 이하
 ```
 
-교차:
+현재 SITE:
 
-``` text
-조회된 UQQ904 면적: 0.0
-실제 교차 면적: 0.0
-필지 교차 비율: 0.0
-면적 교차 존재: False
+```text
+제3종일반주거지역
+서울시 조례 제48조 제5호
 ```
 
-최종:
+따라서:
 
-``` text
-query_status: QUERY_SUCCESS
-resolution: FALSE
-confidence: HIGH
-evidence_state: POSITIVE_CONTROL_VALID_TARGET_ANALYSIS_NEGATIVE_NO_AREA_INTERSECTION
+```text
+서울조례제48조7호부터10호지역 = FALSE
+관광숙박시설 = UNSET
+clause 205 = NOT_APPLICABLE / HIGH
+FAR 325% 적용 금지
 ```
 
-결과 파일:
+---
 
-``` text
-law_data/output/seoul_mixed_use_zone_mapplan_intersection.json
+## 23. Branch-local Predicate Generalization
+
+개별 numeric clause를 수동 패치하는 대신, 조문 내부 branch-local predicate를 자동 탐지하는 probe를 구축하였다.
+
+전체 numeric 후보:
+
+```text
+Numeric rules: 28
+Rules with missing predicates: 3
+Active rules with missing predicates: 1
+HIGH-priority missing: 7
 ```
 
-## 19. MapPlan UQQ 계열 검증 패턴
+검출된 주요 누락 predicate:
 
-현재까지 다음 코드 의미가 공식 지도 HTML 및 실제 MapPlan 요청으로
-검증되었다.
-
-``` text
-UQQ903 → 도시혁신구역
-UQQ904 → 복합용도구역
-UQQ905 → 입체복합구역(도시군계획시설입체복합구역 계열)
+```text
+서울도심 / SITE
+서울조례제48조7호부터10호지역 / SITE
+관광숙박시설 / PROJECT
+감염병대응필요시설 / PROJECT
 ```
 
-공통 검증 패턴:
+clause 205 regression:
 
-``` text
-1. 토지이음 공식 HTML에서 명칭 ↔ 코드 직접 연결 확인
-2. MapPlan req=analysis HTTP 200 / JSON 정상 확인
-3. 동일 layer AC의 UQQ300 양성대조 확인
-4. 대상 UQQ 코드 analysis 확인
-5. Parcel geometry 정상조회
-6. 대상 UQQ geometry 정상조회
-7. Parcel × 대상 geometry 실제 면적교차
-8. TRUE는 실제 양성/면적교차 evidence 필요
-9. FALSE는 양성대조 정상 + 대상 음성 + 실제 교차 없음 필요
-10. HTTP 403/접근 실패 자체는 FALSE 근거로 사용 금지
+```text
+Detected:
+- 관광숙박시설
+- 서울도심
+- 서울조례제48조7호부터10호지역
+
+Expected:
+- 관광숙박시설
+- 서울조례제48조7호부터10호지역
+
+Complete: True
 ```
 
-## 20. 현재 공간조건 판정 현황
+---
 
-  조건                   상태      신뢰도   비고
-  ---------------------- --------- -------- -------------------------------
-  지구단위계획           TRUE      HIGH     Parcel 실제 교차
-  개발진흥지구           FALSE     HIGH     서울시 UQ129
-  자연경관지구           FALSE     HIGH     서울시 UQ121
-  입체복합구역           FALSE     HIGH     UQQ905 evidence consolidation
-  도시혁신구역           FALSE     HIGH     UQQ903 MapPlan
-  복합용도구역           FALSE     HIGH     UQQ904 MapPlan
-  개발밀도관리구역       UNKNOWN   NONE     공식 geometry source 미확정
-  수산자원보호구역       UNKNOWN   NONE     미해결
-  취락지구               UNKNOWN   NONE     미해결
-  산업단지               UNKNOWN   NONE     미해결
-  자연공원               UNKNOWN   NONE     미해결
-  도시지역편입해제구역   UNKNOWN   NONE     HISTORY 로직 필요
+## 24. Branch-local Condition Overlay
 
-현재 문서에 추적되는 12개 조건 기준:
+HIGH confidence + clause 본문 직접 등장 predicate만 실제 condition model에 추가한다.
 
-``` text
-TRUE: 1
-FALSE: 5
-UNKNOWN: 6
+결과:
+
+```text
+Selected predicates: 7
+Added conditions: 7
+Touched rules: 3
+Changed rules: 2
 ```
 
-기존 C-9 최초 요구 10개 외에 후속 법규/공간조건 검토 과정에서
-`도시혁신구역`, `복합용도구역`을 추가 추적한다.
+상태 변화:
 
-## 21. 현재 정확한 중단 위치
+```text
+Before:
+APPLICABLE: 64
+NOT_APPLICABLE: 211
+CONDITIONAL: 37
+UNKNOWN: 2
 
-``` text
+After:
+APPLICABLE: 63
+NOT_APPLICABLE: 213
+CONDITIONAL: 36
+UNKNOWN: 2
+```
+
+주요 regression:
+
+```text
+clause 205
+APPLICABLE -> NOT_APPLICABLE
+
+clause 188
+APPLICABLE -> CONDITIONAL
+감염병대응필요시설 = UNSET
+```
+
+---
+
+## 25. SITE Resolution Registry Reuse
+
+branch-local predicate가 새로 만들어질 때 이미 해결한 SITE condition을 재사용해야 한다.
+
+서울도심 registry:
+
+```text
+서울도심 = FALSE / HIGH
+```
+
+repair 결과:
+
+```text
+clause 201 | 서울도심 | UNKNOWN -> FALSE
+clause 205 | 서울도심 | UNKNOWN -> FALSE
+```
+
+---
+
+## 26. Dynamic Numeric Final Guard Recheck
+
+현재 dynamic scenario에서:
+
+```text
+Active numeric before guard: 11
+Excluded: 2
+- clause 4
+- clause 189
+
+Active numeric after guard: 9
+```
+
+Roles:
+
+```text
+CONDITIONAL_PLAN_RANGE: 1
+DISTRICT_PLAN_CEILING: 2
+NATIONAL_CEILING: 2
+CONDITIONAL_STRENGTHENING: 2
+SPECIAL_AREA_REFERENCE: 1
+OTHER_ACTIVE: 1
+```
+
+즉시 적용 relaxation:
+
+```text
+0
+```
+
+따라서:
+
+```text
+Numeric resolution: BASE_VALUES_RETAINED
+
+Confirmed BCR: 50.0
+Confirmed FAR: 250.0
+```
+
+---
+
+## 27. Residual Numeric Role Probe
+
+남아 있던 `OTHER_ACTIVE: 1`을 확인하였다.
+
+Residual:
+
+```text
+clause 250
+국토의 계획 및 이용에 관한 법률
+용도지역에서의 용적률
+제78조제7항제2호
+```
+
+본문:
+
+```text
+지구단위계획구역 외의 지역:
+제1항 및 제2항에 따라 대통령령으로 정하고 있는
+해당 용도지역별 용적률 최대한도의 120퍼센트 이하
+```
+
+상위 문맥:
+
+```text
+다른 법률에 따른 용적률 완화 규정을 중첩 적용할 수 있음
+```
+
+현재 preliminary 판단:
+
+```text
+직접 FAR 완화가 아님
+중첩 완화 상한(cap) 조문
+```
+
+현재 SITE:
+
+```text
+지구단위계획 = TRUE
+```
+
+따라서 clause 250의:
+
+```text
+지구단위계획구역 외의 지역
+```
+
+branch는 현재 SITE와 불일치할 가능성이 높다.
+
+---
+
+## 28. 현재 정확한 중단 위치
+
+오늘 작업은 아래까지 완료하였다.
+
+```text
 STEP 17
 └─ STEP 17-21
-   └─ C
-      └─ C-9
-         └─ C-9-2
-            └─ STEP 17-21-C-9-2-8A
+   └─ C-10
+      └─ 4B
+         └─ 2D
+            dynamic_numeric_residual_role_probe_test.py
+            ALL PASS
 ```
 
-완료 내용:
+직전 실행 결과:
 
-``` text
-복합용도구역 UQQ904 공식 코드 검증 완료
-MapPlan req=analysis 검증 완료
-UQQ300 양성대조 정상
-UQQ904 analysis 음성
-UQQ904 geometry HTTP 200 / Feature 0
-Parcel Polygon 정상
-Parcel × UQQ904 실제 면적교차 없음
-복합용도구역 최종 판정: FALSE / HIGH
+```text
+Active before guard: 11
+Blocked: [4, 189, 205]
+Active after guard: 9
+
+Residual roles: 1
+Residual immediate risk: 0
+
+Residual clause:
+250
 ```
 
-## 22. 다음 재개 지점
+---
 
-다음 단계:
+## 29. 다음 재개 지점
 
-``` text
-STEP 17-21-C-9-2-9
-다음 미해결 공간조건 식별 및 실제 공간조회
+다음 작업:
+
+```text
+STEP 17-21-C-10-4B-2E
+Clause 250 stacking ceiling resolution
 ```
 
-우선 후보:
+### 아직 작성/실행하지 않은 파일
 
-``` text
-수산자원보호구역
-취락지구
-산업단지
-자연공원
-도시지역편입해제구역
-개발밀도관리구역 재탐색
+```text
+law_data/clause_250_stacking_ceiling_resolution_test.py
 ```
 
-다음 채팅에서는 먼저 **현재 미해결 조건 중 STEP 17-21-C-9-2-9의 정확한
-대상 조건을 확정**한 뒤 source 탐색/코드 의미 검증/geometry 교차 순서로
-진행한다.
+### 검증 목표
 
-## 23. C-9 잔여 조건 권장 순서
+예상 role:
 
-``` text
-수산자원보호구역
-↓
-취락지구
-↓
-산업단지
-↓
-자연공원
-↓
-도시지역편입해제구역
-↓
-개발밀도관리구역 재탐색
+```text
+STACKING_CEILING_OUTSIDE_DISTRICT_PLAN
 ```
 
-`도시지역편입해제구역`은 현재 상태 layer가 아니라 HISTORY 전용 로직이
-필요하다.
+검증 내용:
 
-필요 데이터 예:
+```text
+clause 250
+= 직접 FAR 효과가 아니라
+  여러 용적률 완화 규정 중첩 시 적용하는 ceiling
 
--   도시관리계획 결정·변경 이력
--   용도지역 변경 이력
--   용도구역 해제 이력
--   도시지역 편입 이력
+현재 SITE
+지구단위계획 = TRUE
 
-## 24. C-9 완료 후 핵심 개발 항목
+clause 250 대상
+지구단위계획구역 외의 지역
 
-### 24.1 특례 Clause 적용 엔진
-
-권장 상태:
-
--   `APPLICABLE`
--   `NOT_APPLICABLE`
--   `CONDITIONAL`
--   `UNKNOWN`
-
-### 24.2 PROJECT 조건 입력 모델
-
-``` text
-ProjectProfile
-- building_use
-- project_type
-- housing_type
-- public_housing
-- rental_housing
-- public_open_space
-- public_facility_contribution
-- donation
-- mixed_use
-- hanok
-- university
-- medical_facility
-...
+예상:
+branch match = False
+clause 250 = NOT_APPLICABLE
+direct numeric effect = False
 ```
 
-### 24.3 PROCEDURE 조건 모델
+**2026-08-20 작업 종료 시점에는 이 파일을 작성하거나 실행하지 않았다.**
 
--   도시계획위원회심의
--   시장정비사업심의
--   건축위원회심의
--   공동위원회심의
+---
 
-### 24.4 수치 규정 계산 엔진
+## 30. Clause 250 완료 후 예정 작업
 
--   `ABSOLUTE_LIMIT`
--   `RELATIVE_MULTIPLIER`
--   `ADDITIVE_BONUS`
--   `FORMULA`
--   `MAX_LIMIT`
--   `MIN_LIMIT`
+Clause 250 검증이 완료되면 개별 numeric clause 탐색을 종료하고 다음 요소를 하나의 재사용 가능한 evaluation pipeline으로 통합한다.
 
-### 24.5 Formula Parser
-
-법규 내 산식을 실제 계산 가능한 객체로 구조화한다.
-
-### 24.6 기본 건폐율·용적률 결정 엔진
-
-``` text
-Base Rule
-↓
-Local Ordinance
-↓
-Restriction
-↓
-Relaxation
-↓
-Special Rule
-↓
-Final Limit
+```text
+SITE resolution registry
++
+SITE_HISTORY external dependency
++
+PROJECT dynamic input
++
+PROCEDURE dynamic input
++
+branch-local predicate detector
++
+numeric semantic override
++
+parent-child hierarchy dedup
++
+verified numeric guard
++
+ceiling / stacking rule
+=
+Reusable Rule Evaluation Pipeline
 ```
 
-### 24.7 법규 우선순위 / 중첩 규정 엔진
+목표 API 형태 예:
 
--   법률
--   시행령
--   조례
--   도시관리계획 / 지구단위계획
--   개별 특별법
-
-### 24.8 지구단위계획 결정도서 자동분석
-
-현재 SITE는 지구단위계획구역 TRUE이다.
-
-주요 추출 대상:
-
--   건폐율
--   용적률
--   최고높이
--   건축선
--   벽면선
--   허용용도 / 불허용도
--   공동개발
--   특별계획구역
--   공공기여
--   계획지침
-
-권장 모듈:
-
-``` text
-DistrictUnitPlanDocumentResolver
+```python
+evaluate_site_rules(
+    site=site,
+    project_profile=project_profile,
+    procedure_profile=procedure_profile,
+)
 ```
 
-## 25. 공간정보 공통 엔진 리팩터링
+출력 목표:
 
-권장 구조:
-
-``` text
-law_data/spatial/
-    parcel.py
-    layer_loader.py
-    crs.py
-    intersection.py
-    source_registry.py
-    semantic_filter.py
-    resolver.py
-    mapplan.py
-```
-
-장기 목표:
-
-``` python
-resolve_condition("자연경관지구", parcel)
-resolve_condition("복합용도구역", parcel)
-```
-
-MapPlan UQQ 계열 공통화 시 고려 항목:
-
--   EUM session 초기화
--   gisServer 동적 복원
--   version 동적 복원
--   req=analysis
--   positive control
--   Parcel geometry
--   target geometry
--   intersection
--   evidence consolidation
--   HTTP 403 / 접근회귀 처리
-
-## 26. Spatial Layer Registry
-
-현재 검증 항목 예:
-
-``` text
-UQ121 → 경관지구
-UQ129 → 개발진흥지구
-LT_C_UPISUQ161 → 지구단위계획구역
-LP_PA_CBND_BUBUN → Parcel Polygon
-UQQ903 → 도시혁신구역
-UQQ904 → 복합용도구역
-UQQ905 → 입체복합구역 계열
-```
-
-각 registry 항목:
-
--   provider
--   dataset name
--   official code
--   API service / endpoint
--   file pattern
--   CRS
--   encoding
--   semantic filter
--   geometry type
--   update cycle / version
--   positive control
--   confidence / verification status
-
-## 27. 최종 SiteAnalysis 객체
-
-``` text
-SiteAnalysis
-
-site
-parcel
-
-land
-building
-
-zoning
-spatial_conditions
-site_history
-
-base_rules
-special_rules
-
-project_conditions
-procedure_conditions
-
-formula_results
-final_constraints
-
+```text
+rule applicability
+numeric effects
+confirmed BCR/FAR
+conditional alternatives
+unknown external dependencies
 evidence
-sources
 ```
 
-## 28. AI 설명 계층
+---
 
-``` text
-공공 데이터 / 법규 / 공간정보
-↓
-Parser
-↓
-Rule Engine
-↓
-판정 결과
-↓
-AI 설명
-↓
-보고서 / UI
+## 31. 현재 Rule Engine 핵심 상태
+
+```text
+Total rules: 314
+
+SITE evaluation:
+COMPLETE_WITH_EXTERNAL_DEPENDENCY
+
+Rule engine ready:
+True
+
+SITE baseline:
+APPLICABLE: 58
+NOT_APPLICABLE: 211
+CONDITIONAL: 43
+UNKNOWN: 2
+
+Dynamic test:
+공동주택 TRUE
+도시계획위원회심의 TRUE
+
+branch-local overlay 이후:
+APPLICABLE: 63
+NOT_APPLICABLE: 213
+CONDITIONAL: 36
+UNKNOWN: 2
+
+Confirmed BCR:
+50.0
+
+Confirmed FAR:
+250.0
 ```
 
-AI가 직접 법적 판정을 생성하는 것이 아니라 규칙 엔진의 구조화된 결과를
-설명한다.
+---
 
-## 29. 현재 전체 개발 단계
+## 32. 현재 프로젝트 핵심 안전 원칙
 
-``` text
-PHASE 1  기초 SITE / API                     완료
-PHASE 2  실제 토지·건축물 데이터             완료
-PHASE 3  법령 API / 법규 수집                완료
-PHASE 4  법규 Clause Parser                  핵심 완료
-PHASE 5  용도지역 관련성 판정                 완료
-PHASE 6  SITE 공간조건 판정                   진행 중
-PHASE 7  SITE_HISTORY 판정                    예정
-PHASE 8  PROJECT 조건 모델                    예정
-PHASE 9  PROCEDURE 조건 모델                  예정
-PHASE 10 특례 적용 가능성 엔진                예정
-PHASE 11 기본 건폐율·용적률 결정              예정
-PHASE 12 법규 우선순위 / 중첩 규정 처리        예정
-PHASE 13 Formula / 수치 계산 엔진             예정
-PHASE 14 지구단위계획 결정도서 자동분석        예정
-PHASE 15 최종 SITE 규제값 계산                예정
-PHASE 16 대지분석 결과 객체 통합               예정
-PHASE 17 AI 설명 / 보고서 생성                예정
-PHASE 18 서비스 UI / 자동화 API               예정
-```
-
-## 30. 현재 프로젝트 핵심 안전 원칙
-
-``` text
+```text
 문자열 존재 ≠ SITE 해당
 HTTP 200 ≠ 조회 성공
 QUERY_SUCCESS ≠ dataset 의미 검증
-dataset의 일부 Feature 이름 일치 ≠ dataset 의미
+dataset 일부 Feature 이름 일치 ≠ dataset 의미
 geometry 미확보 ≠ FALSE
 조회 실패 ≠ FALSE
 HTTP 403 ≠ FALSE
 후속 접근 실패 ≠ 기존 정상 evidence 무효
+
 UNKNOWN은 오류가 아니라 정상 상태
 TRUE는 실제 근거가 필요
 FALSE도 정상조회와 비교 근거가 필요
-MapPlan FALSE 판정은 가능한 경우 양성대조를 요구
-대표 Point 포함 판정보다 Parcel Polygon intersection을 우선
+
+대표 Point보다 Parcel Polygon intersection 우선
 코드 의미는 공식 source에서 명칭과 직접 연결 검증 후 사용
+
+PROJECT/PROCEDURE TRUE만으로 numeric 특례 적용 금지
+상위 법령 branch 조건을 반드시 검증
+branch-local SITE/PROJECT/PROCEDURE predicate를 함께 평가
+부모 aggregate numeric + child numeric 중복 적용 금지
+상한(ceiling)과 직접 완화(effect)를 구분
+중첩(stacking) 허용 여부를 별도 판정
+
+외부 역사 원문 미확인은 UNKNOWN으로 보존
+negative search만으로 SITE_HISTORY FALSE 강제 금지
 ```
 
-## 31. 체크포인트
+---
 
-``` text
-PROJECT:
-AI 대지분석 자동화 시스템
+## 33. 현재 전체 개발 단계
 
-CURRENT STEP:
-STEP 17-21-C-9-2-8A
-
-STATUS:
-복합용도구역 공간조건 판정 완료
-
-SITE:
-서울특별시 강남구 개포동 12번지
-
-PNU:
-1168010300100120000
-
-RESOLVED:
-- 지구단위계획: TRUE / HIGH
-- 개발진흥지구: FALSE / HIGH
-- 자연경관지구: FALSE / HIGH
-- 입체복합구역: FALSE / HIGH
-- 도시혁신구역: FALSE / HIGH
-- 복합용도구역: FALSE / HIGH
-
-UNRESOLVED:
-- 개발밀도관리구역: UNKNOWN
-- 수산자원보호구역: UNKNOWN
-- 취락지구: UNKNOWN
-- 산업단지: UNKNOWN
-- 자연공원: UNKNOWN
-- 도시지역편입해제구역: UNKNOWN
-
-NEXT STEP:
-STEP 17-21-C-9-2-9
-다음 미해결 공간조건 식별 및 실제 공간조회
+```text
+PHASE 1  기초 SITE / API                         완료
+PHASE 2  실제 토지·건축물 데이터                 완료
+PHASE 3  법령 API / 법규 수집                    완료
+PHASE 4  법규 Clause Parser                      핵심 완료
+PHASE 5  용도지역 관련성 판정                     완료
+PHASE 6  SITE 공간조건 판정                       완료
+PHASE 7  SITE_HISTORY 판정                        완료*
+PHASE 8  PROJECT 조건 모델                        핵심 구축
+PHASE 9  PROCEDURE 조건 모델                      핵심 구축
+PHASE 10 특례 적용 가능성 엔진                    진행 중
+PHASE 11 기본 건폐율·용적률 결정                  핵심 완료
+PHASE 12 법규 우선순위 / 중첩 규정 처리            진행 중
+PHASE 13 Formula / 수치 계산 엔진                 진행 중
+PHASE 14 지구단위계획 결정도서 자동분석            예정
+PHASE 15 최종 SITE 규제값 계산                    진행 중
+PHASE 16 대지분석 결과 객체 통합                   예정
+PHASE 17 AI 설명 / 보고서 생성                    예정
+PHASE 18 서비스 UI / 자동화 API                   예정
 ```
 
-## 32. 다음 채팅 시작용 핸드오프
+`PHASE 7`의 `완료*` 의미:
 
-``` text
+```text
+자동화 가능한 SITE_HISTORY 검증은 완료.
+도시지역편입해제구역은 HISTORICAL_SOURCE_PENDING external dependency로 보존.
+```
+
+---
+
+## 34. 주요 결과 파일
+
+현재 중요 snapshot / resolution:
+
+```text
+law_data/output/site_spatial_condition_final_snapshot.json
+law_data/output/special_rule_applicability.json
+law_data/output/project_profile_template.json
+law_data/output/procedure_profile_template.json
+law_data/output/site_numeric_regulation_final_snapshot.json
+law_data/output/site_rule_evaluation_final_snapshot.json
+
+law_data/output/seoul_downtown_condition_resolution.json
+law_data/output/development_density_management_evidence_resolution.json
+law_data/output/school_relocation_site_candidate_resolution.json
+law_data/output/urban_area_conversion_history_final_resolution.json
+
+law_data/output/site_rule_evaluation_site_complete.json
+law_data/output/project_procedure_dynamic_rule_evaluation.json
+law_data/output/dynamic_active_numeric_context_probe.json
+law_data/output/dynamic_numeric_guard_reconciliation.json
+law_data/output/clause_205_tourism_branch_guard.json
+law_data/output/numeric_branch_local_condition_generalization_probe.json
+law_data/output/numeric_branch_local_condition_overlay.json
+law_data/output/dynamic_numeric_final_guard_recheck.json
+law_data/output/dynamic_numeric_residual_role_probe.json
+```
+
+---
+
+## 35. 다음 작업 시작용 핸드오프
+
+```text
 AI 대지분석 자동화 시스템 개발을 계속한다.
 
 기준 문서:
 PROJECT_STATUS.md
-
-현재 완료 단계:
-STEP 17-21-C-9-2-8A
 
 현재 SITE:
 서울특별시 강남구 개포동 12번지
@@ -1033,105 +1196,109 @@ SITE ID: 11680-10300-0012-0000
 PNU: 1168010300100120000
 용도지역: 제3종일반주거지역
 
-현재 공간조건:
-- 지구단위계획: TRUE / HIGH
-- 개발진흥지구: FALSE / HIGH
-- 자연경관지구: FALSE / HIGH
-- 입체복합구역: FALSE / HIGH
-- 도시혁신구역: FALSE / HIGH
-- 복합용도구역: FALSE / HIGH
-- 개발밀도관리구역: UNKNOWN / NONE
-- 수산자원보호구역: UNKNOWN / NONE
-- 취락지구: UNKNOWN / NONE
-- 산업단지: UNKNOWN / NONE
-- 자연공원: UNKNOWN / NONE
-- 도시지역편입해제구역: UNKNOWN / NONE
+현재 SITE Rule Evaluation:
+COMPLETE_WITH_EXTERNAL_DEPENDENCY
+
+Rule Engine ready:
+True
+
+Confirmed BCR:
+50%
+
+Confirmed FAR:
+250%
+
+일반 SITE unresolved:
+0
+
+External historical dependency:
+도시지역편입해제구역
+UNKNOWN / MEDIUM
+HISTORICAL_SOURCE_PENDING
+
+현재 dynamic test:
+공동주택 = TRUE
+도시계획위원회심의 = TRUE
+
+branch-local condition / verified numeric guard 적용 후
+즉시 적용 numeric relaxation:
+0
 
 직전 완료:
-STEP 17-21-C-9-2-8A
-복합용도구역 UQQ904 MapPlan 실제 공간교차 검증
-최종 판정: FALSE / HIGH
+STEP 17-21-C-10-4B-2D
+dynamic_numeric_residual_role_probe_test.py
+all_pass: True
 
-MapPlan 공통 검증 원칙:
-- 공식 HTML에서 명칭 ↔ 코드 직접 연결 확인
-- req=analysis 정상응답 확인
-- 동일 요청체계의 양성대조 확인
-- 대상 code analysis 확인
-- Parcel geometry 정상 확보
-- 대상 geometry 정상조회
-- 실제 Parcel Polygon intersection 수행
-- TRUE는 실제 양성/면적교차 evidence 필요
-- FALSE는 정상조회 + 유효한 비교근거 + 대상 음성 + 교차 없음 필요
-- HTTP 403/접근 실패 자체를 FALSE 근거로 사용하지 않음
-- 후속 접근 실패만으로 기존 정상 HTTP 200 evidence를 폐기하지 않음
+Residual:
+clause 250
+국토의 계획 및 이용에 관한 법률 제78조제7항제2호
+"지구단위계획구역 외의 지역:
+해당 용도지역별 용적률 최대한도의 120퍼센트 이하"
+
+현재 판단:
+직접 FAR effect가 아니라 stacking ceiling일 가능성이 높음.
 
 다음 단계:
-STEP 17-21-C-9-2-9
+STEP 17-21-C-10-4B-2E
+Clause 250 stacking ceiling resolution
 
-목표:
-현재 미해결 공간조건 중 다음 대상을 확정하고
-공식 source → 관리코드/semantic 검증 → geometry 확보
-→ Parcel intersection → TRUE/FALSE/UNKNOWN 판정 순으로 진행한다.
+다음 작성 파일:
+law_data/clause_250_stacking_ceiling_resolution_test.py
 
-우선 검토 순서:
-수산자원보호구역
-→ 취락지구
-→ 산업단지
-→ 자연공원
-→ 도시지역편입해제구역
-→ 개발밀도관리구역 재탐색
+주의:
+2026-08-20 종료 시점에는 위 파일을 아직 작성/실행하지 않았다.
 
-기존 안전 원칙:
-- 실제 공간교차 없이는 TRUE 확정 금지
-- 정상조회 및 비교근거 없이 FALSE 확정 금지
-- source/geometry 미확정은 UNKNOWN 유지
-- 문자열 출현만으로 SITE 조건 판정 금지
-- dataset 일부 Feature 명칭만으로 dataset 의미 확정 금지
-- Point보다 Parcel Polygon intersection 우선
-- UNKNOWN은 정상 상태로 보존
+검증 목표:
+role = STACKING_CEILING_OUTSIDE_DISTRICT_PLAN
+현재 SITE 지구단위계획 TRUE
+따라서 "지구단위계획구역 외의 지역" branch 불일치 확인
+direct numeric effect = False 확인
 
-PROJECT_STATUS.md를 기준 상태로 삼아 바로 STEP 17-21-C-9-2-9부터 진행한다.
+그 다음:
+SITE registry
++ PROJECT/PROCEDURE dynamic inputs
++ branch-local predicates
++ numeric semantic overrides
++ verified guards
++ stacking/ceiling
+을 하나의 reusable Rule Evaluation Pipeline으로 통합한다.
 ```
 
-## 33. Git 체크포인트 권장
+---
 
-이번 체크포인트에서 최소 저장 대상:
+## 36. Git 체크포인트
 
-``` text
-PROJECT_STATUS.md
-law_data/seoul_urban_innovation_zone_source_probe_test.py
-law_data/seoul_urban_innovation_zone_mapplan_intersection_test.py
-law_data/seoul_mixed_use_zone_mapplan_intersection_test.py
-law_data/output/seoul_urban_innovation_zone_source_probe.json
-law_data/output/seoul_urban_innovation_zone_mapplan_intersection.json
-law_data/output/seoul_mixed_use_zone_mapplan_intersection.json
-law_data/output/eum_vertical_mixed_use_zone_evidence_consolidation.json
+GitHub 원격 저장소:
+
+```text
+jehun0620-bot/site-ai
+branch: main
 ```
 
-실제 저장 전에는 `git status`로 변경 파일을 확인하고, 프로젝트 정책상
-output JSON을 Git에서 추적하지 않는 경우에는 해당 JSON을 강제로 add하지
-않는다.
+현재 원격 기준 직전 체크포인트:
+
+```text
+37e1a4a
+Complete C-9 SITE spatial condition validation
+```
+
+이번 체크포인트에는 C-10에서 생성·수정된 Python 코드와 `PROJECT_STATUS.md`를 저장한다.
 
 권장 commit message:
 
-``` text
-Complete C-9 MapPlan zone validations through STEP 17-21-C-9-2-8A
+```text
+Checkpoint C-10 dynamic rule and numeric evaluation
 ```
 
-## STEP 17-21-C-9 최종 완료
+Git 저장 전 반드시:
 
-C-8에서 추출된 SITE 공간조건에 대해 실제 공식 공간정보,
-Parcel Polygon intersection, 공식 결정고시 및 history evidence를
-이용하여 TRUE / FALSE / UNKNOWN 판정을 수행하였다.
+```powershell
+git status --short
+git diff --stat
+```
 
-최종 상태:
+으로 실제 변경 범위를 확인한다.
 
-```text
-STEP 17-21-C-9
-status: COMPLETE_WITH_UNKNOWNS
+`git add .`, `git add -A`, `git add --all`은 사용하지 않는다.
 
-required SITE conditions: 10
-
-TRUE: 1
-FALSE: 7
-UNKNOWN: 2
+`law_data/output/*.json`은 프로젝트에서 기존부터 추적하는 경우에만 stage한다.

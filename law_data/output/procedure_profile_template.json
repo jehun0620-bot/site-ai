@@ -1,0 +1,152 @@
+{
+  "step": "STEP 17-21-C-10-1D ProcedureProfile / PROCEDURE 조건 입력 모델 구축",
+  "profile_version": "1.0",
+  "profile_type": "ProcedureProfile",
+  "state_model": {
+    "TRUE": "필요한 절차 또는 심의가 충족/완료됨",
+    "FALSE": "필요한 절차 조건을 충족하지 않음",
+    "UNKNOWN": "절차 관련 정보는 있으나 충족 여부를 확정할 수 없음",
+    "UNSET": "절차 정보가 아직 입력되지 않음"
+  },
+  "fields": {
+    "urban_planning_committee_review": null,
+    "market_redevelopment_review": null
+  },
+  "conditions": [
+    {
+      "name": "도시계획위원회심의",
+      "type": "PROCEDURE",
+      "field": "urban_planning_committee_review",
+      "value_type": "boolean",
+      "state": "UNSET",
+      "value": null,
+      "confidence": "NONE",
+      "source": "USER_OR_PROCESS_INPUT_REQUIRED",
+      "description": "해당 특례 적용을 위해 도시계획위원회 또는 지방도시계획위원회의 심의·의결이 필요한지 또는 완료되었는지 여부",
+      "rule_usage": {
+        "clause_count": 26,
+        "categories": [
+          "건폐율",
+          "용적률"
+        ],
+        "laws": [
+          "국토의 계획 및 이용에 관한 법률",
+          "국토의 계획 및 이용에 관한 법률 시행령",
+          "서울특별시 도시계획 조례"
+        ],
+        "rule_titles": [
+          "건폐율의 강화",
+          "건폐율의 완화",
+          "기존 공장에 대한 특례",
+          "생산녹지지역 등에서 기존 공장의 건폐율",
+          "용도지역에서의 용적률",
+          "용적률의 완화",
+          "자연경관지구 안에서의 건축제한"
+        ],
+        "effect_targets": [
+          "building_coverage_ratio",
+          "floor_area_ratio"
+        ],
+        "clause_indexes": [
+          15,
+          16,
+          17,
+          89,
+          90,
+          92,
+          93,
+          95,
+          102,
+          106,
+          107,
+          108,
+          121,
+          123,
+          131,
+          198,
+          199,
+          200,
+          201,
+          202,
+          203,
+          204,
+          205,
+          248,
+          249,
+          250
+        ]
+      },
+      "evidence": []
+    },
+    {
+      "name": "시장정비사업심의",
+      "type": "PROCEDURE",
+      "field": "market_redevelopment_review",
+      "value_type": "boolean",
+      "state": "UNSET",
+      "value": null,
+      "confidence": "NONE",
+      "source": "USER_OR_PROCESS_INPUT_REQUIRED",
+      "description": "시장정비사업 관련 법정 심의절차의 적용 또는 완료 여부",
+      "rule_usage": {
+        "clause_count": 8,
+        "categories": [
+          "건폐율",
+          "용적률"
+        ],
+        "laws": [
+          "서울특별시 도시계획 조례"
+        ],
+        "rule_titles": [
+          "건폐율의 완화",
+          "상업지역 안에서 주거복합건물의 용도 비율 및 용적률(별표 8 제1호가목, 별표 9 제1호나목, 별표 10 제1호가목, 제50조제1호 관련)",
+          "용적률의 완화"
+        ],
+        "effect_targets": [
+          "building_coverage_ratio",
+          "floor_area_ratio"
+        ],
+        "clause_indexes": [
+          15,
+          18,
+          21,
+          198,
+          211,
+          274,
+          276,
+          280
+        ]
+      },
+      "evidence": []
+    }
+  ],
+  "summary": {
+    "condition_count": 2,
+    "true": 0,
+    "false": 0,
+    "unknown": 0,
+    "unset": 2
+  },
+  "source_validation": {
+    "declared_conditions": [
+      "도시계획위원회심의",
+      "시장정비사업심의"
+    ],
+    "clause_extracted_conditions": [
+      "도시계획위원회심의",
+      "시장정비사업심의"
+    ],
+    "missing_from_clauses": [],
+    "undeclared_in_clauses": []
+  },
+  "validations": {
+    "C-8 declared PROCEDURE 조건과 실제 clause 조건 일치": true,
+    "ProcedureProfile 조건명 전체 일치": true,
+    "PROCEDURE 상태값 4종 한정": true,
+    "최초 PROCEDURE 조건은 모두 UNSET": true,
+    "PROCEDURE semantic registry 전체 존재": true,
+    "semantic field 중복 없음": true,
+    "미입력 PROCEDURE를 FALSE로 자동 처리하지 않음": true
+  },
+  "all_pass": true
+}

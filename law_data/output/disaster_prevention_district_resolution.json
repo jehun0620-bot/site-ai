@@ -1,0 +1,57 @@
+{
+  "step": "STEP 17-21-C-10-2B-10B 서울 방재지구 current-state resolution",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "sido": "서울특별시",
+    "sigungu": "강남구",
+    "dong": "개포동"
+  },
+  "official_history": {
+    "notice": "서울특별시 고시 제2019-133호",
+    "notice_date": "2019-04-25",
+    "action": "서울시 기존 방재지구 전부 폐지",
+    "former_district_count": 5,
+    "former_total_area_m2": 208701.74,
+    "former_locations": [
+      "노원구 월계동 487-17 일대",
+      "성동구 용답동 108-1 일대",
+      "구로구 개봉본동 90-22 일대",
+      "구로구 개봉본동 138-2 일대",
+      "구로구 개봉본동 133-11 일대"
+    ],
+    "reason_summary": "타 법령 및 서울시 안전관리기본계획, 풍수해저감 종합계획 등에 따른 관리와 방재 개선사업 시행 등으로 지정목적을 달성하고 제도운영 변화에 따라 지정 실효성이 저하되어 폐지"
+  },
+  "source_probe": {
+    "resolution": "SOURCE_UNVERIFIED",
+    "current_spatial_layer_verified": false
+  },
+  "current_condition": {
+    "name": "방재지구",
+    "status": "FALSE",
+    "confidence": "HIGH",
+    "reason": "서울특별시 고시 제2019-133호(2019-04-25)로 서울시 기존 방재지구 5개소가 전부 폐지되었고, 후속 서울시 도시계획조례 개정에서도 방재지구 전면 해제를 전제로 관련 규정을 삭제함. 현재 서울 공식 공간자료에서도 방재지구 현행 공간레이어 evidence를 확인하지 못했으므로 대상 SITE의 현행 방재지구 해당 여부를 FALSE로 판정"
+  },
+  "numeric_effect": {
+    "clause_index": 189,
+    "base_far": 250.0,
+    "relaxation_candidate": 300.0,
+    "resolution": "NOT_APPLICABLE",
+    "apply_now": false,
+    "confirmed_far": 250.0,
+    "reason": "국토계획법 시행령 제85조제5항의 방재지구 요건이 FALSE이므로 서울시 조례 clause 189 FAR 300% 완화후보는 적용되지 않음"
+  },
+  "important_note": "방재지구 FALSE는 침수취약지역, 자연재해위험개선지구, 재해지도 등의 별도 재해위험 제도까지 FALSE라는 의미가 아님",
+  "validations": {
+    "SITE 서울특별시": true,
+    "2019 서울 방재지구 전면폐지 근거 등록": true,
+    "SITE 과거 폐지 5개소 위치와 불일치": true,
+    "현재 방재지구 공간 evidence 없음": true,
+    "방재지구 FALSE": true,
+    "confidence HIGH": true,
+    "clause 189 NOT_APPLICABLE": true,
+    "FAR 300 candidate 미적용": true,
+    "confirmed FAR 250": true
+  },
+  "all_pass": true
+}
