@@ -1,0 +1,221 @@
+{
+  "step": "STEP 17-21-C-9-2-14B-3 upisHistory 코드/분류값 분포 복원",
+  "total_rows": 6105,
+  "site_rows": 259,
+  "fields": [
+    "RPT_TYPE",
+    "LCLSF",
+    "MCLSF",
+    "SCLSF",
+    "AREA_ICDC_CD"
+  ],
+  "full_profile": {
+    "RPT_TYPE": {
+      "unique_count": 6,
+      "counts": {
+        "변경": 3305,
+        "신설": 2089,
+        "폐지": 442,
+        "기정": 200,
+        "실효": 54,
+        "정정": 15
+      },
+      "top20": [
+        {
+          "value": "변경",
+          "count": 3305
+        },
+        {
+          "value": "신설",
+          "count": 2089
+        },
+        {
+          "value": "폐지",
+          "count": 442
+        },
+        {
+          "value": "기정",
+          "count": 200
+        },
+        {
+          "value": "실효",
+          "count": 54
+        },
+        {
+          "value": "정정",
+          "count": 15
+        }
+      ]
+    },
+    "LCLSF": {
+      "unique_count": 2,
+      "counts": {
+        "지구단위계획구역": 3826,
+        "특별계획구역": 2279
+      },
+      "top20": [
+        {
+          "value": "지구단위계획구역",
+          "count": 3826
+        },
+        {
+          "value": "특별계획구역",
+          "count": 2279
+        }
+      ]
+    },
+    "MCLSF": {
+      "unique_count": 1,
+      "counts": {
+        "<EMPTY>": 6105
+      },
+      "top20": [
+        {
+          "value": "<EMPTY>",
+          "count": 6105
+        }
+      ]
+    },
+    "SCLSF": {
+      "unique_count": 1,
+      "counts": {
+        "<EMPTY>": 6105
+      },
+      "top20": [
+        {
+          "value": "<EMPTY>",
+          "count": 6105
+        }
+      ]
+    },
+    "AREA_ICDC_CD": {
+      "unique_count": 3,
+      "counts": {
+        "<EMPTY>": 2662,
+        "1": 2236,
+        "2": 1207
+      },
+      "top20": [
+        {
+          "value": "<EMPTY>",
+          "count": 2662
+        },
+        {
+          "value": "1",
+          "count": 2236
+        },
+        {
+          "value": "2",
+          "count": 1207
+        }
+      ]
+    }
+  },
+  "site_profile": {
+    "RPT_TYPE": {
+      "unique_count": 6,
+      "counts": {
+        "변경": 160,
+        "신설": 76,
+        "폐지": 12,
+        "기정": 7,
+        "정정": 3,
+        "실효": 1
+      },
+      "top20": [
+        {
+          "value": "변경",
+          "count": 160
+        },
+        {
+          "value": "신설",
+          "count": 76
+        },
+        {
+          "value": "폐지",
+          "count": 12
+        },
+        {
+          "value": "기정",
+          "count": 7
+        },
+        {
+          "value": "정정",
+          "count": 3
+        },
+        {
+          "value": "실효",
+          "count": 1
+        }
+      ]
+    },
+    "LCLSF": {
+      "unique_count": 2,
+      "counts": {
+        "지구단위계획구역": 165,
+        "특별계획구역": 94
+      },
+      "top20": [
+        {
+          "value": "지구단위계획구역",
+          "count": 165
+        },
+        {
+          "value": "특별계획구역",
+          "count": 94
+        }
+      ]
+    },
+    "MCLSF": {
+      "unique_count": 1,
+      "counts": {
+        "<EMPTY>": 259
+      },
+      "top20": [
+        {
+          "value": "<EMPTY>",
+          "count": 259
+        }
+      ]
+    },
+    "SCLSF": {
+      "unique_count": 1,
+      "counts": {
+        "<EMPTY>": 259
+      },
+      "top20": [
+        {
+          "value": "<EMPTY>",
+          "count": 259
+        }
+      ]
+    },
+    "AREA_ICDC_CD": {
+      "unique_count": 3,
+      "counts": {
+        "<EMPTY>": 127,
+        "1": 112,
+        "2": 20
+      },
+      "top20": [
+        {
+          "value": "<EMPTY>",
+          "count": 127
+        },
+        {
+          "value": "1",
+          "count": 112
+        },
+        {
+          "value": "2",
+          "count": 20
+        }
+      ]
+    }
+  },
+  "resolution": {
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "reason": "upisHistory의 실제 코드/분류값 분포를 복원하는 단계"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "step": "STEP 17-21-C-9-2-15A 개발밀도관리구역 서울시 결정고시 전수 probe",
+  "condition": "개발밀도관리구역",
+  "legal_basis": {
+    "law": "국토의 계획 및 이용에 관한 법률",
+    "article": "제66조",
+    "requirement": "지정 또는 변경 시 고시"
+  },
+  "api": {
+    "query_status": "QUERY_SUCCESS",
+    "result_code": "INFO-000",
+    "total_count": 43508,
+    "received_rows": 43508
+  },
+  "search": {
+    "exact_term": "개발밀도관리구역",
+    "exact_hit_count": 0,
+    "site_exact_hit_count": 0,
+    "broad_hit_count": 0,
+    "exact_hits": [],
+    "site_exact_hits": [],
+    "broad_hits": []
+  },
+  "resolution": {
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "reason": "개발밀도관리구역은 국토계획법 제66조에 따른 별도 지정·고시 대상이므로 서울시 공식 결정고시 DB에서 정확 명칭 및 SITE 관련 후보를 전수 탐색한 단계. 검색 부재만으로 FALSE 판정하지 않음"
+  }
+}

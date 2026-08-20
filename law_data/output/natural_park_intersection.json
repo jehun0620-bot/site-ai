@@ -1,0 +1,73 @@
+{
+  "step": "STEP 17-21-C-9-2-12B 자연공원 Parcel Polygon 실제 공간교차",
+  "condition": "자연공원",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "official_source": {
+    "provider": "국토교통부",
+    "dataset": "(연속주제)_자연공원/용도지구",
+    "vworld_dataset_id": "30395",
+    "source_path": "D:\\site-ai\\law_data\\input\\LSMD_CONT_UM102_5174_서울.zip",
+    "feature_count": 48,
+    "crs": "EPSG:5174"
+  },
+  "layer_validation": {
+    "verified": true,
+    "feature_count": 48,
+    "geometry_types": [
+      "MultiPolygon",
+      "Polygon"
+    ],
+    "valid_geometry_count": 48,
+    "alias_values": [
+      "(구)공원집단시설지구",
+      "자연보존지구",
+      "자연환경지구"
+    ]
+  },
+  "parcel": {
+    "provider": "VWorld",
+    "dataset": "LP_PA_CBND_BUBUN",
+    "feature_id": "LP_PA_CBND_BUBUN.801937",
+    "pnu_direct_match": true,
+    "original_crs": "EPSG:4326",
+    "intersection_crs": "EPSG:5174",
+    "geometry_type": "MultiPolygon",
+    "area": 121040.35341323777,
+    "bounds": [
+      206333.12280831102,
+      443311.99949033384,
+      206842.30280893523,
+      443810.46949070203
+    ]
+  },
+  "intersection": {
+    "bbox_candidate_count": 0,
+    "intersection_count": 0,
+    "positive_area_intersection_count": 0,
+    "max_intersection_ratio": 0.0,
+    "features": []
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "FALSE",
+    "confidence": "HIGH",
+    "reason": "국토교통부 공식 서울 자연공원/용도지구 전체 Polygon layer를 정상 로드하고 대상 PNU Parcel Polygon과 동일 CRS에서 공간교차를 수행했으나 실제 면적교차가 확인되지 않음",
+    "max_intersection_ratio": 0.0
+  },
+  "validation": {
+    "VWORLD_API_KEY 존재": true,
+    "PNU 직접 일치 Parcel": true,
+    "자연공원 Feature 48": true,
+    "CRS EPSG:5174": true,
+    "전체 geometry 유효": true,
+    "Polygon/MultiPolygon only": true,
+    "TRUE는 실제 면적교차 필요": true,
+    "경계접촉만으로 TRUE 금지": true,
+    "FALSE는 전체 공식 layer 정상 필요": true
+  },
+  "next_step": "자연공원 판정 확정 후 다음 미해결 공간조건 진행"
+}

@@ -1,0 +1,16 @@
+{
+  "step": "STEP 17-21-C-9-2-14B-2 도시지역 편입/해제 이력 정밀 필터",
+  "condition": "도시지역편입해제구역",
+  "total_rows": 6105,
+  "classification_candidate_count": 0,
+  "target_candidate_count": 0,
+  "site_target_candidate_count": 0,
+  "AREA_ICDC_CD_values": [],
+  "target_candidates": [],
+  "site_target_candidates": [],
+  "resolution": {
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "reason": "서울시 공식 도시계획이력 DB에서 용도지역/용도구역 분류 기반 후보를 정밀 필터링한 단계이며 Parcel 및 결정고시 연결 전"
+  }
+}

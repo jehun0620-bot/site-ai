@@ -1,0 +1,208 @@
+{
+  "step": "STEP 17-21-C-9-2-14D 도시지역편입해제구역 현행 공간상태 교차검증",
+  "condition": "도시지역편입해제구역",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "parcel": {
+    "pnu_direct_match": true,
+    "crs": "EPSG:5174",
+    "area": 121040.35341323777
+  },
+  "current_state": {
+    "UQ111_urban_area": {
+      "intersection_count": 8,
+      "positive_area_count": 8,
+      "features": [
+        {
+          "index": 695,
+          "intersection_area": 0.14999860768809847,
+          "ratio": 1.2392446275829663e-06,
+          "properties": {
+            "PRESENT_SN": "11000UQ111PS202511120002",
+            "LCLAS_CL": "UQA100",
+            "MLSFC_CL": "UQA120",
+            "SCLAS_CL": "UQA123",
+            "ATRB_SE": "UQA123",
+            "WTNNC_SN": "11000ARZ202510140002",
+            "NTFC_SN": "11000NTC202510140003",
+            "DGM_NM": "제3종일반주거지역",
+            "DGM_AR": "1406221.56626376",
+            "DGM_LT": "18781.57556828",
+            "SIGNGU_SE": "11000",
+            "DRAWING_NO": "nan",
+            "CREATE_DAT": "2025-11-12 00:00:00",
+            "SHAPE_AREA": "1406221.55102",
+            "SHAPE_LEN": "18781.5758612"
+          }
+        },
+        {
+          "index": 1029,
+          "intersection_area": 0.5346531172841211,
+          "ratio": 4.417147688414201e-06,
+          "properties": {
+            "PRESENT_SN": "11000UQ111PS201912152395",
+            "LCLAS_CL": "UQA100",
+            "MLSFC_CL": "UQA120",
+            "SCLAS_CL": "UQA121",
+            "ATRB_SE": "UQA121",
+            "WTNNC_SN": "11000ARZ000000001111",
+            "NTFC_SN": "nan",
+            "DGM_NM": "제1종일반주거지역",
+            "DGM_AR": "22928.75545988",
+            "DGM_LT": "1241.99340058",
+            "SIGNGU_SE": "11000",
+            "DRAWING_NO": "nan",
+            "CREATE_DAT": "2019-12-15 00:00:00",
+            "SHAPE_AREA": "22928.7554597",
+            "SHAPE_LEN": "1241.99340059"
+          }
+        },
+        {
+          "index": 1653,
+          "intersection_area": 0.15759310069444155,
+          "ratio": 1.3019881076884408e-06,
+          "properties": {
+            "PRESENT_SN": "11000UQ111PS201912152169",
+            "LCLAS_CL": "UQA100",
+            "MLSFC_CL": "UQA120",
+            "SCLAS_CL": "UQA124",
+            "ATRB_SE": "UQA124",
+            "WTNNC_SN": "11000ARZ000000001111",
+            "NTFC_SN": "nan",
+            "DGM_NM": "제2종일반주거지역(7층이하)",
+            "DGM_AR": "1851.00675227",
+            "DGM_LT": "174.73994215",
+            "SIGNGU_SE": "11000",
+            "DRAWING_NO": "nan",
+            "CREATE_DAT": "2019-12-15 00:00:00",
+            "SHAPE_AREA": "1851.00675226",
+            "SHAPE_LEN": "174.739942146"
+          }
+        },
+        {
+          "index": 2127,
+          "intersection_area": 0.27123704277039884,
+          "ratio": 2.240881120401079e-06,
+          "properties": {
+            "PRESENT_SN": "11000UQ111PS201912150030",
+            "LCLAS_CL": "UQA100",
+            "MLSFC_CL": "UQA120",
+            "SCLAS_CL": "UQA121",
+            "ATRB_SE": "UQA121",
+            "WTNNC_SN": "11000ARZ000000001111",
+            "NTFC_SN": "nan",
+            "DGM_NM": "제1종일반주거지역",
+            "DGM_AR": "2488.09950002",
+            "DGM_LT": "272.6652966",
+            "SIGNGU_SE": "11000",
+            "DRAWING_NO": "nan",
+            "CREATE_DAT": "2019-12-15 00:00:00",
+            "SHAPE_AREA": "2488.0995",
+            "SHAPE_LEN": "272.665296601"
+          }
+        },
+        {
+          "index": 4515,
+          "intersection_area": 0.5000601148415136,
+          "ratio": 4.131350419428168e-06,
+          "properties": {
+            "PRESENT_SN": "11000UQ111PS201912154003",
+            "LCLAS_CL": "UQA100",
+            "MLSFC_CL": "UQA120",
+            "SCLAS_CL": "UQA124",
+            "ATRB_SE": "UQA124",
+            "WTNNC_SN": "11000ARZ000000001111",
+            "NTFC_SN": "nan",
+            "DGM_NM": "제2종일반주거지역(7층이하)",
+            "DGM_AR": "15515.12050073",
+            "DGM_LT": "564.0719461",
+            "SIGNGU_SE": "11000",
+            "DRAWING_NO": "nan",
+            "CREATE_DAT": "2019-12-15 00:00:00",
+            "SHAPE_AREA": "15515.1205007",
+            "SHAPE_LEN": "564.071946106"
+          }
+        },
+        {
+          "index": 5896,
+          "intersection_area": 121038.7788402529,
+          "ratio": 0.9999869913385043,
+          "properties": {
+            "PRESENT_SN": "11000UQ111PS201912154375",
+            "LCLAS_CL": "UQA100",
+            "MLSFC_CL": "UQA120",
+            "SCLAS_CL": "UQA123",
+            "ATRB_SE": "UQA123",
+            "WTNNC_SN": "11000ARZ000000001111",
+            "NTFC_SN": "nan",
+            "DGM_NM": "제3종일반주거지역",
+            "DGM_AR": "145365.74916388",
+            "DGM_LT": "2186.94952629",
+            "SIGNGU_SE": "11000",
+            "DRAWING_NO": "nan",
+            "CREATE_DAT": "2019-12-15 00:00:00",
+            "SHAPE_AREA": "145365.749164",
+            "SHAPE_LEN": "2186.94952628"
+          }
+        },
+        {
+          "index": 8093,
+          "intersection_area": 0.1453885818344404,
+          "ratio": 1.2011579422449021e-06,
+          "properties": {
+            "PRESENT_SN": "11000UQ111PS201912153093",
+            "LCLAS_CL": "UQA100",
+            "MLSFC_CL": "UQA120",
+            "SCLAS_CL": "UQA123",
+            "ATRB_SE": "UQA123",
+            "WTNNC_SN": "11000ARZ200206201165",
+            "NTFC_SN": "11000NTC200206202718",
+            "DGM_NM": "제3종일반주거지역",
+            "DGM_AR": "1302556.32729438",
+            "DGM_LT": "13035.43944431",
+            "SIGNGU_SE": "11000",
+            "DRAWING_NO": "nan",
+            "CREATE_DAT": "2019-12-15 00:00:00",
+            "SHAPE_AREA": "1302556.3271",
+            "SHAPE_LEN": "13035.4394443"
+          }
+        },
+        {
+          "index": 8139,
+          "intersection_area": 0.04604754856556975,
+          "ratio": 3.8043137901589844e-07,
+          "properties": {
+            "PRESENT_SN": "11000UQ111PS201912151630",
+            "LCLAS_CL": "UQA100",
+            "MLSFC_CL": "UQA120",
+            "SCLAS_CL": "UQA121",
+            "ATRB_SE": "UQA121",
+            "WTNNC_SN": "11000ARZ000000001111",
+            "NTFC_SN": "nan",
+            "DGM_NM": "제1종일반주거지역",
+            "DGM_AR": "1535.91455852",
+            "DGM_LT": "161.24018859",
+            "SIGNGU_SE": "11000",
+            "DRAWING_NO": "nan",
+            "CREATE_DAT": "2019-12-15 00:00:00",
+            "SHAPE_AREA": "1535.91455849",
+            "SHAPE_LEN": "161.240188589"
+          }
+        }
+      ]
+    },
+    "UQ141_greenbelt": {
+      "intersection_count": 0,
+      "positive_area_count": 0,
+      "features": []
+    }
+  },
+  "resolution": {
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "reason": "현행 공간상태를 확인한 단계. 과거 결정고시 전수검색 evidence와 결합하여 다음 단계에서 history 최종 판정"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "step": "STEP 17-21-C-9-2-11A 산업단지 단지경계 공식 source / VWorld layer probe",
+  "condition": "산업단지",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "official_source": {
+    "provider": "국토교통부",
+    "dataset": "단지경계",
+    "official_service_identifier": "damdan",
+    "coverage": "대한민국 전체",
+    "purpose": "산업입지도 산업단지 단지경계"
+  },
+  "vworld_probe": {
+    "dataset_candidate": "LT_C_DAMDAN",
+    "http_status": 200,
+    "status": "NOT_FOUND",
+    "error": null,
+    "feature_count": 0,
+    "features": [],
+    "layer_status": "UNVERIFIED"
+  },
+  "resolution": {
+    "query_status": "QUERY_FAILED",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "VWorld 단지경계 layer 후보의 정상 API 응답을 확인하지 못함"
+  },
+  "validation": {
+    "VWORLD_API_KEY 존재": true,
+    "SITE PNU 19자리": true,
+    "공식 provider 국토교통부": true,
+    "공식 dataset 단지경계": true,
+    "공식 service identifier damdan": true,
+    "Point 결과만으로 FALSE 금지": true,
+    "geometry intersection 전 TRUE 금지": true
+  },
+  "next_step": "단지경계 VWorld layer ID/endpoint 재검증"
+}

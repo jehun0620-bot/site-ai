@@ -1,0 +1,38 @@
+{
+  "step": "STEP 17-21-C-9-2-14C-1 Direct address/PNU 결정고시 정밀 추출",
+  "condition": "도시지역편입해제구역",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "direct_hit_count": 1,
+  "gaepo12_match_count": 1,
+  "direct_target_event_count": 0,
+  "assessment": "DIRECT_NOTICE_BUT_NOT_TARGET_HISTORY",
+  "reason": "대상 SITE 관련 직접 고시는 확인됐으나 도시지역 편입 또는 개발제한/시가화조정/녹지지역 해제에 해당하는 표현은 확인되지 않음",
+  "direct_hits": [
+    {
+      "ANCMNT_MNG_CD": "11000NTC201007155177",
+      "ANCMNT_TYPE": "결정+지적",
+      "ANCMNT_NO": "2010-266",
+      "ANCMNT_YMD": "2010-07-15T00:00:00.000",
+      "TKCG_INST": "서울특별시",
+      "ANCMNT_INST": "서울특별시",
+      "TTL": "도시관리계획(대치택지개발지구 제1종지구단위계획) 결정(변경) 및 지형도면 고시",
+      "CN": "서울특별시고시 제1996-65호(1996.03.26)로 지구단위계획(종전 상세계획)이  결정된 서울특별시 강남구 개포동 12번지 일대 대치택지개발지구  제1종지구단위계획에 대하여 『국토의 계획 및 이용에 관한 법률』  제30조 및 같은법 시행령 제25조 규정에 따라 도시관리계획 (제1종지구단위계획) 결정(변경)?고시하고, 『토지이용규제기본법』  제8조 및 같은법 시행령 제7조 규정에 따라 지형도면을 고시합니다.  2010년  7월 15일 서  울  특  별  시  장",
+      "exact_address_match": true,
+      "pnu_match": false,
+      "gaepo_12_match": true,
+      "matched_target_events": [],
+      "generic_release": false,
+      "also_in_combined_hits": false
+    }
+  ],
+  "resolution": {
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "reason": "직접 일치 결정고시의 실제 의미를 검증하는 단계이며 적용 Parcel/geometry 확정 전"
+  },
+  "next_step": "직접 일치 고시가 target history이면 고시 적용 필지/지형도면 검증, 아니면 도시지역편입해제구역 후보에서 제외"
+}

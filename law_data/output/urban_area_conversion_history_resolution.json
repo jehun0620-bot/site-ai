@@ -1,0 +1,108 @@
+{
+  "step": "STEP 17-21-C-9-2-14G 도시지역편입해제구역 history evidence 종합",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "condition": {
+    "name": "도시지역편입해제구역",
+    "status": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "source_type": "MULTI_SOURCE_HISTORY_EVIDENCE",
+    "source_name": "서울시 도시계획 결정고시 + 서울시 UQ111/UQ141 + 국가기록원 DA0138776",
+    "reason": "서울시 공식 도시계획 결정고시 전체 DB를 정상 조회하고 SITE 관련 편입/해제 후보를 검토했으나 개발제한구역·시가화조정구역·녹지지역·공원 해제 또는 도시지역 신규 편입에 해당하는 직접 고시는 확인되지 않았다. 현재 대상 Parcel은 서울시 UQ111 도시지역과 실제 교차하고 UQ141 개발제한구역과는 교차하지 않는다. 그러나 1989년 대치택지개발 최초 지정 단계의 일부 공식 고시 본문이 누락되어 있고 국가기록원 원기록의 실제 내용도 아직 확인되지 않아 과거 편입/해제 부재를 완전히 입증할 수 없다. 따라서 FALSE로 자동 변환하지 않고 UNKNOWN을 유지한다.",
+    "evidence": [
+      {
+        "type": "OFFICIAL_NOTICE_DATABASE",
+        "source": "서울특별시 도시계획 결정고시 upisAnnouncement",
+        "result": "QUERY_SUCCESS",
+        "detail": "전체 결정고시 43,508건 조회"
+      },
+      {
+        "type": "NOTICE_FILTER",
+        "source": "서울특별시 결정고시",
+        "result": "NO_TARGET_HISTORY_CANDIDATE",
+        "detail": "SITE 관련 편입/해제 결합 후보 8건 중 target history 0건, 미분류 0건"
+      },
+      {
+        "type": "DIRECT_NOTICE",
+        "source": "개포동 12번지 직접 일치 결정고시",
+        "result": "NOT_TARGET_HISTORY",
+        "detail": "2010년 대치택지개발지구 지구단위계획 변경고시로 확인"
+      },
+      {
+        "type": "CURRENT_GEOMETRY",
+        "source": "서울시 UQ111 도시지역",
+        "result": "INTERSECTS",
+        "detail": "대상 Parcel과 현재 도시지역 positive-area intersection 8건"
+      },
+      {
+        "type": "CURRENT_GEOMETRY",
+        "source": "서울시 UQ141 개발제한구역",
+        "result": "NO_INTERSECTION",
+        "detail": "대상 Parcel과 현재 개발제한구역 면적교차 0건"
+      },
+      {
+        "type": "HISTORIC_NOTICE_CHAIN",
+        "source": "1989 대치택지개발 고시 chain",
+        "result": "PARTIALLY_VERIFIED",
+        "detail": "건설부 제123호 및 제608호, 서울시 제534호 계보 확인. 일부 최초 고시 본문 누락"
+      },
+      {
+        "type": "NATIONAL_ARCHIVE",
+        "source": "국가기록원 DA0138776",
+        "result": "SOURCE_CONFIRMED_CONTENT_PENDING",
+        "detail": "관련 기록 후보 10건, 공개 10건, 원문 상태 UNVERIFIED 10건"
+      }
+    ],
+    "reference_mentions": [],
+    "query_group": "HISTORY"
+  },
+  "checks": {
+    "announcement_query_success": true,
+    "announcement_total_count": 43508,
+    "combined_candidate_count": 8,
+    "combined_target_candidate_count": 0,
+    "combined_unresolved_count": 0,
+    "all_combined_candidates_classified_non_target": true,
+    "direct_notice_hit_count": 1,
+    "direct_target_event_count": 0,
+    "direct_notice_is_not_target_history": true,
+    "current_UQ111_positive_area_count": 8,
+    "current_urban_area_confirmed": true,
+    "current_UQ141_positive_area_count": 0,
+    "current_greenbelt_absent": true,
+    "historic_daechi_notice_chain_confirmed": true,
+    "historic_missing_content_notice_count": 1,
+    "historic_chain_has_missing_content": true,
+    "notice_123_identified": true,
+    "notice_534_found": true,
+    "national_archive_candidate_count": 10,
+    "national_archive_public_count": 10,
+    "national_archive_original_unverified_count": 10,
+    "national_archive_candidates_confirmed": true,
+    "national_archive_original_pending": true
+  },
+  "validation_rules": {
+    "문자열 출현만으로 TRUE 금지": true,
+    "현재 상태만으로 과거 이력 FALSE 금지": true,
+    "결정고시 검색 부재만으로 FALSE 금지": true,
+    "누락된 원문 존재 시 FALSE 금지": true,
+    "국가기록원 후보 원문 미확정 시 UNKNOWN 유지": true,
+    "TRUE는 Parcel/history 적용범위 evidence 필요": true
+  },
+  "pending_evidence": [
+    {
+      "source": "국가기록원 DA0138776",
+      "ritem_no": "000000000005",
+      "title": "개포택지개발 예정지구 지정신청에 따른 보완사항 보고"
+    },
+    {
+      "source": "국가기록원 DA0138776",
+      "ritem_no": "000000000007",
+      "title": "개포 택지개발예정지구 지정신청에 따른 보완"
+    }
+  ],
+  "next_resolution_trigger": "과거 공식 원문 또는 당시 공간도면에서 대상 Parcel이 개발제한구역·시가화조정구역·녹지지역·공원 해제 또는 도시지역 신규 편입 범위에 포함됐는지 확인될 경우 재판정"
+}

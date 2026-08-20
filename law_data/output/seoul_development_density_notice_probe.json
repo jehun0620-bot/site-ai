@@ -1,0 +1,58 @@
+{
+  "step": "STEP 17-21-C-9-2-13C 서울 개발밀도관리구역 지정·고시 evidence probe",
+  "condition": "개발밀도관리구역",
+  "results": [
+    {
+      "name": "서울시 통합검색",
+      "http_status": 200,
+      "final_url": "https://www.seoul.go.kr/common/errorAccess.html",
+      "target_present": false,
+      "designation_present": false,
+      "notice_present": false,
+      "release_present": false,
+      "text_preview": "<!doctype html> <html lang=\"ko\"> <head> <meta charset=\"utf-8\" /> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"/> <meta name=\"viewport\" content=\"user-scalable=no, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0\"> <title>ìì¸í¹ë³ìì²­ ìë¬íì´ì§</title> <link type=\"text/css\" rel=\"stylesheet\" href=\"/common/css/error.css\" /> </head> <body> <!-- error_wrap : ìë¬íì´ì§ 404 --> <div class=\"error_wrap\"> <div class=\"error\"> <div class=\"box er404\"> <div class=\"tit_area\"> <span class=\"img\"><img src=\"/common/images/icon_error.png\" alt=\"error\" /></span> <p> <span>ìì²­íì íì´ì§ë¥¼ ì°¾ì ì ììµëë¤.</span> <span>ìë¹ì¤ ì´ì©ì ë¶í¸ì ëë ¤ ì£ì¡í©ëë¤.</span> </p> </div> <div class=\"txt_area\"> <p>ìì²­íì íì´ì§ë¥¼ ì°¾ì ì ììµëë¤.</p> <p> <span>ì°¾ì¼ìë ¤ë íì´ì§ë ì£¼ìë¥¼ ìëª» ì ë ¥íìê±°ë</span> <span>íì´ì§ ì£¼ìì ë³ê²½ ëë ì­ì ë±ì ì´ì ë¡ íì´ì§ë¥¼ ì°¾ì ì ììµëë¤.</span> </p> <p><strong>ì ë ¥íì íì´ì§ì ì£¼ìì ê²½ë¡ê° ì ííì§ íë² ë íì¸ í ì´ì©íìê¸° ë°ëëë¤.</strong></p> </div> <div class=\"btn_area\"> <a href=\"/\">ìì¸ìì²­ íì¼ë¡ ê°ê¸°</a> </div> </div> </div> </div> <!-- //error_wrap : ìë¬íì´ì§ 404 --> <!-- weblog --> <script src=\"//weblog.eseoul.go.kr/wlo/js/install.js\" ></script> <!-- //weblog --> </body> </html>",
+      "error": null
+    },
+    {
+      "name": "서울 열린데이터광장 검색",
+      "http_status": 200,
+      "final_url": "https://data.seoul.go.kr/?searchValue=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+      "target_present": false,
+      "designation_present": false,
+      "notice_present": false,
+      "release_present": false,
+      "text_preview": "<!doctype html> <html lang=\"ko\"> <head> <!-- Global site tag (gtag.js) Google Analytics --> <script async src=\"//www.googletagmanager.com/gtag/js?id=G-0T3XG23CN7\"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-0T3XG23CN7'); </script> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" /> <meta name=\"title\" content=\"열린데이터광장 메인\"/> <meta name=\"keywords\" content=\"열린데이터광장,서울통계\"/> <meta name=\"description\" content=\"데이터분류,데이터검색,데이터활용\"/> <meta name=\"viewport\" content=\"width=device-width\"/> <!-- meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no\"/--><!-- ios때문에 이렇게 한다고하는데..w3s의 권장은 윗줄 --> <meta property=\"og:type\" content=\"website\"> <meta property=\"og:title\" content=\"열린데이터광장 메인\"/> <meta property=\"og:description\" content=\"데이터분류,데이터검색,데이터활용\"/> <meta property=\"og:image\" content=\"https://data.seoul.go.kr:8580/resources/img/common/logo.png\"> <meta property=\"og:url\" content=\"https://data.seoul.go.kr\"> <link rel=\"stylesheet\" href=\"/resources/css/ui.base.css?ver=230331\"> <!-- css수정시 새로고침 안해도 되도록.. --> <link rel=\"stylesheet\" href=\"/resources/lib/owl.carousel.css\"> <!-- <link rel=\"shortcut icon\" href=\"//data.seoul.go.kr/images/favicon.ico\" type=\"image/x-icon\" /> --><!-- 20220701 icon 노출 --> <link rel=\"icon\" href=\"//data.seoul.go.kr/images/favicon.png\" type=\"image/x-icon\" /><!-- 20220622 --> <link rel=\"canonical\" href=\"https://data.seoul.go.kr\"> <link rel=\"stylesheet\" href=\"/resources/css/ui.renewal.css?ver=20230330\"> <!-- 20220615 --> <script src=\"/js/jQuery-2.1.4.min.js\"></script> <script src=\"/resources/lib/owl.carousel.js\"></script> <script src=\"/resources/js/ui.global.js\"></script> <script src=\"/resources/js/ui.plugins.js\"></script> <!-- <script src=\"/resources/js/ui.common.js\"></script>--> <script src=\"/resources/js/ui.common-renewal.js\"></script",
+      "error": null
+    },
+    {
+      "name": "서울 정보소통광장",
+      "http_status": 200,
+      "final_url": "https://opengov.seoul.go.kr/?query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+      "target_present": false,
+      "designation_present": false,
+      "notice_present": false,
+      "release_present": false,
+      "text_preview": "<!-- THEME DEBUG --> <!-- THEME HOOK: 'html' --> <!-- FILE NAME SUGGESTIONS: * html--front.html.twig * html--node--31935149.html.twig * html--node--%.html.twig * html--node.html.twig x html.html.twig --> <!-- BEGIN OUTPUT from 'themes/web/templates/layout/html.html.twig' --> <!DOCTYPE html> <html lang=\"ko\"> <head> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <meta name=\"robots\" content=\"index,follow\"> <title>home > 정보소통광장</title> <meta name=\"description\" content=\"home\"> <meta name=\"naver-site-verification\" content=\"c59fe4dabb5892471103986ecec30320df147c6b\" /> <!--meta name=\"google-site-verification\" content=\"x68jkAJ3QX-n_UB9TdMnLuqbNgnIhsk7j_Y-tLfmG_M\" /--> <meta name=\"google-site-verification\" content=\"uErYL-Ma_RkRisTr0h8HrWMREKvPMUbi2T5ci361Vq4\" /> <meta property=\"og:type\" content=\"website\"> <!-- <meta property=\"og:title\" content=\"home > 정보소통광장\"> --> <!-- <meta property=\"og:title\" content=\"home\"> --> <meta property=\"og:title\" content=\"시민을 위한 정보공개 서비스\"> <!-- <meta property=\"og:description\" content=\"home\"> --> <meta property=\"og:description\" content=\"정보소통광장\"> <!-- <meta property=\"og:image\" content=\"://opengov.seoul.go.kr/opengov.jpg\"> --> <meta property=\"og:image\" content=\"https://opengov.seoul.go.kr/opengov_opengraph.png\"> <meta property=\"og:url\" content=\"://opengov.seoul.go.kr\"> <meta name=\"twitter:card\" content=\"summary_large_image\"> <meta name=\"twitter:title\" content=\"home > 정보소통광장\"> <meta name=\"twitter:description\" content=\"home\"> <meta name=\"twitter:image\" content=\"://opengov.seoul.go.kr/opengov.jpg\"> <meta name=\"twitter:domain\" content=\"://opengov.seoul.go.kr\"> <link rel=\"stylesheet\" media=\"all\" href=\"/modules/opengov/attach_lib/../../../themes/web/css/normalize.css?tivc61\" /> <link rel=\"stylesheet\" media=\"all\" href=\"/modules/opengov/attach_lib/../../../themes/web/css/layouts.css?tivc61\" /> <link rel=\"stylesheet\" media=\"all\" href=\"/modules/opengov/attach_lib/../../../themes/web/cs",
+      "error": null
+    },
+    {
+      "name": "서울기록원",
+      "http_status": 200,
+      "final_url": "https://archives.seoul.go.kr/?query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+      "target_present": false,
+      "designation_present": false,
+      "notice_present": false,
+      "release_present": false,
+      "text_preview": "<!DOCTYPE html> <html lang=\"ko\"> <head> <meta http-equiv=\"refresh\" content=\"0;url=https://archives.seoul.go.kr/main\" /> </head> </html>",
+      "error": null
+    }
+  ],
+  "successful_count": 4,
+  "target_hit_count": 0,
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "서울시 공식 계열 자료에서 개발밀도관리구역 지정·고시 흔적을 탐색하는 단계이며, 검색 결과 부재만으로 미지정을 확정할 수 없으므로 UNKNOWN 유지"
+  }
+}

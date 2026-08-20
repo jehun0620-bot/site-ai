@@ -1,0 +1,34 @@
+{
+  "step": "STEP 17-21-C-9-2-14A-1 도시지역편입해제구역 evidence hit summary",
+  "condition": "도시지역편입해제구역",
+  "hit_file_count": 3,
+  "summaries": [
+    {
+      "file": "law_special_rule_clauses.json",
+      "total_hits": 20,
+      "representative_term": "도시지역편입해제구역",
+      "classification": "POSSIBLE_HISTORY_EVIDENCE",
+      "preview": "목 제외\": true }, \"all_pass\": true, \"required_conditions\": { \"SITE\": [ \"개발밀도관리구역\", \"개발진흥지구\", \"도시지역편입해제구역\", \"산업단지\", \"수산자원보호구역\", \"입체복합구역\", \"자연경관지구\", \"자연공원\", \"지구단위계획\", \"취락지구\" ], \"SITE_HISTORY\": [ \"학교이적지\" ], \"PROJECT\": [ \"공개공지\", \"공공"
+    },
+    {
+      "file": "site_spatial_condition_snapshot.json",
+      "total_hits": 12,
+      "representative_term": "도시지역편입해제구역",
+      "classification": "POSSIBLE_HISTORY_EVIDENCE",
+      "preview": "\"road_address\": \"\", \"zone\": \"제3종일반주거지역\" }, \"required_site_conditions\": [ \"개발밀도관리구역\", \"개발진흥지구\", \"도시지역편입해제구역\", \"산업단지\", \"수산자원보호구역\", \"입체복합구역\", \"자연경관지구\", \"자연공원\", \"지구단위계획\", \"취락지구\" ], \"summary\": { \"total\": 10, \"true\": 0, \"false\": 0, \"unknown\": 10 ..."
+    },
+    {
+      "file": "site_spatial_source_snapshot.json",
+      "total_hits": 8,
+      "representative_term": "도시지역편입해제구역",
+      "classification": "POSSIBLE_HISTORY_EVIDENCE",
+      "preview": "red_method\": \"PARCEL_POLYGON_INTERSECTION\", \"priority\": 9, \"connection_status\": \"NOT_CONNECTED\" }, \"도시지역편입해제구역\": { \"query_group\": \"HISTORY\", \"query_key\": \"urban_area_conversion_history\", \"description\": \"개발제한구역ㆍ시가화조정구역ㆍ녹지지역ㆍ공원 해제 또는 도시지역 신규 ..."
+    }
+  ],
+  "possible_history_file_count": 3,
+  "resolution": {
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "hit 파일의 성격을 분류하는 단계이며 공식 지정/해제 evidence 검증 전"
+  }
+}

@@ -1117,3 +1117,21 @@ output JSON을 Git에서 추적하지 않는 경우에는 해당 JSON을 강제�
 ``` text
 Complete C-9 MapPlan zone validations through STEP 17-21-C-9-2-8A
 ```
+
+## STEP 17-21-C-9 최종 완료
+
+C-8에서 추출된 SITE 공간조건에 대해 실제 공식 공간정보,
+Parcel Polygon intersection, 공식 결정고시 및 history evidence를
+이용하여 TRUE / FALSE / UNKNOWN 판정을 수행하였다.
+
+최종 상태:
+
+```text
+STEP 17-21-C-9
+status: COMPLETE_WITH_UNKNOWNS
+
+required SITE conditions: 10
+
+TRUE: 1
+FALSE: 7
+UNKNOWN: 2

@@ -1,0 +1,162 @@
+{
+  "step": "STEP 17-21-C-9-2-14E-3 1989 대치택지개발 고시 chain 직접 검증",
+  "condition": "도시지역편입해제구역",
+  "total_rows": 43508,
+  "targets": [
+    {
+      "target": {
+        "key": "INITIAL_DESIGNATION",
+        "date": "1989-04-21",
+        "notice_no": "1989-123",
+        "expected_terms": [
+          "대치",
+          "수서",
+          "택지"
+        ],
+        "expected_event": "택지개발예정지구 지정"
+      },
+      "exact_date_number_count": 0,
+      "exact_date_number": [],
+      "date_context_count": 0,
+      "date_context_matches": []
+    },
+    {
+      "target": {
+        "key": "DEVELOPMENT_PLAN",
+        "date": "1989-10-27",
+        "notice_no": "1989-608",
+        "expected_terms": [
+          "대치",
+          "택지"
+        ],
+        "expected_event": "택지개발계획 승인"
+      },
+      "exact_date_number_count": 1,
+      "exact_date_number": [
+        {
+          "ANCMNT_MNG_CD": "11000NTC198910271045",
+          "ANCMNT_NO": "1989-608",
+          "ANCMNT_YMD": "1989-10-27T00:00:00.000",
+          "TKCG_INST": "서울특별시",
+          "ANCMNT_INST": "건설부",
+          "ANCMNT_TYPE": "결정",
+          "TTL": "(기구축내용없음)",
+          "CN": "서울대치 택지개발예정지구를 택지개발촉진법 제3조제1항 및 동법시행령 제3조 규정에 의거 변경 지정하고, 동지구 택지개발계획을 택지개발촉진법 제8조 규정에 의거 승인하였기 이를 아래와 같이 고시합니다. 1989년 10월 27일 건설부장관",
+          "content_status": "MISSING_CONTENT",
+          "history_terms": []
+        }
+      ],
+      "date_context_count": 1,
+      "date_context_matches": [
+        {
+          "ANCMNT_MNG_CD": "11000NTC198910271045",
+          "ANCMNT_NO": "1989-608",
+          "ANCMNT_YMD": "1989-10-27T00:00:00.000",
+          "TKCG_INST": "서울특별시",
+          "ANCMNT_INST": "건설부",
+          "ANCMNT_TYPE": "결정",
+          "TTL": "(기구축내용없음)",
+          "CN": "서울대치 택지개발예정지구를 택지개발촉진법 제3조제1항 및 동법시행령 제3조 규정에 의거 변경 지정하고, 동지구 택지개발계획을 택지개발촉진법 제8조 규정에 의거 승인하였기 이를 아래와 같이 고시합니다. 1989년 10월 27일 건설부장관",
+          "content_status": "MISSING_CONTENT",
+          "history_terms": [],
+          "matched_context_terms": [
+            "대치",
+            "택지"
+          ]
+        }
+      ]
+    },
+    {
+      "target": {
+        "key": "IMPLEMENTATION_PLAN",
+        "date": "1989-12-22",
+        "notice_no": "1989-534",
+        "expected_terms": [
+          "대치",
+          "택지"
+        ],
+        "expected_event": "택지개발사업 실시계획 승인"
+      },
+      "exact_date_number_count": 1,
+      "exact_date_number": [
+        {
+          "ANCMNT_MNG_CD": "11000NTC198912221189",
+          "ANCMNT_NO": "1989-534",
+          "ANCMNT_YMD": "1989-12-22T00:00:00.000",
+          "TKCG_INST": "서울특별시",
+          "ANCMNT_INST": "서울특별시",
+          "ANCMNT_TYPE": "결정",
+          "TTL": "대치지구택지개발사업실시계획승인",
+          "CN": "대치지구 택지개발사업 실시계획을 택지개발촉진법 제9조 및 동법시행량 제18조제1항 규정에 의거 승인하였기 동법 제9조제2항의 규정에 의하여 이를 다음과 같이 고시합니다. 1989년 12월 22일 서울특별시장",
+          "content_status": "CONTENT_AVAILABLE",
+          "history_terms": []
+        }
+      ],
+      "date_context_count": 1,
+      "date_context_matches": [
+        {
+          "ANCMNT_MNG_CD": "11000NTC198912221189",
+          "ANCMNT_NO": "1989-534",
+          "ANCMNT_YMD": "1989-12-22T00:00:00.000",
+          "TKCG_INST": "서울특별시",
+          "ANCMNT_INST": "서울특별시",
+          "ANCMNT_TYPE": "결정",
+          "TTL": "대치지구택지개발사업실시계획승인",
+          "CN": "대치지구 택지개발사업 실시계획을 택지개발촉진법 제9조 및 동법시행량 제18조제1항 규정에 의거 승인하였기 동법 제9조제2항의 규정에 의하여 이를 다음과 같이 고시합니다. 1989년 12월 22일 서울특별시장",
+          "content_status": "CONTENT_AVAILABLE",
+          "history_terms": [],
+          "matched_context_terms": [
+            "대치",
+            "택지"
+          ]
+        }
+      ]
+    }
+  ],
+  "1989_daechi_rows": [
+    {
+      "ANCMNT_MNG_CD": "11000NTC198912221189",
+      "ANCMNT_NO": "1989-534",
+      "ANCMNT_YMD": "1989-12-22T00:00:00.000",
+      "TKCG_INST": "서울특별시",
+      "ANCMNT_INST": "서울특별시",
+      "ANCMNT_TYPE": "결정",
+      "TTL": "대치지구택지개발사업실시계획승인",
+      "CN": "대치지구 택지개발사업 실시계획을 택지개발촉진법 제9조 및 동법시행량 제18조제1항 규정에 의거 승인하였기 동법 제9조제2항의 규정에 의하여 이를 다음과 같이 고시합니다. 1989년 12월 22일 서울특별시장",
+      "content_status": "CONTENT_AVAILABLE",
+      "history_terms": []
+    },
+    {
+      "ANCMNT_MNG_CD": "11000NTC198910271045",
+      "ANCMNT_NO": "1989-608",
+      "ANCMNT_YMD": "1989-10-27T00:00:00.000",
+      "TKCG_INST": "서울특별시",
+      "ANCMNT_INST": "건설부",
+      "ANCMNT_TYPE": "결정",
+      "TTL": "(기구축내용없음)",
+      "CN": "서울대치 택지개발예정지구를 택지개발촉진법 제3조제1항 및 동법시행령 제3조 규정에 의거 변경 지정하고, 동지구 택지개발계획을 택지개발촉진법 제8조 규정에 의거 승인하였기 이를 아래와 같이 고시합니다. 1989년 10월 27일 건설부장관",
+      "content_status": "MISSING_CONTENT",
+      "history_terms": []
+    },
+    {
+      "ANCMNT_MNG_CD": "11000NTC198901180357",
+      "ANCMNT_NO": "1988-161",
+      "ANCMNT_YMD": "1989-01-18T00:00:00.000",
+      "TKCG_INST": "서울특별시",
+      "ANCMNT_INST": "강남구",
+      "ANCMNT_TYPE": "실시",
+      "TTL": "도시계획사업(여객자동차정류장:시내)시행허가",
+      "CN": "1. 서울특별시고시 제278호(79.6.26.)로 도시계획시설 결정 및 지적승인되고, 강남구공고 제149호(88.12.11.)로 서류 공람공고한 강남구 대치동 940-3일대의 도시계획시설(여객자동차정류장:시내)에 대하여 도시계획법 제24조제1항, 제2항 및 같은법시행령제6조의 규정에 따라 다음과 같이 사업시행허가 하였기 도시계획법 제24조제3항의 규정에 따라 이를 고시합니다. 2. 관계서류는 강남구청 도시정비과 비치하고 이해관계인에게 공람합니다. 1989년 1월 18일 강남구청장",
+      "content_status": "CONTENT_AVAILABLE",
+      "history_terms": []
+    }
+  ],
+  "history_evidence_count": 0,
+  "missing_content_count": 1,
+  "resolution": {
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "reason": "1989 최초 지정·개발계획·실시계획 공식 고시 chain의 실제 API 수록 상태와 target history 표현을 검증하는 단계"
+  },
+  "next_step": "1989-123/608/534 중 본문 미수록 고시가 있으면 토지이음 고시 원문/첨부도면 source에서 직접 검증"
+}

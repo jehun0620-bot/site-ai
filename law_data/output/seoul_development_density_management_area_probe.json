@@ -1,0 +1,28 @@
+{
+  "step": "STEP 17-21-C-9-2-13A 서울 개발밀도관리구역 공식 지정 / 공간 source probe",
+  "condition": "개발밀도관리구역",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "eum": {
+    "http_status": 200,
+    "target_name_present": false,
+    "mapplan_server": null,
+    "selected_version": null
+  },
+  "mapplan_analysis": {
+    "http_status": null,
+    "entry_count": 0,
+    "entries": [],
+    "error": null
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "토지이음 공식 SITE 페이지 및 MapPlan code 목록을 조사했으나 개발밀도관리구역의 공식 관리코드와 Polygon geometry source를 아직 확정하지 못했으므로 UNKNOWN 유지"
+  },
+  "next_step": "MapPlan 전체 code와 공식 지정 고시/관리코드의 의미를 대조하여 개발밀도관리구역 layer를 식별"
+}

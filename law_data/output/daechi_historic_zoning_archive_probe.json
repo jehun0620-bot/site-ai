@@ -1,0 +1,79 @@
+{
+  "step": "STEP 17-21-C-9-2-14F-1 서울기록원 과거 용도지역/개발제한구역 기록 probe",
+  "condition": "도시지역편입해제구역",
+  "official_source": {
+    "provider": "서울기록원",
+    "relevant_series": [
+      {
+        "code": "SR228",
+        "name": "용도지역 설정 기록"
+      },
+      {
+        "code": "SR172",
+        "name": "개발제한구역 기록"
+      },
+      {
+        "code": "SR143",
+        "name": "도시개발사업 기록 : 택지개발사업 계획"
+      },
+      {
+        "code": "SR119894",
+        "name": "공동주택건설 기록 : 대치지구"
+      }
+    ]
+  },
+  "search_results": [
+    {
+      "query": "대치지구 용도지역",
+      "case_count": 3,
+      "http_success": 0
+    },
+    {
+      "query": "대치 용도지역 변경",
+      "case_count": 3,
+      "http_success": 0
+    },
+    {
+      "query": "개포동 용도지역",
+      "case_count": 3,
+      "http_success": 0
+    },
+    {
+      "query": "개포 자연녹지",
+      "case_count": 3,
+      "http_success": 0
+    },
+    {
+      "query": "대치 자연녹지",
+      "case_count": 3,
+      "http_success": 0
+    },
+    {
+      "query": "수서 대치 자연녹지",
+      "case_count": 3,
+      "http_success": 0
+    },
+    {
+      "query": "대치 개발제한구역",
+      "case_count": 3,
+      "http_success": 0
+    },
+    {
+      "query": "개포 개발제한구역",
+      "case_count": 3,
+      "http_success": 0
+    },
+    {
+      "query": "대치 택지개발예정지구",
+      "case_count": 3,
+      "http_success": 0
+    }
+  ],
+  "candidate_count": 0,
+  "candidates": [],
+  "resolution": {
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "reason": "서울기록원의 과거 용도지역·개발제한구역·택지개발 기록에서 대치/개포 관련 원기록 후보를 식별하는 단계"
+  }
+}

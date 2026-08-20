@@ -1,0 +1,338 @@
+{
+  "step": "STEP 17-21-C-9-2-14B-1 도시지역 편입/해제 이력 후보 요약",
+  "condition": "도시지역편입해제구역",
+  "candidate_count": 18,
+  "gangnam_candidate_count": 0,
+  "gaepo_candidate_count": 0,
+  "candidates": [
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11140UTZ202503120002",
+      "RPT_TYPE": "변경",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "중구 방산동 70번지 일원",
+      "RGN_NM": "동대문역사문화공원주변지구단위계획구역",
+      "LOGVM": "중구",
+      "AREA_EXS": "42307.8",
+      "AREA_ICDC_CD": "2",
+      "AREA_CHG": "492.1",
+      "AREA_CHG_AFTR": "41815.7",
+      "DCSN_ANCMNT_MNG_CD": "11140NTC202605040005"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11170UTZ202604200001",
+      "RPT_TYPE": "신설",
+      "LCLSF": "지구단위계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "용산구 효창동 5-307 일원",
+      "RGN_NM": "효창공원앞역세권(효창동 5-307일원) 장기전세주택 도시정비형 재개발사업",
+      "LOGVM": "용산구",
+      "AREA_EXS": "0",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "103402.7",
+      "AREA_CHG_AFTR": "103402.7",
+      "DCSN_ANCMNT_MNG_CD": "11170NTC202604200001"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ200601203599",
+      "RPT_TYPE": "신설",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "고덕 2동(단독주택지- 동명공원 우측)",
+      "RGN_NM": "",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "",
+      "AREA_ICDC_CD": "",
+      "AREA_CHG": "",
+      "AREA_CHG_AFTR": "79676.8",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC200601179549"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11590UTZ202206070001",
+      "RPT_TYPE": "신설",
+      "LCLSF": "지구단위계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "동작구 신대방동 498-24번지 일대",
+      "RGN_NM": "보라매공원역 역세권 주택 및 공공임대주택 건립 지구단위계획구역",
+      "LOGVM": "동작구",
+      "AREA_EXS": "0",
+      "AREA_ICDC_CD": "",
+      "AREA_CHG": "",
+      "AREA_CHG_AFTR": "6927.6",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC202207040001"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ201811090030",
+      "RPT_TYPE": "신설",
+      "LCLSF": "지구단위계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "용산구 이태원동 22-34번지 일원",
+      "RGN_NM": "용산공원정비구역 복합시설조성지구 지구단위계획구역",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "51753",
+      "AREA_CHG_AFTR": "51753",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC201510300001"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ201512223291",
+      "RPT_TYPE": "신설",
+      "LCLSF": "지구단위계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "중구 을지로6가 18-79 일대",
+      "RGN_NM": "동대문역사문화공원주변지구단위계획구역",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "669072",
+      "AREA_CHG_AFTR": "669072",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC201504307468"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ201512224293",
+      "RPT_TYPE": "변경",
+      "LCLSF": "지구단위계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "중구 을지로6가 18-79 일대",
+      "RGN_NM": "동대문역사문화공원주변지구단위계획구역",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "669072",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "0",
+      "AREA_CHG_AFTR": "669072",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC202404230001"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11140UTZ202603170003",
+      "RPT_TYPE": "변경",
+      "LCLSF": "지구단위계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "중구 을지로6가 18-79 일대",
+      "RGN_NM": "동대문 역사문화공원주변 지구단위계획구역",
+      "LOGVM": "중구",
+      "AREA_EXS": "669072",
+      "AREA_ICDC_CD": "2",
+      "AREA_CHG": "84556",
+      "AREA_CHG_AFTR": "584516",
+      "DCSN_ANCMNT_MNG_CD": "11140NTC202603170011"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ201811090035",
+      "RPT_TYPE": "신설",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "용산구 이태원동 22-34번지 일원",
+      "RGN_NM": "용산공원정비구역 복합시설조성지구 지구단위계획구역",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "51753",
+      "AREA_CHG_AFTR": "51753",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC201510300001"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ202404230001",
+      "RPT_TYPE": "신설",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "중구 광희동1가 303-1번지 일원",
+      "RGN_NM": "동대문역사문화공원주변지구단위계획구역",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "0",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "12096.9",
+      "AREA_CHG_AFTR": "12096.9",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC202404230001"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ202006180012",
+      "RPT_TYPE": "신설",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "중구 방산동 70번지 일원",
+      "RGN_NM": "동대문역사문화공원주변지구단위계획구역",
+      "LOGVM": "중구",
+      "AREA_EXS": "0",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "42096.2",
+      "AREA_CHG_AFTR": "42096.2",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC201504307468"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ200601203598",
+      "RPT_TYPE": "신설",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "고덕 2동(단독주택지- 동명공원 좌측)",
+      "RGN_NM": "",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "",
+      "AREA_ICDC_CD": "",
+      "AREA_CHG": "",
+      "AREA_CHG_AFTR": "87511.7",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC200601179549"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ202408140002",
+      "RPT_TYPE": "신설",
+      "LCLSF": "지구단위계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "용산구 동ㆍ서빙고동, 용산동 6가일대",
+      "RGN_NM": "용산공원 동측권역 지구단위계획구역",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "0",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "212581.2",
+      "AREA_CHG_AFTR": "212581.2",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC202409260004"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ202408140004",
+      "RPT_TYPE": "신설",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "용산구 서빙고동  4-14 일원",
+      "RGN_NM": "용산공원 동측권역 지구단위계획구역",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "0",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "5625",
+      "AREA_CHG_AFTR": "5625",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC202409260004"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ202408140003",
+      "RPT_TYPE": "신설",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "용산구 서빙고동  235-80 일원",
+      "RGN_NM": "용산공원 동측권역 지구단위계획구역",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "0",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "6330.9",
+      "AREA_CHG_AFTR": "6330.9",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC202409260004"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ202006180013",
+      "RPT_TYPE": "신설",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "중구 을지로6가 18-79일원",
+      "RGN_NM": "동대문역사문화공원주변지구단위계획구역",
+      "LOGVM": "중구",
+      "AREA_EXS": "0",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "27573.1",
+      "AREA_CHG_AFTR": "27573.1",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC201504307468"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11140UTZ202503120001",
+      "RPT_TYPE": "변경",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "중구 방산동 70번지 일원",
+      "RGN_NM": "동대문역사문화공원주변지구단위계획구역",
+      "LOGVM": "중구",
+      "AREA_EXS": "42096.2",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "211.6",
+      "AREA_CHG_AFTR": "42307.8",
+      "DCSN_ANCMNT_MNG_CD": "11140NTC202503120001"
+    },
+    {
+      "matched_terms": [
+        "공원"
+      ],
+      "RPT_MNG_CD": "11000UTZ202408140005",
+      "RPT_TYPE": "신설",
+      "LCLSF": "특별계획구역",
+      "MCLSF": "",
+      "SCLSF": "",
+      "PSTN_NM": "용산구 동빙고동 7 일원",
+      "RGN_NM": "용산공원 동측권역 지구단위계획구역",
+      "LOGVM": "서울특별시",
+      "AREA_EXS": "0",
+      "AREA_ICDC_CD": "1",
+      "AREA_CHG": "77884.2",
+      "AREA_CHG_AFTR": "77884.2",
+      "DCSN_ANCMNT_MNG_CD": "11000NTC202409260004"
+    }
+  ],
+  "resolution": {
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "reason": "서울시 공식 도시계획이력 중 관련 후보를 분류한 단계. Parcel 및 결정고시 연결 전"
+  }
+}

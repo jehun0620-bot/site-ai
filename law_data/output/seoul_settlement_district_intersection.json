@@ -1,0 +1,108 @@
+{
+  "step": "STEP 17-21-C-9-2-10B 서울시 UQ128 취락지구 Parcel Polygon 실제 공간교차",
+  "condition": "취락지구",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "parcel": {
+    "provider": "VWorld",
+    "dataset": "LP_PA_CBND_BUBUN",
+    "feature_id": "LP_PA_CBND_BUBUN.801937",
+    "pnu_direct_match": true,
+    "original_crs": "EPSG:4326",
+    "intersection_crs": "EPSG:5174",
+    "geometry_type": "MultiPolygon",
+    "area": 121040.35341323777,
+    "bounds": [
+      206333.12280831102,
+      443311.99949033384,
+      206842.30280893523,
+      443810.46949070203
+    ]
+  },
+  "uq128_source": {
+    "provider": "서울특별시",
+    "dataset": "서울시 용도지구(취락지구) 공간정보",
+    "dataset_code": "UQ128",
+    "openapi": "upisCUq128",
+    "class_code": "UQM120",
+    "source_path": "D:\\site-ai\\law_data\\input\\UQ128_용도지구(취락지구)_202602.zip",
+    "feature_count": 38,
+    "original_crs": "EPSG:5174",
+    "effective_crs": "EPSG:5174",
+    "crs_source": "FILE_METADATA",
+    "columns": [
+      "PRESENT_SN",
+      "LCLAS_CL",
+      "MLSFC_CL",
+      "SCLAS_CL",
+      "ATRB_SE",
+      "WTNNC_SN",
+      "NTFC_SN",
+      "DGM_NM",
+      "DGM_AR",
+      "DGM_LT",
+      "SIGNGU_SE",
+      "DRAWING_NO",
+      "CREATE_DAT",
+      "SHAPE_AREA",
+      "SHAPE_LEN",
+      "geometry"
+    ]
+  },
+  "schema": {
+    "verified": true,
+    "feature_count": 38,
+    "LCLAS_CL_values": [
+      "UQM120"
+    ],
+    "ATRB_SE_values": [
+      "UQM120"
+    ],
+    "DGM_NM_values": [
+      "부암1",
+      "부암2",
+      "집단취락지구",
+      "취락지구",
+      "평창",
+      "홍지"
+    ],
+    "LCLAS_CL_all_UQM120": true,
+    "ATRB_SE_all_UQM120": true,
+    "geometry_valid_count": 38,
+    "reason": "UQ128 SHP 코드/schema 정상"
+  },
+  "intersection": {
+    "bbox_candidate_count": 0,
+    "intersection_count": 0,
+    "positive_area_intersection_count": 0,
+    "max_intersection_ratio": 0.0,
+    "features": []
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "FALSE",
+    "confidence": "HIGH",
+    "reason": "서울시 공식 UQ128 취락지구 전체 공간레이어를 정상 로드하고 UQM120 코드체계를 검증한 뒤 대상 PNU Parcel Polygon과 공간교차를 수행했으나 실제 면적교차가 확인되지 않음",
+    "max_intersection_ratio": 0.0
+  },
+  "validation": {
+    "VWORLD API Key 존재": true,
+    "SITE PNU 19자리": true,
+    "Parcel query 성공": true,
+    "Parcel PNU 직접 검증": true,
+    "Parcel Polygon geometry": true,
+    "UQ128 공식 공간파일 존재": true,
+    "UQ128 Feature 38건": true,
+    "LCLAS_CL UQM120 검증": true,
+    "ATRB_SE UQM120 검증": true,
+    "UQ128 geometry 전체 유효": true,
+    "동일 CRS 교차": true,
+    "TRUE는 실제 면적교차 필요": true,
+    "경계접촉만으로 TRUE 금지": true,
+    "FALSE는 전체 공식 layer 정상 필요": true
+  },
+  "next_step": "취락지구 판정 확정 후 다음 미해결 공간조건으로 진행"
+}

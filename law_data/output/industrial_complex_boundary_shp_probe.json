@@ -1,0 +1,103 @@
+{
+  "step": "STEP 17-21-C-9-2-11A-1 국토교통부 산업단지 경계도면 SHP source / schema probe",
+  "condition": "산업단지",
+  "official_source": {
+    "provider": "국토교통부",
+    "dataset": "산업단지 경계도면",
+    "coverage": "전국",
+    "included_types": [
+      "국가산업단지",
+      "일반산업단지",
+      "도시첨단산업단지",
+      "농공단지"
+    ]
+  },
+  "layer": {
+    "source_path": "D:\\site-ai\\law_data\\input\\국토교통부_산업단지_경계도면_20250531.zip",
+    "feature_count": 1340,
+    "crs": "EPSG:3857",
+    "columns": [
+      "DAN_ID",
+      "DAN_NAME",
+      "DANJI_TYPE",
+      "CRE_DATE",
+      "UPD_DATE",
+      "GOSI",
+      "REMARK",
+      "geometry"
+    ]
+  },
+  "schema": {
+    "columns": [
+      "DAN_ID",
+      "DAN_NAME",
+      "DANJI_TYPE",
+      "CRE_DATE",
+      "UPD_DATE",
+      "GOSI",
+      "REMARK",
+      "geometry"
+    ],
+    "id_column": "DAN_ID",
+    "name_column": "DAN_NAME",
+    "type_column": null,
+    "name_values_preview": [
+      "AM하이테크",
+      "GW",
+      "H-테크노밸리",
+      "I-Food Park",
+      "IHP",
+      "KCC울산",
+      "KGC예본",
+      "LG Digital Park",
+      "SK스페셜티",
+      "가남",
+      "가산",
+      "가야",
+      "가야곡",
+      "가야곡2",
+      "가연",
+      "가유",
+      "가율",
+      "가은",
+      "가은2",
+      "가장(1공구)",
+      "가장(2공구)",
+      "가장2",
+      "가주",
+      "가흥",
+      "간전",
+      "갈말",
+      "갈사만조선",
+      "갈산",
+      "갈산2전문",
+      "갈산전문"
+    ],
+    "name_value_count": 1277,
+    "type_values": [],
+    "geometry_types": [
+      "MultiPolygon",
+      "Polygon"
+    ],
+    "valid_geometry_count": 1340,
+    "feature_count": 1340
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "UNKNOWN",
+    "confidence": "MEDIUM",
+    "reason": "국토교통부 공식 산업단지 경계 Polygon SHP를 정상 확보함. 다음 단계에서 대상 PNU Parcel Polygon과 실제 공간교차 필요"
+  },
+  "validation": {
+    "공식 국토교통부 source": true,
+    "전국 산업단지 경계": true,
+    "국가산업단지 포함": true,
+    "일반산업단지 포함": true,
+    "도시첨단산업단지 포함": true,
+    "농공단지 포함": true,
+    "Polygon geometry 필요": true,
+    "Parcel intersection 전 TRUE 금지": true,
+    "Parcel intersection 전 FALSE 금지": true
+  },
+  "next_step": "STEP 17-21-C-9-2-11B 산업단지 경계 Parcel Polygon 실제 공간교차"
+}

@@ -1,0 +1,92 @@
+{
+  "step": "STEP 17-21-C-9-2-11B 국토교통부 산업단지 경계도면 × Parcel Polygon 실제 공간교차",
+  "condition": "산업단지",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "official_source": {
+    "provider": "국토교통부",
+    "dataset": "산업단지 경계도면",
+    "coverage": "대한민국 전체",
+    "source_path": "D:\\site-ai\\law_data\\input\\국토교통부_산업단지_경계도면_20250531.zip",
+    "feature_count": 1340,
+    "crs": "EPSG:3857",
+    "columns": [
+      "DAN_ID",
+      "DAN_NAME",
+      "DANJI_TYPE",
+      "CRE_DATE",
+      "UPD_DATE",
+      "GOSI",
+      "REMARK",
+      "geometry"
+    ]
+  },
+  "schema": {
+    "verified": true,
+    "missing_columns": [],
+    "feature_count": 1340,
+    "geometry_types": [
+      "MultiPolygon",
+      "Polygon"
+    ],
+    "valid_geometry_count": 1340,
+    "type_values": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "reason": "산업단지 공식 layer schema 정상"
+  },
+  "parcel": {
+    "provider": "VWorld",
+    "dataset": "LP_PA_CBND_BUBUN",
+    "feature_id": "LP_PA_CBND_BUBUN.801937",
+    "pnu_direct_match": true,
+    "original_crs": "EPSG:4326",
+    "intersection_crs": "EPSG:3857",
+    "geometry_type": "MultiPolygon",
+    "area": 192611.30307326035,
+    "bounds": [
+      14145635.129299562,
+      4507907.143724497,
+      14146276.280581793,
+      4508537.152657504
+    ]
+  },
+  "intersection": {
+    "bbox_candidate_count": 0,
+    "intersection_count": 0,
+    "positive_area_intersection_count": 0,
+    "max_intersection_ratio": 0.0,
+    "features": []
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "FALSE",
+    "confidence": "HIGH",
+    "reason": "국토교통부 공식 전국 산업단지 경계도면 전체 1,340개 Polygon을 정상 로드하고 대상 PNU Parcel Polygon과 동일 CRS에서 공간교차를 수행했으나 실제 면적교차가 확인되지 않음",
+    "max_intersection_ratio": 0.0
+  },
+  "validation": {
+    "VWORLD_API_KEY 존재": true,
+    "PNU 19자리": true,
+    "Parcel query 성공": true,
+    "Parcel PNU 직접 검증": true,
+    "산업단지 공식 layer 존재": true,
+    "산업단지 Feature 1340": true,
+    "산업단지 CRS EPSG:3857": true,
+    "DAN_ID 존재": true,
+    "DAN_NAME 존재": true,
+    "DANJI_TYPE 존재": true,
+    "전체 geometry 유효": true,
+    "동일 CRS 교차": true,
+    "TRUE는 실제 면적교차 필요": true,
+    "경계접촉만으로 TRUE 금지": true,
+    "FALSE는 전체 공식 layer 정상 필요": true
+  },
+  "next_step": "산업단지 판정 확정 후 자연공원 공간조건 검증"
+}

@@ -1,0 +1,65 @@
+{
+  "step": "STEP 17-21-C-9-2-13B 서울시 UQ145 기타용도구역 내 개발밀도관리구역 probe",
+  "condition": "개발밀도관리구역",
+  "official_source": {
+    "provider": "서울특별시",
+    "dataset": "기타용도구역 공간정보",
+    "dataset_code": "UQ145",
+    "crs": "EPSG:5174",
+    "source_path": "D:\\site-ai\\law_data\\input\\UQ145_기타용도구역_202602.zip"
+  },
+  "layer": {
+    "feature_count": 1,
+    "columns": [
+      "PRESENT_SN",
+      "LCLAS_CL",
+      "MLSFC_CL",
+      "SCLAS_CL",
+      "ATRB_SE",
+      "WTNNC_SN",
+      "NTFC_SN",
+      "DGM_NM",
+      "SIGNGU_SE",
+      "DRAWING_NO",
+      "CREATE_DAT",
+      "DGM_AR",
+      "DGM_LT",
+      "SHAPE_AREA",
+      "SHAPE_LEN",
+      "geometry"
+    ],
+    "geometry_types": [
+      "Polygon"
+    ],
+    "valid_geometry_count": 1
+  },
+  "values": {
+    "DGM_NM": [
+      "소로3류"
+    ],
+    "LCLAS_CL": [
+      "UQS122"
+    ],
+    "MLSFC_CL": [],
+    "SCLAS_CL": [],
+    "ATRB_SE": [
+      "UQS122"
+    ],
+    "PRESENT_SN": [
+      "11590UQ151PS202101229994"
+    ]
+  },
+  "target_search": {
+    "exact_hit_count": 0,
+    "contains_hit_count": 0,
+    "exact_hits": [],
+    "contains_hits": []
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "서울시 공식 UQ145 전체 layer는 정상 확인됐으나 개발밀도관리구역 Feature가 확인되지 않음. UQ145 부재만으로 FALSE 처리하지 않고 다른 공식 지정 source를 추가 확인해야 함"
+  },
+  "next_step": "개발밀도관리구역 다른 공식 source 탐색"
+}

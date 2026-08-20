@@ -1,0 +1,63 @@
+{
+  "step": "STEP 17-21-C-9-2-14A-2 도시지역편입해제구역 기존 source 정의 복원",
+  "condition": "도시지역편입해제구역",
+  "source_snapshot": {
+    "hit_count": 1,
+    "hits": [
+      {
+        "path": "$.source_registry",
+        "summary": {
+          "query_group": "HISTORY",
+          "query_key": "urban_area_conversion_history",
+          "description": "개발제한구역ㆍ시가화조정구역ㆍ녹지지역ㆍ공원 해제 또는 도시지역 신규 편입 이력 판정",
+          "preferred_method": "PARCEL_HISTORY_LOOKUP",
+          "priority": 10,
+          "connection_status": "NOT_CONNECTED",
+          "all_keys": [
+            "connection_status",
+            "description",
+            "preferred_method",
+            "priority",
+            "query_group",
+            "query_key",
+            "source_candidates"
+          ]
+        },
+        "raw": {
+          "query_group": "HISTORY",
+          "query_key": "urban_area_conversion_history",
+          "description": "개발제한구역ㆍ시가화조정구역ㆍ녹지지역ㆍ공원 해제 또는 도시지역 신규 편입 이력 판정",
+          "source_candidates": [
+            "도시관리계획 결정ㆍ변경 이력",
+            "용도지역ㆍ구역 변경 이력",
+            "도시계획 고시 이력"
+          ],
+          "preferred_method": "PARCEL_HISTORY_LOOKUP",
+          "priority": 10,
+          "connection_status": "NOT_CONNECTED"
+        }
+      }
+    ]
+  },
+  "condition_snapshot": {
+    "object_hit_count": 0,
+    "list_hit_count": 2,
+    "list_hits": [
+      {
+        "path": "$.required_site_conditions",
+        "index": 2,
+        "count": 10
+      },
+      {
+        "path": "$.query_groups.HISTORY",
+        "index": 0,
+        "count": 1
+      }
+    ]
+  },
+  "resolution": {
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "기존 source 정의와 조건 분류를 복원하는 단계"
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "step": "STEP 17-21-C-9-2-14A 도시지역편입해제구역 공식 source / 관리체계 probe",
+  "condition": "도시지역편입해제구역",
+  "condition_type": "SITE_HISTORY",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "pnu": "1168010300100120000"
+  },
+  "search_terms": [
+    "도시지역편입해제구역",
+    "도시지역 편입 해제구역",
+    "도시지역편입",
+    "편입해제구역",
+    "편입해제"
+  ],
+  "existing_evidence": {
+    "scanned_file_count": 49,
+    "hit_file_count": 3,
+    "total_hit_count": 40,
+    "results": [
+      {
+        "file": "law_special_rule_clauses.json",
+        "path": "D:\\site-ai\\law_data\\output\\law_special_rule_clauses.json",
+        "hits": [
+          {
+            "term": "도시지역편입해제구역",
+            "count": 5,
+            "preview": " 목 제외\": true   },   \"all_pass\": true,   \"required_conditions\": {     \"SITE\": [       \"개발밀도관리구역\",       \"개발진흥지구\",       \"도시지역편입해제구역\",       \"산업단지\",       \"수산자원보호구역\",       \"입체복합구역\",       \"자연경관지구\",       \"자연공원\",       \"지구단위계획\",       \"취락지구\"     ],     \"SITE_HISTORY\": [       \"학교이적지\"     ],     \"PROJECT\": [       \"공개공지\",       \"공공"
+          },
+          {
+            "term": "도시지역편입",
+            "count": 5,
+            "preview": " 목 제외\": true   },   \"all_pass\": true,   \"required_conditions\": {     \"SITE\": [       \"개발밀도관리구역\",       \"개발진흥지구\",       \"도시지역편입해제구역\",       \"산업단지\",       \"수산자원보호구역\",       \"입체복합구역\",       \"자연경관지구\",       \"자연공원\",       \"지구단위계획\",       \"취락지구\"     ],     \"SITE_HISTORY\": [       \"학교이적지\"     ],     \"PROJECT\": [       \"공개공지\",      "
+          },
+          {
+            "term": "편입해제구역",
+            "count": 5,
+            "preview": "외\": true   },   \"all_pass\": true,   \"required_conditions\": {     \"SITE\": [       \"개발밀도관리구역\",       \"개발진흥지구\",       \"도시지역편입해제구역\",       \"산업단지\",       \"수산자원보호구역\",       \"입체복합구역\",       \"자연경관지구\",       \"자연공원\",       \"지구단위계획\",       \"취락지구\"     ],     \"SITE_HISTORY\": [       \"학교이적지\"     ],     \"PROJECT\": [       \"공개공지\",       \"공공"
+          },
+          {
+            "term": "편입해제",
+            "count": 5,
+            "preview": "외\": true   },   \"all_pass\": true,   \"required_conditions\": {     \"SITE\": [       \"개발밀도관리구역\",       \"개발진흥지구\",       \"도시지역편입해제구역\",       \"산업단지\",       \"수산자원보호구역\",       \"입체복합구역\",       \"자연경관지구\",       \"자연공원\",       \"지구단위계획\",       \"취락지구\"     ],     \"SITE_HISTORY\": [       \"학교이적지\"     ],     \"PROJECT\": [       \"공개공지\",       \""
+          }
+        ]
+      },
+      {
+        "file": "site_spatial_condition_snapshot.json",
+        "path": "D:\\site-ai\\law_data\\output\\site_spatial_condition_snapshot.json",
+        "hits": [
+          {
+            "term": "도시지역편입해제구역",
+            "count": 3,
+            "preview": "    \"road_address\": \"\",     \"zone\": \"제3종일반주거지역\"   },   \"required_site_conditions\": [     \"개발밀도관리구역\",     \"개발진흥지구\",     \"도시지역편입해제구역\",     \"산업단지\",     \"수산자원보호구역\",     \"입체복합구역\",     \"자연경관지구\",     \"자연공원\",     \"지구단위계획\",     \"취락지구\"   ],   \"summary\": {     \"total\": 10,     \"true\": 0,     \"false\": 0,     \"unknown\": 10   },   \"query_grou"
+          },
+          {
+            "term": "도시지역편입",
+            "count": 3,
+            "preview": "    \"road_address\": \"\",     \"zone\": \"제3종일반주거지역\"   },   \"required_site_conditions\": [     \"개발밀도관리구역\",     \"개발진흥지구\",     \"도시지역편입해제구역\",     \"산업단지\",     \"수산자원보호구역\",     \"입체복합구역\",     \"자연경관지구\",     \"자연공원\",     \"지구단위계획\",     \"취락지구\"   ],   \"summary\": {     \"total\": 10,     \"true\": 0,     \"false\": 0,     \"unknown\": 10   },   \"query_"
+          },
+          {
+            "term": "편입해제구역",
+            "count": 3,
+            "preview": "\"road_address\": \"\",     \"zone\": \"제3종일반주거지역\"   },   \"required_site_conditions\": [     \"개발밀도관리구역\",     \"개발진흥지구\",     \"도시지역편입해제구역\",     \"산업단지\",     \"수산자원보호구역\",     \"입체복합구역\",     \"자연경관지구\",     \"자연공원\",     \"지구단위계획\",     \"취락지구\"   ],   \"summary\": {     \"total\": 10,     \"true\": 0,     \"false\": 0,     \"unknown\": 10   },   \"query_grou"
+          },
+          {
+            "term": "편입해제",
+            "count": 3,
+            "preview": "\"road_address\": \"\",     \"zone\": \"제3종일반주거지역\"   },   \"required_site_conditions\": [     \"개발밀도관리구역\",     \"개발진흥지구\",     \"도시지역편입해제구역\",     \"산업단지\",     \"수산자원보호구역\",     \"입체복합구역\",     \"자연경관지구\",     \"자연공원\",     \"지구단위계획\",     \"취락지구\"   ],   \"summary\": {     \"total\": 10,     \"true\": 0,     \"false\": 0,     \"unknown\": 10   },   \"query_gr"
+          }
+        ]
+      },
+      {
+        "file": "site_spatial_source_snapshot.json",
+        "path": "D:\\site-ai\\law_data\\output\\site_spatial_source_snapshot.json",
+        "hits": [
+          {
+            "term": "도시지역편입해제구역",
+            "count": 2,
+            "preview": "red_method\": \"PARCEL_POLYGON_INTERSECTION\",       \"priority\": 9,       \"connection_status\": \"NOT_CONNECTED\"     },     \"도시지역편입해제구역\": {       \"query_group\": \"HISTORY\",       \"query_key\": \"urban_area_conversion_history\",       \"description\": \"개발제한구역ㆍ시가화조정구역ㆍ녹지지역ㆍ공원 해제 또는 도시지역 신규 편입 이력 판정\",       \"source_candidates\": [         \"도시관"
+          },
+          {
+            "term": "도시지역편입",
+            "count": 2,
+            "preview": "red_method\": \"PARCEL_POLYGON_INTERSECTION\",       \"priority\": 9,       \"connection_status\": \"NOT_CONNECTED\"     },     \"도시지역편입해제구역\": {       \"query_group\": \"HISTORY\",       \"query_key\": \"urban_area_conversion_history\",       \"description\": \"개발제한구역ㆍ시가화조정구역ㆍ녹지지역ㆍ공원 해제 또는 도시지역 신규 편입 이력 판정\",       \"source_candidates\": [         "
+          },
+          {
+            "term": "편입해제구역",
+            "count": 2,
+            "preview": "method\": \"PARCEL_POLYGON_INTERSECTION\",       \"priority\": 9,       \"connection_status\": \"NOT_CONNECTED\"     },     \"도시지역편입해제구역\": {       \"query_group\": \"HISTORY\",       \"query_key\": \"urban_area_conversion_history\",       \"description\": \"개발제한구역ㆍ시가화조정구역ㆍ녹지지역ㆍ공원 해제 또는 도시지역 신규 편입 이력 판정\",       \"source_candidates\": [         \"도시관"
+          },
+          {
+            "term": "편입해제",
+            "count": 2,
+            "preview": "method\": \"PARCEL_POLYGON_INTERSECTION\",       \"priority\": 9,       \"connection_status\": \"NOT_CONNECTED\"     },     \"도시지역편입해제구역\": {       \"query_group\": \"HISTORY\",       \"query_key\": \"urban_area_conversion_history\",       \"description\": \"개발제한구역ㆍ시가화조정구역ㆍ녹지지역ㆍ공원 해제 또는 도시지역 신규 편입 이력 판정\",       \"source_candidates\": [         \"도"
+          }
+        ]
+      }
+    ]
+  },
+  "source_groups": {
+    "mapplan_files": [],
+    "eum_files": [],
+    "law_files": [
+      "law_special_rule_clauses.json"
+    ],
+    "other_files": [
+      "site_spatial_condition_snapshot.json",
+      "site_spatial_source_snapshot.json"
+    ]
+  },
+  "code_candidates": [],
+  "validation_rules": {
+    "문자열 출현만으로 TRUE 금지": true,
+    "문자열 부재만으로 FALSE 금지": true,
+    "관리코드 의미 추정 금지": true,
+    "현행 Polygon 부재만으로 과거 이력 FALSE 금지": true,
+    "지정/해제 공식 evidence 필요": true
+  },
+  "resolution": {
+    "query_status": "QUERY_SUCCESS",
+    "resolution": "UNKNOWN",
+    "confidence": "NONE",
+    "reason": "기존 프로젝트 evidence에서 도시지역편입해제구역 관련 문자열을 확인했으나 문자열 출현만으로 대상 SITE의 과거 편입·해제 이력을 확정할 수 없음. 공식 관리코드 및 지정/해제 고시 source 추가 검증 필요"
+  },
+  "next_step": "검색 hit 및 관리코드 후보를 기준으로 도시지역편입해제구역 공식 지정/해제 source와 PNU 이력 연결 가능성을 검증"
+}

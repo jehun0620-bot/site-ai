@@ -1,0 +1,277 @@
+{
+  "step": "STEP 17-21-C-9-3A C-9 SITE 공간조건 최종 집계",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "road_address": "",
+    "zone": "제3종일반주거지역"
+  },
+  "required_site_conditions": [
+    "개발밀도관리구역",
+    "개발진흥지구",
+    "도시지역편입해제구역",
+    "산업단지",
+    "수산자원보호구역",
+    "입체복합구역",
+    "자연경관지구",
+    "자연공원",
+    "지구단위계획",
+    "취락지구"
+  ],
+  "summary": {
+    "total": 10,
+    "true": 1,
+    "false": 7,
+    "unknown": 2
+  },
+  "query_groups": {
+    "URBAN_PLANNING_ZONE": [
+      "개발밀도관리구역",
+      "개발진흥지구",
+      "수산자원보호구역",
+      "입체복합구역",
+      "자연경관지구",
+      "지구단위계획",
+      "취락지구"
+    ],
+    "HISTORY": [
+      "도시지역편입해제구역"
+    ],
+    "THEMATIC_LAYER": [
+      "산업단지",
+      "자연공원"
+    ]
+  },
+  "conditions": [
+    {
+      "name": "개발밀도관리구역",
+      "status": "UNKNOWN",
+      "confidence": "MEDIUM",
+      "source_type": "MULTI_SOURCE_NEGATIVE_EVIDENCE",
+      "source_name": "EUM + 서울시 upisAnnouncement + 서울시 공간레이어 probe",
+      "reason": "개발밀도관리구역은 국토계획법 제66조에 따른 별도 지정·고시 대상이다. 토지이용계획에서 해당 명칭이 확인되지 않았고, 서울시 결정고시 전체 DB를 정상 조회했으나 개발밀도관리구역 또는 관련 광의 문자열 고시는 확인되지 않았다. 또한 UQ145는 실제 schema 분석 결과 개발밀도관리구역 공간레이어가 아닌 것으로 확인됐다. 그러나 서울시가 해당 구역을 지정하지 않았음을 직접 증명하는 공식 전국/서울 전용 공간레이어나 명시적 '지정 없음' source를 확보하지 못했으므로 검색 부재를 FALSE 근거로 사용하지 않고 UNKNOWN을 유지한다.",
+      "evidence": [
+        {
+          "type": "LAND_USE_INFORMATION",
+          "source": "토지이용계획/EUM",
+          "result": "NO_NAME_EVIDENCE",
+          "detail": "정상 HTTP 응답에서 개발밀도관리구역 명칭 확인되지 않음"
+        },
+        {
+          "type": "MAP_SOURCE",
+          "source": "MapPlan",
+          "result": "SOURCE_UNVERIFIED",
+          "detail": "개발밀도관리구역에 대응하는 신뢰 가능한 MapPlan layer/source를 확정하지 못함"
+        },
+        {
+          "type": "SPATIAL_LAYER_PROBE",
+          "source": "서울시 UQ145",
+          "result": "NOT_TARGET_DATASET",
+          "detail": "UQ145 공간파일은 존재하지만 실제 DGM_NM/ATRB_SE 분석 결과 소로3류(UQS122)이며 개발밀도관리구역 layer가 아님"
+        },
+        {
+          "type": "OFFICIAL_NOTICE_PROBE",
+          "source": "서울시 고시 관련 probe",
+          "result": "NO_TARGET_HIT",
+          "detail": "정상 HTTP 조회 0건, target hit 0건"
+        },
+        {
+          "type": "OFFICIAL_NOTICE_DATABASE",
+          "source": "서울특별시 upisAnnouncement",
+          "result": "NO_TARGET_HIT",
+          "detail": "결정고시 43,508건 전수조회, 정확명칭 0건, SITE 정확명칭 0건, 광의 문자열 0건"
+        }
+      ],
+      "reference_mentions": [
+        "개발밀도관리구역의 지정기준 및 관리방법"
+      ],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "개발진흥지구",
+      "status": "FALSE",
+      "confidence": "HIGH",
+      "source_type": "PARCEL_POLYGON_INTERSECTION",
+      "source_name": "공식 도시계획 공간정보",
+      "reason": "공식 개발진흥지구 공간정보를 정상 조회하고 대상 PNU Parcel Polygon과 실제 공간교차를 검증했으나 면적교차가 확인되지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "도시지역편입해제구역",
+      "status": "UNKNOWN",
+      "confidence": "MEDIUM",
+      "source_type": "MULTI_SOURCE_HISTORY_EVIDENCE",
+      "source_name": "서울시 도시계획 결정고시 + 서울시 UQ111/UQ141 + 국가기록원 DA0138776",
+      "reason": "서울시 공식 도시계획 결정고시 전체 DB를 정상 조회하고 SITE 관련 편입/해제 후보를 검토했으나 개발제한구역·시가화조정구역·녹지지역·공원 해제 또는 도시지역 신규 편입에 해당하는 직접 고시는 확인되지 않았다. 현재 대상 Parcel은 서울시 UQ111 도시지역과 실제 교차하고 UQ141 개발제한구역과는 교차하지 않는다. 그러나 1989년 대치택지개발 최초 지정 단계의 일부 공식 고시 본문이 누락되어 있고 국가기록원 원기록의 실제 내용도 아직 확인되지 않아 과거 편입/해제 부재를 완전히 입증할 수 없다. 따라서 FALSE로 자동 변환하지 않고 UNKNOWN을 유지한다.",
+      "evidence": [
+        {
+          "type": "OFFICIAL_NOTICE_DATABASE",
+          "source": "서울특별시 도시계획 결정고시 upisAnnouncement",
+          "result": "QUERY_SUCCESS",
+          "detail": "전체 결정고시 43,508건 조회"
+        },
+        {
+          "type": "NOTICE_FILTER",
+          "source": "서울특별시 결정고시",
+          "result": "NO_TARGET_HISTORY_CANDIDATE",
+          "detail": "SITE 관련 편입/해제 결합 후보 8건 중 target history 0건, 미분류 0건"
+        },
+        {
+          "type": "DIRECT_NOTICE",
+          "source": "개포동 12번지 직접 일치 결정고시",
+          "result": "NOT_TARGET_HISTORY",
+          "detail": "2010년 대치택지개발지구 지구단위계획 변경고시로 확인"
+        },
+        {
+          "type": "CURRENT_GEOMETRY",
+          "source": "서울시 UQ111 도시지역",
+          "result": "INTERSECTS",
+          "detail": "대상 Parcel과 현재 도시지역 positive-area intersection 8건"
+        },
+        {
+          "type": "CURRENT_GEOMETRY",
+          "source": "서울시 UQ141 개발제한구역",
+          "result": "NO_INTERSECTION",
+          "detail": "대상 Parcel과 현재 개발제한구역 면적교차 0건"
+        },
+        {
+          "type": "HISTORIC_NOTICE_CHAIN",
+          "source": "1989 대치택지개발 고시 chain",
+          "result": "PARTIALLY_VERIFIED",
+          "detail": "건설부 제123호 및 제608호, 서울시 제534호 계보 확인. 일부 최초 고시 본문 누락"
+        },
+        {
+          "type": "NATIONAL_ARCHIVE",
+          "source": "국가기록원 DA0138776",
+          "result": "SOURCE_CONFIRMED_CONTENT_PENDING",
+          "detail": "관련 기록 후보 10건, 공개 10건, 원문 상태 UNVERIFIED 10건"
+        }
+      ],
+      "reference_mentions": [],
+      "query_group": "HISTORY"
+    },
+    {
+      "name": "산업단지",
+      "status": "FALSE",
+      "confidence": "HIGH",
+      "source_type": "PARCEL_POLYGON_INTERSECTION",
+      "source_name": "국토교통부 산업단지 경계도면",
+      "reason": "국토교통부 공식 전국 산업단지 경계도면 1,340개 Polygon을 정상 로드하고 대상 PNU Parcel Polygon과 동일 CRS에서 공간교차했으나 실제 면적교차가 확인되지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "THEMATIC_LAYER"
+    },
+    {
+      "name": "수산자원보호구역",
+      "status": "FALSE",
+      "confidence": "HIGH",
+      "source_type": "PARCEL_POLYGON_INTERSECTION",
+      "source_name": "해양수산부 수산자원보호구역 공식 WFS",
+      "reason": "해양수산부 공식 WFS를 HTTP 200으로 정상 조회하고 EPSG:5179 geometry와 BBOX 공간필터를 양성대조로 검증한 뒤 대상 PNU Parcel Polygon과 교차했으나 실제 면적교차가 확인되지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "입체복합구역",
+      "status": "FALSE",
+      "confidence": "HIGH",
+      "source_type": "PARCEL_POLYGON_INTERSECTION",
+      "source_name": "MapPlan 공식 공간정보",
+      "reason": "MapPlan 공식 공간정보의 source/관리코드 및 공간조회 구조를 검증한 뒤 대상 Parcel과 실제 공간교차를 수행했으나 면적교차가 확인되지 않음",
+      "evidence": [],
+      "reference_mentions": [
+        "도시ㆍ군계획시설입체복합구역의 지정"
+      ],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "자연경관지구",
+      "status": "FALSE",
+      "confidence": "HIGH",
+      "source_type": "PARCEL_POLYGON_INTERSECTION",
+      "source_name": "공식 도시계획 공간정보",
+      "reason": "공식 자연경관지구 공간정보를 정상 조회하고 대상 PNU Parcel Polygon과 실제 공간교차를 검증했으나 면적교차가 확인되지 않음",
+      "evidence": [],
+      "reference_mentions": [
+        "자연경관지구 안에서의 건축제한",
+        "자연경관지구"
+      ],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "자연공원",
+      "status": "FALSE",
+      "confidence": "HIGH",
+      "source_type": "PARCEL_POLYGON_INTERSECTION",
+      "source_name": "국토교통부 자연공원 공식 공간레이어",
+      "reason": "공식 자연공원 Polygon 공간레이어를 정상 로드하고 대상 PNU Parcel Polygon과 공간교차를 수행했으나 실제 면적교차가 확인되지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "THEMATIC_LAYER"
+    },
+    {
+      "name": "지구단위계획",
+      "status": "TRUE",
+      "confidence": "HIGH",
+      "source_type": "PARCEL_POLYGON_INTERSECTION",
+      "source_name": "공식 도시계획 공간정보",
+      "reason": "공식 도시계획 공간정보를 정상 조회하고 대상 PNU Parcel Polygon과 실제 공간교차를 검증하여 지구단위계획구역 포함이 확인됨",
+      "evidence": [],
+      "reference_mentions": [
+        "해당 필지가 지구단위계획구역에 포함되는지 도시계획 공간정보 확인 필요",
+        "지구단위계획",
+        "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+        "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
+        "역세권 복합개발 지구단위계획 수립"
+      ],
+      "query_group": "URBAN_PLANNING_ZONE"
+    },
+    {
+      "name": "취락지구",
+      "status": "FALSE",
+      "confidence": "HIGH",
+      "source_type": "PARCEL_POLYGON_INTERSECTION",
+      "source_name": "서울시 UQ128 취락지구 공식 공간레이어",
+      "reason": "서울시 공식 UQ128 전체 공간레이어와 UQM120 코드체계를 검증한 뒤 대상 PNU Parcel Polygon과 실제 공간교차를 수행했으나 면적교차가 확인되지 않음",
+      "evidence": [],
+      "reference_mentions": [],
+      "query_group": "URBAN_PLANNING_ZONE"
+    }
+  ],
+  "supplemental_conditions": [
+    {
+      "name": "도시혁신구역",
+      "status": "FALSE",
+      "confidence": "HIGH",
+      "source_type": "PARCEL_POLYGON_INTERSECTION",
+      "source_name": "MapPlan 공식 공간정보",
+      "reason": "공식 관리코드/source를 검증하고 대상 Parcel과 실제 공간교차했으나 면적교차가 확인되지 않음"
+    },
+    {
+      "name": "복합용도구역",
+      "status": "FALSE",
+      "confidence": "HIGH",
+      "source_type": "PARCEL_POLYGON_INTERSECTION",
+      "source_name": "MapPlan UQQ904 공식 공간정보",
+      "reason": "MapPlan UQQ904 실제 공간교차 검증에서 대상 Parcel과 면적교차가 확인되지 않음"
+    }
+  ],
+  "validations": {
+    "필수 SITE 조건 10개 전부 존재": true,
+    "상태값 TRUE/FALSE/UNKNOWN 한정": true,
+    "확정 TRUE/FALSE는 HIGH confidence": true,
+    "UNKNOWN을 FALSE로 자동 변환하지 않음": true,
+    "도시지역편입해제구역 UNKNOWN 유지": true,
+    "개발밀도관리구역 UNKNOWN 유지": true
+  },
+  "all_pass": true,
+  "c9_resolution": {
+    "status": "COMPLETE_WITH_UNKNOWNS",
+    "resolved_count": 8,
+    "unresolved_count": 2,
+    "reason": "C-9 필수 SITE 조건 10개에 대해 공식 source 및 실제 공간검증 또는 근거 있는 UNKNOWN 판정을 완료함. UNKNOWN은 source/geometry/history 미확정에 따른 정상 판정 상태임"
+  }
+}
