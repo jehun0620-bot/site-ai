@@ -1,5 +1,4 @@
-from site_data_model import Building
-
+from .site_data_model import Building
 
 def convert_building(api_data):
     """

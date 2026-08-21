@@ -1,0 +1,2344 @@
+{
+  "step": "STEP 17-21-C-11-2C-2C Parcel source forensic trace",
+  "summary": {
+    "project_source_hits": 261,
+    "git_history_hits": 10,
+    "powershell_matches": 10
+  },
+  "ranked_project_source_hits": [
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": " # ============================================================ # SEARCH TERMS # ============================================================  SEARCH_TERMS = [      # dataset     \"LP_PA_CBND_BUBUN\",     \"PA_CBND_BUBUN\",     \"CBND\",      # processing     \"MapPlan\",     \"geopandas\",     \"gpd.read_file\",     \"read_file(\",      # historic known geometry evidence     \"120945.652",
+      "score": 170
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\external_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\external_parcel_dataset_locator_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "================================================ D:\\\\site-ai 외부에서 C-9 당시 사용했던 Parcel Polygon 원본을 찾는다.  검색 대상 ====================================================================== LP_PA_CBND_BUBUN PA_CBND_BUBUN CBND 연속지적 parcel  검색 확장자 ====================================================================== .shp .zip .gpkg .geojson  주의 ========================================",
+      "score": 160
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\local_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\local_parcel_dataset_locator_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "# -*- coding: utf-8 -*-  \"\"\" STEP 17-21-C-11-2C-2A Local Parcel Dataset Locator  목표 ====================================================================== 로컬 프로젝트 안에서 LP_PA_CBND_BUBUN Parcel dataset의 실제 파일 위치를 찾는다.  지원 탐색 ====================================================================== - .shp - .zip 내부 shapefile - .gpkg - .geojson - .json  주의 ============",
+      "score": 160
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\PROJECT_STATUS.md",
+      "relative_path": "PROJECT_STATUS.md",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "` - 법정동코드: `10300` - 본번: `0012` - 부번: `0000` - 산여부 코드: `1` - 용도지역: **제3종일반주거지역** - 대표 좌표:   - X: `127.07539280356858`   - Y: `37.494197498186885`  Parcel Polygon dataset:  ```text LP_PA_CBND_BUBUN ```  MapPlan 기준 Parcel:  ```text geometry: Polygon area: 120945.65223377591 bounds: (962201.02522, 1943722.58159, 962711.06096, 1944220.16506) ```  ---  ## 3. 전체 아키텍처  ```text SIT",
+      "score": 150
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "120945.65223377591",
+      "preview": "CBND_BUBUN\",     \"PA_CBND_BUBUN\",     \"CBND\",      # processing     \"MapPlan\",     \"geopandas\",     \"gpd.read_file\",     \"read_file(\",      # historic known geometry evidence     \"120945.65223377591\",     \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site     \"1168010300100120000\",      # common spatial formats     \".shp\",     \".gpkg\",  ",
+      "score": 140
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "962201.02522",
+      "preview": "BUBUN\",     \"CBND\",      # processing     \"MapPlan\",     \"geopandas\",     \"gpd.read_file\",     \"read_file(\",      # historic known geometry evidence     \"120945.65223377591\",     \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site     \"1168010300100120000\",      # common spatial formats     \".shp\",     \".gpkg\",     \".geojson\", ]   T",
+      "score": 140
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "1943722.58159",
+      "preview": "     # processing     \"MapPlan\",     \"geopandas\",     \"gpd.read_file\",     \"read_file(\",      # historic known geometry evidence     \"120945.65223377591\",     \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site     \"1168010300100120000\",      # common spatial formats     \".shp\",     \".gpkg\",     \".geojson\", ]   TEXT_SUFFIXES = {     ",
+      "score": 140
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "962711.06096",
+      "preview": " \"MapPlan\",     \"geopandas\",     \"gpd.read_file\",     \"read_file(\",      # historic known geometry evidence     \"120945.65223377591\",     \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site     \"1168010300100120000\",      # common spatial formats     \".shp\",     \".gpkg\",     \".geojson\", ]   TEXT_SUFFIXES = {     \".py\",     \".md\",   ",
+      "score": 140
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "1944220.16506",
+      "preview": "pandas\",     \"gpd.read_file\",     \"read_file(\",      # historic known geometry evidence     \"120945.65223377591\",     \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site     \"1168010300100120000\",      # common spatial formats     \".shp\",     \".gpkg\",     \".geojson\", ]   TEXT_SUFFIXES = {     \".py\",     \".md\",     \".txt\",     \".json\"",
+      "score": 120
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "1168010300100120000",
+      "preview": " \"read_file(\",      # historic known geometry evidence     \"120945.65223377591\",     \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site     \"1168010300100120000\",      # common spatial formats     \".shp\",     \".gpkg\",     \".geojson\", ]   TEXT_SUFFIXES = {     \".py\",     \".md\",     \".txt\",     \".json\",     \".yaml\",     \".yml\",     \".toml\",",
+      "score": 120
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\fishery_resource_protection_zone_intersection_test.py",
+      "relative_path": "law_data\\fishery_resource_protection_zone_intersection_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "==============================  VWORLD_SEARCH_URL = (     \"https://api.vworld.kr/req/search\" )  VWORLD_DATA_URL = (     \"https://api.vworld.kr/req/data\" )  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )   # ============================================================ # namespace # ============================================================  GML_NS = (     \"http://www.opengis.",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_intersection_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_intersection_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "API_KEY\"     ) )   # ============================================================ # Dataset # ============================================================  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )  EXPECTED_INDUSTRIAL_FEATURE_COUNT = (     1340 )  EXPECTED_CRS = (     \"EPSG:3857\" )  EXPECTED_ID_COLUMN = (     \"DAN_ID\" )  EXPECTED_NAME_COLUMN = (     \"DAN_NAME\" )  EXPECTE",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_intersection_test.py",
+      "relative_path": "law_data\\natural_park_intersection_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "k_intersection.json\" )   # ============================================================ # Dataset # ============================================================  PARCEL_DATASET = \"LP_PA_CBND_BUBUN\"  EXPECTED_PREFIX = (     \"LSMD_CONT_UM102\" )  EXPECTED_CRS = (     \"EPSG:5174\" )  EXPECTED_FEATURE_COUNT = 48   # ============================================================ # 환",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "gpd.read_file",
+      "preview": "==================================  SEARCH_TERMS = [      # dataset     \"LP_PA_CBND_BUBUN\",     \"PA_CBND_BUBUN\",     \"CBND\",      # processing     \"MapPlan\",     \"geopandas\",     \"gpd.read_file\",     \"read_file(\",      # historic known geometry evidence     \"120945.65223377591\",     \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "read_file(",
+      "preview": "=============  SEARCH_TERMS = [      # dataset     \"LP_PA_CBND_BUBUN\",     \"PA_CBND_BUBUN\",     \"CBND\",      # processing     \"MapPlan\",     \"geopandas\",     \"gpd.read_file\",     \"read_file(\",      # historic known geometry evidence     \"120945.65223377591\",     \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site     \"116801030010",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_promotion_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_development_promotion_district_intersection_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "a\",     BASE_DIR / \"download\",     BASE_DIR / \"downloads\",     BASE_DIR / \"output\",     PROJECT_ROOT / \"data\",     PROJECT_ROOT / \"downloads\", ]   VWORLD_PARCEL_DATASET_DEFAULT = \"LP_PA_CBND_BUBUN\" SEOUL_UQ129_CODE = \"UQ129\"  REQUEST_TIMEOUT = 30   # ============================================================ # 기본 유틸 # ======================================================",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "on_test.json\" )   # ============================================================ # Dataset / code # ============================================================  PARCEL_DATASET = \"LP_PA_CBND_BUBUN\"  UQ121_CODE = \"UQ121\"  TARGET_LABEL = \"자연경관지구\"  TARGET_LCLASS_CODE = \"UQF110\" TARGET_ATTRIBUTE_CODE = \"UQF110\"   # ============================================================ # ",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_intersection_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "rsection.json\" )   # ============================================================ # Dataset # ============================================================  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )  TARGET_CONDITION = (     \"취락지구\" )  UQ128_CODE = (     \"UQ128\" )  EXPECTED_CLASS_CODE = (     \"UQM120\" )  EXPECTED_CRS = (     \"EPSG:5174\" )   # ===============================",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_analysis_identity_integration_test.py",
+      "relative_path": "law_data\\site_analysis_identity_integration_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "   \"crs\"             )             == \"EPSG:4326\"         ),          \"parcel dataset\": (             parcel_reference.get(                 \"dataset\"             )             == \"LP_PA_CBND_BUBUN\"         ),          \"parcel verified\": (             parcel_reference.get(                 \"strict_pnu_verified\"             )             is True         ),          \"geometry n",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_identity_resolver_test.py",
+      "relative_path": "law_data\\site_identity_resolver_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "= \"CONFIRMED\"         ),          \"parcel dataset\": (             result[                 \"parcel_reference\"             ][                 \"dataset\"             ]             == \"LP_PA_CBND_BUBUN\"         ),          \"parcel verified\": (             result[                 \"parcel_reference\"             ][                 \"strict_pnu_verified\"             ]             is ",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\urban_area_conversion_current_state_probe_test.py",
+      "relative_path": "law_data\\urban_area_conversion_current_state_probe_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "getenv(     \"VWORLD_API_KEY\" )  VWORLD_SEARCH_URL = (     \"https://api.vworld.kr/req/search\" )  VWORLD_DATA_URL = (     \"https://api.vworld.kr/req/data\" )  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )  TARGET_CRS = (     \"EPSG:5174\" )  TIMEOUT = 30   def safe_string(     value: Any, ) -> str:      if value is None:         return \"\"      return str(value).strip()   def load_",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\vworld_district_unit_plan_parcel_intersection_test.py",
+      "relative_path": "law_data\\vworld_district_unit_plan_parcel_intersection_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "= # STEP 17-21-C-9-2-2B-3B-1 # # Parcel Polygon × 지구단위계획 Polygon 교차검증 # # 핵심 보정 # ------------------------------------------------------------ # 1. Parcel dataset은 B-3A에서 검증한 #    LP_PA_CBND_BUBUN 사용 # # 2. Parcel 조회 시 attrFilter(pnu:=...)를 사용하지 않음 # # 3. B-3A에서 실제 성공한 방식 유지 # #       주소검색 #          ↓ #       대표좌표 #          ↓ #       geomFilter=POINT(x y) #          ↓ #  ",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\vworld_parcel_polygon_identifier_probe_test.py",
+      "relative_path": "law_data\\vworld_parcel_polygon_identifier_probe_test.py",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "cel dataset 후보 # # 여기서는 후보일 뿐이다. # 실제 API에서 OK 응답 + Polygon geometry를 확인해야 채택한다. # ============================================================  PARCEL_DATASET_CANDIDATES = [     \"LP_PA_CBND_BUBUN\",     \"LP_PA_CBND_BONBUN\",     \"LT_C_LANDINFO\",     \"LT_C_LANDINFO_1\",     \"LT_C_LANDINFO_2\",     \"LT_C_LANDINFO_BUBUN\",     \"LT_C_LANDINFO_BONBUN\",     \"LT_C_PARCEL\",     \"LT_C_C",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\fishery_resource_protection_zone_intersection.json",
+      "relative_path": "law_data\\output\\fishery_resource_protection_zone_intersection.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "OURCE_API_KEY\",       \"env_value_format\": \"URL_ENCODED\",       \"requests_value_format\": \"URL_DECODED_BY_UNQUOTE\"     }   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.803130\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:5179\",     \"geometry_type\": \"MultiPolyg",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\industrial_complex_boundary_intersection.json",
+      "relative_path": "law_data\\output\\industrial_complex_boundary_intersection.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": ": 1340,     \"type_values\": [       \"1\",       \"2\",       \"3\",       \"4\"     ],     \"reason\": \"산업단지 공식 layer schema 정상\"   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:3857\",     \"geometry_type\": \"MultiPolyg",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\local_parcel_dataset_locator.json",
+      "relative_path": "law_data\\output\\local_parcel_dataset_locator.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "{   \"step\": \"STEP 17-21-C-11-2C-2A local parcel dataset locator\",   \"target_dataset\": \"LP_PA_CBND_BUBUN\",   \"project_root\": \"D:\\\\site-ai\",   \"direct_hits\": [],   \"zip_hits\": [],   \"loose_candidates\": [],   \"summary\": {     \"direct_hit_count\": 0,     \"zip_hit_count\": 0,     \"loose_ca",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\natural_park_intersection.json",
+      "relative_path": "law_data\\output\\natural_park_intersection.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "    ],     \"valid_geometry_count\": 48,     \"alias_values\": [       \"(구)공원집단시설지구\",       \"자연보존지구\",       \"자연환경지구\"     ]   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:5174\",     \"geometry_type\": \"MultiPolyg",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_development_promotion_district_intersection_test.json",
+      "relative_path": "law_data\\output\\seoul_development_promotion_district_intersection_test.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "  \"sigungu_code\": \"11680\",     \"bjdong_code\": \"10300\",     \"san_code\": \"1\",     \"main_no\": \"0012\",     \"sub_no\": \"0000\"   },   \"condition\": \"개발진흥지구\",   \"parcel\": {     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"target_pnu\": \"1168010300100120000\",     \"query_status\": \"QUERY_SUCCESS\",     \"matched_feature_count\": 1,     \"address_search\": {       \"http_status\": 200,       \"url\": \"htt",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_natural_landscape_district_intersection_test.json",
+      "relative_path": "law_data\\output\\seoul_natural_landscape_district_intersection_test.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "구\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zoning\": \"-\",     \"pnu\": \"1168010300100120000\"   },   \"parcel\": {     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.803130\",     \"geometry_type\": \"MultiPolygon\",     \"bounds\": [       127.07240240227819,       37.49198725375971,       127.0781619622408,    ",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_settlement_district_intersection.json",
+      "relative_path": "law_data\\output\\seoul_settlement_district_intersection.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:5174\",     \"geometry_type\": \"MultiPolyg",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_analysis_identity_integration.json",
+      "relative_path": "law_data\\output\\site_analysis_identity_integration.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "   \"y\": 37.494197498186885,     \"identity_status\": \"COMPLETE\",     \"coordinate_status\": \"CONFIRMED\",     \"missing_identity_fields\": [],     \"parcel_reference\": {       \"dataset\": \"LP_PA_CBND_BUBUN\",       \"status\": \"VERIFIED\",       \"strict_pnu_verified\": true,       \"geometry_loaded\": false,       \"note\": \"Parcel dataset은 검증되었으나 geometry 자체는 이번 identity object에 아직 포함하지 않음\"",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_parcel_spatial_source_probe.json",
+      "relative_path": "law_data\\output\\site_parcel_spatial_source_probe.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "robe.json\",       \"path\": \"$.probe_results[0].dataset\",       \"key\": \"dataset\",       \"categories\": [         \"DATASET\"       ],       \"value_type\": \"str\",       \"value_preview\": \"LP_PA_CBND_BUBUN\"     },     {       \"filename\": \"vworld_parcel_polygon_identifier_probe.json\",       \"path\": \"$.probe_results[0].analysis.features[0].properties.pnu\",       \"key\": \"pnu\",       \"c",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_district_unit_plan_parcel_intersection.json",
+      "relative_path": "law_data\\output\\vworld_district_unit_plan_parcel_intersection.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": ": \"STEP 17-21-C-9-2-2B-3B\",   \"site\": {     \"site_id\": \"\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"제3종일반주거지역\",     \"pnu\": \"1168010300100120000\"   },   \"parcel_dataset\": \"LP_PA_CBND_BUBUN\",   \"district_dataset\": \"LT_C_UPISUQ161\",   \"resolution\": {     \"query_status\": \"QUERY_FAILED\",     \"resolution\": \"UNKNOWN\",     \"confidence\": \"NONE\",     \"reason\": \"PNU 직접 일치 par",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_district_unit_plan_parcel_intersection_test.json",
+      "relative_path": "law_data\\output\\vworld_district_unit_plan_parcel_intersection_test.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": "B-1\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"\",     \"pnu\": \"1168010300100120000\"   },   \"datasets\": {     \"parcel\": \"LP_PA_CBND_BUBUN\",     \"district_unit_plan\": \"LT_C_UPISUQ161\"   },   \"representative_point\": {     \"x\": 127.07539280356858,     \"y\": 37.494197498186885   },   \"parcel_query\": {     \"http_status\": ",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_parcel_polygon_identifier_probe.json",
+      "relative_path": "law_data\\output\\vworld_parcel_polygon_identifier_probe.json",
+      "term": "LP_PA_CBND_BUBUN",
+      "preview": " \"point\": {       \"x\": 127.07539280356858,       \"y\": 37.494197498186885,       \"crs\": \"EPSG:4326\"     }   },   \"candidate_count\": 12,   \"probe_results\": [     {       \"dataset\": \"LP_PA_CBND_BUBUN\",       \"http_status\": 200,       \"vworld_status\": \"OK\",       \"classification\": \"QUERY_SUCCESS\",       \"error\": {         \"level\": \"\",         \"code\": \"\",         \"text\": \"\"     ",
+      "score": 100
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "============================================================ # SEARCH TERMS # ============================================================  SEARCH_TERMS = [      # dataset     \"LP_PA_CBND_BUBUN\",     \"PA_CBND_BUBUN\",     \"CBND\",      # processing     \"MapPlan\",     \"geopandas\",     \"gpd.read_file\",     \"read_file(\",      # historic known geometry evidence     \"120945.652",
+      "score": 70
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "CBND",
+      "preview": "========================================================= # SEARCH TERMS # ============================================================  SEARCH_TERMS = [      # dataset     \"LP_PA_CBND_BUBUN\",     \"PA_CBND_BUBUN\",     \"CBND\",      # processing     \"MapPlan\",     \"geopandas\",     \"gpd.read_file\",     \"read_file(\",      # historic known geometry evidence     \"1209",
+      "score": 70
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "MapPlan",
+      "preview": "================================== 1. 프로젝트 내 Python / MD / TXT / JSON source 2. Git commit history 3. PowerShell PSReadLine history 4. 알려진 과거 geometry 값 5. geopandas / read_file / MapPlan 관련 코드  주의 ====================================================================== .env 및 인증정보 파일은 읽지 않는다. 검색 결과는 context 일부만 저장한다. \"\"\"  from __future__ import annotations  import j",
+      "score": 70
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": "geopandas",
+      "preview": "========================================================== 1. 프로젝트 내 Python / MD / TXT / JSON source 2. Git commit history 3. PowerShell PSReadLine history 4. 알려진 과거 geometry 값 5. geopandas / read_file / MapPlan 관련 코드  주의 ====================================================================== .env 및 인증정보 파일은 읽지 않는다. 검색 결과는 context 일부만 저장한다. \"\"\"  from __future__ import",
+      "score": 70
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": ".shp",
+      "preview": "  \"120945.65223377591\",     \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site     \"1168010300100120000\",      # common spatial formats     \".shp\",     \".gpkg\",     \".geojson\", ]   TEXT_SUFFIXES = {     \".py\",     \".md\",     \".txt\",     \".json\",     \".yaml\",     \".yml\",     \".toml\",     \".ps1\",     \".bat\",     \".cmd\", }   S",
+      "score": 70
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\development_density_uq145_probe_test.py",
+      "relative_path": "law_data\\development_density_uq145_probe_test.py",
+      "term": ".shp",
+      "preview": "n (         INPUT_DIR,         SPATIAL_DIR,     ):          if not base_dir.exists():             continue          for pattern in (             \"*UQ145*.zip\",             \"*UQ145*.shp\",         ):              for path in base_dir.rglob(                 pattern             ):                  if path not in result:                     result.append(            ",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\external_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\external_parcel_dataset_locator_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "============================================= D:\\\\site-ai 외부에서 C-9 당시 사용했던 Parcel Polygon 원본을 찾는다.  검색 대상 ====================================================================== LP_PA_CBND_BUBUN PA_CBND_BUBUN CBND 연속지적 parcel  검색 확장자 ====================================================================== .shp .zip .gpkg .geojson  주의 ========================================",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\external_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\external_parcel_dataset_locator_test.py",
+      "term": "CBND",
+      "preview": "========================================== D:\\\\site-ai 외부에서 C-9 당시 사용했던 Parcel Polygon 원본을 찾는다.  검색 대상 ====================================================================== LP_PA_CBND_BUBUN PA_CBND_BUBUN CBND 연속지적 parcel  검색 확장자 ====================================================================== .shp .zip .gpkg .geojson  주의 ==================================",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\external_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\external_parcel_dataset_locator_test.py",
+      "term": ".shp",
+      "preview": "==================================================== LP_PA_CBND_BUBUN PA_CBND_BUBUN CBND 연속지적 parcel  검색 확장자 ====================================================================== .shp .zip .gpkg .geojson  주의 ====================================================================== 파일 내용을 읽지 않고 파일명 / 경로만 탐색한다. 대용량 공간파일 자체를 Git에 저장하지 않는다. \"\"\"  from __future__ import",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\external_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\external_parcel_dataset_locator_test.py",
+      "term": ".gpkg",
+      "preview": "========================================== LP_PA_CBND_BUBUN PA_CBND_BUBUN CBND 연속지적 parcel  검색 확장자 ====================================================================== .shp .zip .gpkg .geojson  주의 ====================================================================== 파일 내용을 읽지 않고 파일명 / 경로만 탐색한다. 대용량 공간파일 자체를 Git에 저장하지 않는다. \"\"\"  from __future__ import annotation",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\external_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\external_parcel_dataset_locator_test.py",
+      "term": ".geojson",
+      "preview": "==================================== LP_PA_CBND_BUBUN PA_CBND_BUBUN CBND 연속지적 parcel  검색 확장자 ====================================================================== .shp .zip .gpkg .geojson  주의 ====================================================================== 파일 내용을 읽지 않고 파일명 / 경로만 탐색한다. 대용량 공간파일 자체를 Git에 저장하지 않는다. \"\"\"  from __future__ import annotations  import",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_intersection_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_intersection_test.py",
+      "term": ".shp",
+      "preview": "   if not path.is_file():                  continue              if (                 path.suffix.lower()                 not in (                     \".zip\",                     \".shp\",                 )             ):                  continue              name = (                 path.name                 .lower()             )              if (              ",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_shp_probe_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_shp_probe_test.py",
+      "term": ".shp",
+      "preview": "    if not path.is_file():                 continue              if (                 path.suffix.lower()                 not in (                     \".zip\",                     \".shp\",                 )             ):                  continue              name = (                 path.name                 .lower()             )              if all(           ",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\local_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\local_parcel_dataset_locator_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "# -*- coding: utf-8 -*-  \"\"\" STEP 17-21-C-11-2C-2A Local Parcel Dataset Locator  목표 ====================================================================== 로컬 프로젝트 안에서 LP_PA_CBND_BUBUN Parcel dataset의 실제 파일 위치를 찾는다.  지원 탐색 ====================================================================== - .shp - .zip 내부 shapefile - .gpkg - .geojson - .json  주의 ============",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\local_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\local_parcel_dataset_locator_test.py",
+      "term": "CBND",
+      "preview": "# -*- coding: utf-8 -*-  \"\"\" STEP 17-21-C-11-2C-2A Local Parcel Dataset Locator  목표 ====================================================================== 로컬 프로젝트 안에서 LP_PA_CBND_BUBUN Parcel dataset의 실제 파일 위치를 찾는다.  지원 탐색 ====================================================================== - .shp - .zip 내부 shapefile - .gpkg - .geojson - .json  주의 ======",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\local_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\local_parcel_dataset_locator_test.py",
+      "term": ".shp",
+      "preview": "======================================= 로컬 프로젝트 안에서 LP_PA_CBND_BUBUN Parcel dataset의 실제 파일 위치를 찾는다.  지원 탐색 ====================================================================== - .shp - .zip 내부 shapefile - .gpkg - .geojson - .json  주의 ====================================================================== 이번 단계에서는 geometry를 읽거나 SITE 객체를 수정하지 않는다. 실제 원본 dataset 위",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\local_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\local_parcel_dataset_locator_test.py",
+      "term": ".gpkg",
+      "preview": "============ 로컬 프로젝트 안에서 LP_PA_CBND_BUBUN Parcel dataset의 실제 파일 위치를 찾는다.  지원 탐색 ====================================================================== - .shp - .zip 내부 shapefile - .gpkg - .geojson - .json  주의 ====================================================================== 이번 단계에서는 geometry를 읽거나 SITE 객체를 수정하지 않는다. 실제 원본 dataset 위치만 찾는다. \"\"\"  from __future__",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\local_parcel_dataset_locator_test.py",
+      "relative_path": "law_data\\local_parcel_dataset_locator_test.py",
+      "term": ".geojson",
+      "preview": "==== 로컬 프로젝트 안에서 LP_PA_CBND_BUBUN Parcel dataset의 실제 파일 위치를 찾는다.  지원 탐색 ====================================================================== - .shp - .zip 내부 shapefile - .gpkg - .geojson - .json  주의 ====================================================================== 이번 단계에서는 geometry를 읽거나 SITE 객체를 수정하지 않는다. 실제 원본 dataset 위치만 찾는다. \"\"\"  from __future__ import ann",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_intersection_test.py",
+      "relative_path": "law_data\\natural_park_intersection_test.py",
+      "term": ".shp",
+      "preview": "n (         INPUT_DIR,         SPATIAL_DIR,     ):          if not base_dir.exists():             continue          for pattern in (             \"*UM102*.zip\",             \"*UM102*.shp\",         ):              for path in base_dir.rglob(                 pattern             ):                  if path not in result:                     result.append(            ",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_source_probe_test.py",
+      "relative_path": "law_data\\natural_park_source_probe_test.py",
+      "term": ".shp",
+      "preview": "n (         INPUT_DIR,         SPATIAL_DIR,     ):          if not base_dir.exists():             continue          for pattern in (             \"*UM102*.zip\",             \"*UM102*.shp\",             \"*자연공원*.zip\",             \"*자연공원*.shp\",         ):              for path in base_dir.rglob(                 pattern             ):                  if path not in re",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_promotion_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_development_promotion_district_intersection_test.py",
+      "term": ".shp",
+      "preview": "개발진흥\" in path.name:         score += 80      if \"용도지구\" in path.name:         score += 20      if path.suffix.lower() == \".zip\":         score += 10      if path.suffix.lower() == \".shp\":         score += 8      if path.suffix.lower() == \".gpkg\":         score += 6      return score   def find_local_uq129_files() -> List[Path]:      candidates: List[Path] = []   ",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_promotion_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_development_promotion_district_intersection_test.py",
+      "term": ".gpkg",
+      "preview": "path.name:         score += 20      if path.suffix.lower() == \".zip\":         score += 10      if path.suffix.lower() == \".shp\":         score += 8      if path.suffix.lower() == \".gpkg\":         score += 6      return score   def find_local_uq129_files() -> List[Path]:      candidates: List[Path] = []      extensions = {         \".zip\",         \".shp\",         \"",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_promotion_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_development_promotion_district_intersection_test.py",
+      "term": ".geojson",
+      "preview": "+= 6      return score   def find_local_uq129_files() -> List[Path]:      candidates: List[Path] = []      extensions = {         \".zip\",         \".shp\",         \".gpkg\",         \".geojson\",         \".json\",     }      for directory in SPATIAL_SEARCH_DIRS:          if not directory.exists():             continue          try:             paths = directory.rglob(    ",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "term": ".shp",
+      "preview": "n (         INPUT_DIR,         SPATIAL_DIR,     ):          if not base_dir.exists():             continue          for pattern in (             \"*UQ121*.zip\",             \"*UQ121*.shp\",         ):              for path in base_dir.rglob(pattern):                  if path not in result:                     result.append(path)      result.sort(         key=lambda",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_schema_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_schema_test.py",
+      "term": ".shp",
+      "preview": "=================================  def find_uq121_files() -> List[Path]:      result: List[Path] = []      patterns = [         \"UQ121*.zip\",         \"*UQ121*.zip\",         \"UQ121*.shp\",         \"*UQ121*.shp\",     ]      for base in [         INPUT_DIR,         SPATIAL_DIR,     ]:          if not base.exists():             continue          for pattern in patter",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_intersection_test.py",
+      "term": ".shp",
+      "preview": " (         INPUT_DIR,         SPATIAL_DIR,     ):          if not base_dir.exists():              continue          for pattern in (             \"*UQ128*.zip\",             \"*UQ128*.shp\",         ):              for path in (                 base_dir.rglob(                     pattern                 )             ):                  if (                     path",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_source_probe_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_source_probe_test.py",
+      "term": ".shp",
+      "preview": "n (         INPUT_DIR,         SPATIAL_DIR,     ):          if not base_dir.exists():             continue          for pattern in (             \"*UQ128*.zip\",             \"*UQ128*.shp\",         ):              for path in (                 base_dir.rglob(                     pattern                 )             ):                  if path not in result:       ",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_vertical_mixed_use_zone_uq145_schema_probe_test.py",
+      "relative_path": "law_data\\seoul_vertical_mixed_use_zone_uq145_schema_probe_test.py",
+      "term": ".shp",
+      "preview": "========== # 공간파일 탐색 # ============================================================  def find_uq145_files() -> List[Path]:      patterns = [         \"*UQ145*.zip\",         \"*UQ145*.shp\",         \"*기타용도구역*.zip\",         \"*기타용도구역*.shp\",     ]      found = []      for directory in [         INPUT_DIR,         SPATIAL_DIR,     ]:          if not directory.exists(): ",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\disaster_prevention_district_source_probe.json",
+      "relative_path": "law_data\\output\\disaster_prevention_district_source_probe.json",
+      "term": ".shp",
+      "preview": "ource/schema probe\",   \"found_files\": 1,   \"probed\": [     {       \"file\": \"D:\\\\site-ai\\\\law_data\\\\input\\\\LSMD_CONT_UM102_5174_서울.zip\",       \"shp\": \"LSMD_CONT_UM102_5174_11_202608.shp\",       \"shp_count\": 1,       \"feature_count\": 48,       \"crs\": \"EPSG:5174\",       \"columns\": [         \"MNUM\",         \"ALIAS\",         \"REMARK\",         \"NTFDATE\",         \"SGG_",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\natural_park_source_probe.json",
+      "relative_path": "law_data\\output\\natural_park_source_probe.json",
+      "term": ".shp",
+      "preview": " \"source_path\": \"D:\\\\site-ai\\\\law_data\\\\input\\\\LSMD_CONT_UM102_5174_서울.zip\",     \"shp_path\": \"C:\\\\Users\\\\agroup26\\\\AppData\\\\Local\\\\Temp\\\\tmp8jv8hxvl\\\\LSMD_CONT_UM102_5174_11_202608.shp\",     \"feature_count\": 48,     \"crs\": \"EPSG:5174\",     \"columns\": [       \"MNUM\",       \"ALIAS\",       \"REMARK\",       \"NTFDATE\",       \"SGG_OID\",       \"COL_ADM_SE\",       \"geome",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_development_promotion_district_intersection_test.json",
+      "relative_path": "law_data\\output\\seoul_development_promotion_district_intersection_test.json",
+      "term": ".shp",
+      "preview": "ected_file\": \"D:\\\\site-ai\\\\law_data\\\\input\\\\UQ129_용도지구(개발진흥지구)_202602.zip\",     \"actual_layer_path\": \"C:\\\\Users\\\\agroup26\\\\AppData\\\\Local\\\\Temp\\\\uq129_i3i2z7ms\\\\shp파일\\\\UPIS_C_UQ129.shp\",     \"feature_count\": 11,     \"original_crs\": \"EPSG:5174\",     \"normalized_crs\": \"EPSG:4326\",     \"crs_assumption\": \"파일 CRS metadata 사용\"   },   \"intersection\": {     \"layer_featu",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_settlement_district_source_probe.json",
+      "relative_path": "law_data\\output\\seoul_settlement_district_source_probe.json",
+      "term": ".shp",
+      "preview": "\\site-ai\\\\law_data\\\\input\\\\UQ128_용도지구(취락지구)_202602.zip\",       \"shp_path\": \"C:\\\\Users\\\\agroup26\\\\AppData\\\\Local\\\\Temp\\\\tmpclqcr1v8\\\\934_UQ128_용도지구(취락지구)_202602\\\\shp파일\\\\UPIS_C_UQ128.shp\",       \"feature_count\": 38,       \"original_crs\": \"EPSG:5174\",       \"columns\": [         \"PRESENT_SN\",         \"LCLAS_CL\",         \"MLSFC_CL\",         \"SCLAS_CL\",         \"ATRB_",
+      "score": 60
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\PROJECT_STATUS.md",
+      "relative_path": "PROJECT_STATUS.md",
+      "term": "PA_CBND_BUBUN",
+      "preview": " 법정동코드: `10300` - 본번: `0012` - 부번: `0000` - 산여부 코드: `1` - 용도지역: **제3종일반주거지역** - 대표 좌표:   - X: `127.07539280356858`   - Y: `37.494197498186885`  Parcel Polygon dataset:  ```text LP_PA_CBND_BUBUN ```  MapPlan 기준 Parcel:  ```text geometry: Polygon area: 120945.65223377591 bounds: (962201.02522, 1943722.58159, 962711.06096, 1944220.16506) ```  ---  ## 3. 전체 아키텍처  ```text SIT",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\PROJECT_STATUS.md",
+      "relative_path": "PROJECT_STATUS.md",
+      "term": "CBND",
+      "preview": "동코드: `10300` - 본번: `0012` - 부번: `0000` - 산여부 코드: `1` - 용도지역: **제3종일반주거지역** - 대표 좌표:   - X: `127.07539280356858`   - Y: `37.494197498186885`  Parcel Polygon dataset:  ```text LP_PA_CBND_BUBUN ```  MapPlan 기준 Parcel:  ```text geometry: Polygon area: 120945.65223377591 bounds: (962201.02522, 1943722.58159, 962711.06096, 1944220.16506) ```  ---  ## 3. 전체 아키텍처  ```te",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\PROJECT_STATUS.md",
+      "relative_path": "PROJECT_STATUS.md",
+      "term": "MapPlan",
+      "preview": "번: `0012` - 부번: `0000` - 산여부 코드: `1` - 용도지역: **제3종일반주거지역** - 대표 좌표:   - X: `127.07539280356858`   - Y: `37.494197498186885`  Parcel Polygon dataset:  ```text LP_PA_CBND_BUBUN ```  MapPlan 기준 Parcel:  ```text geometry: Polygon area: 120945.65223377591 bounds: (962201.02522, 1943722.58159, 962711.06096, 1944220.16506) ```  ---  ## 3. 전체 아키텍처  ```text SITE │ ├─ 주소 / S",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\PROJECT_STATUS.md",
+      "relative_path": "PROJECT_STATUS.md",
+      "term": "120945.65223377591",
+      "preview": "주거지역** - 대표 좌표:   - X: `127.07539280356858`   - Y: `37.494197498186885`  Parcel Polygon dataset:  ```text LP_PA_CBND_BUBUN ```  MapPlan 기준 Parcel:  ```text geometry: Polygon area: 120945.65223377591 bounds: (962201.02522, 1943722.58159, 962711.06096, 1944220.16506) ```  ---  ## 3. 전체 아키텍처  ```text SITE │ ├─ 주소 / SITE ID / PNU / 좌표 / Parcel Polygon ├─ 토지정보 ├─ 건축물정보 ├─ 용도지역 ├─ ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\PROJECT_STATUS.md",
+      "relative_path": "PROJECT_STATUS.md",
+      "term": "962201.02522",
+      "preview": "07539280356858`   - Y: `37.494197498186885`  Parcel Polygon dataset:  ```text LP_PA_CBND_BUBUN ```  MapPlan 기준 Parcel:  ```text geometry: Polygon area: 120945.65223377591 bounds: (962201.02522, 1943722.58159, 962711.06096, 1944220.16506) ```  ---  ## 3. 전체 아키텍처  ```text SITE │ ├─ 주소 / SITE ID / PNU / 좌표 / Parcel Polygon ├─ 토지정보 ├─ 건축물정보 ├─ 용도지역 ├─ 용도지구 ├─ 용도구역 ├─ 도시계획시설",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\PROJECT_STATUS.md",
+      "relative_path": "PROJECT_STATUS.md",
+      "term": "1943722.58159",
+      "preview": "`   - Y: `37.494197498186885`  Parcel Polygon dataset:  ```text LP_PA_CBND_BUBUN ```  MapPlan 기준 Parcel:  ```text geometry: Polygon area: 120945.65223377591 bounds: (962201.02522, 1943722.58159, 962711.06096, 1944220.16506) ```  ---  ## 3. 전체 아키텍처  ```text SITE │ ├─ 주소 / SITE ID / PNU / 좌표 / Parcel Polygon ├─ 토지정보 ├─ 건축물정보 ├─ 용도지역 ├─ 용도지구 ├─ 용도구역 ├─ 도시계획시설 │ └─ 법규 분석    ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\PROJECT_STATUS.md",
+      "relative_path": "PROJECT_STATUS.md",
+      "term": "962711.06096",
+      "preview": "4197498186885`  Parcel Polygon dataset:  ```text LP_PA_CBND_BUBUN ```  MapPlan 기준 Parcel:  ```text geometry: Polygon area: 120945.65223377591 bounds: (962201.02522, 1943722.58159, 962711.06096, 1944220.16506) ```  ---  ## 3. 전체 아키텍처  ```text SITE │ ├─ 주소 / SITE ID / PNU / 좌표 / Parcel Polygon ├─ 토지정보 ├─ 건축물정보 ├─ 용도지역 ├─ 용도지구 ├─ 용도구역 ├─ 도시계획시설 │ └─ 법규 분석     ├─ 법률     ├─ ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\PROJECT_STATUS.md",
+      "relative_path": "PROJECT_STATUS.md",
+      "term": "1944220.16506",
+      "preview": "  Parcel Polygon dataset:  ```text LP_PA_CBND_BUBUN ```  MapPlan 기준 Parcel:  ```text geometry: Polygon area: 120945.65223377591 bounds: (962201.02522, 1943722.58159, 962711.06096, 1944220.16506) ```  ---  ## 3. 전체 아키텍처  ```text SITE │ ├─ 주소 / SITE ID / PNU / 좌표 / Parcel Polygon ├─ 토지정보 ├─ 건축물정보 ├─ 용도지역 ├─ 용도지구 ├─ 용도구역 ├─ 도시계획시설 │ └─ 법규 분석     ├─ 법률     ├─ 시행령     ├─ 서울시 ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\development_density_uq145_probe_test.py",
+      "relative_path": "law_data\\development_density_uq145_probe_test.py",
+      "term": "gpd.read_file",
+      "preview": "           \"windows-949\",             \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                     gdf = gpd.read_file(                         shp_path                     )                  else:                     gdf = gpd.read_file(                         shp_path,                         e",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\development_density_uq145_probe_test.py",
+      "relative_path": "law_data\\development_density_uq145_probe_test.py",
+      "term": "read_file(",
+      "preview": "       \"windows-949\",             \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                     gdf = gpd.read_file(                         shp_path                     )                  else:                     gdf = gpd.read_file(                         shp_path,                         en",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\disaster_prevention_district_source_probe_test.py",
+      "relative_path": "law_data\\disaster_prevention_district_source_probe_test.py",
+      "term": "gpd.read_file",
+      "preview": "iles:          temp_dir.cleanup()          raise FileNotFoundError(             \"ZIP 내부 SHP 없음\"         )      # 보통 1개지만 여러 개면 전부 보여주기 위해 첫 번째 로드     shp = shp_files[0]      gdf = gpd.read_file(         shp     )      return (         temp_dir,         shp,         shp_files,         gdf,     )   def safe_unique(     gdf,     column: str,     limit: int = 20, ):      if ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\disaster_prevention_district_source_probe_test.py",
+      "relative_path": "law_data\\disaster_prevention_district_source_probe_test.py",
+      "term": "read_file(",
+      "preview": ":          temp_dir.cleanup()          raise FileNotFoundError(             \"ZIP 내부 SHP 없음\"         )      # 보통 1개지만 여러 개면 전부 보여주기 위해 첫 번째 로드     shp = shp_files[0]      gdf = gpd.read_file(         shp     )      return (         temp_dir,         shp,         shp_files,         gdf,     )   def safe_unique(     gdf,     column: str,     limit: int = 20, ):      if c",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_intersection_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_intersection_test.py",
+      "term": "gpd.read_file",
+      "preview": "     \"windows-949\",             \"euc-kr\",             None,         ):              try:                  if encoding is None:                      gdf = (                         gpd.read_file(                             shp_path                         )                     )                  else:                      gdf = (                         gpd.read_file(   ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_intersection_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_intersection_test.py",
+      "term": "read_file(",
+      "preview": " \"windows-949\",             \"euc-kr\",             None,         ):              try:                  if encoding is None:                      gdf = (                         gpd.read_file(                             shp_path                         )                     )                  else:                      gdf = (                         gpd.read_file(    ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_shp_probe_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_shp_probe_test.py",
+      "term": "gpd.read_file",
+      "preview": "     \"windows-949\",             \"euc-kr\",             None,         ):              try:                  if encoding is None:                      gdf = (                         gpd.read_file(                             shp_path                         )                     )                  else:                      gdf = (                         gpd.read_file(   ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_shp_probe_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_shp_probe_test.py",
+      "term": "read_file(",
+      "preview": " \"windows-949\",             \"euc-kr\",             None,         ):              try:                  if encoding is None:                      gdf = (                         gpd.read_file(                             shp_path                         )                     )                  else:                      gdf = (                         gpd.read_file(    ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_intersection_test.py",
+      "relative_path": "law_data\\natural_park_intersection_test.py",
+      "term": "gpd.read_file",
+      "preview": "          \"windows-949\",             \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                      gdf = gpd.read_file(                         shp_path                     )                  else:                      gdf = gpd.read_file(                         shp_path,                         ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_intersection_test.py",
+      "relative_path": "law_data\\natural_park_intersection_test.py",
+      "term": "read_file(",
+      "preview": "      \"windows-949\",             \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                      gdf = gpd.read_file(                         shp_path                     )                  else:                      gdf = gpd.read_file(                         shp_path,                         e",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_source_probe_test.py",
+      "relative_path": "law_data\\natural_park_source_probe_test.py",
+      "term": "gpd.read_file",
+      "preview": "           \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                      gdf = (                         gpd.read_file(                             shp_path                         )                     )                  else:                      gdf = (                         gpd.read_file(   ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_source_probe_test.py",
+      "relative_path": "law_data\\natural_park_source_probe_test.py",
+      "term": "read_file(",
+      "preview": "       \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                      gdf = (                         gpd.read_file(                             shp_path                         )                     )                  else:                      gdf = (                         gpd.read_file(    ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_promotion_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_development_promotion_district_intersection_test.py",
+      "term": "gpd.read_file",
+      "preview": "        )         )          if shp is None:             raise RuntimeError(                 \"UQ129 ZIP 내부에서 SHP 파일을 찾지 못했습니다.\"             )          actual_path = shp      gdf = gpd.read_file(         actual_path     )      if gdf.empty:         raise RuntimeError(             \"UQ129 공간레이어가 비어 있습니다.\"         )      if \"geometry\" not in gdf.columns:         raise Runtim",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_promotion_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_development_promotion_district_intersection_test.py",
+      "term": "read_file(",
+      "preview": "    )         )          if shp is None:             raise RuntimeError(                 \"UQ129 ZIP 내부에서 SHP 파일을 찾지 못했습니다.\"             )          actual_path = shp      gdf = gpd.read_file(         actual_path     )      if gdf.empty:         raise RuntimeError(             \"UQ129 공간레이어가 비어 있습니다.\"         )      if \"geometry\" not in gdf.columns:         raise Runtime",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "term": "gpd.read_file",
+      "preview": "          \"euc-kr\",             \"windows-949\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                      gdf = gpd.read_file(                         shp_path                     )                  else:                      gdf = gpd.read_file(                         shp_path,                         ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "term": "read_file(",
+      "preview": "      \"euc-kr\",             \"windows-949\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                      gdf = gpd.read_file(                         shp_path                     )                  else:                      gdf = gpd.read_file(                         shp_path,                         e",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_schema_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_schema_test.py",
+      "term": "gpd.read_file",
+      "preview": "th\":                         str(source_path),                 }          else:              shp_path = source_path          # encoding windows-949         try:              gdf = gpd.read_file(                 shp_path,                 encoding=OFFICIAL_ENCODING,             )          except Exception:              # 일부 GDAL 환경은 euc-kr로 읽어야 할 수 있음             gdf = gpd",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_schema_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_schema_test.py",
+      "term": "read_file(",
+      "preview": "                         str(source_path),                 }          else:              shp_path = source_path          # encoding windows-949         try:              gdf = gpd.read_file(                 shp_path,                 encoding=OFFICIAL_ENCODING,             )          except Exception:              # 일부 GDAL 환경은 euc-kr로 읽어야 할 수 있음             gdf = gpd.",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_intersection_test.py",
+      "term": "gpd.read_file",
+      "preview": "           \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                      gdf = (                         gpd.read_file(                             shp_path                         )                     )                  else:                      gdf = (                         gpd.read_file(   ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_intersection_test.py",
+      "term": "read_file(",
+      "preview": "       \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                      gdf = (                         gpd.read_file(                             shp_path                         )                     )                  else:                      gdf = (                         gpd.read_file(    ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_source_probe_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_source_probe_test.py",
+      "term": "gpd.read_file",
+      "preview": "           \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                      gdf = (                         gpd.read_file(                             shp_path                         )                     )                  else:                      gdf = (                         gpd.read_file(   ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_source_probe_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_source_probe_test.py",
+      "term": "read_file(",
+      "preview": "       \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding is None:                      gdf = (                         gpd.read_file(                             shp_path                         )                     )                  else:                      gdf = (                         gpd.read_file(    ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_vertical_mixed_use_zone_uq145_schema_probe_test.py",
+      "relative_path": "law_data\\seoul_vertical_mixed_use_zone_uq145_schema_probe_test.py",
+      "term": "gpd.read_file",
+      "preview": "     ):              shp_path = source_path          else:              result[\"error\"] = (                 \"지원하지 않는 파일 형식\"             )              return result          gdf = gpd.read_file(             shp_path,             encoding=\"cp949\",         )          result[\"loaded\"] = True         result[\"feature_count\"] = len(gdf)         result[\"columns\"] = list(       ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_vertical_mixed_use_zone_uq145_schema_probe_test.py",
+      "relative_path": "law_data\\seoul_vertical_mixed_use_zone_uq145_schema_probe_test.py",
+      "term": "read_file(",
+      "preview": " ):              shp_path = source_path          else:              result[\"error\"] = (                 \"지원하지 않는 파일 형식\"             )              return result          gdf = gpd.read_file(             shp_path,             encoding=\"cp949\",         )          result[\"loaded\"] = True         result[\"feature_count\"] = len(gdf)         result[\"columns\"] = list(        ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\urban_area_conversion_current_state_probe_test.py",
+      "relative_path": "law_data\\urban_area_conversion_current_state_probe_test.py",
+      "term": "gpd.read_file",
+      "preview": "949\",             \"windows-949\",             \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding:                      gdf = gpd.read_file(                         shp_path,                         encoding=encoding,                     )                  else:                      gdf = gpd.read_file(               ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\urban_area_conversion_current_state_probe_test.py",
+      "relative_path": "law_data\\urban_area_conversion_current_state_probe_test.py",
+      "term": "read_file(",
+      "preview": ",             \"windows-949\",             \"euc-kr\",             \"utf-8\",             None,         ):              try:                  if encoding:                      gdf = gpd.read_file(                         shp_path,                         encoding=encoding,                     )                  else:                      gdf = gpd.read_file(                ",
+      "score": 50
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\disaster_prevention_district_source_probe_test.py",
+      "relative_path": "law_data\\disaster_prevention_district_source_probe_test.py",
+      "term": ".shp",
+      "preview": "        \"r\",     ) as zf:          zf.extractall(             temp_dir.name         )      shp_files = list(         Path(             temp_dir.name         ).rglob(             \"*.shp\"         )     )      if not shp_files:          temp_dir.cleanup()          raise FileNotFoundError(             \"ZIP 내부 SHP 없음\"         )      # 보통 1개지만 여러 개면 전부 보여주기 위해 첫 번째 로드",
+      "score": 40
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": ".gpkg",
+      "preview": "223377591\",     \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site     \"1168010300100120000\",      # common spatial formats     \".shp\",     \".gpkg\",     \".geojson\", ]   TEXT_SUFFIXES = {     \".py\",     \".md\",     \".txt\",     \".json\",     \".yaml\",     \".yml\",     \".toml\",     \".ps1\",     \".bat\",     \".cmd\", }   SKIP_DIRS = { ",
+      "score": 40
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\parcel_source_forensic_trace_test.py",
+      "relative_path": "law_data\\parcel_source_forensic_trace_test.py",
+      "term": ".geojson",
+      "preview": "   \"962201.02522\",     \"1943722.58159\",     \"962711.06096\",     \"1944220.16506\",      # site     \"1168010300100120000\",      # common spatial formats     \".shp\",     \".gpkg\",     \".geojson\", ]   TEXT_SUFFIXES = {     \".py\",     \".md\",     \".txt\",     \".json\",     \".yaml\",     \".yml\",     \".toml\",     \".ps1\",     \".bat\",     \".cmd\", }   SKIP_DIRS = {     \".git\",     ",
+      "score": 40
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\urban_area_conversion_current_state_probe_test.py",
+      "relative_path": "law_data\\urban_area_conversion_current_state_probe_test.py",
+      "term": ".shp",
+      "preview": "at().st_mtime,         reverse=True,     )      return files[0]   def find_shp(     folder: Path,     code: str, ) -> Optional[Path]:      shp_files = list(         folder.rglob(\"*.shp\")     )      for path in shp_files:          if code.upper() in path.name.upper():             return path      return (         shp_files[0]         if shp_files         else Non",
+      "score": 40
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_mixed_use_zone_mapplan_intersection.json",
+      "relative_path": "law_data\\output\\seoul_mixed_use_zone_mapplan_intersection.json",
+      "term": "120945.65223377591",
+      "preview": "\"     ]   },   \"target_geometry\": {     \"http_status\": 200,     \"geojson_valid\": true,     \"feature_count\": 0,     \"geometry_types\": []   },   \"intersection\": {     \"parcel_area\": 120945.65223377591,     \"target_area\": 0.0,     \"intersection_area\": 0.0,     \"intersection_ratio\": 0.0,     \"has_area_intersection\": false   },   \"site_resolution\": {     \"query_status\": \"QUERY_SUC",
+      "score": 30
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "relative_path": "law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "term": "120945.65223377591",
+      "preview": "{       \"valid\": true,       \"feature_count\": 1,       \"geometry_types\": [         \"Polygon\"       ]     },     \"geometry_valid\": true,     \"geometry_type\": \"Polygon\",     \"area\": 120945.65223377591,     \"bounds\": [       962201.02522,       1943722.58159,       962711.06096,       1944220.16506     ]   },   \"target_geometry\": {     \"request\": {       \"url\": \"https://www.eum.",
+      "score": 30
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\development_density_management_resolution_test.py",
+      "relative_path": "law_data\\development_density_management_resolution_test.py",
+      "term": "MapPlan",
+      "preview": " evidence[         \"notice_probe\"     ]      announcement = evidence[         \"announcement_full\"     ]      # --------------------------------------------------------     # EUM / MapPlan     # --------------------------------------------------------      eum_http = initial.get(         \"eum_http\"     )      eum_name_present = initial.get(         \"name_present\"   ",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\eum_vertical_mixed_use_zone_mapplan_live_test.py",
+      "relative_path": "law_data\\eum_vertical_mixed_use_zone_mapplan_live_test.py",
+      "term": "MapPlan",
+      "preview": "============================================= # STEP # ============================================================  STEP_NAME = (     \"STEP 17-21-C-9-2-6A-6 \"     \"토지이음 UQQ905 실제 MapPlan 요청 / Geometry 조회 테스트\" )   # ============================================================ # PATH # ============================================================  BASE_DIR = Path(__f",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\eum_vertical_mixed_use_zone_mapplan_probe_test.py",
+      "relative_path": "law_data\\eum_vertical_mixed_use_zone_mapplan_probe_test.py",
+      "term": "MapPlan",
+      "preview": "======================================================= # STEP # ============================================================  STEP_NAME = (     \"STEP 17-21-C-9-2-6A-5 \"     \"토지이음 MapPlan UQQ905 실제 공간 Layer 요청 구조 분석\" )   # ============================================================ # PATH # ============================================================  BASE_DIR = P",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py",
+      "relative_path": "law_data\\eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py",
+      "term": "MapPlan",
+      "preview": "===================================================== # STEP # ============================================================  STEP_NAME = (     \"STEP 17-21-C-9-2-6A-7-1 \"     \"토지이음 MapPlan HTTP 403 보정 / UQQ905 의미 양성대조 검증\" )   # ============================================================ # PATH # ============================================================  BASE_DIR",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\eum_vertical_mixed_use_zone_network_probe_test.py",
+      "relative_path": "law_data\\eum_vertical_mixed_use_zone_network_probe_test.py",
+      "term": "MapPlan",
+      "preview": "tFeature\",     \"GetMap\",     \"geom\",     \"geometry\",     \"polygon\",     \"Polygon\",     \"feature\",     \"Feature\",     \"ajax\",     \"$.ajax\",     \"XMLHttpRequest\",     \"fetch(\",     \"MapPlan\",     \"KRAS\",     \"land\",     \"pnu\", ]   def keyword_hits(text: str):     hits = []      for keyword in GIS_KEYWORDS:          count = text.count(keyword)          if count > 0:  ",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_density_management_area_probe_test.py",
+      "relative_path": "law_data\\seoul_development_density_management_area_probe_test.py",
+      "term": "MapPlan",
+      "preview": "-C-9-2-13A 서울 개발밀도관리구역 공식 지정 / 공간 source probe  목표 ====================================================================== 1. 토지이음 SITE 페이지를 정상 조회한다. 2. 개발밀도관리구역 명칭 출현 여부만 진단한다. 3. MapPlan analysis 전체 layer/code를 저장한다. 4. 개발밀도관리구역의 공식 code는 추측하지 않는다. 5. 서울시 공식 지정 evidence가 없으면 UNKNOWN 유지한다. 6. 콘솔에는 핵심 결과만 출력한다.  주의 ===================================================",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_mixed_use_zone_mapplan_intersection_test.py",
+      "relative_path": "law_data\\seoul_mixed_use_zone_mapplan_intersection_test.py",
+      "term": "MapPlan",
+      "preview": "================================================ # STEP # ============================================================  STEP_NAME = (     \"STEP 17-21-C-9-2-8A \"     \"복합용도구역 UQQ904 MapPlan 실제 공간교차 검증\" )   # ============================================================ # 프로젝트 경로 # ============================================================  BASE_DIR = Path(__file__).",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_urban_innovation_zone_mapplan_intersection_test.py",
+      "relative_path": "law_data\\seoul_urban_innovation_zone_mapplan_intersection_test.py",
+      "term": "MapPlan",
+      "preview": "================================================ # STEP # ============================================================  STEP_NAME = (     \"STEP 17-21-C-9-2-7B \"     \"도시혁신구역 UQQ903 MapPlan 실제 공간교차 검증\" )  TARGET_NAME = \"도시혁신구역\" TARGET_CODE = \"UQQ903\" TARGET_LAYER = \"AC\"  POSITIVE_CONTROL_CODE = \"UQQ300\" POSITIVE_CONTROL_LAYER = \"AC\"  PARCEL_LAYER = \"FA\"   # =========",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_urban_innovation_zone_source_probe_test.py",
+      "relative_path": "law_data\\seoul_urban_innovation_zone_source_probe_test.py",
+      "term": "MapPlan",
+      "preview": "========  STEP_NAME = (     \"STEP 17-21-C-9-2-7A \"     \"도시혁신구역 공식 Source / 관리코드 탐색\" )  TARGET_NAME = \"도시혁신구역\"  # 이전 토지이음 범례에서 이미 확인된 후보 TARGET_CODE = \"UQQ903\"  # UQQ905에서 검증된 토지이음 MapPlan 상위 layer TARGET_LAYER = \"AC\"   # ============================================================ # PATH # ============================================================  BASE_DIR = Pat",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_spatial_condition_final_snapshot_test.py",
+      "relative_path": "law_data\\site_spatial_condition_final_snapshot_test.py",
+      "term": "MapPlan",
+      "preview": "구역\": {         \"status\": \"FALSE\",         \"confidence\": \"HIGH\",         \"source_type\": (             \"PARCEL_POLYGON_INTERSECTION\"         ),         \"source_name\": (             \"MapPlan 공식 공간정보\"         ),         \"reason\": (             \"MapPlan 공식 공간정보의 source/관리코드 및 \"             \"공간조회 구조를 검증한 뒤 대상 Parcel과 \"             \"실제 공간교차를 수행했으나 면적교차가 확인되지 않음\"         )",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\urban_area_inclusion_release_source_probe_test.py",
+      "relative_path": "law_data\\urban_area_inclusion_release_source_probe_test.py",
+      "term": "MapPlan",
+      "preview": "==============================================  def extract_code_candidates(     results: List[         Dict[str, Any]     ], ) -> List[str]:      candidates = set()      # UPIS / MapPlan 계열에서 사용했던     # UQ / UQM / UQS 형태만 \"후보\"로 수집한다.     #     # 의미를 확정하지 않는다.      pattern = re.compile(         r\"\\b\"         r\"(?:UQ[A-Z]?\\d{3,6})\"         r\"\\b\",         re.IGNORECA",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\development_density_management_resolution.json",
+      "relative_path": "law_data\\output\\development_density_management_resolution.json",
+      "term": "MapPlan",
+      "preview": "source\": \"토지이용계획/EUM\",         \"result\": \"NO_NAME_EVIDENCE\",         \"detail\": \"정상 HTTP 응답에서 개발밀도관리구역 명칭 확인되지 않음\"       },       {         \"type\": \"MAP_SOURCE\",         \"source\": \"MapPlan\",         \"result\": \"SOURCE_UNVERIFIED\",         \"detail\": \"개발밀도관리구역에 대응하는 신뢰 가능한 MapPlan layer/source를 확정하지 못함\"       },       {         \"type\": \"SPATIAL_LAYER_PROBE\",         \"s",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_gis_endpoint_probe.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_gis_endpoint_probe.json",
+      "term": "MapPlan",
+      "preview": "팅한다.\\r\\n * \\r\\n * @return void\\r\\n **/\\r\\n$.fn.setTitleLawdcd = function(){\\r\\n\\tvar center=map.getView().getCenter();\\r\\n\\tmapObj[\\\"center\\\"]=center;\\r\\n\\tvar jsonurl = server+\\\"/MapPlan?req=search\\\";\\r\\n\\tvar params = {\\r\\n\\t\\tversion: mapObj[\\\"version\\\"],\\r\\n\\t\\tlayer:\\\"FA\\\",\\r\\n\\t\\tmbr: center[0]+\\\",\\\"+center[1]+\\\",\\\"+center[0]+\\\",\\\"+center[1]\\r\\n\\t};\\r\\n\\t$.ge",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_layer_probe.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_layer_probe.json",
+      "term": "MapPlan",
+      "preview": "   \"hit_terms\": [           \"도시군계획시설입체복합구역\",           \"입체복합구역\"         ]       }     ],     \"identifier_candidates\": [       \"Description\",       \"KRAS\",       \"Keywords\",       \"MapPlan\",       \"UA-Compatible\",       \"absolute\",       \"action\",       \"active\",       \"addEventListener\",       \"add_list\",       \"address\",       \"alert\",       \"allClose\",       \"all",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_mapplan_live.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_mapplan_live.json",
+      "term": "MapPlan",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-6A-6 토지이음 UQQ905 실제 MapPlan 요청 / Geometry 조회 테스트\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"도시",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_mapplan_live.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_mapplan_live.json",
+      "term": "1168010300100120000",
+      "preview": "  \"step\": \"STEP 17-21-C-9-2-6A-6 토지이음 UQQ905 실제 MapPlan 요청 / Geometry 조회 테스트\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"도시군계획시설입체복합구역\",     \"code\": \"UQQ905\",     \"layer\": \"AC\"   },   \"setinit_calls\": [     {       \"raw\": \"'1168010300100120000','','','https://www.eum",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_mapplan_probe.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_mapplan_probe.json",
+      "term": "MapPlan",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-6A-5 토지이음 MapPlan UQQ905 실제 공간 Layer 요청 구조 분석\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"nam",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_mapplan_probe.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_mapplan_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-6A-5 토지이음 MapPlan UQQ905 실제 공간 Layer 요청 구조 분석\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"도시군계획시설입체복합구역\",     \"code\": \"UQQ905\"   },   \"html_analysis\": {     \"variables\": {       \"context\": [         \"/web\"       ],       \"server\": [],  ",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_mapplan_semantic_validation.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_mapplan_semantic_validation.json",
+      "term": "MapPlan",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-6A-7-1 토지이음 MapPlan HTTP 403 보정 / UQQ905 의미 양성대조 검증\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"mapplan\": {    ",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_mapplan_semantic_validation.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_mapplan_semantic_validation.json",
+      "term": "1168010300100120000",
+      "preview": "step\": \"STEP 17-21-C-9-2-6A-7-1 토지이음 MapPlan HTTP 403 보정 / UQQ905 의미 양성대조 검증\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"mapplan\": {     \"endpoint\": \"https://www.eum.ne.kr:9002/MapPlan\",     \"version\": \"20260614\",     \"mbr\": \"962170.4865538419,1943690.920233938,962741.8650744666,1944251.386",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_network_probe.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_network_probe.json",
+      "term": "MapPlan",
+      "preview": " },         {           \"keyword\": \"ajax\",           \"count\": 6         },         {           \"keyword\": \"$.ajax\",           \"count\": 6         },         {           \"keyword\": \"MapPlan\",           \"count\": 14         },         {           \"keyword\": \"land\",           \"count\": 3         },         {           \"keyword\": \"pnu\",           \"count\": 90         }    ",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_mixed_use_zone_mapplan_intersection.json",
+      "relative_path": "law_data\\output\\seoul_mixed_use_zone_mapplan_intersection.json",
+      "term": "MapPlan",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-8A 복합용도구역 UQQ904 MapPlan 실제 공간교차 검증\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"복합용도구역\",    ",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_mixed_use_zone_mapplan_intersection.json",
+      "relative_path": "law_data\\output\\seoul_mixed_use_zone_mapplan_intersection.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-8A 복합용도구역 UQQ904 MapPlan 실제 공간교차 검증\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"복합용도구역\",     \"code\": \"UQQ904\",     \"layer\": \"AC\"   },   \"source_verification\": {     \"matches\": [       {         \"tag\": \"li\",         \"class\": [ ",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "relative_path": "law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "term": "MapPlan",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-7B 도시혁신구역 UQQ903 MapPlan 실제 공간교차 검증\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"도시혁신구역\",    ",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "relative_path": "law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-7B 도시혁신구역 UQQ903 MapPlan 실제 공간교차 검증\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"도시혁신구역\",     \"code\": \"UQQ903\",     \"layer\": \"AC\"   },   \"mapplan\": {     \"gis_server\": \"https://www.eum.ne.kr:9003/MapPlan\",     \"endpoint\": \"http",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_spatial_condition_final_snapshot.json",
+      "relative_path": "law_data\\output\\site_spatial_condition_final_snapshot.json",
+      "term": "MapPlan",
+      "preview": "이용계획/EUM\",           \"result\": \"NO_NAME_EVIDENCE\",           \"detail\": \"정상 HTTP 응답에서 개발밀도관리구역 명칭 확인되지 않음\"         },         {           \"type\": \"MAP_SOURCE\",           \"source\": \"MapPlan\",           \"result\": \"SOURCE_UNVERIFIED\",           \"detail\": \"개발밀도관리구역에 대응하는 신뢰 가능한 MapPlan layer/source를 확정하지 못함\"         },         {           \"type\": \"SPATIAL_LAYER_PROBE\", ",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\special_rule_applicability.json",
+      "relative_path": "law_data\\output\\special_rule_applicability.json",
+      "term": "MapPlan",
+      "preview": "source_name\": \"해양수산부 수산자원보호구역 공식 WFS\"     },     \"입체복합구역\": {       \"status\": \"FALSE\",       \"confidence\": \"HIGH\",       \"query_group\": \"URBAN_PLANNING_ZONE\",       \"source_name\": \"MapPlan 공식 공간정보\"     },     \"자연경관지구\": {       \"status\": \"FALSE\",       \"confidence\": \"HIGH\",       \"query_group\": \"URBAN_PLANNING_ZONE\",       \"source_name\": \"공식 도시계획 공간정보\"     },     \"자연",
+      "score": 20
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\PROJECT_STATUS.md",
+      "relative_path": "PROJECT_STATUS.md",
+      "term": "1168010300100120000",
+      "preview": "결과 객체 생성 11. AI가 규칙엔진의 판정 결과를 설명하고 보고서로 생성  핵심 원칙:  > **Rule Engine이 판정하고, AI는 설명한다.**  ---  ## 2. 현재 테스트 SITE  - 주소: 서울특별시 강남구 개포동 12번지 - SITE ID: `11680-10300-0012-0000` - PNU: `1168010300100120000` - 시군구코드: `11680` - 법정동코드: `10300` - 본번: `0012` - 부번: `0000` - 산여부 코드: `1` - 용도지역: **제3종일반주거지역** - 대표 좌표:   - X: `127.07539280356858`   - Y: `37.494197498186885`  Parcel Polygon d",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\development_density_management_evidence_resolution_test.py",
+      "relative_path": "law_data\\development_density_management_evidence_resolution_test.py",
+      "term": "MapPlan",
+      "preview": "      resolution.resolution     resolution.confidence   3. seoul_development_density_management_area_probe.json  실제 schema:     eum.http_status     eum.target_name_present     eum.mapplan_server      mapplan_analysis.http_status     mapplan_analysis.entry_count      resolution   4. site_rule_evaluation_condition_overlay.json  현재 개발밀도관리구역 UNKNOWN 영향:     11 clauses ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\development_density_uq145_probe_test.py",
+      "relative_path": "law_data\\development_density_uq145_probe_test.py",
+      "term": "geopandas",
+      "preview": "장한다. \"\"\"  from __future__ import annotations  import json import math import tempfile import zipfile  from pathlib import Path from typing import Any, Dict, List, Optional  import geopandas as gpd   STEP_NAME = (     \"STEP 17-21-C-9-2-13B \"     \"서울시 UQ145 기타용도구역 내 개발밀도관리구역 probe\" )  TARGET_NAME = \"개발밀도관리구역\"  BASE_DIR = Path(__file__).resolve().parent.parent LAW_DATA_",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\disaster_prevention_district_source_probe_test.py",
+      "relative_path": "law_data\\disaster_prevention_district_source_probe_test.py",
+      "term": "geopandas",
+      "preview": " SITE TRUE/FALSE 판정은 하지 않음 \"\"\"  from __future__ import annotations  import json import tempfile import zipfile  from pathlib import Path from typing import Any, Dict, List  import geopandas as gpd   STEP_NAME = (     \"STEP 17-21-C-10-2B-10A \"     \"서울시 방재지구 공식 SHP source/schema probe\" )   BASE_DIR = (     Path(__file__)     .resolve()     .parent     .parent )  INPUT_",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\eum_vertical_mixed_use_zone_a6_evidence_structure_probe.py",
+      "relative_path": "law_data\\eum_vertical_mixed_use_zone_a6_evidence_structure_probe.py",
+      "term": "MapPlan",
+      "preview": "ping import Any   BASE_DIR = Path(__file__).resolve().parent.parent OUTPUT_DIR = BASE_DIR / \"law_data\" / \"output\"  INPUT_PATH = (     OUTPUT_DIR     / \"eum_vertical_mixed_use_zone_mapplan_live.json\" )   TARGETS = [     \"UQQ300\",     \"UQQ905\",     '\"layer\"',     \"analysis\",     \"preview\",     \"response\",     \"raw\", ]   def load_json(path: Path) -> Any:     with path",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\eum_vertical_mixed_use_zone_evidence_consolidation_test.py",
+      "relative_path": "law_data\\eum_vertical_mixed_use_zone_evidence_consolidation_test.py",
+      "term": "MapPlan",
+      "preview": "R = Path(__file__).resolve().parent.parent LAW_DATA_DIR = BASE_DIR / \"law_data\" OUTPUT_DIR = LAW_DATA_DIR / \"output\"  A6_PATH = (     OUTPUT_DIR     / \"eum_vertical_mixed_use_zone_mapplan_live.json\" )  A7_PATH = (     OUTPUT_DIR     / \"eum_vertical_mixed_use_zone_mapplan_semantic_validation.json\" )  OUTPUT_PATH = (     OUTPUT_DIR     / \"eum_vertical_mixed_use_zone_",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\fishery_resource_protection_zone_intersection_test.py",
+      "relative_path": "law_data\\fishery_resource_protection_zone_intersection_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "===========================  VWORLD_SEARCH_URL = (     \"https://api.vworld.kr/req/search\" )  VWORLD_DATA_URL = (     \"https://api.vworld.kr/req/data\" )  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )   # ============================================================ # namespace # ============================================================  GML_NS = (     \"http://www.opengis.",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\fishery_resource_protection_zone_intersection_test.py",
+      "relative_path": "law_data\\fishery_resource_protection_zone_intersection_test.py",
+      "term": "CBND",
+      "preview": "========================  VWORLD_SEARCH_URL = (     \"https://api.vworld.kr/req/search\" )  VWORLD_DATA_URL = (     \"https://api.vworld.kr/req/data\" )  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )   # ============================================================ # namespace # ============================================================  GML_NS = (     \"http://www.op",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\fishery_resource_protection_zone_wfs_probe_test.py",
+      "relative_path": "law_data\\fishery_resource_protection_zone_wfs_probe_test.py",
+      "term": "MapPlan",
+      "preview": "__).resolve().parent.parent LAW_DATA_DIR = BASE_DIR / \"law_data\" OUTPUT_DIR = LAW_DATA_DIR / \"output\"  QUERY_CONTEXT_PATH = (     OUTPUT_DIR / \"site_spatial_query_context.json\" )  MAPPLAN_LIVE_PATH = (     OUTPUT_DIR / \"eum_vertical_mixed_use_zone_mapplan_live.json\" )  OUTPUT_PATH = (     OUTPUT_DIR / \"fishery_resource_protection_zone_wfs_probe.json\" )   # ========",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_intersection_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_intersection_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "_KEY\"     ) )   # ============================================================ # Dataset # ============================================================  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )  EXPECTED_INDUSTRIAL_FEATURE_COUNT = (     1340 )  EXPECTED_CRS = (     \"EPSG:3857\" )  EXPECTED_ID_COLUMN = (     \"DAN_ID\" )  EXPECTED_NAME_COLUMN = (     \"DAN_NAME\" )  EXPECTE",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_intersection_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_intersection_test.py",
+      "term": "CBND",
+      "preview": "Y\"     ) )   # ============================================================ # Dataset # ============================================================  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )  EXPECTED_INDUSTRIAL_FEATURE_COUNT = (     1340 )  EXPECTED_CRS = (     \"EPSG:3857\" )  EXPECTED_ID_COLUMN = (     \"DAN_ID\" )  EXPECTED_NAME_COLUMN = (     \"DAN_NAME\" )  E",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_intersection_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_intersection_test.py",
+      "term": "geopandas",
+      "preview": "\"\"\"  from __future__ import annotations  import json import os import tempfile import zipfile  from pathlib import Path from typing import Any, Dict, List, Optional, Tuple  import geopandas as gpd import requests  from dotenv import load_dotenv  from shapely.geometry import shape from shapely.geometry.base import BaseGeometry   # =====================================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\industrial_complex_boundary_shp_probe_test.py",
+      "relative_path": "law_data\\industrial_complex_boundary_shp_probe_test.py",
+      "term": "geopandas",
+      "preview": "FALSE를 판정하지 않는다. \"\"\"  from __future__ import annotations  import json import tempfile import zipfile  from pathlib import Path from typing import Any, Dict, List, Optional  import geopandas as gpd   # ============================================================ # STEP # ============================================================  STEP_NAME = (     \"STEP 17-21-C-9-2-",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_intersection_test.py",
+      "relative_path": "law_data\\natural_park_intersection_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "ntersection.json\" )   # ============================================================ # Dataset # ============================================================  PARCEL_DATASET = \"LP_PA_CBND_BUBUN\"  EXPECTED_PREFIX = (     \"LSMD_CONT_UM102\" )  EXPECTED_CRS = (     \"EPSG:5174\" )  EXPECTED_FEATURE_COUNT = 48   # ============================================================ # 환",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_intersection_test.py",
+      "relative_path": "law_data\\natural_park_intersection_test.py",
+      "term": "CBND",
+      "preview": "rsection.json\" )   # ============================================================ # Dataset # ============================================================  PARCEL_DATASET = \"LP_PA_CBND_BUBUN\"  EXPECTED_PREFIX = (     \"LSMD_CONT_UM102\" )  EXPECTED_CRS = (     \"EPSG:5174\" )  EXPECTED_FEATURE_COUNT = 48   # ==========================================================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_intersection_test.py",
+      "relative_path": "law_data\\natural_park_intersection_test.py",
+      "term": "geopandas",
+      "preview": "future__ import annotations  import json import math import os import tempfile import zipfile  from pathlib import Path from typing import Any, Dict, List, Optional, Tuple  import geopandas as gpd import requests  from dotenv import load_dotenv from shapely.geometry import shape from shapely.geometry.base import BaseGeometry   # ======================================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\natural_park_source_probe_test.py",
+      "relative_path": "law_data\\natural_park_source_probe_test.py",
+      "term": "geopandas",
+      "preview": "nce는 JSON 파일에 저장 \"\"\"  from __future__ import annotations  import json import tempfile import zipfile  from pathlib import Path from typing import Any, Dict, List, Optional  import geopandas as gpd   # ============================================================ # STEP # ============================================================  STEP_NAME = (     \"STEP 17-21-C-9-2-",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\school_relocation_site_candidate_resolution_test.py",
+      "relative_path": "law_data\\school_relocation_site_candidate_resolution_test.py",
+      "term": "1168010300100120000",
+      "preview": "===================== 서울시 공식 upisAnnouncement 전체 DB: - 개포동 학교이적지 strong candidate = 1건 - 서울특별시 고시 제2015-10호  공식 고시 원문: - 학교이적지 대상 = 강남구 개포동 153번지 일대  현재 SITE: - 강남구 개포동 12번지 - PNU 1168010300100120000  따라서: 2015-10 고시는 현재 SITE와 다른 부지.  목표 ====================================================================== 1. 이전 probe 결과 로드 2. strong candidate가 2015-10 1건인지 확인 3. candidate ta",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\school_relocation_site_history_probe_test.py",
+      "relative_path": "law_data\\school_relocation_site_history_probe_test.py",
+      "term": "1168010300100120000",
+      "preview": "==================== # SITE # ============================================================  SITE = {     \"site_id\": (         \"11680-10300-0012-0000\"     ),      \"pnu\": (         \"1168010300100120000\"     ),      \"address\": (         \"서울특별시 강남구 개포동 12번지\"     ),      \"sigungu\": (         \"강남구\"     ),      \"dong\": (         \"개포동\"     ),      \"bonbun\": (         \"12\"     ), }   #",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_promotion_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_development_promotion_district_intersection_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "     BASE_DIR / \"download\",     BASE_DIR / \"downloads\",     BASE_DIR / \"output\",     PROJECT_ROOT / \"data\",     PROJECT_ROOT / \"downloads\", ]   VWORLD_PARCEL_DATASET_DEFAULT = \"LP_PA_CBND_BUBUN\" SEOUL_UQ129_CODE = \"UQ129\"  REQUEST_TIMEOUT = 30   # ============================================================ # 기본 유틸 # ======================================================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_promotion_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_development_promotion_district_intersection_test.py",
+      "term": "CBND",
+      "preview": "  BASE_DIR / \"download\",     BASE_DIR / \"downloads\",     BASE_DIR / \"output\",     PROJECT_ROOT / \"data\",     PROJECT_ROOT / \"downloads\", ]   VWORLD_PARCEL_DATASET_DEFAULT = \"LP_PA_CBND_BUBUN\" SEOUL_UQ129_CODE = \"UQ129\"  REQUEST_TIMEOUT = 30   # ============================================================ # 기본 유틸 # ================================================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_promotion_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_development_promotion_district_intersection_test.py",
+      "term": "geopandas",
+      "preview": "       )      return temp_dir   # ============================================================ # 공간파일 로드 # ============================================================  def import_geopandas():      try:         import geopandas as gpd      except ImportError as exc:          raise RuntimeError(             \"geopandas가 설치되어 있지 않습니다.\\n\"             \"설치 예:\\n\"           ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_development_promotion_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_development_promotion_district_intersection_test.py",
+      "term": "1168010300100120000",
+      "preview": "llmatch(                     r\"\\d{19}\",                     pnu,                 )             ),          \"개포동 12번지 기준 PNU\":             (                 pnu                 == \"1168010300100120000\"             ),          \"Parcel query status 허용값\":             (                 parcel_result.get(                     \"query_status\"                 )                 in {     ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "test.json\" )   # ============================================================ # Dataset / code # ============================================================  PARCEL_DATASET = \"LP_PA_CBND_BUBUN\"  UQ121_CODE = \"UQ121\"  TARGET_LABEL = \"자연경관지구\"  TARGET_LCLASS_CODE = \"UQF110\" TARGET_ATTRIBUTE_CODE = \"UQF110\"   # ============================================================ # ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "term": "CBND",
+      "preview": "t.json\" )   # ============================================================ # Dataset / code # ============================================================  PARCEL_DATASET = \"LP_PA_CBND_BUBUN\"  UQ121_CODE = \"UQ121\"  TARGET_LABEL = \"자연경관지구\"  TARGET_LCLASS_CODE = \"UQF110\" TARGET_ATTRIBUTE_CODE = \"UQF110\"   # =========================================================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_intersection_test.py",
+      "term": "geopandas",
+      "preview": " \"\"\"  from __future__ import annotations  import json import os import tempfile import zipfile from pathlib import Path from typing import Any, Dict, List, Optional, Tuple  import geopandas as gpd import requests from dotenv import load_dotenv from shapely.geometry import shape   # ============================================================ # 경로 # ==================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_schema_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_schema_test.py",
+      "term": "geopandas",
+      "preview": "ort Path from typing import Any, Dict, List, Optional, Tuple  import requests from dotenv import load_dotenv   # ============================================================ # 선택적 geopandas # ============================================================  try:     import geopandas as gpd except Exception:     gpd = None   # =============================================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_natural_landscape_district_source_probe_test.py",
+      "relative_path": "law_data\\seoul_natural_landscape_district_source_probe_test.py",
+      "term": "1168010300100120000",
+      "preview": "/ 공간정보 코드 후보를 추측하지 않고    공식 카탈로그 정보만 저장 5. geometry 공간교차 전에는 SITE TRUE/FALSE 판정 금지  현재 대상 SITE ------------------------------------------------------------ 서울특별시 강남구 개포동 12번지 PNU: 1168010300100120000 \"\"\"  from __future__ import annotations  import json import os import re import sys from pathlib import Path from typing import Any, Dict, List, Optional  import requests from dot",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_intersection_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "ction.json\" )   # ============================================================ # Dataset # ============================================================  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )  TARGET_CONDITION = (     \"취락지구\" )  UQ128_CODE = (     \"UQ128\" )  EXPECTED_CLASS_CODE = (     \"UQM120\" )  EXPECTED_CRS = (     \"EPSG:5174\" )   # ===============================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_intersection_test.py",
+      "term": "CBND",
+      "preview": "on.json\" )   # ============================================================ # Dataset # ============================================================  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )  TARGET_CONDITION = (     \"취락지구\" )  UQ128_CODE = (     \"UQ128\" )  EXPECTED_CLASS_CODE = (     \"UQM120\" )  EXPECTED_CRS = (     \"EPSG:5174\" )   # =========================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_intersection_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_intersection_test.py",
+      "term": "geopandas",
+      "preview": "\"\"\"  from __future__ import annotations  import json import os import tempfile import zipfile  from pathlib import Path from typing import Any, Dict, List, Optional, Tuple  import geopandas as gpd import requests  from dotenv import load_dotenv  from shapely.geometry import shape from shapely.geometry.base import BaseGeometry   # =====================================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_settlement_district_source_probe_test.py",
+      "relative_path": "law_data\\seoul_settlement_district_source_probe_test.py",
+      "term": "geopandas",
+      "preview": "LSE 금지 \"\"\"  from __future__ import annotations  import json import os import tempfile import zipfile  from pathlib import Path from typing import Any, Dict, List, Optional  import geopandas as gpd import requests  from dotenv import load_dotenv   # ============================================================ # STEP # ==================================================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\seoul_vertical_mixed_use_zone_uq145_schema_probe_test.py",
+      "relative_path": "law_data\\seoul_vertical_mixed_use_zone_uq145_schema_probe_test.py",
+      "term": "geopandas",
+      "preview": "  \"feature_count\": 0,         \"columns\": [],         \"crs\": None,         \"target_matches\": [],         \"unique_values\": {},         \"error\": None,     }      try:          import geopandas as gpd      except Exception as exc:          result[\"error\"] = (             f\"geopandas import 실패: {exc}\"         )          return result      temp_dir = None      try:        ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_analysis_identity_integration_test.py",
+      "relative_path": "law_data\\site_analysis_identity_integration_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "\"crs\"             )             == \"EPSG:4326\"         ),          \"parcel dataset\": (             parcel_reference.get(                 \"dataset\"             )             == \"LP_PA_CBND_BUBUN\"         ),          \"parcel verified\": (             parcel_reference.get(                 \"strict_pnu_verified\"             )             is True         ),          \"geometry n",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_analysis_identity_integration_test.py",
+      "relative_path": "law_data\\site_analysis_identity_integration_test.py",
+      "term": "CBND",
+      "preview": "s\"             )             == \"EPSG:4326\"         ),          \"parcel dataset\": (             parcel_reference.get(                 \"dataset\"             )             == \"LP_PA_CBND_BUBUN\"         ),          \"parcel verified\": (             parcel_reference.get(                 \"strict_pnu_verified\"             )             is True         ),          \"geom",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_analysis_identity_integration_test.py",
+      "relative_path": "law_data\\site_analysis_identity_integration_test.py",
+      "term": "1168010300100120000",
+      "preview": "   == (                 \"서울특별시 강남구 개포동 12번지\"             )         ),          \"pnu\": (             site.get(                 \"pnu\"             )             == (                 \"1168010300100120000\"             )         ),          \"sigungu\": (             site.get(                 \"sigungu_code\"             )             == \"11680\"         ),          \"bjdong\": (          ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_identity_resolver_test.py",
+      "relative_path": "law_data\\site_identity_resolver_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "CONFIRMED\"         ),          \"parcel dataset\": (             result[                 \"parcel_reference\"             ][                 \"dataset\"             ]             == \"LP_PA_CBND_BUBUN\"         ),          \"parcel verified\": (             result[                 \"parcel_reference\"             ][                 \"strict_pnu_verified\"             ]             is ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_identity_resolver_test.py",
+      "relative_path": "law_data\\site_identity_resolver_test.py",
+      "term": "CBND",
+      "preview": "FIRMED\"         ),          \"parcel dataset\": (             result[                 \"parcel_reference\"             ][                 \"dataset\"             ]             == \"LP_PA_CBND_BUBUN\"         ),          \"parcel verified\": (             result[                 \"parcel_reference\"             ][                 \"strict_pnu_verified\"             ]          ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_identity_resolver_test.py",
+      "relative_path": "law_data\\site_identity_resolver_test.py",
+      "term": "1168010300100120000",
+      "preview": "     == (                 \"서울특별시 강남구 개포동 12번지\"             )         ),          \"pnu\": (             result[                 \"pnu\"             ]             == (                 \"1168010300100120000\"             )         ),          \"sigungu\": (             result[                 \"sigungu_code\"             ]             == \"11680\"         ),          \"bjdong\": (            ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_parcel_spatial_source_probe_test.py",
+      "relative_path": "law_data\\site_parcel_spatial_source_probe_test.py",
+      "term": "MapPlan",
+      "preview": "============================================================  CANDIDATE_FILES = [      \"vworld_parcel_polygon_identifier_probe.json\",      \"site_spatial_query_context.json\",      \"mapplan_parcel_geometry_probe.json\",      \"parcel_polygon_probe.json\",      \"site_parcel_polygon.json\",      \"site_spatial_condition_final_snapshot.json\", ]   # ==========================",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\site_spatial_query_context_test.py",
+      "relative_path": "law_data\\site_spatial_query_context_test.py",
+      "term": "1168010300100120000",
+      "preview": "-0000 # # 의미: #   11680 : 시군구코드 #   10300 : 법정동코드 #   0012  : 본번 #   0000  : 부번 # # PNU: #   시군구코드 5 # + 법정동코드 5 # + 산여부 1 # + 본번 4 # + 부번 4 # # 일반 번지 산여부 = 1 # 산번지 = 2 # # 예: #   1168010300100120000 # ============================================================   BASE_DIR = Path(__file__).resolve().parent  INPUT_SITE_PATH = (     BASE_DIR     / \"output\"     / \"site_law_condit",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\urban_area_conversion_current_state_probe_test.py",
+      "relative_path": "law_data\\urban_area_conversion_current_state_probe_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": "env(     \"VWORLD_API_KEY\" )  VWORLD_SEARCH_URL = (     \"https://api.vworld.kr/req/search\" )  VWORLD_DATA_URL = (     \"https://api.vworld.kr/req/data\" )  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )  TARGET_CRS = (     \"EPSG:5174\" )  TIMEOUT = 30   def safe_string(     value: Any, ) -> str:      if value is None:         return \"\"      return str(value).strip()   def load_",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\urban_area_conversion_current_state_probe_test.py",
+      "relative_path": "law_data\\urban_area_conversion_current_state_probe_test.py",
+      "term": "CBND",
+      "preview": "(     \"VWORLD_API_KEY\" )  VWORLD_SEARCH_URL = (     \"https://api.vworld.kr/req/search\" )  VWORLD_DATA_URL = (     \"https://api.vworld.kr/req/data\" )  PARCEL_DATASET = (     \"LP_PA_CBND_BUBUN\" )  TARGET_CRS = (     \"EPSG:5174\" )  TIMEOUT = 30   def safe_string(     value: Any, ) -> str:      if value is None:         return \"\"      return str(value).strip()   def",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\urban_area_conversion_current_state_probe_test.py",
+      "relative_path": "law_data\\urban_area_conversion_current_state_probe_test.py",
+      "term": "geopandas",
+      "preview": "\"\"\"  from __future__ import annotations  import json import os import tempfile import zipfile  from pathlib import Path from typing import Any, Dict, List, Optional, Tuple  import geopandas as gpd import requests  from dotenv import load_dotenv from shapely.geometry import shape   STEP_NAME = (     \"STEP 17-21-C-9-2-14D \"     \"도시지역편입해제구역 현행 공간상태 교차검증\" )  BASE_DIR = P",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\vworld_district_unit_plan_parcel_intersection_test.py",
+      "relative_path": "law_data\\vworld_district_unit_plan_parcel_intersection_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": " STEP 17-21-C-9-2-2B-3B-1 # # Parcel Polygon × 지구단위계획 Polygon 교차검증 # # 핵심 보정 # ------------------------------------------------------------ # 1. Parcel dataset은 B-3A에서 검증한 #    LP_PA_CBND_BUBUN 사용 # # 2. Parcel 조회 시 attrFilter(pnu:=...)를 사용하지 않음 # # 3. B-3A에서 실제 성공한 방식 유지 # #       주소검색 #          ↓ #       대표좌표 #          ↓ #       geomFilter=POINT(x y) #          ↓ #  ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\vworld_district_unit_plan_parcel_intersection_test.py",
+      "relative_path": "law_data\\vworld_district_unit_plan_parcel_intersection_test.py",
+      "term": "CBND",
+      "preview": "EP 17-21-C-9-2-2B-3B-1 # # Parcel Polygon × 지구단위계획 Polygon 교차검증 # # 핵심 보정 # ------------------------------------------------------------ # 1. Parcel dataset은 B-3A에서 검증한 #    LP_PA_CBND_BUBUN 사용 # # 2. Parcel 조회 시 attrFilter(pnu:=...)를 사용하지 않음 # # 3. B-3A에서 실제 성공한 방식 유지 # #       주소검색 #          ↓ #       대표좌표 #          ↓ #       geomFilter=POINT(x y) #         ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\vworld_parcel_polygon_identifier_probe_test.py",
+      "relative_path": "law_data\\vworld_parcel_polygon_identifier_probe_test.py",
+      "term": "PA_CBND_BUBUN",
+      "preview": " dataset 후보 # # 여기서는 후보일 뿐이다. # 실제 API에서 OK 응답 + Polygon geometry를 확인해야 채택한다. # ============================================================  PARCEL_DATASET_CANDIDATES = [     \"LP_PA_CBND_BUBUN\",     \"LP_PA_CBND_BONBUN\",     \"LT_C_LANDINFO\",     \"LT_C_LANDINFO_1\",     \"LT_C_LANDINFO_2\",     \"LT_C_LANDINFO_BUBUN\",     \"LT_C_LANDINFO_BONBUN\",     \"LT_C_PARCEL\",     \"LT_C_C",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\vworld_parcel_polygon_identifier_probe_test.py",
+      "relative_path": "law_data\\vworld_parcel_polygon_identifier_probe_test.py",
+      "term": "CBND",
+      "preview": "taset 후보 # # 여기서는 후보일 뿐이다. # 실제 API에서 OK 응답 + Polygon geometry를 확인해야 채택한다. # ============================================================  PARCEL_DATASET_CANDIDATES = [     \"LP_PA_CBND_BUBUN\",     \"LP_PA_CBND_BONBUN\",     \"LT_C_LANDINFO\",     \"LT_C_LANDINFO_1\",     \"LT_C_LANDINFO_2\",     \"LT_C_LANDINFO_BUBUN\",     \"LT_C_LANDINFO_BONBUN\",     \"LT_C_PARCEL\",     \"",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\development_density_management_evidence_resolution.json",
+      "relative_path": "law_data\\output\\development_density_management_evidence_resolution.json",
+      "term": "MapPlan",
+      "preview": "개발밀도관리구역 layer가 아니라 기타용도구역 후보 layer이므로 보조 evidence로만 사용\"     },     \"eum_site\": {       \"query_success\": true,       \"http_status\": 200,       \"target_name_present\": false,       \"mapplan_server_found\": false,       \"mapplan_http\": null,       \"mapplan_entry_count\": 0,       \"direct_positive_evidence\": false,       \"negative\": true     }   },   \"negative_evidence_c",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\development_density_management_resolution.json",
+      "relative_path": "law_data\\output\\development_density_management_resolution.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-15B 개발밀도관리구역 evidence 종합\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"condition\": {     \"name\": \"개발밀도관리구역\",     \"status\": \"UNKNOWN\",     \"confidence\": \"MEDIUM\",     \"source_type\": \"MULTI_SOURCE_NEGATIVE_EVIDENCE\",     \"source_name\": \"EUM + ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_development_density_control_area_code_probe.json",
+      "relative_path": "law_data\\output\\eum_development_density_control_area_code_probe.json",
+      "term": "1168010300100120000",
+      "preview": "step\": \"STEP 17-21-C-9-2-4A-2A\",   \"condition\": \"개발밀도관리구역\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zoning\": \"-\",     \"pnu\": \"1168010300100120000\"   },   \"source\": {     \"provider\": \"국토교통부\",     \"service\": \"토지이음\",     \"dictionary_url\": \"https://www.eum.go.kr/web/in/dc/dcDictList.jsp\"   },   \"dictionary_search\": {     \"attem",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_evidence_consolidation.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_evidence_consolidation.json",
+      "term": "MapPlan",
+      "preview": "개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"도시군계획시설입체복합구역\",     \"layer\": \"AC\",     \"code\": \"UQQ905\"   },   \"a6_analysis_evidence\": {     \"source\": \"mapplan_analysis[0].preview\",     \"http_status\": 200,     \"content_type\": \"application/json;charset=utf-8\",     \"parse_success\": true,     \"layer_count\": 7,     \"code_count\": 24   },   \"p",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_evidence_consolidation.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_evidence_consolidation.json",
+      "term": "1168010300100120000",
+      "preview": " 17-21-C-9-2-6A-8-1 토지이음 UQQ905 기존 정상응답 Evidence Consolidation 보정 / 최종 판정 검증\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"도시군계획시설입체복합구역\",     \"layer\": \"AC\",     \"code\": \"UQQ905\"   },   \"a6_analysis_evidence\": {     \"source\": \"mapplan_analysis[0].preview\",     \"http_st",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_gis_endpoint_probe.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_gis_endpoint_probe.json",
+      "term": "1168010300100120000",
+      "preview": "\"step\": \"STEP 17-21-C-9-2-6A-4 토지이음 GIS Endpoint 요청 Parameter / 응답 Schema 분석\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"도시군계획시설입체복합구역\",     \"code\": \"UQQ905\"   },   \"endpoint\": \"https://www.eum.go.kr/mp/mpMapDetGisAjaxXml.jsp\",   \"network_probe_verified\": true,   \"ta",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_gis_endpoint_probe.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_gis_endpoint_probe.json",
+      "term": ".geojson",
+      "preview": "\\t\\tlayer:\\\"FA\\\",\\r\\n\\t\\t\\tmbr: coord[0] +','+ coord[1]+','+coord[0]+','+coord[1]\\r\\n\\t};\\r\\n\\t$.getJSON(jsonurl,params,function(data, status) {\\r\\n\\t\\tvar features = new ol.format.GeoJSON().readFeatures(data);\\r\\n\\t\\tif(features.length > 0){\\r\\n\\t\\t\\tvar feature = features[0];\\r\\n\\t\\t\\tvar att = feature.getProperties();\\r\\n\\t\\t\\tvar pnu = att.pnu;\\r\\n\\r\\n\\t\\t\\t$.aj",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_layer_probe.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_layer_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-6A-2 토지이음 도시군계획시설입체복합구역 Layer / 코드 탐색\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"previous_probe_loaded\": true,   \"eum\": {     \"url\": \"https://www.eum.go.kr/web/mp/mpMapDet.jsp?add=land&pnu=1168010300100120000\",     \"http_status\": 200,     \"target_pres",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_mapplan_probe.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_mapplan_probe.json",
+      "term": ".geojson",
+      "preview": "athname == '/web/st/stMapDet.jsp'){\\r\\n\\t\\t\\t\\t\\t\\t$.fn.showLcstSpaceStPolygon(data, codeObj, code);\\r\\n\\t\\t\\t\\t\\t\\treturn;\\r\\n\\t\\t\\t\\t\\t}\\r\\n\\t\\t\\t\\t\\tvar features = new ol.format.GeoJSON().readFeatures(data);\\r\\n\\t\\t\\t\\t\\tif(features.length > 0){\\r\\n\\t\\t\\t\\t\\t\\tsearchSource.addFeatures(features);\\r\\n\\t\\t\\t\\t\\t}\\r\\n\\t\\t\\t\\t\\tmap.updateSize();\\r\\n\\t\\t\\t\\t}\\r\\n\\t\\t\\t",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\eum_vertical_mixed_use_zone_network_probe.json",
+      "relative_path": "law_data\\output\\eum_vertical_mixed_use_zone_network_probe.json",
+      "term": "1168010300100120000",
+      "preview": " \"step\": \"STEP 17-21-C-9-2-6A-3 토지이음 도시군계획시설입체복합구역 실제 Layer 요청 / Endpoint 추적\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"target\": {     \"name\": \"도시군계획시설입체복합구역\",     \"short_name\": \"입체복합구역\",     \"legend_code\": \"UQQ905\"   },   \"map_request\": {     \"url\": \"https://www.eum.go.kr/web/mp/mpMapDet.",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\fishery_resource_protection_zone_intersection.json",
+      "relative_path": "law_data\\output\\fishery_resource_protection_zone_intersection.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "CE_API_KEY\",       \"env_value_format\": \"URL_ENCODED\",       \"requests_value_format\": \"URL_DECODED_BY_UNQUOTE\"     }   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.803130\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:5179\",     \"geometry_type\": \"MultiPolyg",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\fishery_resource_protection_zone_intersection.json",
+      "relative_path": "law_data\\output\\fishery_resource_protection_zone_intersection.json",
+      "term": "CBND",
+      "preview": "API_KEY\",       \"env_value_format\": \"URL_ENCODED\",       \"requests_value_format\": \"URL_DECODED_BY_UNQUOTE\"     }   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.803130\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:5179\",     \"geometry_type\": \"Mult",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\fishery_resource_protection_zone_intersection.json",
+      "relative_path": "law_data\\output\\fishery_resource_protection_zone_intersection.json",
+      "term": "1168010300100120000",
+      "preview": "B 수산자원보호구역 공식 WFS GML / Parcel Polygon 실제 공간교차 검증\",   \"condition\": \"수산자원보호구역\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"source\": {     \"provider\": \"해양수산부\",     \"dataset\": \"수산자원보호구역\",     \"endpoint\": \"http://apis.data.go.kr/1192000/apVhdService_FshrsrcPzn/getOpnFshrsrcPznWFS\",     \"api_type",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\fishery_resource_protection_zone_wfs_probe.json",
+      "relative_path": "law_data\\output\\fishery_resource_protection_zone_wfs_probe.json",
+      "term": "MapPlan",
+      "preview": "nm\",       \"fshrsrc_pzn_ar\",       \"geom\"     ]   },   \"parcel_bbox\": {     \"crs_candidate\": \"EPSG:5179\",     \"source\": \"D:\\\\site-ai\\\\law_data\\\\output\\\\eum_vertical_mixed_use_zone_mapplan_live.json\",     \"search_bbox\": [       962170.4865538419,       1943690.920233938,       962741.8650744666,       1944251.3866923628     ]   },   \"positive_control\": {     \"name\":",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\fishery_resource_protection_zone_wfs_probe.json",
+      "relative_path": "law_data\\output\\fishery_resource_protection_zone_wfs_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-9A 수산자원보호구역 공식 WFS source / geometry probe\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"source\": {     \"provider\": \"해양수산부\",     \"dataset\": \"수산자원보호구역\",     \"api_type\": \"WFS\",     \"endpoint\": \"http://apis.data.go.kr/1192000/apVhdService_FshrsrcPzn/getOpnFshrsr",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\industrial_complex_boundary_intersection.json",
+      "relative_path": "law_data\\output\\industrial_complex_boundary_intersection.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "340,     \"type_values\": [       \"1\",       \"2\",       \"3\",       \"4\"     ],     \"reason\": \"산업단지 공식 layer schema 정상\"   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:3857\",     \"geometry_type\": \"MultiPolyg",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\industrial_complex_boundary_intersection.json",
+      "relative_path": "law_data\\output\\industrial_complex_boundary_intersection.json",
+      "term": "CBND",
+      "preview": ",     \"type_values\": [       \"1\",       \"2\",       \"3\",       \"4\"     ],     \"reason\": \"산업단지 공식 layer schema 정상\"   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:3857\",     \"geometry_type\": \"Mult",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\industrial_complex_boundary_intersection.json",
+      "relative_path": "law_data\\output\\industrial_complex_boundary_intersection.json",
+      "term": "1168010300100120000",
+      "preview": "21-C-9-2-11B 국토교통부 산업단지 경계도면 × Parcel Polygon 실제 공간교차\",   \"condition\": \"산업단지\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"official_source\": {     \"provider\": \"국토교통부\",     \"dataset\": \"산업단지 경계도면\",     \"coverage\": \"대한민국 전체\",     \"source_path\": \"D:\\\\site-ai\\\\law_data\\\\input\\\\국토교통부_산업단지_경계도면_2025",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\industrial_complex_boundary_source_probe.json",
+      "relative_path": "law_data\\output\\industrial_complex_boundary_source_probe.json",
+      "term": "1168010300100120000",
+      "preview": "21-C-9-2-11A 산업단지 단지경계 공식 source / VWorld layer probe\",   \"condition\": \"산업단지\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"official_source\": {     \"provider\": \"국토교통부\",     \"dataset\": \"단지경계\",     \"official_service_identifier\": \"damdan\",     \"coverage\": \"대한민국 전체\",     \"purpose\": \"산업입지도 산업단지 단지경",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\local_parcel_dataset_locator.json",
+      "relative_path": "law_data\\output\\local_parcel_dataset_locator.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "{   \"step\": \"STEP 17-21-C-11-2C-2A local parcel dataset locator\",   \"target_dataset\": \"LP_PA_CBND_BUBUN\",   \"project_root\": \"D:\\\\site-ai\",   \"direct_hits\": [],   \"zip_hits\": [],   \"loose_candidates\": [],   \"summary\": {     \"direct_hit_count\": 0,     \"zip_hit_count\": 0,     \"loose_ca",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\local_parcel_dataset_locator.json",
+      "relative_path": "law_data\\output\\local_parcel_dataset_locator.json",
+      "term": "CBND",
+      "preview": "{   \"step\": \"STEP 17-21-C-11-2C-2A local parcel dataset locator\",   \"target_dataset\": \"LP_PA_CBND_BUBUN\",   \"project_root\": \"D:\\\\site-ai\",   \"direct_hits\": [],   \"zip_hits\": [],   \"loose_candidates\": [],   \"summary\": {     \"direct_hit_count\": 0,     \"zip_hit_count\": 0,     \"lo",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\national_development_density_control_area_source_probe.json",
+      "relative_path": "law_data\\output\\national_development_density_control_area_source_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-4A-1\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\",     \"zone\": \"제3종일반주거지역\"   },   \"previous_seoul_resolution\": {     \"condition\": \"개발밀도관리구역\",     \"query_group\": \"URBAN_PLANNING_ZONE\",     \"query_status\": \"NOT_CONNECTED\",     \"re",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\natural_park_intersection.json",
+      "relative_path": "law_data\\output\\natural_park_intersection.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": " ],     \"valid_geometry_count\": 48,     \"alias_values\": [       \"(구)공원집단시설지구\",       \"자연보존지구\",       \"자연환경지구\"     ]   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:5174\",     \"geometry_type\": \"MultiPolyg",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\natural_park_intersection.json",
+      "relative_path": "law_data\\output\\natural_park_intersection.json",
+      "term": "CBND",
+      "preview": "     \"valid_geometry_count\": 48,     \"alias_values\": [       \"(구)공원집단시설지구\",       \"자연보존지구\",       \"자연환경지구\"     ]   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:5174\",     \"geometry_type\": \"Mult",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\natural_park_intersection.json",
+      "relative_path": "law_data\\output\\natural_park_intersection.json",
+      "term": "1168010300100120000",
+      "preview": "p\": \"STEP 17-21-C-9-2-12B 자연공원 Parcel Polygon 실제 공간교차\",   \"condition\": \"자연공원\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"official_source\": {     \"provider\": \"국토교통부\",     \"dataset\": \"(연속주제)_자연공원/용도지구\",     \"vworld_dataset_id\": \"30395\",     \"source_path\": \"D:\\\\site-ai\\\\law_data\\\\input\\\\LSMD_C",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\school_relocation_site_candidate_resolution.json",
+      "relative_path": "law_data\\output\\school_relocation_site_candidate_resolution.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-10-3B-5B 학교이적지 candidate resolution\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"pnu\": \"1168010300100120000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"dong\": \"개포동\",     \"bonbun\": \"12\"   },   \"known_gaepo_school_relocation\": {     \"notice\": \"서울특별시 고시 제2015-10호\",     \"notice_date\": \"2015",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\school_relocation_site_history_probe.json",
+      "relative_path": "law_data\\output\\school_relocation_site_history_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-10-3B-5A 학교이적지 SITE history probe\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"pnu\": \"1168010300100120000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"sigungu\": \"강남구\",     \"dong\": \"개포동\",     \"bonbun\": \"12\"   },   \"definition\": {     \"condition\": \"학교이적지\",     \"meaning\": \"학교 전체가 이전하고 남은 ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_development_density_control_area_source_probe.json",
+      "relative_path": "law_data\\output\\seoul_development_density_control_area_source_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-4A\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"제3종일반주거지역\",     \"pnu\": \"1168010300100120000\",     \"sigungu_code\": \"11680\"   },   \"target_condition\": \"개발밀도관리구역\",   \"search_policy\": {     \"vworld_numeric_guessing\": false,     \"official_catalog_first\": true,     \"true_false",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_development_density_management_area_probe.json",
+      "relative_path": "law_data\\output\\seoul_development_density_management_area_probe.json",
+      "term": "MapPlan",
+      "preview": "_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"eum\": {     \"http_status\": 200,     \"target_name_present\": false,     \"mapplan_server\": null,     \"selected_version\": null   },   \"mapplan_analysis\": {     \"http_status\": null,     \"entry_count\": 0,     \"entries\": [],     \"error\": null   },   \"resolution\": {",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_development_density_management_area_probe.json",
+      "relative_path": "law_data\\output\\seoul_development_density_management_area_probe.json",
+      "term": "1168010300100120000",
+      "preview": "-21-C-9-2-13A 서울 개발밀도관리구역 공식 지정 / 공간 source probe\",   \"condition\": \"개발밀도관리구역\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"eum\": {     \"http_status\": 200,     \"target_name_present\": false,     \"mapplan_server\": null,     \"selected_version\": null   },   \"mapplan_analysis\": {     \"http_status\":",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_development_promotion_district_intersection_test.json",
+      "relative_path": "law_data\\output\\seoul_development_promotion_district_intersection_test.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "sigungu_code\": \"11680\",     \"bjdong_code\": \"10300\",     \"san_code\": \"1\",     \"main_no\": \"0012\",     \"sub_no\": \"0000\"   },   \"condition\": \"개발진흥지구\",   \"parcel\": {     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"target_pnu\": \"1168010300100120000\",     \"query_status\": \"QUERY_SUCCESS\",     \"matched_feature_count\": 1,     \"address_search\": {       \"http_status\": 200,       \"url\": \"htt",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_development_promotion_district_intersection_test.json",
+      "relative_path": "law_data\\output\\seoul_development_promotion_district_intersection_test.json",
+      "term": "CBND",
+      "preview": "ungu_code\": \"11680\",     \"bjdong_code\": \"10300\",     \"san_code\": \"1\",     \"main_no\": \"0012\",     \"sub_no\": \"0000\"   },   \"condition\": \"개발진흥지구\",   \"parcel\": {     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"target_pnu\": \"1168010300100120000\",     \"query_status\": \"QUERY_SUCCESS\",     \"matched_feature_count\": 1,     \"address_search\": {       \"http_status\": 200,       \"url\"",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_development_promotion_district_intersection_test.json",
+      "relative_path": "law_data\\output\\seoul_development_promotion_district_intersection_test.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-3B-1A\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"제3종일반주거지역\",     \"pnu\": \"1168010300100120000\",     \"parcel_key\": \"11680-10300-0012-0000\",     \"sigungu_code\": \"11680\",     \"bjdong_code\": \"10300\",     \"san_code\": \"1\",     \"main_no\": \"0012\",     \"sub_no\": \"0000\"   },   \"cond",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_development_promotion_district_source_test.json",
+      "relative_path": "law_data\\output\\seoul_development_promotion_district_source_test.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-3A-3\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\",     \"zone\": \"제3종일반주거지역\",     \"sigungu_code\": \"11680\",     \"bjdong_code\": \"10300\"   },   \"source\": {     \"provider\": \"서울특별시\",     \"source_type\": \"SEOUL_OPEN_DATA\",     \"dataset_n",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_natural_landscape_district_intersection_test.json",
+      "relative_path": "law_data\\output\\seoul_natural_landscape_district_intersection_test.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zoning\": \"-\",     \"pnu\": \"1168010300100120000\"   },   \"parcel\": {     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.803130\",     \"geometry_type\": \"MultiPolygon\",     \"bounds\": [       127.07240240227819,       37.49198725375971,       127.0781619622408,    ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_natural_landscape_district_intersection_test.json",
+      "relative_path": "law_data\\output\\seoul_natural_landscape_district_intersection_test.json",
+      "term": "CBND",
+      "preview": "\"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zoning\": \"-\",     \"pnu\": \"1168010300100120000\"   },   \"parcel\": {     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.803130\",     \"geometry_type\": \"MultiPolygon\",     \"bounds\": [       127.07240240227819,       37.49198725375971,       127.078161962240",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_natural_landscape_district_intersection_test.json",
+      "relative_path": "law_data\\output\\seoul_natural_landscape_district_intersection_test.json",
+      "term": "1168010300100120000",
+      "preview": "  \"step\": \"STEP 17-21-C-9-2-5C-2\",   \"condition\": \"자연경관지구\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zoning\": \"-\",     \"pnu\": \"1168010300100120000\"   },   \"parcel\": {     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.803130\",     \"geometry_type\": \"MultiPolygon\",     \"bounds\": [       127.07240240227819, ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_natural_landscape_district_schema_test.json",
+      "relative_path": "law_data\\output\\seoul_natural_landscape_district_schema_test.json",
+      "term": "1168010300100120000",
+      "preview": "     \"crs\": \"EPSG:5174\",     \"encoding\": \"windows-949\"   },   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zoning\": \"-\",     \"pnu\": \"1168010300100120000\",     \"sigungu_code\": \"11680\"   },   \"source_probe_input\": {     \"step\": \"STEP 17-21-C-9-2-5A\",     \"condition\": \"자연경관지구\",     \"site\": {       \"site_id\": \"11680-10300-0012-0000\", ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_natural_landscape_district_source_probe.json",
+      "relative_path": "law_data\\output\\seoul_natural_landscape_district_source_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-5A\",   \"condition\": \"자연경관지구\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zoning\": \"-\",     \"pnu\": \"1168010300100120000\",     \"sigungu_code\": \"11680\"   },   \"search_keywords\": [     \"자연경관지구\",     \"경관지구\",     \"용도지구(경관지구)\"   ],   \"catalog\": {     \"service\": \"SearchCatalogService\",     \"success\": true",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_settlement_district_intersection.json",
+      "relative_path": "law_data\\output\\seoul_settlement_district_intersection.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "e\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:5174\",     \"geometry_type\": \"MultiPolyg",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_settlement_district_intersection.json",
+      "relative_path": "law_data\\output\\seoul_settlement_district_intersection.json",
+      "term": "CBND",
+      "preview": " {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",     \"pnu_direct_match\": true,     \"original_crs\": \"EPSG:4326\",     \"intersection_crs\": \"EPSG:5174\",     \"geometry_type\": \"Mult",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_settlement_district_intersection.json",
+      "relative_path": "law_data\\output\\seoul_settlement_district_intersection.json",
+      "term": "1168010300100120000",
+      "preview": "17-21-C-9-2-10B 서울시 UQ128 취락지구 Parcel Polygon 실제 공간교차\",   \"condition\": \"취락지구\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"parcel\": {     \"provider\": \"VWorld\",     \"dataset\": \"LP_PA_CBND_BUBUN\",     \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",     \"pnu_direct_match\": true,     \"original_crs\": \"EP",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_settlement_district_source_probe.json",
+      "relative_path": "law_data\\output\\seoul_settlement_district_source_probe.json",
+      "term": "1168010300100120000",
+      "preview": "-21-C-9-2-10A 서울시 취락지구 UQ128 공식 source / schema probe\",   \"condition\": \"취락지구\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"official_source\": {     \"provider\": \"서울특별시\",     \"dataset\": \"서울시 용도지구(취락지구) 공간정보\",     \"dataset_code\": \"UQ128\",     \"openapi_service\": \"upisCUq128\",     \"official_crs\": \"",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "relative_path": "law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "term": "962201.02522",
+      "preview": "harset=utf-8\",       \"json\": {         \"features\": [           {             \"geometry\": {               \"coordinates\": [                 [                   [                     962201.02522,                     1943841.80188                   ],                   [                     962210.40147,                     1943851.19867                   ],               ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "relative_path": "law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "term": "1943722.58159",
+      "preview": "               [                     962418.08919,                     1943754.18504                   ],                   [                     962339.82131,                     1943722.58159                   ],                   [                     962326.10299,                     1943755.90169                   ],                   [                     962278.75",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "relative_path": "law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "term": "962711.06096",
+      "preview": "044.13832                   ],                   [                     962710.80309,                     1944041.93572                   ],                   [                     962711.06096,                     1944039.66521                   ],                   [                     962710.94888,                     1944037.37667                   ],               ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "relative_path": "law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+      "term": "1944220.16506",
+      "preview": "               [                     962411.08353,                     1944196.20534                   ],                   [                     962471.71758,                     1944220.16506                   ],                   [                     962514.30746,                     1944113.69962                   ],                   [                     962534.49",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_source_probe.json",
+      "relative_path": "law_data\\output\\seoul_urban_innovation_zone_source_probe.json",
+      "term": "MapPlan",
+      "preview": "구 개포동 12번지\",     \"pnu\": \"1168010300100120000\",     \"sigungu_code\": \"11680\",     \"zoning\": null   },   \"target\": {     \"name\": \"도시혁신구역\",     \"legend_code\": \"UQQ903\",     \"candidate_mapplan_layer\": \"AC\"   },   \"seoul_catalog\": {     \"service\": \"SearchCatalogService\",     \"success\": true,     \"total_count\": 8250,     \"row_count\": 8250,     \"candidates\": [       {     ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_source_probe.json",
+      "relative_path": "law_data\\output\\seoul_urban_innovation_zone_source_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-7A 도시혁신구역 공식 Source / 관리코드 탐색\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\",     \"sigungu_code\": \"11680\",     \"zoning\": null   },   \"target\": {     \"name\": \"도시혁신구역\",     \"legend_code\": \"UQQ903\",     \"candidate_mapplan_layer\": \"AC\"   },   \"seoul_catalog\":",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_vertical_mixed_use_zone_source_probe.json",
+      "relative_path": "law_data\\output\\seoul_vertical_mixed_use_zone_source_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-6A 입체복합구역 서울시 공식 Source 탐색 / 의미 검증\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\",     \"sigungu_code\": \"11680\",     \"zoning\": null   },   \"source_snapshot_loaded\": true,   \"catalog\": {     \"service\": \"SearchCatalogService\",     \"success\": true,     \"total_coun",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\seoul_vertical_mixed_use_zone_uq145_schema_probe.json",
+      "relative_path": "law_data\\output\\seoul_vertical_mixed_use_zone_uq145_schema_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-6A-1 입체복합구역 서울시 기타용도구역 UQ145 Schema 탐색\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\",     \"sigungu_code\": \"11680\",     \"zoning\": null   },   \"previous_probe_loaded\": true,   \"dataset\": {     \"provider\": \"서울특별시\",     \"name\": \"서울시 기타용도구역 공간정보\",     \"code\": \"UQ145\",",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_analysis_identity_integration.json",
+      "relative_path": "law_data\\output\\site_analysis_identity_integration.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "\"y\": 37.494197498186885,     \"identity_status\": \"COMPLETE\",     \"coordinate_status\": \"CONFIRMED\",     \"missing_identity_fields\": [],     \"parcel_reference\": {       \"dataset\": \"LP_PA_CBND_BUBUN\",       \"status\": \"VERIFIED\",       \"strict_pnu_verified\": true,       \"geometry_loaded\": false,       \"note\": \"Parcel dataset은 검증되었으나 geometry 자체는 이번 identity object에 아직 포함하지 않음\"",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_analysis_identity_integration.json",
+      "relative_path": "law_data\\output\\site_analysis_identity_integration.json",
+      "term": "CBND",
+      "preview": ": 37.494197498186885,     \"identity_status\": \"COMPLETE\",     \"coordinate_status\": \"CONFIRMED\",     \"missing_identity_fields\": [],     \"parcel_reference\": {       \"dataset\": \"LP_PA_CBND_BUBUN\",       \"status\": \"VERIFIED\",       \"strict_pnu_verified\": true,       \"geometry_loaded\": false,       \"note\": \"Parcel dataset은 검증되었으나 geometry 자체는 이번 identity object에 아직 포함",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_analysis_identity_integration.json",
+      "relative_path": "law_data\\output\\site_analysis_identity_integration.json",
+      "term": "1168010300100120000",
+      "preview": "17-21-C-11-2B-2 SITE analysis identity integration\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"road_address\": null,     \"pnu\": \"1168010300100120000\",     \"sigungu_code\": \"11680\",     \"bjdong_code\": \"10300\",     \"main_no\": \"0012\",     \"sub_no\": \"0000\",     \"zone\": \"제3종일반주거지역\",     \"land_use_zone\": \"제3종일반주거지역\",     \"coordinate\"",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_parcel_spatial_source_probe.json",
+      "relative_path": "law_data\\output\\site_parcel_spatial_source_probe.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "e.json\",       \"path\": \"$.probe_results[0].dataset\",       \"key\": \"dataset\",       \"categories\": [         \"DATASET\"       ],       \"value_type\": \"str\",       \"value_preview\": \"LP_PA_CBND_BUBUN\"     },     {       \"filename\": \"vworld_parcel_polygon_identifier_probe.json\",       \"path\": \"$.probe_results[0].analysis.features[0].properties.pnu\",       \"key\": \"pnu\",       \"c",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_parcel_spatial_source_probe.json",
+      "relative_path": "law_data\\output\\site_parcel_spatial_source_probe.json",
+      "term": "CBND",
+      "preview": "son\",       \"path\": \"$.probe_results[0].dataset\",       \"key\": \"dataset\",       \"categories\": [         \"DATASET\"       ],       \"value_type\": \"str\",       \"value_preview\": \"LP_PA_CBND_BUBUN\"     },     {       \"filename\": \"vworld_parcel_polygon_identifier_probe.json\",       \"path\": \"$.probe_results[0].analysis.features[0].properties.pnu\",       \"key\": \"pnu\",   ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_parcel_spatial_source_probe.json",
+      "relative_path": "law_data\\output\\site_parcel_spatial_source_probe.json",
+      "term": "MapPlan",
+      "preview": "     \"all_pass\",         \"next_source_plan\",         \"query_context\",         \"source_registry_step\",         \"step\",         \"validations\"       ]     },     {       \"filename\": \"mapplan_parcel_geometry_probe.json\",       \"exists\": false,       \"hit_count\": 0     },     {       \"filename\": \"parcel_polygon_probe.json\",       \"exists\": false,       \"hit_count\": 0   ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_parcel_spatial_source_probe.json",
+      "relative_path": "law_data\\output\\site_parcel_spatial_source_probe.json",
+      "term": "1168010300100120000",
+      "preview": "cel_polygon_identifier_probe.json\",       \"path\": \"$.site.pnu\",       \"key\": \"pnu\",       \"categories\": [         \"PNU\"       ],       \"value_type\": \"str\",       \"value_preview\": \"1168010300100120000\"     },     {       \"filename\": \"vworld_parcel_polygon_identifier_probe.json\",       \"path\": \"$.site.point.crs\",       \"key\": \"crs\",       \"categories\": [         \"CRS\"       ],  ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\site_spatial_query_context.json",
+      "relative_path": "law_data\\output\\site_spatial_query_context.json",
+      "term": "1168010300100120000",
+      "preview": " \"sigungu_code\": \"11680\",     \"bjdong_code\": \"10300\",     \"mountain_flag\": \"1\",     \"main_no\": \"0012\",     \"sub_no\": \"0000\",     \"parcel_key\": \"11680-10300-0012-0000\",     \"pnu\": \"1168010300100120000\",     \"source\": {       \"sigungu_code\": \"site_id\",       \"bjdong_code\": \"site_id\",       \"main_no\": \"site_id\",       \"sub_no\": \"site_id\"     }   },   \"validations\": {     \"parcel ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\urban_area_conversion_announcement_probe.json",
+      "relative_path": "law_data\\output\\urban_area_conversion_announcement_probe.json",
+      "term": "1168010300100120000",
+      "preview": "역 편입/해제 후보 probe\",   \"condition\": \"도시지역편입해제구역\",   \"condition_type\": \"HISTORY\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"official_source\": {     \"provider\": \"서울특별시\",     \"dataset\": \"서울시 도시계획 결정고시 정보\",     \"service\": \"upisAnnouncement\",     \"source_system\": \"서울도시공간포털\"   },   \"api\": {     \"ht",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\urban_area_conversion_current_state.json",
+      "relative_path": "law_data\\output\\urban_area_conversion_current_state.json",
+      "term": "1168010300100120000",
+      "preview": ": \"STEP 17-21-C-9-2-14D 도시지역편입해제구역 현행 공간상태 교차검증\",   \"condition\": \"도시지역편입해제구역\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"parcel\": {     \"pnu_direct_match\": true,     \"crs\": \"EPSG:5174\",     \"area\": 121040.35341323777   },   \"current_state\": {     \"UQ111_urban_area\": {       \"intersection_co",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\urban_area_conversion_direct_notice_probe.json",
+      "relative_path": "law_data\\output\\urban_area_conversion_direct_notice_probe.json",
+      "term": "1168010300100120000",
+      "preview": "17-21-C-9-2-14C-1 Direct address/PNU 결정고시 정밀 추출\",   \"condition\": \"도시지역편입해제구역\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"direct_hit_count\": 1,   \"gaepo12_match_count\": 1,   \"direct_target_event_count\": 0,   \"assessment\": \"DIRECT_NOTICE_BUT_NOT_TARGET_HISTORY\",   \"reason\": \"대상 SITE 관련 직접 고시는",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\urban_area_conversion_history_resolution.json",
+      "relative_path": "law_data\\output\\urban_area_conversion_history_resolution.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-14G 도시지역편입해제구역 history evidence 종합\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"condition\": {     \"name\": \"도시지역편입해제구역\",     \"status\": \"UNKNOWN\",     \"confidence\": \"MEDIUM\",     \"source_type\": \"MULTI_SOURCE_HISTORY_EVIDENCE\",     \"source_name\": \"서울시 도",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\urban_area_conversion_upis_history_probe.json",
+      "relative_path": "law_data\\output\\urban_area_conversion_upis_history_probe.json",
+      "term": "1168010300100120000",
+      "preview": " 및 SITE 후보 probe\",   \"condition\": \"도시지역편입해제구역\",   \"condition_type\": \"HISTORY\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"official_source\": {     \"provider\": \"서울특별시\",     \"dataset\": \"서울시 도시계획이력 정보\",     \"service\": \"upisHistory\",     \"source_system\": \"서울도시공간포털\"   },   \"api\": {     \"http_statu",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\urban_area_inclusion_release_source_probe.json",
+      "relative_path": "law_data\\output\\urban_area_inclusion_release_source_probe.json",
+      "term": "MapPlan",
+      "preview": " \\\"description\\\": \\\"개발제한구역ㆍ시가화조정구역ㆍ녹지지역ㆍ공원 해제 또는 도시지역 신규 편입 이력 판정\\\",       \\\"source_candidates\\\": [         \\\"도\"           }         ]       }     ]   },   \"source_groups\": {     \"mapplan_files\": [],     \"eum_files\": [],     \"law_files\": [       \"law_special_rule_clauses.json\"     ],     \"other_files\": [       \"site_spatial_condition_snapshot.json\",       \"site_spa",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\urban_area_inclusion_release_source_probe.json",
+      "relative_path": "law_data\\output\\urban_area_inclusion_release_source_probe.json",
+      "term": "1168010300100120000",
+      "preview": " 관리체계 probe\",   \"condition\": \"도시지역편입해제구역\",   \"condition_type\": \"SITE_HISTORY\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\"   },   \"search_terms\": [     \"도시지역편입해제구역\",     \"도시지역 편입 해제구역\",     \"도시지역편입\",     \"편입해제구역\",     \"편입해제\"   ],   \"existing_evidence\": {     \"scanned_file_count\": 49,     \"hit_file_co",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_data_identifier_probe.json",
+      "relative_path": "law_data\\output\\vworld_data_identifier_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-2B-1B\",   \"site\": {     \"site_id\": \"\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\",     \"parcel_key\": \"11680-10300-0012-0000\"   },   \"coordinate\": {     \"x\": 127.07539280356858,     \"y\": 37.494197498186885   },   \"candidate_count\": 11,   \"successful_datasets\": ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_development_promotion_district_identifier_probe.json",
+      "relative_path": "law_data\\output\\vworld_development_promotion_district_identifier_probe.json",
+      "term": "1168010300100120000",
+      "preview": "EP 17-21-C-9-2-3A-1\",   \"target_condition\": \"개발진흥지구\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"제3종일반주거지역\",     \"pnu\": \"1168010300100120000\",     \"representative_point\": {       \"x\": 127.07539280356858,       \"y\": 37.494197498186885,       \"crs\": \"EPSG:4326\"     }   },   \"summary\": {     \"total_candidates\": 30,     \"i",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_district_unit_plan_api_test.json",
+      "relative_path": "law_data\\output\\vworld_district_unit_plan_api_test.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-2B-1A\",   \"site\": {     \"site_id\": \"\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\",     \"parcel_key\": \"11680-10300-0012-0000\"   },   \"vworld\": {     \"api_key_present\": true,     \"address_search\": {       \"http_status\": 200,       \"vworld_status\": \"OK\",       \"x",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_district_unit_plan_geometry_test.json",
+      "relative_path": "law_data\\output\\vworld_district_unit_plan_geometry_test.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-2B-2\",   \"site\": {     \"site_id\": \"\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"pnu\": \"1168010300100120000\",     \"parcel_key\": \"11680-10300-0012-0000\"   },   \"dataset\": \"LT_C_UPISUQ161\",   \"dataset_verified\": true,   \"coordinate\": {     \"x\": 127.07539280356858,     \"y\": 37.494197498186",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_district_unit_plan_parcel_intersection.json",
+      "relative_path": "law_data\\output\\vworld_district_unit_plan_parcel_intersection.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "STEP 17-21-C-9-2-2B-3B\",   \"site\": {     \"site_id\": \"\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"제3종일반주거지역\",     \"pnu\": \"1168010300100120000\"   },   \"parcel_dataset\": \"LP_PA_CBND_BUBUN\",   \"district_dataset\": \"LT_C_UPISUQ161\",   \"resolution\": {     \"query_status\": \"QUERY_FAILED\",     \"resolution\": \"UNKNOWN\",     \"confidence\": \"NONE\",     \"reason\": \"PNU 직접 일치 par",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_district_unit_plan_parcel_intersection.json",
+      "relative_path": "law_data\\output\\vworld_district_unit_plan_parcel_intersection.json",
+      "term": "CBND",
+      "preview": "P 17-21-C-9-2-2B-3B\",   \"site\": {     \"site_id\": \"\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"제3종일반주거지역\",     \"pnu\": \"1168010300100120000\"   },   \"parcel_dataset\": \"LP_PA_CBND_BUBUN\",   \"district_dataset\": \"LT_C_UPISUQ161\",   \"resolution\": {     \"query_status\": \"QUERY_FAILED\",     \"resolution\": \"UNKNOWN\",     \"confidence\": \"NONE\",     \"reason\": \"PNU 직접 ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_district_unit_plan_parcel_intersection.json",
+      "relative_path": "law_data\\output\\vworld_district_unit_plan_parcel_intersection.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-2B-3B\",   \"site\": {     \"site_id\": \"\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"제3종일반주거지역\",     \"pnu\": \"1168010300100120000\"   },   \"parcel_dataset\": \"LP_PA_CBND_BUBUN\",   \"district_dataset\": \"LT_C_UPISUQ161\",   \"resolution\": {     \"query_status\": \"QUERY_FAILED\",     \"resolution\": \"UNKNOWN\",     \"confi",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_district_unit_plan_parcel_intersection_test.json",
+      "relative_path": "law_data\\output\\vworld_district_unit_plan_parcel_intersection_test.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"\",     \"pnu\": \"1168010300100120000\"   },   \"datasets\": {     \"parcel\": \"LP_PA_CBND_BUBUN\",     \"district_unit_plan\": \"LT_C_UPISUQ161\"   },   \"representative_point\": {     \"x\": 127.07539280356858,     \"y\": 37.494197498186885   },   \"parcel_query\": {     \"http_status\": ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_district_unit_plan_parcel_intersection_test.json",
+      "relative_path": "law_data\\output\\vworld_district_unit_plan_parcel_intersection_test.json",
+      "term": "CBND",
+      "preview": "  \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"\",     \"pnu\": \"1168010300100120000\"   },   \"datasets\": {     \"parcel\": \"LP_PA_CBND_BUBUN\",     \"district_unit_plan\": \"LT_C_UPISUQ161\"   },   \"representative_point\": {     \"x\": 127.07539280356858,     \"y\": 37.494197498186885   },   \"parcel_query\": {     \"http_sta",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_district_unit_plan_parcel_intersection_test.json",
+      "relative_path": "law_data\\output\\vworld_district_unit_plan_parcel_intersection_test.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-2B-3B-1\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"\",     \"pnu\": \"1168010300100120000\"   },   \"datasets\": {     \"parcel\": \"LP_PA_CBND_BUBUN\",     \"district_unit_plan\": \"LT_C_UPISUQ161\"   },   \"representative_point\": {     \"x\": 127.07539280356858,     \"y\": 37.494197",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_parcel_polygon_identifier_probe.json",
+      "relative_path": "law_data\\output\\vworld_parcel_polygon_identifier_probe.json",
+      "term": "PA_CBND_BUBUN",
+      "preview": "oint\": {       \"x\": 127.07539280356858,       \"y\": 37.494197498186885,       \"crs\": \"EPSG:4326\"     }   },   \"candidate_count\": 12,   \"probe_results\": [     {       \"dataset\": \"LP_PA_CBND_BUBUN\",       \"http_status\": 200,       \"vworld_status\": \"OK\",       \"classification\": \"QUERY_SUCCESS\",       \"error\": {         \"level\": \"\",         \"code\": \"\",         \"text\": \"\"     ",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_parcel_polygon_identifier_probe.json",
+      "relative_path": "law_data\\output\\vworld_parcel_polygon_identifier_probe.json",
+      "term": "CBND",
+      "preview": "t\": {       \"x\": 127.07539280356858,       \"y\": 37.494197498186885,       \"crs\": \"EPSG:4326\"     }   },   \"candidate_count\": 12,   \"probe_results\": [     {       \"dataset\": \"LP_PA_CBND_BUBUN\",       \"http_status\": 200,       \"vworld_status\": \"OK\",       \"classification\": \"QUERY_SUCCESS\",       \"error\": {         \"level\": \"\",         \"code\": \"\",         \"text\": \"",
+      "score": 0
+    },
+    {
+      "source": "PROJECT_SOURCE",
+      "path": "D:\\site-ai\\law_data\\output\\vworld_parcel_polygon_identifier_probe.json",
+      "relative_path": "law_data\\output\\vworld_parcel_polygon_identifier_probe.json",
+      "term": "1168010300100120000",
+      "preview": "{   \"step\": \"STEP 17-21-C-9-2-2B-3A\",   \"site\": {     \"site_id\": \"11680-10300-0012-0000\",     \"address\": \"서울특별시 강남구 개포동 12번지\",     \"zone\": \"제3종일반주거지역\",     \"pnu\": \"1168010300100120000\",     \"point\": {       \"x\": 127.07539280356858,       \"y\": 37.494197498186885,       \"crs\": \"EPSG:4326\"     }   },   \"candidate_count\": 12,   \"probe_results\": [     {       \"datas",
+      "score": 0
+    }
+  ],
+  "git_history": [
+    {
+      "source": "GIT_HISTORY",
+      "term": "LP_PA_CBND_BUBUN",
+      "matches": [
+        "a08a390 Checkpoint C-10 dynamic rule and numeric evaluation",
+        "37e1a4a Complete C-9 SITE spatial condition validation",
+        "e4de8e0 Complete fishery zone validation and UQ128 source probe",
+        "6914a52 checkpoint: complete STEP 17-21-C-9-2-5C-2 spatial condition analysis"
+      ]
+    },
+    {
+      "source": "GIT_HISTORY",
+      "term": "MapPlan",
+      "matches": [
+        "a08a390 Checkpoint C-10 dynamic rule and numeric evaluation",
+        "37e1a4a Complete C-9 SITE spatial condition validation",
+        "e4de8e0 Complete fishery zone validation and UQ128 source probe",
+        "84fd67b Complete C-9 MapPlan zone validations through STEP 17-21-C-9-2-8A"
+      ]
+    },
+    {
+      "source": "GIT_HISTORY",
+      "term": "120945.65223377591",
+      "matches": [
+        "a08a390 Checkpoint C-10 dynamic rule and numeric evaluation",
+        "84fd67b Complete C-9 MapPlan zone validations through STEP 17-21-C-9-2-8A"
+      ]
+    },
+    {
+      "source": "GIT_HISTORY",
+      "term": "962201.02522",
+      "matches": [
+        "84fd67b Complete C-9 MapPlan zone validations through STEP 17-21-C-9-2-8A"
+      ]
+    },
+    {
+      "source": "GIT_HISTORY",
+      "term": "gpd.read_file",
+      "matches": [
+        "a08a390 Checkpoint C-10 dynamic rule and numeric evaluation",
+        "37e1a4a Complete C-9 SITE spatial condition validation",
+        "e4de8e0 Complete fishery zone validation and UQ128 source probe",
+        "84fd67b Complete C-9 MapPlan zone validations through STEP 17-21-C-9-2-8A",
+        "6914a52 checkpoint: complete STEP 17-21-C-9-2-5C-2 spatial condition analysis"
+      ]
+    },
+    {
+      "source": "GIT_GREP",
+      "term": "LP_PA_CBND_BUBUN",
+      "matches": [
+        "PROJECT_STATUS.md:45:LP_PA_CBND_BUBUN",
+        "law_data/fishery_resource_protection_zone_intersection_test.py:161:    \"LP_PA_CBND_BUBUN\"",
+        "law_data/industrial_complex_boundary_intersection_test.py:115:    \"LP_PA_CBND_BUBUN\"",
+        "law_data/natural_park_intersection_test.py:88:PARCEL_DATASET = \"LP_PA_CBND_BUBUN\"",
+        "law_data/output/fishery_resource_protection_zone_intersection.json:23:    \"dataset\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/output/fishery_resource_protection_zone_intersection.json:24:    \"feature_id\": \"LP_PA_CBND_BUBUN.803130\",",
+        "law_data/output/industrial_complex_boundary_intersection.json:46:    \"dataset\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/output/industrial_complex_boundary_intersection.json:47:    \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",",
+        "law_data/output/natural_park_intersection.json:33:    \"dataset\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/output/natural_park_intersection.json:34:    \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",",
+        "law_data/output/seoul_development_promotion_district_intersection_test.json:17:    \"dataset\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/output/seoul_development_promotion_district_intersection_test.json:198:      \"request_url\": \"https://api.vworld.kr/req/data?service=data&request=GetFeature&data=LP_PA_CBND_BUBUN&key=B3795EEA-B66E-3924-B263-EFA4B68F319B&domain=localhost&format=json&geometry=true&attribute=true&crs=EPSG%3A4326&geomFilter=BOX%28127.07439280356857%2C37.49319749818689%2C127.07639280356858%2C37.49519749818688%29&size=100&page=1\",",
+        "law_data/output/seoul_development_promotion_district_intersection_test.json:452:                  \"id\": \"LP_PA_CBND_BUBUN.803130\"",
+        "law_data/output/seoul_development_promotion_district_intersection_test.json:531:                  \"id\": \"LP_PA_CBND_BUBUN.803132\"",
+        "law_data/output/seoul_development_promotion_district_intersection_test.json:870:                  \"id\": \"LP_PA_CBND_BUBUN.835943\"",
+        "law_data/output/seoul_development_promotion_district_intersection_test.json:882:      \"LP_PA_CBND_BUBUN.803130\"",
+        "law_data/output/seoul_natural_landscape_district_intersection_test.json:11:    \"dataset\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/output/seoul_natural_landscape_district_intersection_test.json:12:    \"feature_id\": \"LP_PA_CBND_BUBUN.803130\",",
+        "law_data/output/seoul_settlement_district_intersection.json:11:    \"dataset\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/output/seoul_settlement_district_intersection.json:12:    \"feature_id\": \"LP_PA_CBND_BUBUN.801937\",",
+        "law_data/output/vworld_district_unit_plan_parcel_intersection.json:9:  \"parcel_dataset\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/output/vworld_district_unit_plan_parcel_intersection_test.json:10:    \"parcel\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/output/vworld_district_unit_plan_parcel_intersection_test.json:23:      \"id\": \"LP_PA_CBND_BUBUN.803130\",",
+        "law_data/output/vworld_parcel_polygon_identifier_probe.json:17:      \"dataset\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/output/vworld_parcel_polygon_identifier_probe.json:35:            \"id\": \"LP_PA_CBND_BUBUN.803130\",",
+        "law_data/output/vworld_parcel_polygon_identifier_probe.json:57:            \"id\": \"LP_PA_CBND_BUBUN.803130\",",
+        "law_data/output/vworld_parcel_polygon_identifier_probe.json:337:      \"dataset\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/output/vworld_parcel_polygon_identifier_probe.json:346:    \"dataset\": \"LP_PA_CBND_BUBUN\",",
+        "law_data/seoul_development_promotion_district_intersection_test.py:79:VWORLD_PARCEL_DATASET_DEFAULT = \"LP_PA_CBND_BUBUN\"",
+        "law_data/seoul_natural_landscape_district_intersection_test.py:96:PARCEL_DATASET = \"LP_PA_CBND_BUBUN\"",
+        "law_data/seoul_settlement_district_intersection_test.py:105:    \"LP_PA_CBND_BUBUN\"",
+        "law_data/urban_area_conversion_current_state_probe_test.py:72:    \"LP_PA_CBND_BUBUN\"",
+        "law_data/vworld_district_unit_plan_parcel_intersection_test.py:28:#    LP_PA_CBND_BUBUN 사용",
+        "law_data/vworld_district_unit_plan_parcel_intersection_test.py:96:    \"LP_PA_CBND_BUBUN\"",
+        "law_data/vworld_parcel_polygon_identifier_probe_test.py:67:    \"LP_PA_CBND_BUBUN\","
+      ]
+    },
+    {
+      "source": "GIT_GREP",
+      "term": "MapPlan",
+      "matches": [
+        "PROJECT_STATUS.md:48:MapPlan 기준 Parcel:",
+        "law_data/development_density_management_evidence_resolution_test.py:75:   + MapPlan 대상 evidence 없음",
+        "law_data/development_density_management_evidence_resolution_test.py:397:    # 3. EUM / MapPlan",
+        "law_data/development_density_management_evidence_resolution_test.py:465:    # MapPlan server 자체를 못 찾았음.",
+        "law_data/development_density_management_evidence_resolution_test.py:475:    # MapPlan이 실제 정상 응답했다면",
+        "law_data/development_density_management_resolution_test.py:229:    # EUM / MapPlan",
+        "law_data/development_density_management_resolution_test.py:457:                \"MapPlan\"",
+        "law_data/development_density_management_resolution_test.py:464:                \"신뢰 가능한 MapPlan layer/source를 \"",
+        "law_data/eum_vertical_mixed_use_zone_evidence_consolidation_test.py:889:        \"=== 1. A-6 기존 정상 MapPlan Evidence 복원 ===\"",
+        "law_data/eum_vertical_mixed_use_zone_evidence_consolidation_test.py:1153:        \"후속 HTTP 403은 MapPlan 접근 상태 \"",
+        "law_data/eum_vertical_mixed_use_zone_evidence_consolidation_test.py:1309:            \"A-6에서 동일 MapPlan 요청 체계의 \"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:16:    \"토지이음 UQQ905 실제 MapPlan 요청 / Geometry 조회 테스트\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:919:        \"=== 3. MapPlan version 확인 ===\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1094:        \"MapPlan mbr:\",",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1106:        \"=== 6. MapPlan Server 확정 ===\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1152:            + \"/MapPlan\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1270:            + \"/MapPlan\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1441:            \"UQQ905 MapPlan geometry Feature 조회에는 \"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1463:            \"MapPlan geometry 조회가 정상 수행되었으나 \"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1486:            \"실제 MapPlan server 또는 geometry 응답을 \"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1559:        \"MapPlan version 탐색\": (",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1587:        \"MapPlan search 실행\": (",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1594:        \"MapPlan analysis 실행\": (",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_live_test.py:1753:                \"→ MapPlan GeoJSON CRS 확인\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:16:    \"토지이음 MapPlan UQQ905 실제 공간 Layer 요청 구조 분석\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:600:            + \"/MapPlan\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:608:        EUM_ROOT + \"/MapPlan\",",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:609:        EUM_ROOT + \"/web/MapPlan\",",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:610:        EUM_ROOT + \"/web/mp/MapPlan\",",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:938:    # MapPlan context",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:943:        \"=== 5. MapPlan 요청 문맥 ===\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:950:            \"/MapPlan\",",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:956:        \"MapPlan context 수:\",",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:1124:    # MapPlan URL 후보",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:1159:        \"=== 8. MapPlan Endpoint 접근 테스트 ===\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:1310:        \"MapPlan\" in show_function",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:1334:        \"MapPlan 사용:\",",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:1403:            \"범례 선택 후 공간 영역을 조회하는 MapPlan \"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:1417:            \"MapPlan endpoint 접근에는 성공했으나 \"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:1429:            \"지도 JS에서 MapPlan 사용 구조는 확인했으나 \"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:1447:        \"정상 MapPlan 후보:\",",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:1560:        \"MapPlan context 탐색 실행\": (",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_probe_test.py:1736:            \"토지이음 MapPlan 공간 Layer \"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py:14:    \"토지이음 MapPlan HTTP 403 보정 / UQQ905 의미 양성대조 검증\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py:71:# eum.ne.kr:9002 MapPlan 서버에 무조건 브라우저 AJAX 헤더를",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py:424:        + \"/MapPlan\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py:505:        \"=== MapPlan HTTP 접근 Profile Probe ===\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py:896:        \"=== 1. A-6 MapPlan 정보 복원 ===\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py:921:            \"MapPlan server를 찾지 못했습니다.\"",
+        "law_data/eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py:927:            \"MapPlan version을 찾지 못했습니다.\""
+      ]
+    },
+    {
+      "source": "GIT_GREP",
+      "term": "120945.65223377591",
+      "matches": [
+        "PROJECT_STATUS.md:52:area: 120945.65223377591",
+        "law_data/output/seoul_mixed_use_zone_mapplan_intersection.json:221:    \"parcel_area\": 120945.65223377591,",
+        "law_data/output/seoul_urban_innovation_zone_mapplan_intersection.json:562:    \"area\": 120945.65223377591,"
+      ]
+    },
+    {
+      "source": "GIT_GREP",
+      "term": "962201.02522",
+      "matches": [
+        "PROJECT_STATUS.md:54:(962201.02522, 1943722.58159, 962711.06096, 1944220.16506)",
+        "law_data/output/seoul_urban_innovation_zone_mapplan_intersection.json:330:                    962201.02522,",
+        "law_data/output/seoul_urban_innovation_zone_mapplan_intersection.json:530:                    962201.02522,",
+        "law_data/output/seoul_urban_innovation_zone_mapplan_intersection.json:550:      \"preview\": \"{\\\"features\\\":[{\\\"geometry\\\":{\\\"coordinates\\\":[[[962201.02522,1943841.80188],[962210.40147,1943851.19867],[962310.38647,1943957.41892],[962331.54959,1943991.6039],[962351.13186,1944023.62808],[962362.08086,1944044.98202],[962379.28105,1944083.99617],[962399.48705,1944162.06966],[962404.05866,1944187.23595],[962411.08353,1944196.20534],[962471.71758,1944220.16506],[962514.30746,1944113.69962],[962534.49313,1944121.86959],[962659.89314,1944170.44689],[962710.155,1944044.13832],[962710.80309,1944041.93572],[962711.06096,1944039.66521],[962710.94888,1944037.37667],[962710.44722,1944035.14017],[962709.59634,1944033.02548],[962708.39645,1944031.07257],[962706.8879,1944029.35121],[962705.11094,1944027.91117],[962703.11571,1944026.78217],[962681.56753,1944018.03963],[962677.93069,1944016.48948],[962670.78548,1944013.10861],[962663.82834,1944009.37688],[962657.06921,1944005.28423],[962650.52819,1944000.85056],[962644.21538,1943996.0958],[962638.16078,1943991.01979],[962632.37442,1943985.63248],[962626.87647,1943979.96374],[962624.23192,1943977.02886],[962597.46094,1943946.62217],[962505.25578,1943840.92054],[962510.26798,1943828.47868],[962449.45109,1943803.97011],[962405.16331,1943786.13146],[962418.08919,1943754.18504],[962339.82131,1943722.58159],[962326.10299,1943755.90169],[962278.75024,1943736.9097],[962273.73889,1943749.51149],[962273.33207,1943750.08343],[962272.55551,1943750.67732],[962271.64615,1943750.73212],[962248.17652,1943741.5799],[962245.14498,1943739.18686],[962201.02522,1943841.80188]]],\\\"type\\\":\\\"Polygon\\\"},\\\"id\\\":\\\"40138102\\\",\\\"type\\\":\\\"Feature\\\",\\\"properties\\\":{\\\"code\\\":\\\"08\\\",\\\"pnu\\\":\\\"1168010300100120000\\\",\\\"jibun\\\":\\\"12대\\\",\\\"order\\\":133427}}],\\\"type\\\":\\\"FeatureCollection\\\"}\",",
+        "law_data/output/seoul_urban_innovation_zone_mapplan_intersection.json:564:      962201.02522,"
+      ]
+    },
+    {
+      "source": "GIT_GREP",
+      "term": "gpd.read_file",
+      "matches": [
+        "law_data/development_density_uq145_probe_test.py:215:                    gdf = gpd.read_file(",
+        "law_data/development_density_uq145_probe_test.py:220:                    gdf = gpd.read_file(",
+        "law_data/disaster_prevention_district_source_probe_test.py:155:    gdf = gpd.read_file(",
+        "law_data/industrial_complex_boundary_intersection_test.py:712:                        gpd.read_file(",
+        "law_data/industrial_complex_boundary_intersection_test.py:720:                        gpd.read_file(",
+        "law_data/industrial_complex_boundary_shp_probe_test.py:323:                        gpd.read_file(",
+        "law_data/industrial_complex_boundary_shp_probe_test.py:331:                        gpd.read_file(",
+        "law_data/natural_park_intersection_test.py:612:                    gdf = gpd.read_file(",
+        "law_data/natural_park_intersection_test.py:618:                    gdf = gpd.read_file(",
+        "law_data/natural_park_source_probe_test.py:283:                        gpd.read_file(",
+        "law_data/natural_park_source_probe_test.py:291:                        gpd.read_file(",
+        "law_data/seoul_development_promotion_district_intersection_test.py:1330:    gdf = gpd.read_file(",
+        "law_data/seoul_natural_landscape_district_intersection_test.py:558:                    gdf = gpd.read_file(",
+        "law_data/seoul_natural_landscape_district_intersection_test.py:564:                    gdf = gpd.read_file(",
+        "law_data/seoul_natural_landscape_district_schema_test.py:747:            gdf = gpd.read_file(",
+        "law_data/seoul_natural_landscape_district_schema_test.py:755:            gdf = gpd.read_file(",
+        "law_data/seoul_settlement_district_intersection_test.py:693:                        gpd.read_file(",
+        "law_data/seoul_settlement_district_intersection_test.py:701:                        gpd.read_file(",
+        "law_data/seoul_settlement_district_source_probe_test.py:465:                        gpd.read_file(",
+        "law_data/seoul_settlement_district_source_probe_test.py:473:                        gpd.read_file(",
+        "law_data/seoul_vertical_mixed_use_zone_uq145_schema_probe_test.py:610:        gdf = gpd.read_file(",
+        "law_data/urban_area_conversion_current_state_probe_test.py:240:                    gdf = gpd.read_file(",
+        "law_data/urban_area_conversion_current_state_probe_test.py:247:                    gdf = gpd.read_file("
+      ]
+    }
+  ],
+  "powershell_history": {
+    "histories": [
+      {
+        "path": "C:\\Users\\agroup26\\AppData\\Roaming\\Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt",
+        "exists": true,
+        "match_count": 10,
+        "matches": [
+          {
+            "line": 174,
+            "text": "python -c \"from site_data.vworld_api import get_land_characteristics; records = get_land_characteristics('1168010300100120000'); print('받은 데이터 수:', len(records)); print('최종수정일:', [r.get('lastUpdtDt') for r in records])\""
+          },
+          {
+            "line": 254,
+            "text": "pip install geopandas pyogrio shapely pyproj"
+          },
+          {
+            "line": 256,
+            "text": "pip install geopandas pyogrio shapely pyproj"
+          },
+          {
+            "line": 290,
+            "text": "python law_data\\eum_vertical_mixed_use_zone_mapplan_probe_test.py"
+          },
+          {
+            "line": 292,
+            "text": "python law_data\\eum_vertical_mixed_use_zone_mapplan_live_test.py"
+          },
+          {
+            "line": 294,
+            "text": "python law_data\\eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py"
+          },
+          {
+            "line": 296,
+            "text": "python law_data\\eum_vertical_mixed_use_zone_mapplan_semantic_validation_test.py"
+          },
+          {
+            "line": 308,
+            "text": "python law_data\\seoul_urban_innovation_zone_mapplan_intersection_test.py"
+          },
+          {
+            "line": 310,
+            "text": "python law_data\\seoul_mixed_use_zone_mapplan_intersection_test.py"
+          },
+          {
+            "line": 317,
+            "text": "git commit -m \"Complete C-9 MapPlan zone validations through STEP 17-21-C-9-2-8A\""
+          }
+        ]
+      }
+    ]
+  },
+  "resolution": "TRACE_EVIDENCE_FOUND"
+}

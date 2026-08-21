@@ -1,0 +1,377 @@
+{
+  "analysis": {
+    "status": "READY",
+    "engine": "RULE_EVALUATION_PIPELINE",
+    "engine_version": "C-10-5C-2"
+  },
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "zone": "제3종일반주거지역",
+    "land_use_zone": "제3종일반주거지역"
+  },
+  "input": {
+    "project": {
+      "공동주택": "TRUE"
+    },
+    "procedure": {
+      "도시계획위원회심의": "TRUE"
+    }
+  },
+  "regulation": {
+    "building_coverage_ratio": {
+      "value": 50.0,
+      "unit": "percent",
+      "status": "CONFIRMED"
+    },
+    "floor_area_ratio": {
+      "value": 250.0,
+      "unit": "percent",
+      "status": "CONFIRMED"
+    },
+    "numeric_resolution": "BASE_VALUES_RETAINED",
+    "direct_relaxation_count": 0,
+    "numeric_active_before_guard": 11,
+    "numeric_excluded_count": 3,
+    "numeric_retained_count": 8
+  },
+  "rule_evaluation": {
+    "total": 314,
+    "applicable": 63,
+    "not_applicable": 213,
+    "conditional": 36,
+    "unknown": 2
+  },
+  "input_requirements": {
+    "project": [
+      {
+        "name": "공공시설제공",
+        "affected_clause_count": 14,
+        "state": "UNSET"
+      },
+      {
+        "name": "공공주택",
+        "affected_clause_count": 7,
+        "state": "UNSET"
+      },
+      {
+        "name": "임대주택",
+        "affected_clause_count": 7,
+        "state": "UNSET"
+      },
+      {
+        "name": "사회복지시설",
+        "affected_clause_count": 6,
+        "state": "UNSET"
+      },
+      {
+        "name": "기부채납",
+        "affected_clause_count": 4,
+        "state": "UNSET"
+      },
+      {
+        "name": "대학",
+        "affected_clause_count": 4,
+        "state": "UNSET"
+      },
+      {
+        "name": "공개공지",
+        "affected_clause_count": 3,
+        "state": "UNSET"
+      },
+      {
+        "name": "한옥",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "감염병대응필요시설",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "종합의료시설",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "주거복합",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "관광숙박시설",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "시장정비사업대상전통시장",
+        "affected_clause_count": 1,
+        "state": "UNSET"
+      },
+      {
+        "name": "도시정비형재개발사업",
+        "affected_clause_count": 1,
+        "state": "UNSET"
+      }
+    ],
+    "procedure": [
+      {
+        "name": "시장정비사업심의",
+        "affected_clause_count": 3,
+        "state": "UNSET"
+      }
+    ],
+    "project_count": 14,
+    "procedure_count": 1,
+    "requires_additional_input": true
+  },
+  "external_dependencies": {
+    "count": 1,
+    "items": [
+      {
+        "category": "SITE_HISTORY",
+        "condition": "도시지역편입해제구역",
+        "status": "UNKNOWN",
+        "confidence": "MEDIUM",
+        "automation_state": "HISTORICAL_SOURCE_PENDING",
+        "blocking_analysis": false
+      }
+    ]
+  },
+  "rule_engine": {
+    "baseline": {
+      "APPLICABLE": 58,
+      "NOT_APPLICABLE": 211,
+      "CONDITIONAL": 43,
+      "UNKNOWN": 2
+    },
+    "branch_overlay": {
+      "added_condition_count": 7,
+      "added_conditions": [
+        {
+          "clause_index": 201,
+          "name": "서울도심",
+          "type": "SITE",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SEOUL_DOWNTOWN_CONDITION_RESOLUTION",
+          "branch_local": true,
+          "detector_confidence": "HIGH"
+        },
+        {
+          "clause_index": 201,
+          "name": "서울조례제48조7호부터10호지역",
+          "type": "SITE",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "RULE_CONDITION_REGISTRY",
+          "resolution_meta": {
+            "site_zone": "제3종일반주거지역",
+            "article_48_number": 5,
+            "required_numbers": [
+              7,
+              8,
+              9,
+              10
+            ]
+          },
+          "branch_local": true,
+          "detector_confidence": "HIGH"
+        },
+        {
+          "clause_index": 201,
+          "name": "관광숙박시설",
+          "type": "PROJECT",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "RULE_CONDITION_REGISTRY",
+          "branch_local": true,
+          "detector_confidence": "HIGH"
+        },
+        {
+          "clause_index": 205,
+          "name": "서울도심",
+          "type": "SITE",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SEOUL_DOWNTOWN_CONDITION_RESOLUTION",
+          "branch_local": true,
+          "detector_confidence": "HIGH"
+        },
+        {
+          "clause_index": 205,
+          "name": "서울조례제48조7호부터10호지역",
+          "type": "SITE",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "RULE_CONDITION_REGISTRY",
+          "resolution_meta": {
+            "site_zone": "제3종일반주거지역",
+            "article_48_number": 5,
+            "required_numbers": [
+              7,
+              8,
+              9,
+              10
+            ]
+          },
+          "branch_local": true,
+          "detector_confidence": "HIGH"
+        },
+        {
+          "clause_index": 205,
+          "name": "관광숙박시설",
+          "type": "PROJECT",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "RULE_CONDITION_REGISTRY",
+          "branch_local": true,
+          "detector_confidence": "HIGH"
+        },
+        {
+          "clause_index": 212,
+          "name": "감염병대응필요시설",
+          "type": "PROJECT",
+          "state": "UNSET",
+          "confidence": "NONE",
+          "source": "RULE_CONDITION_REGISTRY",
+          "branch_local": true,
+          "detector_confidence": "HIGH"
+        }
+      ],
+      "after_branch": {
+        "APPLICABLE": 58,
+        "NOT_APPLICABLE": 213,
+        "CONDITIONAL": 41,
+        "UNKNOWN": 2
+      }
+    },
+    "dynamic_injection": {
+      "touched_rule_count": 16,
+      "changed_rule_count": 5,
+      "transitions": {
+        "CONDITIONAL -> APPLICABLE": 5
+      },
+      "changes": [
+        {
+          "clause_index": 16,
+          "rule_title": "건폐율의 완화",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 121,
+          "rule_title": "건폐율의 강화",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 248,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 249,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 250,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        }
+      ]
+    },
+    "site_registry": {
+      "서울도심": {
+        "type": "SITE",
+        "state": "FALSE",
+        "confidence": "HIGH",
+        "source": "SEOUL_DOWNTOWN_CONDITION_RESOLUTION"
+      }
+    },
+    "site_repairs": [],
+    "numeric": {
+      "active_before_guard": 11,
+      "excluded_count": 3,
+      "excluded": [
+        {
+          "clause_index": 4,
+          "rule_title": "건폐율의 완화",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "DIRECT_RELAXATION"
+          }
+        },
+        {
+          "clause_index": 189,
+          "rule_title": "용적률의 완화",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "DIRECT_RELAXATION"
+          }
+        },
+        {
+          "clause_index": 250,
+          "rule_title": "용도지역에서의 용적률",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "STACKING_CEILING_OUTSIDE_DISTRICT_PLAN",
+            "corrected_numeric_semantic": {
+              "semantic_type": "STACKING_CEILING_MULTIPLIER",
+              "value": 120.0,
+              "factor": 1.2,
+              "unit": "percent_of_statutory_max",
+              "formula": "statutory_zone_max * 1.2",
+              "direct_base_effect": false,
+              "requires_existing_relaxation_stack": true,
+              "confidence": "HIGH"
+            }
+          }
+        }
+      ],
+      "retained_count": 8,
+      "retained_clause_indexes": [
+        3,
+        50,
+        61,
+        121,
+        220,
+        233,
+        244,
+        262
+      ],
+      "direct_relaxation_count": 0,
+      "resolution": "BASE_VALUES_RETAINED",
+      "building_coverage_ratio": 50.0,
+      "floor_area_ratio": 250.0
+    }
+  },
+  "validations": {
+    "analysis ready": true,
+    "engine correct": true,
+    "SITE zone correct": true,
+    "BCR 50": true,
+    "FAR 250": true,
+    "BCR confirmed": true,
+    "FAR confirmed": true,
+    "numeric base retained": true,
+    "rules 314": true,
+    "applicable 63": true,
+    "not applicable 213": true,
+    "conditional 36": true,
+    "unknown 2": true,
+    "project input remains": true,
+    "procedure input remains": true,
+    "historical dependency 1": true,
+    "historical pending": true
+  },
+  "all_pass": true
+}

@@ -1,10 +1,10 @@
-from site_data_model import Site
-from building_converter import convert_building
-from land_converter import (
+from .site_data_model import Site
+from .building_converter import convert_building
+from .land_converter import (
     select_latest_land_record,
     convert_land_record,
 )
-from vworld_api import (
+from .vworld_api import (
     create_pnu,
     get_land_characteristics,
 )

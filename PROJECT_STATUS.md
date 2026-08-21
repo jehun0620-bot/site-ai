@@ -1302,3 +1302,337 @@ git diff --stat
 `git add .`, `git add -A`, `git add --all`은 사용하지 않는다.
 
 `law_data/output/*.json`은 프로젝트에서 기존부터 추적하는 경우에만 stage한다.
+
+---
+
+# STEP 17-21-C-12 CHECKPOINT
+
+최종 업데이트: 2026-08-21
+
+## 현재 단계
+
+STEP 17-21-C-12-5 완료
+
+FastAPI Thin HTTP Layer까지 구현 및 실제 서버 검증 완료.
+
+다음 작업:
+
+STEP 17-21-C-12-6
+API Contract / Error Handling Regression
+
+검증 예정:
+- 잘못된 입력 -> 422
+- 존재하지 않는 필지 -> 404
+- Building HUB 오류 -> 502
+- 내부 분석 오류 -> 500
+
+
+## 최종 서비스 흐름
+
+건축HUB 실제 API
+→ create_site()
+→ Site dataclass
+→ analyze_site_object()
+→ build_site_analysis()
+→ SITE spatial / rule evaluation
+→ build_site_analysis_response()
+→ analyze_site_by_parcel()
+→ FastAPI
+→ POST /v1/site-analysis
+
+
+## HTTP API
+
+FastAPI app:
+
+api_app.py
+
+Endpoints:
+
+GET /health
+POST /v1/site-analysis
+
+Swagger:
+
+/docs
+
+OpenAPI:
+
+/openapi.json
+
+
+## 실제 서버 검증
+
+실행:
+
+uvicorn api_app:app --reload
+
+검증 결과:
+
+GET /health
+→ 200 OK
+
+GET /docs
+→ 200 OK
+
+GET /openapi.json
+→ 200 OK
+
+POST /v1/site-analysis
+→ 200 OK
+
+
+## API Schema
+
+SITE_ANALYSIS_API_V1
+
+대표 응답:
+
+status = READY
+
+SITE ID:
+11680-10300-0012-0000
+
+주소:
+서울특별시 강남구 개포동 12번지
+
+도로명주소:
+서울특별시 강남구 개포로109길 21 (개포동)
+
+PNU:
+1168010300100120000
+
+용도지역:
+제3종일반주거지역
+
+
+## SITE Spatial
+
+대표 좌표:
+
+x = 127.07539280356858
+y = 37.494197498186885
+CRS = EPSG:4326
+
+Parcel:
+
+geometry = Polygon
+
+MapPlan geometry area:
+120945.65223377591
+
+bounds:
+
+[
+  962201.02522,
+  1943722.58159,
+  962711.06096,
+  1944220.16506
+]
+
+Parcel CRS:
+
+None
+
+CRS status:
+
+SOURCE_CRS_NOT_EXPLICIT
+
+주의:
+Parcel CRS는 추정하지 않고 미확정 상태로 유지.
+
+
+## Land Area Source Policy
+
+VWorld 공식/속성 면적:
+
+121040.4 m²
+
+source:
+VWORLD_LAND_CHARACTERISTICS
+
+role:
+LEGAL_OR_ATTRIBUTE_LAND_AREA
+
+primary:
+official
+
+
+MapPlan geometry 면적:
+
+120945.65223377591
+
+source:
+MAPPLAN_PARCEL_GEOMETRY
+
+role:
+SPATIAL_GEOMETRY_AREA
+
+
+차이:
+
+94.74776622408535
+
+difference ratio:
+
+0.07827780329880384 %
+
+resolution:
+
+KEEP_BOTH_WITH_SOURCE_ROLES
+
+
+## Rule Engine
+
+Rule Engine:
+
+READY
+
+Stateless:
+
+True
+
+총 rule:
+
+314
+
+현재 representative scenario:
+
+PROJECT:
+공동주택 = TRUE
+
+PROCEDURE:
+도시계획위원회심의 = TRUE
+
+
+결과:
+
+APPLICABLE = 63
+NOT_APPLICABLE = 213
+CONDITIONAL = 36
+UNKNOWN = 2
+
+
+확정 건폐율:
+
+50.0 %
+
+확정 용적률:
+
+250.0 %
+
+
+Remaining PROJECT inputs:
+
+14
+
+Remaining PROCEDURE inputs:
+
+1
+
+
+External historical dependency:
+
+도시지역편입해제구역
+
+state:
+
+HISTORICAL_SOURCE_PENDING
+
+분석 실행을 차단하지 않음.
+
+
+## Parcel Snapshot
+
+공식 C-11 Parcel spatial snapshot:
+
+law_data/output/site_parcel_spatial_snapshot.geojson
+
+metadata:
+
+law_data/output/site_parcel_spatial_recovery.json
+
+source recovery:
+
+law_data/output/seoul_urban_innovation_zone_mapplan_intersection.json
+
+
+## 주요 신규 모듈
+
+law_data/site_analysis_builder.py
+law_data/site_identity_resolver.py
+law_data/site_spatial_payload_resolver.py
+
+site_data/site_analysis_service.py
+site_data/site_analysis_response.py
+site_data/site_analysis_orchestrator.py
+
+api_app.py
+
+
+## Python package import 정책
+
+C-12부터 site_data / law_data는 package import 방식 사용.
+
+권장 실행:
+
+python -m site_data.<module>
+
+기존 site_data 내부 import는 상대 import 사용:
+
+from .site_data_model import ...
+from .building_converter import ...
+from .land_converter import ...
+
+
+## FastAPI Test Dependency
+
+Starlette TestClient 사용을 위해 httpx2 필요.
+
+테스트:
+
+python test_api_app.py
+
+결과:
+
+all_pass: True
+
+
+## 최종 검증된 테스트
+
+python -m site_data.test_site_analysis_service
+→ all_pass: True
+
+python -m site_data.test_real_api_to_site_analysis
+→ all_pass: True
+
+python -m site_data.test_land_area_source_reconciliation
+→ all_pass: True
+
+python -m site_data.test_site_analysis_land_area_integration
+→ all_pass: True
+
+python -m site_data.test_site_analysis_response
+→ all_pass: True
+
+python -m site_data.test_site_analysis_orchestrator
+→ all_pass: True
+
+python test_api_app.py
+→ all_pass: True
+
+uvicorn api_app:app --reload
+→ 실제 HTTP server 정상 실행
+
+POST /v1/site-analysis
+→ HTTP 200
+
+
+## 다음 시작 지점
+
+STEP 17-21-C-12-6
+
+API Contract / Error Handling Regression
+
+정상 path는 더 이상 수정하지 않고,
+HTTP error mapping을 회귀 테스트할 것.

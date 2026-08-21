@@ -1,0 +1,443 @@
+{
+  "step": "STEP 17-21-C-10-6 final rule engine snapshot",
+  "engine": {
+    "status": "READY",
+    "stateless": true,
+    "clean_baseline": true,
+    "branch_local_predicates": true,
+    "dynamic_project_input": true,
+    "dynamic_procedure_input": true,
+    "numeric_verified_guards": true,
+    "stacking_ceiling_resolution": true,
+    "external_dependency_supported": true
+  },
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "zone": "제3종일반주거지역"
+  },
+  "site_zone": "제3종일반주거지역",
+  "baseline": {
+    "input": {
+      "project": {},
+      "procedure": {}
+    },
+    "rule_summary": {
+      "APPLICABLE": 58,
+      "NOT_APPLICABLE": 213,
+      "CONDITIONAL": 41,
+      "UNKNOWN": 2
+    },
+    "numeric": {
+      "active_before_guard": 9,
+      "excluded_count": 2,
+      "excluded": [
+        {
+          "clause_index": 4,
+          "rule_title": "건폐율의 완화",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "DIRECT_RELAXATION"
+          }
+        },
+        {
+          "clause_index": 189,
+          "rule_title": "용적률의 완화",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "DIRECT_RELAXATION"
+          }
+        }
+      ],
+      "retained_count": 7,
+      "retained_clause_indexes": [
+        3,
+        50,
+        61,
+        220,
+        233,
+        244,
+        262
+      ],
+      "direct_relaxation_count": 0,
+      "resolution": "BASE_VALUES_RETAINED",
+      "building_coverage_ratio": 50.0,
+      "floor_area_ratio": 250.0
+    }
+  },
+  "dynamic_scenario": {
+    "input": {
+      "project": {
+        "공동주택": "TRUE"
+      },
+      "procedure": {
+        "도시계획위원회심의": "TRUE"
+      }
+    },
+    "rule_summary": {
+      "APPLICABLE": 63,
+      "NOT_APPLICABLE": 213,
+      "CONDITIONAL": 36,
+      "UNKNOWN": 2
+    },
+    "dynamic_injection": {
+      "touched_rule_count": 16,
+      "changed_rule_count": 5,
+      "transitions": {
+        "CONDITIONAL -> APPLICABLE": 5
+      },
+      "changes": [
+        {
+          "clause_index": 16,
+          "rule_title": "건폐율의 완화",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 121,
+          "rule_title": "건폐율의 강화",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 248,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 249,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 250,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        }
+      ]
+    },
+    "numeric": {
+      "active_before_guard": 11,
+      "excluded_count": 3,
+      "excluded": [
+        {
+          "clause_index": 4,
+          "rule_title": "건폐율의 완화",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "DIRECT_RELAXATION"
+          }
+        },
+        {
+          "clause_index": 189,
+          "rule_title": "용적률의 완화",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "DIRECT_RELAXATION"
+          }
+        },
+        {
+          "clause_index": 250,
+          "rule_title": "용도지역에서의 용적률",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "STACKING_CEILING_OUTSIDE_DISTRICT_PLAN",
+            "corrected_numeric_semantic": {
+              "semantic_type": "STACKING_CEILING_MULTIPLIER",
+              "value": 120.0,
+              "factor": 1.2,
+              "unit": "percent_of_statutory_max",
+              "formula": "statutory_zone_max * 1.2",
+              "direct_base_effect": false,
+              "requires_existing_relaxation_stack": true,
+              "confidence": "HIGH"
+            }
+          }
+        }
+      ],
+      "retained_count": 8,
+      "retained_clause_indexes": [
+        3,
+        50,
+        61,
+        121,
+        220,
+        233,
+        244,
+        262
+      ],
+      "direct_relaxation_count": 0,
+      "resolution": "BASE_VALUES_RETAINED",
+      "building_coverage_ratio": 50.0,
+      "floor_area_ratio": 250.0
+    }
+  },
+  "negative_scenario": {
+    "input": {
+      "project": {
+        "공동주택": "FALSE"
+      },
+      "procedure": {
+        "도시계획위원회심의": "TRUE"
+      }
+    },
+    "rule_summary": {
+      "APPLICABLE": 63,
+      "NOT_APPLICABLE": 214,
+      "CONDITIONAL": 35,
+      "UNKNOWN": 2
+    },
+    "dynamic_injection": {
+      "touched_rule_count": 16,
+      "changed_rule_count": 6,
+      "transitions": {
+        "CONDITIONAL -> APPLICABLE": 5,
+        "CONDITIONAL -> NOT_APPLICABLE": 1
+      },
+      "changes": [
+        {
+          "clause_index": 16,
+          "rule_title": "건폐율의 완화",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 121,
+          "rule_title": "건폐율의 강화",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 206,
+          "rule_title": "용적률의 완화",
+          "before": "CONDITIONAL",
+          "after": "NOT_APPLICABLE"
+        },
+        {
+          "clause_index": 248,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 249,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        },
+        {
+          "clause_index": 250,
+          "rule_title": "용도지역에서의 용적률",
+          "before": "CONDITIONAL",
+          "after": "APPLICABLE"
+        }
+      ]
+    },
+    "numeric": {
+      "active_before_guard": 11,
+      "excluded_count": 3,
+      "excluded": [
+        {
+          "clause_index": 4,
+          "rule_title": "건폐율의 완화",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "DIRECT_RELAXATION"
+          }
+        },
+        {
+          "clause_index": 189,
+          "rule_title": "용적률의 완화",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "DIRECT_RELAXATION"
+          }
+        },
+        {
+          "clause_index": 250,
+          "rule_title": "용도지역에서의 용적률",
+          "guard": {
+            "allow_numeric": false,
+            "resolution": "NOT_APPLICABLE",
+            "role": "STACKING_CEILING_OUTSIDE_DISTRICT_PLAN",
+            "corrected_numeric_semantic": {
+              "semantic_type": "STACKING_CEILING_MULTIPLIER",
+              "value": 120.0,
+              "factor": 1.2,
+              "unit": "percent_of_statutory_max",
+              "formula": "statutory_zone_max * 1.2",
+              "direct_base_effect": false,
+              "requires_existing_relaxation_stack": true,
+              "confidence": "HIGH"
+            }
+          }
+        }
+      ],
+      "retained_count": 8,
+      "retained_clause_indexes": [
+        3,
+        50,
+        61,
+        121,
+        220,
+        233,
+        244,
+        262
+      ],
+      "direct_relaxation_count": 0,
+      "resolution": "BASE_VALUES_RETAINED",
+      "building_coverage_ratio": 50.0,
+      "floor_area_ratio": 250.0
+    }
+  },
+  "remaining_inputs": {
+    "project": [
+      {
+        "name": "공공시설제공",
+        "affected_clause_count": 14,
+        "state": "UNSET"
+      },
+      {
+        "name": "공공주택",
+        "affected_clause_count": 7,
+        "state": "UNSET"
+      },
+      {
+        "name": "임대주택",
+        "affected_clause_count": 7,
+        "state": "UNSET"
+      },
+      {
+        "name": "사회복지시설",
+        "affected_clause_count": 6,
+        "state": "UNSET"
+      },
+      {
+        "name": "기부채납",
+        "affected_clause_count": 4,
+        "state": "UNSET"
+      },
+      {
+        "name": "대학",
+        "affected_clause_count": 4,
+        "state": "UNSET"
+      },
+      {
+        "name": "공개공지",
+        "affected_clause_count": 3,
+        "state": "UNSET"
+      },
+      {
+        "name": "한옥",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "감염병대응필요시설",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "공동주택",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "종합의료시설",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "주거복합",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "관광숙박시설",
+        "affected_clause_count": 2,
+        "state": "UNSET"
+      },
+      {
+        "name": "시장정비사업대상전통시장",
+        "affected_clause_count": 1,
+        "state": "UNSET"
+      },
+      {
+        "name": "도시정비형재개발사업",
+        "affected_clause_count": 1,
+        "state": "UNSET"
+      }
+    ],
+    "procedure": [
+      {
+        "name": "도시계획위원회심의",
+        "affected_clause_count": 15,
+        "state": "UNSET"
+      },
+      {
+        "name": "시장정비사업심의",
+        "affected_clause_count": 3,
+        "state": "UNSET"
+      }
+    ]
+  },
+  "external_dependencies": {
+    "historical": {
+      "condition": "도시지역편입해제구역",
+      "status": "UNKNOWN",
+      "confidence": "MEDIUM",
+      "automation_state": "HISTORICAL_SOURCE_PENDING",
+      "affected_clause_count": 3,
+      "unknown_rule_count": 2,
+      "unknown_rules": [
+        {
+          "clause_index": 47,
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+          "reason": "필수조건 미확정: 도시지역편입해제구역"
+        },
+        {
+          "clause_index": 48,
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "rule_title": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
+          "reason": "필수조건 미확정: 도시지역편입해제구역"
+        }
+      ],
+      "blocking_site_stage": false
+    }
+  },
+  "validations": {
+    "baseline pipeline ready": true,
+    "dynamic pipeline ready": true,
+    "negative pipeline ready": true,
+    "baseline rules 314": true,
+    "dynamic rules 314": true,
+    "negative rules 314": true,
+    "baseline dynamic changes 0": true,
+    "dynamic changes 5": true,
+    "negative changes 6": true,
+    "dynamic and negative differ": true,
+    "baseline BCR 50": true,
+    "baseline FAR 250": true,
+    "dynamic BCR 50": true,
+    "dynamic FAR 250": true,
+    "negative BCR 50": true,
+    "negative FAR 250": true,
+    "direct relaxation baseline 0": true,
+    "direct relaxation dynamic 0": true,
+    "direct relaxation negative 0": true,
+    "historical dependency preserved": true,
+    "engine ready": true
+  },
+  "all_pass": true
+}

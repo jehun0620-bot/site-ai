@@ -1,0 +1,50 @@
+{
+  "step": "STEP 17-21-C-11-2C-2D MapPlan parcel spatial recovery",
+  "site": {
+    "pnu": "1168010300100120000"
+  },
+  "source": {
+    "snapshot": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+    "dataset": "MapPlan",
+    "recovery": {
+      "mode": "DIRECT_JSON",
+      "path": "$.parcel_geometry.request.json.features[0]"
+    }
+  },
+  "parcel": {
+    "geometry_type": "Polygon",
+    "area": 120945.65223377591,
+    "bounds": [
+      962201.02522,
+      1943722.58159,
+      962711.06096,
+      1944220.16506
+    ],
+    "stored_bounds_evidence": [
+      {
+        "path": "$.parcel_geometry.bounds",
+        "value": [
+          962201.02522,
+          1943722.58159,
+          962711.06096,
+          1944220.16506
+        ]
+      }
+    ],
+    "crs": null,
+    "crs_status": "SOURCE_CRS_NOT_EXPLICIT",
+    "geometry_snapshot": "D:\\site-ai\\law_data\\output\\site_parcel_spatial_snapshot.geojson"
+  },
+  "validations": {
+    "feature recovered": true,
+    "target PNU": true,
+    "geometry dict": true,
+    "geometry Polygon": true,
+    "coordinates exist": true,
+    "calculated bounds": true,
+    "expected bounds match": true,
+    "area evidence found": true,
+    "bounds evidence found": true
+  },
+  "all_pass": true
+}

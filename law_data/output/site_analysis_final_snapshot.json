@@ -1,0 +1,728 @@
+{
+  "step": "STEP 17-21-C-11-3 Final SITE Analysis Schema Snapshot",
+  "schema_version": "C-11-3-v1",
+  "schema": {
+    "analysis": [
+      "status",
+      "engine",
+      "engine_version"
+    ],
+    "site": [
+      "site_id",
+      "address",
+      "road_address",
+      "pnu",
+      "sigungu_code",
+      "bjdong_code",
+      "main_no",
+      "sub_no",
+      "zone",
+      "coordinate",
+      "spatial"
+    ],
+    "regulation": [
+      "building_coverage_ratio",
+      "floor_area_ratio",
+      "numeric_resolution",
+      "direct_relaxation_count"
+    ],
+    "rule_evaluation": [
+      "total",
+      "applicable",
+      "not_applicable",
+      "conditional",
+      "unknown"
+    ],
+    "input_requirements": [
+      "project",
+      "procedure",
+      "project_count",
+      "procedure_count",
+      "requires_additional_input"
+    ],
+    "external_dependencies": [
+      "count",
+      "items"
+    ],
+    "rule_engine": [
+      "baseline",
+      "branch_overlay",
+      "dynamic_injection",
+      "site_registry",
+      "site_repairs",
+      "numeric"
+    ]
+  },
+  "analysis_object": {
+    "analysis": {
+      "status": "READY",
+      "engine": "RULE_EVALUATION_PIPELINE",
+      "engine_version": "C-10-5C-2"
+    },
+    "site": {
+      "site_id": "11680-10300-0012-0000",
+      "address": "서울특별시 강남구 개포동 12번지",
+      "road_address": null,
+      "pnu": "1168010300100120000",
+      "sigungu_code": "11680",
+      "bjdong_code": "10300",
+      "main_no": "0012",
+      "sub_no": "0000",
+      "zone": "제3종일반주거지역",
+      "land_use_zone": "제3종일반주거지역",
+      "coordinate": {
+        "x": 127.07539280356858,
+        "y": 37.494197498186885,
+        "crs": "EPSG:4326"
+      },
+      "x": 127.07539280356858,
+      "y": 37.494197498186885,
+      "identity_status": "COMPLETE",
+      "coordinate_status": "CONFIRMED",
+      "missing_identity_fields": [],
+      "parcel_reference": {
+        "dataset": "LP_PA_CBND_BUBUN",
+        "status": "VERIFIED",
+        "strict_pnu_verified": true,
+        "geometry_loaded": false,
+        "note": "Parcel dataset은 검증되었으나 geometry 자체는 이번 identity object에 아직 포함하지 않음"
+      },
+      "spatial": {
+        "parcel": {
+          "pnu": "1168010300100120000",
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  962201.02522,
+                  1943841.80188
+                ],
+                [
+                  962210.40147,
+                  1943851.19867
+                ],
+                [
+                  962310.38647,
+                  1943957.41892
+                ],
+                [
+                  962331.54959,
+                  1943991.6039
+                ],
+                [
+                  962351.13186,
+                  1944023.62808
+                ],
+                [
+                  962362.08086,
+                  1944044.98202
+                ],
+                [
+                  962379.28105,
+                  1944083.99617
+                ],
+                [
+                  962399.48705,
+                  1944162.06966
+                ],
+                [
+                  962404.05866,
+                  1944187.23595
+                ],
+                [
+                  962411.08353,
+                  1944196.20534
+                ],
+                [
+                  962471.71758,
+                  1944220.16506
+                ],
+                [
+                  962514.30746,
+                  1944113.69962
+                ],
+                [
+                  962534.49313,
+                  1944121.86959
+                ],
+                [
+                  962659.89314,
+                  1944170.44689
+                ],
+                [
+                  962710.155,
+                  1944044.13832
+                ],
+                [
+                  962710.80309,
+                  1944041.93572
+                ],
+                [
+                  962711.06096,
+                  1944039.66521
+                ],
+                [
+                  962710.94888,
+                  1944037.37667
+                ],
+                [
+                  962710.44722,
+                  1944035.14017
+                ],
+                [
+                  962709.59634,
+                  1944033.02548
+                ],
+                [
+                  962708.39645,
+                  1944031.07257
+                ],
+                [
+                  962706.8879,
+                  1944029.35121
+                ],
+                [
+                  962705.11094,
+                  1944027.91117
+                ],
+                [
+                  962703.11571,
+                  1944026.78217
+                ],
+                [
+                  962681.56753,
+                  1944018.03963
+                ],
+                [
+                  962677.93069,
+                  1944016.48948
+                ],
+                [
+                  962670.78548,
+                  1944013.10861
+                ],
+                [
+                  962663.82834,
+                  1944009.37688
+                ],
+                [
+                  962657.06921,
+                  1944005.28423
+                ],
+                [
+                  962650.52819,
+                  1944000.85056
+                ],
+                [
+                  962644.21538,
+                  1943996.0958
+                ],
+                [
+                  962638.16078,
+                  1943991.01979
+                ],
+                [
+                  962632.37442,
+                  1943985.63248
+                ],
+                [
+                  962626.87647,
+                  1943979.96374
+                ],
+                [
+                  962624.23192,
+                  1943977.02886
+                ],
+                [
+                  962597.46094,
+                  1943946.62217
+                ],
+                [
+                  962505.25578,
+                  1943840.92054
+                ],
+                [
+                  962510.26798,
+                  1943828.47868
+                ],
+                [
+                  962449.45109,
+                  1943803.97011
+                ],
+                [
+                  962405.16331,
+                  1943786.13146
+                ],
+                [
+                  962418.08919,
+                  1943754.18504
+                ],
+                [
+                  962339.82131,
+                  1943722.58159
+                ],
+                [
+                  962326.10299,
+                  1943755.90169
+                ],
+                [
+                  962278.75024,
+                  1943736.9097
+                ],
+                [
+                  962273.73889,
+                  1943749.51149
+                ],
+                [
+                  962273.33207,
+                  1943750.08343
+                ],
+                [
+                  962272.55551,
+                  1943750.67732
+                ],
+                [
+                  962271.64615,
+                  1943750.73212
+                ],
+                [
+                  962248.17652,
+                  1943741.5799
+                ],
+                [
+                  962245.14498,
+                  1943739.18686
+                ],
+                [
+                  962201.02522,
+                  1943841.80188
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "geometry_type": "Polygon",
+          "geometry_loaded": true,
+          "area": {
+            "value": 120945.65223377591,
+            "unit": "native_crs_square_units",
+            "status": "RECOVERED"
+          },
+          "bounds": [
+            962201.02522,
+            1943722.58159,
+            962711.06096,
+            1944220.16506
+          ],
+          "crs": null,
+          "crs_status": "SOURCE_CRS_NOT_EXPLICIT",
+          "source": {
+            "provider": "MapPlan",
+            "snapshot": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+            "recovery": {
+              "mode": "DIRECT_JSON",
+              "path": "$.parcel_geometry.request.json.features[0]"
+            },
+            "geojson_snapshot": "D:\\site-ai\\law_data\\output\\site_parcel_spatial_snapshot.geojson",
+            "verified": true
+          }
+        }
+      }
+    },
+    "input": {
+      "site": {},
+      "project": {
+        "공동주택": "TRUE"
+      },
+      "procedure": {
+        "도시계획위원회심의": "TRUE"
+      }
+    },
+    "regulation": {
+      "building_coverage_ratio": {
+        "value": 50.0,
+        "unit": "percent",
+        "status": "CONFIRMED"
+      },
+      "floor_area_ratio": {
+        "value": 250.0,
+        "unit": "percent",
+        "status": "CONFIRMED"
+      },
+      "numeric_resolution": "BASE_VALUES_RETAINED",
+      "direct_relaxation_count": 0,
+      "numeric_active_before_guard": 11,
+      "numeric_excluded_count": 3,
+      "numeric_retained_count": 8
+    },
+    "rule_evaluation": {
+      "total": 314,
+      "applicable": 63,
+      "not_applicable": 213,
+      "conditional": 36,
+      "unknown": 2
+    },
+    "input_requirements": {
+      "project": [
+        {
+          "name": "공공시설제공",
+          "affected_clause_count": 14,
+          "state": "UNSET"
+        },
+        {
+          "name": "공공주택",
+          "affected_clause_count": 7,
+          "state": "UNSET"
+        },
+        {
+          "name": "임대주택",
+          "affected_clause_count": 7,
+          "state": "UNSET"
+        },
+        {
+          "name": "사회복지시설",
+          "affected_clause_count": 6,
+          "state": "UNSET"
+        },
+        {
+          "name": "기부채납",
+          "affected_clause_count": 4,
+          "state": "UNSET"
+        },
+        {
+          "name": "대학",
+          "affected_clause_count": 4,
+          "state": "UNSET"
+        },
+        {
+          "name": "공개공지",
+          "affected_clause_count": 3,
+          "state": "UNSET"
+        },
+        {
+          "name": "한옥",
+          "affected_clause_count": 2,
+          "state": "UNSET"
+        },
+        {
+          "name": "감염병대응필요시설",
+          "affected_clause_count": 2,
+          "state": "UNSET"
+        },
+        {
+          "name": "종합의료시설",
+          "affected_clause_count": 2,
+          "state": "UNSET"
+        },
+        {
+          "name": "주거복합",
+          "affected_clause_count": 2,
+          "state": "UNSET"
+        },
+        {
+          "name": "관광숙박시설",
+          "affected_clause_count": 2,
+          "state": "UNSET"
+        },
+        {
+          "name": "시장정비사업대상전통시장",
+          "affected_clause_count": 1,
+          "state": "UNSET"
+        },
+        {
+          "name": "도시정비형재개발사업",
+          "affected_clause_count": 1,
+          "state": "UNSET"
+        }
+      ],
+      "procedure": [
+        {
+          "name": "시장정비사업심의",
+          "affected_clause_count": 3,
+          "state": "UNSET"
+        }
+      ],
+      "project_count": 14,
+      "procedure_count": 1,
+      "requires_additional_input": true
+    },
+    "external_dependencies": {
+      "count": 1,
+      "items": [
+        {
+          "category": "SITE_HISTORY",
+          "condition": "도시지역편입해제구역",
+          "status": "UNKNOWN",
+          "confidence": "MEDIUM",
+          "automation_state": "HISTORICAL_SOURCE_PENDING",
+          "blocking_analysis": false
+        }
+      ]
+    },
+    "rule_engine": {
+      "baseline": {
+        "APPLICABLE": 58,
+        "NOT_APPLICABLE": 211,
+        "CONDITIONAL": 43,
+        "UNKNOWN": 2
+      },
+      "branch_overlay": {
+        "added_condition_count": 7,
+        "added_conditions": [
+          {
+            "clause_index": 201,
+            "name": "서울도심",
+            "type": "SITE",
+            "state": "FALSE",
+            "confidence": "HIGH",
+            "source": "SEOUL_DOWNTOWN_CONDITION_RESOLUTION",
+            "branch_local": true,
+            "detector_confidence": "HIGH"
+          },
+          {
+            "clause_index": 201,
+            "name": "서울조례제48조7호부터10호지역",
+            "type": "SITE",
+            "state": "FALSE",
+            "confidence": "HIGH",
+            "source": "RULE_CONDITION_REGISTRY",
+            "resolution_meta": {
+              "site_zone": "제3종일반주거지역",
+              "article_48_number": 5,
+              "required_numbers": [
+                7,
+                8,
+                9,
+                10
+              ]
+            },
+            "branch_local": true,
+            "detector_confidence": "HIGH"
+          },
+          {
+            "clause_index": 201,
+            "name": "관광숙박시설",
+            "type": "PROJECT",
+            "state": "UNSET",
+            "confidence": "NONE",
+            "source": "RULE_CONDITION_REGISTRY",
+            "branch_local": true,
+            "detector_confidence": "HIGH"
+          },
+          {
+            "clause_index": 205,
+            "name": "서울도심",
+            "type": "SITE",
+            "state": "FALSE",
+            "confidence": "HIGH",
+            "source": "SEOUL_DOWNTOWN_CONDITION_RESOLUTION",
+            "branch_local": true,
+            "detector_confidence": "HIGH"
+          },
+          {
+            "clause_index": 205,
+            "name": "서울조례제48조7호부터10호지역",
+            "type": "SITE",
+            "state": "FALSE",
+            "confidence": "HIGH",
+            "source": "RULE_CONDITION_REGISTRY",
+            "resolution_meta": {
+              "site_zone": "제3종일반주거지역",
+              "article_48_number": 5,
+              "required_numbers": [
+                7,
+                8,
+                9,
+                10
+              ]
+            },
+            "branch_local": true,
+            "detector_confidence": "HIGH"
+          },
+          {
+            "clause_index": 205,
+            "name": "관광숙박시설",
+            "type": "PROJECT",
+            "state": "UNSET",
+            "confidence": "NONE",
+            "source": "RULE_CONDITION_REGISTRY",
+            "branch_local": true,
+            "detector_confidence": "HIGH"
+          },
+          {
+            "clause_index": 212,
+            "name": "감염병대응필요시설",
+            "type": "PROJECT",
+            "state": "UNSET",
+            "confidence": "NONE",
+            "source": "RULE_CONDITION_REGISTRY",
+            "branch_local": true,
+            "detector_confidence": "HIGH"
+          }
+        ],
+        "after_branch": {
+          "APPLICABLE": 58,
+          "NOT_APPLICABLE": 213,
+          "CONDITIONAL": 41,
+          "UNKNOWN": 2
+        }
+      },
+      "dynamic_injection": {
+        "touched_rule_count": 16,
+        "changed_rule_count": 5,
+        "transitions": {
+          "CONDITIONAL -> APPLICABLE": 5
+        },
+        "changes": [
+          {
+            "clause_index": 16,
+            "rule_title": "건폐율의 완화",
+            "before": "CONDITIONAL",
+            "after": "APPLICABLE"
+          },
+          {
+            "clause_index": 121,
+            "rule_title": "건폐율의 강화",
+            "before": "CONDITIONAL",
+            "after": "APPLICABLE"
+          },
+          {
+            "clause_index": 248,
+            "rule_title": "용도지역에서의 용적률",
+            "before": "CONDITIONAL",
+            "after": "APPLICABLE"
+          },
+          {
+            "clause_index": 249,
+            "rule_title": "용도지역에서의 용적률",
+            "before": "CONDITIONAL",
+            "after": "APPLICABLE"
+          },
+          {
+            "clause_index": 250,
+            "rule_title": "용도지역에서의 용적률",
+            "before": "CONDITIONAL",
+            "after": "APPLICABLE"
+          }
+        ]
+      },
+      "site_registry": {
+        "서울도심": {
+          "type": "SITE",
+          "state": "FALSE",
+          "confidence": "HIGH",
+          "source": "SEOUL_DOWNTOWN_CONDITION_RESOLUTION"
+        }
+      },
+      "site_repairs": [],
+      "numeric": {
+        "active_before_guard": 11,
+        "excluded_count": 3,
+        "excluded": [
+          {
+            "clause_index": 4,
+            "rule_title": "건폐율의 완화",
+            "guard": {
+              "allow_numeric": false,
+              "resolution": "NOT_APPLICABLE",
+              "role": "DIRECT_RELAXATION"
+            }
+          },
+          {
+            "clause_index": 189,
+            "rule_title": "용적률의 완화",
+            "guard": {
+              "allow_numeric": false,
+              "resolution": "NOT_APPLICABLE",
+              "role": "DIRECT_RELAXATION"
+            }
+          },
+          {
+            "clause_index": 250,
+            "rule_title": "용도지역에서의 용적률",
+            "guard": {
+              "allow_numeric": false,
+              "resolution": "NOT_APPLICABLE",
+              "role": "STACKING_CEILING_OUTSIDE_DISTRICT_PLAN",
+              "corrected_numeric_semantic": {
+                "semantic_type": "STACKING_CEILING_MULTIPLIER",
+                "value": 120.0,
+                "factor": 1.2,
+                "unit": "percent_of_statutory_max",
+                "formula": "statutory_zone_max * 1.2",
+                "direct_base_effect": false,
+                "requires_existing_relaxation_stack": true,
+                "confidence": "HIGH"
+              }
+            }
+          }
+        ],
+        "retained_count": 8,
+        "retained_clause_indexes": [
+          3,
+          50,
+          61,
+          121,
+          220,
+          233,
+          244,
+          262
+        ],
+        "direct_relaxation_count": 0,
+        "resolution": "BASE_VALUES_RETAINED",
+        "building_coverage_ratio": 50.0,
+        "floor_area_ratio": 250.0
+      }
+    }
+  },
+  "validations": {
+    "top schema complete": true,
+    "analysis ready": true,
+    "engine": true,
+    "engine version exists": true,
+    "site id": true,
+    "address": true,
+    "pnu": true,
+    "sigungu": true,
+    "bjdong": true,
+    "main no": true,
+    "sub no": true,
+    "zone": true,
+    "identity complete": true,
+    "coordinate confirmed": true,
+    "coordinate x": true,
+    "coordinate y": true,
+    "coordinate crs": true,
+    "parcel pnu": true,
+    "parcel geometry loaded": true,
+    "parcel polygon": true,
+    "parcel geometry exists": true,
+    "parcel area": true,
+    "parcel bounds": true,
+    "parcel crs unknown preserved": true,
+    "parcel crs status": true,
+    "parcel source verified": true,
+    "BCR 50": true,
+    "BCR confirmed": true,
+    "FAR 250": true,
+    "FAR confirmed": true,
+    "numeric resolution": true,
+    "direct relaxation zero": true,
+    "rules total 314": true,
+    "rules applicable 63": true,
+    "rules not applicable 213": true,
+    "rules conditional 36": true,
+    "rules unknown 2": true,
+    "project requirements exist": true,
+    "procedure requirements exist": true,
+    "additional input required": true,
+    "external dependency one": true,
+    "historical dependency pending": true,
+    "historical dependency not blocking": true,
+    "rule engine baseline exists": true,
+    "rule engine branch exists": true,
+    "rule engine dynamic exists": true,
+    "rule engine numeric exists": true
+  },
+  "all_pass": true
+}

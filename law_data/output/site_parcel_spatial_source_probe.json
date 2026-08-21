@@ -1,0 +1,282 @@
+{
+  "step": "STEP 17-21-C-11-2C-1 Parcel spatial source probe",
+  "files": [
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "exists": true,
+      "hit_count": 18,
+      "top_level_keys": [
+        "all_pass",
+        "candidate_count",
+        "polygon_candidates",
+        "probe_results",
+        "selected",
+        "site",
+        "step",
+        "validations"
+      ]
+    },
+    {
+      "filename": "site_spatial_query_context.json",
+      "exists": true,
+      "hit_count": 2,
+      "top_level_keys": [
+        "all_pass",
+        "next_source_plan",
+        "query_context",
+        "source_registry_step",
+        "step",
+        "validations"
+      ]
+    },
+    {
+      "filename": "mapplan_parcel_geometry_probe.json",
+      "exists": false,
+      "hit_count": 0
+    },
+    {
+      "filename": "parcel_polygon_probe.json",
+      "exists": false,
+      "hit_count": 0
+    },
+    {
+      "filename": "site_parcel_polygon.json",
+      "exists": false,
+      "hit_count": 0
+    },
+    {
+      "filename": "site_spatial_condition_final_snapshot.json",
+      "exists": true,
+      "hit_count": 0,
+      "top_level_keys": [
+        "all_pass",
+        "c9_resolution",
+        "conditions",
+        "query_groups",
+        "required_site_conditions",
+        "site",
+        "step",
+        "summary",
+        "supplemental_conditions",
+        "validations"
+      ]
+    }
+  ],
+  "summary": {
+    "files_checked": 6,
+    "files_existing": 3,
+    "total_hits": 20,
+    "category_counts": {
+      "GEOMETRY": 0,
+      "AREA": 0,
+      "BOUNDS": 0,
+      "CRS": 1,
+      "DATASET": 15,
+      "PNU": 4
+    },
+    "geometry_candidate_count": 0
+  },
+  "geometry_candidates": [],
+  "hits": [
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.site.pnu",
+      "key": "pnu",
+      "categories": [
+        "PNU"
+      ],
+      "value_type": "str",
+      "value_preview": "1168010300100120000"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.site.point.crs",
+      "key": "crs",
+      "categories": [
+        "CRS"
+      ],
+      "value_type": "str",
+      "value_preview": "EPSG:4326"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[0].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LP_PA_CBND_BUBUN"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[0].analysis.features[0].properties.pnu",
+      "key": "pnu",
+      "categories": [
+        "PNU"
+      ],
+      "value_type": "str",
+      "value_preview": "1168010300100120000"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[0].analysis.pnu_polygon_matches[0].properties.pnu",
+      "key": "pnu",
+      "categories": [
+        "PNU"
+      ],
+      "value_type": "str",
+      "value_preview": "1168010300100120000"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[1].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LP_PA_CBND_BONBUN"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[2].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LT_C_LANDINFO"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[3].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LT_C_LANDINFO_1"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[4].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LT_C_LANDINFO_2"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[5].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LT_C_LANDINFO_BUBUN"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[6].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LT_C_LANDINFO_BONBUN"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[7].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LT_C_PARCEL"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[8].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LT_C_CADASTRAL"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[9].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LT_C_JIJUK"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[10].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LT_C_JIJUK_BUBUN"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.probe_results[11].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LT_C_JIJUK_BONBUN"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.polygon_candidates[0].dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LP_PA_CBND_BUBUN"
+    },
+    {
+      "filename": "vworld_parcel_polygon_identifier_probe.json",
+      "path": "$.selected.dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "LP_PA_CBND_BUBUN"
+    },
+    {
+      "filename": "site_spatial_query_context.json",
+      "path": "$.query_context.pnu",
+      "key": "pnu",
+      "categories": [
+        "PNU"
+      ],
+      "value_type": "str",
+      "value_preview": "1168010300100120000"
+    },
+    {
+      "filename": "site_spatial_query_context.json",
+      "path": "$.next_source_plan.primary.dataset",
+      "key": "dataset",
+      "categories": [
+        "DATASET"
+      ],
+      "value_type": "str",
+      "value_preview": "지구단위계획"
+    }
+  ]
+}

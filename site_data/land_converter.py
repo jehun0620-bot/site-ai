@@ -1,8 +1,7 @@
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from site_data_model import Land
-
+from .site_data_model import Land
 
 def select_latest_land_record(
     records: List[Dict[str, Any]]

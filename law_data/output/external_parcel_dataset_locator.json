@@ -1,0 +1,25 @@
+{
+  "step": "STEP 17-21-C-11-2C-2B external parcel dataset locator",
+  "project_root": "D:\\site-ai",
+  "search_roots": [
+    "D:\\"
+  ],
+  "scan_results": [
+    {
+      "root": "D:\\",
+      "scanned_dirs": 10,
+      "scanned_spatial_files": 0,
+      "exact_hits": [],
+      "loose_hits": [],
+      "errors": [],
+      "exists": true
+    }
+  ],
+  "summary": {
+    "exact_hit_count": 0,
+    "loose_hit_count": 0,
+    "candidate_count": 0
+  },
+  "ranked_candidates": [],
+  "resolution": "SOURCE_NOT_FOUND"
+}

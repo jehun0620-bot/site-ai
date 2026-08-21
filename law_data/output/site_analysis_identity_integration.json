@@ -1,0 +1,83 @@
+{
+  "step": "STEP 17-21-C-11-2B-2 SITE analysis identity integration",
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "road_address": null,
+    "pnu": "1168010300100120000",
+    "sigungu_code": "11680",
+    "bjdong_code": "10300",
+    "main_no": "0012",
+    "sub_no": "0000",
+    "zone": "제3종일반주거지역",
+    "land_use_zone": "제3종일반주거지역",
+    "coordinate": {
+      "x": 127.07539280356858,
+      "y": 37.494197498186885,
+      "crs": "EPSG:4326"
+    },
+    "x": 127.07539280356858,
+    "y": 37.494197498186885,
+    "identity_status": "COMPLETE",
+    "coordinate_status": "CONFIRMED",
+    "missing_identity_fields": [],
+    "parcel_reference": {
+      "dataset": "LP_PA_CBND_BUBUN",
+      "status": "VERIFIED",
+      "strict_pnu_verified": true,
+      "geometry_loaded": false,
+      "note": "Parcel dataset은 검증되었으나 geometry 자체는 이번 identity object에 아직 포함하지 않음"
+    }
+  },
+  "regulation": {
+    "building_coverage_ratio": {
+      "value": 50.0,
+      "unit": "percent",
+      "status": "CONFIRMED"
+    },
+    "floor_area_ratio": {
+      "value": 250.0,
+      "unit": "percent",
+      "status": "CONFIRMED"
+    },
+    "numeric_resolution": "BASE_VALUES_RETAINED",
+    "direct_relaxation_count": 0,
+    "numeric_active_before_guard": 11,
+    "numeric_excluded_count": 3,
+    "numeric_retained_count": 8
+  },
+  "rule_evaluation": {
+    "total": 314,
+    "applicable": 63,
+    "not_applicable": 213,
+    "conditional": 36,
+    "unknown": 2
+  },
+  "validations": {
+    "analysis ready": true,
+    "site id": true,
+    "address": true,
+    "pnu": true,
+    "sigungu": true,
+    "bjdong": true,
+    "main": true,
+    "sub": true,
+    "zone": true,
+    "identity complete": true,
+    "coordinate confirmed": true,
+    "x": true,
+    "y": true,
+    "crs": true,
+    "parcel dataset": true,
+    "parcel verified": true,
+    "geometry not yet loaded": true,
+    "BCR 50": true,
+    "FAR 250": true,
+    "rules 314": true,
+    "applicable 63": true,
+    "not applicable 213": true,
+    "conditional 36": true,
+    "unknown 2": true
+  },
+  "all_pass": true
+}

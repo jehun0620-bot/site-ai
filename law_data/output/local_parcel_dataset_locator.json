@@ -1,0 +1,15 @@
+{
+  "step": "STEP 17-21-C-11-2C-2A local parcel dataset locator",
+  "target_dataset": "LP_PA_CBND_BUBUN",
+  "project_root": "D:\\site-ai",
+  "direct_hits": [],
+  "zip_hits": [],
+  "loose_candidates": [],
+  "summary": {
+    "direct_hit_count": 0,
+    "zip_hit_count": 0,
+    "loose_candidate_count": 0,
+    "candidate_count": 0
+  },
+  "resolution": "SOURCE_NOT_FOUND"
+}

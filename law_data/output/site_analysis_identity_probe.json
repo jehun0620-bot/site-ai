@@ -1,0 +1,118 @@
+{
+  "step": "STEP 17-21-C-11-2A SITE analysis identity probe",
+  "site_keys": [
+    "address",
+    "land_use_zone",
+    "site_id",
+    "zone"
+  ],
+  "field_status": {
+    "address": {
+      "found": true,
+      "source_key": "address",
+      "value": "서울특별시 강남구 개포동 12번지"
+    },
+    "road_address": {
+      "found": false,
+      "source_key": null,
+      "value": null
+    },
+    "site_id": {
+      "found": true,
+      "source_key": "site_id",
+      "value": "11680-10300-0012-0000"
+    },
+    "pnu": {
+      "found": false,
+      "source_key": null,
+      "value": null
+    },
+    "sigungu_code": {
+      "found": false,
+      "source_key": null,
+      "value": null
+    },
+    "bjdong_code": {
+      "found": false,
+      "source_key": null,
+      "value": null
+    },
+    "main_no": {
+      "found": false,
+      "source_key": null,
+      "value": null
+    },
+    "sub_no": {
+      "found": false,
+      "source_key": null,
+      "value": null
+    },
+    "x": {
+      "found": false,
+      "source_key": null,
+      "value": null
+    },
+    "y": {
+      "found": false,
+      "source_key": null,
+      "value": null
+    },
+    "zone": {
+      "found": true,
+      "source_key": "zone",
+      "value": "제3종일반주거지역"
+    },
+    "parcel_area": {
+      "found": false,
+      "source_key": null,
+      "value": null
+    },
+    "geometry": {
+      "found": false,
+      "source_key": null,
+      "value": null
+    }
+  },
+  "summary": {
+    "required_field_count": 13,
+    "found_count": 3,
+    "missing_count": 10,
+    "found": [
+      "address",
+      "site_id",
+      "zone"
+    ],
+    "missing": [
+      "bjdong_code",
+      "geometry",
+      "main_no",
+      "parcel_area",
+      "pnu",
+      "road_address",
+      "sigungu_code",
+      "sub_no",
+      "x",
+      "y"
+    ],
+    "missing_identity": [
+      "bjdong_code",
+      "main_no",
+      "pnu",
+      "sigungu_code",
+      "sub_no"
+    ],
+    "missing_spatial": [
+      "geometry",
+      "parcel_area",
+      "x",
+      "y"
+    ],
+    "requires_site_builder_integration": true
+  },
+  "site": {
+    "site_id": "11680-10300-0012-0000",
+    "address": "서울특별시 강남구 개포동 12번지",
+    "zone": "제3종일반주거지역",
+    "land_use_zone": "제3종일반주거지역"
+  }
+}
