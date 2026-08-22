@@ -29,7 +29,9 @@ import json
 
 from pathlib import Path
 from typing import Any, Dict, Optional
-
+from law_data.zone_base_numeric_resolver import (
+    resolve_zone_base_numeric,
+)
 
 try:
     from .rule_evaluation_pipeline import (
@@ -650,22 +652,6 @@ def build_site_analysis(
     )
 
     # ========================================================
-    # rule engine
-    # ========================================================
-
-    engine_result = (
-        evaluate_site_rules(
-            project_profile=(
-                project_profile
-            ),
-
-            procedure_profile=(
-                procedure_profile
-            ),
-        )
-    )
-
-    # ========================================================
     # base SITE
     # ========================================================
 
@@ -728,13 +714,50 @@ def build_site_analysis(
     )
 
     spatial = (
-        resolve_site_spatial_payload()
+    resolve_site_spatial_payload(
+        site=(
+            site
+        )
     )
-
+)
     site[
         "spatial"
     ] = (
         spatial
+    )
+
+    zone_base_numeric = (
+        resolve_zone_base_numeric(
+            site.get(
+                "zone"
+            )
+        )
+    )
+
+    # ========================================================
+    # rule engine
+    # ========================================================
+
+    engine_result = (
+        evaluate_site_rules(
+            project_profile=(
+                project_profile
+            ),
+
+            procedure_profile=(
+                procedure_profile
+            ),
+
+            base_numeric_context=(
+                zone_base_numeric
+            ),
+
+                   site_zone_context=(
+            site.get(
+                "zone"
+            )
+        ), 
+        )
     )
 
     land_area = (

@@ -7,7 +7,7 @@ Reusable Rule Evaluation Pipeline module regression test
 
 from __future__ import annotations
 
-from rule_evaluation_pipeline import (
+from law_data.rule_evaluation_pipeline import (
     evaluate_site_rules,
 )
 

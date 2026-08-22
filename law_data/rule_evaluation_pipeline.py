@@ -8,14 +8,16 @@ Reusable Rule Evaluation Pipeline
 깨끗한 SITE baseline에서 시작하여 다음 순서로 rule evaluation을 수행한다.
 
 1. SITE baseline load
-2. branch-local predicate detection
-3. branch-local condition 추가
-4. SITE resolution registry 적용
-5. PROJECT / PROCEDURE 입력 적용
-6. applicability 재평가
-7. numeric-specific verified guard 적용
-8. numeric result 확정
-9. remaining input / external dependency 반환
+2. 현재 SITE 용도지역 기준 zone relevance 재평가
+3. branch-local predicate detection
+4. branch-local condition 추가
+5. SITE resolution registry 적용
+6. PROJECT / PROCEDURE 입력 적용
+7. applicability 재평가
+8. numeric-specific verified guard 적용
+9. dynamic zone base numeric 적용
+10. numeric result 확정
+11. remaining input / external dependency 반환
 
 중요
 ======================================================================
@@ -23,14 +25,34 @@ Reusable Rule Evaluation Pipeline
 사용하지 않는다.
 
 항상:
+
     site_rule_evaluation_site_complete.json
 
 을 clean baseline으로 사용한다.
 
-branch-local predicate는:
-    rule_condition_registry.py
+C-13 Multi-SITE 원칙
+======================================================================
+기존 snapshot의 zone_relevance는 개포동 12번지 기준으로 생성되었으므로,
+현재 SITE zone을 기준으로 zone relevance를 다시 계산한다.
 
-에서 직접 탐지한다.
+단:
+
+OTHER_ZONE -> DIRECT / GROUP
+
+으로 변경되었다는 이유만으로 모든 rule을 즉시 APPLICABLE 처리하지 않는다.
+
+예:
+- 시장정비사업
+- 주거복합건물
+- 임대주택
+- 특례
+- 완화
+- 강화
+
+등은 별도 PROJECT / PROCEDURE / 문맥 조건이 숨어 있을 수 있다.
+
+따라서 현재 단계에서는 명확하게 확인된
+"용도지역 기본 한도/reference rule"만 제한적으로 재활성화한다.
 """
 
 from __future__ import annotations
@@ -41,6 +63,23 @@ import json
 from collections import Counter
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+
+# ============================================================
+# zone classifier
+# ============================================================
+
+try:
+
+    from .law_special_rule_clause_split_test import (
+        classify_zone_relevance,
+    )
+
+except ImportError:
+
+    from law_special_rule_clause_split_test import (
+        classify_zone_relevance,
+    )
 
 
 # ============================================================
@@ -101,12 +140,14 @@ BASE_NUMERIC_PATH = (
 # ============================================================
 
 try:
+
     from .rule_condition_registry import (
         build_branch_condition,
         find_missing_branch_predicates,
     )
 
 except ImportError:
+
     from rule_condition_registry import (
         build_branch_condition,
         find_missing_branch_predicates,
@@ -122,6 +163,26 @@ VALID_STATES = {
     "FALSE",
     "UNKNOWN",
     "UNSET",
+}
+
+
+# ============================================================
+# SAFE ZONE REACTIVATION
+#
+# 현재 C-13에서 실제 조문구조를 검증한 범위만 허용한다.
+# ============================================================
+
+SAFE_ZONE_REACTIVATION_RULES = {
+
+    (
+        "국토의 계획 및 이용에 관한 법률",
+        "용도지역의 건폐율",
+    ),
+
+    (
+        "국토의 계획 및 이용에 관한 법률",
+        "용도지역에서의 용적률",
+    ),
 }
 
 
@@ -152,6 +213,7 @@ def safe_string(
 ) -> str:
 
     if value is None:
+
         return ""
 
     return str(
@@ -164,7 +226,9 @@ def validate_profile(
     profile_type: str,
 ) -> None:
 
-    for name, state in profile.items():
+    for name, state in (
+        profile.items()
+    ):
 
         if state not in VALID_STATES:
 
@@ -195,14 +259,16 @@ def refresh_condition_groups(
         item
         for item
         in conditions
-        if isinstance(
-            item,
-            dict,
+        if (
+            isinstance(
+                item,
+                dict,
+            )
+            and item.get(
+                "state"
+            )
+            == "UNSET"
         )
-        and item.get(
-            "state"
-        )
-        == "UNSET"
     ]
 
     rule[
@@ -211,14 +277,16 @@ def refresh_condition_groups(
         item
         for item
         in conditions
-        if isinstance(
-            item,
-            dict,
+        if (
+            isinstance(
+                item,
+                dict,
+            )
+            and item.get(
+                "state"
+            )
+            == "FALSE"
         )
-        and item.get(
-            "state"
-        )
-        == "FALSE"
     ]
 
     rule[
@@ -227,14 +295,16 @@ def refresh_condition_groups(
         item
         for item
         in conditions
-        if isinstance(
-            item,
-            dict,
+        if (
+            isinstance(
+                item,
+                dict,
+            )
+            and item.get(
+                "state"
+            )
+            == "UNKNOWN"
         )
-        and item.get(
-            "state"
-        )
-        == "UNKNOWN"
     ]
 
 
@@ -267,9 +337,14 @@ def recalculate_applicability(
         )
     )
 
+    # --------------------------------------------------------
+    # FALSE condition
+    # --------------------------------------------------------
+
     if blocked:
 
         return {
+
             "applicability": (
                 "NOT_APPLICABLE"
             ),
@@ -288,9 +363,36 @@ def recalculate_applicability(
             ),
         }
 
+    # --------------------------------------------------------
+    # zone mismatch
+    # --------------------------------------------------------
+
+    if (
+        rule.get(
+            "zone_relevance"
+        )
+        == "OTHER_ZONE"
+    ):
+
+        return {
+
+            "applicability": (
+                "NOT_APPLICABLE"
+            ),
+
+            "reason": (
+                "현재 SITE 용도지역 불일치"
+            ),
+        }
+
+    # --------------------------------------------------------
+    # UNKNOWN condition
+    # --------------------------------------------------------
+
     if unknown:
 
         return {
+
             "applicability": (
                 "UNKNOWN"
             ),
@@ -309,9 +411,14 @@ def recalculate_applicability(
             ),
         }
 
+    # --------------------------------------------------------
+    # UNSET condition
+    # --------------------------------------------------------
+
     if required:
 
         return {
+
             "applicability": (
                 "CONDITIONAL"
             ),
@@ -330,24 +437,12 @@ def recalculate_applicability(
             ),
         }
 
-    if (
-        rule.get(
-            "zone_relevance"
-        )
-        == "OTHER_ZONE"
-    ):
-
-        return {
-            "applicability": (
-                "NOT_APPLICABLE"
-            ),
-
-            "reason": (
-                "현재 SITE 용도지역 불일치"
-            ),
-        }
+    # --------------------------------------------------------
+    # applicable
+    # --------------------------------------------------------
 
     return {
+
         "applicability": (
             "APPLICABLE"
         ),
@@ -373,6 +468,7 @@ def refresh_numeric_effect(
     )
 
     if not numeric_effect:
+
         return
 
     applicability = (
@@ -381,25 +477,43 @@ def refresh_numeric_effect(
         )
     )
 
-    if applicability == "NOT_APPLICABLE":
+    if (
+        applicability
+        == "NOT_APPLICABLE"
+    ):
 
-        status = "INACTIVE"
+        status = (
+            "INACTIVE"
+        )
 
-    elif applicability == "CONDITIONAL":
+    elif (
+        applicability
+        == "CONDITIONAL"
+    ):
 
-        status = "POTENTIAL_CONDITIONAL"
+        status = (
+            "POTENTIAL_CONDITIONAL"
+        )
 
-    elif applicability == "UNKNOWN":
+    elif (
+        applicability
+        == "UNKNOWN"
+    ):
 
-        status = "POTENTIAL_UNKNOWN"
+        status = (
+            "POTENTIAL_UNKNOWN"
+        )
 
     else:
 
-        status = "ACTIVE_CANDIDATE"
+        status = (
+            "ACTIVE_CANDIDATE"
+        )
 
     rule[
         "current_numeric_effect"
     ] = {
+
         "status": (
             status
         ),
@@ -457,7 +571,10 @@ def refresh_rule(
 
 def build_site_registry(
     downtown_data: Dict[str, Any],
-) -> Dict[str, Dict[str, Any]]:
+) -> Dict[
+    str,
+    Dict[str, Any]
+]:
 
     downtown_condition = (
         downtown_data.get(
@@ -469,6 +586,7 @@ def build_site_registry(
     return {
 
         "서울도심": {
+
             "type": (
                 "SITE"
             ),
@@ -497,9 +615,14 @@ def build_site_registry(
 # ============================================================
 
 def apply_branch_local_conditions(
-    rules: List[Dict[str, Any]],
+    rules: List[
+        Dict[str, Any]
+    ],
     site_zone: str,
-    site_registry: Dict[str, Dict[str, Any]],
+    site_registry: Dict[
+        str,
+        Dict[str, Any]
+    ],
 ) -> Dict[str, Any]:
 
     added = []
@@ -514,11 +637,13 @@ def apply_branch_local_conditions(
             rule,
             dict,
         ):
+
             continue
 
         if not rule.get(
             "numeric_effect"
         ):
+
             continue
 
         missing = (
@@ -544,9 +669,11 @@ def apply_branch_local_conditions(
         ]
 
         if not selected:
+
             continue
 
         existing_names = {
+
             safe_string(
                 condition.get(
                     "name"
@@ -577,6 +704,7 @@ def apply_branch_local_conditions(
 
                 reused.append(
                     {
+
                         "clause_index": (
                             rule.get(
                                 "clause_index"
@@ -593,21 +721,28 @@ def apply_branch_local_conditions(
 
             condition = (
                 build_branch_condition(
-                    predicate=predicate,
-                    site_zone=site_zone,
-                    site_registry=site_registry,
+                    predicate=(
+                        predicate
+                    ),
+                    site_zone=(
+                        site_zone
+                    ),
+                    site_registry=(
+                        site_registry
+                    ),
                 )
             )
 
             rule.setdefault(
                 "conditions",
-                []
+                [],
             ).append(
                 condition
             )
 
             added.append(
                 {
+
                     "clause_index": (
                         rule.get(
                             "clause_index"
@@ -635,6 +770,7 @@ def apply_branch_local_conditions(
         )
 
     return {
+
         "added": (
             added
         ),
@@ -656,9 +792,16 @@ def apply_branch_local_conditions(
 # ============================================================
 
 def apply_site_registry(
-    rules: List[Dict[str, Any]],
-    site_registry: Dict[str, Dict[str, Any]],
-) -> List[Dict[str, Any]]:
+    rules: List[
+        Dict[str, Any]
+    ],
+    site_registry: Dict[
+        str,
+        Dict[str, Any]
+    ],
+) -> List[
+    Dict[str, Any]
+]:
 
     repairs = []
 
@@ -668,19 +811,23 @@ def apply_site_registry(
             rule,
             dict,
         ):
+
             continue
 
         changed = False
 
-        for condition in rule.get(
-            "conditions",
-            [],
+        for condition in (
+            rule.get(
+                "conditions",
+                [],
+            )
         ):
 
             if not isinstance(
                 condition,
                 dict,
             ):
+
                 continue
 
             name = safe_string(
@@ -696,6 +843,7 @@ def apply_site_registry(
             )
 
             if not resolved:
+
                 continue
 
             previous_state = (
@@ -710,6 +858,7 @@ def apply_site_registry(
                     "state"
                 ]
             ):
+
                 continue
 
             condition[
@@ -738,6 +887,7 @@ def apply_site_registry(
 
             repairs.append(
                 {
+
                     "clause_index": (
                         rule.get(
                             "clause_index"
@@ -776,9 +926,17 @@ def apply_site_registry(
 # ============================================================
 
 def inject_profiles(
-    rules: List[Dict[str, Any]],
-    project_profile: Dict[str, str],
-    procedure_profile: Dict[str, str],
+    rules: List[
+        Dict[str, Any]
+    ],
+    project_profile: Dict[
+        str,
+        str
+    ],
+    procedure_profile: Dict[
+        str,
+        str
+    ],
 ) -> Dict[str, Any]:
 
     touched = []
@@ -791,6 +949,7 @@ def inject_profiles(
             rule,
             dict,
         ):
+
             continue
 
         before = (
@@ -801,15 +960,18 @@ def inject_profiles(
 
         matched = []
 
-        for condition in rule.get(
-            "conditions",
-            [],
+        for condition in (
+            rule.get(
+                "conditions",
+                [],
+            )
         ):
 
             if not isinstance(
                 condition,
                 dict,
             ):
+
                 continue
 
             name = safe_string(
@@ -818,9 +980,11 @@ def inject_profiles(
                 )
             )
 
-            condition_type = safe_string(
-                condition.get(
-                    "type"
+            condition_type = (
+                safe_string(
+                    condition.get(
+                        "type"
+                    )
                 )
             )
 
@@ -853,6 +1017,7 @@ def inject_profiles(
                 )
 
             if new_state is None:
+
                 continue
 
             previous_state = (
@@ -881,6 +1046,7 @@ def inject_profiles(
 
             matched.append(
                 {
+
                     "name": (
                         name
                     ),
@@ -900,6 +1066,7 @@ def inject_profiles(
             )
 
         if not matched:
+
             continue
 
         refresh_rule(
@@ -908,6 +1075,7 @@ def inject_profiles(
 
         touched.append(
             {
+
                 "clause_index": (
                     rule.get(
                         "clause_index"
@@ -929,6 +1097,7 @@ def inject_profiles(
 
             changes.append(
                 {
+
                     "clause_index": (
                         rule.get(
                             "clause_index"
@@ -954,8 +1123,14 @@ def inject_profiles(
             )
 
     return {
-        "touched": touched,
-        "changes": changes,
+
+        "touched": (
+            touched
+        ),
+
+        "changes": (
+            changes
+        ),
     }
 
 
@@ -968,7 +1143,10 @@ def build_numeric_guard_registry(
     disaster_data: Dict[str, Any],
     clause_205_data: Dict[str, Any],
     clause_250_data: Dict[str, Any],
-) -> Dict[int, Dict[str, Any]]:
+) -> Dict[
+    int,
+    Dict[str, Any]
+]:
 
     clause_4_resolution = (
         upper_data.get(
@@ -1017,6 +1195,7 @@ def build_numeric_guard_registry(
     return {
 
         4: {
+
             "allow_numeric": (
                 clause_4_resolution
                 == "CONFIRMED"
@@ -1032,6 +1211,7 @@ def build_numeric_guard_registry(
         },
 
         189: {
+
             "allow_numeric": (
                 clause_189_resolution
                 == "CONFIRMED"
@@ -1051,6 +1231,7 @@ def build_numeric_guard_registry(
         },
 
         205: {
+
             "allow_numeric": (
                 clause_205_resolution
                 == "APPLICABLE"
@@ -1066,6 +1247,7 @@ def build_numeric_guard_registry(
         },
 
         250: {
+
             "allow_numeric": (
                 clause_250_resolution.get(
                     "allow_numeric_effect"
@@ -1099,8 +1281,13 @@ def build_numeric_guard_registry(
 # ============================================================
 
 def apply_numeric_guards(
-    rules: List[Dict[str, Any]],
-    guards: Dict[int, Dict[str, Any]],
+    rules: List[
+        Dict[str, Any]
+    ],
+    guards: Dict[
+        int,
+        Dict[str, Any]
+    ],
 ) -> Dict[str, Any]:
 
     active = []
@@ -1115,11 +1302,13 @@ def apply_numeric_guards(
             rule,
             dict,
         ):
+
             continue
 
         if not rule.get(
             "numeric_effect"
         ):
+
             continue
 
         if (
@@ -1131,6 +1320,7 @@ def apply_numeric_guards(
             )
             != "ACTIVE_CANDIDATE"
         ):
+
             continue
 
         active.append(
@@ -1161,6 +1351,7 @@ def apply_numeric_guards(
 
             excluded.append(
                 {
+
                     "clause_index": (
                         clause_index
                     ),
@@ -1184,9 +1375,18 @@ def apply_numeric_guards(
         )
 
     return {
-        "active": active,
-        "excluded": excluded,
-        "retained": retained,
+
+        "active": (
+            active
+        ),
+
+        "excluded": (
+            excluded
+        ),
+
+        "retained": (
+            retained
+        ),
     }
 
 
@@ -1195,10 +1395,18 @@ def apply_numeric_guards(
 # ============================================================
 
 def aggregate_remaining_inputs(
-    rules: List[Dict[str, Any]],
-) -> Dict[str, List[Dict[str, Any]]]:
+    rules: List[
+        Dict[str, Any]
+    ],
+) -> Dict[
+    str,
+    List[
+        Dict[str, Any]
+    ]
+]:
 
     project = Counter()
+
     procedure = Counter()
 
     for rule in rules:
@@ -1207,17 +1415,21 @@ def aggregate_remaining_inputs(
             rule,
             dict,
         ):
+
             continue
 
-        for condition in rule.get(
-            "required_inputs",
-            [],
+        for condition in (
+            rule.get(
+                "required_inputs",
+                [],
+            )
         ):
 
             if not isinstance(
                 condition,
                 dict,
             ):
+
                 continue
 
             name = safe_string(
@@ -1226,27 +1438,38 @@ def aggregate_remaining_inputs(
                 )
             )
 
-            condition_type = safe_string(
-                condition.get(
-                    "type"
+            condition_type = (
+                safe_string(
+                    condition.get(
+                        "type"
+                    )
                 )
             )
 
-            if condition_type == "PROJECT":
+            if (
+                condition_type
+                == "PROJECT"
+            ):
 
                 project[
                     name
                 ] += 1
 
-            elif condition_type == "PROCEDURE":
+            elif (
+                condition_type
+                == "PROCEDURE"
+            ):
 
                 procedure[
                     name
                 ] += 1
 
     return {
+
         "project": [
+
             {
+
                 "name": (
                     name
                 ),
@@ -1265,7 +1488,9 @@ def aggregate_remaining_inputs(
         ],
 
         "procedure": [
+
             {
+
                 "name": (
                     name
                 ),
@@ -1286,6 +1511,436 @@ def aggregate_remaining_inputs(
 
 
 # ============================================================
+# zone transition safety
+# ============================================================
+
+def is_safe_zone_reactivation_rule(
+    rule: Dict[str, Any],
+) -> bool:
+
+    law_name = safe_string(
+        rule.get(
+            "law_name"
+        )
+    )
+
+    rule_title = safe_string(
+        rule.get(
+            "rule_title"
+        )
+    )
+
+    return (
+        (
+            law_name,
+            rule_title,
+        )
+        in SAFE_ZONE_REACTIVATION_RULES
+    )
+
+
+# ============================================================
+# zone relevance transition
+# ============================================================
+
+def apply_zone_relevance_transition(
+    rule: Dict[str, Any],
+    old_zone_relevance: str,
+    new_zone_relevance: str,
+) -> Dict[str, Any]:
+
+    updated = copy.deepcopy(
+        rule
+    )
+
+    old_zone_relevance = (
+        safe_string(
+            old_zone_relevance
+        )
+    )
+
+    new_zone_relevance = (
+        safe_string(
+            new_zone_relevance
+        )
+    )
+
+    old_applicability = (
+        safe_string(
+            updated.get(
+                "applicability"
+            )
+        )
+    )
+
+    old_reason = (
+        safe_string(
+            updated.get(
+                "applicability_reason"
+            )
+        )
+    )
+
+    # ========================================================
+    # A.
+    # 기존 SITE에서는 적용 zone이었지만
+    # 현재 SITE에서는 OTHER_ZONE
+    # ========================================================
+
+    if (
+        old_zone_relevance
+        in {
+            "DIRECT",
+            "GROUP",
+        }
+        and new_zone_relevance
+        == "OTHER_ZONE"
+    ):
+
+        updated[
+            "applicability"
+        ] = (
+            "NOT_APPLICABLE"
+        )
+
+        updated[
+            "applicability_reason"
+        ] = (
+            "현재 SITE 용도지역 불일치"
+        )
+
+        updated[
+            "zone_transition"
+        ] = {
+
+            "status": (
+                "DEACTIVATED_BY_ZONE"
+            ),
+
+            "before": (
+                old_zone_relevance
+            ),
+
+            "after": (
+                new_zone_relevance
+            ),
+
+            "previous_applicability": (
+                old_applicability
+            ),
+        }
+
+        refresh_numeric_effect(
+            updated
+        )
+
+        return updated
+
+    # ========================================================
+    # B.
+    # 기존 SITE에서는 OTHER_ZONE
+    # 현재 SITE에서는 DIRECT / GROUP
+    # ========================================================
+
+    if (
+        old_zone_relevance
+        == "OTHER_ZONE"
+        and new_zone_relevance
+        in {
+            "DIRECT",
+            "GROUP",
+        }
+    ):
+
+        # ----------------------------------------------------
+        # 기존 제외사유가 실제 zone mismatch였는지 확인
+        # ----------------------------------------------------
+
+        was_zone_only_exclusion = (
+            old_applicability
+            == "NOT_APPLICABLE"
+            and "용도지역 불일치"
+            in old_reason
+        )
+
+        if not was_zone_only_exclusion:
+
+            updated[
+                "zone_transition"
+            ] = {
+
+                "status": (
+                    "MATCHED_BUT_ORIGINAL_EXCLUSION_PRESERVED"
+                ),
+
+                "before": (
+                    old_zone_relevance
+                ),
+
+                "after": (
+                    new_zone_relevance
+                ),
+            }
+
+            return updated
+
+        # ----------------------------------------------------
+        # 검증된 용도지역 기본/reference rule만
+        # 재활성화 허용
+        # ----------------------------------------------------
+
+        if (
+            is_safe_zone_reactivation_rule(
+                updated
+            )
+        ):
+
+            refresh_condition_groups(
+                updated
+            )
+
+            recalculated = (
+                recalculate_applicability(
+                    updated
+                )
+            )
+
+            updated[
+                "applicability"
+            ] = (
+                recalculated[
+                    "applicability"
+                ]
+            )
+
+            updated[
+                "applicability_reason"
+            ] = (
+                recalculated[
+                    "reason"
+                ]
+            )
+
+            updated[
+                "zone_transition"
+            ] = {
+
+                "status": (
+                    "REACTIVATED_SAFE_ZONE_REFERENCE"
+                ),
+
+                "before": (
+                    old_zone_relevance
+                ),
+
+                "after": (
+                    new_zone_relevance
+                ),
+            }
+
+            refresh_numeric_effect(
+                updated
+            )
+
+            return updated
+
+        # ----------------------------------------------------
+        # 아직 추가 문맥이 검증되지 않은 rule은
+        # 자동 활성화하지 않는다.
+        # ----------------------------------------------------
+
+        updated[
+            "applicability"
+        ] = (
+            old_applicability
+        )
+
+        updated[
+            "applicability_reason"
+        ] = (
+            "현재 SITE 용도지역은 일치하나 "
+            "추가 적용요건 재검증 전까지 "
+            "기존 판정 유지"
+        )
+
+        updated[
+            "zone_transition"
+        ] = {
+
+            "status": (
+                "REACTIVATION_DEFERRED"
+            ),
+
+            "before": (
+                old_zone_relevance
+            ),
+
+            "after": (
+                new_zone_relevance
+            ),
+        }
+
+        return updated
+
+    # ========================================================
+    # C.
+    # 기타 변화
+    # ========================================================
+
+    updated[
+        "zone_transition"
+    ] = {
+
+        "status": (
+            "NO_APPLICABILITY_TRANSITION"
+        ),
+
+        "before": (
+            old_zone_relevance
+        ),
+
+        "after": (
+            new_zone_relevance
+        ),
+    }
+
+    return updated
+
+
+# ============================================================
+# zone relevance refresh
+# ============================================================
+
+def refresh_rule_zone_relevance(
+    rule: Dict[str, Any],
+    site_zone: str,
+) -> Dict[str, Any]:
+
+    own_text = safe_string(
+        rule.get(
+            "text"
+        )
+    )
+
+    inherited_context = (
+        safe_string(
+            rule.get(
+                "inherited_text"
+            )
+        )
+    )
+
+    old_zone_relevance = (
+        safe_string(
+            rule.get(
+                "zone_relevance"
+            )
+        )
+    )
+
+    result = (
+        classify_zone_relevance(
+            target_zone=(
+                site_zone
+            ),
+
+            own_text=(
+                own_text
+            ),
+
+            inherited_context=(
+                inherited_context
+            ),
+
+            law_name=(
+                safe_string(
+                    rule.get(
+                        "law_name"
+                    )
+                )
+            ),
+
+            rule_title=(
+                safe_string(
+                    rule.get(
+                        "rule_title"
+                    )
+                )
+            ),
+        )
+    )
+
+    new_zone_relevance = (
+        safe_string(
+            result.get(
+                "status"
+            )
+        )
+    )
+
+    refreshed = copy.deepcopy(
+        rule
+    )
+
+    refreshed[
+        "zone_relevance"
+    ] = (
+        new_zone_relevance
+    )
+
+    refreshed[
+        "zone_relevance_reason"
+    ] = (
+        result.get(
+            "reason"
+        )
+    )
+
+    refreshed[
+        "zone_relevance_zones"
+    ] = (
+        result.get(
+            "zones",
+            [],
+        )
+    )
+
+    refreshed[
+        "zone_relevance_groups"
+    ] = (
+        result.get(
+            "groups",
+            [],
+        )
+    )
+
+    refreshed[
+        "zone_relevance_matched_groups"
+    ] = (
+        result.get(
+            "matched_groups",
+            [],
+        )
+    )
+
+    return (
+        apply_zone_relevance_transition(
+            rule=(
+                refreshed
+            ),
+
+            old_zone_relevance=(
+                old_zone_relevance
+            ),
+
+            new_zone_relevance=(
+                new_zone_relevance
+            ),
+        )
+    )
+
+
+# ============================================================
 # main API
 # ============================================================
 
@@ -1295,6 +1950,12 @@ def evaluate_site_rules(
     ] = None,
     procedure_profile: Optional[
         Dict[str, str]
+    ] = None,
+    base_numeric_context: Optional[
+        Dict[str, Any]
+    ] = None,
+    site_zone_context: Optional[
+        str
     ] = None,
 ) -> Dict[str, Any]:
 
@@ -1306,6 +1967,17 @@ def evaluate_site_rules(
     procedure_profile = (
         procedure_profile
         or {}
+    )
+
+    base_numeric_context = (
+        base_numeric_context
+        or {}
+    )
+
+    site_zone_context = (
+        safe_string(
+            site_zone_context
+        )
     )
 
     validate_profile(
@@ -1361,7 +2033,12 @@ def evaluate_site_rules(
         )
     )
 
-    if len(rules) != 314:
+    if (
+        len(
+            rules
+        )
+        != 314
+    ):
 
         raise ValueError(
             f"rule count 오류: "
@@ -1381,14 +2058,124 @@ def evaluate_site_rules(
     )
 
     # ========================================================
-    # site zone
+    # current SITE zone
     # ========================================================
 
     site_zone = (
-        base_numeric.get(
-            "site_zone"
+        site_zone_context
+        or safe_string(
+            base_numeric.get(
+                "site_zone"
+            )
         )
     )
+
+    if not site_zone:
+
+        raise ValueError(
+            "SITE 용도지역을 결정할 수 없습니다."
+        )
+
+    # ========================================================
+    # dynamic zone relevance
+    # ========================================================
+
+    rules = [
+
+        refresh_rule_zone_relevance(
+            rule=(
+                rule
+            ),
+            site_zone=(
+                site_zone
+            ),
+        )
+
+        if isinstance(
+            rule,
+            dict,
+        )
+
+        else rule
+
+        for rule
+        in rules
+    ]
+
+    # ========================================================
+    # zone transition audit
+    # ========================================================
+
+    zone_transition_summary = Counter()
+
+    zone_transition_changes = []
+
+    for rule in rules:
+
+        if not isinstance(
+            rule,
+            dict,
+        ):
+
+            continue
+
+        transition = (
+            rule.get(
+                "zone_transition",
+                {},
+            )
+        )
+
+        status = safe_string(
+            transition.get(
+                "status"
+            )
+        )
+
+        if status:
+
+            zone_transition_summary[
+                status
+            ] += 1
+
+        if (
+            status
+            and status
+            != "NO_APPLICABILITY_TRANSITION"
+        ):
+
+            zone_transition_changes.append(
+                {
+
+                    "clause_index": (
+                        rule.get(
+                            "clause_index"
+                        )
+                    ),
+
+                    "rule_title": (
+                        rule.get(
+                            "rule_title"
+                        )
+                    ),
+
+                    "zone_relevance": (
+                        rule.get(
+                            "zone_relevance"
+                        )
+                    ),
+
+                    "applicability": (
+                        rule.get(
+                            "applicability"
+                        )
+                    ),
+
+                    "transition": (
+                        transition
+                    ),
+                }
+            )
 
     # ========================================================
     # registry
@@ -1406,9 +2193,17 @@ def evaluate_site_rules(
 
     branch_result = (
         apply_branch_local_conditions(
-            rules=rules,
-            site_zone=site_zone,
-            site_registry=site_registry,
+            rules=(
+                rules
+            ),
+
+            site_zone=(
+                site_zone
+            ),
+
+            site_registry=(
+                site_registry
+            ),
         )
     )
 
@@ -1430,8 +2225,13 @@ def evaluate_site_rules(
 
     site_repairs = (
         apply_site_registry(
-            rules,
-            site_registry,
+            rules=(
+                rules
+            ),
+
+            site_registry=(
+                site_registry
+            ),
         )
     )
 
@@ -1441,9 +2241,17 @@ def evaluate_site_rules(
 
     injection = (
         inject_profiles(
-            rules=rules,
-            project_profile=project_profile,
-            procedure_profile=procedure_profile,
+            rules=(
+                rules
+            ),
+
+            project_profile=(
+                project_profile
+            ),
+
+            procedure_profile=(
+                procedure_profile
+            ),
         )
     )
 
@@ -1465,17 +2273,33 @@ def evaluate_site_rules(
 
     numeric_guards = (
         build_numeric_guard_registry(
-            upper_data=upper_data,
-            disaster_data=disaster_data,
-            clause_205_data=clause_205_data,
-            clause_250_data=clause_250_data,
+            upper_data=(
+                upper_data
+            ),
+
+            disaster_data=(
+                disaster_data
+            ),
+
+            clause_205_data=(
+                clause_205_data
+            ),
+
+            clause_250_data=(
+                clause_250_data
+            ),
         )
     )
 
     numeric_guard_result = (
         apply_numeric_guards(
-            rules,
-            numeric_guards,
+            rules=(
+                rules
+            ),
+
+            guards=(
+                numeric_guards
+            ),
         )
     )
 
@@ -1490,11 +2314,13 @@ def evaluate_site_rules(
     }
 
     retained_direct = [
+
         rule
         for rule
         in numeric_guard_result[
             "retained"
         ]
+
         if int(
             rule.get(
                 "clause_index"
@@ -1514,25 +2340,55 @@ def evaluate_site_rules(
         )
     )
 
-    base_bcr = float(
-        base_regulation.get(
+    dynamic_bcr = (
+        base_numeric_context.get(
             "building_coverage_ratio",
             {},
         ).get(
-            "value",
-            50.0,
+            "value"
+        )
+    )
+
+    dynamic_far = (
+        base_numeric_context.get(
+            "floor_area_ratio",
+            {},
+        ).get(
+            "value"
+        )
+    )
+
+    base_bcr = float(
+        dynamic_bcr
+        if dynamic_bcr is not None
+        else (
+            base_regulation.get(
+                "building_coverage_ratio",
+                {},
+            ).get(
+                "value",
+                50.0,
+            )
         )
     )
 
     base_far = float(
-        base_regulation.get(
-            "floor_area_ratio",
-            {},
-        ).get(
-            "value",
-            250.0,
+        dynamic_far
+        if dynamic_far is not None
+        else (
+            base_regulation.get(
+                "floor_area_ratio",
+                {},
+            ).get(
+                "value",
+                250.0,
+            )
         )
     )
+
+    # ========================================================
+    # numeric resolution
+    # ========================================================
 
     if retained_direct:
 
@@ -1541,6 +2397,7 @@ def evaluate_site_rules(
         )
 
         confirmed_bcr = None
+
         confirmed_far = None
 
     else:
@@ -1558,7 +2415,7 @@ def evaluate_site_rules(
         )
 
     # ========================================================
-    # transitions
+    # PROJECT / PROCEDURE transitions
     # ========================================================
 
     transitions = Counter(
@@ -1570,6 +2427,7 @@ def evaluate_site_rules(
                 "after"
             ],
         )
+
         for item
         in injection[
             "changes"
@@ -1623,16 +2481,18 @@ def evaluate_site_rules(
     return {
 
         "pipeline": {
+
             "ready": (
                 ready
             ),
 
             "version": (
-                "C-10-5C-2"
+                "C-13-5-ZONE-CONTEXT"
             ),
         },
 
         "input": {
+
             "project": (
                 project_profile
             ),
@@ -1640,12 +2500,16 @@ def evaluate_site_rules(
             "procedure": (
                 procedure_profile
             ),
+
+            "site_zone": (
+                site_zone
+            ),
         },
 
         "site": (
             site_complete.get(
                 "site",
-                {}
+                {},
             )
         ),
 
@@ -1659,7 +2523,35 @@ def evaluate_site_rules(
             )
         ),
 
+        # ----------------------------------------------------
+        # dynamic zone evaluation
+        # ----------------------------------------------------
+
+        "zone_evaluation": {
+
+            "site_zone": (
+                site_zone
+            ),
+
+            "transition_summary": (
+                dict(
+                    zone_transition_summary
+                )
+            ),
+
+            "changed_rule_count": (
+                len(
+                    zone_transition_changes
+                )
+            ),
+
+            "changes": (
+                zone_transition_changes
+            ),
+        },
+
         "branch_overlay": {
+
             "added_condition_count": (
                 len(
                     branch_result[
@@ -1690,6 +2582,7 @@ def evaluate_site_rules(
         ),
 
         "dynamic_injection": {
+
             "touched_rule_count": (
                 len(
                     injection[
@@ -1707,6 +2600,7 @@ def evaluate_site_rules(
             ),
 
             "transitions": {
+
                 f"{before} -> {after}": (
                     count
                 )
@@ -1732,6 +2626,7 @@ def evaluate_site_rules(
         ),
 
         "numeric": {
+
             "active_before_guard": (
                 len(
                     numeric_guard_result[
@@ -1763,9 +2658,11 @@ def evaluate_site_rules(
             ),
 
             "retained_clause_indexes": [
+
                 rule.get(
                     "clause_index"
                 )
+
                 for rule
                 in numeric_guard_result[
                     "retained"
@@ -1789,6 +2686,27 @@ def evaluate_site_rules(
             "floor_area_ratio": (
                 confirmed_far
             ),
+
+            "base_context": {
+
+                "site_zone": (
+                    site_zone
+                ),
+
+                "building_coverage_ratio": (
+                    base_bcr
+                ),
+
+                "floor_area_ratio": (
+                    base_far
+                ),
+
+                "dynamic_context_used": (
+                    bool(
+                        base_numeric_context
+                    )
+                ),
+            },
         },
 
         "remaining_inputs": (
@@ -1796,6 +2714,7 @@ def evaluate_site_rules(
         ),
 
         "external_dependencies": {
+
             "historical": (
                 historical_dependency
             ),

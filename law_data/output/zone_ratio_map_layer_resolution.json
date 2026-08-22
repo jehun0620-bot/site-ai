@@ -1,0 +1,4071 @@
+{
+  "step": "STEP 17-21-C-13-4E Zone Ratio Map Layer Resolution",
+  "source": "D:\\site-ai\\law_data\\output\\law_zone_ratio_map.json",
+  "zones": [
+    "제1종전용주거지역",
+    "제2종전용주거지역",
+    "제1종일반주거지역",
+    "제2종일반주거지역",
+    "제3종일반주거지역",
+    "준주거지역",
+    "중심상업지역",
+    "일반상업지역",
+    "근린상업지역",
+    "유통상업지역",
+    "전용공업지역",
+    "일반공업지역",
+    "준공업지역",
+    "보전녹지지역",
+    "생산녹지지역",
+    "자연녹지지역"
+  ],
+  "result_by_zone": {
+    "제1종전용주거지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          50.0
+        ],
+        "national_values": [
+          50.0
+        ],
+        "seoul_selected": {
+          "zone": "제1종전용주거지역",
+          "minimum": null,
+          "maximum": 50.0,
+          "raw_values": [
+            50.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "제1종전용주거지역: ",
+              "after": "2."
+            }
+          ],
+          "segment": "제1종전용주거지역: 50퍼센트2.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "제1종전용주거지역",
+          "minimum": null,
+          "maximum": 50.0,
+          "raw_values": [
+            50.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "제1종전용주거지역 : ",
+              "after": " 2."
+            }
+          ],
+          "segment": "제1종전용주거지역 : 50퍼센트 이하 2.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "제1종전용주거지역",
+            "minimum": null,
+            "maximum": 50.0,
+            "raw_values": [
+              50.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "제1종전용주거지역 : ",
+                "after": " 2."
+              }
+            ],
+            "segment": "제1종전용주거지역 : 50퍼센트 이하 2.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "제1종전용주거지역",
+            "minimum": null,
+            "maximum": 50.0,
+            "raw_values": [
+              50.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "제1종전용주거지역: ",
+                "after": "2."
+              }
+            ],
+            "segment": "제1종전용주거지역: 50퍼센트2.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          100.0
+        ],
+        "national_values": [
+          100.0
+        ],
+        "seoul_selected": {
+          "zone": "제1종전용주거지역",
+          "minimum": null,
+          "maximum": 100.0,
+          "raw_values": [
+            100.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "100퍼센트",
+              "value": 100.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "제1종전용주거지역: ",
+              "after": "2."
+            }
+          ],
+          "segment": "제1종전용주거지역: 100퍼센트2.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "제1종전용주거지역",
+          "minimum": 50.0,
+          "maximum": 100.0,
+          "raw_values": [
+            50.0,
+            100.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "제1종전용주거지역 : ",
+              "after": " 100퍼센트 이하 2."
+            },
+            {
+              "raw": "100퍼센트",
+              "value": 100.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "1종전용주거지역 : 50퍼센트 이상 ",
+              "after": " 2."
+            }
+          ],
+          "segment": "제1종전용주거지역 : 50퍼센트 이상 100퍼센트 이하 2.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "제1종전용주거지역",
+            "minimum": 50.0,
+            "maximum": 100.0,
+            "raw_values": [
+              50.0,
+              100.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "제1종전용주거지역 : ",
+                "after": " 100퍼센트 이하 2."
+              },
+              {
+                "raw": "100퍼센트",
+                "value": 100.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "1종전용주거지역 : 50퍼센트 이상 ",
+                "after": " 2."
+              }
+            ],
+            "segment": "제1종전용주거지역 : 50퍼센트 이상 100퍼센트 이하 2.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "제1종전용주거지역",
+            "minimum": null,
+            "maximum": 100.0,
+            "raw_values": [
+              100.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "100퍼센트",
+                "value": 100.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "제1종전용주거지역: ",
+                "after": "2."
+              }
+            ],
+            "segment": "제1종전용주거지역: 100퍼센트2.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "제2종전용주거지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          40.0
+        ],
+        "national_values": [
+          50.0
+        ],
+        "seoul_selected": {
+          "zone": "제2종전용주거지역",
+          "minimum": null,
+          "maximum": 40.0,
+          "raw_values": [
+            40.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "40퍼센트",
+              "value": 40.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "제2종전용주거지역: ",
+              "after": "3."
+            }
+          ],
+          "segment": "제2종전용주거지역: 40퍼센트3.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "제2종전용주거지역",
+          "minimum": null,
+          "maximum": 50.0,
+          "raw_values": [
+            50.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "제2종전용주거지역 : ",
+              "after": " 3."
+            }
+          ],
+          "segment": "제2종전용주거지역 : 50퍼센트 이하 3.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "제2종전용주거지역",
+            "minimum": null,
+            "maximum": 50.0,
+            "raw_values": [
+              50.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "제2종전용주거지역 : ",
+                "after": " 3."
+              }
+            ],
+            "segment": "제2종전용주거지역 : 50퍼센트 이하 3.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "제2종전용주거지역",
+            "minimum": null,
+            "maximum": 40.0,
+            "raw_values": [
+              40.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "40퍼센트",
+                "value": 40.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "제2종전용주거지역: ",
+                "after": "3."
+              }
+            ],
+            "segment": "제2종전용주거지역: 40퍼센트3.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          120.0
+        ],
+        "national_values": [
+          150.0
+        ],
+        "seoul_selected": {
+          "zone": "제2종전용주거지역",
+          "minimum": null,
+          "maximum": 120.0,
+          "raw_values": [
+            120.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "120퍼센트",
+              "value": 120.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "제2종전용주거지역: ",
+              "after": "3."
+            }
+          ],
+          "segment": "제2종전용주거지역: 120퍼센트3.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "제2종전용주거지역",
+          "minimum": 50.0,
+          "maximum": 150.0,
+          "raw_values": [
+            50.0,
+            150.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "제2종전용주거지역 : ",
+              "after": " 150퍼센트 이하 3."
+            },
+            {
+              "raw": "150퍼센트",
+              "value": 150.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "2종전용주거지역 : 50퍼센트 이상 ",
+              "after": " 3."
+            }
+          ],
+          "segment": "제2종전용주거지역 : 50퍼센트 이상 150퍼센트 이하 3.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "제2종전용주거지역",
+            "minimum": 50.0,
+            "maximum": 150.0,
+            "raw_values": [
+              50.0,
+              150.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "제2종전용주거지역 : ",
+                "after": " 150퍼센트 이하 3."
+              },
+              {
+                "raw": "150퍼센트",
+                "value": 150.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "2종전용주거지역 : 50퍼센트 이상 ",
+                "after": " 3."
+              }
+            ],
+            "segment": "제2종전용주거지역 : 50퍼센트 이상 150퍼센트 이하 3.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "제2종전용주거지역",
+            "minimum": null,
+            "maximum": 120.0,
+            "raw_values": [
+              120.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "120퍼센트",
+                "value": 120.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "제2종전용주거지역: ",
+                "after": "3."
+              }
+            ],
+            "segment": "제2종전용주거지역: 120퍼센트3.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "제1종일반주거지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          60.0
+        ],
+        "national_values": [
+          60.0
+        ],
+        "seoul_selected": {
+          "zone": "제1종일반주거지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "제1종일반주거지역: ",
+              "after": "4."
+            }
+          ],
+          "segment": "제1종일반주거지역: 60퍼센트4.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "제1종일반주거지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "제1종일반주거지역 : ",
+              "after": " 4."
+            }
+          ],
+          "segment": "제1종일반주거지역 : 60퍼센트 이하 4.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "제1종일반주거지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "제1종일반주거지역 : ",
+                "after": " 4."
+              }
+            ],
+            "segment": "제1종일반주거지역 : 60퍼센트 이하 4.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "제1종일반주거지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "제1종일반주거지역: ",
+                "after": "4."
+              }
+            ],
+            "segment": "제1종일반주거지역: 60퍼센트4.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          150.0
+        ],
+        "national_values": [
+          200.0
+        ],
+        "seoul_selected": {
+          "zone": "제1종일반주거지역",
+          "minimum": null,
+          "maximum": 150.0,
+          "raw_values": [
+            150.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "150퍼센트",
+              "value": 150.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "제1종일반주거지역: ",
+              "after": "4."
+            }
+          ],
+          "segment": "제1종일반주거지역: 150퍼센트4.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "제1종일반주거지역",
+          "minimum": 100.0,
+          "maximum": 200.0,
+          "raw_values": [
+            100.0,
+            200.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "100퍼센트",
+              "value": 100.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "제1종일반주거지역 : ",
+              "after": " 200퍼센트 이하 4."
+            },
+            {
+              "raw": "200퍼센트",
+              "value": 200.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "종일반주거지역 : 100퍼센트 이상 ",
+              "after": " 4."
+            }
+          ],
+          "segment": "제1종일반주거지역 : 100퍼센트 이상 200퍼센트 이하 4.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "제1종일반주거지역",
+            "minimum": 100.0,
+            "maximum": 200.0,
+            "raw_values": [
+              100.0,
+              200.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "100퍼센트",
+                "value": 100.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "제1종일반주거지역 : ",
+                "after": " 200퍼센트 이하 4."
+              },
+              {
+                "raw": "200퍼센트",
+                "value": 200.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "종일반주거지역 : 100퍼센트 이상 ",
+                "after": " 4."
+              }
+            ],
+            "segment": "제1종일반주거지역 : 100퍼센트 이상 200퍼센트 이하 4.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "제1종일반주거지역",
+            "minimum": null,
+            "maximum": 150.0,
+            "raw_values": [
+              150.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "150퍼센트",
+                "value": 150.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "제1종일반주거지역: ",
+                "after": "4."
+              }
+            ],
+            "segment": "제1종일반주거지역: 150퍼센트4.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "제2종일반주거지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          60.0
+        ],
+        "national_values": [
+          60.0
+        ],
+        "seoul_selected": {
+          "zone": "제2종일반주거지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "제2종일반주거지역: ",
+              "after": "5."
+            }
+          ],
+          "segment": "제2종일반주거지역: 60퍼센트5.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "제2종일반주거지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "제2종일반주거지역 : ",
+              "after": " 5."
+            }
+          ],
+          "segment": "제2종일반주거지역 : 60퍼센트 이하 5.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "제2종일반주거지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "제2종일반주거지역 : ",
+                "after": " 5."
+              }
+            ],
+            "segment": "제2종일반주거지역 : 60퍼센트 이하 5.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "제2종일반주거지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "제2종일반주거지역: ",
+                "after": "5."
+              }
+            ],
+            "segment": "제2종일반주거지역: 60퍼센트5.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          200.0
+        ],
+        "national_values": [
+          250.0
+        ],
+        "seoul_selected": {
+          "zone": "제2종일반주거지역",
+          "minimum": null,
+          "maximum": 200.0,
+          "raw_values": [
+            200.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "200퍼센트",
+              "value": 200.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "제2종일반주거지역: ",
+              "after": "5."
+            }
+          ],
+          "segment": "제2종일반주거지역: 200퍼센트5.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "제2종일반주거지역",
+          "minimum": 100.0,
+          "maximum": 250.0,
+          "raw_values": [
+            100.0,
+            250.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "100퍼센트",
+              "value": 100.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "제2종일반주거지역 : ",
+              "after": " 250퍼센트 이하 5."
+            },
+            {
+              "raw": "250퍼센트",
+              "value": 250.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "종일반주거지역 : 100퍼센트 이상 ",
+              "after": " 5."
+            }
+          ],
+          "segment": "제2종일반주거지역 : 100퍼센트 이상 250퍼센트 이하 5.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "제2종일반주거지역",
+            "minimum": 100.0,
+            "maximum": 250.0,
+            "raw_values": [
+              100.0,
+              250.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "100퍼센트",
+                "value": 100.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "제2종일반주거지역 : ",
+                "after": " 250퍼센트 이하 5."
+              },
+              {
+                "raw": "250퍼센트",
+                "value": 250.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "종일반주거지역 : 100퍼센트 이상 ",
+                "after": " 5."
+              }
+            ],
+            "segment": "제2종일반주거지역 : 100퍼센트 이상 250퍼센트 이하 5.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "제2종일반주거지역",
+            "minimum": null,
+            "maximum": 200.0,
+            "raw_values": [
+              200.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "200퍼센트",
+                "value": 200.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "제2종일반주거지역: ",
+                "after": "5."
+              }
+            ],
+            "segment": "제2종일반주거지역: 200퍼센트5.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "제3종일반주거지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          50.0
+        ],
+        "national_values": [
+          50.0
+        ],
+        "seoul_selected": {
+          "zone": "제3종일반주거지역",
+          "minimum": null,
+          "maximum": 50.0,
+          "raw_values": [
+            50.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "제3종일반주거지역: ",
+              "after": "6."
+            }
+          ],
+          "segment": "제3종일반주거지역: 50퍼센트6.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "제3종일반주거지역",
+          "minimum": null,
+          "maximum": 50.0,
+          "raw_values": [
+            50.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "제3종일반주거지역 : ",
+              "after": " 6."
+            }
+          ],
+          "segment": "제3종일반주거지역 : 50퍼센트 이하 6.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "제3종일반주거지역",
+            "minimum": null,
+            "maximum": 50.0,
+            "raw_values": [
+              50.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "제3종일반주거지역 : ",
+                "after": " 6."
+              }
+            ],
+            "segment": "제3종일반주거지역 : 50퍼센트 이하 6.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "제3종일반주거지역",
+            "minimum": null,
+            "maximum": 50.0,
+            "raw_values": [
+              50.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "제3종일반주거지역: ",
+                "after": "6."
+              }
+            ],
+            "segment": "제3종일반주거지역: 50퍼센트6.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          250.0
+        ],
+        "national_values": [
+          300.0
+        ],
+        "seoul_selected": {
+          "zone": "제3종일반주거지역",
+          "minimum": null,
+          "maximum": 250.0,
+          "raw_values": [
+            250.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "250퍼센트",
+              "value": 250.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "제3종일반주거지역: ",
+              "after": "6."
+            }
+          ],
+          "segment": "제3종일반주거지역: 250퍼센트6.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "제3종일반주거지역",
+          "minimum": 100.0,
+          "maximum": 300.0,
+          "raw_values": [
+            100.0,
+            300.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "100퍼센트",
+              "value": 100.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "제3종일반주거지역 : ",
+              "after": " 300퍼센트 이하 6."
+            },
+            {
+              "raw": "300퍼센트",
+              "value": 300.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "종일반주거지역 : 100퍼센트 이상 ",
+              "after": " 6."
+            }
+          ],
+          "segment": "제3종일반주거지역 : 100퍼센트 이상 300퍼센트 이하 6.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "제3종일반주거지역",
+            "minimum": 100.0,
+            "maximum": 300.0,
+            "raw_values": [
+              100.0,
+              300.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "100퍼센트",
+                "value": 100.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "제3종일반주거지역 : ",
+                "after": " 300퍼센트 이하 6."
+              },
+              {
+                "raw": "300퍼센트",
+                "value": 300.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "종일반주거지역 : 100퍼센트 이상 ",
+                "after": " 6."
+              }
+            ],
+            "segment": "제3종일반주거지역 : 100퍼센트 이상 300퍼센트 이하 6.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "제3종일반주거지역",
+            "minimum": null,
+            "maximum": 250.0,
+            "raw_values": [
+              250.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "250퍼센트",
+                "value": 250.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "제3종일반주거지역: ",
+                "after": "6."
+              }
+            ],
+            "segment": "제3종일반주거지역: 250퍼센트6.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "준주거지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          60.0
+        ],
+        "national_values": [
+          70.0
+        ],
+        "seoul_selected": {
+          "zone": "준주거지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "준주거지역: ",
+              "after": "7."
+            }
+          ],
+          "segment": "준주거지역: 60퍼센트7.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "준주거지역",
+          "minimum": null,
+          "maximum": 70.0,
+          "raw_values": [
+            70.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "70퍼센트",
+              "value": 70.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "준주거지역 : ",
+              "after": " 7."
+            }
+          ],
+          "segment": "준주거지역 : 70퍼센트 이하 7.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "준주거지역",
+            "minimum": null,
+            "maximum": 70.0,
+            "raw_values": [
+              70.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "70퍼센트",
+                "value": 70.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "준주거지역 : ",
+                "after": " 7."
+              }
+            ],
+            "segment": "준주거지역 : 70퍼센트 이하 7.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "준주거지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "준주거지역: ",
+                "after": "7."
+              }
+            ],
+            "segment": "준주거지역: 60퍼센트7.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          400.0
+        ],
+        "national_values": [
+          500.0
+        ],
+        "seoul_selected": {
+          "zone": "준주거지역",
+          "minimum": null,
+          "maximum": 400.0,
+          "raw_values": [
+            400.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "400퍼센트",
+              "value": 400.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "준주거지역: ",
+              "after": "7."
+            }
+          ],
+          "segment": "준주거지역: 400퍼센트7.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "준주거지역",
+          "minimum": 200.0,
+          "maximum": 500.0,
+          "raw_values": [
+            200.0,
+            500.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "200퍼센트",
+              "value": 200.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "준주거지역 : ",
+              "after": " 500퍼센트 이하 7."
+            },
+            {
+              "raw": "500퍼센트",
+              "value": 500.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "준주거지역 : 200퍼센트 이상 ",
+              "after": " 7."
+            }
+          ],
+          "segment": "준주거지역 : 200퍼센트 이상 500퍼센트 이하 7.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "준주거지역",
+            "minimum": 200.0,
+            "maximum": 500.0,
+            "raw_values": [
+              200.0,
+              500.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "200퍼센트",
+                "value": 200.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "준주거지역 : ",
+                "after": " 500퍼센트 이하 7."
+              },
+              {
+                "raw": "500퍼센트",
+                "value": 500.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "준주거지역 : 200퍼센트 이상 ",
+                "after": " 7."
+              }
+            ],
+            "segment": "준주거지역 : 200퍼센트 이상 500퍼센트 이하 7.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "준주거지역",
+            "minimum": null,
+            "maximum": 400.0,
+            "raw_values": [
+              400.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "400퍼센트",
+                "value": 400.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "준주거지역: ",
+                "after": "7."
+              }
+            ],
+            "segment": "준주거지역: 400퍼센트7.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "중심상업지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          60.0
+        ],
+        "national_values": [
+          90.0
+        ],
+        "seoul_selected": {
+          "zone": "중심상업지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "중심상업지역: ",
+              "after": "8."
+            }
+          ],
+          "segment": "중심상업지역: 60퍼센트8.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "중심상업지역",
+          "minimum": null,
+          "maximum": 90.0,
+          "raw_values": [
+            90.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "90퍼센트",
+              "value": 90.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "중심상업지역 : ",
+              "after": " 8."
+            }
+          ],
+          "segment": "중심상업지역 : 90퍼센트 이하 8.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "중심상업지역",
+            "minimum": null,
+            "maximum": 90.0,
+            "raw_values": [
+              90.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "90퍼센트",
+                "value": 90.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "중심상업지역 : ",
+                "after": " 8."
+              }
+            ],
+            "segment": "중심상업지역 : 90퍼센트 이하 8.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "중심상업지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "중심상업지역: ",
+                "after": "8."
+              }
+            ],
+            "segment": "중심상업지역: 60퍼센트8.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          1000.0
+        ],
+        "national_values": [
+          1500.0
+        ],
+        "seoul_selected": {
+          "zone": "중심상업지역",
+          "minimum": null,
+          "maximum": 1000.0,
+          "raw_values": [
+            1000.0,
+            800.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "1천퍼센트",
+              "value": 1000.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "중심상업지역: ",
+              "after": "(단, 서울도심: 800퍼센트)8."
+            },
+            {
+              "raw": "800퍼센트",
+              "value": 800.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "업지역: 1천퍼센트(단, 서울도심: ",
+              "after": ")8."
+            }
+          ],
+          "segment": "중심상업지역: 1천퍼센트(단, 서울도심: 800퍼센트)8.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "중심상업지역",
+          "minimum": 200.0,
+          "maximum": 1500.0,
+          "raw_values": [
+            200.0,
+            1500.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "200퍼센트",
+              "value": 200.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "중심상업지역 : ",
+              "after": " 1천500퍼센트 이하 8."
+            },
+            {
+              "raw": "1천500퍼센트",
+              "value": 1500.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "중심상업지역 : 200퍼센트 이상 ",
+              "after": " 8."
+            }
+          ],
+          "segment": "중심상업지역 : 200퍼센트 이상 1천500퍼센트 이하 8.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "중심상업지역",
+            "minimum": 200.0,
+            "maximum": 1500.0,
+            "raw_values": [
+              200.0,
+              1500.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "200퍼센트",
+                "value": 200.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "중심상업지역 : ",
+                "after": " 1천500퍼센트 이하 8."
+              },
+              {
+                "raw": "1천500퍼센트",
+                "value": 1500.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "중심상업지역 : 200퍼센트 이상 ",
+                "after": " 8."
+              }
+            ],
+            "segment": "중심상업지역 : 200퍼센트 이상 1천500퍼센트 이하 8.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "중심상업지역",
+            "minimum": null,
+            "maximum": 1000.0,
+            "raw_values": [
+              1000.0,
+              800.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "1천퍼센트",
+                "value": 1000.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "중심상업지역: ",
+                "after": "(단, 서울도심: 800퍼센트)8."
+              },
+              {
+                "raw": "800퍼센트",
+                "value": 800.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "업지역: 1천퍼센트(단, 서울도심: ",
+                "after": ")8."
+              }
+            ],
+            "segment": "중심상업지역: 1천퍼센트(단, 서울도심: 800퍼센트)8.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "일반상업지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          60.0
+        ],
+        "national_values": [
+          80.0
+        ],
+        "seoul_selected": {
+          "zone": "일반상업지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "일반상업지역: ",
+              "after": "9."
+            }
+          ],
+          "segment": "일반상업지역: 60퍼센트9.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "일반상업지역",
+          "minimum": null,
+          "maximum": 80.0,
+          "raw_values": [
+            80.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "80퍼센트",
+              "value": 80.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "일반상업지역 : ",
+              "after": " 9."
+            }
+          ],
+          "segment": "일반상업지역 : 80퍼센트 이하 9.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "일반상업지역",
+            "minimum": null,
+            "maximum": 80.0,
+            "raw_values": [
+              80.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "80퍼센트",
+                "value": 80.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "일반상업지역 : ",
+                "after": " 9."
+              }
+            ],
+            "segment": "일반상업지역 : 80퍼센트 이하 9.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "일반상업지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "일반상업지역: ",
+                "after": "9."
+              }
+            ],
+            "segment": "일반상업지역: 60퍼센트9.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          800.0
+        ],
+        "national_values": [
+          1300.0
+        ],
+        "seoul_selected": {
+          "zone": "일반상업지역",
+          "minimum": null,
+          "maximum": 800.0,
+          "raw_values": [
+            800.0,
+            600.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "800퍼센트",
+              "value": 800.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "일반상업지역: ",
+              "after": "(단, 서울도심: 600퍼센트)9."
+            },
+            {
+              "raw": "600퍼센트",
+              "value": 600.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "지역: 800퍼센트(단, 서울도심: ",
+              "after": ")9."
+            }
+          ],
+          "segment": "일반상업지역: 800퍼센트(단, 서울도심: 600퍼센트)9.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "일반상업지역",
+          "minimum": 200.0,
+          "maximum": 1300.0,
+          "raw_values": [
+            200.0,
+            1300.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "200퍼센트",
+              "value": 200.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "일반상업지역 : ",
+              "after": " 1천300퍼센트 이하 9."
+            },
+            {
+              "raw": "1천300퍼센트",
+              "value": 1300.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "일반상업지역 : 200퍼센트 이상 ",
+              "after": " 9."
+            }
+          ],
+          "segment": "일반상업지역 : 200퍼센트 이상 1천300퍼센트 이하 9.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "일반상업지역",
+            "minimum": 200.0,
+            "maximum": 1300.0,
+            "raw_values": [
+              200.0,
+              1300.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "200퍼센트",
+                "value": 200.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "일반상업지역 : ",
+                "after": " 1천300퍼센트 이하 9."
+              },
+              {
+                "raw": "1천300퍼센트",
+                "value": 1300.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "일반상업지역 : 200퍼센트 이상 ",
+                "after": " 9."
+              }
+            ],
+            "segment": "일반상업지역 : 200퍼센트 이상 1천300퍼센트 이하 9.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "일반상업지역",
+            "minimum": null,
+            "maximum": 800.0,
+            "raw_values": [
+              800.0,
+              600.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "800퍼센트",
+                "value": 800.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "일반상업지역: ",
+                "after": "(단, 서울도심: 600퍼센트)9."
+              },
+              {
+                "raw": "600퍼센트",
+                "value": 600.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "지역: 800퍼센트(단, 서울도심: ",
+                "after": ")9."
+              }
+            ],
+            "segment": "일반상업지역: 800퍼센트(단, 서울도심: 600퍼센트)9.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "근린상업지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          60.0
+        ],
+        "national_values": [
+          70.0
+        ],
+        "seoul_selected": {
+          "zone": "근린상업지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "근린상업지역: ",
+              "after": "10."
+            }
+          ],
+          "segment": "근린상업지역: 60퍼센트10.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "근린상업지역",
+          "minimum": null,
+          "maximum": 70.0,
+          "raw_values": [
+            70.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "70퍼센트",
+              "value": 70.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "근린상업지역 : ",
+              "after": " 10."
+            }
+          ],
+          "segment": "근린상업지역 : 70퍼센트 이하 10.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "근린상업지역",
+            "minimum": null,
+            "maximum": 70.0,
+            "raw_values": [
+              70.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "70퍼센트",
+                "value": 70.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "근린상업지역 : ",
+                "after": " 10."
+              }
+            ],
+            "segment": "근린상업지역 : 70퍼센트 이하 10.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "근린상업지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "근린상업지역: ",
+                "after": "10."
+              }
+            ],
+            "segment": "근린상업지역: 60퍼센트10.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          600.0
+        ],
+        "national_values": [
+          900.0
+        ],
+        "seoul_selected": {
+          "zone": "근린상업지역",
+          "minimum": null,
+          "maximum": 600.0,
+          "raw_values": [
+            600.0,
+            500.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "600퍼센트",
+              "value": 600.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "근린상업지역: ",
+              "after": "(단, 서울도심: 500퍼센트)10."
+            },
+            {
+              "raw": "500퍼센트",
+              "value": 500.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "지역: 600퍼센트(단, 서울도심: ",
+              "after": ")10."
+            }
+          ],
+          "segment": "근린상업지역: 600퍼센트(단, 서울도심: 500퍼센트)10.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "근린상업지역",
+          "minimum": 200.0,
+          "maximum": 900.0,
+          "raw_values": [
+            200.0,
+            900.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "200퍼센트",
+              "value": 200.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "근린상업지역 : ",
+              "after": " 900퍼센트 이하 10."
+            },
+            {
+              "raw": "900퍼센트",
+              "value": 900.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "근린상업지역 : 200퍼센트 이상 ",
+              "after": " 10."
+            }
+          ],
+          "segment": "근린상업지역 : 200퍼센트 이상 900퍼센트 이하 10.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "근린상업지역",
+            "minimum": 200.0,
+            "maximum": 900.0,
+            "raw_values": [
+              200.0,
+              900.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "200퍼센트",
+                "value": 200.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "근린상업지역 : ",
+                "after": " 900퍼센트 이하 10."
+              },
+              {
+                "raw": "900퍼센트",
+                "value": 900.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "근린상업지역 : 200퍼센트 이상 ",
+                "after": " 10."
+              }
+            ],
+            "segment": "근린상업지역 : 200퍼센트 이상 900퍼센트 이하 10.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "근린상업지역",
+            "minimum": null,
+            "maximum": 600.0,
+            "raw_values": [
+              600.0,
+              500.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "600퍼센트",
+                "value": 600.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "근린상업지역: ",
+                "after": "(단, 서울도심: 500퍼센트)10."
+              },
+              {
+                "raw": "500퍼센트",
+                "value": 500.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "지역: 600퍼센트(단, 서울도심: ",
+                "after": ")10."
+              }
+            ],
+            "segment": "근린상업지역: 600퍼센트(단, 서울도심: 500퍼센트)10.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "유통상업지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          60.0
+        ],
+        "national_values": [
+          80.0
+        ],
+        "seoul_selected": {
+          "zone": "유통상업지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "유통상업지역: ",
+              "after": "11."
+            }
+          ],
+          "segment": "유통상업지역: 60퍼센트11.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "유통상업지역",
+          "minimum": null,
+          "maximum": 80.0,
+          "raw_values": [
+            80.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "80퍼센트",
+              "value": 80.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "유통상업지역 : ",
+              "after": " 11."
+            }
+          ],
+          "segment": "유통상업지역 : 80퍼센트 이하 11.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "유통상업지역",
+            "minimum": null,
+            "maximum": 80.0,
+            "raw_values": [
+              80.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "80퍼센트",
+                "value": 80.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "유통상업지역 : ",
+                "after": " 11."
+              }
+            ],
+            "segment": "유통상업지역 : 80퍼센트 이하 11.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "유통상업지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "유통상업지역: ",
+                "after": "11."
+              }
+            ],
+            "segment": "유통상업지역: 60퍼센트11.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          600.0
+        ],
+        "national_values": [
+          1100.0
+        ],
+        "seoul_selected": {
+          "zone": "유통상업지역",
+          "minimum": null,
+          "maximum": 600.0,
+          "raw_values": [
+            600.0,
+            500.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "600퍼센트",
+              "value": 600.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "유통상업지역: ",
+              "after": "(단, 서울도심: 500퍼센트)11."
+            },
+            {
+              "raw": "500퍼센트",
+              "value": 500.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "지역: 600퍼센트(단, 서울도심: ",
+              "after": ")11."
+            }
+          ],
+          "segment": "유통상업지역: 600퍼센트(단, 서울도심: 500퍼센트)11.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "유통상업지역",
+          "minimum": 200.0,
+          "maximum": 1100.0,
+          "raw_values": [
+            200.0,
+            1100.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "200퍼센트",
+              "value": 200.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "유통상업지역 : ",
+              "after": " 1천100퍼센트 이하 11."
+            },
+            {
+              "raw": "1천100퍼센트",
+              "value": 1100.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "유통상업지역 : 200퍼센트 이상 ",
+              "after": " 11."
+            }
+          ],
+          "segment": "유통상업지역 : 200퍼센트 이상 1천100퍼센트 이하 11.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "유통상업지역",
+            "minimum": 200.0,
+            "maximum": 1100.0,
+            "raw_values": [
+              200.0,
+              1100.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "200퍼센트",
+                "value": 200.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "유통상업지역 : ",
+                "after": " 1천100퍼센트 이하 11."
+              },
+              {
+                "raw": "1천100퍼센트",
+                "value": 1100.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "유통상업지역 : 200퍼센트 이상 ",
+                "after": " 11."
+              }
+            ],
+            "segment": "유통상업지역 : 200퍼센트 이상 1천100퍼센트 이하 11.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "유통상업지역",
+            "minimum": null,
+            "maximum": 600.0,
+            "raw_values": [
+              600.0,
+              500.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "600퍼센트",
+                "value": 600.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "유통상업지역: ",
+                "after": "(단, 서울도심: 500퍼센트)11."
+              },
+              {
+                "raw": "500퍼센트",
+                "value": 500.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "지역: 600퍼센트(단, 서울도심: ",
+                "after": ")11."
+              }
+            ],
+            "segment": "유통상업지역: 600퍼센트(단, 서울도심: 500퍼센트)11.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "전용공업지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          60.0
+        ],
+        "national_values": [
+          70.0
+        ],
+        "seoul_selected": {
+          "zone": "전용공업지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "전용공업지역: ",
+              "after": "12."
+            }
+          ],
+          "segment": "전용공업지역: 60퍼센트12.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "전용공업지역",
+          "minimum": null,
+          "maximum": 70.0,
+          "raw_values": [
+            70.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "70퍼센트",
+              "value": 70.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "전용공업지역 : ",
+              "after": " 12."
+            }
+          ],
+          "segment": "전용공업지역 : 70퍼센트 이하 12.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "전용공업지역",
+            "minimum": null,
+            "maximum": 70.0,
+            "raw_values": [
+              70.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "70퍼센트",
+                "value": 70.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "전용공업지역 : ",
+                "after": " 12."
+              }
+            ],
+            "segment": "전용공업지역 : 70퍼센트 이하 12.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "전용공업지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "전용공업지역: ",
+                "after": "12."
+              }
+            ],
+            "segment": "전용공업지역: 60퍼센트12.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          200.0
+        ],
+        "national_values": [
+          300.0
+        ],
+        "seoul_selected": {
+          "zone": "전용공업지역",
+          "minimum": null,
+          "maximum": 200.0,
+          "raw_values": [
+            200.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "200퍼센트",
+              "value": 200.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "전용공업지역: ",
+              "after": "12."
+            }
+          ],
+          "segment": "전용공업지역: 200퍼센트12.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "전용공업지역",
+          "minimum": 150.0,
+          "maximum": 300.0,
+          "raw_values": [
+            150.0,
+            300.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "150퍼센트",
+              "value": 150.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "전용공업지역 : ",
+              "after": " 300퍼센트 이하 12."
+            },
+            {
+              "raw": "300퍼센트",
+              "value": 300.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "전용공업지역 : 150퍼센트 이상 ",
+              "after": " 12."
+            }
+          ],
+          "segment": "전용공업지역 : 150퍼센트 이상 300퍼센트 이하 12.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "전용공업지역",
+            "minimum": 150.0,
+            "maximum": 300.0,
+            "raw_values": [
+              150.0,
+              300.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "150퍼센트",
+                "value": 150.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "전용공업지역 : ",
+                "after": " 300퍼센트 이하 12."
+              },
+              {
+                "raw": "300퍼센트",
+                "value": 300.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "전용공업지역 : 150퍼센트 이상 ",
+                "after": " 12."
+              }
+            ],
+            "segment": "전용공업지역 : 150퍼센트 이상 300퍼센트 이하 12.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "전용공업지역",
+            "minimum": null,
+            "maximum": 200.0,
+            "raw_values": [
+              200.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "200퍼센트",
+                "value": 200.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "전용공업지역: ",
+                "after": "12."
+              }
+            ],
+            "segment": "전용공업지역: 200퍼센트12.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "일반공업지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          60.0
+        ],
+        "national_values": [
+          70.0
+        ],
+        "seoul_selected": {
+          "zone": "일반공업지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "일반공업지역: ",
+              "after": "13."
+            }
+          ],
+          "segment": "일반공업지역: 60퍼센트13.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "일반공업지역",
+          "minimum": null,
+          "maximum": 70.0,
+          "raw_values": [
+            70.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "70퍼센트",
+              "value": 70.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "일반공업지역 : ",
+              "after": " 13."
+            }
+          ],
+          "segment": "일반공업지역 : 70퍼센트이하 13.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "일반공업지역",
+            "minimum": null,
+            "maximum": 70.0,
+            "raw_values": [
+              70.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "70퍼센트",
+                "value": 70.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "일반공업지역 : ",
+                "after": " 13."
+              }
+            ],
+            "segment": "일반공업지역 : 70퍼센트이하 13.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "일반공업지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "일반공업지역: ",
+                "after": "13."
+              }
+            ],
+            "segment": "일반공업지역: 60퍼센트13.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          200.0
+        ],
+        "national_values": [
+          350.0
+        ],
+        "seoul_selected": {
+          "zone": "일반공업지역",
+          "minimum": null,
+          "maximum": 200.0,
+          "raw_values": [
+            200.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "200퍼센트",
+              "value": 200.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "일반공업지역: ",
+              "after": "13."
+            }
+          ],
+          "segment": "일반공업지역: 200퍼센트13.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "일반공업지역",
+          "minimum": 150.0,
+          "maximum": 350.0,
+          "raw_values": [
+            150.0,
+            350.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "150퍼센트",
+              "value": 150.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "일반공업지역 : ",
+              "after": " 350퍼센트 이하 13."
+            },
+            {
+              "raw": "350퍼센트",
+              "value": 350.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "일반공업지역 : 150퍼센트 이상 ",
+              "after": " 13."
+            }
+          ],
+          "segment": "일반공업지역 : 150퍼센트 이상 350퍼센트 이하 13.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "일반공업지역",
+            "minimum": 150.0,
+            "maximum": 350.0,
+            "raw_values": [
+              150.0,
+              350.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "150퍼센트",
+                "value": 150.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "일반공업지역 : ",
+                "after": " 350퍼센트 이하 13."
+              },
+              {
+                "raw": "350퍼센트",
+                "value": 350.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "일반공업지역 : 150퍼센트 이상 ",
+                "after": " 13."
+              }
+            ],
+            "segment": "일반공업지역 : 150퍼센트 이상 350퍼센트 이하 13.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "일반공업지역",
+            "minimum": null,
+            "maximum": 200.0,
+            "raw_values": [
+              200.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "200퍼센트",
+                "value": 200.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "일반공업지역: ",
+                "after": "13."
+              }
+            ],
+            "segment": "일반공업지역: 200퍼센트13.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "준공업지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          60.0
+        ],
+        "national_values": [
+          70.0
+        ],
+        "seoul_selected": {
+          "zone": "준공업지역",
+          "minimum": null,
+          "maximum": 60.0,
+          "raw_values": [
+            60.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "60퍼센트",
+              "value": 60.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "준공업지역: ",
+              "after": "14."
+            }
+          ],
+          "segment": "준공업지역: 60퍼센트14.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "준공업지역",
+          "minimum": null,
+          "maximum": 70.0,
+          "raw_values": [
+            70.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "70퍼센트",
+              "value": 70.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "준공업지역 : ",
+              "after": " 14."
+            }
+          ],
+          "segment": "준공업지역 : 70퍼센트 이하 14.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "준공업지역",
+            "minimum": null,
+            "maximum": 70.0,
+            "raw_values": [
+              70.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "70퍼센트",
+                "value": 70.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "준공업지역 : ",
+                "after": " 14."
+              }
+            ],
+            "segment": "준공업지역 : 70퍼센트 이하 14.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "준공업지역",
+            "minimum": null,
+            "maximum": 60.0,
+            "raw_values": [
+              60.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "60퍼센트",
+                "value": 60.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "준공업지역: ",
+                "after": "14."
+              }
+            ],
+            "segment": "준공업지역: 60퍼센트14.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          400.0
+        ],
+        "national_values": [
+          400.0
+        ],
+        "seoul_selected": {
+          "zone": "준공업지역",
+          "minimum": null,
+          "maximum": 400.0,
+          "raw_values": [
+            400.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "400퍼센트",
+              "value": 400.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "준공업지역: ",
+              "after": "14."
+            }
+          ],
+          "segment": "준공업지역: 400퍼센트14.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "준공업지역",
+          "minimum": 150.0,
+          "maximum": 400.0,
+          "raw_values": [
+            150.0,
+            400.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "150퍼센트",
+              "value": 150.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "준공업지역 : ",
+              "after": " 400퍼센트 이하 14."
+            },
+            {
+              "raw": "400퍼센트",
+              "value": 400.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "준공업지역 : 150퍼센트 이상 ",
+              "after": " 14."
+            }
+          ],
+          "segment": "준공업지역 : 150퍼센트 이상 400퍼센트 이하 14.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "준공업지역",
+            "minimum": 150.0,
+            "maximum": 400.0,
+            "raw_values": [
+              150.0,
+              400.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "150퍼센트",
+                "value": 150.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "준공업지역 : ",
+                "after": " 400퍼센트 이하 14."
+              },
+              {
+                "raw": "400퍼센트",
+                "value": 400.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "준공업지역 : 150퍼센트 이상 ",
+                "after": " 14."
+              }
+            ],
+            "segment": "준공업지역 : 150퍼센트 이상 400퍼센트 이하 14.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "준공업지역",
+            "minimum": null,
+            "maximum": 400.0,
+            "raw_values": [
+              400.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "400퍼센트",
+                "value": 400.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "준공업지역: ",
+                "after": "14."
+              }
+            ],
+            "segment": "준공업지역: 400퍼센트14.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "보전녹지지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          20.0
+        ],
+        "national_values": [
+          20.0
+        ],
+        "seoul_selected": {
+          "zone": "보전녹지지역",
+          "minimum": null,
+          "maximum": 20.0,
+          "raw_values": [
+            20.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "20퍼센트",
+              "value": 20.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "보전녹지지역: ",
+              "after": "15."
+            }
+          ],
+          "segment": "보전녹지지역: 20퍼센트15.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "보전녹지지역",
+          "minimum": null,
+          "maximum": 20.0,
+          "raw_values": [
+            20.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "20퍼센트",
+              "value": 20.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "보전녹지지역 : ",
+              "after": " 15."
+            }
+          ],
+          "segment": "보전녹지지역 : 20퍼센트 이하 15.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "보전녹지지역",
+            "minimum": null,
+            "maximum": 20.0,
+            "raw_values": [
+              20.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "20퍼센트",
+                "value": 20.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "보전녹지지역 : ",
+                "after": " 15."
+              }
+            ],
+            "segment": "보전녹지지역 : 20퍼센트 이하 15.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "보전녹지지역",
+            "minimum": null,
+            "maximum": 20.0,
+            "raw_values": [
+              20.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "20퍼센트",
+                "value": 20.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "보전녹지지역: ",
+                "after": "15."
+              }
+            ],
+            "segment": "보전녹지지역: 20퍼센트15.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          50.0
+        ],
+        "national_values": [
+          80.0
+        ],
+        "seoul_selected": {
+          "zone": "보전녹지지역",
+          "minimum": null,
+          "maximum": 50.0,
+          "raw_values": [
+            50.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "보전녹지지역: ",
+              "after": "15."
+            }
+          ],
+          "segment": "보전녹지지역: 50퍼센트15.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "보전녹지지역",
+          "minimum": 50.0,
+          "maximum": 80.0,
+          "raw_values": [
+            50.0,
+            80.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "보전녹지지역 : ",
+              "after": " 80퍼센트 이하 15."
+            },
+            {
+              "raw": "80퍼센트",
+              "value": 80.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "보전녹지지역 : 50퍼센트 이상 ",
+              "after": " 15."
+            }
+          ],
+          "segment": "보전녹지지역 : 50퍼센트 이상 80퍼센트 이하 15.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "보전녹지지역",
+            "minimum": 50.0,
+            "maximum": 80.0,
+            "raw_values": [
+              50.0,
+              80.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "보전녹지지역 : ",
+                "after": " 80퍼센트 이하 15."
+              },
+              {
+                "raw": "80퍼센트",
+                "value": 80.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "보전녹지지역 : 50퍼센트 이상 ",
+                "after": " 15."
+              }
+            ],
+            "segment": "보전녹지지역 : 50퍼센트 이상 80퍼센트 이하 15.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "보전녹지지역",
+            "minimum": null,
+            "maximum": 50.0,
+            "raw_values": [
+              50.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "보전녹지지역: ",
+                "after": "15."
+              }
+            ],
+            "segment": "보전녹지지역: 50퍼센트15.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "생산녹지지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          20.0
+        ],
+        "national_values": [
+          20.0
+        ],
+        "seoul_selected": {
+          "zone": "생산녹지지역",
+          "minimum": null,
+          "maximum": 20.0,
+          "raw_values": [
+            20.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "20퍼센트",
+              "value": 20.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "생산녹지지역: ",
+              "after": "16."
+            }
+          ],
+          "segment": "생산녹지지역: 20퍼센트16.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "생산녹지지역",
+          "minimum": null,
+          "maximum": 20.0,
+          "raw_values": [
+            20.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "20퍼센트",
+              "value": 20.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "생산녹지지역 : ",
+              "after": " 16."
+            }
+          ],
+          "segment": "생산녹지지역 : 20퍼센트 이하 16.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "생산녹지지역",
+            "minimum": null,
+            "maximum": 20.0,
+            "raw_values": [
+              20.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "20퍼센트",
+                "value": 20.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "생산녹지지역 : ",
+                "after": " 16."
+              }
+            ],
+            "segment": "생산녹지지역 : 20퍼센트 이하 16.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "생산녹지지역",
+            "minimum": null,
+            "maximum": 20.0,
+            "raw_values": [
+              20.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "20퍼센트",
+                "value": 20.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "생산녹지지역: ",
+                "after": "16."
+              }
+            ],
+            "segment": "생산녹지지역: 20퍼센트16.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          50.0
+        ],
+        "national_values": [
+          100.0
+        ],
+        "seoul_selected": {
+          "zone": "생산녹지지역",
+          "minimum": null,
+          "maximum": 50.0,
+          "raw_values": [
+            50.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "생산녹지지역: ",
+              "after": "16."
+            }
+          ],
+          "segment": "생산녹지지역: 50퍼센트16.",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "생산녹지지역",
+          "minimum": 50.0,
+          "maximum": 100.0,
+          "raw_values": [
+            50.0,
+            100.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "생산녹지지역 : ",
+              "after": " 100퍼센트 이하 16."
+            },
+            {
+              "raw": "100퍼센트",
+              "value": 100.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "생산녹지지역 : 50퍼센트 이상 ",
+              "after": " 16."
+            }
+          ],
+          "segment": "생산녹지지역 : 50퍼센트 이상 100퍼센트 이하 16.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "생산녹지지역",
+            "minimum": 50.0,
+            "maximum": 100.0,
+            "raw_values": [
+              50.0,
+              100.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "생산녹지지역 : ",
+                "after": " 100퍼센트 이하 16."
+              },
+              {
+                "raw": "100퍼센트",
+                "value": 100.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "생산녹지지역 : 50퍼센트 이상 ",
+                "after": " 16."
+              }
+            ],
+            "segment": "생산녹지지역 : 50퍼센트 이상 100퍼센트 이하 16.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "생산녹지지역",
+            "minimum": null,
+            "maximum": 50.0,
+            "raw_values": [
+              50.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "생산녹지지역: ",
+                "after": "16."
+              }
+            ],
+            "segment": "생산녹지지역: 50퍼센트16.",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    },
+    "자연녹지지역": {
+      "건폐율": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          20.0
+        ],
+        "national_values": [
+          20.0
+        ],
+        "seoul_selected": {
+          "zone": "자연녹지지역",
+          "minimum": null,
+          "maximum": 20.0,
+          "raw_values": [
+            20.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "20퍼센트",
+              "value": 20.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "자연녹지지역: ",
+              "after": ""
+            }
+          ],
+          "segment": "자연녹지지역: 20퍼센트",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004400",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "자연녹지지역",
+          "minimum": null,
+          "maximum": 20.0,
+          "raw_values": [
+            20.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "20퍼센트",
+              "value": 20.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "자연녹지지역 : ",
+              "after": " 17."
+            }
+          ],
+          "segment": "자연녹지지역 : 20퍼센트 이하 17.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "84",
+          "article_branch_number": "",
+          "article_title": "용도지역안에서의 건폐율",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "자연녹지지역",
+            "minimum": null,
+            "maximum": 20.0,
+            "raw_values": [
+              20.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "20퍼센트",
+                "value": 20.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "자연녹지지역 : ",
+                "after": " 17."
+              }
+            ],
+            "segment": "자연녹지지역 : 20퍼센트 이하 17.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "84",
+            "article_branch_number": "",
+            "article_title": "용도지역안에서의 건폐율",
+            "source_type": "article"
+          },
+          {
+            "zone": "자연녹지지역",
+            "minimum": null,
+            "maximum": 20.0,
+            "raw_values": [
+              20.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "20퍼센트",
+                "value": 20.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "자연녹지지역: ",
+                "after": ""
+              }
+            ],
+            "segment": "자연녹지지역: 20퍼센트",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004400",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 건폐율",
+            "source_type": "article"
+          }
+        ]
+      },
+      "용적률": {
+        "status": "RESOLVED",
+        "seoul_values": [
+          50.0
+        ],
+        "national_values": [
+          100.0
+        ],
+        "seoul_selected": {
+          "zone": "자연녹지지역",
+          "minimum": null,
+          "maximum": 50.0,
+          "raw_values": [
+            50.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": null,
+              "condition_text": null,
+              "before": "자연녹지지역: ",
+              "after": ""
+            }
+          ],
+          "segment": "자연녹지지역: 50퍼센트",
+          "law_name": "서울특별시 도시계획 조례",
+          "level": 2,
+          "article_number": "004800",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_selected": {
+          "zone": "자연녹지지역",
+          "minimum": 50.0,
+          "maximum": 100.0,
+          "raw_values": [
+            50.0,
+            100.0
+          ],
+          "percentage_details": [
+            {
+              "raw": "50퍼센트",
+              "value": 50.0,
+              "condition": "min",
+              "condition_text": "이상",
+              "before": "자연녹지지역 : ",
+              "after": " 100퍼센트 이하 17."
+            },
+            {
+              "raw": "100퍼센트",
+              "value": 100.0,
+              "condition": "max",
+              "condition_text": "이하",
+              "before": "자연녹지지역 : 50퍼센트 이상 ",
+              "after": " 17."
+            }
+          ],
+          "segment": "자연녹지지역 : 50퍼센트 이상 100퍼센트 이하 17.",
+          "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+          "level": 4,
+          "article_number": "85",
+          "article_branch_number": "",
+          "article_title": "용도지역 안에서의 용적률",
+          "source_type": "article"
+        },
+        "national_ceiling_valid": true,
+        "all_candidates": [
+          {
+            "zone": "자연녹지지역",
+            "minimum": 50.0,
+            "maximum": 100.0,
+            "raw_values": [
+              50.0,
+              100.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": "min",
+                "condition_text": "이상",
+                "before": "자연녹지지역 : ",
+                "after": " 100퍼센트 이하 17."
+              },
+              {
+                "raw": "100퍼센트",
+                "value": 100.0,
+                "condition": "max",
+                "condition_text": "이하",
+                "before": "자연녹지지역 : 50퍼센트 이상 ",
+                "after": " 17."
+              }
+            ],
+            "segment": "자연녹지지역 : 50퍼센트 이상 100퍼센트 이하 17.",
+            "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
+            "level": 4,
+            "article_number": "85",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          },
+          {
+            "zone": "자연녹지지역",
+            "minimum": null,
+            "maximum": 50.0,
+            "raw_values": [
+              50.0
+            ],
+            "percentage_details": [
+              {
+                "raw": "50퍼센트",
+                "value": 50.0,
+                "condition": null,
+                "condition_text": null,
+                "before": "자연녹지지역: ",
+                "after": ""
+              }
+            ],
+            "segment": "자연녹지지역: 50퍼센트",
+            "law_name": "서울특별시 도시계획 조례",
+            "level": 2,
+            "article_number": "004800",
+            "article_branch_number": "",
+            "article_title": "용도지역 안에서의 용적률",
+            "source_type": "article"
+          }
+        ]
+      }
+    }
+  },
+  "resolved_map": {
+    "제1종전용주거지역": {
+      "building_coverage_ratio": 50.0,
+      "floor_area_ratio": 100.0
+    },
+    "제2종전용주거지역": {
+      "building_coverage_ratio": 40.0,
+      "floor_area_ratio": 120.0
+    },
+    "제1종일반주거지역": {
+      "building_coverage_ratio": 60.0,
+      "floor_area_ratio": 150.0
+    },
+    "제2종일반주거지역": {
+      "building_coverage_ratio": 60.0,
+      "floor_area_ratio": 200.0
+    },
+    "제3종일반주거지역": {
+      "building_coverage_ratio": 50.0,
+      "floor_area_ratio": 250.0
+    },
+    "준주거지역": {
+      "building_coverage_ratio": 60.0,
+      "floor_area_ratio": 400.0
+    },
+    "중심상업지역": {
+      "building_coverage_ratio": 60.0,
+      "floor_area_ratio": 1000.0
+    },
+    "일반상업지역": {
+      "building_coverage_ratio": 60.0,
+      "floor_area_ratio": 800.0
+    },
+    "근린상업지역": {
+      "building_coverage_ratio": 60.0,
+      "floor_area_ratio": 600.0
+    },
+    "유통상업지역": {
+      "building_coverage_ratio": 60.0,
+      "floor_area_ratio": 600.0
+    },
+    "전용공업지역": {
+      "building_coverage_ratio": 60.0,
+      "floor_area_ratio": 200.0
+    },
+    "일반공업지역": {
+      "building_coverage_ratio": 60.0,
+      "floor_area_ratio": 200.0
+    },
+    "준공업지역": {
+      "building_coverage_ratio": 60.0,
+      "floor_area_ratio": 400.0
+    },
+    "보전녹지지역": {
+      "building_coverage_ratio": 20.0,
+      "floor_area_ratio": 50.0
+    },
+    "생산녹지지역": {
+      "building_coverage_ratio": 20.0,
+      "floor_area_ratio": 50.0
+    },
+    "자연녹지지역": {
+      "building_coverage_ratio": 20.0,
+      "floor_area_ratio": 50.0
+    }
+  },
+  "resolved_count": 16,
+  "unresolved": [],
+  "ambiguous": [],
+  "resolution": "SEOUL_ZONE_BASE_NUMERIC_COMPLETE",
+  "probe_pass": true
+}

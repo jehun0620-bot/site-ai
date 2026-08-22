@@ -1,6 +1,8 @@
 # AI 대지분석 자동화 시스템 — PROJECT STATUS
 
-*Last updated: 2026-08-20*
+**Last updated: 2026-08-22**
+
+---
 
 ## 1. 프로젝트 목표
 
@@ -16,7 +18,8 @@
 8. SITE / SITE_HISTORY / PROJECT / PROCEDURE 조건 판정
 9. 기본 건폐율·용적률·높이 및 특례·완화·강화 규정 계산
 10. 최종 대지분석 결과 객체 생성
-11. AI가 규칙엔진의 판정 결과를 설명하고 보고서로 생성
+11. HTTP API로 분석 서비스 제공
+12. AI가 규칙엔진의 판정 결과를 설명하고 보고서로 생성
 
 핵심 원칙:
 
@@ -24,20 +27,21 @@
 
 ---
 
-## 2. 현재 테스트 SITE
+## 2. 현재 대표 테스트 SITE
 
 - 주소: 서울특별시 강남구 개포동 12번지
+- 도로명주소: 서울특별시 강남구 개포로109길 21 (개포동)
 - SITE ID: `11680-10300-0012-0000`
 - PNU: `1168010300100120000`
 - 시군구코드: `11680`
 - 법정동코드: `10300`
 - 본번: `0012`
 - 부번: `0000`
-- 산여부 코드: `1`
 - 용도지역: **제3종일반주거지역**
 - 대표 좌표:
   - X: `127.07539280356858`
   - Y: `37.494197498186885`
+  - CRS: `EPSG:4326`
 
 Parcel Polygon dataset:
 
@@ -45,53 +49,87 @@ Parcel Polygon dataset:
 LP_PA_CBND_BUBUN
 ```
 
-MapPlan 기준 Parcel:
+MapPlan recovery 기준 Parcel:
 
 ```text
 geometry: Polygon
 area: 120945.65223377591
 bounds:
-(962201.02522, 1943722.58159, 962711.06096, 1944220.16506)
+[962201.02522, 1943722.58159, 962711.06096, 1944220.16506]
+
+CRS: None
+CRS status: SOURCE_CRS_NOT_EXPLICIT
+```
+
+공식 토지면적:
+
+```text
+121040.4 m²
+source: VWORLD_LAND_CHARACTERISTICS
+role: LEGAL_OR_ATTRIBUTE_LAND_AREA
+```
+
+MapPlan geometry 면적:
+
+```text
+120945.65223377591
+source: MAPPLAN_PARCEL_GEOMETRY
+role: SPATIAL_GEOMETRY_AREA
+```
+
+면적 차이 정책:
+
+```text
+difference: 94.74776622408535
+difference ratio: 0.07827780329880384 %
+
+resolution:
+KEEP_BOTH_WITH_SOURCE_ROLES
+
+primary:
+official
 ```
 
 ---
 
-## 3. 전체 아키텍처
+## 3. 현재 서비스 아키텍처
 
 ```text
-SITE
-│
-├─ 주소 / SITE ID / PNU / 좌표 / Parcel Polygon
-├─ 토지정보
-├─ 건축물정보
-├─ 용도지역
-├─ 용도지구
-├─ 용도구역
-├─ 도시계획시설
-│
-└─ 법규 분석
-    ├─ 법률
-    ├─ 시행령
-    ├─ 서울시 조례
-    ├─ 일반 규정
-    └─ 특례 규정
-        ├─ SITE
-        ├─ SITE_HISTORY
-        ├─ PROJECT
-        └─ PROCEDURE
+건축HUB / 토지 API
+        ↓
+create_site()
+        ↓
+Site dataclass
+        ↓
+analyze_site_object()
+        ↓
+build_site_analysis()
+        ↓
+SITE identity / spatial / land area
+        +
+Rule Evaluation Pipeline
+        ↓
+build_site_analysis_response()
+        ↓
+analyze_site_by_parcel()
+        ↓
+FastAPI
+        ↓
+POST /v1/site-analysis
 ```
 
-최종 판정 구조:
+법규 분석 내부 구조:
 
 ```text
 법규 clause
-+ 용도지역 적합성
++ 현재 SITE 용도지역 적합성
 + SITE 공간조건
 + SITE_HISTORY 조건
 + PROJECT 조건
 + PROCEDURE 조건
 + branch-local predicate
 + numeric semantic / guard
++ dynamic zone base numeric
 = 실제 적용 가능성 및 최종 수치
 ```
 
@@ -101,6 +139,8 @@ SITE
 
 ### STEP 1 ~ STEP 15
 
+완료:
+
 - 주소 기반 SITE 생성
 - SITE ID 생성
 - 시군구 / 법정동 / 본번 / 부번 구조화
@@ -109,17 +149,26 @@ SITE
 - SITE Builder 구축
 - 외부 API 응답을 내부 SITE 데이터 구조로 변환
 - 테스트 데이터 중심 구조에서 실제 공공 API 기반 구조로 전환
-- 환경변수 이름 불일치 문제 수정 및 실제 API Key 로딩 정상화
+- 환경변수 이름 불일치 문제 수정
+- 실제 API Key 로딩 정상화
 
 ### STEP 16 — 실제 토지/건축물 데이터 연결
-
-가상 데이터에서 실제 필지 데이터 기반으로 전환하였다.
 
 실제 건축물 API:
 
 ```text
 전체 데이터 수: 34
 현재 받은 건축물 수: 34
+resultCode: 00
+resultMsg: NORMAL SERVICE
+```
+
+실제 토지 데이터:
+
+```text
+토지면적: 121040.4
+지목: 대
+용도지역: 제3종일반주거지역
 ```
 
 ---
@@ -131,6 +180,7 @@ SITE
 - 국토의 계획 및 이용에 관한 법률
 - 국토의 계획 및 이용에 관한 법률 시행령
 - 서울특별시 도시계획 조례
+- 관련 자치구 조례 / 행정규정
 
 주요 효과 대상:
 
@@ -217,7 +267,7 @@ SITE
 조 → 항 → 호 → 목 → 세부 clause
 ```
 
-### C-8 최종 핵심 검증
+주요 검증 완료:
 
 - 개정일자 조각 제거
 - 도시지역 외 규정 배제
@@ -231,13 +281,10 @@ SITE
 - 시장정비사업 제3종일반주거지역 60% 나목 분리
 - 학교이적지 제3종일반주거지역 200% 바목 분리
 
+최종:
+
 ```text
 C-8 parser: ALL PASS
-```
-
-현재 규칙 단위:
-
-```text
 총 clause: 314
 ```
 
@@ -245,7 +292,7 @@ C-8 parser: ALL PASS
 
 ## 8. 용도지역 관련성 판정
 
-현재 SITE 계층:
+대표 SITE 계층:
 
 ```text
 제3종일반주거지역
@@ -254,12 +301,17 @@ C-8 parser: ALL PASS
 ⊂ 도시지역
 ```
 
-Clause 관련성:
+현재 dynamic zone relevance 상태:
 
-- `DIRECT`
-- `GROUP`
-- `UNSPECIFIED`
-- `EXCLUDED`
+```text
+DIRECT
+GROUP
+OTHER_ZONE
+UNSPECIFIED
+```
+
+C-13부터 기존 단일 SITE snapshot의 `zone_relevance`를 그대로 신뢰하지 않고,
+현재 `site_zone_context`를 기준으로 재평가한다.
 
 ---
 
@@ -286,10 +338,9 @@ HTTP 403 자체 → TRUE/FALSE 근거로 사용 금지
 대표 Point보다 Parcel Polygon intersection 우선
 ```
 
-### C-9 최종 상태
+C-9 최종 상태:
 
 ```text
-STEP 17-21-C-9
 status: COMPLETE_WITH_UNKNOWNS
 ```
 
@@ -307,265 +358,97 @@ status: COMPLETE_WITH_UNKNOWNS
 | 취락지구 | FALSE | HIGH |
 | 산업단지 | FALSE | HIGH |
 | 자연공원 | FALSE | HIGH |
-| 개발밀도관리구역 | 이후 C-10에서 FALSE로 해결 | HIGH |
-| 학교이적지 | 이후 C-10에서 FALSE로 해결 | HIGH |
-| 서울도심 | 이후 C-10에서 FALSE로 해결 | HIGH |
-| 방재지구 | 이후 C-10에서 FALSE로 해결 | HIGH |
+| 개발밀도관리구역 | FALSE | HIGH |
+| 학교이적지 | FALSE | HIGH |
+| 서울도심 | FALSE | HIGH |
+| 방재지구 | FALSE | HIGH |
 | 도시지역편입해제구역 | UNKNOWN | MEDIUM |
 
 ---
 
-## 10. STEP 17-21-C-10 — Rule Applicability / Numeric Evaluation
+## 10. SITE_HISTORY external dependency
 
-C-9에서 구축한 SITE / SITE_HISTORY 결과를 실제 314개 clause의 applicability와 numeric effect에 연결하였다.
-
----
-
-## 11. C-10 SITE Rule Evaluation 완료
-
-최종 SITE 단계:
+도시지역편입해제구역:
 
 ```text
-SITE stage: COMPLETE_WITH_EXTERNAL_DEPENDENCY
-Rule engine ready: True
-
-APPLICABLE: 58
-NOT_APPLICABLE: 211
-CONDITIONAL: 43
-UNKNOWN: 2
-
-Confirmed BCR: 50.0
-Confirmed FAR: 250.0
-```
-
-일반 SITE unresolved:
-
-```text
-0
-```
-
-외부 역사자료 dependency:
-
-```text
-1
-```
-
-### 해결 완료된 주요 SITE 조건
-
-```text
-서울도심             FALSE / HIGH
-개발밀도관리구역     FALSE / HIGH
-학교이적지           FALSE / HIGH
-방재지구             FALSE / HIGH
-지구단위계획         TRUE / HIGH
-```
-
----
-
-## 12. 개발밀도관리구역 — FALSE / HIGH
-
-서울시 공식 고시 DB와 공간/토지이음 자료를 다중 검증하였다.
-
-최종:
-
-```text
-Announcement DB: OK
-Rows: 43508
-Exact hits: 0
-Broad hits: 0
-
-UQ145: OK
-Feature: 1
-Target hits: 0
-
-EUM: OK
-Name present: False
-
-개발밀도관리구역: FALSE / HIGH
-```
-
-Rule overlay:
-
-```text
-Touched rules: 11
-Changed rules: 11
-UNKNOWN -> NOT_APPLICABLE: 11
-```
-
----
-
-## 13. 학교이적지 — FALSE / HIGH
-
-서울시 공식 고시 DB 전체 검색:
-
-```text
-Total: 43508
-Direct school history: 0
-Strong relocation candidates: 1
-```
-
-개포동 강한 후보:
-
-```text
-서울특별시 고시 제2015-10호
-대상: 강남구 개포동 153번지 일대
-```
-
-현재 SITE:
-
-```text
-강남구 개포동 12번지
-```
-
-주소 불일치가 명확하여:
-
-```text
-학교이적지: FALSE / HIGH
-```
-
-Rule overlay:
-
-```text
-Touched rules: 7
-Changed rules: 7
-UNKNOWN -> NOT_APPLICABLE: 7
-```
-
----
-
-## 14. 서울도심 — FALSE / HIGH
-
-현재 SITE는 서울도심 범위에 해당하지 않음.
-
-```text
-서울도심: FALSE / HIGH
-```
-
-영향 clause:
-
-```text
-clause 208
-UNKNOWN -> NOT_APPLICABLE
-```
-
----
-
-## 15. 방재지구 — FALSE / HIGH
-
-서울특별시 고시 제2019-133호의 방재지구 폐지와 이후 재지정 여부를 검증하였다.
-
-후속 고시 DB:
-
-```text
-Post-2019-04-25 notices: 3952
-방재지구 hits: 0
-Strong redesignation: 0
-Gangnam/Gaepo hits: 0
-```
-
-최종:
-
-```text
-방재지구: FALSE / HIGH
-NO_REDESIGNATION_EVIDENCE
-```
-
-이에 따라 FAR 300% 후보가 제거되었다.
-
----
-
-## 16. 도시지역편입해제구역 — UNKNOWN / MEDIUM
-
-이 조건은 현재 상태가 아니라 과거 도시계획 변경 이력이 필요한 `SITE_HISTORY` 조건이다.
-
-검증 자료:
-
-```text
-서울시 공식 고시 DB: 43508건
-Combined candidates: 8
-Target candidates: 0
-Direct notices: 1
-Direct target history: 0
-
-Current urban: True
-Current greenbelt: False
-
-Historic missing content: True
-Archive candidates: 10
-Archive pending: True
-```
-
-최종:
-
-```text
-도시지역편입해제구역: UNKNOWN / MEDIUM
+status: UNKNOWN
+confidence: MEDIUM
 automation_state: HISTORICAL_SOURCE_PENDING
-overlay: KEEP_UNKNOWN
+blocking_site_stage: False
 ```
 
 핵심 정책:
 
 > 과거 핵심 원문이 미확인된 상태에서는 negative DB 검색만으로 FALSE를 강제하지 않는다.
 
-이 조건은 외부 역사자료 dependency로 격리한다.
-
-```text
-blocking_site_stage: False
-```
-
-따라서 SITE Rule Evaluation은:
+따라서 현재 Rule Engine은:
 
 ```text
 COMPLETE_WITH_EXTERNAL_DEPENDENCY
 ```
 
-로 완료 처리한다.
+로 동작하며 분석 실행 자체는 차단하지 않는다.
 
 ---
 
-## 17. 기본 건폐율 / 용적률 확정
+## 11. STEP 17-21-C-10 — Rule Applicability / Numeric Evaluation
 
-현재 SITE 용도지역:
+C-9 SITE / SITE_HISTORY 결과를 314개 clause의 applicability와 numeric effect에 연결하였다.
+
+CLEAN baseline:
 
 ```text
-제3종일반주거지역
+APPLICABLE: 58
+NOT_APPLICABLE: 211
+CONDITIONAL: 43
+UNKNOWN: 2
+TOTAL: 314
 ```
 
-기본 규제값:
+대표 dynamic scenario:
 
 ```text
-Base BCR: 50.0
-Base FAR: 250.0
+PROJECT:
+공동주택 = TRUE
+
+PROCEDURE:
+도시계획위원회심의 = TRUE
 ```
 
-국가 상한:
+branch-local overlay + verified numeric guard 이후:
 
 ```text
-National BCR ceiling: 70.0
-National FAR ceiling: 500.0
+APPLICABLE: 63
+NOT_APPLICABLE: 213
+CONDITIONAL: 36
+UNKNOWN: 2
+TOTAL: 314
 ```
 
-현재 확정값:
+Numeric:
 
 ```text
+Active numeric before guard: 11
+Excluded: 3
+Retained: 8
+Direct relaxation: 0
+
+Numeric resolution:
+BASE_VALUES_RETAINED
+
 Confirmed BCR: 50.0
 Confirmed FAR: 250.0
 ```
 
 ---
 
-## 18. Numeric Semantic Engine
+## 12. Numeric Semantic / Guard Engine
 
 Numeric clause:
 
 ```text
 Numeric clauses: 124
-```
-
-hierarchy dedup 이후 후보:
-
-```text
-Final numeric candidates: 28
+Final numeric candidates after hierarchy dedup: 28
 ```
 
 주요 semantic type:
@@ -578,502 +461,785 @@ Final numeric candidates: 28
 - `NON_EFFECT_THRESHOLD`
 - `MAX_LIMIT_MULTIPLIER`
 
-부모 aggregate clause는 child leaf clause가 존재하면 계산 후보에서 제외한다.
+핵심 정책:
 
----
+- 부모 aggregate clause + child leaf clause 중복 적용 금지
+- applicability만으로 numeric effect 적용 금지
+- 상위 법령 branch 검증 필수
+- ceiling과 direct relaxation을 구분
+- stacking 허용 여부 별도 판정
 
-## 19. Numeric-specific SITE guard
-
-단순 applicability만으로 숫자 특례를 적용하지 않는다.
-
-### clause 4 — BCR 60% 후보
-
-```text
-서울특별시 도시계획 조례
-해당 용도지역별 건폐율의 120%
-```
-
-상위 시행령 branch를 추적한 결과 현재 SITE 용도지역과 불일치.
+검증 완료 주요 clause:
 
 ```text
-clause 4: NOT_APPLICABLE
-BCR 60% 적용 금지
-```
+clause 4
+→ 상위 branch 불일치
+→ direct BCR relaxation 금지
 
-### clause 189 — FAR 300% 후보
+clause 189
+→ 방재지구 FALSE
+→ FAR 300 후보 제거
 
-방재지구 조건이 필수.
+clause 205
+→ 관광숙박시설 / 서울도심 / 서울조례 제48조 7~10호 branch 검증
+→ current SITE direct effect 금지
 
-```text
-방재지구: FALSE / HIGH
-clause 189: NOT_APPLICABLE
-FAR 300% 적용 금지
+clause 250
+→ stacking ceiling / outside district plan branch로 정리
+→ current representative SITE direct effect 아님
 ```
 
 ---
 
-## 20. PROJECT / PROCEDURE Profile
+## 13. Reusable Rule Evaluation Pipeline
 
-PROJECT condition template:
+구축 완료 모듈:
 
 ```text
-공개공지
-공공시설제공
-공공주택
-공동주택
-기부채납
-대학
-사회복지시설
-임대주택
-종합의료시설
-주거복합
-한옥
+law_data/rule_evaluation_pipeline.py
 ```
 
-PROCEDURE condition:
+주요 입력:
 
-```text
-도시계획위원회심의
-시장정비사업심의
+```python
+evaluate_site_rules(
+    project_profile=...,
+    procedure_profile=...,
+    base_numeric_context=...,
+    site_zone_context=...,
+)
 ```
 
-초기 상태:
+현재 기능:
 
 ```text
-UNSET
+CLEAN baseline load
++ dynamic SITE zone relevance
++ SITE resolution registry
++ PROJECT input
++ PROCEDURE input
++ branch-local predicate
++ numeric semantic / guard
++ dynamic base numeric
++ external dependency
+= reusable rule evaluation
+```
+
+대표 regression:
+
+```text
+Pipeline ready: True
+
+Baseline:
+58 / 211 / 43 / 2
+
+Final representative scenario:
+63 / 213 / 36 / 2
+
+Confirmed BCR/FAR:
+50 / 250
+
+all_pass: True
 ```
 
 ---
 
-## 21. PROJECT / PROCEDURE Dynamic Evaluation
+## 14. STEP 17-21-C-11 — SITE Analysis Object 통합
 
-동적 입력을 Rule Engine에 주입하는 구조를 검증하였다.
+상위 서비스가 개별 `law_data/output/*.json`을 직접 해석하지 않도록
+단일 분석 객체를 구축하였다.
 
-테스트 scenario:
+핵심 API:
+
+```python
+build_site_analysis()
+```
+
+통합 내용:
+
+- SITE identity
+- PNU
+- 도로명주소
+- 좌표
+- Parcel geometry
+- 토지면적 source reconciliation
+- 용도지역
+- BCR/FAR
+- Rule summary
+- remaining PROJECT/PROCEDURE inputs
+- external dependencies
+- debug/evidence
+
+대표 상태:
 
 ```text
-PROJECT
-공동주택 = TRUE
+Analysis status: READY
+Engine: RULE_EVALUATION_PIPELINE
+```
 
-PROCEDURE
-도시계획위원회심의 = TRUE
+---
+
+## 15. SITE Identity Resolver
+
+대표 결과:
+
+```text
+SITE ID: 11680-10300-0012-0000
+PNU: 1168010300100120000
+
+Sigungu: 11680
+Bjdong: 10300
+Main/Sub: 0012 / 0000
+
+Coordinate:
+127.07539280356858
+37.494197498186885
+EPSG:4326
+
+Identity status: COMPLETE
+Coordinate status: CONFIRMED
+```
+
+Parcel reference:
+
+```text
+dataset: LP_PA_CBND_BUBUN
+status: VERIFIED
+strict_pnu_verified: True
+```
+
+---
+
+## 16. Parcel Spatial Recovery / Multi-SITE Spatial Resolver
+
+로컬 원본 shapefile은 발견하지 못했으나,
+기존 정상 MapPlan response JSON에서 representative SITE Polygon을 복구하였다.
+
+복구 source:
+
+```text
+law_data/output/seoul_urban_innovation_zone_mapplan_intersection.json
+```
+
+복구 결과:
+
+```text
+PNU: 1168010300100120000
+Geometry: Polygon
+Area evidence: 120945.65223377591
+Bounds:
+[962201.02522, 1943722.58159, 962711.06096, 1944220.16506]
+```
+
+C-13에서는 spatial payload resolver가 현재 SITE PNU와 snapshot PNU를 비교한다.
+
+정책:
+
+```text
+PNU 일치
+→ snapshot geometry 사용 가능
+
+PNU 불일치
+→ 대표 SITE geometry를 재사용하지 않음
+→ geometry_loaded = False
+→ bounds = None
+→ spatial area = None
+```
+
+이로써 대표 SITE Polygon이 다른 SITE에 누수되는 문제를 제거했다.
+
+---
+
+## 17. STEP 17-21-C-12 — Service / API Layer
+
+### 서비스 흐름
+
+```text
+건축HUB 실제 API
+→ create_site()
+→ Site dataclass
+→ analyze_site_object()
+→ build_site_analysis()
+→ build_site_analysis_response()
+→ analyze_site_by_parcel()
+→ FastAPI
+```
+
+### FastAPI
+
+App:
+
+```text
+api_app.py
+```
+
+Endpoints:
+
+```text
+GET /health
+POST /v1/site-analysis
+```
+
+Swagger:
+
+```text
+/docs
+```
+
+OpenAPI:
+
+```text
+/openapi.json
+```
+
+Schema:
+
+```text
+SITE_ANALYSIS_API_V1
+```
+
+실제 서버 검증:
+
+```text
+GET /health → 200
+GET /docs → 200
+GET /openapi.json → 200
+POST /v1/site-analysis → 200
+```
+
+대표 API 결과:
+
+```text
+Status: READY
+BCR: 50.0
+FAR: 250.0
+Rules: 63 / 213 / 36 / 2
+Building count: 34
+```
+
+---
+
+## 18. C-12 API Contract / Error Handling 완료
+
+검증 완료 HTTP contract:
+
+```text
+Normal request: 200
+Invalid schema: 422
+Missing field: 422
+Site not found: 404
+Building API error: 502
+Analysis error: 500
+Unexpected error: 500
+```
+
+Final contract regression:
+
+```text
+SITE_ANALYSIS_API_V1 FINAL CONTRACT
+Missing top keys: []
+
+HTTP success: 200
+HTTP validation: 422
+HTTP not found: 404
+HTTP upstream: 502
+HTTP internal: 500
+
+Schema freeze: READY
+all_pass: True
+```
+
+주요 테스트:
+
+```text
+test_api_error_contract.py
+test_api_contract_final_regression.py
+test_api_app.py
+```
+
+---
+
+## 19. STEP 17-21-C-13 — Multi-SITE Generalization
+
+### 문제 발견
+
+초기 leakage probe에서 synthetic SITE를 넣어도:
+
+```text
+대표 SITE Parcel geometry가 재사용됨
+BCR/FAR가 50/250으로 고정됨
+Rule summary가 동일함
+```
+
+초기 signal:
+
+```text
+SPATIAL_SNAPSHOT_FIXED_TO_BASE_SITE
+NUMERIC_BASELINE_SINGLE_SITE_SUSPECTED
+RULE_EVALUATION_SINGLE_SITE_SUSPECTED
+```
+
+따라서 C-13에서 다음 세 축을 분리하여 수정하였다.
+
+```text
+1. Spatial
+2. Numeric
+3. Rule applicability
+```
+
+---
+
+## 20. C-13 Spatial Leakage 제거
+
+대표 SITE snapshot PNU:
+
+```text
+1168010300100120000
+```
+
+synthetic SITE PNU:
+
+```text
+1168010300100130000
+```
+
+PNU가 다르면 대표 snapshot을 사용하지 않도록 수정.
+
+최종 synthetic SITE spatial:
+
+```text
+Parcel PNU: 1168010300100130000
+Parcel loaded: False
+Parcel bounds: None
+Spatial area: None
 ```
 
 결과:
 
 ```text
-Before:
-APPLICABLE: 58
-NOT_APPLICABLE: 211
-CONDITIONAL: 43
-UNKNOWN: 2
+Parcel still base PNU: False
+Same parcel bounds: False
+Same spatial area: False
+```
 
-After:
-APPLICABLE: 64
-NOT_APPLICABLE: 211
-CONDITIONAL: 37
-UNKNOWN: 2
+Spatial leakage 제거 완료.
 
-Touched rules: 16
-Changed rules: 6
-Transitions:
-CONDITIONAL -> APPLICABLE: 6
+---
+
+## 21. C-13 Dynamic Zone Base Numeric Resolver
+
+기존 문제:
+
+```text
+제3종일반주거지역 → 50 / 250
+일반상업지역 → 50 / 250
+자연녹지지역 → 50 / 250
+```
+
+즉 base numeric이 대표 SITE snapshot에 고정되어 있었다.
+
+### Source resolution
+
+서울시 조례와 국가 시행령의 용도지역별 BCR/FAR source를 다시 추적하였다.
+
+16개 주요 용도지역 모두 해결:
+
+```text
+Zones: 16
+Resolved: 16
+Unresolved: 0
+Ambiguous: 0
+
+resolution:
+SEOUL_ZONE_BASE_NUMERIC_COMPLETE
+```
+
+Resolved Seoul base numeric:
+
+| 용도지역 | BCR | FAR |
+|---|---:|---:|
+| 제1종전용주거지역 | 50 | 100 |
+| 제2종전용주거지역 | 40 | 120 |
+| 제1종일반주거지역 | 60 | 150 |
+| 제2종일반주거지역 | 60 | 200 |
+| 제3종일반주거지역 | 50 | 250 |
+| 준주거지역 | 60 | 400 |
+| 중심상업지역 | 60 | 1000 |
+| 일반상업지역 | 60 | 800 |
+| 근린상업지역 | 60 | 600 |
+| 유통상업지역 | 60 | 600 |
+| 전용공업지역 | 60 | 200 |
+| 일반공업지역 | 60 | 200 |
+| 준공업지역 | 60 | 400 |
+| 보전녹지지역 | 20 | 50 |
+| 생산녹지지역 | 20 | 50 |
+| 자연녹지지역 | 20 | 50 |
+
+신규 resolver:
+
+```text
+law_data/zone_base_numeric_resolver.py
+```
+
+대표 테스트:
+
+```text
+제3종일반주거지역 => 50 / 250
+일반상업지역 => 60 / 800
+자연녹지지역 => 20 / 50
+준주거지역 => 60 / 400
+준공업지역 => 60 / 400
+
+all_pass: True
 ```
 
 ---
 
-## 22. Dynamic Numeric Guard
+## 22. C-13 Dynamic Numeric Injection
 
-동적 입력 이후 잘못 재활성화된 숫자 특례를 별도 guard로 검증하였다.
+`evaluate_site_rules()` 확장:
 
-초기 immediate 후보:
-
-```text
-clause 4   → BCR 60
-clause 189 → FAR 300
-clause 205 → FAR 325
+```python
+base_numeric_context
 ```
 
-### clause 4
+dynamic context 직접 테스트:
 
 ```text
-상위 branch 불일치
-→ NOT_APPLICABLE
+Input:
+BCR 60
+FAR 800
+
+Result:
+Confirmed BCR: 60.0
+Confirmed FAR: 800.0
+Numeric resolution: BASE_VALUES_RETAINED
+
+all_pass: True
 ```
 
-### clause 189
+`site_analysis_builder.py`는 현재 SITE zone을 확정한 후:
 
 ```text
-방재지구 FALSE / HIGH
-→ NOT_APPLICABLE
+site.zone
+→ resolve_zone_base_numeric()
+→ evaluate_site_rules(base_numeric_context=...)
 ```
 
-### clause 205
-
-본문:
-
-```text
-제48조제7호부터 제10호까지의 지역에서
-관광숙박시설을 건축하는 경우
-용적률 130% 이하
-```
-
-현재 SITE:
-
-```text
-제3종일반주거지역
-서울시 조례 제48조 제5호
-```
-
-따라서:
-
-```text
-서울조례제48조7호부터10호지역 = FALSE
-관광숙박시설 = UNSET
-clause 205 = NOT_APPLICABLE / HIGH
-FAR 325% 적용 금지
-```
-
----
-
-## 23. Branch-local Predicate Generalization
-
-개별 numeric clause를 수동 패치하는 대신, 조문 내부 branch-local predicate를 자동 탐지하는 probe를 구축하였다.
-
-전체 numeric 후보:
-
-```text
-Numeric rules: 28
-Rules with missing predicates: 3
-Active rules with missing predicates: 1
-HIGH-priority missing: 7
-```
-
-검출된 주요 누락 predicate:
-
-```text
-서울도심 / SITE
-서울조례제48조7호부터10호지역 / SITE
-관광숙박시설 / PROJECT
-감염병대응필요시설 / PROJECT
-```
-
-clause 205 regression:
-
-```text
-Detected:
-- 관광숙박시설
-- 서울도심
-- 서울조례제48조7호부터10호지역
-
-Expected:
-- 관광숙박시설
-- 서울조례제48조7호부터10호지역
-
-Complete: True
-```
-
----
-
-## 24. Branch-local Condition Overlay
-
-HIGH confidence + clause 본문 직접 등장 predicate만 실제 condition model에 추가한다.
+순서로 실행한다.
 
 결과:
 
 ```text
-Selected predicates: 7
-Added conditions: 7
-Touched rules: 3
-Changed rules: 2
+BASE:
+제3종일반주거지역 → 50 / 250
+
+ALTERNATE:
+일반상업지역 → 60 / 800
 ```
 
-상태 변화:
+Numeric leakage 제거 완료.
+
+---
+
+## 23. C-13 Dynamic Rule SITE Context
+
+`evaluate_site_rules()` 확장:
+
+```python
+site_zone_context
+```
+
+기존 문제:
 
 ```text
-Before:
-APPLICABLE: 64
-NOT_APPLICABLE: 211
-CONDITIONAL: 37
-UNKNOWN: 2
+site_rule_evaluation_site_complete.json
+```
 
-After:
+안의 `zone_relevance`가 대표 SITE인 제3종일반주거지역 기준으로 이미 생성되어 있었다.
+
+C-13에서는 현재 SITE zone을 기준으로:
+
+```python
+classify_zone_relevance()
+```
+
+를 다시 호출한다.
+
+상태:
+
+```text
+DIRECT
+GROUP
+OTHER_ZONE
+UNSPECIFIED
+```
+
+---
+
+## 24. Zone Transition Safety Policy
+
+전체 rule applicability를 무조건 재계산했을 때 BASE regression이 깨지는 문제가 발견되었다.
+
+실패 사례:
+
+```text
+BASE expected:
+63 / 213 / 36 / 2
+
+unsafe full recalc:
+106 / 170 / 36 / 2
+```
+
+따라서 전체 재계산을 폐기하고,
+zone transition만 제한적으로 반영한다.
+
+정책:
+
+```text
+DIRECT/GROUP → OTHER_ZONE
+=> NOT_APPLICABLE
+
+OTHER_ZONE → DIRECT/GROUP
+=> 무조건 APPLICABLE 금지
+```
+
+자동 재활성화는 현재 검증된 다음 기본/reference 규칙 유형으로 제한:
+
+```text
+국토의 계획 및 이용에 관한 법률
+- 용도지역의 건폐율
+- 용도지역에서의 용적률
+```
+
+예:
+
+```text
+주거지역 BCR leaf
+clause 61:
+GROUP → OTHER_ZONE
+=> NOT_APPLICABLE
+
+상업지역 BCR leaf
+clause 62:
+OTHER_ZONE → GROUP
+=> APPLICABLE
+
+주거지역 FAR leaf
+clause 233:
+GROUP → OTHER_ZONE
+=> NOT_APPLICABLE
+
+상업지역 FAR leaf
+clause 234:
+OTHER_ZONE → GROUP
+=> APPLICABLE
+```
+
+시장정비사업 / 주거복합 / 임대주택 등은:
+
+```text
+REACTIVATION_DEFERRED
+```
+
+로 보존한다.
+
+---
+
+## 25. Applicability Priority Fix
+
+C-13 과정에서 추가로 발견:
+
+기존 `recalculate_applicability()` 순서:
+
+```text
+blocked
+unknown
+required
+OTHER_ZONE
+```
+
+이면 현재 SITE가 `OTHER_ZONE`이어도 required input이 존재할 때
+잘못 `CONDITIONAL`로 재활성화될 수 있었다.
+
+수정 후:
+
+```text
+blocked
+OTHER_ZONE
+unknown
+required
+applicable
+```
+
+즉 용도지역 불일치는 PROJECT/PROCEDURE 추가 입력보다 우선한다.
+
+대표 regression:
+
+```text
+clause 206
+
+before fix:
+NOT_APPLICABLE → CONDITIONAL
+
+after fix:
+NOT_APPLICABLE 유지
+```
+
+---
+
+## 26. C-13 Multi-SITE 최종 검증
+
+### BASE SITE
+
+```text
+SITE ID: 11680-10300-0012-0000
+PNU: 1168010300100120000
+Zone: 제3종일반주거지역
+
+Parcel loaded: True
+Official area: 121040.4
+Spatial area: 120945.65223377591
+
+BCR/FAR:
+50 / 250
+
+Rules:
 APPLICABLE: 63
 NOT_APPLICABLE: 213
 CONDITIONAL: 36
 UNKNOWN: 2
+TOTAL: 314
 ```
 
-주요 regression:
+### ALTERNATE synthetic SITE
 
 ```text
-clause 205
-APPLICABLE -> NOT_APPLICABLE
+SITE ID: 11680-10300-0013-0000
+Address: SYNTHETIC TEST SITE
+PNU: 1168010300100130000
+Zone: 일반상업지역
 
-clause 188
-APPLICABLE -> CONDITIONAL
-감염병대응필요시설 = UNSET
+Parcel PNU:
+1168010300100130000
+
+Parcel loaded:
+False
+
+Parcel bounds:
+None
+
+Official area:
+1000.0
+
+Spatial area:
+None
+
+BCR/FAR:
+60 / 800
+
+Rules:
+APPLICABLE: 63
+NOT_APPLICABLE: 216
+CONDITIONAL: 33
+UNKNOWN: 2
+TOTAL: 314
+```
+
+Leakage audit:
+
+```text
+Identity changed: True
+PNU changed: True
+Zone changed: True
+Official area changed: True
+
+Parcel PNU matches SITE: True
+Parcel still base PNU: False
+Same parcel bounds: False
+Same spatial area: False
+
+Same numeric: False
+Same rule summary: False
+
+Leakage signals: []
+
+Multi-SITE ready: True
+Resolution: MULTI_SITE_READY
+
+probe_pass: True
+```
+
+C-13 상태:
+
+```text
+C-13 STATUS: COMPLETE
+MULTI-SITE CORE: READY
 ```
 
 ---
 
-## 25. SITE Resolution Registry Reuse
+## 27. 최신 전체 회귀 테스트
 
-branch-local predicate가 새로 만들어질 때 이미 해결한 SITE condition을 재사용해야 한다.
-
-서울도심 registry:
+2026-08-22 기준 아래 테스트 모두 정상 통과.
 
 ```text
-서울도심 = FALSE / HIGH
+python -m law_data.rule_evaluation_pipeline_module_test
+→ all_pass: True
+
+python -m law_data.zone_base_numeric_resolver_test
+→ all_pass: True
+
+python -m site_data.test_site_analysis_service
+→ all_pass: True
+
+python -m site_data.test_site_analysis_orchestrator
+→ all_pass: True
+
+python test_api_app.py
+→ all_pass: True
+
+python -m law_data.multi_site_state_leakage_probe_test
+→ probe_pass: True
+→ Multi-SITE ready: True
+→ Resolution: MULTI_SITE_READY
 ```
 
-repair 결과:
+추가로 이전 검증 완료:
 
 ```text
-clause 201 | 서울도심 | UNKNOWN -> FALSE
-clause 205 | 서울도심 | UNKNOWN -> FALSE
+python -m site_data.test_real_api_to_site_analysis
+python -m site_data.test_land_area_source_reconciliation
+python -m site_data.test_site_analysis_land_area_integration
+python -m site_data.test_site_analysis_response
+python test_api_error_contract.py
+python test_api_contract_final_regression.py
 ```
+
+모두 정상 완료 상태.
 
 ---
 
-## 26. Dynamic Numeric Final Guard Recheck
+## 28. 현재 Rule Engine 핵심 상태
 
-현재 dynamic scenario에서:
-
-```text
-Active numeric before guard: 11
-Excluded: 2
-- clause 4
-- clause 189
-
-Active numeric after guard: 9
-```
-
-Roles:
-
-```text
-CONDITIONAL_PLAN_RANGE: 1
-DISTRICT_PLAN_CEILING: 2
-NATIONAL_CEILING: 2
-CONDITIONAL_STRENGTHENING: 2
-SPECIAL_AREA_REFERENCE: 1
-OTHER_ACTIVE: 1
-```
-
-즉시 적용 relaxation:
-
-```text
-0
-```
-
-따라서:
-
-```text
-Numeric resolution: BASE_VALUES_RETAINED
-
-Confirmed BCR: 50.0
-Confirmed FAR: 250.0
-```
-
----
-
-## 27. Residual Numeric Role Probe
-
-남아 있던 `OTHER_ACTIVE: 1`을 확인하였다.
-
-Residual:
-
-```text
-clause 250
-국토의 계획 및 이용에 관한 법률
-용도지역에서의 용적률
-제78조제7항제2호
-```
-
-본문:
-
-```text
-지구단위계획구역 외의 지역:
-제1항 및 제2항에 따라 대통령령으로 정하고 있는
-해당 용도지역별 용적률 최대한도의 120퍼센트 이하
-```
-
-상위 문맥:
-
-```text
-다른 법률에 따른 용적률 완화 규정을 중첩 적용할 수 있음
-```
-
-현재 preliminary 판단:
-
-```text
-직접 FAR 완화가 아님
-중첩 완화 상한(cap) 조문
-```
-
-현재 SITE:
-
-```text
-지구단위계획 = TRUE
-```
-
-따라서 clause 250의:
-
-```text
-지구단위계획구역 외의 지역
-```
-
-branch는 현재 SITE와 불일치할 가능성이 높다.
-
----
-
-## 28. 현재 정확한 중단 위치
-
-오늘 작업은 아래까지 완료하였다.
-
-```text
-STEP 17
-└─ STEP 17-21
-   └─ C-10
-      └─ 4B
-         └─ 2D
-            dynamic_numeric_residual_role_probe_test.py
-            ALL PASS
-```
-
-직전 실행 결과:
-
-```text
-Active before guard: 11
-Blocked: [4, 189, 205]
-Active after guard: 9
-
-Residual roles: 1
-Residual immediate risk: 0
-
-Residual clause:
-250
-```
-
----
-
-## 29. 다음 재개 지점
-
-다음 작업:
-
-```text
-STEP 17-21-C-10-4B-2E
-Clause 250 stacking ceiling resolution
-```
-
-### 아직 작성/실행하지 않은 파일
-
-```text
-law_data/clause_250_stacking_ceiling_resolution_test.py
-```
-
-### 검증 목표
-
-예상 role:
-
-```text
-STACKING_CEILING_OUTSIDE_DISTRICT_PLAN
-```
-
-검증 내용:
-
-```text
-clause 250
-= 직접 FAR 효과가 아니라
-  여러 용적률 완화 규정 중첩 시 적용하는 ceiling
-
-현재 SITE
-지구단위계획 = TRUE
-
-clause 250 대상
-지구단위계획구역 외의 지역
-
-예상:
-branch match = False
-clause 250 = NOT_APPLICABLE
-direct numeric effect = False
-```
-
-**2026-08-20 작업 종료 시점에는 이 파일을 작성하거나 실행하지 않았다.**
-
----
-
-## 30. Clause 250 완료 후 예정 작업
-
-Clause 250 검증이 완료되면 개별 numeric clause 탐색을 종료하고 다음 요소를 하나의 재사용 가능한 evaluation pipeline으로 통합한다.
-
-```text
-SITE resolution registry
-+
-SITE_HISTORY external dependency
-+
-PROJECT dynamic input
-+
-PROCEDURE dynamic input
-+
-branch-local predicate detector
-+
-numeric semantic override
-+
-parent-child hierarchy dedup
-+
-verified numeric guard
-+
-ceiling / stacking rule
-=
-Reusable Rule Evaluation Pipeline
-```
-
-목표 API 형태 예:
-
-```python
-evaluate_site_rules(
-    site=site,
-    project_profile=project_profile,
-    procedure_profile=procedure_profile,
-)
-```
-
-출력 목표:
-
-```text
-rule applicability
-numeric effects
-confirmed BCR/FAR
-conditional alternatives
-unknown external dependencies
-evidence
-```
-
----
-
-## 31. 현재 Rule Engine 핵심 상태
+Representative BASE scenario:
 
 ```text
 Total rules: 314
 
-SITE evaluation:
-COMPLETE_WITH_EXTERNAL_DEPENDENCY
-
-Rule engine ready:
-True
-
-SITE baseline:
+CLEAN baseline:
 APPLICABLE: 58
 NOT_APPLICABLE: 211
 CONDITIONAL: 43
 UNKNOWN: 2
 
-Dynamic test:
-공동주택 TRUE
-도시계획위원회심의 TRUE
+PROJECT:
+공동주택 = TRUE
 
-branch-local overlay 이후:
+PROCEDURE:
+도시계획위원회심의 = TRUE
+
+Final:
 APPLICABLE: 63
 NOT_APPLICABLE: 213
 CONDITIONAL: 36
@@ -1086,9 +1252,61 @@ Confirmed FAR:
 250.0
 ```
 
+General commercial synthetic SITE:
+
+```text
+Zone:
+일반상업지역
+
+Confirmed BCR:
+60.0
+
+Confirmed FAR:
+800.0
+
+Final:
+APPLICABLE: 63
+NOT_APPLICABLE: 216
+CONDITIONAL: 33
+UNKNOWN: 2
+```
+
 ---
 
-## 32. 현재 프로젝트 핵심 안전 원칙
+## 29. 현재 서비스 상태
+
+```text
+SITE Analysis Object: READY
+Rule Engine: READY
+Stateless: True
+Multi-SITE core: READY
+API Schema: SITE_ANALYSIS_API_V1
+FastAPI: READY
+```
+
+Health:
+
+```text
+GET /health
+→ 200 OK
+```
+
+Analysis:
+
+```text
+POST /v1/site-analysis
+→ 200 OK
+```
+
+API contract:
+
+```text
+200 / 422 / 404 / 502 / 500
+```
+
+---
+
+## 30. 현재 프로젝트 핵심 안전 원칙
 
 ```text
 문자열 존재 ≠ SITE 해당
@@ -1099,90 +1317,268 @@ geometry 미확보 ≠ FALSE
 조회 실패 ≠ FALSE
 HTTP 403 ≠ FALSE
 후속 접근 실패 ≠ 기존 정상 evidence 무효
-
 UNKNOWN은 오류가 아니라 정상 상태
 TRUE는 실제 근거가 필요
 FALSE도 정상조회와 비교 근거가 필요
-
 대표 Point보다 Parcel Polygon intersection 우선
+Parcel snapshot은 PNU 일치 시에만 재사용
+다른 SITE에 대표 SITE geometry 재사용 금지
 코드 의미는 공식 source에서 명칭과 직접 연결 검증 후 사용
-
 PROJECT/PROCEDURE TRUE만으로 numeric 특례 적용 금지
 상위 법령 branch 조건을 반드시 검증
 branch-local SITE/PROJECT/PROCEDURE predicate를 함께 평가
 부모 aggregate numeric + child numeric 중복 적용 금지
 상한(ceiling)과 직접 완화(effect)를 구분
 중첩(stacking) 허용 여부를 별도 판정
-
+용도지역 불일치는 PROJECT/PROCEDURE 미입력보다 우선
+OTHER_ZONE → DIRECT/GROUP만으로 무조건 APPLICABLE 금지
+deferred 특례는 추가 조건 검증 전까지 기존 판정 유지
 외부 역사 원문 미확인은 UNKNOWN으로 보존
 negative search만으로 SITE_HISTORY FALSE 강제 금지
+.env는 Git 추적 금지
+실제 API key를 저장소에 commit 금지
 ```
 
 ---
 
-## 33. 현재 전체 개발 단계
+## 31. 현재 전체 개발 단계
 
 ```text
-PHASE 1  기초 SITE / API                         완료
-PHASE 2  실제 토지·건축물 데이터                 완료
-PHASE 3  법령 API / 법규 수집                    완료
-PHASE 4  법규 Clause Parser                      핵심 완료
-PHASE 5  용도지역 관련성 판정                     완료
-PHASE 6  SITE 공간조건 판정                       완료
-PHASE 7  SITE_HISTORY 판정                        완료*
-PHASE 8  PROJECT 조건 모델                        핵심 구축
-PHASE 9  PROCEDURE 조건 모델                      핵심 구축
-PHASE 10 특례 적용 가능성 엔진                    진행 중
-PHASE 11 기본 건폐율·용적률 결정                  핵심 완료
-PHASE 12 법규 우선순위 / 중첩 규정 처리            진행 중
-PHASE 13 Formula / 수치 계산 엔진                 진행 중
-PHASE 14 지구단위계획 결정도서 자동분석            예정
-PHASE 15 최종 SITE 규제값 계산                    진행 중
-PHASE 16 대지분석 결과 객체 통합                   예정
-PHASE 17 AI 설명 / 보고서 생성                    예정
-PHASE 18 서비스 UI / 자동화 API                   예정
+PHASE 1  기초 SITE / API                       완료
+PHASE 2  실제 토지·건축물 데이터               완료
+PHASE 3  법령 API / 법규 수집                  완료
+PHASE 4  법규 Clause Parser                    핵심 완료
+PHASE 5  용도지역 관련성 판정                   완료
+PHASE 6  SITE 공간조건 판정                    완료
+PHASE 7  SITE_HISTORY 판정                     완료*
+PHASE 8  PROJECT 조건 모델                     핵심 구축
+PHASE 9  PROCEDURE 조건 모델                   핵심 구축
+PHASE 10 특례 적용 가능성 엔진                 핵심 완료 / 일반화 진행
+PHASE 11 기본 건폐율·용적률 결정               16개 zone dynamic 완료
+PHASE 12 법규 우선순위 / 중첩 규정 처리         핵심 완료 / 확장 예정
+PHASE 13 Formula / 수치 계산 엔진               핵심 완료 / 확장 예정
+PHASE 14 지구단위계획 결정도서 자동분석         예정
+PHASE 15 최종 SITE 규제값 계산                  핵심 완료
+PHASE 16 대지분석 결과 객체 통합                완료
+PHASE 17 AI 설명 / 보고서 생성                 예정
+PHASE 18 서비스 UI / 자동화 API                API 핵심 완료 / UI 예정
+PHASE 19 Multi-SITE generalization              핵심 완료
 ```
 
-`PHASE 7`의 `완료*` 의미:
+`PHASE 7 완료*` 의미:
 
 ```text
 자동화 가능한 SITE_HISTORY 검증은 완료.
-도시지역편입해제구역은 HISTORICAL_SOURCE_PENDING external dependency로 보존.
+도시지역편입해제구역은
+HISTORICAL_SOURCE_PENDING external dependency로 보존.
 ```
 
 ---
 
-## 34. 주요 결과 파일
+## 32. 주요 현재 모듈
 
-현재 중요 snapshot / resolution:
+Rule / law:
+
+```text
+law_data/rule_evaluation_pipeline.py
+law_data/rule_condition_registry.py
+law_data/zone_base_numeric_resolver.py
+law_data/site_analysis_builder.py
+law_data/site_identity_resolver.py
+law_data/site_spatial_payload_resolver.py
+```
+
+Service:
+
+```text
+site_data/site_analysis_service.py
+site_data/site_analysis_response.py
+site_data/site_analysis_orchestrator.py
+site_data/site_builder.py
+```
+
+API:
+
+```text
+api_app.py
+```
+
+주요 C-13 테스트:
+
+```text
+law_data/multi_site_state_leakage_probe_test.py
+law_data/dynamic_base_numeric_context_test.py
+law_data/numeric_baseline_source_audit_test.py
+law_data/zone_numeric_regulation_source_probe_test.py
+law_data/base_zone_numeric_clause_exact_probe_test.py
+law_data/seoul_base_zone_numeric_article_probe_test.py
+law_data/zone_ratio_map_layer_resolution_test.py
+law_data/zone_base_numeric_resolver_test.py
+```
+
+API contract tests:
+
+```text
+test_api_error_contract.py
+test_api_contract_final_regression.py
+test_api_app.py
+```
+
+---
+
+## 33. 주요 현재 output / snapshot
 
 ```text
 law_data/output/site_spatial_condition_final_snapshot.json
-law_data/output/special_rule_applicability.json
-law_data/output/project_profile_template.json
-law_data/output/procedure_profile_template.json
-law_data/output/site_numeric_regulation_final_snapshot.json
-law_data/output/site_rule_evaluation_final_snapshot.json
-
-law_data/output/seoul_downtown_condition_resolution.json
-law_data/output/development_density_management_evidence_resolution.json
-law_data/output/school_relocation_site_candidate_resolution.json
-law_data/output/urban_area_conversion_history_final_resolution.json
-
 law_data/output/site_rule_evaluation_site_complete.json
-law_data/output/project_procedure_dynamic_rule_evaluation.json
-law_data/output/dynamic_active_numeric_context_probe.json
-law_data/output/dynamic_numeric_guard_reconciliation.json
-law_data/output/clause_205_tourism_branch_guard.json
-law_data/output/numeric_branch_local_condition_generalization_probe.json
-law_data/output/numeric_branch_local_condition_overlay.json
-law_data/output/dynamic_numeric_final_guard_recheck.json
-law_data/output/dynamic_numeric_residual_role_probe.json
+law_data/output/base_numeric_regulation_hierarchy.json
+law_data/output/site_parcel_spatial_snapshot.geojson
+law_data/output/site_parcel_spatial_recovery.json
+law_data/output/zone_numeric_regulation_source_probe.json
+law_data/output/base_zone_numeric_clause_exact_probe.json
+law_data/output/seoul_base_zone_numeric_article_probe.json
+law_data/output/zone_ratio_map_layer_resolution.json
+law_data/output/numeric_baseline_source_audit.json
+```
+
+대표 zone ratio resolution:
+
+```text
+resolution:
+SEOUL_ZONE_BASE_NUMERIC_COMPLETE
 ```
 
 ---
 
-## 35. 다음 작업 시작용 핸드오프
+## 34. Python package import 정책
+
+`site_data` / `law_data`는 package import 방식을 기본으로 한다.
+
+권장 실행:
+
+```powershell
+python -m site_data.<module>
+python -m law_data.<module>
+```
+
+패키지 내부 import는 가능하면 상대 import를 사용한다.
+
+예:
+
+```python
+from .site_data_model import Site
+```
+
+직접 script 실행과 `python -m` 실행이 혼재할 경우 import 호환성을 명시적으로 고려한다.
+
+---
+
+## 35. 환경변수 / API Key 정책
+
+실제 API Key는:
+
+```text
+.env
+```
+
+에만 저장한다.
+
+현재 확인:
+
+```text
+git check-ignore -v .env
+→ .gitignore:4:.env .env
+
+git ls-files .env
+→ no output
+```
+
+즉 `.env`는 Git 추적 대상이 아니다.
+
+`.env.example`은 2026-08-22 의도적으로 삭제하였다.
+
+주의:
+
+```text
+.env
+실제 API Key
+credential
+secret
+token
+```
+
+은 절대 Git commit하지 않는다.
+
+---
+
+## 36. 현재 정확한 완료 지점
+
+```text
+STEP 17
+└─ STEP 17-21
+   ├─ C-10 Rule / Numeric Evaluation        COMPLETE
+   ├─ C-11 SITE Analysis Object             COMPLETE
+   ├─ C-12 Service / FastAPI / Contract     COMPLETE
+   └─ C-13 Multi-SITE Generalization        COMPLETE
+```
+
+C-13 최종:
+
+```text
+Spatial leakage: removed
+Numeric leakage: removed
+Rule leakage: removed
+
+Leakage signals: []
+
+Multi-SITE ready: True
+Resolution: MULTI_SITE_READY
+```
+
+---
+
+## 37. 다음 개발 시작 지점
+
+다음 단계는 **C-14 — Multi-SITE Real Parcel Validation & Deferred Rule Generalization**으로 진행한다.
+
+권장 작업 순서:
+
+```text
+1. synthetic SITE가 아니라 실제 다른 필지 2~3개를 선정
+2. 실제 Building HUB / 토지 API로 SITE 생성
+3. 현재 PNU 기반 spatial resolver의 live geometry source 확장
+4. 각 SITE의 실제 zone에 따라 dynamic BCR/FAR 검증
+5. Rule summary가 zone에 따라 합리적으로 변화하는지 검증
+6. REACTIVATION_DEFERRED rule을 유형별로 일반화
+7. 주거복합 / 시장정비사업 / 임대주택 / 개발진흥지구 등
+   추가 PROJECT / PROCEDURE / SITE 조건을 동적 condition으로 연결
+8. 대표 SITE snapshot 의존 output을 점진적으로 runtime source로 교체
+```
+
+우선순위 1:
+
+```text
+실제 두 번째 SITE를 API로 분석하여
+synthetic test가 아닌 real Multi-SITE regression 확보
+```
+
+우선순위 2:
+
+```text
+REACTIVATION_DEFERRED 규칙의
+PROJECT / PROCEDURE / SITE predicate 일반화
+```
+
+우선순위 3:
+
+```text
+다른 PNU의 Parcel Polygon을 runtime에서 확보하는
+live spatial payload source 구축
+```
+
+---
+
+## 38. 다음 작업 시작용 핸드오프
 
 ```text
 AI 대지분석 자동화 시스템 개발을 계속한다.
@@ -1190,214 +1586,14 @@ AI 대지분석 자동화 시스템 개발을 계속한다.
 기준 문서:
 PROJECT_STATUS.md
 
-현재 SITE:
+현재 단계:
+STEP 17-21-C-13 COMPLETE
+
+현재 대표 SITE:
 서울특별시 강남구 개포동 12번지
-SITE ID: 11680-10300-0012-0000
-PNU: 1168010300100120000
-용도지역: 제3종일반주거지역
-
-현재 SITE Rule Evaluation:
-COMPLETE_WITH_EXTERNAL_DEPENDENCY
-
-Rule Engine ready:
-True
-
-Confirmed BCR:
-50%
-
-Confirmed FAR:
-250%
-
-일반 SITE unresolved:
-0
-
-External historical dependency:
-도시지역편입해제구역
-UNKNOWN / MEDIUM
-HISTORICAL_SOURCE_PENDING
-
-현재 dynamic test:
-공동주택 = TRUE
-도시계획위원회심의 = TRUE
-
-branch-local condition / verified numeric guard 적용 후
-즉시 적용 numeric relaxation:
-0
-
-직전 완료:
-STEP 17-21-C-10-4B-2D
-dynamic_numeric_residual_role_probe_test.py
-all_pass: True
-
-Residual:
-clause 250
-국토의 계획 및 이용에 관한 법률 제78조제7항제2호
-"지구단위계획구역 외의 지역:
-해당 용도지역별 용적률 최대한도의 120퍼센트 이하"
-
-현재 판단:
-직접 FAR effect가 아니라 stacking ceiling일 가능성이 높음.
-
-다음 단계:
-STEP 17-21-C-10-4B-2E
-Clause 250 stacking ceiling resolution
-
-다음 작성 파일:
-law_data/clause_250_stacking_ceiling_resolution_test.py
-
-주의:
-2026-08-20 종료 시점에는 위 파일을 아직 작성/실행하지 않았다.
-
-검증 목표:
-role = STACKING_CEILING_OUTSIDE_DISTRICT_PLAN
-현재 SITE 지구단위계획 TRUE
-따라서 "지구단위계획구역 외의 지역" branch 불일치 확인
-direct numeric effect = False 확인
-
-그 다음:
-SITE registry
-+ PROJECT/PROCEDURE dynamic inputs
-+ branch-local predicates
-+ numeric semantic overrides
-+ verified guards
-+ stacking/ceiling
-을 하나의 reusable Rule Evaluation Pipeline으로 통합한다.
-```
-
----
-
-## 36. Git 체크포인트
-
-GitHub 원격 저장소:
-
-```text
-jehun0620-bot/site-ai
-branch: main
-```
-
-현재 원격 기준 직전 체크포인트:
-
-```text
-37e1a4a
-Complete C-9 SITE spatial condition validation
-```
-
-이번 체크포인트에는 C-10에서 생성·수정된 Python 코드와 `PROJECT_STATUS.md`를 저장한다.
-
-권장 commit message:
-
-```text
-Checkpoint C-10 dynamic rule and numeric evaluation
-```
-
-Git 저장 전 반드시:
-
-```powershell
-git status --short
-git diff --stat
-```
-
-으로 실제 변경 범위를 확인한다.
-
-`git add .`, `git add -A`, `git add --all`은 사용하지 않는다.
-
-`law_data/output/*.json`은 프로젝트에서 기존부터 추적하는 경우에만 stage한다.
-
----
-
-# STEP 17-21-C-12 CHECKPOINT
-
-최종 업데이트: 2026-08-21
-
-## 현재 단계
-
-STEP 17-21-C-12-5 완료
-
-FastAPI Thin HTTP Layer까지 구현 및 실제 서버 검증 완료.
-
-다음 작업:
-
-STEP 17-21-C-12-6
-API Contract / Error Handling Regression
-
-검증 예정:
-- 잘못된 입력 -> 422
-- 존재하지 않는 필지 -> 404
-- Building HUB 오류 -> 502
-- 내부 분석 오류 -> 500
-
-
-## 최종 서비스 흐름
-
-건축HUB 실제 API
-→ create_site()
-→ Site dataclass
-→ analyze_site_object()
-→ build_site_analysis()
-→ SITE spatial / rule evaluation
-→ build_site_analysis_response()
-→ analyze_site_by_parcel()
-→ FastAPI
-→ POST /v1/site-analysis
-
-
-## HTTP API
-
-FastAPI app:
-
-api_app.py
-
-Endpoints:
-
-GET /health
-POST /v1/site-analysis
-
-Swagger:
-
-/docs
-
-OpenAPI:
-
-/openapi.json
-
-
-## 실제 서버 검증
-
-실행:
-
-uvicorn api_app:app --reload
-
-검증 결과:
-
-GET /health
-→ 200 OK
-
-GET /docs
-→ 200 OK
-
-GET /openapi.json
-→ 200 OK
-
-POST /v1/site-analysis
-→ 200 OK
-
-
-## API Schema
-
-SITE_ANALYSIS_API_V1
-
-대표 응답:
-
-status = READY
 
 SITE ID:
 11680-10300-0012-0000
-
-주소:
-서울특별시 강남구 개포동 12번지
-
-도로명주소:
-서울특별시 강남구 개포로109길 21 (개포동)
 
 PNU:
 1168010300100120000
@@ -1405,234 +1601,140 @@ PNU:
 용도지역:
 제3종일반주거지역
 
-
-## SITE Spatial
-
-대표 좌표:
-
-x = 127.07539280356858
-y = 37.494197498186885
-CRS = EPSG:4326
-
-Parcel:
-
-geometry = Polygon
-
-MapPlan geometry area:
-120945.65223377591
-
-bounds:
-
-[
-  962201.02522,
-  1943722.58159,
-  962711.06096,
-  1944220.16506
-]
-
-Parcel CRS:
-
-None
-
-CRS status:
-
-SOURCE_CRS_NOT_EXPLICIT
-
-주의:
-Parcel CRS는 추정하지 않고 미확정 상태로 유지.
-
-
-## Land Area Source Policy
-
-VWorld 공식/속성 면적:
-
-121040.4 m²
-
-source:
-VWORLD_LAND_CHARACTERISTICS
-
-role:
-LEGAL_OR_ATTRIBUTE_LAND_AREA
-
-primary:
-official
-
-
-MapPlan geometry 면적:
-
-120945.65223377591
-
-source:
-MAPPLAN_PARCEL_GEOMETRY
-
-role:
-SPATIAL_GEOMETRY_AREA
-
-
-차이:
-
-94.74776622408535
-
-difference ratio:
-
-0.07827780329880384 %
-
-resolution:
-
-KEEP_BOTH_WITH_SOURCE_ROLES
-
-
-## Rule Engine
-
-Rule Engine:
-
+대표 SITE 분석:
 READY
 
-Stateless:
+BCR:
+50%
 
+FAR:
+250%
+
+Rules:
+APPLICABLE 63
+NOT_APPLICABLE 213
+CONDITIONAL 36
+UNKNOWN 2
+
+Rule Engine:
+READY
+Stateless: True
+
+API:
+SITE_ANALYSIS_API_V1
+FastAPI 정상
+API contract freeze READY
+
+C-13 완료:
+Spatial leakage 제거
+Numeric leakage 제거
+Rule leakage 제거
+
+Synthetic alternate SITE:
+11680-10300-0013-0000
+일반상업지역
+
+BCR/FAR:
+60 / 800
+
+Rules:
+63 / 216 / 33 / 2
+
+Leakage signals:
+[]
+
+Multi-SITE ready:
 True
 
-총 rule:
-
-314
-
-현재 representative scenario:
-
-PROJECT:
-공동주택 = TRUE
-
-PROCEDURE:
-도시계획위원회심의 = TRUE
-
-
-결과:
-
-APPLICABLE = 63
-NOT_APPLICABLE = 213
-CONDITIONAL = 36
-UNKNOWN = 2
-
-
-확정 건폐율:
-
-50.0 %
-
-확정 용적률:
-
-250.0 %
-
-
-Remaining PROJECT inputs:
-
-14
-
-Remaining PROCEDURE inputs:
-
-1
-
+Resolution:
+MULTI_SITE_READY
 
 External historical dependency:
-
 도시지역편입해제구역
-
-state:
-
+UNKNOWN / MEDIUM
 HISTORICAL_SOURCE_PENDING
+분석 차단하지 않음
 
-분석 실행을 차단하지 않음.
+다음 단계:
+C-14
+Multi-SITE Real Parcel Validation
++
+Deferred Rule Generalization
 
+첫 목표:
+실제 다른 PNU를 가진 SITE를 API로 분석하여
+real Multi-SITE regression을 확보한다.
+```
 
-## Parcel Snapshot
+---
 
-공식 C-11 Parcel spatial snapshot:
+## 39. Git 체크포인트
 
-law_data/output/site_parcel_spatial_snapshot.geojson
+현재 branch:
 
-metadata:
+```text
+checkpoint/c12-fastapi-20260821
+```
 
-law_data/output/site_parcel_spatial_recovery.json
+원격:
 
-source recovery:
+```text
+origin/checkpoint/c12-fastapi-20260821
+```
 
-law_data/output/seoul_urban_innovation_zone_mapplan_intersection.json
+현재 C-13 체크포인트 권장 commit message:
 
+```text
+Complete C-13 multi-site rule and numeric generalization
+```
 
-## 주요 신규 모듈
+Git 저장 전:
 
-law_data/site_analysis_builder.py
-law_data/site_identity_resolver.py
-law_data/site_spatial_payload_resolver.py
+```powershell
+git status --short
+git diff --stat
+```
 
-site_data/site_analysis_service.py
-site_data/site_analysis_response.py
-site_data/site_analysis_orchestrator.py
+사용 금지:
 
-api_app.py
+```powershell
+git add .
+git add -A
+git add --all
+```
 
+이유:
 
-## Python package import 정책
+- `.env` 등 비밀정보 안전
+- 불필요한 output / 임시파일 자동 stage 방지
+- 의도하지 않은 파일 삭제/추가 방지
 
-C-12부터 site_data / law_data는 package import 방식 사용.
+`.env.example` 삭제는 의도된 변경이다.
 
-권장 실행:
+`law_data/output/*.json`은 이번 C-13의 source/resolution으로 실제 필요한 파일만 명시적으로 stage한다.
 
-python -m site_data.<module>
+---
 
-기존 site_data 내부 import는 상대 import 사용:
+# CURRENT CHECKPOINT SUMMARY
 
-from .site_data_model import ...
-from .building_converter import ...
-from .land_converter import ...
+```text
+C-10: COMPLETE
+C-11: COMPLETE
+C-12: COMPLETE
+C-13: COMPLETE
 
+SITE Analysis:
+READY
 
-## FastAPI Test Dependency
+Rule Engine:
+READY
 
-Starlette TestClient 사용을 위해 httpx2 필요.
+API:
+READY
 
-테스트:
+Multi-SITE core:
+READY
 
-python test_api_app.py
-
-결과:
-
-all_pass: True
-
-
-## 최종 검증된 테스트
-
-python -m site_data.test_site_analysis_service
-→ all_pass: True
-
-python -m site_data.test_real_api_to_site_analysis
-→ all_pass: True
-
-python -m site_data.test_land_area_source_reconciliation
-→ all_pass: True
-
-python -m site_data.test_site_analysis_land_area_integration
-→ all_pass: True
-
-python -m site_data.test_site_analysis_response
-→ all_pass: True
-
-python -m site_data.test_site_analysis_orchestrator
-→ all_pass: True
-
-python test_api_app.py
-→ all_pass: True
-
-uvicorn api_app:app --reload
-→ 실제 HTTP server 정상 실행
-
-POST /v1/site-analysis
-→ HTTP 200
-
-
-## 다음 시작 지점
-
-STEP 17-21-C-12-6
-
-API Contract / Error Handling Regression
-
-정상 path는 더 이상 수정하지 않고,
-HTTP error mapping을 회귀 테스트할 것.
+Next:
+C-14 Real Multi-SITE Validation
+```

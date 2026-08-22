@@ -134,7 +134,47 @@ def site_to_analysis_input(
         )
     )
 
+        # ========================================================
+    # canonical identity
+    # ========================================================
+
+    pnu = ""
+
+    if (
+        len(sigungu_cd) == 5
+        and len(bjdong_cd) == 5
+        and len(bun) == 4
+        and len(ji) == 4
+    ):
+
+        # PNU:
+        #
+        # 시군구 5
+        # + 법정동 5
+        # + 토지구분 1
+        # + 본번 4
+        # + 부번 4
+        #
+        # 현재 Site 모델에는 산 여부가 별도로 없으므로
+        # 일반 필지 land_gbn = "1"을 사용한다.
+        #
+        # 산번지 지원은 이후 SITE identity schema에서
+        # 별도 필드로 일반화한다.
+
+        pnu = (
+            sigungu_cd
+            + bjdong_cd
+            + "1"
+            + bun
+            + ji
+        )
+
     result = {
+
+        # ----------------------------------------------------
+        # original Site model keys
+        # ----------------------------------------------------
+
         "site_id": (
             site_id
         ),
@@ -161,6 +201,30 @@ def site_to_analysis_input(
 
         "ji": (
             ji
+        ),
+
+        # ----------------------------------------------------
+        # canonical SITE Analysis keys
+        # ----------------------------------------------------
+
+        "sigungu_code": (
+            sigungu_cd
+        ),
+
+        "bjdong_code": (
+            bjdong_cd
+        ),
+
+        "main_no": (
+            bun
+        ),
+
+        "sub_no": (
+            ji
+        ),
+
+        "pnu": (
+            pnu
         ),
     }
 
