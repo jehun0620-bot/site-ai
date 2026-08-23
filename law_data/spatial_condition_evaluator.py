@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-STEP 17-21-C-15-1
+STEP 17-21-C-15 / C-16
 Runtime Spatial Condition Evaluator
 
 목표
@@ -9,9 +9,16 @@ Runtime Spatial Condition Evaluator
 현재 분석 SITE의 Parcel Polygon을 이용하여 SITE 공간조건을
 runtime에서 독립적으로 판정한다.
 
-첫 번째 지원 condition:
+현재 지원 condition
+======================================================================
+1. 지구단위계획
+   dataset: LT_C_UPISUQ161
 
-    지구단위계획
+2. 개발진흥지구
+   dataset: LT_C_UQ129
+
+3. 취락지구
+   dataset: LT_C_UQ128
 
 핵심 원칙
 ======================================================================
@@ -22,6 +29,33 @@ runtime에서 독립적으로 판정한다.
 5. 정상조회 + 유효 geometry + 교차 없음만 FALSE로 판정한다.
 6. 실제 geometry intersection이 확인된 경우 TRUE로 판정한다.
 7. EPSG:4326 geometry의 degree² 면적을 법정 면적 또는 면적비로 사용하지 않는다.
+8. Analysis Primary Parcel Source와 Spatial Evaluation Geometry Source는
+   서로 다를 수 있다.
+9. PNU가 다른 geometry는 fallback으로 사용하지 않는다.
+10. VWorld NOT_FOUND를 FALSE로 해석할지는 dataset별 검증 결과에 따라
+    registry에서 명시적으로 결정한다.
+
+C-15 compatibility
+======================================================================
+지구단위계획 LT_C_UPISUQ161은 기존 C-15 안전정책을 유지한다.
+
+    NOT_FOUND
+    ≠
+    자동 FALSE
+
+C-16 verified empty datasets
+======================================================================
+개발진흥지구 LT_C_UQ129:
+- positive dataset response 검증
+- negative BASE/LIVE response 검증
+- NOT_FOUND + feature 0을 verified empty로 사용
+
+취락지구 LT_C_UQ128:
+- BASE/LIVE negative 검증
+- 천왕동 10-39 / 10-42 / 7-9 / 7-8 positive 검증
+- feature LT_C_UQ128.20689
+- uname 집단취락지구
+- NOT_FOUND + feature 0을 verified empty로 사용
 """
 
 from __future__ import annotations
@@ -39,6 +73,7 @@ from dotenv import load_dotenv
 from shapely.geometry import shape
 from shapely.geometry.base import BaseGeometry
 
+
 try:
 
     from .parcel_geometry_provider import (
@@ -50,6 +85,7 @@ except ImportError:
     from parcel_geometry_provider import (
         resolve_live_parcel_geometry,
     )
+
 
 # ============================================================
 # PATH
@@ -71,11 +107,143 @@ VWORLD_DATA_URL = (
     "https://api.vworld.kr/req/data"
 )
 
+
 DISTRICT_UNIT_PLAN_DATASET = (
     "LT_C_UPISUQ161"
 )
 
+DEVELOPMENT_PROMOTION_DISTRICT_DATASET = (
+    "LT_C_UQ129"
+)
+
+SETTLEMENT_DISTRICT_DATASET = (
+    "LT_C_UQ128"
+)
+
+
 REQUEST_TIMEOUT = 30
+
+
+# ============================================================
+# Spatial Condition Registry
+# ============================================================
+
+SPATIAL_CONDITION_REGISTRY: Dict[
+    str,
+    Dict[str, Any],
+] = {
+
+    # --------------------------------------------------------
+    # C-15
+    # --------------------------------------------------------
+
+    "지구단위계획": {
+
+        "dataset":
+            DISTRICT_UNIT_PLAN_DATASET,
+
+        "true_resolution":
+            "PARCEL_INTERSECTS_DISTRICT_UNIT_PLAN",
+
+        "false_resolution":
+            "PARCEL_DOES_NOT_INTERSECT_DISTRICT_UNIT_PLAN",
+
+        "empty_resolution":
+            "QUERY_SUCCESS_NO_DISTRICT_FEATURE",
+
+        "query_failed_resolution":
+            "DISTRICT_UNIT_PLAN_QUERY_FAILED",
+
+        # ----------------------------------------------------
+        # C-15 기존 정책 보존
+        #
+        # LT_C_UPISUQ161의 NOT_FOUND는 현재 단계에서
+        # verified FALSE로 일반화하지 않는다.
+        # ----------------------------------------------------
+
+        "not_found_is_empty":
+            False,
+    },
+
+    # --------------------------------------------------------
+    # C-16 development promotion district
+    # --------------------------------------------------------
+
+    "개발진흥지구": {
+
+        "dataset":
+            DEVELOPMENT_PROMOTION_DISTRICT_DATASET,
+
+        "true_resolution":
+            "PARCEL_INTERSECTS_DEVELOPMENT_PROMOTION_DISTRICT",
+
+        "false_resolution":
+            "PARCEL_DOES_NOT_INTERSECT_DEVELOPMENT_PROMOTION_DISTRICT",
+
+        "empty_resolution":
+            "NO_DEVELOPMENT_PROMOTION_DISTRICT_FEATURE",
+
+        "query_failed_resolution":
+            "DEVELOPMENT_PROMOTION_DISTRICT_QUERY_FAILED",
+
+        # ----------------------------------------------------
+        # C-16-2
+        #
+        # positive:
+        # 동대문구 제기동 1082
+        # LT_C_UQ129.2952
+        # uname 특정개발진흥지구
+        #
+        # negative:
+        # 개포동 12 / 13
+        # ----------------------------------------------------
+
+        "not_found_is_empty":
+            True,
+    },
+
+    # --------------------------------------------------------
+    # C-16 settlement district
+    # --------------------------------------------------------
+
+    "취락지구": {
+
+        "dataset":
+            SETTLEMENT_DISTRICT_DATASET,
+
+        "true_resolution":
+            "PARCEL_INTERSECTS_SETTLEMENT_DISTRICT",
+
+        "false_resolution":
+            "PARCEL_DOES_NOT_INTERSECT_SETTLEMENT_DISTRICT",
+
+        "empty_resolution":
+            "NO_SETTLEMENT_DISTRICT_FEATURE",
+
+        "query_failed_resolution":
+            "SETTLEMENT_DISTRICT_QUERY_FAILED",
+
+        # ----------------------------------------------------
+        # C-16-6-A/B
+        #
+        # negative:
+        # 개포동 12 / 13
+        #
+        # positive:
+        # 천왕동 10-39
+        # 천왕동 10-42
+        # 천왕동 7-9
+        # 천왕동 7-8
+        #
+        # feature:
+        # LT_C_UQ128.20689
+        # uname 집단취락지구
+        # ----------------------------------------------------
+
+        "not_found_is_empty":
+            True,
+    },
+}
 
 
 # ============================================================
@@ -87,6 +255,7 @@ def safe_string(
 ) -> str:
 
     if value is None:
+
         return ""
 
     return str(
@@ -102,6 +271,7 @@ def safe_dict(
         value,
         dict,
     ):
+
         return value
 
     return {}
@@ -115,6 +285,7 @@ def safe_list(
         value,
         list,
     ):
+
         return value
 
     return []
@@ -138,6 +309,28 @@ def load_vworld_api_key() -> str:
     ).strip()
 
 
+def sanitize_evaluation_parcel(
+    evaluation_parcel: Dict[str, Any],
+) -> Dict[str, Any]:
+
+    """
+    Shapely geometry 등 JSON 직렬화가 어려운 객체를 제외하여
+    evidence/debug에 사용할 evaluation parcel metadata를 만든다.
+    """
+
+    return copy.deepcopy(
+        {
+            key: value
+            for key, value
+            in evaluation_parcel.items()
+            if key not in {
+                "geometry",
+                "geometry_geojson",
+            }
+        }
+    )
+
+
 # ============================================================
 # FeatureCollection
 # ============================================================
@@ -156,6 +349,7 @@ def collect_features(
         payload,
         dict,
     ):
+
         return []
 
     candidates: List[Any] = []
@@ -172,8 +366,10 @@ def collect_features(
         )
     )
 
-    feature_collection = result.get(
-        "featureCollection"
+    feature_collection = (
+        result.get(
+            "featureCollection"
+        )
     )
 
     if isinstance(
@@ -200,6 +396,7 @@ def collect_features(
                 item,
                 dict,
             ):
+
                 continue
 
             candidates.extend(
@@ -211,7 +408,7 @@ def collect_features(
             )
 
     # --------------------------------------------------------
-    # 혹시 일반 GeoJSON 형태가 직접 반환되는 경우
+    # 일반 GeoJSON 형태가 직접 반환되는 경우
     # --------------------------------------------------------
 
     candidates.extend(
@@ -222,7 +419,9 @@ def collect_features(
         )
     )
 
-    features: List[Dict[str, Any]] = []
+    features: List[
+        Dict[str, Any]
+    ] = []
 
     for feature in candidates:
 
@@ -230,6 +429,7 @@ def collect_features(
             feature,
             dict,
         ):
+
             features.append(
                 feature
             )
@@ -249,6 +449,7 @@ def get_vworld_status(
         payload,
         dict,
     ):
+
         return None
 
     return (
@@ -270,6 +471,7 @@ def get_vworld_error(
         payload,
         dict,
     ):
+
         return {}
 
     response = safe_dict(
@@ -297,22 +499,27 @@ def geometry_to_shape(
         geometry,
         dict,
     ):
+
         return None
 
     if not geometry.get(
         "type"
     ):
+
         return None
 
     if not geometry.get(
         "coordinates"
     ):
+
         return None
 
     try:
 
-        result = shape(
-            geometry
+        result = (
+            shape(
+                geometry
+            )
         )
 
     except Exception:
@@ -330,9 +537,11 @@ def parcel_to_shape(
     parcel: Dict[str, Any],
 ) -> Optional[BaseGeometry]:
 
-    return geometry_to_shape(
-        parcel.get(
-            "geometry"
+    return (
+        geometry_to_shape(
+            parcel.get(
+                "geometry"
+            )
         )
     )
 
@@ -362,12 +571,16 @@ def resolve_query_point(
         )
     )
 
-    x = coordinate.get(
-        "x"
+    x = (
+        coordinate.get(
+            "x"
+        )
     )
 
-    y = coordinate.get(
-        "y"
+    y = (
+        coordinate.get(
+            "y"
+        )
     )
 
     crs = safe_string(
@@ -426,12 +639,16 @@ def resolve_query_point(
         )
     )
 
-    x = live_coordinate.get(
-        "x"
+    x = (
+        live_coordinate.get(
+            "x"
+        )
     )
 
-    y = live_coordinate.get(
-        "y"
+    y = (
+        live_coordinate.get(
+            "y"
+        )
     )
 
     crs = safe_string(
@@ -473,6 +690,11 @@ def resolve_query_point(
         None,
         None,
     )
+
+
+# ============================================================
+# Evaluation-compatible Parcel
+# ============================================================
 
 def resolve_evaluation_parcel(
     *,
@@ -539,28 +761,32 @@ def resolve_evaluation_parcel(
 
     if (
         parcel_loaded
-        and parcel_geometry is not None
-        and parcel_crs == "EPSG:4326"
+        and parcel_geometry
+        is not None
+        and parcel_crs
+        == "EPSG:4326"
     ):
 
         return {
-            "resolved": True,
 
-            "geometry": (
-                parcel_geometry
-            ),
+            "resolved":
+                True,
 
-            "geometry_geojson": copy.deepcopy(
-                parcel.get(
-                    "geometry"
-                )
-            ),
+            "geometry":
+                parcel_geometry,
 
-            "crs": (
-                "EPSG:4326"
-            ),
+            "geometry_geojson":
+                copy.deepcopy(
+                    parcel.get(
+                        "geometry"
+                    )
+                ),
+
+            "crs":
+                "EPSG:4326",
 
             "source": {
+
                 "mode":
                     "PRIMARY_PARCEL",
 
@@ -633,16 +859,19 @@ def resolve_evaluation_parcel(
     if (
         live_loaded
         and strict_pnu_verified
-        and live_geometry is not None
-        and live_crs == "EPSG:4326"
+        and live_geometry
+        is not None
+        and live_crs
+        == "EPSG:4326"
     ):
 
         return {
-            "resolved": True,
 
-            "geometry": (
-                live_geometry
-            ),
+            "resolved":
+                True,
+
+            "geometry":
+                live_geometry,
 
             "geometry_geojson":
                 copy.deepcopy(
@@ -653,6 +882,7 @@ def resolve_evaluation_parcel(
                 "EPSG:4326",
 
             "source": {
+
                 "mode":
                     "LIVE_COMPATIBLE_FALLBACK",
 
@@ -685,6 +915,7 @@ def resolve_evaluation_parcel(
                 True,
 
             "live_result": {
+
                 "resolution":
                     live_result.get(
                         "resolution"
@@ -712,15 +943,21 @@ def resolve_evaluation_parcel(
     # ========================================================
 
     return {
-        "resolved": False,
 
-        "geometry": None,
+        "resolved":
+            False,
 
-        "geometry_geojson": None,
+        "geometry":
+            None,
 
-        "crs": None,
+        "geometry_geojson":
+            None,
+
+        "crs":
+            None,
 
         "source": {
+
             "mode":
                 "UNRESOLVED",
 
@@ -736,6 +973,7 @@ def resolve_evaluation_parcel(
             True,
 
         "live_result": {
+
             "resolution":
                 live_result.get(
                     "resolution"
@@ -757,12 +995,15 @@ def resolve_evaluation_parcel(
                 ),
         },
     }
+
+
 # ============================================================
-# district-unit-plan query
+# Generic VWorld spatial query
 # ============================================================
 
-def query_district_unit_plan(
+def query_spatial_dataset(
     *,
+    dataset: str,
     api_key: str,
     x: float,
     y: float,
@@ -777,7 +1018,7 @@ def query_district_unit_plan(
             "GetFeature",
 
         "data":
-            DISTRICT_UNIT_PLAN_DATASET,
+            dataset,
 
         "key":
             api_key,
@@ -804,6 +1045,21 @@ def query_district_unit_plan(
             1,
     }
 
+    request_info = {
+
+        "dataset":
+            dataset,
+
+        "x":
+            x,
+
+        "y":
+            y,
+
+        "crs":
+            "EPSG:4326",
+    }
+
     try:
 
         response = requests.get(
@@ -815,61 +1071,84 @@ def query_district_unit_plan(
     except requests.RequestException as exc:
 
         return {
-            "http_status": None,
-            "vworld_status": None,
-            "classification": (
-                "TRANSPORT_ERROR"
-            ),
-            "transport_error": repr(
-                exc
-            ),
-            "feature_count": 0,
-            "geometry_feature_count": 0,
-            "features": [],
-            "request": {
-                "dataset": (
-                    DISTRICT_UNIT_PLAN_DATASET
+
+            "http_status":
+                None,
+
+            "vworld_status":
+                None,
+
+            "classification":
+                "TRANSPORT_ERROR",
+
+            "transport_error":
+                repr(
+                    exc
                 ),
-                "x": x,
-                "y": y,
-                "crs": "EPSG:4326",
-            },
+
+            "feature_count":
+                0,
+
+            "geometry_feature_count":
+                0,
+
+            "features":
+                [],
+
+            "request":
+                request_info,
         }
 
     try:
 
-        payload = response.json()
+        payload = (
+            response.json()
+        )
 
-    except Exception:
+    except Exception as exc:
 
         return {
-            "http_status": (
-                response.status_code
-            ),
-            "vworld_status": None,
-            "classification": (
-                "JSON_PARSE_ERROR"
-            ),
-            "transport_error": None,
-            "feature_count": 0,
-            "geometry_feature_count": 0,
-            "features": [],
-            "request": {
-                "dataset": (
-                    DISTRICT_UNIT_PLAN_DATASET
+
+            "http_status":
+                response.status_code,
+
+            "vworld_status":
+                None,
+
+            "classification":
+                "JSON_PARSE_ERROR",
+
+            "transport_error":
+                None,
+
+            "json_error":
+                repr(
+                    exc
                 ),
-                "x": x,
-                "y": y,
-                "crs": "EPSG:4326",
-            },
+
+            "feature_count":
+                0,
+
+            "geometry_feature_count":
+                0,
+
+            "features":
+                [],
+
+            "request":
+                request_info,
         }
 
-    status = get_vworld_status(
-        payload
+    status = (
+        get_vworld_status(
+            payload
+        )
     )
 
-    features = collect_features(
-        payload
+    features = (
+        collect_features(
+            payload
+        )
     )
 
     geometry_features: List[
@@ -878,77 +1157,95 @@ def query_district_unit_plan(
 
     for feature in features:
 
-        geometry = feature.get(
-            "geometry"
-        )
-
         geometry_shape = (
             geometry_to_shape(
-                geometry
+                feature.get(
+                    "geometry"
+                )
             )
         )
 
         if geometry_shape is None:
+
             continue
 
         geometry_features.append(
             {
-                "feature": copy.deepcopy(
-                    feature
-                ),
-                "geometry": geometry_shape,
+
+                "feature":
+                    copy.deepcopy(
+                        feature
+                    ),
+
+                "geometry":
+                    geometry_shape,
             }
         )
 
-    if response.status_code != 200:
+    if (
+        response.status_code
+        != 200
+    ):
 
         classification = (
             "HTTP_ERROR"
         )
 
-    elif status != "OK":
-
-        classification = (
-            "QUERY_FAILED"
-        )
-
-    else:
+    elif status == "OK":
 
         classification = (
             "QUERY_SUCCESS"
         )
 
+    elif (
+        status == "NOT_FOUND"
+        and not features
+    ):
+
+        classification = (
+            "QUERY_EMPTY"
+        )
+
+    else:
+
+        classification = (
+            "QUERY_FAILED"
+        )
+
     return {
-        "http_status": (
-            response.status_code
-        ),
-        "vworld_status": (
-            status
-        ),
-        "classification": (
-            classification
-        ),
-        "transport_error": None,
-        "error": get_vworld_error(
-            payload
-        ),
-        "feature_count": len(
-            features
-        ),
-        "geometry_feature_count": len(
-            geometry_features
-        ),
-        "features": (
-            geometry_features
-        ),
-        "request": {
-            "dataset": (
-                DISTRICT_UNIT_PLAN_DATASET
+
+        "http_status":
+            response.status_code,
+
+        "vworld_status":
+            status,
+
+        "classification":
+            classification,
+
+        "transport_error":
+            None,
+
+        "error":
+            get_vworld_error(
+                payload
             ),
-            "x": x,
-            "y": y,
-            "crs": "EPSG:4326",
-        },
+
+        "feature_count":
+            len(
+                features
+            ),
+
+        "geometry_feature_count":
+            len(
+                geometry_features
+            ),
+
+        "features":
+            geometry_features,
+
+        "request":
+            request_info,
     }
 
 
@@ -984,11 +1281,14 @@ def compute_intersections(
             )
         )
 
-        district_geometry = item.get(
-            "geometry"
+        district_geometry = (
+            item.get(
+                "geometry"
+            )
         )
 
         if district_geometry is None:
+
             continue
 
         try:
@@ -1003,16 +1303,22 @@ def compute_intersections(
 
             results.append(
                 {
-                    "index": index,
-                    "feature_id": (
+
+                    "index":
+                        index,
+
+                    "feature_id":
                         feature.get(
                             "id"
-                        )
-                    ),
-                    "intersects": None,
-                    "geometry_error": repr(
-                        exc
-                    ),
+                        ),
+
+                    "intersects":
+                        None,
+
+                    "geometry_error":
+                        repr(
+                            exc
+                        ),
                 }
             )
 
@@ -1024,33 +1330,43 @@ def compute_intersections(
             )
         )
 
+        district_name = (
+            properties.get(
+                "dgm_nm"
+            )
+            or properties.get(
+                "DGM_NM"
+            )
+            or properties.get(
+                "uname"
+            )
+            or properties.get(
+                "UNAME"
+            )
+            or ""
+        )
+
         results.append(
             {
-                "index": index,
 
-                "feature_id": (
+                "index":
+                    index,
+
+                "feature_id":
                     feature.get(
                         "id"
-                    )
-                ),
+                    ),
 
-                "district_name": (
-                    properties.get(
-                        "dgm_nm"
-                    )
-                    or properties.get(
-                        "DGM_NM"
-                    )
-                    or ""
-                ),
+                "district_name":
+                    district_name,
 
-                "geometry_type": (
-                    district_geometry.geom_type
-                ),
+                "geometry_type":
+                    district_geometry.geom_type,
 
-                "intersects": bool(
-                    intersects
-                ),
+                "intersects":
+                    bool(
+                        intersects
+                    ),
             }
         )
 
@@ -1058,18 +1374,78 @@ def compute_intersections(
 
 
 # ============================================================
-# condition resolution
+# Generic registered polygon condition resolver
 # ============================================================
 
-def resolve_district_unit_plan_condition(
+def resolve_registered_polygon_condition(
     *,
+    condition_name: str,
     site: Dict[str, Any],
     parcel: Dict[str, Any],
 ) -> Dict[str, Any]:
 
-    """
-    현재 SITE의 지구단위계획 공간조건을 runtime에서 판정한다.
-    """
+    config = (
+        SPATIAL_CONDITION_REGISTRY.get(
+            condition_name
+        )
+    )
+
+    if not isinstance(
+        config,
+        dict,
+    ):
+
+        return {
+
+            "name":
+                condition_name,
+
+            "type":
+                "SITE",
+
+            "state":
+                "UNKNOWN",
+
+            "confidence":
+                "LOW",
+
+            "pnu":
+                safe_string(
+                    site.get(
+                        "pnu"
+                    )
+                ),
+
+            "resolution":
+                "SPATIAL_CONDITION_NOT_REGISTERED",
+
+            "geometry_verified":
+                False,
+
+            "source":
+                {},
+
+            "evaluation": {
+
+                "query_success":
+                    False,
+
+                "intersects":
+                    None,
+
+                "intersection_count":
+                    None,
+            },
+
+            "evidence":
+                {},
+        }
+
+    dataset = safe_string(
+        config.get(
+            "dataset"
+        )
+    )
 
     pnu = safe_string(
         site.get(
@@ -1086,7 +1462,7 @@ def resolve_district_unit_plan_condition(
     ] = {
 
         "name":
-            "지구단위계획",
+            condition_name,
 
         "type":
             "SITE",
@@ -1095,11 +1471,12 @@ def resolve_district_unit_plan_condition(
             pnu,
 
         "source": {
+
             "provider":
                 "VWorld",
 
             "dataset":
-                DISTRICT_UNIT_PLAN_DATASET,
+                dataset,
 
             "crs":
                 "EPSG:4326",
@@ -1107,17 +1484,19 @@ def resolve_district_unit_plan_condition(
     }
 
     # ========================================================
-    # parcel validation
-    # ========================================================
-
-        # ========================================================
-    # evaluation-compatible Parcel
+    # compatible Parcel geometry
     # ========================================================
 
     evaluation_parcel = (
         resolve_evaluation_parcel(
             site=site,
             parcel=parcel,
+        )
+    )
+
+    evaluation_parcel_evidence = (
+        sanitize_evaluation_parcel(
+            evaluation_parcel
         )
     )
 
@@ -1129,6 +1508,7 @@ def resolve_district_unit_plan_condition(
     ):
 
         return {
+
             **result_base,
 
             "state":
@@ -1144,6 +1524,7 @@ def resolve_district_unit_plan_condition(
                 False,
 
             "evaluation": {
+
                 "query_success":
                     False,
 
@@ -1155,7 +1536,9 @@ def resolve_district_unit_plan_condition(
             },
 
             "evidence": {
+
                 "primary_parcel": {
+
                     "pnu":
                         parcel.get(
                             "pnu"
@@ -1182,17 +1565,7 @@ def resolve_district_unit_plan_condition(
                 },
 
                 "evaluation_parcel":
-                    copy.deepcopy(
-                        {
-                            key: value
-                            for key, value
-                            in evaluation_parcel.items()
-                            if key not in {
-                                "geometry",
-                                "geometry_geojson",
-                            }
-                        }
-                    ),
+                    evaluation_parcel_evidence,
             },
         }
 
@@ -1202,14 +1575,8 @@ def resolve_district_unit_plan_condition(
         )
     )
 
-    parcel_crs = (
-        evaluation_parcel.get(
-            "crs"
-        )
-    )
-
     # ========================================================
-    # query point
+    # query coordinate
     # ========================================================
 
     x, y, coordinate_crs = (
@@ -1225,6 +1592,7 @@ def resolve_district_unit_plan_condition(
     ):
 
         return {
+
             **result_base,
 
             "state":
@@ -1240,6 +1608,7 @@ def resolve_district_unit_plan_condition(
                 False,
 
             "evaluation": {
+
                 "query_success":
                     False,
 
@@ -1251,14 +1620,9 @@ def resolve_district_unit_plan_condition(
             },
 
             "evidence": {
-                "parcel_loaded":
-                    True,
 
-                "parcel_crs":
-                    parcel_crs,
-
-                "coordinate_crs":
-                    coordinate_crs,
+                "evaluation_parcel":
+                    evaluation_parcel_evidence,
             },
         }
 
@@ -1269,6 +1633,7 @@ def resolve_district_unit_plan_condition(
     ):
 
         return {
+
             **result_base,
 
             "state":
@@ -1284,6 +1649,7 @@ def resolve_district_unit_plan_condition(
                 False,
 
             "evaluation": {
+
                 "query_success":
                     False,
 
@@ -1295,25 +1661,36 @@ def resolve_district_unit_plan_condition(
             },
 
             "evidence": {
+
                 "coordinate": {
-                    "x": x,
-                    "y": y,
-                    "crs": (
-                        coordinate_crs
-                    ),
+
+                    "x":
+                        x,
+
+                    "y":
+                        y,
+
+                    "crs":
+                        coordinate_crs,
                 },
+
+                "evaluation_parcel":
+                    evaluation_parcel_evidence,
             },
         }
 
     # ========================================================
-    # VWorld query
+    # API key
     # ========================================================
 
-    api_key = load_vworld_api_key()
+    api_key = (
+        load_vworld_api_key()
+    )
 
     if not api_key:
 
         return {
+
             **result_base,
 
             "state":
@@ -1329,60 +1706,7 @@ def resolve_district_unit_plan_condition(
                 False,
 
             "evaluation": {
-                "query_success":
-                    False,
 
-                "intersects":
-                    None,
-
-                "intersection_count":
-                    None,
-            },
-
-            "evidence": {},
-        }
-
-    query_result = (
-        query_district_unit_plan(
-            api_key=api_key,
-            x=x,
-            y=y,
-        )
-    )
-
-    query_success = (
-        query_result.get(
-            "classification"
-        )
-        == "QUERY_SUCCESS"
-        and query_result.get(
-            "http_status"
-        )
-        == 200
-        and query_result.get(
-            "vworld_status"
-        )
-        == "OK"
-    )
-
-    if not query_success:
-
-        return {
-            **result_base,
-
-            "state":
-                "UNKNOWN",
-
-            "confidence":
-                "MEDIUM",
-
-            "resolution":
-                "DISTRICT_UNIT_PLAN_QUERY_FAILED",
-
-            "geometry_verified":
-                False,
-
-            "evaluation": {
                 "query_success":
                     False,
 
@@ -1394,22 +1718,222 @@ def resolve_district_unit_plan_condition(
             },
 
             "evidence": {
-                "coordinate": {
-                    "x": x,
-                    "y": y,
-                    "crs": "EPSG:4326",
-                },
 
-                "query": {
-                    key: value
-                    for key, value
-                    in query_result.items()
-                    if key != "features"
-                },
+                "evaluation_parcel":
+                    evaluation_parcel_evidence,
             },
         }
 
-    district_items = (
+    # ========================================================
+    # dataset query
+    # ========================================================
+
+    query_result = (
+        query_spatial_dataset(
+            dataset=dataset,
+            api_key=api_key,
+            x=x,
+            y=y,
+        )
+    )
+
+    classification = (
+        query_result.get(
+            "classification"
+        )
+    )
+
+    query_evidence = {
+
+        key: value
+        for key, value
+        in query_result.items()
+        if key != "features"
+    }
+
+    coordinate_evidence = {
+
+        "x":
+            x,
+
+        "y":
+            y,
+
+        "crs":
+            "EPSG:4326",
+
+        # ----------------------------------------------------
+        # C-15 기존 evidence 접근과 호환
+        # ----------------------------------------------------
+
+        "evaluation_parcel":
+            copy.deepcopy(
+                evaluation_parcel_evidence
+            ),
+    }
+
+    # ========================================================
+    # verified empty
+    #
+    # 반드시 dataset registry가 허용한 경우에만 FALSE.
+    # ========================================================
+
+    if (
+        classification
+        == "QUERY_EMPTY"
+    ):
+
+        if (
+            config.get(
+                "not_found_is_empty"
+            )
+            is True
+        ):
+
+            return {
+
+                **result_base,
+
+                "state":
+                    "FALSE",
+
+                "confidence":
+                    "HIGH",
+
+                "resolution":
+                    config[
+                        "empty_resolution"
+                    ],
+
+                "geometry_verified":
+                    True,
+
+                "evaluation": {
+
+                    "query_success":
+                        True,
+
+                    "intersects":
+                        False,
+
+                    "intersection_count":
+                        0,
+                },
+
+                "evidence": {
+
+                    "coordinate":
+                        coordinate_evidence,
+
+                    "evaluation_parcel":
+                        evaluation_parcel_evidence,
+
+                    "query":
+                        query_evidence,
+                },
+            }
+
+        # ----------------------------------------------------
+        # C-15 지구단위계획 등:
+        # NOT_FOUND를 verified FALSE로 인정하지 않는 dataset.
+        # ----------------------------------------------------
+
+        return {
+
+            **result_base,
+
+            "state":
+                "UNKNOWN",
+
+            "confidence":
+                "MEDIUM",
+
+            "resolution":
+                config[
+                    "query_failed_resolution"
+                ],
+
+            "geometry_verified":
+                False,
+
+            "evaluation": {
+
+                "query_success":
+                    False,
+
+                "intersects":
+                    None,
+
+                "intersection_count":
+                    None,
+            },
+
+            "evidence": {
+
+                "coordinate":
+                    coordinate_evidence,
+
+                "evaluation_parcel":
+                    evaluation_parcel_evidence,
+
+                "query":
+                    query_evidence,
+            },
+        }
+
+    # ========================================================
+    # query failure
+    # ========================================================
+
+    if (
+        classification
+        != "QUERY_SUCCESS"
+    ):
+
+        return {
+
+            **result_base,
+
+            "state":
+                "UNKNOWN",
+
+            "confidence":
+                "MEDIUM",
+
+            "resolution":
+                config[
+                    "query_failed_resolution"
+                ],
+
+            "geometry_verified":
+                False,
+
+            "evaluation": {
+
+                "query_success":
+                    False,
+
+                "intersects":
+                    None,
+
+                "intersection_count":
+                    None,
+            },
+
+            "evidence": {
+
+                "coordinate":
+                    coordinate_evidence,
+
+                "evaluation_parcel":
+                    evaluation_parcel_evidence,
+
+                "query":
+                    query_evidence,
+            },
+        }
+
+    spatial_items = (
         query_result.get(
             "features",
             []
@@ -1417,12 +1941,13 @@ def resolve_district_unit_plan_condition(
     )
 
     # ========================================================
-    # successful query with no matching features
+    # QUERY_SUCCESS + no valid geometry feature
     # ========================================================
 
-    if not district_items:
+    if not spatial_items:
 
         return {
+
             **result_base,
 
             "state":
@@ -1432,12 +1957,15 @@ def resolve_district_unit_plan_condition(
                 "HIGH",
 
             "resolution":
-                "QUERY_SUCCESS_NO_DISTRICT_FEATURE",
+                config[
+                    "empty_resolution"
+                ],
 
             "geometry_verified":
                 True,
 
             "evaluation": {
+
                 "query_success":
                     True,
 
@@ -1449,33 +1977,34 @@ def resolve_district_unit_plan_condition(
             },
 
             "evidence": {
-                "coordinate": {
-                    "x": x,
-                    "y": y,
-                    "crs": "EPSG:4326",
-                },
 
-                "query": {
-                    key: value
-                    for key, value
-                    in query_result.items()
-                    if key != "features"
-                },
+                "coordinate":
+                    coordinate_evidence,
+
+                "evaluation_parcel":
+                    evaluation_parcel_evidence,
+
+                "query":
+                    query_evidence,
             },
         }
 
     # ========================================================
-    # intersection
+    # Parcel intersection
     # ========================================================
 
-    intersections = compute_intersections(
-        parcel_geometry=parcel_geometry,
-        district_items=district_items,
+    intersections = (
+        compute_intersections(
+            parcel_geometry=parcel_geometry,
+            district_items=spatial_items,
+        )
     )
 
     positive = [
+
         item
-        for item in intersections
+        for item
+        in intersections
         if item.get(
             "intersects"
         )
@@ -1483,21 +2012,24 @@ def resolve_district_unit_plan_condition(
     ]
 
     geometry_errors = [
+
         item
-        for item in intersections
+        for item
+        in intersections
         if item.get(
             "intersects"
         )
         is None
     ]
 
-    # --------------------------------------------------------
+    # ========================================================
     # TRUE
-    # --------------------------------------------------------
+    # ========================================================
 
     if positive:
 
         return {
+
             **result_base,
 
             "state":
@@ -1507,12 +2039,15 @@ def resolve_district_unit_plan_condition(
                 "HIGH",
 
             "resolution":
-                "PARCEL_INTERSECTS_DISTRICT_UNIT_PLAN",
+                config[
+                    "true_resolution"
+                ],
 
             "geometry_verified":
                 True,
 
             "evaluation": {
+
                 "query_success":
                     True,
 
@@ -1526,28 +2061,15 @@ def resolve_district_unit_plan_condition(
             },
 
             "evidence": {
-                "coordinate": {
-                    "x": x,
-                    "y": y,
-                    "crs": "EPSG:4326",
-                    "evaluation_parcel": {
-    key: value
-    for key, value
-    in evaluation_parcel.items()
-    if key not in {
-        "geometry",
-        "geometry_geojson",
-    }
-},
-                
-                },
 
-                "query": {
-                    key: value
-                    for key, value
-                    in query_result.items()
-                    if key != "features"
-                },
+                "coordinate":
+                    coordinate_evidence,
+
+                "evaluation_parcel":
+                    evaluation_parcel_evidence,
+
+                "query":
+                    query_evidence,
 
                 "intersections":
                     copy.deepcopy(
@@ -1556,13 +2078,14 @@ def resolve_district_unit_plan_condition(
             },
         }
 
-    # --------------------------------------------------------
+    # ========================================================
     # geometry evaluation error
-    # --------------------------------------------------------
+    # ========================================================
 
     if geometry_errors:
 
         return {
+
             **result_base,
 
             "state":
@@ -1578,6 +2101,7 @@ def resolve_district_unit_plan_condition(
                 False,
 
             "evaluation": {
+
                 "query_success":
                     True,
 
@@ -1589,27 +2113,29 @@ def resolve_district_unit_plan_condition(
             },
 
             "evidence": {
+
+                "coordinate":
+                    coordinate_evidence,
+
+                "evaluation_parcel":
+                    evaluation_parcel_evidence,
+
+                "query":
+                    query_evidence,
+
                 "intersections":
                     copy.deepcopy(
                         intersections
                     ),
-                    "evaluation_parcel": {
-    key: value
-    for key, value
-    in evaluation_parcel.items()
-    if key not in {
-        "geometry",
-        "geometry_geojson",
-    }
-},
             },
         }
 
-    # --------------------------------------------------------
-    # FALSE
-    # --------------------------------------------------------
+    # ========================================================
+    # verified non-intersection
+    # ========================================================
 
     return {
+
         **result_base,
 
         "state":
@@ -1619,12 +2145,15 @@ def resolve_district_unit_plan_condition(
             "HIGH",
 
         "resolution":
-            "PARCEL_DOES_NOT_INTERSECT_DISTRICT_UNIT_PLAN",
+            config[
+                "false_resolution"
+            ],
 
         "geometry_verified":
             True,
 
         "evaluation": {
+
             "query_success":
                 True,
 
@@ -1636,18 +2165,15 @@ def resolve_district_unit_plan_condition(
         },
 
         "evidence": {
-            "coordinate": {
-                "x": x,
-                "y": y,
-                "crs": "EPSG:4326",
-            },
 
-            "query": {
-                key: value
-                for key, value
-                in query_result.items()
-                if key != "features"
-            },
+            "coordinate":
+                coordinate_evidence,
+
+            "evaluation_parcel":
+                evaluation_parcel_evidence,
+
+            "query":
+                query_evidence,
 
             "intersections":
                 copy.deepcopy(
@@ -1658,8 +2184,80 @@ def resolve_district_unit_plan_condition(
 
 
 # ============================================================
-# generic public API
+# Condition-specific wrappers
 # ============================================================
+
+def resolve_district_unit_plan_condition(
+    *,
+    site: Dict[str, Any],
+    parcel: Dict[str, Any],
+) -> Dict[str, Any]:
+
+    return (
+        resolve_registered_polygon_condition(
+            condition_name=(
+                "지구단위계획"
+            ),
+
+            site=site,
+            parcel=parcel,
+        )
+    )
+
+
+def resolve_development_promotion_district_condition(
+    *,
+    site: Dict[str, Any],
+    parcel: Dict[str, Any],
+) -> Dict[str, Any]:
+
+    return (
+        resolve_registered_polygon_condition(
+            condition_name=(
+                "개발진흥지구"
+            ),
+
+            site=site,
+            parcel=parcel,
+        )
+    )
+
+
+def resolve_settlement_district_condition(
+    *,
+    site: Dict[str, Any],
+    parcel: Dict[str, Any],
+) -> Dict[str, Any]:
+
+    return (
+        resolve_registered_polygon_condition(
+            condition_name=(
+                "취락지구"
+            ),
+
+            site=site,
+            parcel=parcel,
+        )
+    )
+
+
+# ============================================================
+# public API
+# ============================================================
+
+def get_supported_spatial_conditions() -> List[str]:
+
+    """
+    현재 runtime spatial evaluator가 지원하는 SITE condition 목록.
+
+    site_analysis_builder는 이 API만 사용하고
+    개별 dataset/adapter 구조를 알지 않는다.
+    """
+
+    return list(
+        SPATIAL_CONDITION_REGISTRY.keys()
+    )
+
 
 def resolve_site_spatial_condition(
     *,
@@ -1668,11 +2266,16 @@ def resolve_site_spatial_condition(
     parcel: Dict[str, Any],
 ) -> Dict[str, Any]:
 
-    normalized_name = safe_string(
-        condition_name
+    normalized_name = (
+        safe_string(
+            condition_name
+        )
     )
 
-    if normalized_name == "지구단위계획":
+    if (
+        normalized_name
+        == "지구단위계획"
+    ):
 
         return (
             resolve_district_unit_plan_condition(
@@ -1681,25 +2284,72 @@ def resolve_site_spatial_condition(
             )
         )
 
-    return {
-        "name": normalized_name,
-        "type": "SITE",
-        "state": "UNKNOWN",
-        "confidence": "LOW",
-        "pnu": safe_string(
-            site.get(
-                "pnu"
+    if (
+        normalized_name
+        == "개발진흥지구"
+    ):
+
+        return (
+            resolve_development_promotion_district_condition(
+                site=site,
+                parcel=parcel,
             )
-        ),
-        "resolution": (
-            "UNSUPPORTED_SPATIAL_CONDITION"
-        ),
-        "geometry_verified": False,
-        "source": {},
+        )
+
+    if (
+        normalized_name
+        == "취락지구"
+    ):
+
+        return (
+            resolve_settlement_district_condition(
+                site=site,
+                parcel=parcel,
+            )
+        )
+
+    return {
+
+        "name":
+            normalized_name,
+
+        "type":
+            "SITE",
+
+        "state":
+            "UNKNOWN",
+
+        "confidence":
+            "LOW",
+
+        "pnu":
+            safe_string(
+                site.get(
+                    "pnu"
+                )
+            ),
+
+        "resolution":
+            "UNSUPPORTED_SPATIAL_CONDITION",
+
+        "geometry_verified":
+            False,
+
+        "source":
+            {},
+
         "evaluation": {
-            "query_success": False,
-            "intersects": None,
-            "intersection_count": None,
+
+            "query_success":
+                False,
+
+            "intersects":
+                None,
+
+            "intersection_count":
+                None,
         },
-        "evidence": {},
+
+        "evidence":
+            {},
     }

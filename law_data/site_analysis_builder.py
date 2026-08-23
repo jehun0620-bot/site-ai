@@ -20,6 +20,17 @@ SITE 정보와 reusable Rule Evaluation Engine 결과를 결합하여
     build_site_analysis()
 
 결과만 사용한다.
+
+C-15
+======================================================================
+현재 SITE Parcel geometry를 이용한 runtime SITE spatial condition을
+Rule Engine site_condition_context에 연결한다.
+
+C-16
+======================================================================
+특정 condition을 builder에 하드코딩하지 않고
+spatial_condition_evaluator가 지원하는 runtime condition 전체를
+자동으로 수집하여 Rule Engine에 전달한다.
 """
 
 from __future__ import annotations
@@ -29,11 +40,15 @@ import json
 
 from pathlib import Path
 from typing import Any, Dict, Optional
+
+
 from law_data.zone_base_numeric_resolver import (
     resolve_zone_base_numeric,
 )
 
+
 try:
+
     from .rule_evaluation_pipeline import (
         evaluate_site_rules,
     )
@@ -47,6 +62,7 @@ try:
     )
 
 except ImportError:
+
     from rule_evaluation_pipeline import (
         evaluate_site_rules,
     )
@@ -59,17 +75,22 @@ except ImportError:
         resolve_site_spatial_payload,
     )
 
+
 try:
 
     from .spatial_condition_evaluator import (
+        get_supported_spatial_conditions,
         resolve_site_spatial_condition,
     )
 
 except ImportError:
 
     from spatial_condition_evaluator import (
+        get_supported_spatial_conditions,
         resolve_site_spatial_condition,
     )
+
+
 # ============================================================
 # PATH
 # ============================================================
@@ -127,7 +148,10 @@ def safe_string(
     if value is None:
         return ""
 
-    return str(value).strip()
+    return str(
+        value
+    ).strip()
+
 
 # ============================================================
 # land area reconciliation
@@ -172,23 +196,35 @@ def build_land_area_result(
     ):
 
         difference = (
-            float(official_area)
-            - float(spatial_area)
+            float(
+                official_area
+            )
+            - float(
+                spatial_area
+            )
         )
 
-        if float(official_area) != 0:
+        if (
+            float(
+                official_area
+            )
+            != 0
+        ):
 
             difference_ratio = (
                 abs(
                     difference
                 )
-                / float(official_area)
+                / float(
+                    official_area
+                )
                 * 100.0
             )
 
     return {
 
         "official": {
+
             "value": (
                 official_area
             ),
@@ -207,6 +243,7 @@ def build_land_area_result(
         },
 
         "spatial": {
+
             "value": (
                 spatial_area
             ),
@@ -237,6 +274,7 @@ def build_land_area_result(
         },
 
         "difference": {
+
             "value": (
                 difference
             ),
@@ -255,6 +293,7 @@ def build_land_area_result(
         ),
     }
 
+
 # ============================================================
 # regulation result
 # ============================================================
@@ -271,7 +310,9 @@ def build_regulation_result(
     )
 
     return {
+
         "building_coverage_ratio": {
+
             "value": (
                 numeric.get(
                     "building_coverage_ratio"
@@ -293,6 +334,7 @@ def build_regulation_result(
         },
 
         "floor_area_ratio": {
+
             "value": (
                 numeric.get(
                     "floor_area_ratio"
@@ -397,6 +439,7 @@ def build_rule_summary(
     )
 
     return {
+
         "total": (
             applicable
             + not_applicable
@@ -452,6 +495,7 @@ def build_input_requirements(
     )
 
     return {
+
         "project": (
             project
         ),
@@ -509,6 +553,7 @@ def build_external_dependencies(
 
         active.append(
             {
+
                 "category": (
                     "SITE_HISTORY"
                 ),
@@ -547,6 +592,7 @@ def build_external_dependencies(
         )
 
     return {
+
         "count": (
             len(
                 active
@@ -654,12 +700,16 @@ def build_site_analysis(
     # source
     # ========================================================
 
-    site_complete = load_json(
-        SITE_COMPLETE_PATH
+    site_complete = (
+        load_json(
+            SITE_COMPLETE_PATH
+        )
     )
 
-    base_numeric = load_json(
-        BASE_NUMERIC_PATH
+    base_numeric = (
+        load_json(
+            BASE_NUMERIC_PATH
+        )
     )
 
     # ========================================================
@@ -714,32 +764,35 @@ def build_site_analysis(
     # 3. spatial query context / parcel probe
     # ========================================================
 
-    site = resolve_site_identity(
-        base_site=(
-            base_site
-        ),
+    site = (
+        resolve_site_identity(
+            base_site=(
+                base_site
+            ),
 
-        site_input=(
-            site_input
-        ),
-    )
-
-    spatial = (
-    resolve_site_spatial_payload(
-        site=(
-            site
+            site_input=(
+                site_input
+            ),
         )
     )
-)
+
+    # ========================================================
+    # spatial payload
+    # ========================================================
+
+    spatial = (
+        resolve_site_spatial_payload(
+            site=(
+                site
+            )
+        )
+    )
+
     site[
         "spatial"
     ] = (
         spatial
     )
-
-    # ========================================================
-    # C-15 runtime SITE spatial conditions
-    # ========================================================
 
     parcel = (
         spatial.get(
@@ -748,28 +801,54 @@ def build_site_analysis(
         )
     )
 
-    district_unit_plan_condition = (
-        resolve_site_spatial_condition(
-            condition_name=(
-                "지구단위계획"
-            ),
+    # ========================================================
+    # C-16 runtime SITE spatial conditions
+    #
+    # 중요:
+    # builder는 개별 condition 이름이나 dataset을 알지 않는다.
+    #
+    # spatial_condition_evaluator registry가 지원하는
+    # runtime condition 전체를 자동으로 실행한다.
+    # ========================================================
 
-            site=(
-                site
-            ),
-
-            parcel=(
-                parcel
-            ),
-        )
+    runtime_condition_names = (
+        get_supported_spatial_conditions()
     )
 
-    site_condition_context = {
+    site_condition_context: Dict[
+        str,
+        Dict[str, Any],
+    ] = {}
 
-        "지구단위계획": (
-            district_unit_plan_condition
-        ),
-    }
+    for condition_name in (
+        runtime_condition_names
+    ):
+
+        condition_result = (
+            resolve_site_spatial_condition(
+                condition_name=(
+                    condition_name
+                ),
+
+                site=(
+                    site
+                ),
+
+                parcel=(
+                    parcel
+                ),
+            )
+        )
+
+        site_condition_context[
+            condition_name
+        ] = (
+            condition_result
+        )
+
+    # --------------------------------------------------------
+    # 모든 runtime condition 평가 완료 후 한 번만 저장한다.
+    # --------------------------------------------------------
 
     site[
         "runtime_conditions"
@@ -872,6 +951,7 @@ def build_site_analysis(
             site[
                 "coordinate"
             ] = {
+
                 "x": (
                     live_coordinate.get(
                         "x"
@@ -899,7 +979,11 @@ def build_site_analysis(
                     "CONFIRMED"
                 ),
             }
-            
+
+    # ========================================================
+    # zone base numeric
+    # ========================================================
+
     zone_base_numeric = (
         resolve_zone_base_numeric(
             site.get(
@@ -931,23 +1015,29 @@ def build_site_analysis(
                     "zone"
                 )
             ),
+
             site_condition_context=(
                 site_condition_context
             ),
         )
     )
 
-    land_area = (
-    build_land_area_result(
-        site_input=(
-            site_input
-        ),
+    # ========================================================
+    # land area
+    # ========================================================
 
-        site=(
-            site
-        ),
+    land_area = (
+        build_land_area_result(
+            site_input=(
+                site_input
+            ),
+
+            site=(
+                site
+            ),
+        )
     )
-)
+
     # ========================================================
     # regulation
     # ========================================================
@@ -1011,6 +1101,7 @@ def build_site_analysis(
     return {
 
         "analysis": {
+
             "status": (
                 analysis_status
             ),
@@ -1034,6 +1125,7 @@ def build_site_analysis(
         ),
 
         "input": {
+
             "site": (
                 copy.deepcopy(
                     site_input
@@ -1054,9 +1146,9 @@ def build_site_analysis(
         },
 
         "land_area": (
-             land_area
+            land_area
         ),
-        
+
         "regulation": (
             regulation
         ),
@@ -1078,6 +1170,7 @@ def build_site_analysis(
         # ----------------------------------------------------
 
         "rule_engine": {
+
             "baseline": (
                 engine_result.get(
                     "baseline"

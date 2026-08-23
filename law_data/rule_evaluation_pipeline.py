@@ -53,6 +53,28 @@ OTHER_ZONE -> DIRECT / GROUP
 
 따라서 현재 단계에서는 명확하게 확인된
 "용도지역 기본 한도/reference rule"만 제한적으로 재활성화한다.
+
+C-15 / C-16 Runtime SITE Condition 원칙
+======================================================================
+runtime spatial condition은 기존 대표 SITE snapshot보다 우선한다.
+
+TRUE / FALSE / UNKNOWN 모두 overlay 대상이다.
+
+또한 runtime state가 기존 snapshot state와 동일하더라도:
+
+    confidence
+    source / provenance
+
+가 다르면 현재 runtime evidence 기준으로 반드시 갱신한다.
+
+예:
+
+    snapshot FALSE
+    runtime FALSE
+
+state 값은 같지만 현재 SITE의 판정 근거가 runtime spatial query라면
+최종 rule condition source는 SITE_CONDITION_SNAPSHOT이 아니라
+RUNTIME_SPATIAL_CONDITION이어야 한다.
 """
 
 from __future__ import annotations
@@ -609,6 +631,7 @@ def build_site_registry(
         },
     }
 
+
 def overlay_runtime_site_conditions(
     site_registry: Dict[
         str,
@@ -621,19 +644,21 @@ def overlay_runtime_site_conditions(
 ]:
 
     """
-    C-15 runtime SITE condition 결과를 기존 SITE registry 위에 덮어쓴다.
+    C-15 / C-16 runtime SITE condition 결과를
+    기존 SITE registry 위에 덮어쓴다.
 
     우선순위
     ==================================================================
     runtime SITE condition
         >
-    기존 verified SITE registry
+    기존 verified SITE registry / snapshot
 
     중요
     ==================================================================
     TRUE만 overlay하지 않는다.
 
     runtime FALSE도 반드시 반영한다.
+
     runtime UNKNOWN도 현재 SITE의 실제 runtime 결과이므로
     기존 BASE snapshot TRUE/FALSE보다 우선한다.
 
@@ -660,12 +685,14 @@ def overlay_runtime_site_conditions(
         )
 
         if not condition_name:
+
             continue
 
         if not isinstance(
             raw_condition,
             dict,
         ):
+
             continue
 
         state = safe_string(
@@ -724,9 +751,8 @@ def overlay_runtime_site_conditions(
             ),
 
             # ------------------------------------------------
-            # 기존 code는 source를 string으로도 사용하므로
             # registry-level source는 고정 marker로 둔다.
-            # 상세 provider/dataset은 runtime_context에 보존.
+            # 상세 provider/dataset은 runtime_source에 보존.
             # ------------------------------------------------
 
             "source": (
@@ -781,6 +807,8 @@ def overlay_runtime_site_conditions(
         }
 
     return merged
+
+
 # ============================================================
 # branch-local predicates
 # ============================================================
@@ -895,9 +923,11 @@ def apply_branch_local_conditions(
                     predicate=(
                         predicate
                     ),
+
                     site_zone=(
                         site_zone
                     ),
+
                     site_registry=(
                         site_registry
                     ),
@@ -974,6 +1004,30 @@ def apply_site_registry(
     Dict[str, Any]
 ]:
 
+    """
+    SITE registry 결과를 모든 rule condition에 반영한다.
+
+    C-16 provenance 정책
+    ==================================================================
+    state 값만 비교하지 않는다.
+
+    state / confidence / source 중 하나라도 다르면
+    현재 registry 기준으로 condition을 갱신한다.
+
+    따라서:
+
+        snapshot FALSE
+        runtime FALSE
+
+    처럼 state가 동일한 경우에도 source가 달라지면:
+
+        SITE_CONDITION_SNAPSHOT
+        ->
+        RUNTIME_SPATIAL_CONDITION
+
+    으로 정상 갱신된다.
+    """
+
     repairs = []
 
     for rule in rules:
@@ -1023,11 +1077,60 @@ def apply_site_registry(
                 )
             )
 
-            if (
-                previous_state
-                == resolved[
+            previous_confidence = (
+                condition.get(
+                    "confidence"
+                )
+            )
+
+            previous_source = (
+                condition.get(
+                    "source"
+                )
+            )
+
+            resolved_state = (
+                resolved.get(
                     "state"
-                ]
+                )
+            )
+
+            resolved_confidence = (
+                resolved.get(
+                    "confidence"
+                )
+            )
+
+            resolved_source = (
+                resolved.get(
+                    "source"
+                )
+            )
+
+            state_changed = (
+                previous_state
+                != resolved_state
+            )
+
+            confidence_changed = (
+                previous_confidence
+                != resolved_confidence
+            )
+
+            source_changed = (
+                previous_source
+                != resolved_source
+            )
+
+            # ------------------------------------------------
+            # state가 같더라도 runtime provenance가 다르면
+            # metadata를 반드시 갱신한다.
+            # ------------------------------------------------
+
+            if not (
+                state_changed
+                or confidence_changed
+                or source_changed
             ):
 
                 continue
@@ -1035,25 +1138,19 @@ def apply_site_registry(
             condition[
                 "state"
             ] = (
-                resolved[
-                    "state"
-                ]
+                resolved_state
             )
 
             condition[
                 "confidence"
             ] = (
-                resolved[
-                    "confidence"
-                ]
+                resolved_confidence
             )
 
             condition[
                 "source"
             ] = (
-                resolved[
-                    "source"
-                ]
+                resolved_source
             )
 
             repairs.append(
@@ -1074,9 +1171,35 @@ def apply_site_registry(
                     ),
 
                     "after": (
-                        resolved[
-                            "state"
-                        ]
+                        resolved_state
+                    ),
+
+                    "previous_confidence": (
+                        previous_confidence
+                    ),
+
+                    "new_confidence": (
+                        resolved_confidence
+                    ),
+
+                    "previous_source": (
+                        previous_source
+                    ),
+
+                    "new_source": (
+                        resolved_source
+                    ),
+
+                    "state_changed": (
+                        state_changed
+                    ),
+
+                    "confidence_changed": (
+                        confidence_changed
+                    ),
+
+                    "source_changed": (
+                        source_changed
                     ),
                 }
             )
@@ -1823,10 +1946,6 @@ def apply_zone_relevance_transition(
         }
     ):
 
-        # ----------------------------------------------------
-        # 기존 제외사유가 실제 zone mismatch였는지 확인
-        # ----------------------------------------------------
-
         was_zone_only_exclusion = (
             old_applicability
             == "NOT_APPLICABLE"
@@ -1854,11 +1973,6 @@ def apply_zone_relevance_transition(
             }
 
             return updated
-
-        # ----------------------------------------------------
-        # 검증된 용도지역 기본/reference rule만
-        # 재활성화 허용
-        # ----------------------------------------------------
 
         if (
             is_safe_zone_reactivation_rule(
@@ -1914,11 +2028,6 @@ def apply_zone_relevance_transition(
             )
 
             return updated
-
-        # ----------------------------------------------------
-        # 아직 추가 문맥이 검증되지 않은 rule은
-        # 자동 활성화하지 않는다.
-        # ----------------------------------------------------
 
         updated[
             "applicability"
@@ -2130,7 +2239,7 @@ def evaluate_site_rules(
     ] = None,
     site_condition_context: Optional[
         Dict[str, Any]
-    ] = None
+    ] = None,
 ) -> Dict[str, Any]:
 
     project_profile = (
@@ -2145,6 +2254,11 @@ def evaluate_site_rules(
 
     base_numeric_context = (
         base_numeric_context
+        or {}
+    )
+
+    site_condition_context = (
+        site_condition_context
         or {}
     )
 
@@ -2260,6 +2374,7 @@ def evaluate_site_rules(
             rule=(
                 rule
             ),
+
             site_zone=(
                 site_zone
             ),
@@ -2352,7 +2467,7 @@ def evaluate_site_rules(
             )
 
     # ========================================================
-    # registry
+    # base SITE registry
     # ========================================================
 
     site_registry = (
@@ -2362,7 +2477,7 @@ def evaluate_site_rules(
     )
 
     # ========================================================
-    # C-15 runtime SITE condition overlay
+    # C-15 / C-16 runtime SITE condition overlay
     #
     # runtime 결과가 존재하면 기존 대표 SITE registry보다 우선한다.
     #
@@ -2380,7 +2495,7 @@ def evaluate_site_rules(
             ),
         )
     )
-    
+
     # ========================================================
     # branch conditions
     # ========================================================
@@ -2415,6 +2530,9 @@ def evaluate_site_rules(
 
     # ========================================================
     # site registry repair
+    #
+    # 기존 rule condition + 새 branch condition 모두
+    # 최종 runtime registry 기준으로 state/confidence/source를 동기화한다.
     # ========================================================
 
     site_repairs = (
@@ -2681,7 +2799,7 @@ def evaluate_site_rules(
             ),
 
             "version": (
-                "C-13-5-ZONE-CONTEXT"
+                "C-16-RUNTIME-SPATIAL-CONDITION"
             ),
         },
 
@@ -2697,6 +2815,12 @@ def evaluate_site_rules(
 
             "site_zone": (
                 site_zone
+            ),
+
+            "site_conditions": (
+                copy.deepcopy(
+                    site_condition_context
+                )
             ),
         },
 
