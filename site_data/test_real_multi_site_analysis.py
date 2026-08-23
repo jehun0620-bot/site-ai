@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-STEP 17-21-C-14-1
-Real Multi-SITE Validation
+STEP 17-21-C-14-2
+Real Multi-SITE + Live Parcel Geometry Regression
 
 목표
 ======================================================================
@@ -22,6 +22,10 @@ dynamic zone numeric
     ↓
 dynamic rule evaluation
     ↓
+PNU-aware spatial resolver
+    ↓
+VWorld live Parcel geometry fallback
+    ↓
 Final SITE Analysis Object
 
 까지 정상적으로 이어지는지 검증한다.
@@ -36,20 +40,21 @@ Final SITE Analysis Object
 
 와 다른 실제 SITE를 사용한다.
 
-현재 C-14 첫 real SITE:
+현재 C-14 real SITE:
 
     서울특별시 강남구 개포동 13번지
     SITE ID: 11680-10300-0013-0000
     PNU: 1168010300100130000
 
-C-13 정책에 따라 다른 PNU에 대표 SITE의 Parcel snapshot을
-재사용해서는 안 된다.
+C-13 / C-14 안전 정책:
 
-따라서 현재 runtime에서 해당 PNU의 geometry source가 확보되지 않았다면:
-
-    geometry_loaded = False
-
-는 정상 상태일 수 있다.
+1. 다른 PNU에 대표 SITE Parcel snapshot 재사용 금지
+2. snapshot PNU 불일치 시 VWorld live provider fallback
+3. LP_PA_CBND_BUBUN dataset 사용
+4. Polygon / MultiPolygon만 허용
+5. Feature PNU와 target PNU 직접 일치 필수
+6. live geometry는 EPSG:4326
+7. EPSG:4326 좌표에서 parcel area를 임의 계산하지 않음
 """
 
 from __future__ import annotations
@@ -112,6 +117,26 @@ EXPECTED_SITE_ID = (
 EXPECTED_PNU = (
     "1168010300100130000"
 )
+
+EXPECTED_ZONE = (
+    "제1종일반주거지역"
+)
+
+EXPECTED_BCR = (
+    60.0
+)
+
+EXPECTED_FAR = (
+    150.0
+)
+
+EXPECTED_RULE_SUMMARY = {
+    "total": 314,
+    "applicable": 63,
+    "not_applicable": 215,
+    "conditional": 34,
+    "unknown": 2,
+}
 
 BASE_SITE_ID = (
     "11680-10300-0012-0000"
@@ -346,11 +371,6 @@ except requests.exceptions.JSONDecodeError:
             ]
         ),
     )
-
-    # --------------------------------------------------------
-    # requests 버전에 따라 JSONDecodeError alias가
-    # 다르게 동작할 가능성에 대비하여 여기서 종료
-    # --------------------------------------------------------
 
     raise SystemExit(
         1
@@ -663,6 +683,7 @@ print(
     ),
 )
 
+
 # ============================================================
 # land
 # ============================================================
@@ -834,6 +855,46 @@ parcel_bounds = (
     )
 )
 
+parcel_crs = (
+    parcel.get(
+        "crs"
+    )
+)
+
+parcel_crs_status = (
+    parcel.get(
+        "crs_status"
+    )
+)
+
+parcel_source = (
+    parcel.get(
+        "source",
+        {},
+    )
+)
+
+live_source = (
+    parcel_source.get(
+        "live",
+        {},
+    )
+)
+
+live_coordinate = (
+    live_source.get(
+        "coordinate",
+        {},
+    )
+)
+
+live_query = (
+    live_source.get(
+        "query",
+        {},
+    )
+)
+
 
 # ============================================================
 # console
@@ -909,6 +970,21 @@ print(
 print(
     "Parcel bounds:",
     parcel_bounds,
+)
+
+print(
+    "Parcel CRS:",
+    parcel_crs,
+)
+
+print(
+    "Parcel CRS status:",
+    parcel_crs_status,
+)
+
+print(
+    "Parcel source:",
+    parcel_source,
 )
 
 print()
@@ -1003,12 +1079,33 @@ print(
     ),
 )
 
+print(
+    "Parcel provider:",
+    parcel_source.get(
+        "provider"
+    ),
+)
+
+print(
+    "Live coordinate:",
+    live_coordinate,
+)
+
+print(
+    "Live query:",
+    live_query,
+)
+
 
 # ============================================================
 # validations
 # ============================================================
 
 validations = {
+
+    # --------------------------------------------------------
+    # API
+    # --------------------------------------------------------
 
     "API success": (
         header.get(
@@ -1023,6 +1120,10 @@ validations = {
         )
         > 0
     ),
+
+    # --------------------------------------------------------
+    # SITE identity
+    # --------------------------------------------------------
 
     "site id": (
         site.site_id
@@ -1077,10 +1178,7 @@ validations = {
     ),
 
     # --------------------------------------------------------
-    # 다른 PNU에 대표 SITE snapshot이 누수되면 안 된다.
-    #
-    # 현재 runtime source가 없으면 geometry_loaded=False도 정상.
-    # 중요한 것은 parcel의 PNU context가 현재 SITE와 일치하는 것.
+    # Parcel identity
     # --------------------------------------------------------
 
     "parcel pnu matches site": (
@@ -1094,8 +1192,141 @@ validations = {
     ),
 
     # --------------------------------------------------------
-    # 실제 토지 API에서 zone이 확보되어야
-    # dynamic base numeric 검증이 가능하다.
+    # Live Parcel geometry
+    # --------------------------------------------------------
+
+    "parcel loaded": (
+        parcel_loaded
+        is True
+    ),
+
+    "parcel multipolygon": (
+        parcel_geometry_type
+        == "MultiPolygon"
+    ),
+
+    "parcel bounds resolved": (
+        isinstance(
+            parcel_bounds,
+            list,
+        )
+        and len(
+            parcel_bounds
+        )
+        == 4
+    ),
+
+    "parcel CRS": (
+        parcel_crs
+        == "EPSG:4326"
+    ),
+
+    "parcel CRS confirmed": (
+        parcel_crs_status
+        == "CONFIRMED"
+    ),
+
+    # --------------------------------------------------------
+    # source metadata
+    # --------------------------------------------------------
+
+    "parcel provider VWorld": (
+        parcel_source.get(
+            "provider"
+        )
+        == "VWorld"
+    ),
+
+    "parcel dataset": (
+        parcel_source.get(
+            "dataset"
+        )
+        == "LP_PA_CBND_BUBUN"
+    ),
+
+    "parcel source verified": (
+        parcel_source.get(
+            "verified"
+        )
+        is True
+    ),
+
+    "snapshot mismatch confirmed": (
+        parcel_source.get(
+            "pnu_match"
+        )
+        is False
+    ),
+
+    "live PNU verified": (
+        live_source.get(
+            "feature_pnu"
+        )
+        == EXPECTED_PNU
+    ),
+
+    "live dataset": (
+        live_source.get(
+            "dataset"
+        )
+        == "LP_PA_CBND_BUBUN"
+    ),
+
+    "live query success": (
+        live_query.get(
+            "classification"
+        )
+        == "QUERY_SUCCESS"
+    ),
+
+    "live query HTTP 200": (
+        live_query.get(
+            "http_status"
+        )
+        == 200
+    ),
+
+    "live VWorld status OK": (
+        live_query.get(
+            "vworld_status"
+        )
+        == "OK"
+    ),
+
+    "live coordinate resolved": (
+        live_coordinate.get(
+            "crs"
+        )
+        == "EPSG:4326"
+        and isinstance(
+            live_coordinate.get(
+                "x"
+            ),
+            (
+                int,
+                float,
+            ),
+        )
+        and isinstance(
+            live_coordinate.get(
+                "y"
+            ),
+            (
+                int,
+                float,
+            ),
+        )
+    ),
+
+    "live coordinate source": (
+        live_coordinate.get(
+            "source"
+        )
+        == "VWORLD_ADDRESS_SEARCH"
+    ),
+
+    # --------------------------------------------------------
+    # zone / numeric
     # --------------------------------------------------------
 
     "zone exists": (
@@ -1104,12 +1335,10 @@ validations = {
         )
     ),
 
-    # --------------------------------------------------------
-    # C-14에서는 특정 zone/BCR/FAR을 미리 가정하지 않는다.
-    #
-    # 실제 토지정보로 결정된 zone에 따라 resolver가
-    # 유효한 numeric을 반환했는지만 확인한다.
-    # --------------------------------------------------------
+    "zone expected": (
+        resolved_zone
+        == EXPECTED_ZONE
+    ),
 
     "BCR resolved": (
         isinstance(
@@ -1155,6 +1384,20 @@ validations = {
         > 0
     ),
 
+    "BCR expected": (
+        resolved_bcr
+        == EXPECTED_BCR
+    ),
+
+    "FAR expected": (
+        resolved_far
+        == EXPECTED_FAR
+    ),
+
+    # --------------------------------------------------------
+    # rules
+    # --------------------------------------------------------
+
     "rules 314": (
         rules.get(
             "total"
@@ -1185,33 +1428,12 @@ validations = {
         )
         == 314
     ),
-    "zone expected": (
-        resolved_zone
-        == "제1종일반주거지역"
-    ),
-
-    "BCR expected": (
-        resolved_bcr
-        == 60.0
-    ),
-
-    "FAR expected": (
-        resolved_far
-        == 150.0
-    ),
 
     "rule summary expected": (
         rules
-        == {
-            "total": 314,
-            "applicable": 63,
-            "not_applicable": 215,
-            "conditional": 34,
-            "unknown": 2,
-        }
+        == EXPECTED_RULE_SUMMARY
     ),
 }
-
 
 
 all_pass = all(
@@ -1271,6 +1493,12 @@ if not all_pass:
                 name,
             )
 
+print(
+    "Analysis coordinate:",
+    analysis_site.get(
+        "coordinate"
+    ),
+)
 
 raise SystemExit(
     0

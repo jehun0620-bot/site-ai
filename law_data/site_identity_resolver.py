@@ -314,6 +314,159 @@ def resolve_site_identity(
         ),
     )
 
+    # ========================================================
+    # base coordinate PNU guard
+    #
+    # base SITE의 representative coordinate는
+    # 현재 resolved PNU와 base SITE PNU가 같은 경우에만
+    # 재사용할 수 있다.
+    #
+    # 다른 SITE/PNU에 base coordinate가 상속되는 것을 방지한다.
+    # ========================================================
+
+    resolved_pnu_text = (
+        str(
+            pnu
+        ).strip()
+        if pnu is not None
+        else ""
+    )
+
+    # ========================================================
+    # coordinate PNU guards
+    #
+    # 1. base SITE coordinate
+    #    -> base SITE PNU와 현재 PNU가 같을 때만 재사용
+    #
+    # 2. parcel probe point
+    #    -> parcel probe SITE PNU와 현재 PNU가 같을 때만 재사용
+    #
+    # 서로 다른 source의 PNU guard를 분리한다.
+    # ========================================================
+
+    resolved_pnu_text = (
+        str(
+            pnu
+        ).strip()
+        if pnu is not None
+        else ""
+    )
+
+    base_pnu = (
+        str(
+            base_site.get(
+                "pnu"
+            )
+        ).strip()
+        if base_site.get(
+            "pnu"
+        )
+        is not None
+        else ""
+    )
+
+    parcel_probe_pnu = (
+        str(
+            parcel_site.get(
+                "pnu"
+            )
+        ).strip()
+        if parcel_site.get(
+            "pnu"
+        )
+        is not None
+        else ""
+    )
+
+    same_pnu_as_base = bool(
+        resolved_pnu_text
+        and base_pnu
+        and (
+            resolved_pnu_text
+            == base_pnu
+        )
+    )
+
+    same_pnu_as_parcel_probe = bool(
+        resolved_pnu_text
+        and parcel_probe_pnu
+        and (
+            resolved_pnu_text
+            == parcel_probe_pnu
+        )
+    )
+
+    # ========================================================
+    # base coordinate
+    # ========================================================
+
+    base_coordinate = (
+        base_site.get(
+            "coordinate",
+            {},
+        )
+        if isinstance(
+            base_site.get(
+                "coordinate"
+            ),
+            dict,
+        )
+        else {}
+    )
+
+    base_x = (
+        first_value(
+            base_site.get(
+                "x"
+            ),
+            base_coordinate.get(
+                "x"
+            ),
+        )
+        if same_pnu_as_base
+        else None
+    )
+
+    base_y = (
+        first_value(
+            base_site.get(
+                "y"
+            ),
+            base_coordinate.get(
+                "y"
+            ),
+        )
+        if same_pnu_as_base
+        else None
+    )
+
+    # ========================================================
+    # historical parcel probe coordinate
+    #
+    # parcel probe에 기록된 PNU와 현재 PNU가 직접 일치하는
+    # 경우에만 point를 사용할 수 있다.
+    # ========================================================
+
+    fallback_point_x = (
+        point.get(
+            "x"
+        )
+        if same_pnu_as_parcel_probe
+        else None
+    )
+
+    fallback_point_y = (
+        point.get(
+            "y"
+        )
+        if same_pnu_as_parcel_probe
+        else None
+    )
+
+    # ========================================================
+    # resolved coordinate
+    # ========================================================
+
     x = first_value(
         site_input.get(
             "x"
@@ -321,12 +474,8 @@ def resolve_site_identity(
         site_input.get(
             "longitude"
         ),
-        base_site.get(
-            "x"
-        ),
-        point.get(
-            "x"
-        ),
+        base_x,
+        fallback_point_x,
     )
 
     y = first_value(
@@ -336,21 +485,32 @@ def resolve_site_identity(
         site_input.get(
             "latitude"
         ),
-        base_site.get(
-            "y"
-        ),
+        base_y,
+        fallback_point_y,
+    )
+
+    base_coordinate_crs = (
+        base_coordinate.get(
+            "crs"
+        )
+        if same_pnu_as_base
+        else None
+    )
+
+    parcel_probe_crs = (
         point.get(
-            "y"
-        ),
+            "crs"
+        )
+        if same_pnu_as_parcel_probe
+        else None
     )
 
     coordinate_crs = first_value(
         site_input.get(
             "coordinate_crs"
         ),
-        point.get(
-            "crs"
-        ),
+        base_coordinate_crs,
+        parcel_probe_crs,
     )
 
     # ========================================================

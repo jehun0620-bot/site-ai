@@ -726,6 +726,127 @@ def build_site_analysis(
         spatial
     )
 
+    # ========================================================
+    # representative coordinate promotion
+    #
+    # 기존 SITE coordinate가 이미 있으면 유지한다.
+    #
+    # coordinate가 없고 live parcel provider에서
+    # EPSG:4326 좌표가 검증된 경우에만
+    # representative coordinate로 승격한다.
+    # ========================================================
+
+    existing_coordinate = (
+        site.get(
+            "coordinate"
+        )
+    )
+
+    existing_coordinate_valid = (
+        isinstance(
+            existing_coordinate,
+            dict,
+        )
+        and isinstance(
+            existing_coordinate.get(
+                "x"
+            ),
+            (
+                int,
+                float,
+            ),
+        )
+        and isinstance(
+            existing_coordinate.get(
+                "y"
+            ),
+            (
+                int,
+                float,
+            ),
+        )
+    )
+
+    if not existing_coordinate_valid:
+
+        live_coordinate = (
+            spatial.get(
+                "parcel",
+                {},
+            ).get(
+                "source",
+                {},
+            ).get(
+                "live",
+                {},
+            ).get(
+                "coordinate",
+                {},
+            )
+        )
+
+        live_coordinate_valid = (
+            isinstance(
+                live_coordinate,
+                dict,
+            )
+            and live_coordinate.get(
+                "crs"
+            )
+            == "EPSG:4326"
+            and isinstance(
+                live_coordinate.get(
+                    "x"
+                ),
+                (
+                    int,
+                    float,
+                ),
+            )
+            and isinstance(
+                live_coordinate.get(
+                    "y"
+                ),
+                (
+                    int,
+                    float,
+                ),
+            )
+        )
+
+        if live_coordinate_valid:
+
+            site[
+                "coordinate"
+            ] = {
+                "x": (
+                    live_coordinate.get(
+                        "x"
+                    )
+                ),
+
+                "y": (
+                    live_coordinate.get(
+                        "y"
+                    )
+                ),
+
+                "crs": (
+                    "EPSG:4326"
+                ),
+
+                "source": (
+                    live_coordinate.get(
+                        "source"
+                    )
+                    or "VWORLD_ADDRESS_SEARCH"
+                ),
+
+                "status": (
+                    "CONFIRMED"
+                ),
+            }
+            
     zone_base_numeric = (
         resolve_zone_base_numeric(
             site.get(
