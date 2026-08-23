@@ -609,7 +609,178 @@ def build_site_registry(
         },
     }
 
+def overlay_runtime_site_conditions(
+    site_registry: Dict[
+        str,
+        Dict[str, Any]
+    ],
+    site_condition_context: Any,
+) -> Dict[
+    str,
+    Dict[str, Any]
+]:
 
+    """
+    C-15 runtime SITE condition 결과를 기존 SITE registry 위에 덮어쓴다.
+
+    우선순위
+    ==================================================================
+    runtime SITE condition
+        >
+    기존 verified SITE registry
+
+    중요
+    ==================================================================
+    TRUE만 overlay하지 않는다.
+
+    runtime FALSE도 반드시 반영한다.
+    runtime UNKNOWN도 현재 SITE의 실제 runtime 결과이므로
+    기존 BASE snapshot TRUE/FALSE보다 우선한다.
+
+    이를 통해 대표 SITE condition이 다른 PNU에 누수되는 것을 방지한다.
+    """
+
+    merged = copy.deepcopy(
+        site_registry
+    )
+
+    if not isinstance(
+        site_condition_context,
+        dict,
+    ):
+
+        return merged
+
+    for name, raw_condition in (
+        site_condition_context.items()
+    ):
+
+        condition_name = safe_string(
+            name
+        )
+
+        if not condition_name:
+            continue
+
+        if not isinstance(
+            raw_condition,
+            dict,
+        ):
+            continue
+
+        state = safe_string(
+            raw_condition.get(
+                "state"
+            )
+        ).upper()
+
+        # ----------------------------------------------------
+        # 유효한 runtime state만 registry에 사용
+        # ----------------------------------------------------
+
+        if state not in {
+            "TRUE",
+            "FALSE",
+            "UNKNOWN",
+        }:
+
+            continue
+
+        confidence = safe_string(
+            raw_condition.get(
+                "confidence"
+            )
+        ).upper()
+
+        if not confidence:
+
+            confidence = (
+                "LOW"
+            )
+
+        runtime_source = (
+            raw_condition.get(
+                "source"
+            )
+        )
+
+        merged[
+            condition_name
+        ] = {
+
+            "type": (
+                raw_condition.get(
+                    "type"
+                )
+                or "SITE"
+            ),
+
+            "state": (
+                state
+            ),
+
+            "confidence": (
+                confidence
+            ),
+
+            # ------------------------------------------------
+            # 기존 code는 source를 string으로도 사용하므로
+            # registry-level source는 고정 marker로 둔다.
+            # 상세 provider/dataset은 runtime_context에 보존.
+            # ------------------------------------------------
+
+            "source": (
+                "RUNTIME_SPATIAL_CONDITION"
+            ),
+
+            "runtime": (
+                True
+            ),
+
+            "pnu": (
+                raw_condition.get(
+                    "pnu"
+                )
+            ),
+
+            "resolution": (
+                raw_condition.get(
+                    "resolution"
+                )
+            ),
+
+            "geometry_verified": (
+                raw_condition.get(
+                    "geometry_verified"
+                )
+            ),
+
+            "runtime_source": (
+                copy.deepcopy(
+                    runtime_source
+                )
+            ),
+
+            "evaluation": (
+                copy.deepcopy(
+                    raw_condition.get(
+                        "evaluation",
+                        {},
+                    )
+                )
+            ),
+
+            "evidence": (
+                copy.deepcopy(
+                    raw_condition.get(
+                        "evidence",
+                        {},
+                    )
+                )
+            ),
+        }
+
+    return merged
 # ============================================================
 # branch-local predicates
 # ============================================================
@@ -1957,6 +2128,9 @@ def evaluate_site_rules(
     site_zone_context: Optional[
         str
     ] = None,
+    site_condition_context: Optional[
+        Dict[str, Any]
+    ] = None
 ) -> Dict[str, Any]:
 
     project_profile = (
@@ -2187,6 +2361,26 @@ def evaluate_site_rules(
         )
     )
 
+    # ========================================================
+    # C-15 runtime SITE condition overlay
+    #
+    # runtime 결과가 존재하면 기존 대표 SITE registry보다 우선한다.
+    #
+    # TRUE / FALSE / UNKNOWN 모두 overlay 대상이다.
+    # ========================================================
+
+    site_registry = (
+        overlay_runtime_site_conditions(
+            site_registry=(
+                site_registry
+            ),
+
+            site_condition_context=(
+                site_condition_context
+            ),
+        )
+    )
+    
     # ========================================================
     # branch conditions
     # ========================================================

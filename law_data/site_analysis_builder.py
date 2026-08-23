@@ -59,6 +59,17 @@ except ImportError:
         resolve_site_spatial_payload,
     )
 
+try:
+
+    from .spatial_condition_evaluator import (
+        resolve_site_spatial_condition,
+    )
+
+except ImportError:
+
+    from spatial_condition_evaluator import (
+        resolve_site_spatial_condition,
+    )
 # ============================================================
 # PATH
 # ============================================================
@@ -727,6 +738,48 @@ def build_site_analysis(
     )
 
     # ========================================================
+    # C-15 runtime SITE spatial conditions
+    # ========================================================
+
+    parcel = (
+        spatial.get(
+            "parcel",
+            {},
+        )
+    )
+
+    district_unit_plan_condition = (
+        resolve_site_spatial_condition(
+            condition_name=(
+                "지구단위계획"
+            ),
+
+            site=(
+                site
+            ),
+
+            parcel=(
+                parcel
+            ),
+        )
+    )
+
+    site_condition_context = {
+
+        "지구단위계획": (
+            district_unit_plan_condition
+        ),
+    }
+
+    site[
+        "runtime_conditions"
+    ] = (
+        copy.deepcopy(
+            site_condition_context
+        )
+    )
+
+    # ========================================================
     # representative coordinate promotion
     #
     # 기존 SITE coordinate가 이미 있으면 유지한다.
@@ -873,11 +926,14 @@ def build_site_analysis(
                 zone_base_numeric
             ),
 
-                   site_zone_context=(
-            site.get(
-                "zone"
-            )
-        ), 
+            site_zone_context=(
+                site.get(
+                    "zone"
+                )
+            ),
+            site_condition_context=(
+                site_condition_context
+            ),
         )
     )
 

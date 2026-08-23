@@ -785,147 +785,435 @@ git add --all
 
 ---
 
-## 26. 현재 정확한 완료 지점
+## 26. STEP 17-21-C-15 — Runtime SITE Spatial Condition Integration
 
-```text
-STEP 17
-└─ STEP 17-21
-   ├─ C-10 Rule / Numeric Evaluation        COMPLETE
-   ├─ C-11 SITE Analysis Object             COMPLETE
-   ├─ C-12 Service / FastAPI / Contract     COMPLETE
-   ├─ C-13 Multi-SITE Generalization        COMPLETE
-   └─ C-14 Real Multi-SITE Live Spatial     COMPLETE
-```
+### 목표
 
----
+기존 C-9 대표 SITE 공간조건 snapshot을 모든 SITE에 재사용하지 않고, 현재 분석 SITE의 Parcel geometry를 이용해 SITE 공간조건을 runtime에서 직접 판정하여 Rule Engine에 연결한다.
 
-## 27. 다음 개발 시작 지점 — C-15
-
-다음 단계:
-
-# STEP 17-21-C-15 — Dynamic Multi-SITE Spatial Condition Evaluation
-
-현재까지 Multi-SITE runtime화 완료:
-
-```text
-SITE identity
-PNU
-Parcel Polygon
-representative coordinate
-zone
-base BCR/FAR
-zone relevance
-```
-
-아직 대표 SITE C-9 snapshot/evidence 의존이 남아 있는 핵심:
-
-```text
-SITE spatial condition registry
-```
-
-C-15 목표:
-
-```text
-현재 SITE Parcel Polygon
-+
-현재 SITE PNU
-+
-현재 SITE representative coordinate
-+
-공식 spatial datasets / runtime source
-=
-현재 SITE별 SITE condition 재평가
-```
-
-첫 대상:
+첫 runtime 일반화 대상:
 
 ```text
 지구단위계획
 ```
 
-검증 SITE:
+공식 VWorld dataset:
 
 ```text
-BASE: 개포동 12번지
-LIVE: 개포동 13번지
+LT_C_UPISUQ161
 ```
 
-목표 schema:
+### C-15-1 — Runtime Spatial Condition Evaluator
 
-```json
-{
-  "name": "지구단위계획",
-  "type": "SITE",
-  "state": "TRUE|FALSE|UNKNOWN",
-  "confidence": "HIGH|MEDIUM|LOW",
-  "source": "...",
-  "pnu": "...",
-  "geometry_verified": true,
-  "evidence": {}
-}
-```
-
-예상 순서:
+신규 모듈:
 
 ```text
-C-15-1 Runtime Spatial Condition Evaluator Interface
-C-15-2 지구단위계획 Multi-SITE Runtime Evaluation
-C-15-3 BASE/LIVE Spatial Condition Regression
-C-15-4 SITE Registry Dynamic Overlay
-C-15-5 Rule Evaluation Integration
-C-15-6 Additional SITE Conditions Generalization
+law_data/spatial_condition_evaluator.py
 ```
 
----
+주요 API:
 
-## 28. 다음 작업 시작용 핸드오프
+```python
+resolve_site_spatial_condition(
+    condition_name=...,
+    site=...,
+    parcel=...,
+)
+```
+
+현재 지원:
 
 ```text
-AI 대지분석 자동화 시스템 개발을 계속한다.
+지구단위계획
+```
 
-기준:
-PROJECT_STATUS.md
+핵심 안전 정책:
 
-현재:
-STEP 17-21-C-14 COMPLETE
+```text
+조회 실패 ≠ FALSE
+geometry 미확보 ≠ FALSE
+CRS 불일치 상태에서 강제 intersection 금지
+runtime TRUE / FALSE / UNKNOWN 모두 유효한 현재 SITE 결과
+EPSG:4326 degree² 면적을 법정 면적값으로 사용하지 않음
+```
 
-BASE:
-서울특별시 강남구 개포동 12번지
-PNU 1168010300100120000
-제3종일반주거지역
-BCR/FAR 50/250
-Rules 63/213/36/2
-MapPlan Polygon
-Coordinate 127.07539280356858 / 37.494197498186885
+현재는 면적비가 아니라 실제 geometry의 `intersects` 여부를 핵심 공간 판정 근거로 사용한다.
 
-LIVE:
+### C-15-2 — 실제 LIVE SITE 지구단위계획 판정
+
+대상:
+
+```text
 서울특별시 강남구 개포동 13번지
-PNU 1168010300100130000
-제1종일반주거지역
-BCR/FAR 60/150
-Rules 63/215/34/2
-VWorld LP_PA_CBND_BUBUN MultiPolygon
-PNU_POLYGON_VERIFIED
-Coordinate 127.07804416954306 / 37.49668484241573
-VWORLD_ADDRESS_SEARCH
+SITE ID: 11680-10300-0013-0000
+PNU: 1168010300100130000
+```
 
-C-14:
-Real Multi-SITE PASS
-Parcel source isolation PASS
-Coordinate isolation PASS
-Final regression ALL PASS
+Parcel:
 
-다음:
-C-15 Dynamic Multi-SITE Spatial Condition Evaluation
+```text
+Provider: VWorld
+Dataset: LP_PA_CBND_BUBUN
+Geometry: MultiPolygon
+CRS: EPSG:4326
+PNU direct verified: True
+```
 
-첫 목표:
-지구단위계획 condition을 대표 SITE snapshot 의존 구조에서
-현재 SITE Parcel Polygon 기반 runtime evaluator로 일반화한다.
+지구단위계획 runtime query:
+
+```text
+Dataset: LT_C_UPISUQ161
+HTTP: 200
+VWorld: OK
+Classification: QUERY_SUCCESS
+Feature: LT_C_UPISUQ161.1154
+District: 대치택지개발지구
+Intersects: True
+```
+
+최종:
+
+```text
+State: TRUE
+Confidence: HIGH
+Resolution: PARCEL_INTERSECTS_DISTRICT_UNIT_PLAN
+Geometry verified: True
+```
+
+Regression:
+
+```text
+python -m law_data.district_unit_plan_runtime_live_test
+→ all_pass: True
+```
+
+### C-15-3 — BASE/LIVE Compatible Geometry Strategy
+
+C-15에서 다음 아키텍처 원칙을 확정하였다.
+
+```text
+Analysis Primary Parcel Source
+≠
+Spatial Condition Evaluation Geometry Source
+```
+
+BASE SITE의 primary Parcel은 기존 MapPlan snapshot을 보존한다.
+
+```text
+PNU: 1168010300100120000
+Primary provider: MapPlan
+Geometry: Polygon
+CRS: None
+```
+
+MapPlan CRS를 임의 추정하지 않는다. 지구단위계획 평가 시 동일 PNU의 VWorld Parcel을 별도로 확보한다.
+
+```text
+Provider: VWorld
+Dataset: LP_PA_CBND_BUBUN
+Resolution: PNU_POLYGON_VERIFIED
+CRS: EPSG:4326
+Mode: LIVE_COMPATIBLE_FALLBACK
+```
+
+LIVE SITE:
+
+```text
+PNU: 1168010300100130000
+Primary provider: VWorld
+Geometry: MultiPolygon
+CRS: EPSG:4326
+Evaluation mode: PRIMARY_PARCEL
+```
+
+Dual-SITE 결과:
+
+```text
+BASE: TRUE / HIGH / 대치택지개발지구
+LIVE: TRUE / HIGH / 대치택지개발지구
+BASE evaluation mode: LIVE_COMPATIBLE_FALLBACK
+LIVE evaluation mode: PRIMARY_PARCEL
+```
+
+Regression:
+
+```text
+python -m law_data.district_unit_plan_dual_site_regression_test
+→ all_pass: True
+```
+
+### C-15-4 — Runtime SITE Condition → Rule Engine Overlay
+
+`evaluate_site_rules()`에 신규 context를 추가하였다.
+
+```python
+site_condition_context
+```
+
+신규 overlay:
+
+```text
+overlay_runtime_site_conditions()
+```
+
+우선순위:
+
+```text
+runtime SITE condition
+>
+기존 SITE registry / snapshot
+```
+
+중요 정책:
+
+```text
+TRUE만 overlay하지 않음
+FALSE도 반드시 overlay
+UNKNOWN도 현재 SITE runtime 결과이므로 overlay
+```
+
+검증:
+
+```text
+BASE registry FALSE + runtime TRUE → final TRUE
+BASE registry TRUE + runtime FALSE → final FALSE
+```
+
+314개 Rule Engine condition까지 TRUE/FALSE propagation을 확인하였다.
+
+```text
+runtime TRUE → 관련 지구단위계획 condition TRUE
+runtime FALSE → 관련 지구단위계획 condition FALSE
+TRUE scenario rule count: 314
+FALSE scenario rule count: 314
+```
+
+Regression:
+
+```text
+python -m law_data.runtime_site_condition_overlay_regression_test
+→ all_pass: True
+```
+
+### C-15-5 — SITE Analysis Builder 자동 연결
+
+실서비스 분석 경로:
+
+```text
+build_site_analysis()
+    ↓
+resolve_site_identity()
+    ↓
+resolve_site_spatial_payload()
+    ↓
+resolve_site_spatial_condition()
+    ↓
+runtime_conditions
+    ↓
+site_condition_context
+    ↓
+evaluate_site_rules()
+```
+
+Final SITE object:
+
+```python
+analysis["site"]["runtime_conditions"]["지구단위계획"]
+```
+
+대표 확인 결과:
+
+```text
+state: TRUE
+confidence: HIGH
+resolution: PARCEL_INTERSECTS_DISTRICT_UNIT_PLAN
+source: VWorld / LT_C_UPISUQ161 / EPSG:4326
+```
+
+기존 BASE regression:
+
+```text
+Analysis: READY
+BCR/FAR: 50 / 250
+Rules: 63 / 213 / 36 / 2
+all_pass: True
+```
+
+실제 LIVE SITE regression:
+
+```text
+Zone: 제1종일반주거지역
+BCR/FAR: 60 / 150
+Rules: 63 / 215 / 34 / 2
+Parcel: VWorld / MultiPolygon / EPSG:4326
+all_pass: True
+```
+
+참고:
+
+```text
+analysis.debug.rule_engine.site_registry 경로는 현재 외부 debug object에 노출되지 않음.
+이는 실패가 아니며, C-15-4에서 evaluate_site_rules() 반환 registry와 314개 rule condition propagation을 직접 검증함.
+향후 observability 개선 시 debug 노출 가능.
+```
+
+C-15 상태:
+
+```text
+C-15 STATUS: COMPLETE
+Runtime Parcel: READY
+Runtime SITE Spatial Condition: READY
+Runtime SITE Condition → Rule Engine: READY
 ```
 
 ---
 
-## 29. Git 체크포인트
+## 27. C-15 최종 회귀 테스트
+
+2026-08-23 기준:
+
+```text
+python -m law_data.district_unit_plan_runtime_live_test
+→ all_pass: True
+
+python -m law_data.district_unit_plan_dual_site_regression_test
+→ all_pass: True
+
+python -m law_data.runtime_site_condition_overlay_regression_test
+→ all_pass: True
+
+python -m site_data.test_site_analysis_service
+→ all_pass: True
+
+python -m site_data.test_real_multi_site_analysis
+→ all_pass: True
+```
+
+BASE 최종:
+
+```text
+SITE ID: 11680-10300-0012-0000
+PNU: 1168010300100120000
+Zone: 제3종일반주거지역
+BCR/FAR: 50 / 250
+Rules: 63 / 213 / 36 / 2
+지구단위계획: TRUE / HIGH
+Evaluation mode: LIVE_COMPATIBLE_FALLBACK
+District: 대치택지개발지구
+```
+
+LIVE 최종:
+
+```text
+SITE ID: 11680-10300-0013-0000
+PNU: 1168010300100130000
+Zone: 제1종일반주거지역
+BCR/FAR: 60 / 150
+Rules: 63 / 215 / 34 / 2
+지구단위계획: TRUE / HIGH
+Evaluation mode: PRIMARY_PARCEL
+District: 대치택지개발지구
+```
+
+---
+
+## 28. 현재 정확한 완료 지점
+
+```text
+STEP 17
+└─ STEP 17-21
+   ├─ C-10 Rule / Numeric Evaluation              COMPLETE
+   ├─ C-11 SITE Analysis Object                   COMPLETE
+   ├─ C-12 Service / FastAPI / Contract           COMPLETE
+   ├─ C-13 Multi-SITE Generalization              COMPLETE
+   ├─ C-14 Real Multi-SITE Live Spatial           COMPLETE
+   └─ C-15 Runtime SITE Spatial Condition         COMPLETE
+```
+
+현재 핵심 상태:
+
+```text
+SITE Analysis: READY
+Rule Engine: READY
+API: READY
+Multi-SITE core: READY
+Live Parcel Geometry: READY
+Coordinate Isolation: READY
+Runtime District Unit Plan Evaluation: READY
+Runtime SITE Condition → Rule Engine: READY
+```
+
+---
+
+## 29. 다음 개발 시작 지점 — C-16
+
+다음 단계:
+
+```text
+STEP 17-21-C-16
+Runtime SITE Condition Generalization
+```
+
+현재 runtime 자동화 완료:
+
+```text
+지구단위계획
+```
+
+다음 일반화 후보:
+
+```text
+개발진흥지구
+자연경관지구
+취락지구
+수산자원보호구역
+산업단지
+자연공원
+개발밀도관리구역
+방재지구
+기타 C-9 SITE condition
+```
+
+권장 순서:
+
+```text
+1. C-9 registry condition 전체 목록과 runtime source 후보 매핑
+2. 공식 VWorld/UPIS dataset 의미가 이미 검증된 condition부터 선정
+3. spatial_condition_evaluator를 condition별 adapter/registry 구조로 일반화
+4. 현재 PNU Parcel Polygon intersection을 우선 근거로 사용
+5. TRUE/FALSE/UNKNOWN 안전 정책 유지
+6. runtime condition을 site_condition_context에 자동 추가
+7. 대표 SITE snapshot fallback 의존도를 점진적으로 축소
+8. BASE + LIVE + 추가 실제 SITE regression 확대
+```
+
+C-16 첫 목표:
+
+> **공식 spatial dataset/source가 이미 검증된 C-9 SITE condition을 선정하여, 지구단위계획과 동일한 runtime evaluator 구조로 일반화한다.**
+
+---
+
+## 30. C-16 시작 시 유지할 안전 원칙
+
+```text
+조회 실패 ≠ FALSE
+geometry 미확보 ≠ FALSE
+HTTP 403 ≠ FALSE
+HTTP 200 ≠ 의미 검증 완료
+QUERY_SUCCESS ≠ dataset 의미 검증 완료
+TRUE/FALSE 모두 실제 runtime evidence 필요
+Parcel Polygon intersection 우선
+대표 SITE snapshot을 다른 PNU에 재사용 금지
+CRS를 임의 추정하지 않음
+runtime FALSE도 기존 TRUE registry를 override
+runtime UNKNOWN도 현재 SITE 결과로 보존
+Analysis Primary Parcel Source와 Evaluation Geometry Source는 분리 가능
+PNU가 다른 geometry의 fallback 사용 금지
+```
+
+---
+
+## 31. C-15 Git 체크포인트
 
 현재 branch:
 
@@ -933,27 +1221,26 @@ C-15 Dynamic Multi-SITE Spatial Condition Evaluation
 checkpoint/c12-fastapi-20260821
 ```
 
-이전 원격 체크포인트:
+직전 원격 체크포인트:
 
 ```text
-fa19a7e
-Checkpoint C-14 live parcel geometry provider
+a14ec80
+Checkpoint C-14 multi-site live spatial resolution
 ```
 
-현재 C-14 final checkpoint stage 대상:
+C-15 stage 대상:
 
 ```text
 PROJECT_STATUS.md
-law_data/dual_source_coordinate_regression_test.py
-law_data/dual_source_parcel_regression_test.py
+law_data/spatial_condition_evaluator.py
+law_data/district_unit_plan_runtime_live_test.py
+law_data/district_unit_plan_dual_site_regression_test.py
+law_data/runtime_site_condition_overlay_regression_test.py
+law_data/rule_evaluation_pipeline.py
 law_data/site_analysis_builder.py
-law_data/site_analysis_builder_test.py
-law_data/site_identity_resolver.py
-law_data/site_spatial_payload_resolver.py
-site_data/test_real_multi_site_analysis.py
 ```
 
-제외:
+이번 C-15에서 제외:
 
 ```text
 law_data/output/seoul_base_zone_numeric_article_probe.json
@@ -962,7 +1249,134 @@ law_data/output/seoul_base_zone_numeric_article_probe.json
 권장 commit:
 
 ```text
-Checkpoint C-14 multi-site live spatial resolution
+Checkpoint C-15 runtime spatial condition integration
+```
+
+저장 명령:
+
+```powershell
+git add PROJECT_STATUS.md
+git status
+git diff --cached --stat
+
+git commit -m "Checkpoint C-15 runtime spatial condition integration"
+git push
+
+git status
+git log -1 --oneline
+```
+
+`git add .`, `git add -A`, `git add --all`은 사용하지 않는다.
+
+---
+
+## 32. 새 채팅 시작용 핸드오프
+
+```text
+AI 대지분석 자동화 시스템 개발을 계속한다.
+
+기준 문서:
+PROJECT_STATUS.md
+
+현재 branch:
+checkpoint/c12-fastapi-20260821
+
+현재 완료 단계:
+STEP 17-21-C-15 COMPLETE
+
+현재 시스템 상태:
+SITE Analysis READY
+Rule Engine READY
+FastAPI READY
+Multi-SITE core READY
+Live Parcel Geometry READY
+Runtime SITE Spatial Condition READY
+
+대표 SITE:
+서울특별시 강남구 개포동 12번지
+SITE ID: 11680-10300-0012-0000
+PNU: 1168010300100120000
+Zone: 제3종일반주거지역
+BCR/FAR: 50 / 250
+Rules: 63 / 213 / 36 / 2
+
+실제 두 번째 SITE:
+서울특별시 강남구 개포동 13번지
+SITE ID: 11680-10300-0013-0000
+PNU: 1168010300100130000
+Zone: 제1종일반주거지역
+BCR/FAR: 60 / 150
+Rules: 63 / 215 / 34 / 2
+
+C-14 완료:
+VWorld LP_PA_CBND_BUBUN live Parcel provider 구축
+PNU 직접 검증
+MultiPolygon / EPSG:4326
+대표좌표 확보
+BASE/LIVE coordinate leakage 제거
+
+C-15 완료:
+신규 모듈 law_data/spatial_condition_evaluator.py
+첫 runtime SITE condition: 지구단위계획
+공식 dataset: LT_C_UPISUQ161
+
+BASE runtime:
+TRUE / HIGH
+대치택지개발지구
+Evaluation mode: LIVE_COMPATIBLE_FALLBACK
+
+LIVE runtime:
+TRUE / HIGH
+대치택지개발지구
+Evaluation mode: PRIMARY_PARCEL
+
+중요 아키텍처:
+Analysis Primary Parcel Source
+≠
+Spatial Condition Evaluation Geometry Source
+
+Runtime SITE condition이:
+site_condition_context
+→ Rule Engine site_registry overlay
+→ 314개 rule condition
+까지 연결됨.
+
+runtime TRUE propagation 검증 완료
+runtime FALSE override 검증 완료
+runtime UNKNOWN도 기존 snapshot보다 우선하도록 설계
+
+주요 regression 모두 all_pass True.
+
+현재 제외된 untracked output:
+law_data/output/seoul_base_zone_numeric_article_probe.json
+C-15 commit에 포함하지 않음.
+
+다음 단계:
+STEP 17-21-C-16
+Runtime SITE Condition Generalization
+
+첫 목표:
+기존 C-9 SITE condition 중 공식 spatial dataset/source가 이미 검증된 조건을 선정하여 지구단위계획과 동일한 runtime evaluator 구조로 일반화한다.
+
+우선 후보:
+개발진흥지구
+자연경관지구
+취락지구
+수산자원보호구역
+산업단지
+자연공원
+개발밀도관리구역
+방재지구
+
+안전 원칙:
+조회 실패 ≠ FALSE
+geometry 미확보 ≠ FALSE
+HTTP 403 ≠ FALSE
+TRUE/FALSE 모두 실제 runtime evidence 필요
+Parcel Polygon intersection 우선
+대표 SITE snapshot을 다른 PNU에 재사용 금지
+CRS를 임의 추정하지 않음
+runtime FALSE도 기존 TRUE registry를 override
 ```
 
 ---
@@ -975,6 +1389,7 @@ C-11 COMPLETE
 C-12 COMPLETE
 C-13 COMPLETE
 C-14 COMPLETE
+C-15 COMPLETE
 
 SITE Analysis READY
 Rule Engine READY
@@ -982,7 +1397,9 @@ API READY
 Multi-SITE READY
 Live Parcel Geometry READY
 Coordinate Isolation READY
+Runtime District Unit Plan Evaluation READY
+Runtime SITE Condition → Rule Engine READY
 
 Next:
-C-15 Dynamic Multi-SITE Spatial Condition Evaluation
+C-16 Runtime SITE Condition Generalization
 ```
