@@ -205,8 +205,38 @@ def fetch_building_items(
 
     except ValueError as exc:
 
+        content_type = (
+            response.headers.get(
+                "Content-Type",
+                "",
+            )
+        )
+
+        response_text = (
+            response.text
+            or ""
+        )
+
+        response_preview = (
+            response_text[
+                :500
+            ]
+            .replace(
+                "\r",
+                " ",
+            )
+            .replace(
+                "\n",
+                " ",
+            )
+        )
+
         raise BuildingAPIError(
             "건축HUB 응답 JSON 파싱 실패"
+            f" | HTTP={response.status_code}"
+            f" | Content-Type={content_type}"
+            f" | Length={len(response_text)}"
+            f" | Preview={response_preview!r}"
         ) from exc
 
     api_response = (

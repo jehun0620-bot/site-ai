@@ -120,6 +120,9 @@ SETTLEMENT_DISTRICT_DATASET = (
     "LT_C_UQ128"
 )
 
+DISASTER_PREVENTION_DISTRICT_DATASET = (
+    "LT_C_UQ125"
+)
 
 REQUEST_TIMEOUT = 30
 
@@ -243,6 +246,38 @@ SPATIAL_CONDITION_REGISTRY: Dict[
         "not_found_is_empty":
             True,
     },
+
+    "방재지구": {
+
+    "dataset":
+        DISASTER_PREVENTION_DISTRICT_DATASET,
+
+    "true_resolution":
+        "PARCEL_INTERSECTS_DISASTER_PREVENTION_DISTRICT",
+
+    "false_resolution":
+        "PARCEL_DOES_NOT_INTERSECT_DISASTER_PREVENTION_DISTRICT",
+
+    "empty_resolution":
+        "NO_DISASTER_PREVENTION_DISTRICT_FEATURE",
+
+    "query_failed_resolution":
+        "DISASTER_PREVENTION_DISTRICT_QUERY_FAILED",
+
+    # C-16-7
+    #
+    # negative:
+    # 개포동 12 / 13
+    #
+    # positive:
+    # PNU 1211015700105800006
+    # feature LT_C_UQ125.22
+    # uname 방재지구
+    # Parcel Polygon intersection verified
+    "not_found_is_empty":
+        True,
+    },
+
 }
 
 
@@ -2240,6 +2275,22 @@ def resolve_settlement_district_condition(
         )
     )
 
+def resolve_disaster_prevention_district_condition(
+    *,
+    site: Dict[str, Any],
+    parcel: Dict[str, Any],
+) -> Dict[str, Any]:
+
+    return (
+        resolve_registered_polygon_condition(
+            condition_name=(
+                "방재지구"
+            ),
+
+            site=site,
+            parcel=parcel,
+        )
+    )
 
 # ============================================================
 # public API
@@ -2307,6 +2358,18 @@ def resolve_site_spatial_condition(
                 parcel=parcel,
             )
         )
+
+    if (
+         normalized_name
+        == "방재지구"
+    ):
+
+        return (
+        resolve_disaster_prevention_district_condition(
+            site=site,
+            parcel=parcel,
+        )
+    )
 
     return {
 

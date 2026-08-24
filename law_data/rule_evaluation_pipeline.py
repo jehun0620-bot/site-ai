@@ -987,6 +987,363 @@ def apply_branch_local_conditions(
         ),
     }
 
+# ============================================================
+# verified upper-branch conditions
+# ============================================================
+
+def apply_verified_upper_branch_conditions(
+    rules: List[
+        Dict[str, Any]
+    ],
+    upper_data: Dict[str, Any],
+) -> Dict[str, Any]:
+
+    """
+    상위 법령 branch 분석에서 이미 검증된 condition을
+    clean baseline rule에 복원한다.
+
+    목적
+    ==================================================================
+    하위 조례 clause 자체 text에는 상위법의 predicate 문자열이
+    직접 존재하지 않을 수 있다.
+
+    예:
+        서울특별시 도시계획 조례 clause 189
+        → "영 제85조제5항"만 직접 참조
+        → 실제 상위 branch 조건:
+            SITE    방재지구
+            PROJECT 재해예방시설
+
+    이 경우 text pattern detector가 조건을 재발견하도록 강제하지 않고,
+    검증 완료된 upper_relaxation_branch_resolution.json의
+    conditions를 source-of-evidence로 사용한다.
+
+    중요
+    ==================================================================
+    여기서는 runtime SITE registry를 직접 주입하지 않는다.
+
+    우선 verified branch condition 자체를 rule에 복원하고,
+    이후 apply_site_registry()가 현재 SITE runtime 상태를 덮어쓴다.
+
+    따라서 처리 순서는:
+
+        verified branch condition restoration
+        ↓
+        apply_site_registry()
+        ↓
+        PROJECT / PROCEDURE injection
+
+    이다.
+    """
+
+    added = []
+
+    reused = []
+
+    touched = set()
+
+    resolutions = (
+        upper_data.get(
+            "resolutions",
+            {},
+        )
+    )
+
+    if not isinstance(
+        resolutions,
+        dict,
+    ):
+
+        return {
+            "added":
+                [],
+            "reused":
+                [],
+            "touched_clause_indexes":
+                [],
+        }
+
+    # --------------------------------------------------------
+    # clause_index → verified conditions
+    # --------------------------------------------------------
+
+    binding_by_clause: Dict[
+        int,
+        List[
+            Dict[str, Any]
+        ],
+    ] = {}
+
+    for resolution_name, resolution in (
+        resolutions.items()
+    ):
+
+        if not isinstance(
+            resolution,
+            dict,
+        ):
+
+            continue
+
+        clause_index = (
+            resolution.get(
+                "clause_index"
+            )
+        )
+
+        if not isinstance(
+            clause_index,
+            int,
+        ):
+
+            continue
+
+        raw_conditions = (
+            resolution.get(
+                "conditions",
+                [],
+            )
+        )
+
+        if not isinstance(
+            raw_conditions,
+            list,
+        ):
+
+            continue
+
+        verified_conditions = []
+
+        for raw_condition in raw_conditions:
+
+            if not isinstance(
+                raw_condition,
+                dict,
+            ):
+
+                continue
+
+            name = safe_string(
+                raw_condition.get(
+                    "name"
+                )
+            )
+
+            condition_type = safe_string(
+                raw_condition.get(
+                    "type"
+                )
+            )
+
+            if not name:
+
+                continue
+
+            if condition_type not in {
+                "SITE",
+                "SITE_HISTORY",
+                "PROJECT",
+                "PROCEDURE",
+            }:
+
+                continue
+
+            verified_conditions.append(
+                {
+                    "name":
+                        name,
+
+                    "type":
+                        condition_type,
+
+                    "state":
+                        (
+                            safe_string(
+                                raw_condition.get(
+                                    "state"
+                                )
+                            )
+                            or (
+                                "UNSET"
+                                if condition_type
+                                in {
+                                    "PROJECT",
+                                    "PROCEDURE",
+                                }
+                                else "UNKNOWN"
+                            )
+                        ),
+
+                    "confidence":
+                        (
+                            safe_string(
+                                raw_condition.get(
+                                    "confidence"
+                                )
+                            )
+                            or "NONE"
+                        ),
+
+                    "source":
+                        (
+                            safe_string(
+                                raw_condition.get(
+                                    "source"
+                                )
+                            )
+                            or "VERIFIED_UPPER_BRANCH"
+                        ),
+
+                    "upper_branch_verified":
+                        True,
+
+                    "upper_branch_resolution":
+                        resolution_name,
+
+                    "upper_reference":
+                        resolution.get(
+                            "upper_reference"
+                        ),
+                }
+            )
+
+        if verified_conditions:
+
+            binding_by_clause[
+                clause_index
+            ] = (
+                verified_conditions
+            )
+
+    # --------------------------------------------------------
+    # rule restoration
+    # --------------------------------------------------------
+
+    for rule in rules:
+
+        if not isinstance(
+            rule,
+            dict,
+        ):
+
+            continue
+
+        clause_index = (
+            rule.get(
+                "clause_index"
+            )
+        )
+
+        if not isinstance(
+            clause_index,
+            int,
+        ):
+
+            continue
+
+        verified_conditions = (
+            binding_by_clause.get(
+                clause_index
+            )
+        )
+
+        if not verified_conditions:
+
+            continue
+
+        conditions = (
+            rule.setdefault(
+                "conditions",
+                [],
+            )
+        )
+
+        existing_names = {
+
+            safe_string(
+                condition.get(
+                    "name"
+                )
+            )
+
+            for condition
+            in conditions
+
+            if isinstance(
+                condition,
+                dict,
+            )
+        }
+
+        changed = False
+
+        for condition in (
+            verified_conditions
+        ):
+
+            name = condition[
+                "name"
+            ]
+
+            if name in existing_names:
+
+                reused.append(
+                    {
+                        "clause_index":
+                            clause_index,
+
+                        "name":
+                            name,
+                    }
+                )
+
+                continue
+
+            conditions.append(
+                copy.deepcopy(
+                    condition
+                )
+            )
+
+            added.append(
+                {
+                    "clause_index":
+                        clause_index,
+
+                    **copy.deepcopy(
+                        condition
+                    ),
+                }
+            )
+
+            existing_names.add(
+                name
+            )
+
+            touched.add(
+                clause_index
+            )
+
+            changed = True
+
+        if changed:
+
+            refresh_rule(
+                rule
+            )
+
+    return {
+        "added":
+            added,
+
+        "reused":
+            reused,
+
+        "touched_clause_indexes":
+            sorted(
+                touched
+            ),
+    }
 
 # ============================================================
 # global SITE registry
@@ -1506,21 +1863,38 @@ def build_numeric_guard_registry(
 
         189: {
 
+        # --------------------------------------------------------
+        # C-16-7-I
+        #
+        # 방재지구 / 재해예방시설 여부는 이미 current rule의
+        # verified upper-branch conditions에서 평가된다.
+        #
+        # numeric guard에서 대표 SITE의 static 방재지구 상태를
+        # 다시 사용하지 않는다.
+        #
+        # ACTIVE_CANDIDATE까지 도달했다는 것은:
+        #
+        #   방재지구 TRUE
+        #   재해예방시설 TRUE
+        #   zone / branch 조건 충족
+        #
+        # 이 이미 확인되었다는 뜻이다.
+        # --------------------------------------------------------
+
             "allow_numeric": (
-                clause_189_resolution
-                == "CONFIRMED"
-                and disaster_condition.get(
-                    "status"
-                )
-                == "TRUE"
+                True
             ),
 
             "resolution": (
-                clause_189_resolution
+                "RUNTIME_BRANCH_CONDITIONS_SATISFIED"
             ),
 
             "role": (
                 "DIRECT_RELAXATION"
+            ),
+
+            "guard_source": (
+                "CURRENT_RULE_APPLICABILITY"
             ),
         },
 
@@ -2516,6 +2890,30 @@ def evaluate_site_rules(
         )
     )
 
+    # ========================================================
+    # C-16-7-G verified upper-branch condition restoration
+    #
+    # clause 자체 text에는 predicate가 없지만
+    # 상위 법령 branch 분석에서 이미 검증된 condition을 복원한다.
+    #
+    # 예:
+    # clause 189
+    #   SITE    방재지구
+    #   PROJECT 재해예방시설
+    # ========================================================
+
+    upper_branch_condition_result = (
+     apply_verified_upper_branch_conditions(
+            rules=(
+                rules
+        ),
+
+            upper_data=(
+                upper_data
+            ),
+        )
+    )
+    
     after_branch = Counter(
         rule.get(
             "applicability"
@@ -2881,6 +3279,24 @@ def evaluate_site_rules(
             "added_conditions": (
                 branch_result[
                     "added"
+                ]
+            ),
+
+            "verified_upper_branch_added": (
+                upper_branch_condition_result[
+                    "added"
+                ]
+            ),
+
+            "verified_upper_branch_reused": (
+                upper_branch_condition_result[
+                    "reused"
+                 ]
+            ),
+
+            "verified_upper_branch_touched_clause_indexes": (
+                upper_branch_condition_result[
+                    "touched_clause_indexes"
                 ]
             ),
 

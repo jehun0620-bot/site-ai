@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-STEP 17-21-C-14-2
-Real Multi-SITE + Live Parcel Geometry Regression
+STEP 17-21-C-16
+Real Multi-SITE + Runtime Spatial Condition Regression
 
 목표
 ======================================================================
@@ -20,34 +20,33 @@ analyze_site_object()
     ↓
 dynamic zone numeric
     ↓
-dynamic rule evaluation
-    ↓
 PNU-aware spatial resolver
     ↓
 VWorld live Parcel geometry fallback
+    ↓
+Runtime SITE Spatial Conditions
+    ↓
+Rule Engine overlay
     ↓
 Final SITE Analysis Object
 
 까지 정상적으로 이어지는지 검증한다.
 
-중요
+현재 실제 테스트 SITE
 ======================================================================
-이 테스트는 기존 대표 SITE:
+서울특별시 강남구 개포동 13번지
 
-    서울특별시 강남구 개포동 12번지
-    SITE ID: 11680-10300-0012-0000
-    PNU: 1168010300100120000
+SITE ID:
+    11680-10300-0013-0000
 
-와 다른 실제 SITE를 사용한다.
+PNU:
+    1168010300100130000
 
-현재 C-14 real SITE:
+Zone:
+    제1종일반주거지역
 
-    서울특별시 강남구 개포동 13번지
-    SITE ID: 11680-10300-0013-0000
-    PNU: 1168010300100130000
-
-C-13 / C-14 안전 정책:
-
+C-14 안전 정책
+======================================================================
 1. 다른 PNU에 대표 SITE Parcel snapshot 재사용 금지
 2. snapshot PNU 불일치 시 VWorld live provider fallback
 3. LP_PA_CBND_BUBUN dataset 사용
@@ -55,6 +54,52 @@ C-13 / C-14 안전 정책:
 5. Feature PNU와 target PNU 직접 일치 필수
 6. live geometry는 EPSG:4326
 7. EPSG:4326 좌표에서 parcel area를 임의 계산하지 않음
+
+C-16 Runtime SITE Condition 정책
+======================================================================
+현재 지원:
+
+- 지구단위계획
+- 개발진흥지구
+- 취락지구
+- 방재지구
+
+현재 LIVE SITE 기대값:
+
+지구단위계획
+    TRUE / HIGH
+    LT_C_UPISUQ161
+
+개발진흥지구
+    FALSE / HIGH
+    LT_C_UQ129
+
+취락지구
+    FALSE / HIGH
+    LT_C_UQ128
+
+방재지구
+    FALSE / HIGH
+    LT_C_UQ125
+
+C-16-7 방재지구 반영
+======================================================================
+방재지구 runtime FALSE가 clause 189 상위 branch에 연결되므로
+기존 LIVE rule summary:
+
+    63 / 215 / 34 / 2
+
+에서:
+
+    62 / 216 / 34 / 2
+
+로 변경된다.
+
+BCR/FAR:
+
+    60 / 150
+
+은 그대로 유지되어야 한다.
 """
 
 from __future__ import annotations
@@ -110,6 +155,7 @@ TARGET_JI = (
     "0000"
 )
 
+
 EXPECTED_SITE_ID = (
     "11680-10300-0013-0000"
 )
@@ -130,13 +176,81 @@ EXPECTED_FAR = (
     150.0
 )
 
+
 EXPECTED_RULE_SUMMARY = {
-    "total": 314,
-    "applicable": 63,
-    "not_applicable": 215,
-    "conditional": 34,
-    "unknown": 2,
+
+    "total":
+        314,
+
+    "applicable":
+        62,
+
+    "not_applicable":
+        216,
+
+    "conditional":
+        34,
+
+    "unknown":
+        2,
 }
+
+
+# ============================================================
+# EXPECTED RUNTIME CONDITIONS
+# ============================================================
+
+EXPECTED_RUNTIME_CONDITIONS = {
+
+    "지구단위계획": {
+
+        "state":
+            "TRUE",
+
+        "confidence":
+            "HIGH",
+
+        "dataset":
+            "LT_C_UPISUQ161",
+    },
+
+    "개발진흥지구": {
+
+        "state":
+            "FALSE",
+
+        "confidence":
+            "HIGH",
+
+        "dataset":
+            "LT_C_UQ129",
+    },
+
+    "취락지구": {
+
+        "state":
+            "FALSE",
+
+        "confidence":
+            "HIGH",
+
+        "dataset":
+            "LT_C_UQ128",
+    },
+
+    "방재지구": {
+
+        "state":
+            "FALSE",
+
+        "confidence":
+            "HIGH",
+
+        "dataset":
+            "LT_C_UQ125",
+    },
+}
+
 
 BASE_SITE_ID = (
     "11680-10300-0012-0000"
@@ -159,6 +273,7 @@ load_dotenv(
 SERVICE_KEY = os.getenv(
     "DATA_API_KEY"
 )
+
 
 if not SERVICE_KEY:
 
@@ -776,6 +891,7 @@ dependencies = (
     ]
 )
 
+
 spatial = (
     analysis_site.get(
         "spatial",
@@ -786,6 +902,13 @@ spatial = (
 parcel = (
     spatial.get(
         "parcel",
+        {},
+    )
+)
+
+runtime_conditions = (
+    analysis_site.get(
+        "runtime_conditions",
         {},
     )
 )
@@ -830,6 +953,7 @@ resolved_far = (
         "value"
     )
 )
+
 
 parcel_pnu = (
     parcel.get(
@@ -892,6 +1016,56 @@ live_query = (
     live_source.get(
         "query",
         {},
+    )
+)
+
+
+# ============================================================
+# runtime condition helpers
+# ============================================================
+
+def get_runtime_condition(
+    name: str,
+) -> Dict[str, Any]:
+
+    value = (
+        runtime_conditions.get(
+            name,
+            {},
+        )
+    )
+
+    if isinstance(
+        value,
+        dict,
+    ):
+
+        return value
+
+    return {}
+
+
+district_unit_plan = (
+    get_runtime_condition(
+        "지구단위계획"
+    )
+)
+
+development_promotion = (
+    get_runtime_condition(
+        "개발진흥지구"
+    )
+)
+
+settlement_district = (
+    get_runtime_condition(
+        "취락지구"
+    )
+)
+
+disaster_prevention_district = (
+    get_runtime_condition(
+        "방재지구"
     )
 )
 
@@ -990,6 +1164,39 @@ print(
 print()
 
 print(
+    "Runtime conditions:"
+)
+
+for name, condition in (
+    runtime_conditions.items()
+):
+
+    print(
+        name,
+        "=>",
+        condition.get(
+            "state"
+        ),
+        "/",
+        condition.get(
+            "confidence"
+        ),
+        "/",
+        condition.get(
+            "source",
+            {},
+        ).get(
+            "dataset"
+        ),
+        "/",
+        condition.get(
+            "resolution"
+        ),
+    )
+
+print()
+
+print(
     "확정 건폐율:",
     resolved_bcr,
 )
@@ -1031,7 +1238,7 @@ print(
 
 
 # ============================================================
-# C-14 Multi-SITE diagnostics
+# Multi-SITE diagnostics
 # ============================================================
 
 print()
@@ -1094,6 +1301,13 @@ print(
 print(
     "Live query:",
     live_query,
+)
+
+print(
+    "Runtime condition names:",
+    list(
+        runtime_conditions.keys()
+    ),
 )
 
 
@@ -1326,6 +1540,224 @@ validations = {
     ),
 
     # --------------------------------------------------------
+    # runtime condition collection
+    # --------------------------------------------------------
+
+    "runtime conditions exists": (
+        isinstance(
+            runtime_conditions,
+            dict,
+        )
+        and bool(
+            runtime_conditions
+        )
+    ),
+
+    "runtime condition count >= 4": (
+        len(
+            runtime_conditions
+        )
+        >= 4
+    ),
+
+    "runtime expected keys": (
+        set(
+            EXPECTED_RUNTIME_CONDITIONS.keys()
+        ).issubset(
+            set(
+                runtime_conditions.keys()
+            )
+        )
+    ),
+
+    # --------------------------------------------------------
+    # district unit plan
+    # --------------------------------------------------------
+
+    "district unit plan TRUE": (
+        district_unit_plan.get(
+            "state"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "지구단위계획"
+        ][
+            "state"
+        ]
+    ),
+
+    "district unit plan confidence HIGH": (
+        district_unit_plan.get(
+            "confidence"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "지구단위계획"
+        ][
+            "confidence"
+        ]
+    ),
+
+    "district unit plan dataset": (
+        district_unit_plan.get(
+            "source",
+            {},
+        ).get(
+            "dataset"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "지구단위계획"
+        ][
+            "dataset"
+        ]
+    ),
+
+    # --------------------------------------------------------
+    # development promotion
+    # --------------------------------------------------------
+
+    "development promotion FALSE": (
+        development_promotion.get(
+            "state"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "개발진흥지구"
+        ][
+            "state"
+        ]
+    ),
+
+    "development promotion confidence HIGH": (
+        development_promotion.get(
+            "confidence"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "개발진흥지구"
+        ][
+            "confidence"
+        ]
+    ),
+
+    "development promotion dataset": (
+        development_promotion.get(
+            "source",
+            {},
+        ).get(
+            "dataset"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "개발진흥지구"
+        ][
+            "dataset"
+        ]
+    ),
+
+    # --------------------------------------------------------
+    # settlement district
+    # --------------------------------------------------------
+
+    "settlement district FALSE": (
+        settlement_district.get(
+            "state"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "취락지구"
+        ][
+            "state"
+        ]
+    ),
+
+    "settlement district confidence HIGH": (
+        settlement_district.get(
+            "confidence"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "취락지구"
+        ][
+            "confidence"
+        ]
+    ),
+
+    "settlement district dataset": (
+        settlement_district.get(
+            "source",
+            {},
+        ).get(
+            "dataset"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "취락지구"
+        ][
+            "dataset"
+        ]
+    ),
+
+    # --------------------------------------------------------
+    # disaster prevention district
+    # --------------------------------------------------------
+
+    "disaster prevention FALSE": (
+        disaster_prevention_district.get(
+            "state"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "방재지구"
+        ][
+            "state"
+        ]
+    ),
+
+    "disaster prevention confidence HIGH": (
+        disaster_prevention_district.get(
+            "confidence"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "방재지구"
+        ][
+            "confidence"
+        ]
+    ),
+
+    "disaster prevention dataset": (
+        disaster_prevention_district.get(
+            "source",
+            {},
+        ).get(
+            "dataset"
+        )
+        == EXPECTED_RUNTIME_CONDITIONS[
+            "방재지구"
+        ][
+            "dataset"
+        ]
+    ),
+
+    "disaster prevention query success": (
+        disaster_prevention_district.get(
+            "evaluation",
+            {},
+        ).get(
+            "query_success"
+        )
+        is True
+    ),
+
+    "disaster prevention no intersection": (
+        disaster_prevention_district.get(
+            "evaluation",
+            {},
+        ).get(
+            "intersects"
+        )
+        is False
+    ),
+
+    "disaster prevention geometry verified": (
+        disaster_prevention_district.get(
+            "geometry_verified"
+        )
+        is True
+    ),
+
+    # --------------------------------------------------------
     # zone / numeric
     # --------------------------------------------------------
 
@@ -1469,6 +1901,18 @@ for name, passed in (
 print()
 
 print(
+    "Expected rule summary:",
+    EXPECTED_RULE_SUMMARY,
+)
+
+print(
+    "Actual rule summary:",
+    rules,
+)
+
+print()
+
+print(
     "all_pass:",
     all_pass,
 )
@@ -1493,12 +1937,14 @@ if not all_pass:
                 name,
             )
 
+
 print(
     "Analysis coordinate:",
     analysis_site.get(
         "coordinate"
     ),
 )
+
 
 raise SystemExit(
     0
