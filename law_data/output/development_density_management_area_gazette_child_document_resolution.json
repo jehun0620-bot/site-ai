@@ -1,0 +1,577 @@
+{
+  "step": "STEP 17-21-C-16-8-K Development Density Management Area Gazette Child Document Resolution",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "input": {
+    "path": "D:\\site-ai\\law_data\\output\\development_density_management_area_official_notice_source_verification.json",
+    "j_stage_resolution": "OFFICIAL_NOTICE_SOURCE_VERIFICATION_GAZETTE_CHILD_RESOLUTION_REQUIRED"
+  },
+  "method": {
+    "gazette_parent_only": true,
+    "parent_resolution_required": "GAZETTE_CONTAINER_REQUIRES_CHILD_RESOLUTION",
+    "parent_text_evidence_inheritance": false,
+    "parent_target_inheritance": false,
+    "parent_notice_number_inheritance": false,
+    "parent_date_inheritance": false,
+    "parent_official_context_inheritance": false,
+    "parent_scope_inheritance": false,
+    "child_document_local_evidence_only": true,
+    "pdf_parser_enabled": true,
+    "hwp_parser_enabled": true,
+    "hwpx_parser_enabled": true,
+    "html_child_parser_enabled": true,
+    "extensionless_document_detection": true,
+    "administrative_duty_false_positive_guard": true,
+    "legal_reference_false_positive_guard": true,
+    "scope_extraction": true,
+    "scope_required_for_positive": false,
+    "runtime_registration_allowed": false,
+    "site_positive_allowed": false,
+    "egov_javascript_attachment_recovery": true,
+    "synap_attachment_identity_recovery": true,
+    "javascript_placeholder_verification_allowed": false,
+    "synap_viewer_verification_allowed": false,
+    "attachment_identity_preservation": true,
+    "resolved_url_dedupe_after_attachment_recovery": true
+  },
+  "summary": {
+    "gazette_parent_count": 10,
+    "parent_request_count": 10,
+    "parent_http_success_count": 10,
+    "parent_download_failed_count": 0,
+    "parent_no_child_count": 0,
+    "discovered_child_count": 10,
+    "raw_child_record_count": 10,
+    "canonical_child_count": 10,
+    "duplicate_child_removed_count": 0,
+    "child_request_count": 10,
+    "child_http_success_count": 10,
+    "child_download_failed_count": 0,
+    "child_parse_failed_count": 0,
+    "canonical_download_failed_count": 0,
+    "canonical_parse_failed_count": 0,
+    "verified_positive_count": 0,
+    "administrative_duty_reference_count": 0,
+    "legal_reference_only_count": 0,
+    "target_mention_only_count": 0,
+    "unrelated_document_count": 0,
+    "scope_evidence_extracted_count": 0,
+    "recovered_attachment_identity_count": 10,
+    "synthetic_download_url_count": 10,
+    "download_endpoint_html_count": 10
+  },
+  "resolution_counts": {
+    "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML": 10
+  },
+  "parent_results": [
+    {
+      "parent_index": 1,
+      "region": "충청남도 당진시",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1130457",
+      "http_status": 200,
+      "html_encoding": "utf-8",
+      "child_count": 1,
+      "verified_child_count": 0,
+      "resolution": "GAZETTE_PARENT_CHILDREN_RESOLVED"
+    },
+    {
+      "parent_index": 2,
+      "region": "충청남도 당진시",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1130808",
+      "http_status": 200,
+      "html_encoding": "utf-8",
+      "child_count": 1,
+      "verified_child_count": 0,
+      "resolution": "GAZETTE_PARENT_CHILDREN_RESOLVED"
+    },
+    {
+      "parent_index": 3,
+      "region": "충청남도 당진시",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1131179",
+      "http_status": 200,
+      "html_encoding": "utf-8",
+      "child_count": 1,
+      "verified_child_count": 0,
+      "resolution": "GAZETTE_PARENT_CHILDREN_RESOLVED"
+    },
+    {
+      "parent_index": 4,
+      "region": "충청남도 당진시",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1131472",
+      "http_status": 200,
+      "html_encoding": "utf-8",
+      "child_count": 1,
+      "verified_child_count": 0,
+      "resolution": "GAZETTE_PARENT_CHILDREN_RESOLVED"
+    },
+    {
+      "parent_index": 5,
+      "region": "충청남도 당진시",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1132080",
+      "http_status": 200,
+      "html_encoding": "utf-8",
+      "child_count": 1,
+      "verified_child_count": 0,
+      "resolution": "GAZETTE_PARENT_CHILDREN_RESOLVED"
+    },
+    {
+      "parent_index": 6,
+      "region": "충청남도 당진시",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1132181",
+      "http_status": 200,
+      "html_encoding": "utf-8",
+      "child_count": 1,
+      "verified_child_count": 0,
+      "resolution": "GAZETTE_PARENT_CHILDREN_RESOLVED"
+    },
+    {
+      "parent_index": 7,
+      "region": "충청남도 당진시",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1132574",
+      "http_status": 200,
+      "html_encoding": "utf-8",
+      "child_count": 1,
+      "verified_child_count": 0,
+      "resolution": "GAZETTE_PARENT_CHILDREN_RESOLVED"
+    },
+    {
+      "parent_index": 8,
+      "region": "충청남도 당진시",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1133207",
+      "http_status": 200,
+      "html_encoding": "utf-8",
+      "child_count": 1,
+      "verified_child_count": 0,
+      "resolution": "GAZETTE_PARENT_CHILDREN_RESOLVED"
+    },
+    {
+      "parent_index": 9,
+      "region": "충청남도 당진시",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1133672",
+      "http_status": 200,
+      "html_encoding": "utf-8",
+      "child_count": 1,
+      "verified_child_count": 0,
+      "resolution": "GAZETTE_PARENT_CHILDREN_RESOLVED"
+    },
+    {
+      "parent_index": 10,
+      "region": "충청남도 당진시",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1134208",
+      "http_status": 200,
+      "html_encoding": "utf-8",
+      "child_count": 1,
+      "verified_child_count": 0,
+      "resolution": "GAZETTE_PARENT_CHILDREN_RESOLVED"
+    }
+  ],
+  "child_documents": [
+    {
+      "child_index": 1,
+      "parent_region": "충청남도 당진시",
+      "parent_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1130457",
+      "child_label": "시보361호.pdf (2,119kb)",
+      "child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001207735&fileSn=0",
+      "requested_child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001207735&fileSn=0",
+      "response_final_url": "https://www.dangjin.go.kr/error/permission.jsp",
+      "attachment_identity": {
+        "atchFileId": "FILE_000000001207735",
+        "fileSn": "0"
+      },
+      "attachment_resolution_source": "SYNAP_VIEWER_ATTACHMENT_IDENTITY",
+      "synthetic_download_url": true,
+      "synap_viewer_source_url": "https://www.dangjin.go.kr/synapsoft/FileViewer.do?atchFileId=FILE_000000001207735&fileName=&fileSn=0",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_disposition": "",
+      "response_bytes": 7562,
+      "document_type": "HTML",
+      "parser": "html:utf-8",
+      "response_text_preview": "PERMISSION-ERROR 접근권한이 없습니다. 서비스 이용에 불편을 드려 죄송합니다. . 서비스 이용에 불편을 드려 죄송합니다. 접근 권한을 확인후 이용해 주시기바랍니다. 이전페이지로 대표홈페이지가기",
+      "verified_positive": false,
+      "resolution": "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML",
+      "reasons": [
+        "EXPECTED_ATTACHMENT_BUT_HTML_RETURNED"
+      ],
+      "parent_target_evidence_inherited": false,
+      "parent_notice_number_inherited": false,
+      "parent_date_inherited": false,
+      "parent_official_context_inherited": false,
+      "parent_scope_evidence_inherited": false,
+      "duplicate_discovery_count": 1,
+      "parent_urls": [
+        "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1130457"
+      ],
+      "labels": [
+        "시보361호.pdf (2,119kb)"
+      ]
+    },
+    {
+      "child_index": 2,
+      "parent_region": "충청남도 당진시",
+      "parent_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1130808",
+      "child_label": "시보362호.pdf (1,161kb)",
+      "child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001208267&fileSn=0",
+      "requested_child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001208267&fileSn=0",
+      "response_final_url": "https://www.dangjin.go.kr/error/permission.jsp",
+      "attachment_identity": {
+        "atchFileId": "FILE_000000001208267",
+        "fileSn": "0"
+      },
+      "attachment_resolution_source": "SYNAP_VIEWER_ATTACHMENT_IDENTITY",
+      "synthetic_download_url": true,
+      "synap_viewer_source_url": "https://www.dangjin.go.kr/synapsoft/FileViewer.do?atchFileId=FILE_000000001208267&fileName=&fileSn=0",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_disposition": "",
+      "response_bytes": 7562,
+      "document_type": "HTML",
+      "parser": "html:utf-8",
+      "response_text_preview": "PERMISSION-ERROR 접근권한이 없습니다. 서비스 이용에 불편을 드려 죄송합니다. . 서비스 이용에 불편을 드려 죄송합니다. 접근 권한을 확인후 이용해 주시기바랍니다. 이전페이지로 대표홈페이지가기",
+      "verified_positive": false,
+      "resolution": "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML",
+      "reasons": [
+        "EXPECTED_ATTACHMENT_BUT_HTML_RETURNED"
+      ],
+      "parent_target_evidence_inherited": false,
+      "parent_notice_number_inherited": false,
+      "parent_date_inherited": false,
+      "parent_official_context_inherited": false,
+      "parent_scope_evidence_inherited": false,
+      "duplicate_discovery_count": 1,
+      "parent_urls": [
+        "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1130808"
+      ],
+      "labels": [
+        "시보362호.pdf (1,161kb)"
+      ]
+    },
+    {
+      "child_index": 3,
+      "parent_region": "충청남도 당진시",
+      "parent_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1131179",
+      "child_label": "시보363호.pdf (387kb)",
+      "child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001208869&fileSn=0",
+      "requested_child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001208869&fileSn=0",
+      "response_final_url": "https://www.dangjin.go.kr/error/permission.jsp",
+      "attachment_identity": {
+        "atchFileId": "FILE_000000001208869",
+        "fileSn": "0"
+      },
+      "attachment_resolution_source": "SYNAP_VIEWER_ATTACHMENT_IDENTITY",
+      "synthetic_download_url": true,
+      "synap_viewer_source_url": "https://www.dangjin.go.kr/synapsoft/FileViewer.do?atchFileId=FILE_000000001208869&fileName=&fileSn=0",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_disposition": "",
+      "response_bytes": 7562,
+      "document_type": "HTML",
+      "parser": "html:utf-8",
+      "response_text_preview": "PERMISSION-ERROR 접근권한이 없습니다. 서비스 이용에 불편을 드려 죄송합니다. . 서비스 이용에 불편을 드려 죄송합니다. 접근 권한을 확인후 이용해 주시기바랍니다. 이전페이지로 대표홈페이지가기",
+      "verified_positive": false,
+      "resolution": "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML",
+      "reasons": [
+        "EXPECTED_ATTACHMENT_BUT_HTML_RETURNED"
+      ],
+      "parent_target_evidence_inherited": false,
+      "parent_notice_number_inherited": false,
+      "parent_date_inherited": false,
+      "parent_official_context_inherited": false,
+      "parent_scope_evidence_inherited": false,
+      "duplicate_discovery_count": 1,
+      "parent_urls": [
+        "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1131179"
+      ],
+      "labels": [
+        "시보363호.pdf (387kb)"
+      ]
+    },
+    {
+      "child_index": 4,
+      "parent_region": "충청남도 당진시",
+      "parent_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1131472",
+      "child_label": "시보364호.pdf (2,414kb)",
+      "child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001209375&fileSn=0",
+      "requested_child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001209375&fileSn=0",
+      "response_final_url": "https://www.dangjin.go.kr/error/permission.jsp",
+      "attachment_identity": {
+        "atchFileId": "FILE_000000001209375",
+        "fileSn": "0"
+      },
+      "attachment_resolution_source": "SYNAP_VIEWER_ATTACHMENT_IDENTITY",
+      "synthetic_download_url": true,
+      "synap_viewer_source_url": "https://www.dangjin.go.kr/synapsoft/FileViewer.do?atchFileId=FILE_000000001209375&fileName=&fileSn=0",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_disposition": "",
+      "response_bytes": 7562,
+      "document_type": "HTML",
+      "parser": "html:utf-8",
+      "response_text_preview": "PERMISSION-ERROR 접근권한이 없습니다. 서비스 이용에 불편을 드려 죄송합니다. . 서비스 이용에 불편을 드려 죄송합니다. 접근 권한을 확인후 이용해 주시기바랍니다. 이전페이지로 대표홈페이지가기",
+      "verified_positive": false,
+      "resolution": "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML",
+      "reasons": [
+        "EXPECTED_ATTACHMENT_BUT_HTML_RETURNED"
+      ],
+      "parent_target_evidence_inherited": false,
+      "parent_notice_number_inherited": false,
+      "parent_date_inherited": false,
+      "parent_official_context_inherited": false,
+      "parent_scope_evidence_inherited": false,
+      "duplicate_discovery_count": 1,
+      "parent_urls": [
+        "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1131472"
+      ],
+      "labels": [
+        "시보364호.pdf (2,414kb)"
+      ]
+    },
+    {
+      "child_index": 5,
+      "parent_region": "충청남도 당진시",
+      "parent_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1132080",
+      "child_label": "시보365호.pdf (1,410kb)",
+      "child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001210237&fileSn=0",
+      "requested_child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001210237&fileSn=0",
+      "response_final_url": "https://www.dangjin.go.kr/error/permission.jsp",
+      "attachment_identity": {
+        "atchFileId": "FILE_000000001210237",
+        "fileSn": "0"
+      },
+      "attachment_resolution_source": "SYNAP_VIEWER_ATTACHMENT_IDENTITY",
+      "synthetic_download_url": true,
+      "synap_viewer_source_url": "https://www.dangjin.go.kr/synapsoft/FileViewer.do?atchFileId=FILE_000000001210237&fileName=&fileSn=0",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_disposition": "",
+      "response_bytes": 7562,
+      "document_type": "HTML",
+      "parser": "html:utf-8",
+      "response_text_preview": "PERMISSION-ERROR 접근권한이 없습니다. 서비스 이용에 불편을 드려 죄송합니다. . 서비스 이용에 불편을 드려 죄송합니다. 접근 권한을 확인후 이용해 주시기바랍니다. 이전페이지로 대표홈페이지가기",
+      "verified_positive": false,
+      "resolution": "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML",
+      "reasons": [
+        "EXPECTED_ATTACHMENT_BUT_HTML_RETURNED"
+      ],
+      "parent_target_evidence_inherited": false,
+      "parent_notice_number_inherited": false,
+      "parent_date_inherited": false,
+      "parent_official_context_inherited": false,
+      "parent_scope_evidence_inherited": false,
+      "duplicate_discovery_count": 1,
+      "parent_urls": [
+        "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1132080"
+      ],
+      "labels": [
+        "시보365호.pdf (1,410kb)"
+      ]
+    },
+    {
+      "child_index": 6,
+      "parent_region": "충청남도 당진시",
+      "parent_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1132181",
+      "child_label": "긴급시보(20260618).pdf (650kb)",
+      "child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001210484&fileSn=0",
+      "requested_child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001210484&fileSn=0",
+      "response_final_url": "https://www.dangjin.go.kr/error/permission.jsp",
+      "attachment_identity": {
+        "atchFileId": "FILE_000000001210484",
+        "fileSn": "0"
+      },
+      "attachment_resolution_source": "SYNAP_VIEWER_ATTACHMENT_IDENTITY",
+      "synthetic_download_url": true,
+      "synap_viewer_source_url": "https://www.dangjin.go.kr/synapsoft/FileViewer.do?atchFileId=FILE_000000001210484&fileName=&fileSn=0",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_disposition": "",
+      "response_bytes": 7562,
+      "document_type": "HTML",
+      "parser": "html:utf-8",
+      "response_text_preview": "PERMISSION-ERROR 접근권한이 없습니다. 서비스 이용에 불편을 드려 죄송합니다. . 서비스 이용에 불편을 드려 죄송합니다. 접근 권한을 확인후 이용해 주시기바랍니다. 이전페이지로 대표홈페이지가기",
+      "verified_positive": false,
+      "resolution": "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML",
+      "reasons": [
+        "EXPECTED_ATTACHMENT_BUT_HTML_RETURNED"
+      ],
+      "parent_target_evidence_inherited": false,
+      "parent_notice_number_inherited": false,
+      "parent_date_inherited": false,
+      "parent_official_context_inherited": false,
+      "parent_scope_evidence_inherited": false,
+      "duplicate_discovery_count": 1,
+      "parent_urls": [
+        "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1132181"
+      ],
+      "labels": [
+        "긴급시보(20260618).pdf (650kb)"
+      ]
+    },
+    {
+      "child_index": 7,
+      "parent_region": "충청남도 당진시",
+      "parent_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1132574",
+      "child_label": "시보366호.pdf (2,623kb)",
+      "child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001211019&fileSn=0",
+      "requested_child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001211019&fileSn=0",
+      "response_final_url": "https://www.dangjin.go.kr/error/permission.jsp",
+      "attachment_identity": {
+        "atchFileId": "FILE_000000001211019",
+        "fileSn": "0"
+      },
+      "attachment_resolution_source": "SYNAP_VIEWER_ATTACHMENT_IDENTITY",
+      "synthetic_download_url": true,
+      "synap_viewer_source_url": "https://www.dangjin.go.kr/synapsoft/FileViewer.do?atchFileId=FILE_000000001211019&fileName=&fileSn=0",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_disposition": "",
+      "response_bytes": 7562,
+      "document_type": "HTML",
+      "parser": "html:utf-8",
+      "response_text_preview": "PERMISSION-ERROR 접근권한이 없습니다. 서비스 이용에 불편을 드려 죄송합니다. . 서비스 이용에 불편을 드려 죄송합니다. 접근 권한을 확인후 이용해 주시기바랍니다. 이전페이지로 대표홈페이지가기",
+      "verified_positive": false,
+      "resolution": "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML",
+      "reasons": [
+        "EXPECTED_ATTACHMENT_BUT_HTML_RETURNED"
+      ],
+      "parent_target_evidence_inherited": false,
+      "parent_notice_number_inherited": false,
+      "parent_date_inherited": false,
+      "parent_official_context_inherited": false,
+      "parent_scope_evidence_inherited": false,
+      "duplicate_discovery_count": 1,
+      "parent_urls": [
+        "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1132574"
+      ],
+      "labels": [
+        "시보366호.pdf (2,623kb)"
+      ]
+    },
+    {
+      "child_index": 8,
+      "parent_region": "충청남도 당진시",
+      "parent_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1133207",
+      "child_label": "시보 367호.pdf (3,267kb)",
+      "child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001211876&fileSn=0",
+      "requested_child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001211876&fileSn=0",
+      "response_final_url": "https://www.dangjin.go.kr/error/permission.jsp",
+      "attachment_identity": {
+        "atchFileId": "FILE_000000001211876",
+        "fileSn": "0"
+      },
+      "attachment_resolution_source": "SYNAP_VIEWER_ATTACHMENT_IDENTITY",
+      "synthetic_download_url": true,
+      "synap_viewer_source_url": "https://www.dangjin.go.kr/synapsoft/FileViewer.do?atchFileId=FILE_000000001211876&fileName=&fileSn=0",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_disposition": "",
+      "response_bytes": 7562,
+      "document_type": "HTML",
+      "parser": "html:utf-8",
+      "response_text_preview": "PERMISSION-ERROR 접근권한이 없습니다. 서비스 이용에 불편을 드려 죄송합니다. . 서비스 이용에 불편을 드려 죄송합니다. 접근 권한을 확인후 이용해 주시기바랍니다. 이전페이지로 대표홈페이지가기",
+      "verified_positive": false,
+      "resolution": "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML",
+      "reasons": [
+        "EXPECTED_ATTACHMENT_BUT_HTML_RETURNED"
+      ],
+      "parent_target_evidence_inherited": false,
+      "parent_notice_number_inherited": false,
+      "parent_date_inherited": false,
+      "parent_official_context_inherited": false,
+      "parent_scope_evidence_inherited": false,
+      "duplicate_discovery_count": 1,
+      "parent_urls": [
+        "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1133207"
+      ],
+      "labels": [
+        "시보 367호.pdf (3,267kb)"
+      ]
+    },
+    {
+      "child_index": 9,
+      "parent_region": "충청남도 당진시",
+      "parent_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1133672",
+      "child_label": "시보368호.pdf (4,054kb)",
+      "child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001212557&fileSn=0",
+      "requested_child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001212557&fileSn=0",
+      "response_final_url": "https://www.dangjin.go.kr/error/permission.jsp",
+      "attachment_identity": {
+        "atchFileId": "FILE_000000001212557",
+        "fileSn": "0"
+      },
+      "attachment_resolution_source": "SYNAP_VIEWER_ATTACHMENT_IDENTITY",
+      "synthetic_download_url": true,
+      "synap_viewer_source_url": "https://www.dangjin.go.kr/synapsoft/FileViewer.do?atchFileId=FILE_000000001212557&fileName=&fileSn=0",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_disposition": "",
+      "response_bytes": 7562,
+      "document_type": "HTML",
+      "parser": "html:utf-8",
+      "response_text_preview": "PERMISSION-ERROR 접근권한이 없습니다. 서비스 이용에 불편을 드려 죄송합니다. . 서비스 이용에 불편을 드려 죄송합니다. 접근 권한을 확인후 이용해 주시기바랍니다. 이전페이지로 대표홈페이지가기",
+      "verified_positive": false,
+      "resolution": "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML",
+      "reasons": [
+        "EXPECTED_ATTACHMENT_BUT_HTML_RETURNED"
+      ],
+      "parent_target_evidence_inherited": false,
+      "parent_notice_number_inherited": false,
+      "parent_date_inherited": false,
+      "parent_official_context_inherited": false,
+      "parent_scope_evidence_inherited": false,
+      "duplicate_discovery_count": 1,
+      "parent_urls": [
+        "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1133672"
+      ],
+      "labels": [
+        "시보368호.pdf (4,054kb)"
+      ]
+    },
+    {
+      "child_index": 10,
+      "parent_region": "충청남도 당진시",
+      "parent_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1134208",
+      "child_label": "시보 369호.pdf (1,116kb)",
+      "child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001213312&fileSn=0",
+      "requested_child_url": "https://www.dangjin.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000001213312&fileSn=0",
+      "response_final_url": "https://www.dangjin.go.kr/error/permission.jsp",
+      "attachment_identity": {
+        "atchFileId": "FILE_000000001213312",
+        "fileSn": "0"
+      },
+      "attachment_resolution_source": "SYNAP_VIEWER_ATTACHMENT_IDENTITY",
+      "synthetic_download_url": true,
+      "synap_viewer_source_url": "https://www.dangjin.go.kr/synapsoft/FileViewer.do?atchFileId=FILE_000000001213312&fileName=&fileSn=0",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_disposition": "",
+      "response_bytes": 7562,
+      "document_type": "HTML",
+      "parser": "html:utf-8",
+      "response_text_preview": "PERMISSION-ERROR 접근권한이 없습니다. 서비스 이용에 불편을 드려 죄송합니다. . 서비스 이용에 불편을 드려 죄송합니다. 접근 권한을 확인후 이용해 주시기바랍니다. 이전페이지로 대표홈페이지가기",
+      "verified_positive": false,
+      "resolution": "GAZETTE_CHILD_DOWNLOAD_ENDPOINT_RETURNED_HTML",
+      "reasons": [
+        "EXPECTED_ATTACHMENT_BUT_HTML_RETURNED"
+      ],
+      "parent_target_evidence_inherited": false,
+      "parent_notice_number_inherited": false,
+      "parent_date_inherited": false,
+      "parent_official_context_inherited": false,
+      "parent_scope_evidence_inherited": false,
+      "duplicate_discovery_count": 1,
+      "parent_urls": [
+        "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardArticle.do?nttId=1134208"
+      ],
+      "labels": [
+        "시보 369호.pdf (1,116kb)"
+      ]
+    }
+  ],
+  "verified_positive_documents": [],
+  "resolution": "GAZETTE_CHILD_RESOLUTION_DOWNLOAD_ENDPOINT_RECOVERY_REQUIRED",
+  "next_action": "공보 attachment identity는 복원되었으나 현재 구성한 download endpoint가 실제 첨부 원문 대신 HTML 응답을 반환했다. parent HTML의 다운로드 JavaScript 구현, 실제 form/action endpoint, request parameter 및 필요한 Referer/session 조건을 분석하여 원본 PDF/HWP 다운로드 URL을 복원한다.",
+  "runtime_registration_allowed": false,
+  "site_positive_allowed": false
+}

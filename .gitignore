@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 .env
 .vscode/
+law_data/output/development_density_management_area_historical_official_archive_discovery.json
+law_data/output/development_density_management_area_official_notice_recovery_discovery.json

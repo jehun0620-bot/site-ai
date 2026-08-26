@@ -1,0 +1,25 @@
+{
+  "step": "STEP 17-21-C-16-8-B",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "previous_resolution": {
+    "LT_C_UQ141": "REACHABLE_BUT_TARGET_NOT_DISCOVERED",
+    "LT_C_UQQ700": "INVALID_RANGE",
+    "LT_C_UQ700": "INVALID_RANGE"
+  },
+  "search": {
+    "query_count": 10,
+    "engine_run_count": 20,
+    "unique_result_count": 0,
+    "official_candidate_count": 0,
+    "official_probe_count": 0,
+    "positive_notice_candidate_count": 0
+  },
+  "positive_notice_candidates": [],
+  "official_candidates": [],
+  "resolution": "OFFICIAL_NOTICE_NOT_YET_DISCOVERED",
+  "runtime_registration_allowed": false,
+  "site_false_allowed": false
+}

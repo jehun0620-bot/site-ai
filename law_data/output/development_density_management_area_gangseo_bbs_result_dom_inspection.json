@@ -1,0 +1,1240 @@
+{
+  "step": "STEP 17-21-C-16-8-P Development Density Management Area Gangseo BBS Result DOM Inspection",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "input": {
+    "o_stage_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_gangseo_category_request_reconstruction.json",
+    "o_stage_exists": true,
+    "o_stage_parsed": true
+  },
+  "confirmed_search_structure": {
+    "endpoint": "https://www.gangseo.seoul.kr/search",
+    "method": "GET",
+    "search_field": "searchText",
+    "search_value": "개발밀도관리구역",
+    "category_field": "colTarget",
+    "category_value": "bbs",
+    "pagination_field": "curPage",
+    "pagination_value": "1",
+    "javascript_evidence": "$('#colTarget').val(category); $('#curPage').val(1); $('#frmSearch').submit();"
+  },
+  "method": {
+    "category_field_fixed_from_javascript": true,
+    "sort_type_as_category_prohibited": true,
+    "cur_page_as_category_prohibited": true,
+    "title_only_target_requirement": false,
+    "result_block_target_evidence_enabled": true,
+    "search_echo_guard_enabled": true,
+    "search_url_detail_seed_prohibited": true,
+    "detail_seed_is_final_positive": false
+  },
+  "request": {
+    "http_status": 200,
+    "final_url": "https://www.gangseo.seoul.kr/search?searchText=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&colTarget=bbs&curPage=1",
+    "target_response": true,
+    "category_counts": {
+      "게시판": 3
+    },
+    "html_snapshot_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_gangseo_bbs_result_response.html"
+  },
+  "summary": {
+    "request_count": 1,
+    "http_success_count": 1,
+    "transport_error_count": 0,
+    "all_anchor_count": 382,
+    "official_non_search_anchor_count": 286,
+    "structural_block_count": 280,
+    "target_block_count": 1,
+    "target_result_block_count": 0,
+    "target_context_window_count": 6,
+    "window_detail_candidate_count": 19,
+    "detail_seed_candidate_count": 0
+  },
+  "target_result_blocks": [],
+  "target_context_windows": [
+    {
+      "variant": "개발밀도관리구역",
+      "source_index": 20819,
+      "text": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식",
+      "search_echo_score": 4,
+      "search_echo": false,
+      "anchors": [
+        {
+          "label": "동대문구",
+          "href": "http://www.ddm.go.kr/",
+          "url": "http://www.ddm.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동작구",
+          "href": "http://www.dongjak.go.kr/",
+          "url": "http://www.dongjak.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "마포구",
+          "href": "http://www.mapo.go.kr/",
+          "url": "http://www.mapo.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "서대문구",
+          "href": "http://www.sdm.go.kr/",
+          "url": "http://www.sdm.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "서초구",
+          "href": "http://www.seocho.go.kr/",
+          "url": "http://www.seocho.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "성동구",
+          "href": "https://www.sd.go.kr/",
+          "url": "https://www.sd.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "성북구",
+          "href": "http://www.sb.go.kr/",
+          "url": "http://www.sb.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "송파구",
+          "href": "http://www.songpa.go.kr/",
+          "url": "http://www.songpa.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "양천구",
+          "href": "http://www.yangcheon.go.kr/",
+          "url": "http://www.yangcheon.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "영등포구",
+          "href": "http://www.ydp.go.kr/",
+          "url": "http://www.ydp.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "용산구",
+          "href": "http://www.yongsan.go.kr/",
+          "url": "http://www.yongsan.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "은평구",
+          "href": "http://www.ep.go.kr/",
+          "url": "http://www.ep.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "종로구",
+          "href": "http://www.jongno.go.kr/",
+          "url": "http://www.jongno.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "중 구",
+          "href": "http://www.junggu.seoul.kr/",
+          "url": "http://www.junggu.seoul.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "중랑구",
+          "href": "http://www.jungnang.go.kr/",
+          "url": "http://www.jungnang.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "강서구 주요사이트, 모아보기 닫기",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "통합예약",
+          "href": "/reserve",
+          "url": "https://www.gangseo.seoul.kr/reserve",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "로그인",
+          "href": "javascript:totalLogin()",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "회원가입",
+          "href": "/join",
+          "url": "https://www.gangseo.seoul.kr/join",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "English",
+          "href": "/eng",
+          "url": "https://www.gangseo.seoul.kr/eng",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "전체메뉴",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "ENGLISH",
+          "href": "/eng",
+          "url": "https://www.gangseo.seoul.kr/eng",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "강서구",
+          "href": "/index",
+          "url": "https://www.gangseo.seoul.kr/index",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "구의회",
+          "href": "http://gsc.gangseo.seoul.kr",
+          "url": "http://gsc.gangseo.seoul.kr",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "문화관광",
+          "href": "/munhwa",
+          "url": "https://www.gangseo.seoul.kr/munhwa",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "보건소",
+          "href": "/health",
+          "url": "https://www.gangseo.seoul.kr/health",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "어린이",
+          "href": "/kids",
+          "url": "https://www.gangseo.seoul.kr/kids",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "부서",
+          "href": "/gs050201",
+          "url": "https://www.gangseo.seoul.kr/gs050201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동주민",
+          "href": "/gs100000",
+          "url": "https://www.gangseo.seoul.kr/gs100000",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동안내",
+          "href": "/gs100101",
+          "url": "https://www.gangseo.seoul.kr/gs100101",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "가양1동",
+          "href": "/gs100002",
+          "url": "https://www.gangseo.seoul.kr/gs100002",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "우리동 소개",
+          "href": "/gs100201",
+          "url": "https://www.gangseo.seoul.kr/gs100201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동장인사말",
+          "href": "/gs100201",
+          "url": "https://www.gangseo.seoul.kr/gs100201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동현황",
+          "href": "/gs100202",
+          "url": "https://www.gangseo.seoul.kr/gs100202",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동유래 및 연혁",
+          "href": "/gs100203",
+          "url": "https://www.gangseo.seoul.kr/gs100203",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "직원안내",
+          "href": "/gs100204",
+          "url": "https://www.gangseo.seoul.kr/gs100204",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "오시는길",
+          "href": "/gs100205",
+          "url": "https://www.gangseo.seoul.kr/gs100205",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "우리동 소식",
+          "href": "/gs100206?srchStdg=STDG_1",
+          "url": "https://www.gangseo.seoul.kr/gs100206?srchStdg=STDG_1",
+          "onclick": "",
+          "data_attributes": {}
+        }
+      ],
+      "raw_html": " target=\"_blank\">도봉구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.ddm.go.kr/\" title=\"새창열림\" target=\"_blank\">동대문구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.dongjak.go.kr/\" title=\"새창열림\" target=\"_blank\">동작구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.mapo.go.kr/\" title=\"새창열림\" target=\"_blank\">마포구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.sdm.go.kr/\" title=\"새창열림\" target=\"_blank\">서대문구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.seocho.go.kr/\" title=\"새창열림\" target=\"_blank\">서초구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"https://www.sd.go.kr/\" title=\"새창열림\" target=\"_blank\">성동구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.sb.go.kr/\" title=\"새창열림\" target=\"_blank\">성북구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.songpa.go.kr/\" title=\"새창열림\" target=\"_blank\">송파구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.yangcheon.go.kr/\" title=\"새창열림\" target=\"_blank\">양천구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.ydp.go.kr/\" title=\"새창열림\" target=\"_blank\">영등포구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.yongsan.go.kr/\" title=\"새창열림\" target=\"_blank\">용산구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.ep.go.kr/\" title=\"새창열림\" target=\"_blank\">은평구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.jongno.go.kr/\" title=\"새창열림\" target=\"_blank\">종로구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.junggu.seoul.kr/\" title=\"새창열림\" target=\"_blank\">중 구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.jungnang.go.kr/\" title=\"새창열림\" target=\"_blank\">중랑구</a></li>\n                                </ul>\n                            </li>\n                        </ul>\n                    </div>\n                    <div class=\"close-btn\"><a href=\"#none\"><span class=\"hd-element\">강서구 주요사이트, 모아보기 닫기</span></a></div>\n                </div>\n            </li>\n            <li><a href=\"/reserve\" target=\"_blank\" title=\"새창\">통합예약</a></li>\n        </ul>\n        <ul class=\"login-link\">\n        \t<li><a href=\"javascript:totalLogin()\">로그인</a></li>\n\t            \t<li><a href=\"/join\">회원가입</a></li>\n\t            <li>\n                <a href=\"/eng\" target=\"_blank\" title=\"새창\" class=\"lang\">English</a>\n            </li>\n        </ul>\n    </div>\n</div><!--// header top --><!-- header body -->\n<div class=\"header-body\">\n    <div class=\"inner\">\n        <h1><img src=\"/humanframe/theme/global/assets/image/common/img_logo_total.png\" alt=\"변화로 만드는 미래 구민과 도약하는 강서 - 통합검색\"></h1>\n        <fieldset>\n\t        <form name=\"frmSearch\" id=\"frmSearch\" method=\"get\" action=\"/search\">\n            \t<input type=\"hidden\" id=\"dateAll\" name=\"dateAll\" value=\"\">\n            \t<input type=\"hidden\" id=\"preKwds\" name=\"preKwds\" value=\"개발밀도관리구역\">\n            \t<input type=\"hidden\" id=\"colTarget\" name=\"colTarget\" value=\"bbs\">\n            \t<input type=\"hidden\" id=\"sortType\" name=\"sortType\" value=\"\">\n            \t<input type=\"hidden\" id=\"rangeTarget\" name=\"rangeTarget\" value=\"\">\n            \t<input type=\"hidden\" id=\"curPage\" name=\"curPage\" value=\"1\">\n            \t<input type=\"hidden\" id=\"lang\" name=\"lang\" value=\"KO\">\n\t\t        <legend>검색영역</legend>\n\t\t        <div class=\"search-wrap\">\n\t\t            <div class=\"search-box\">\n\t\t                <label for=\"searchText\" class=\"hd-element\">검색어를 입력하세요</label>\n\t\t                <input type=\"text\" id=\"searchText\" name=\"searchText\" value=\"개발밀도관리구역\" autocomplete=\"off\">\n\t\t                <button type=\"submit\"><span class=\"hd-element\">검색버튼</span></button>\n\t\t            </div>\n\t\t        </div>\n\t\t        <div class=\"checkbox-control\">\n\t\t            <input type=\"checkbox\" id=\"chkResearch\" name=\"chkResearch\" value=\"Y\">\n\t\t            <label for=\"chkResearch\">결과 내 재검색</label>\n\t\t        </div>\n\t    \t</form>\n\t    </fieldset>\n\t    <div class=\"all-menu\">\n            <a href=\"#none\">\n                <div class=\"title hd-element\">전체메뉴</div>\n                <div class=\"bar-wrap\">\n                    <span class=\"line1\"></span>\n                    <span class=\"line2\"></span>\n                    <span class=\"line3\"></span>\n                </div>\n            </a>\n        </div>\n    </div>\n</div><!--// header body -->\n<!-- mobile-menu -->\r\n<div class=\"mobile-menu-wrap\">\r\n    <div class=\"mobile-menu-head\">\r\n        <div class=\"login-menu\">\r\n            <ul>\r\n                <li><a href=\"javascript:totalLogin()\">로그인</a></li>\r\n\t\t            \t<li><a href=\"/join\">회원가입</a></li>\r\n\t\t            </ul>\r\n            <div class=\"lang-link\"><a href=\"/eng\" target=\"_blank\" title=\"새창\">ENGLISH</a></div>\r\n        </div>\r\n        <ul class=\"other-menu\">\r\n            <li><a href=\"/index\" target=\"_blank\" title=\"새창\">강서구</a></li>\r\n            <li><a href=\"http://gsc.gangseo.seoul.kr\" target=\"_blank\" title=\"새창\">구의회</a></li>\r\n            <li><a href=\"/munhwa\" target=\"_blank\" title=\"새창\">문화관광</a></li>\r\n            <li><a href=\"/health\" target=\"_blank\" title=\"새창\">보건소</a></li>\r\n            <li><a href=\"/kids\" target=\"_blank\" title=\"새창\">어린이</a></li>\r\n        </ul>\r\n        <div class=\"mobile-menu-close\"><a href=\"#none\"></a></div>\r\n    </div>\r\n    <div class=\"mobile-menu-body\">\r\n        <!-- gnb menu clone -->\r\n        <div class=\"top-element\">\r\n\r\n        </div><!--// gnb menu clone -->\r\n        <ul class=\"body-element\">\r\n            <li><a href=\"/reserve\">통합예약</a></li>\r\n            <li><a href=\"/gs050201\">부서</a></li>\r\n            <li class=\"site-btn \">\r\n            \t<a href=\"/gs100000\">동주민</a>\r\n            \t<ul>\r\n                            \t<li >\r\n\t\t                                    <a href=\"/gs100101\" >동안내</a>\n</li>\r\n\t\t\t\t\t\t\t\t\t<li >\r\n\t\t                                    <a href=\"/gs100002\" >가양1동</a>\n<ul>\r\n\t\t\t                                    \t<li >\r\n\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100201\" >우리동 소개</a>\n<ul>\r\n\t\t\t\t\t\t\t\t                                    \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100201\" >동장인사말</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100202\" >동현황</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100203\" >동유래 및 연혁</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100204\" >직원안내</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100205\" >오시는길</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t</ul>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</li>\r\n\t\t\t                                        \t<li >\r\n\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100206?srchStdg=STDG_1\" >우리동 소식</a>\n<ul>\r\n\t\t\t\t\t\t\t\t                                    \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t"
+    },
+    {
+      "variant": "개발밀도관리구역",
+      "source_index": 21469,
+      "text": "송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 <a href=\"https://jachi.gangseo.seoul.kr/cpage/program/cpageProgramList\" target=\"_blank\" title=\"새창\" class=\"other-link l",
+      "search_echo_score": 4,
+      "search_echo": false,
+      "anchors": [
+        {
+          "label": "송파구",
+          "href": "http://www.songpa.go.kr/",
+          "url": "http://www.songpa.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "양천구",
+          "href": "http://www.yangcheon.go.kr/",
+          "url": "http://www.yangcheon.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "영등포구",
+          "href": "http://www.ydp.go.kr/",
+          "url": "http://www.ydp.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "용산구",
+          "href": "http://www.yongsan.go.kr/",
+          "url": "http://www.yongsan.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "은평구",
+          "href": "http://www.ep.go.kr/",
+          "url": "http://www.ep.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "종로구",
+          "href": "http://www.jongno.go.kr/",
+          "url": "http://www.jongno.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "중 구",
+          "href": "http://www.junggu.seoul.kr/",
+          "url": "http://www.junggu.seoul.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "중랑구",
+          "href": "http://www.jungnang.go.kr/",
+          "url": "http://www.jungnang.go.kr/",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "강서구 주요사이트, 모아보기 닫기",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "통합예약",
+          "href": "/reserve",
+          "url": "https://www.gangseo.seoul.kr/reserve",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "로그인",
+          "href": "javascript:totalLogin()",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "회원가입",
+          "href": "/join",
+          "url": "https://www.gangseo.seoul.kr/join",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "English",
+          "href": "/eng",
+          "url": "https://www.gangseo.seoul.kr/eng",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "전체메뉴",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "ENGLISH",
+          "href": "/eng",
+          "url": "https://www.gangseo.seoul.kr/eng",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "강서구",
+          "href": "/index",
+          "url": "https://www.gangseo.seoul.kr/index",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "구의회",
+          "href": "http://gsc.gangseo.seoul.kr",
+          "url": "http://gsc.gangseo.seoul.kr",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "문화관광",
+          "href": "/munhwa",
+          "url": "https://www.gangseo.seoul.kr/munhwa",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "보건소",
+          "href": "/health",
+          "url": "https://www.gangseo.seoul.kr/health",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "어린이",
+          "href": "/kids",
+          "url": "https://www.gangseo.seoul.kr/kids",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "부서",
+          "href": "/gs050201",
+          "url": "https://www.gangseo.seoul.kr/gs050201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동주민",
+          "href": "/gs100000",
+          "url": "https://www.gangseo.seoul.kr/gs100000",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동안내",
+          "href": "/gs100101",
+          "url": "https://www.gangseo.seoul.kr/gs100101",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "가양1동",
+          "href": "/gs100002",
+          "url": "https://www.gangseo.seoul.kr/gs100002",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "우리동 소개",
+          "href": "/gs100201",
+          "url": "https://www.gangseo.seoul.kr/gs100201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동장인사말",
+          "href": "/gs100201",
+          "url": "https://www.gangseo.seoul.kr/gs100201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동현황",
+          "href": "/gs100202",
+          "url": "https://www.gangseo.seoul.kr/gs100202",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "동유래 및 연혁",
+          "href": "/gs100203",
+          "url": "https://www.gangseo.seoul.kr/gs100203",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "직원안내",
+          "href": "/gs100204",
+          "url": "https://www.gangseo.seoul.kr/gs100204",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "오시는길",
+          "href": "/gs100205",
+          "url": "https://www.gangseo.seoul.kr/gs100205",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "우리동 소식",
+          "href": "/gs100206?srchStdg=STDG_1",
+          "url": "https://www.gangseo.seoul.kr/gs100206?srchStdg=STDG_1",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "공지 및 소식",
+          "href": "/gs100206?srchStdg=STDG_1",
+          "url": "https://www.gangseo.seoul.kr/gs100206?srchStdg=STDG_1",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "고시(채용)공고 · 입법예고",
+          "href": "/gs100208?srchStdg=STDG_1",
+          "url": "https://www.gangseo.seoul.kr/gs100208?srchStdg=STDG_1",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "포토갤러리",
+          "href": "/gs100209?srchStdg=STDG_1",
+          "url": "https://www.gangseo.seoul.kr/gs100209?srchStdg=STDG_1",
+          "onclick": "",
+          "data_attributes": {}
+        }
+      ],
+      "raw_html": "\t\t\t\t\t\t\t<li><a href=\"http://www.songpa.go.kr/\" title=\"새창열림\" target=\"_blank\">송파구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.yangcheon.go.kr/\" title=\"새창열림\" target=\"_blank\">양천구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.ydp.go.kr/\" title=\"새창열림\" target=\"_blank\">영등포구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.yongsan.go.kr/\" title=\"새창열림\" target=\"_blank\">용산구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.ep.go.kr/\" title=\"새창열림\" target=\"_blank\">은평구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.jongno.go.kr/\" title=\"새창열림\" target=\"_blank\">종로구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.junggu.seoul.kr/\" title=\"새창열림\" target=\"_blank\">중 구</a></li>\n\t\t\t\t\t\t\t\t\t<li><a href=\"http://www.jungnang.go.kr/\" title=\"새창열림\" target=\"_blank\">중랑구</a></li>\n                                </ul>\n                            </li>\n                        </ul>\n                    </div>\n                    <div class=\"close-btn\"><a href=\"#none\"><span class=\"hd-element\">강서구 주요사이트, 모아보기 닫기</span></a></div>\n                </div>\n            </li>\n            <li><a href=\"/reserve\" target=\"_blank\" title=\"새창\">통합예약</a></li>\n        </ul>\n        <ul class=\"login-link\">\n        \t<li><a href=\"javascript:totalLogin()\">로그인</a></li>\n\t            \t<li><a href=\"/join\">회원가입</a></li>\n\t            <li>\n                <a href=\"/eng\" target=\"_blank\" title=\"새창\" class=\"lang\">English</a>\n            </li>\n        </ul>\n    </div>\n</div><!--// header top --><!-- header body -->\n<div class=\"header-body\">\n    <div class=\"inner\">\n        <h1><img src=\"/humanframe/theme/global/assets/image/common/img_logo_total.png\" alt=\"변화로 만드는 미래 구민과 도약하는 강서 - 통합검색\"></h1>\n        <fieldset>\n\t        <form name=\"frmSearch\" id=\"frmSearch\" method=\"get\" action=\"/search\">\n            \t<input type=\"hidden\" id=\"dateAll\" name=\"dateAll\" value=\"\">\n            \t<input type=\"hidden\" id=\"preKwds\" name=\"preKwds\" value=\"개발밀도관리구역\">\n            \t<input type=\"hidden\" id=\"colTarget\" name=\"colTarget\" value=\"bbs\">\n            \t<input type=\"hidden\" id=\"sortType\" name=\"sortType\" value=\"\">\n            \t<input type=\"hidden\" id=\"rangeTarget\" name=\"rangeTarget\" value=\"\">\n            \t<input type=\"hidden\" id=\"curPage\" name=\"curPage\" value=\"1\">\n            \t<input type=\"hidden\" id=\"lang\" name=\"lang\" value=\"KO\">\n\t\t        <legend>검색영역</legend>\n\t\t        <div class=\"search-wrap\">\n\t\t            <div class=\"search-box\">\n\t\t                <label for=\"searchText\" class=\"hd-element\">검색어를 입력하세요</label>\n\t\t                <input type=\"text\" id=\"searchText\" name=\"searchText\" value=\"개발밀도관리구역\" autocomplete=\"off\">\n\t\t                <button type=\"submit\"><span class=\"hd-element\">검색버튼</span></button>\n\t\t            </div>\n\t\t        </div>\n\t\t        <div class=\"checkbox-control\">\n\t\t            <input type=\"checkbox\" id=\"chkResearch\" name=\"chkResearch\" value=\"Y\">\n\t\t            <label for=\"chkResearch\">결과 내 재검색</label>\n\t\t        </div>\n\t    \t</form>\n\t    </fieldset>\n\t    <div class=\"all-menu\">\n            <a href=\"#none\">\n                <div class=\"title hd-element\">전체메뉴</div>\n                <div class=\"bar-wrap\">\n                    <span class=\"line1\"></span>\n                    <span class=\"line2\"></span>\n                    <span class=\"line3\"></span>\n                </div>\n            </a>\n        </div>\n    </div>\n</div><!--// header body -->\n<!-- mobile-menu -->\r\n<div class=\"mobile-menu-wrap\">\r\n    <div class=\"mobile-menu-head\">\r\n        <div class=\"login-menu\">\r\n            <ul>\r\n                <li><a href=\"javascript:totalLogin()\">로그인</a></li>\r\n\t\t            \t<li><a href=\"/join\">회원가입</a></li>\r\n\t\t            </ul>\r\n            <div class=\"lang-link\"><a href=\"/eng\" target=\"_blank\" title=\"새창\">ENGLISH</a></div>\r\n        </div>\r\n        <ul class=\"other-menu\">\r\n            <li><a href=\"/index\" target=\"_blank\" title=\"새창\">강서구</a></li>\r\n            <li><a href=\"http://gsc.gangseo.seoul.kr\" target=\"_blank\" title=\"새창\">구의회</a></li>\r\n            <li><a href=\"/munhwa\" target=\"_blank\" title=\"새창\">문화관광</a></li>\r\n            <li><a href=\"/health\" target=\"_blank\" title=\"새창\">보건소</a></li>\r\n            <li><a href=\"/kids\" target=\"_blank\" title=\"새창\">어린이</a></li>\r\n        </ul>\r\n        <div class=\"mobile-menu-close\"><a href=\"#none\"></a></div>\r\n    </div>\r\n    <div class=\"mobile-menu-body\">\r\n        <!-- gnb menu clone -->\r\n        <div class=\"top-element\">\r\n\r\n        </div><!--// gnb menu clone -->\r\n        <ul class=\"body-element\">\r\n            <li><a href=\"/reserve\">통합예약</a></li>\r\n            <li><a href=\"/gs050201\">부서</a></li>\r\n            <li class=\"site-btn \">\r\n            \t<a href=\"/gs100000\">동주민</a>\r\n            \t<ul>\r\n                            \t<li >\r\n\t\t                                    <a href=\"/gs100101\" >동안내</a>\n</li>\r\n\t\t\t\t\t\t\t\t\t<li >\r\n\t\t                                    <a href=\"/gs100002\" >가양1동</a>\n<ul>\r\n\t\t\t                                    \t<li >\r\n\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100201\" >우리동 소개</a>\n<ul>\r\n\t\t\t\t\t\t\t\t                                    \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100201\" >동장인사말</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100202\" >동현황</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100203\" >동유래 및 연혁</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100204\" >직원안내</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100205\" >오시는길</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t</ul>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</li>\r\n\t\t\t                                        \t<li >\r\n\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100206?srchStdg=STDG_1\" >우리동 소식</a>\n<ul>\r\n\t\t\t\t\t\t\t\t                                    \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100206?srchStdg=STDG_1\" >공지 및 소식</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100208?srchStdg=STDG_1\" >고시(채용)공고 · 입법예고</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t<li >\r\n\t\t\t\t\t\t\t\t                        \t\t\t\t\t\t\t<a href=\"/gs100209?srchStdg=STDG_1\" >포토갤러리</a>\n</li>\r\n\t\t\t\t\t\t\t\t                                        \t</ul>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</li>\r\n\t\t\t                                        \t<li >\r\n\t\t\t                        \t\t\t\t\t\t\t<a href=\"https://jachi.gangseo.seoul.kr/cpage/program/cpageProgramList\" target=\"_blank\" title=\"새창\" class=\"other-link l"
+    },
+    {
+      "variant": "개발밀도관리구역",
+      "source_index": 83102,
+      "text": "통합예약 검색옵션 정렬 최신 순 정확도 순 기간 전체 1일 1주 1개월 1년 직접입력 달력선택 달력선택 적용하기 검색어 “개발밀도관리구역” 에 대하여 총 3 건의 검색결과를 찾았습니다. 게시판 검색결과 3 건 강서구, 도시개발예측시스템 구축 완료 등록일 : 2007-12-04 서울 강서구는 재건축 및 재개발 등의 지역개발사업에 필요한 각종 자료를 5분이면 작성할 수 있는 '도시개발예측시스템' 구축작업을 완료하고 이달 1일부터 본격적인 운용에 들어간다고 밝혔다. '도시개발예측시스템'은 건축행정정보시스템, 한국토지관리정보시스템, 시군구행정정보시스템, 새주소 정보시스템, 도로관리시스템 자료 등의 자료와 연계되어 각종 지역개발사업을 위한 계획수립 시 객관적이고 과학적인 기초자료를 제공하게 된다. 지금까지 재개발·재건축 등 개발사업을 추진할 경우 도시주거환경기본계획에서 요구하는 정비구역 지정요건 구비여부를 파악할 수 있는 정보가 없어 토지대장 및 건축물대장 등 각종 공부를 하나하나 열람하여 기초 자료를 작성하고, 개발대상지역을 방문하여 건축물 현황조사를 하는 등 최소 몇 개월 이상의 기간과 많은 경비가 소요되었다. 금번에 구축한 도시개발예측시스템을 활용하면 전문 업체에 용역을 의뢰하지 않고도 사업추진의 가능성 및 타당성 검토가 가능하여 용역비 절감은 물론 정비구역 지정요건 검증, 정비구역내의 토지 및 건축물 기초자료, 노후불량 건축물, 호수밀도, 과소필지, 접도율 등의 자료를 5분 이내에 작성·출력할 수 있어 소요시간도 대폭 단축될 것으로 전망된다. 따라서 이 시스템의 구축으로 낙후지역의 재건축, 재개발 등 정비구역 지정요건 검증 및 예측시기의 파악이 가능하고, 사업시행의 적정여부를 쉽게 판단할 수 있어 개발사업 업무 추진 시 효율적인 활용이 가능하여 대민서비스 만족도가 크게 향상될 것으로 기대된다. 구 관계자는 “도시개발예측시스템의 운용으로 객관적인 분석을 통한 정비예정구역 선 강서구청 동주민센터 가양1동 우리동 소식 공지 및 소식 강서구, 도시개발예측시스템 구축 완료 등록일 : 2007-12-03 서울 강서구는 재건축 및 재개발 등의 지역개발사업에 필요한 각종 자료를 5분이면 작성할 수 있는 '도시개발예측시스템' 구축작업을 완료하고 이달 1일부터 본격적인 운용에 들어간다고 밝혔다. '도시개발예측시스템'은 건축행정정보시스템, 한국토지관리정보시스템, 시군구행정정보시스템, 새주소 정보시스템, 도로관리시스템 자료 등의 자료와 연계되어 각종 지역개발사업을 위한 계획수립 시 객관적이고 과학적인 기초자료를 제공하게 된다. 지금까지 재개발·재건축 등 개발사업을 추진할 경우 도시주거환경기본계획에서 요구하는 정비구역 지정요건 구비여부를 파악할 수 있는 정보가 없어 토지대장 및 건축물대장 등 각종 공부를 하나하나 열람하여 기초 자료를 작성하고, 개발대상지역을 방문하여 건축물 현황조사를 하는 등 최소 몇 개월 이상의 기간과 많은 경비가 소요되었다. 금번에 구축한 도시개발예측시스템을 활용하면 전문 업체에 용역을 의뢰하지 않고도 사업추진의 가능성 및 타당성 검토가 가능하여 용역비 절감은 물론 정비구역 지정요건 검증, 정비구역내의 토지 및 건축물 기초자료, 노후불량 건축물, 호수밀도, 과소필지, 접도율 등의 자료를 5분 이내에 작성·출력할 수 있어 소요시간도 대폭 단축될 것으로 전망된다. 따라서 이 시스템의 구축으로 낙후지역의 재건축, 재개발 등 정비구역 지정요건 검증 및 예측시",
+      "search_echo_score": 7,
+      "search_echo": true,
+      "anchors": [
+        {
+          "label": "통합예약",
+          "href": "#none",
+          "url": "",
+          "onclick": "searchByCategory('reserve')",
+          "data_attributes": {}
+        },
+        {
+          "label": "검색옵션",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "정렬",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "최신 순",
+          "href": "#none",
+          "url": "",
+          "onclick": "searchByOrder('DATE')",
+          "data_attributes": {}
+        },
+        {
+          "label": "정확도 순",
+          "href": "#none",
+          "url": "",
+          "onclick": "searchByOrder('RANK')",
+          "data_attributes": {}
+        },
+        {
+          "label": "기간",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "전체",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "1일",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "1주",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "1개월",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "1년",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "적용하기",
+          "href": "#none",
+          "url": "",
+          "onclick": "doSearch()",
+          "data_attributes": {}
+        },
+        {
+          "label": "강서구, 도시개발예측시스템 구축 완료",
+          "href": "//www.gangseo.seoul.kr/gs100206/175169?srchStdg=STDG_1",
+          "url": "https://www.gangseo.seoul.kr/gs100206/175169?srchStdg=STDG_1",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "공지 및 소식",
+          "href": "//www.gangseo.seoul.kr/gs100206?srchStdg=STDG_1",
+          "url": "https://www.gangseo.seoul.kr/gs100206?srchStdg=STDG_1",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "강서구, 도시개발예측시스템 구축 완료",
+          "href": "//www.gangseo.seoul.kr/gs100206/175134?srchStdg=STDG_1",
+          "url": "https://www.gangseo.seoul.kr/gs100206/175134?srchStdg=STDG_1",
+          "onclick": "",
+          "data_attributes": {}
+        }
+      ],
+      "raw_html": "       <li ><a href=\"#none\" onclick=\"searchByCategory('reserve')\">통합예약</a></li>\r\n        </ul>\r\n    </nav>\r\n    <div class=\"option\">\r\n        <a href=\"#none\">검색옵션</a>\r\n    </div>\r\n</div>\r\n<div class=\"option-detail-list\" id=\"searchOption\">\r\n    <div class=\"inner\">\r\n        <ul>\r\n            <li>\r\n                <a href=\"#none\">정렬</a>\r\n                <div class=\"detail-view\">\r\n                    <ul>\r\n                        <li><a href=\"#none\" onclick=\"searchByOrder('DATE')\" class=\"sortNew\">최신 순</a></li>\r\n                        <li><a href=\"#none\" onclick=\"searchByOrder('RANK')\" class=\"sortAccuracy\">정확도 순</a></li>\r\n                    </ul>\r\n                </div>\r\n            </li>\r\n            <li>\r\n                <a href=\"#none\">기간</a>\r\n                <div class=\"detail-view\">\r\n                    <ul>\r\n                        <li><a href=\"#none\" class=\"dateAll\">전체</a></li>\r\n                        <li><a href=\"#none\" class=\"beforeDay\">1일</a></li>\r\n                        <li><a href=\"#none\" class=\"beforeWeek\">1주</a></li>\r\n                        <li><a href=\"#none\" class=\"beforeMonth\">1개월</a></li>\r\n                        <li><a href=\"#none\" class=\"beforeYear\">1년</a></li>\r\n                    </ul>\r\n                    <div class=\"detail-day\">\r\n                        <div class=\"title\">직접입력</div>\r\n                        <div class=\"cont\">\r\n                            <div class=\"calendar-control\">\r\n                                <input type=\"text\" class=\"input-control\" id=\"srchBeginDt\" name=\"srchBeginDt\" autocomplete=\"off\">\r\n                                <button type=\"button\"><span class=\"hd-element\">달력선택</span></button>\r\n                            </div>\r\n                            <div class=\"calendar-control\">\r\n                                <input type=\"text\" class=\"input-control\" id=\"srchEndDt\" name=\"srchEndDt\" autocomplete=\"off\">\r\n                                <button type=\"button\"><span class=\"hd-element\">달력선택</span></button>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"detail-btn\">\r\n                            <a href=\"#none\" onclick=\"doSearch()\">적용하기</a>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </li>\r\n            </ul>\r\n    </div>\r\n</div><div class=\"search-result-wrap\">\r\n            <div class=\"inner\">\r\n                <div class=\"search-result\">\r\n                \t\r\n\t\t                \t검색어 <span class=\"search-txt\">“개발밀도관리구역”</span> 에 대하여 총 <span class=\"search-num\">3</span>건의 검색결과를 찾았습니다.\r\n\t                \t</div>\r\n                <div class=\"search-list\">\r\n                    <section class=\"search-section\">\r\n                        <div class=\"search-head\">\r\n                            <h2 class=\"h2\">게시판</h2>\r\n                            <span class=\"result\">검색결과 <strong>3</strong>건</span>\r\n                        </div>\r\n                        <div class=\"search-body\">\r\n\t                        <ul class=\"search-type04\">\r\n\t\t                                <li>\r\n\t\t\t\t                                <dl>\r\n\t\t\t\t                                    <dt>\r\n\t\t\t\t                                        <div class=\"title fs-20\">\r\n\t\t\t\t                                            <a href=\"//www.gangseo.seoul.kr/gs100206/175169?srchStdg=STDG_1\" target=\"_blank\" title=\"새창\">\r\n\t\t\t\t                                            \t강서구, 도시개발예측시스템 구축 완료</a>\r\n\t\t\t\t                                        </div>\r\n\t\t\t\t                                        <div class=\"data\">등록일 : 2007-12-04</div>\r\n\t\t\t\t                                    </dt>\r\n\t\t\t\t                                    <dd>\r\n\t\t\t\t                                        서울 강서구는 재건축 및 재개발 등의 지역개발사업에 필요한 각종 자료를 5분이면 작성할 수 있는 '도시개발예측시스템' 구축작업을 완료하고 이달 1일부터 본격적인 운용에 들어간다고 밝혔다. '도시개발예측시스템'은 건축행정정보시스템, 한국토지관리정보시스템, 시군구행정정보시스템, 새주소 정보시스템, 도로관리시스템 자료 등의 자료와 연계되어 각종 지역개발사업을 위한 계획수립 시 객관적이고 과학적인 기초자료를 제공하게 된다. 지금까지 재개발·재건축 등 개발사업을 추진할 경우 도시주거환경기본계획에서 요구하는 정비구역 지정요건 구비여부를 파악할 수 있는 정보가 없어 토지대장 및 건축물대장 등 각종 공부를 하나하나 열람하여 기초 자료를 작성하고, 개발대상지역을 방문하여 건축물 현황조사를 하는 등 최소 몇 개월 이상의 기간과 많은 경비가 소요되었다. 금번에 구축한 도시개발예측시스템을 활용하면 전문 업체에 용역을 의뢰하지 않고도 사업추진의 가능성 및 타당성 검토가 가능하여 용역비 절감은 물론 정비구역 지정요건 검증, 정비구역내의 토지 및 건축물 기초자료, 노후불량 건축물, 호수밀도, 과소필지, 접도율 등의 자료를 5분 이내에 작성·출력할 수 있어 소요시간도 대폭 단축될 것으로 전망된다. 따라서 이 시스템의 구축으로 낙후지역의 재건축, 재개발 등 정비구역 지정요건 검증 및 예측시기의 파악이 가능하고, 사업시행의 적정여부를 쉽게 판단할 수 있어 개발사업 업무 추진 시 효율적인 활용이 가능하여 대민서비스 만족도가 크게 향상될 것으로 기대된다. 구 관계자는 “도시개발예측시스템의 운용으로 객관적인 분석을 통한 정비예정구역 선</dd>\r\n\t\t\t\t                                </dl>\r\n\t\t\t\t                                <div class=\"menu-list\">\r\n\t\t\t\t                                    <span>강서구청</span>\r\n\t\t\t\t\t                                \t<span>동주민센터</span>\r\n\t\t\t\t\t                                \t<span>가양1동</span>\r\n\t\t\t\t\t                                \t<span>우리동 소식</span>\r\n\t\t\t\t\t                                \t<span>\r\n\t\t\t                                    \t\t\t\t<a href=\"//www.gangseo.seoul.kr/gs100206?srchStdg=STDG_1\" target=\"_blank\" title=\"새창\">공지 및 소식</a>\r\n\t\t\t                                    \t\t\t</span>\r\n\t\t\t                                    \t\t</div>\r\n\t\t\t\t                            </li>\r\n\t\t\t\t\t\t\t\t\t\t<li>\r\n\t\t\t\t                                <dl>\r\n\t\t\t\t                                    <dt>\r\n\t\t\t\t                                        <div class=\"title fs-20\">\r\n\t\t\t\t                                            <a href=\"//www.gangseo.seoul.kr/gs100206/175134?srchStdg=STDG_1\" target=\"_blank\" title=\"새창\">\r\n\t\t\t\t                                            \t강서구, 도시개발예측시스템 구축 완료</a>\r\n\t\t\t\t                                        </div>\r\n\t\t\t\t                                        <div class=\"data\">등록일 : 2007-12-03</div>\r\n\t\t\t\t                                    </dt>\r\n\t\t\t\t                                    <dd>\r\n\t\t\t\t                                        서울 강서구는 재건축 및 재개발 등의 지역개발사업에 필요한 각종 자료를 5분이면 작성할 수 있는 '도시개발예측시스템' 구축작업을 완료하고 이달 1일부터 본격적인 운용에 들어간다고 밝혔다. '도시개발예측시스템'은 건축행정정보시스템, 한국토지관리정보시스템, 시군구행정정보시스템, 새주소 정보시스템, 도로관리시스템 자료 등의 자료와 연계되어 각종 지역개발사업을 위한 계획수립 시 객관적이고 과학적인 기초자료를 제공하게 된다. 지금까지 재개발·재건축 등 개발사업을 추진할 경우 도시주거환경기본계획에서 요구하는 정비구역 지정요건 구비여부를 파악할 수 있는 정보가 없어 토지대장 및 건축물대장 등 각종 공부를 하나하나 열람하여 기초 자료를 작성하고, 개발대상지역을 방문하여 건축물 현황조사를 하는 등 최소 몇 개월 이상의 기간과 많은 경비가 소요되었다. 금번에 구축한 도시개발예측시스템을 활용하면 전문 업체에 용역을 의뢰하지 않고도 사업추진의 가능성 및 타당성 검토가 가능하여 용역비 절감은 물론 정비구역 지정요건 검증, 정비구역내의 토지 및 건축물 기초자료, 노후불량 건축물, 호수밀도, 과소필지, 접도율 등의 자료를 5분 이내에 작성·출력할 수 있어 소요시간도 대폭 단축될 것으로 전망된다. 따라서 이 시스템의 구축으로 낙후지역의 재건축, 재개발 등 정비구역 지정요건 검증 및 예측시"
+    },
+    {
+      "variant": "개발밀도관리구역",
+      "source_index": 93689,
+      "text": "_this = $(this); $.ajax({ url : '/search/delSearchHistory' , data : {delWord : _this.data('searchtext')} , type : \"GET\" , async : false , success : function(data){ if (data == 'SUCCESS') { _this.parent().remove(); } } }); }); }); function getSearchRank(rng) { $.ajax({ url : '/search/getRank', data : {range : rng}, type: \"GET\", dataType : \"json\", async : false, success : function(data) { var arr = data.Query; var hList = \"\"; for(var i in arr){ if (i '; } else { hList += ' '; } hList += ' '; hList += ' '+arr[i].id+' '+arr[i].content; if (arr[i].updown == 'N') { hList += ' NEW '; } if (arr[i].updown == 'C') { hList += ' - '; } if (arr[i].updown == 'U') { hList += ' '+arr[i].count+' '; } if (arr[i].updown == 'D') { hList += ' '+arr[i].count+' '; } hList += ' '; hList += ' '; } $('#rankList').html(hList); if (rng == 'D') { $('#rankDay').addClass(\"active\"); $('#rankWeek').removeClass(\"active\"); } else { $('#rankDay').removeClass(\"active\"); $('#rankWeek').addClass(\"active\"); } } }); } 조직도 검색 인기 검색어 일간 주간 내가 찾은 검색어 개발밀도관리구역 내가 찾은 검색어 삭제 (우) 07658 서울특별시 강서구 화곡로 302(화곡동) TEL : 02-2600-6114 (120다산콜센터로 연결) 02-2600-6330 (야간, 공휴일/당직실) 개인정보처리방침 찾아오시는 길 전화번호 안내 저작권정책 COPYRIGHT © 2021 GANGSEO-GU. ALL RIGHTS RESERVED. 최상단으로 이동 이미지미리보기 레이어팝업 닫기",
+      "search_echo_score": 6,
+      "search_echo": true,
+      "anchors": [
+        {
+          "label": "'; hList += ' '+arr[i].id+' '+arr[i].content; if (arr[i].updown == 'N') { hList += ' NEW '; } if (arr[i].updown == 'C') { hList += ' - '; } if (arr[i].updown == 'U') { hList += ' '+arr[i].count+' '; } if (arr[i].updown == 'D') { hList += ' '+arr[i].count+' '; } hList += '",
+          "href": "#none",
+          "url": "",
+          "onclick": "searchText(\\''+arr[i].content+'\\')",
+          "data_attributes": {}
+        },
+        {
+          "label": "조직도 검색",
+          "href": "/gs050201",
+          "url": "https://www.gangseo.seoul.kr/gs050201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "일간",
+          "href": "#none",
+          "url": "",
+          "onclick": "getSearchRank('D')",
+          "data_attributes": {}
+        },
+        {
+          "label": "주간",
+          "href": "#none",
+          "url": "",
+          "onclick": "getSearchRank('W')",
+          "data_attributes": {}
+        },
+        {
+          "label": "내가 찾은 검색어 삭제",
+          "href": "javascript:void(0);",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {
+            "data-searchtext": "개발밀도관리구역"
+          }
+        },
+        {
+          "label": "",
+          "href": "/initCache",
+          "url": "https://www.gangseo.seoul.kr/initCache",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "TEL : 02-2600-6114",
+          "href": "tel:02-2600-6114",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "02-2600-6330",
+          "href": "tel:02-2600-6330",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "개인정보처리방침",
+          "href": "/gs060201",
+          "url": "https://www.gangseo.seoul.kr/gs060201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "찾아오시는 길",
+          "href": "/gs050205",
+          "url": "https://www.gangseo.seoul.kr/gs050205",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "전화번호 안내",
+          "href": "/gs050201",
+          "url": "https://www.gangseo.seoul.kr/gs050201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "저작권정책",
+          "href": "/gs060301",
+          "url": "https://www.gangseo.seoul.kr/gs060301",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "",
+          "href": "http://www.wa.or.kr/board/list.asp?search=total&SearchString=%B0%AD%BC%AD%B1%B8%C3%BB&BoardID=0006",
+          "url": "http://www.wa.or.kr/board/list.asp?search=total&SearchString=%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%C3%BB&BoardID=0006",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "최상단으로 이동",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "레이어팝업 닫기",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        }
+      ],
+      "raw_html": " _this = $(this);\r\n\t\t\t$.ajax({\r\n\t\t\t\t  url : '/search/delSearchHistory'\r\n\t\t\t\t, data : {delWord :  _this.data('searchtext')}\r\n\t\t\t   \t, type : \"GET\"\r\n\t\t\t   \t, async : false\r\n\t\t\t\t, success : function(data){\r\n\t\t\t\t\tif (data == 'SUCCESS') {\r\n\t\t\t\t\t\t_this.parent().remove();\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t});\r\n\t\t});\r\n\t});\r\n\r\n\tfunction getSearchRank(rng) {\r\n\t\t$.ajax({\r\n\t    \turl : '/search/getRank',\r\n\t    \tdata : {range : rng},\r\n\t    \ttype: \"GET\",\r\n\t    \tdataType : \"json\",\r\n\t    \tasync : false,\r\n\t    \tsuccess : function(data) {\r\n\t    \t\tvar arr = data.Query;\r\n\t    \t\tvar hList = \"\";\r\n\r\n\t    \t\tfor(var i in arr){\r\n\t    \t\t\tif (i < 3) {\r\n\t    \t\t\t\thList += '<li class=\"active\">';\r\n\t    \t\t\t} else {\r\n\t\t    \t\t\thList += '<li>';\r\n\t    \t\t\t}\r\n\r\n\t\t    \t\thList += '\t<a href=\"#none\" onclick=\"searchText(\\''+arr[i].content+'\\')\">';\r\n\t\t    \t\thList += '        <span class=\"num\">'+arr[i].id+'</span>'+arr[i].content;\r\n\r\n\t\t    \t\tif (arr[i].updown == 'N') {\r\n\t\t    \t\t\thList += '        <span class=\"category new\">NEW</span>';\r\n\t\t    \t\t}\r\n\t\t    \t\tif (arr[i].updown == 'C') {\r\n\t\t    \t\t\thList += '        <span class=\"category\">-</span>';\r\n\t\t    \t\t}\r\n\t\t    \t\tif (arr[i].updown == 'U') {\r\n\t\t    \t\t\thList += '        <span class=\"category up\">'+arr[i].count+'</span>';\r\n\t\t    \t\t}\r\n\t\t    \t\tif (arr[i].updown == 'D') {\r\n\t\t    \t\t\thList += '        <span class=\"category down\">'+arr[i].count+'</span>';\r\n\t\t    \t\t}\r\n\r\n\t\t    \t\thList += '    </a>';\r\n\t\t    \t\thList += '</li>';\r\n\t\t\t   \t}\r\n\r\n\t    \t\t$('#rankList').html(hList);\r\n\r\n\t    \t\tif (rng == 'D') {\r\n\t    \t\t\t$('#rankDay').addClass(\"active\");\r\n\t    \t\t\t$('#rankWeek').removeClass(\"active\");\r\n\t    \t\t} else {\r\n\t    \t\t\t$('#rankDay').removeClass(\"active\");\r\n\t    \t\t\t$('#rankWeek').addClass(\"active\");\r\n\t    \t\t}\r\n\t    \t}\r\n\t    });\r\n\t}\r\n</script>\r\n\r\n<div class=\"search-aside\">\r\n    <div class=\"org-search\">\r\n        <a href=\"/gs050201\"><span>조직도 검색</span></a>\r\n    </div>\r\n    <div class=\"best-list\">\r\n        <div class=\"top\">\r\n            <h3 class=\"fs-20\">인기 검색어</h3>\r\n            <!-- filter -->\r\n            <div class=\"board-filter\">\r\n                <a href=\"#none\" onclick=\"getSearchRank('D')\" id=\"rankDay\">일간</a>\r\n                <a href=\"#none\" onclick=\"getSearchRank('W')\" id=\"rankWeek\">주간</a>\r\n            </div><!--// filter -->\r\n        </div>\r\n        <ul class=\"list\" id=\"rankList\">\r\n        </ul>\r\n        <div class=\"keywrod-wrap\">\r\n            <h3 class=\"fs-20\">내가 찾은 검색어</h3>\r\n            <ul>\r\n            \t<li>\r\n                \t\t<span style=\"cursor:pointer\" onclick=\"searchText('개발밀도관리구역')\">개발밀도관리구역</span>\r\n                \t\t<a href=\"javascript:void(0);\" class=\"del\" data-searchtext=\"개발밀도관리구역\"><span class=\"hd-element\">내가 찾은 검색어 삭제</span>&nbsp;</a>\r\n                \t</li>\r\n                </ul>\r\n        </div>\r\n    </div>\r\n</div></div>\r\n        </div>\r\n    </div>\r\n</main><!--// content -->\n\n        <footer>\n\t            <div class=\"footer\">\n\t    <div class=\"footer-body\">\n\t        <div class=\"footer-left\">\n\t            <div class=\"footer-logo\">\n\t                <a href=\"/initCache\"><img src=\"/humanframe/theme/global/assets/image/common/img_logo02.png\" alt=\"강서구\"></a>\n\t            </div>\n\t            <div class=\"copyright-wrap\">\n\t                <p class=\"address\">\n\t                    (우) 07658 서울특별시 강서구 화곡로 302(화곡동)<br>\n\t                    <a href=\"tel:02-2600-6114\">TEL : 02-2600-6114</a>(120다산콜센터로 연결) <a href=\"tel:02-2600-6330\">02-2600-6330</a>(야간, 공휴일/당직실) <!-- FAX : 02-2692-0635 -->\n\t                </p>\n\t                <ul class=\"footer-menu\">\n\t                    <li><a href=\"/gs060201\">개인정보처리방침</a></li>\n\t                    <li><a href=\"/gs050205\">찾아오시는 길</a></li>\n\t                    <li><a href=\"/gs050201\">전화번호 안내</a></li>\n\t                    <li><a href=\"/gs060301\">저작권정책</a></li>\n\t                </ul>\n\t                <p class=\"copyright-text\">\n\t                    COPYRIGHT © 2021 GANGSEO-GU. ALL RIGHTS RESERVED.\n\t                </p>\n\t            </div>\n\t        </div>\n\t        <div class=\"web_icon\">\n\t\t            <a title=\"새창\" href=\"http://www.wa.or.kr/board/list.asp?search=total&SearchString=%B0%AD%BC%AD%B1%B8%C3%BB&BoardID=0006\" target=\"_blank\"><img src=\"/humanframe/theme/global/assets/image/common/web_icon_2026.png\" alt=\"과학기술정보통신부 WA WEB 접근성 한국정보접근성인증평가원 2026.05.22 ~ 2027.05.21\"></a>\n\t\t        </div>\n\t        </div>\n\t</div></footer>\n\t\t\t<a href=\"#none\" class=\"moveTop\">\n\t\t\t\t<i class=\"fa fa-chevron-up\"><span>최상단으로 이동</span></i>\n\t\t\t</a>\n        </div>\n\n\t<form id=\"frmLoginForward\" name=\"frmLoginForward\" method=\"post\">\n\t\t<input type=\"hidden\" id=\"returnUrl\" name=\"returnUrl\" value=\"/index\"/>\n\t</form>\n\n\t<div class=\"mask-layer\"></div>\n\t<div class=\"gnb-mask-layer\"></div>\n\n\t<div class=\"layer-popup-wrap\" id=\"layerImage\" style=\"display:none\">\n\t    <div class=\"layer-popup-head\">\n\t        <div class=\"title\">이미지미리보기</div>\n\t    </div>\n\t    <div class=\"layer-popup-body\">\n\t        <img id=\"imgPreview\" src=\"\" alt=\"preview\" style=\"width: 100%;height: auto;\">\n\t    </div>\n\t    <div class=\"layer-popup-close\"><a href=\"#none\"><span class=\"hd-element\">레이어팝업 닫기</span></a></div>\n\t</div>\n</body>\n</html>"
+    },
+    {
+      "variant": "개발밀도관리구역",
+      "source_index": 93701,
+      "text": "his); $.ajax({ url : '/search/delSearchHistory' , data : {delWord : _this.data('searchtext')} , type : \"GET\" , async : false , success : function(data){ if (data == 'SUCCESS') { _this.parent().remove(); } } }); }); }); function getSearchRank(rng) { $.ajax({ url : '/search/getRank', data : {range : rng}, type: \"GET\", dataType : \"json\", async : false, success : function(data) { var arr = data.Query; var hList = \"\"; for(var i in arr){ if (i '; } else { hList += ' '; } hList += ' '; hList += ' '+arr[i].id+' '+arr[i].content; if (arr[i].updown == 'N') { hList += ' NEW '; } if (arr[i].updown == 'C') { hList += ' - '; } if (arr[i].updown == 'U') { hList += ' '+arr[i].count+' '; } if (arr[i].updown == 'D') { hList += ' '+arr[i].count+' '; } hList += ' '; hList += ' '; } $('#rankList').html(hList); if (rng == 'D') { $('#rankDay').addClass(\"active\"); $('#rankWeek').removeClass(\"active\"); } else { $('#rankDay').removeClass(\"active\"); $('#rankWeek').addClass(\"active\"); } } }); } 조직도 검색 인기 검색어 일간 주간 내가 찾은 검색어 개발밀도관리구역 내가 찾은 검색어 삭제 (우) 07658 서울특별시 강서구 화곡로 302(화곡동) TEL : 02-2600-6114 (120다산콜센터로 연결) 02-2600-6330 (야간, 공휴일/당직실) 개인정보처리방침 찾아오시는 길 전화번호 안내 저작권정책 COPYRIGHT © 2021 GANGSEO-GU. ALL RIGHTS RESERVED. 최상단으로 이동 이미지미리보기 레이어팝업 닫기",
+      "search_echo_score": 6,
+      "search_echo": true,
+      "anchors": [
+        {
+          "label": "'; hList += ' '+arr[i].id+' '+arr[i].content; if (arr[i].updown == 'N') { hList += ' NEW '; } if (arr[i].updown == 'C') { hList += ' - '; } if (arr[i].updown == 'U') { hList += ' '+arr[i].count+' '; } if (arr[i].updown == 'D') { hList += ' '+arr[i].count+' '; } hList += '",
+          "href": "#none",
+          "url": "",
+          "onclick": "searchText(\\''+arr[i].content+'\\')",
+          "data_attributes": {}
+        },
+        {
+          "label": "조직도 검색",
+          "href": "/gs050201",
+          "url": "https://www.gangseo.seoul.kr/gs050201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "일간",
+          "href": "#none",
+          "url": "",
+          "onclick": "getSearchRank('D')",
+          "data_attributes": {}
+        },
+        {
+          "label": "주간",
+          "href": "#none",
+          "url": "",
+          "onclick": "getSearchRank('W')",
+          "data_attributes": {}
+        },
+        {
+          "label": "내가 찾은 검색어 삭제",
+          "href": "javascript:void(0);",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {
+            "data-searchtext": "개발밀도관리구역"
+          }
+        },
+        {
+          "label": "",
+          "href": "/initCache",
+          "url": "https://www.gangseo.seoul.kr/initCache",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "TEL : 02-2600-6114",
+          "href": "tel:02-2600-6114",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "02-2600-6330",
+          "href": "tel:02-2600-6330",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "개인정보처리방침",
+          "href": "/gs060201",
+          "url": "https://www.gangseo.seoul.kr/gs060201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "찾아오시는 길",
+          "href": "/gs050205",
+          "url": "https://www.gangseo.seoul.kr/gs050205",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "전화번호 안내",
+          "href": "/gs050201",
+          "url": "https://www.gangseo.seoul.kr/gs050201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "저작권정책",
+          "href": "/gs060301",
+          "url": "https://www.gangseo.seoul.kr/gs060301",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "",
+          "href": "http://www.wa.or.kr/board/list.asp?search=total&SearchString=%B0%AD%BC%AD%B1%B8%C3%BB&BoardID=0006",
+          "url": "http://www.wa.or.kr/board/list.asp?search=total&SearchString=%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%C3%BB&BoardID=0006",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "최상단으로 이동",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "레이어팝업 닫기",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        }
+      ],
+      "raw_html": "his);\r\n\t\t\t$.ajax({\r\n\t\t\t\t  url : '/search/delSearchHistory'\r\n\t\t\t\t, data : {delWord :  _this.data('searchtext')}\r\n\t\t\t   \t, type : \"GET\"\r\n\t\t\t   \t, async : false\r\n\t\t\t\t, success : function(data){\r\n\t\t\t\t\tif (data == 'SUCCESS') {\r\n\t\t\t\t\t\t_this.parent().remove();\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t});\r\n\t\t});\r\n\t});\r\n\r\n\tfunction getSearchRank(rng) {\r\n\t\t$.ajax({\r\n\t    \turl : '/search/getRank',\r\n\t    \tdata : {range : rng},\r\n\t    \ttype: \"GET\",\r\n\t    \tdataType : \"json\",\r\n\t    \tasync : false,\r\n\t    \tsuccess : function(data) {\r\n\t    \t\tvar arr = data.Query;\r\n\t    \t\tvar hList = \"\";\r\n\r\n\t    \t\tfor(var i in arr){\r\n\t    \t\t\tif (i < 3) {\r\n\t    \t\t\t\thList += '<li class=\"active\">';\r\n\t    \t\t\t} else {\r\n\t\t    \t\t\thList += '<li>';\r\n\t    \t\t\t}\r\n\r\n\t\t    \t\thList += '\t<a href=\"#none\" onclick=\"searchText(\\''+arr[i].content+'\\')\">';\r\n\t\t    \t\thList += '        <span class=\"num\">'+arr[i].id+'</span>'+arr[i].content;\r\n\r\n\t\t    \t\tif (arr[i].updown == 'N') {\r\n\t\t    \t\t\thList += '        <span class=\"category new\">NEW</span>';\r\n\t\t    \t\t}\r\n\t\t    \t\tif (arr[i].updown == 'C') {\r\n\t\t    \t\t\thList += '        <span class=\"category\">-</span>';\r\n\t\t    \t\t}\r\n\t\t    \t\tif (arr[i].updown == 'U') {\r\n\t\t    \t\t\thList += '        <span class=\"category up\">'+arr[i].count+'</span>';\r\n\t\t    \t\t}\r\n\t\t    \t\tif (arr[i].updown == 'D') {\r\n\t\t    \t\t\thList += '        <span class=\"category down\">'+arr[i].count+'</span>';\r\n\t\t    \t\t}\r\n\r\n\t\t    \t\thList += '    </a>';\r\n\t\t    \t\thList += '</li>';\r\n\t\t\t   \t}\r\n\r\n\t    \t\t$('#rankList').html(hList);\r\n\r\n\t    \t\tif (rng == 'D') {\r\n\t    \t\t\t$('#rankDay').addClass(\"active\");\r\n\t    \t\t\t$('#rankWeek').removeClass(\"active\");\r\n\t    \t\t} else {\r\n\t    \t\t\t$('#rankDay').removeClass(\"active\");\r\n\t    \t\t\t$('#rankWeek').addClass(\"active\");\r\n\t    \t\t}\r\n\t    \t}\r\n\t    });\r\n\t}\r\n</script>\r\n\r\n<div class=\"search-aside\">\r\n    <div class=\"org-search\">\r\n        <a href=\"/gs050201\"><span>조직도 검색</span></a>\r\n    </div>\r\n    <div class=\"best-list\">\r\n        <div class=\"top\">\r\n            <h3 class=\"fs-20\">인기 검색어</h3>\r\n            <!-- filter -->\r\n            <div class=\"board-filter\">\r\n                <a href=\"#none\" onclick=\"getSearchRank('D')\" id=\"rankDay\">일간</a>\r\n                <a href=\"#none\" onclick=\"getSearchRank('W')\" id=\"rankWeek\">주간</a>\r\n            </div><!--// filter -->\r\n        </div>\r\n        <ul class=\"list\" id=\"rankList\">\r\n        </ul>\r\n        <div class=\"keywrod-wrap\">\r\n            <h3 class=\"fs-20\">내가 찾은 검색어</h3>\r\n            <ul>\r\n            \t<li>\r\n                \t\t<span style=\"cursor:pointer\" onclick=\"searchText('개발밀도관리구역')\">개발밀도관리구역</span>\r\n                \t\t<a href=\"javascript:void(0);\" class=\"del\" data-searchtext=\"개발밀도관리구역\"><span class=\"hd-element\">내가 찾은 검색어 삭제</span>&nbsp;</a>\r\n                \t</li>\r\n                </ul>\r\n        </div>\r\n    </div>\r\n</div></div>\r\n        </div>\r\n    </div>\r\n</main><!--// content -->\n\n        <footer>\n\t            <div class=\"footer\">\n\t    <div class=\"footer-body\">\n\t        <div class=\"footer-left\">\n\t            <div class=\"footer-logo\">\n\t                <a href=\"/initCache\"><img src=\"/humanframe/theme/global/assets/image/common/img_logo02.png\" alt=\"강서구\"></a>\n\t            </div>\n\t            <div class=\"copyright-wrap\">\n\t                <p class=\"address\">\n\t                    (우) 07658 서울특별시 강서구 화곡로 302(화곡동)<br>\n\t                    <a href=\"tel:02-2600-6114\">TEL : 02-2600-6114</a>(120다산콜센터로 연결) <a href=\"tel:02-2600-6330\">02-2600-6330</a>(야간, 공휴일/당직실) <!-- FAX : 02-2692-0635 -->\n\t                </p>\n\t                <ul class=\"footer-menu\">\n\t                    <li><a href=\"/gs060201\">개인정보처리방침</a></li>\n\t                    <li><a href=\"/gs050205\">찾아오시는 길</a></li>\n\t                    <li><a href=\"/gs050201\">전화번호 안내</a></li>\n\t                    <li><a href=\"/gs060301\">저작권정책</a></li>\n\t                </ul>\n\t                <p class=\"copyright-text\">\n\t                    COPYRIGHT © 2021 GANGSEO-GU. ALL RIGHTS RESERVED.\n\t                </p>\n\t            </div>\n\t        </div>\n\t        <div class=\"web_icon\">\n\t\t            <a title=\"새창\" href=\"http://www.wa.or.kr/board/list.asp?search=total&SearchString=%B0%AD%BC%AD%B1%B8%C3%BB&BoardID=0006\" target=\"_blank\"><img src=\"/humanframe/theme/global/assets/image/common/web_icon_2026.png\" alt=\"과학기술정보통신부 WA WEB 접근성 한국정보접근성인증평가원 2026.05.22 ~ 2027.05.21\"></a>\n\t\t        </div>\n\t        </div>\n\t</div></footer>\n\t\t\t<a href=\"#none\" class=\"moveTop\">\n\t\t\t\t<i class=\"fa fa-chevron-up\"><span>최상단으로 이동</span></i>\n\t\t\t</a>\n        </div>\n\n\t<form id=\"frmLoginForward\" name=\"frmLoginForward\" method=\"post\">\n\t\t<input type=\"hidden\" id=\"returnUrl\" name=\"returnUrl\" value=\"/index\"/>\n\t</form>\n\n\t<div class=\"mask-layer\"></div>\n\t<div class=\"gnb-mask-layer\"></div>\n\n\t<div class=\"layer-popup-wrap\" id=\"layerImage\" style=\"display:none\">\n\t    <div class=\"layer-popup-head\">\n\t        <div class=\"title\">이미지미리보기</div>\n\t    </div>\n\t    <div class=\"layer-popup-body\">\n\t        <img id=\"imgPreview\" src=\"\" alt=\"preview\" style=\"width: 100%;height: auto;\">\n\t    </div>\n\t    <div class=\"layer-popup-close\"><a href=\"#none\"><span class=\"hd-element\">레이어팝업 닫기</span></a></div>\n\t</div>\n</body>\n</html>"
+    },
+    {
+      "variant": "개발밀도관리구역",
+      "source_index": 93795,
+      "text": "a('searchtext')} , type : \"GET\" , async : false , success : function(data){ if (data == 'SUCCESS') { _this.parent().remove(); } } }); }); }); function getSearchRank(rng) { $.ajax({ url : '/search/getRank', data : {range : rng}, type: \"GET\", dataType : \"json\", async : false, success : function(data) { var arr = data.Query; var hList = \"\"; for(var i in arr){ if (i '; } else { hList += ' '; } hList += ' '; hList += ' '+arr[i].id+' '+arr[i].content; if (arr[i].updown == 'N') { hList += ' NEW '; } if (arr[i].updown == 'C') { hList += ' - '; } if (arr[i].updown == 'U') { hList += ' '+arr[i].count+' '; } if (arr[i].updown == 'D') { hList += ' '+arr[i].count+' '; } hList += ' '; hList += ' '; } $('#rankList').html(hList); if (rng == 'D') { $('#rankDay').addClass(\"active\"); $('#rankWeek').removeClass(\"active\"); } else { $('#rankDay').removeClass(\"active\"); $('#rankWeek').addClass(\"active\"); } } }); } 조직도 검색 인기 검색어 일간 주간 내가 찾은 검색어 개발밀도관리구역 내가 찾은 검색어 삭제 (우) 07658 서울특별시 강서구 화곡로 302(화곡동) TEL : 02-2600-6114 (120다산콜센터로 연결) 02-2600-6330 (야간, 공휴일/당직실) 개인정보처리방침 찾아오시는 길 전화번호 안내 저작권정책 COPYRIGHT © 2021 GANGSEO-GU. ALL RIGHTS RESERVED. 최상단으로 이동 이미지미리보기 레이어팝업 닫기",
+      "search_echo_score": 6,
+      "search_echo": true,
+      "anchors": [
+        {
+          "label": "'; hList += ' '+arr[i].id+' '+arr[i].content; if (arr[i].updown == 'N') { hList += ' NEW '; } if (arr[i].updown == 'C') { hList += ' - '; } if (arr[i].updown == 'U') { hList += ' '+arr[i].count+' '; } if (arr[i].updown == 'D') { hList += ' '+arr[i].count+' '; } hList += '",
+          "href": "#none",
+          "url": "",
+          "onclick": "searchText(\\''+arr[i].content+'\\')",
+          "data_attributes": {}
+        },
+        {
+          "label": "조직도 검색",
+          "href": "/gs050201",
+          "url": "https://www.gangseo.seoul.kr/gs050201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "일간",
+          "href": "#none",
+          "url": "",
+          "onclick": "getSearchRank('D')",
+          "data_attributes": {}
+        },
+        {
+          "label": "주간",
+          "href": "#none",
+          "url": "",
+          "onclick": "getSearchRank('W')",
+          "data_attributes": {}
+        },
+        {
+          "label": "내가 찾은 검색어 삭제",
+          "href": "javascript:void(0);",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {
+            "data-searchtext": "개발밀도관리구역"
+          }
+        },
+        {
+          "label": "",
+          "href": "/initCache",
+          "url": "https://www.gangseo.seoul.kr/initCache",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "TEL : 02-2600-6114",
+          "href": "tel:02-2600-6114",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "02-2600-6330",
+          "href": "tel:02-2600-6330",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "개인정보처리방침",
+          "href": "/gs060201",
+          "url": "https://www.gangseo.seoul.kr/gs060201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "찾아오시는 길",
+          "href": "/gs050205",
+          "url": "https://www.gangseo.seoul.kr/gs050205",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "전화번호 안내",
+          "href": "/gs050201",
+          "url": "https://www.gangseo.seoul.kr/gs050201",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "저작권정책",
+          "href": "/gs060301",
+          "url": "https://www.gangseo.seoul.kr/gs060301",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "",
+          "href": "http://www.wa.or.kr/board/list.asp?search=total&SearchString=%B0%AD%BC%AD%B1%B8%C3%BB&BoardID=0006",
+          "url": "http://www.wa.or.kr/board/list.asp?search=total&SearchString=%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%C3%BB&BoardID=0006",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "최상단으로 이동",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        },
+        {
+          "label": "레이어팝업 닫기",
+          "href": "#none",
+          "url": "",
+          "onclick": "",
+          "data_attributes": {}
+        }
+      ],
+      "raw_html": "a('searchtext')}\r\n\t\t\t   \t, type : \"GET\"\r\n\t\t\t   \t, async : false\r\n\t\t\t\t, success : function(data){\r\n\t\t\t\t\tif (data == 'SUCCESS') {\r\n\t\t\t\t\t\t_this.parent().remove();\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t});\r\n\t\t});\r\n\t});\r\n\r\n\tfunction getSearchRank(rng) {\r\n\t\t$.ajax({\r\n\t    \turl : '/search/getRank',\r\n\t    \tdata : {range : rng},\r\n\t    \ttype: \"GET\",\r\n\t    \tdataType : \"json\",\r\n\t    \tasync : false,\r\n\t    \tsuccess : function(data) {\r\n\t    \t\tvar arr = data.Query;\r\n\t    \t\tvar hList = \"\";\r\n\r\n\t    \t\tfor(var i in arr){\r\n\t    \t\t\tif (i < 3) {\r\n\t    \t\t\t\thList += '<li class=\"active\">';\r\n\t    \t\t\t} else {\r\n\t\t    \t\t\thList += '<li>';\r\n\t    \t\t\t}\r\n\r\n\t\t    \t\thList += '\t<a href=\"#none\" onclick=\"searchText(\\''+arr[i].content+'\\')\">';\r\n\t\t    \t\thList += '        <span class=\"num\">'+arr[i].id+'</span>'+arr[i].content;\r\n\r\n\t\t    \t\tif (arr[i].updown == 'N') {\r\n\t\t    \t\t\thList += '        <span class=\"category new\">NEW</span>';\r\n\t\t    \t\t}\r\n\t\t    \t\tif (arr[i].updown == 'C') {\r\n\t\t    \t\t\thList += '        <span class=\"category\">-</span>';\r\n\t\t    \t\t}\r\n\t\t    \t\tif (arr[i].updown == 'U') {\r\n\t\t    \t\t\thList += '        <span class=\"category up\">'+arr[i].count+'</span>';\r\n\t\t    \t\t}\r\n\t\t    \t\tif (arr[i].updown == 'D') {\r\n\t\t    \t\t\thList += '        <span class=\"category down\">'+arr[i].count+'</span>';\r\n\t\t    \t\t}\r\n\r\n\t\t    \t\thList += '    </a>';\r\n\t\t    \t\thList += '</li>';\r\n\t\t\t   \t}\r\n\r\n\t    \t\t$('#rankList').html(hList);\r\n\r\n\t    \t\tif (rng == 'D') {\r\n\t    \t\t\t$('#rankDay').addClass(\"active\");\r\n\t    \t\t\t$('#rankWeek').removeClass(\"active\");\r\n\t    \t\t} else {\r\n\t    \t\t\t$('#rankDay').removeClass(\"active\");\r\n\t    \t\t\t$('#rankWeek').addClass(\"active\");\r\n\t    \t\t}\r\n\t    \t}\r\n\t    });\r\n\t}\r\n</script>\r\n\r\n<div class=\"search-aside\">\r\n    <div class=\"org-search\">\r\n        <a href=\"/gs050201\"><span>조직도 검색</span></a>\r\n    </div>\r\n    <div class=\"best-list\">\r\n        <div class=\"top\">\r\n            <h3 class=\"fs-20\">인기 검색어</h3>\r\n            <!-- filter -->\r\n            <div class=\"board-filter\">\r\n                <a href=\"#none\" onclick=\"getSearchRank('D')\" id=\"rankDay\">일간</a>\r\n                <a href=\"#none\" onclick=\"getSearchRank('W')\" id=\"rankWeek\">주간</a>\r\n            </div><!--// filter -->\r\n        </div>\r\n        <ul class=\"list\" id=\"rankList\">\r\n        </ul>\r\n        <div class=\"keywrod-wrap\">\r\n            <h3 class=\"fs-20\">내가 찾은 검색어</h3>\r\n            <ul>\r\n            \t<li>\r\n                \t\t<span style=\"cursor:pointer\" onclick=\"searchText('개발밀도관리구역')\">개발밀도관리구역</span>\r\n                \t\t<a href=\"javascript:void(0);\" class=\"del\" data-searchtext=\"개발밀도관리구역\"><span class=\"hd-element\">내가 찾은 검색어 삭제</span>&nbsp;</a>\r\n                \t</li>\r\n                </ul>\r\n        </div>\r\n    </div>\r\n</div></div>\r\n        </div>\r\n    </div>\r\n</main><!--// content -->\n\n        <footer>\n\t            <div class=\"footer\">\n\t    <div class=\"footer-body\">\n\t        <div class=\"footer-left\">\n\t            <div class=\"footer-logo\">\n\t                <a href=\"/initCache\"><img src=\"/humanframe/theme/global/assets/image/common/img_logo02.png\" alt=\"강서구\"></a>\n\t            </div>\n\t            <div class=\"copyright-wrap\">\n\t                <p class=\"address\">\n\t                    (우) 07658 서울특별시 강서구 화곡로 302(화곡동)<br>\n\t                    <a href=\"tel:02-2600-6114\">TEL : 02-2600-6114</a>(120다산콜센터로 연결) <a href=\"tel:02-2600-6330\">02-2600-6330</a>(야간, 공휴일/당직실) <!-- FAX : 02-2692-0635 -->\n\t                </p>\n\t                <ul class=\"footer-menu\">\n\t                    <li><a href=\"/gs060201\">개인정보처리방침</a></li>\n\t                    <li><a href=\"/gs050205\">찾아오시는 길</a></li>\n\t                    <li><a href=\"/gs050201\">전화번호 안내</a></li>\n\t                    <li><a href=\"/gs060301\">저작권정책</a></li>\n\t                </ul>\n\t                <p class=\"copyright-text\">\n\t                    COPYRIGHT © 2021 GANGSEO-GU. ALL RIGHTS RESERVED.\n\t                </p>\n\t            </div>\n\t        </div>\n\t        <div class=\"web_icon\">\n\t\t            <a title=\"새창\" href=\"http://www.wa.or.kr/board/list.asp?search=total&SearchString=%B0%AD%BC%AD%B1%B8%C3%BB&BoardID=0006\" target=\"_blank\"><img src=\"/humanframe/theme/global/assets/image/common/web_icon_2026.png\" alt=\"과학기술정보통신부 WA WEB 접근성 한국정보접근성인증평가원 2026.05.22 ~ 2027.05.21\"></a>\n\t\t        </div>\n\t        </div>\n\t</div></footer>\n\t\t\t<a href=\"#none\" class=\"moveTop\">\n\t\t\t\t<i class=\"fa fa-chevron-up\"><span>최상단으로 이동</span></i>\n\t\t\t</a>\n        </div>\n\n\t<form id=\"frmLoginForward\" name=\"frmLoginForward\" method=\"post\">\n\t\t<input type=\"hidden\" id=\"returnUrl\" name=\"returnUrl\" value=\"/index\"/>\n\t</form>\n\n\t<div class=\"mask-layer\"></div>\n\t<div class=\"gnb-mask-layer\"></div>\n\n\t<div class=\"layer-popup-wrap\" id=\"layerImage\" style=\"display:none\">\n\t    <div class=\"layer-popup-head\">\n\t        <div class=\"title\">이미지미리보기</div>\n\t    </div>\n\t    <div class=\"layer-popup-body\">\n\t        <img id=\"imgPreview\" src=\"\" alt=\"preview\" style=\"width: 100%;height: auto;\">\n\t    </div>\n\t    <div class=\"layer-popup-close\"><a href=\"#none\"><span class=\"hd-element\">레이어팝업 닫기</span></a></div>\n\t</div>\n</body>\n</html>"
+    }
+  ],
+  "window_detail_candidates": [
+    {
+      "window_index": 1,
+      "label": "통합예약",
+      "url": "https://www.gangseo.seoul.kr/reserve",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "회원가입",
+      "url": "https://www.gangseo.seoul.kr/join",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "English",
+      "url": "https://www.gangseo.seoul.kr/eng",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "강서구",
+      "url": "https://www.gangseo.seoul.kr/index",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "문화관광",
+      "url": "https://www.gangseo.seoul.kr/munhwa",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "보건소",
+      "url": "https://www.gangseo.seoul.kr/health",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "어린이",
+      "url": "https://www.gangseo.seoul.kr/kids",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "부서",
+      "url": "https://www.gangseo.seoul.kr/gs050201",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "동주민",
+      "url": "https://www.gangseo.seoul.kr/gs100000",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "동안내",
+      "url": "https://www.gangseo.seoul.kr/gs100101",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "가양1동",
+      "url": "https://www.gangseo.seoul.kr/gs100002",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "우리동 소개",
+      "url": "https://www.gangseo.seoul.kr/gs100201",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "동현황",
+      "url": "https://www.gangseo.seoul.kr/gs100202",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "동유래 및 연혁",
+      "url": "https://www.gangseo.seoul.kr/gs100203",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "직원안내",
+      "url": "https://www.gangseo.seoul.kr/gs100204",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "오시는길",
+      "url": "https://www.gangseo.seoul.kr/gs100205",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 1,
+      "label": "우리동 소식",
+      "url": "https://www.gangseo.seoul.kr/gs100206?srchStdg=STDG_1",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "target=\"_blank\">도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식"
+    },
+    {
+      "window_index": 2,
+      "label": "고시(채용)공고 · 입법예고",
+      "url": "https://www.gangseo.seoul.kr/gs100208?srchStdg=STDG_1",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 <a href=\"https://jachi.gangseo.seoul.kr/cpage/program/cpageProgramList\" target=\"_blank\" title=\"새창\" class=\"other-link l"
+    },
+    {
+      "window_index": 2,
+      "label": "포토갤러리",
+      "url": "https://www.gangseo.seoul.kr/gs100209?srchStdg=STDG_1",
+      "onclick": "",
+      "data_attributes": {},
+      "probable_detail_url": false,
+      "window_preview": "송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 <a href=\"https://jachi.gangseo.seoul.kr/cpage/program/cpageProgramList\" target=\"_blank\" title=\"새창\" class=\"other-link l"
+    }
+  ],
+  "detail_seed_candidates": [],
+  "resolution": "GANGSEO_BBS_RESULTS_CONFIRMED_DOM_ITEM_STILL_UNRESOLVED",
+  "runtime_registration_blocked": true,
+  "site_false_interpretation_blocked": true,
+  "next_action": "강서구 게시판 결과 3건은 서버에서 재확인됐으나 일반 LI/TR/DL/ARTICLE 구조로 결과 block을 분리하지 못했다. 저장된 raw HTML에서 게시판 결과 영역의 DIV/class 구조를 site-specific하게 추출한다."
+}

@@ -1,0 +1,100 @@
+{
+  "step": "STEP 17-21-C-16-8-S Development Density Management Area Gazette Historical Strong Detail Verification",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "input": {
+    "path": "D:\\site-ai\\law_data\\output\\development_density_management_area_gazette_historical_detail_candidate_refinement.json",
+    "strong_detail_candidate_count": 2
+  },
+  "method": {
+    "actual_detail_http_verification": true,
+    "body_target_required": true,
+    "action_context_required": true,
+    "official_notice_number_required": true,
+    "search_url_final_positive_allowed": false,
+    "list_url_final_positive_allowed": false,
+    "preview_url_final_positive_allowed": false,
+    "structural_url_only_positive_allowed": false,
+    "generic_action_word_only_positive_allowed": false
+  },
+  "summary": {
+    "candidate_count": 2,
+    "request_count": 2,
+    "http_success_count": 2,
+    "transport_error_count": 0,
+    "html_parse_count": 2,
+    "general_false_positive_count": 2,
+    "verified_positive_count": 0,
+    "rejected_or_unverified_count": 2,
+    "search_like_final_positive_leakage": 0
+  },
+  "verification_records": [
+    {
+      "region": "경상남도 김해시",
+      "agency": "경상남도 김해시",
+      "label": "저당권설정, 말소, 이전·변경",
+      "url": "https://www.gimhae.go.kr/00610/00639/00679.web",
+      "final_url": "https://www.gimhae.go.kr/00610/00639/00679.web",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "html_title": "저당권설정, 말소, 이전·변경 | 김해시청",
+      "target_in_document_body": false,
+      "action_context": true,
+      "strong_official_context": true,
+      "notice_numbers": [],
+      "dates": [
+        "2026-07-08",
+        "2026-08-02"
+      ],
+      "search_url": false,
+      "list_url": false,
+      "preview_url": false,
+      "general_false_positive": true,
+      "verified_positive": false,
+      "resolution": "REJECTED_STRUCTURAL_FALSE_POSITIVE",
+      "reasons": [
+        "TARGET_NOT_IN_DOCUMENT_BODY",
+        "NO_NOTICE_NUMBER_EVIDENCE",
+        "GENERAL_UNRELATED_FALSE_POSITIVE"
+      ],
+      "preview": "저당권설정, 말소, 이전·변경 | 김해시청 본문 바로가기 주 메뉴 바로가기 이 누리집은 대한민국 공식 전자정부 누리집입니다. 포털 홈 시정포털 관광포털 분야포털 공공예약포털 주민자치포털 기업119 일자리지원센터 김해시의회 공공데이터 스마트도시 교통정보 국가상징 Global Navigation 홈 사이트맵 LANGUAGE 펼치기 한국어 ENGLISH 中國語 日本語 Tiếng Việt o'zbek tili LANGUAGE 닫기 김해시 상단 메뉴 주 메뉴 펼치기 Global Navigation 홈 사이트맵 LANGUAGE 펼치기 한국어 ENGLISH 中國語 日本語 Tiếng Việt o'zbek tili LANGUAGE 닫기 주 메뉴 닫기 종합민원 종합민원 편리하고 정확한 민원처리를 위해 최선을 다하겠습니다. 민원안내 민원편람(민원서식) QR코드 민원서식(예시) 민원처리기간 민원처리공개 민원사무안내 가족관계등록 인터넷지방세 지방세 미리계산하기 지방세 상담챗봇 상하수도요금 정부24 110정부민원안내콜센터 청내 분실물 보관소 운영 취약계층 배려 창구 민원상담 민원상담(신문고) 나의민원보기 민원상담신청(2018년 이전) 바로가기 민원편의제도 사전심사청구제 민원후견인제 무인민원발급창구 어디서나민원처리제 복합민원 사전상담 예약제 민원사무 착오 및 지연 보상 제"
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "label": "지정기부 진해 벚꽃소생 프로젝트",
+      "url": "https://www.changwon.go.kr/cwportal/10311/10952/15007.web",
+      "final_url": "https://www.changwon.go.kr/cwportal/10311/10952/15007.web",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "html_title": "지정기부 진해 벚꽃소생 프로젝트 | 창원특례시",
+      "target_in_document_body": false,
+      "action_context": true,
+      "strong_official_context": true,
+      "notice_numbers": [],
+      "dates": [
+        "2025-01-01",
+        "2027-12-03"
+      ],
+      "search_url": false,
+      "list_url": false,
+      "preview_url": false,
+      "general_false_positive": true,
+      "verified_positive": false,
+      "resolution": "REJECTED_STRUCTURAL_FALSE_POSITIVE",
+      "reasons": [
+        "TARGET_NOT_IN_DOCUMENT_BODY",
+        "NO_NOTICE_NUMBER_EVIDENCE",
+        "GENERAL_UNRELATED_FALSE_POSITIVE"
+      ],
+      "preview": "지정기부 진해 벚꽃소생 프로젝트 | 창원특례시 서비스 접속 대기 중입니다. 예상대기시간 : --:--:-- 현재 접속 사용자가 많아 대기중이며, 잠시만 기다리시면 자동 접속됩니다. 창원특례시 서비스 접속이 차단 되었습니다. 현재 접속하신 아이피에서는 접속이 불가능합니다. 창원특례시 서비스 접속이 불가합니다. 접속량이 많아 접속이 불가능합니다. 잠시 후 다시 접속해주세요 창원특례시 본문 바로가기 주 메뉴 바로가기 JavaScript has been disabled. This site requires JavaScript for full functionality, please enable. 이 누리집은 대한민국 공식 전자정부 누리집입니다. 창원특례시 통합예약 기업경제정보 분야별정보 구청정보 창원관광 창원특례시의회 나를 위한 맞춤 정보 My창원 오늘 안보이기 닫기 통합검색 보이기 통합검색 검색하기 통합검색 숨기기 본인인증 Korean Korean English 日本語 中文 Việt Nam 언어선택 숨기기 창원고향사랑기부제 주 메뉴 주 메뉴 펼치기 주 메뉴 닫기 창원특례시 통합예약 기업경제정보 분야별정보 구청정보 창원고향사랑기부제 명예의전당 생활밀착형사업 Korean Korean English 日本語 中文 Việt Nam 언어선택 숨기기 창원관광 창원특례"
+    }
+  ],
+  "verified_positive_candidates": [],
+  "resolution": "GAZETTE_HISTORICAL_STRONG_DETAIL_VERIFICATION_COMPLETED_NO_POSITIVE",
+  "runtime_registration_blocked": true,
+  "site_false_interpretation_blocked": true,
+  "next_action": "R-stage strong detail 후보는 구조적 false positive 또는 unverified 문서로 유지한다. 다음 단계에서는 과거 공보의 실제 게시물 행/첨부파일 URL 추출과 연도·호수별 archive 본문 검색으로 확장한다."
+}

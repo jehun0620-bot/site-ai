@@ -1,0 +1,140 @@
+{
+  "step": "STEP 17-21-C-16-8-T-2-S1 Historical Target Document Reverse Discovery Semantic Candidate Gate Hardening",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "resolution_policy": {
+    "resolution_type": "HYBRID_SPATIAL_NOTICE",
+    "negative_evidence_allowed": false,
+    "source_failure_site_status": "UNKNOWN"
+  },
+  "inputs": {
+    "t1_stage_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_historical_target_document_discovery.json",
+    "s3_stage_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_historical_source_family_entry_endpoint_qualification_hardening.json",
+    "t1_resolution": "HISTORICAL_TARGET_DOCUMENT_DISCOVERY_NO_DOCUMENT"
+  },
+  "method": {
+    "exact_target_search_enabled": true,
+    "legal_identity_reverse_search_enabled": true,
+    "historical_notice_identity_search_enabled": true,
+    "same_host_only": true,
+    "official_go_kr_candidate_required": true,
+    "search_engine_scraping_enabled": false,
+    "bounded_query_matrix_enabled": true,
+    "endpoint_bruteforce_repeat_enabled": false,
+    "region_binding_required": true,
+    "generic_urban_notice_auto_promotion_disabled": true,
+    "query_used_as_candidate_evidence": false,
+    "page_title_used_as_candidate_evidence": false,
+    "link_local_candidate_evidence_only": true,
+    "document_url_identity_required": true,
+    "generic_navigation_candidate_promotion_disabled": true,
+    "canonical_document_identity_by_url": true,
+    "cross_source_family_document_dedupe_enabled": true,
+    "document_provenance_merge_enabled": true,
+    "negative_evidence_enabled": false,
+    "verified_positive_promotion_allowed": false,
+    "runtime_registration_allowed": false,
+    "site_positive_allowed": false
+  },
+  "summary": {
+    "s3_endpoint_count": 7,
+    "request_count": 120,
+    "http_success_count": 120,
+    "transport_error_count": 0,
+    "query_contamination_rejected_count": 41664,
+    "page_title_only_rejected_count": 0,
+    "navigation_link_rejected_count": 0,
+    "document_identity_rejected_count": 0,
+    "raw_candidate_count": 0,
+    "duplicate_candidate_removed": 0,
+    "canonical_record_count": 0,
+    "candidate_document_count": 0,
+    "rejected_document_count": 0,
+    "next_stage_document_pool_count": 0
+  },
+  "classification_counts": {},
+  "source_results": [
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "url": "https://bsgangseo.go.kr/portal/bsgsNscvrg/list.do?mid=0605010000",
+      "request_count": 18,
+      "candidate_count": 0,
+      "resolution": "NOT_FOUND_IN_REVERSE_DISCOVERY"
+    },
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "url": "https://bsgangseo.go.kr/portal/nscvrgRmrk/list.do?mid=0605020000",
+      "request_count": 18,
+      "candidate_count": 0,
+      "resolution": "NOT_FOUND_IN_REVERSE_DISCOVERY"
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 평택시"
+      ],
+      "url": "http://119.gg.go.kr/pyeongtaek",
+      "request_count": 18,
+      "candidate_count": 0,
+      "resolution": "NOT_FOUND_IN_REVERSE_DISCOVERY"
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 평택시"
+      ],
+      "url": "http://119.gg.go.kr/pyeongtaek/ntt/index.do?bbsId=gg_12_58&menuId=pt_003_001",
+      "request_count": 18,
+      "candidate_count": 0,
+      "resolution": "NOT_FOUND_IN_REVERSE_DISCOVERY"
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시"
+      ],
+      "url": "https://119.gg.go.kr/seongnam",
+      "request_count": 18,
+      "candidate_count": 0,
+      "resolution": "NOT_FOUND_IN_REVERSE_DISCOVERY"
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시"
+      ],
+      "url": "https://119.gg.go.kr/seongnam/ntt/index.do?bbsId=gg_3_45&menuId=sn_003_001",
+      "request_count": 18,
+      "candidate_count": 0,
+      "resolution": "NOT_FOUND_IN_REVERSE_DISCOVERY"
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501020000",
+      "request_count": 12,
+      "candidate_count": 0,
+      "resolution": "NOT_FOUND_IN_REVERSE_DISCOVERY"
+    }
+  ],
+  "candidate_documents": [],
+  "rejected_documents": [],
+  "next_stage_document_pool": [],
+  "all_canonical_records": [],
+  "resolution": "HISTORICAL_TARGET_DOCUMENT_REVERSE_DISCOVERY_NO_DOCUMENT",
+  "next_action": "현재 S-3 source 범위의 hardened reverse discovery에서도 개발밀도관리구역 historical document identity가 확인되지 않았다. SITE FALSE로 판정하지 않고 UNKNOWN을 유지한다. 다음 단계에서는 실제 search form action 복원 또는 notice-number reverse lookup source family를 추가한다.",
+  "verified_positive": false,
+  "runtime_registration_allowed": false,
+  "site_positive_allowed": false,
+  "final_positive_promotion_allowed": false
+}

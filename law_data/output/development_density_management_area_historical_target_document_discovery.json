@@ -1,0 +1,187 @@
+{
+  "step": "STEP 17-21-C-16-8-T-1 Historical Target Document Discovery",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "regulation_resolution_policy": {
+    "name": "개발밀도관리구역",
+    "resolution_type": "HYBRID_SPATIAL_NOTICE",
+    "official_source_required": true,
+    "designation_notice_required": true,
+    "historical_notice_required": true,
+    "spatial_confirmation_required": true,
+    "legal_rule_calculation_required": false,
+    "external_authority_confirmation_required": false,
+    "negative_evidence_allowed": false,
+    "source_not_found_means_false": false,
+    "discovery_stage_positive_allowed": false,
+    "endpoint_stage_positive_allowed": false,
+    "document_candidate_positive_allowed": false,
+    "runtime_registration_allowed": false,
+    "site_positive_allowed": false,
+    "true_requirements": [
+      "OFFICIAL_DESIGNATION_IDENTITY_VERIFIED",
+      "DESIGNATION_VALIDITY_VERIFIED",
+      "SITE_SPATIAL_INCLUSION_VERIFIED"
+    ],
+    "false_requirements_any": [
+      "OFFICIAL_SPATIAL_EXCLUSION_VERIFIED",
+      "OFFICIAL_RELEASE_OR_CANCELLATION_VERIFIED",
+      "AUTHORITATIVE_NON_DESIGNATION_VERIFIED"
+    ],
+    "unknown_conditions": [
+      "SOURCE_NOT_FOUND_IN_THIS_SOURCE",
+      "HISTORICAL_SOURCE_UNRESOLVED",
+      "NOTICE_IDENTITY_UNVERIFIED",
+      "SPATIAL_SCOPE_UNVERIFIED",
+      "VALIDITY_PERIOD_UNVERIFIED"
+    ],
+    "standard_code": "UQQ700"
+  },
+  "inputs": {
+    "s3_stage_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_historical_source_family_entry_endpoint_qualification_hardening.json",
+    "s3_stage_resolution": "HISTORICAL_SOURCE_FAMILY_ENTRY_ENDPOINT_QUALIFICATION_HARDENING_COMPLETED"
+  },
+  "method": {
+    "s3_hardened_endpoint_only": true,
+    "endpoint_rediscovery_disabled": true,
+    "search_engine_scraping_disabled": true,
+    "bounded_target_query_matrix": true,
+    "target_queries": [
+      "개발밀도관리구역",
+      "개발밀도관리구역 지정",
+      "개발밀도관리구역 변경",
+      "개발밀도관리구역 해제",
+      "개발밀도관리구역 고시",
+      "개발밀도관리구역 지정 고시"
+    ],
+    "same_host_document_discovery_required": true,
+    "official_go_kr_source_required": true,
+    "source_family_scope_inherited": true,
+    "region_scope_inherited": true,
+    "source_not_found_is_false": false,
+    "negative_evidence_allowed": false,
+    "document_candidate_positive_allowed": false,
+    "runtime_registration_allowed": false,
+    "site_positive_allowed": false,
+    "final_positive_promotion_allowed": false
+  },
+  "summary": {
+    "s3_endpoint_count": 7,
+    "request_count": 42,
+    "http_success_count": 42,
+    "transport_error_count": 0,
+    "raw_candidate_count": 0,
+    "duplicate_candidate_removed": 0,
+    "canonical_document_candidate_count": 0,
+    "next_stage_document_pool_count": 0,
+    "source_no_result_count": 7
+  },
+  "candidate_classification_counts": {},
+  "source_classification_counts": {
+    "NOT_FOUND_IN_THIS_SOURCE": 7
+  },
+  "source_results": [
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "source_entry_url": "https://bsgangseo.go.kr/portal/bsgsNscvrg/list.do?mid=0605010000",
+      "request_count": 6,
+      "candidate_count": 0,
+      "classification": "NOT_FOUND_IN_THIS_SOURCE",
+      "site_status_if_only_source": "UNKNOWN",
+      "negative_evidence_allowed": false,
+      "source_not_found_means_false": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "source_entry_url": "https://bsgangseo.go.kr/portal/nscvrgRmrk/list.do?mid=0605020000",
+      "request_count": 6,
+      "candidate_count": 0,
+      "classification": "NOT_FOUND_IN_THIS_SOURCE",
+      "site_status_if_only_source": "UNKNOWN",
+      "negative_evidence_allowed": false,
+      "source_not_found_means_false": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 평택시"
+      ],
+      "source_entry_url": "http://119.gg.go.kr/pyeongtaek",
+      "request_count": 6,
+      "candidate_count": 0,
+      "classification": "NOT_FOUND_IN_THIS_SOURCE",
+      "site_status_if_only_source": "UNKNOWN",
+      "negative_evidence_allowed": false,
+      "source_not_found_means_false": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 평택시"
+      ],
+      "source_entry_url": "http://119.gg.go.kr/pyeongtaek/ntt/index.do?bbsId=gg_12_58&menuId=pt_003_001",
+      "request_count": 6,
+      "candidate_count": 0,
+      "classification": "NOT_FOUND_IN_THIS_SOURCE",
+      "site_status_if_only_source": "UNKNOWN",
+      "negative_evidence_allowed": false,
+      "source_not_found_means_false": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시"
+      ],
+      "source_entry_url": "https://119.gg.go.kr/seongnam",
+      "request_count": 6,
+      "candidate_count": 0,
+      "classification": "NOT_FOUND_IN_THIS_SOURCE",
+      "site_status_if_only_source": "UNKNOWN",
+      "negative_evidence_allowed": false,
+      "source_not_found_means_false": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시"
+      ],
+      "source_entry_url": "https://119.gg.go.kr/seongnam/ntt/index.do?bbsId=gg_3_45&menuId=sn_003_001",
+      "request_count": 6,
+      "candidate_count": 0,
+      "classification": "NOT_FOUND_IN_THIS_SOURCE",
+      "site_status_if_only_source": "UNKNOWN",
+      "negative_evidence_allowed": false,
+      "source_not_found_means_false": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "source_entry_url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501020000",
+      "request_count": 6,
+      "candidate_count": 0,
+      "classification": "NOT_FOUND_IN_THIS_SOURCE",
+      "site_status_if_only_source": "UNKNOWN",
+      "negative_evidence_allowed": false,
+      "source_not_found_means_false": false
+    }
+  ],
+  "document_candidates": [],
+  "next_stage_document_pool": [],
+  "source_failure_site_status": "UNKNOWN",
+  "resolution": "HISTORICAL_TARGET_DOCUMENT_DISCOVERY_NO_DOCUMENT",
+  "next_action": "현재 S-3 historical endpoint에서는 개발밀도관리구역 관련 문서가 발견되지 않았다. 이는 SITE FALSE가 아니다. 다른 official source family 또는 notice-number reverse lookup 경로를 추가 탐색한다.",
+  "verified_positive": false,
+  "runtime_registration_allowed": false,
+  "site_positive_allowed": false,
+  "final_positive_promotion_allowed": false
+}

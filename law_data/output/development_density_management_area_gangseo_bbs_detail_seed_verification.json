@@ -1,0 +1,166 @@
+{
+  "step": "STEP 17-21-C-16-8-Q Development Density Management Area Gangseo BBS Detail Seed Extraction / Verification",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "input": {
+    "p_stage_json": "D:\\site-ai\\law_data\\output\\development_density_management_area_gangseo_bbs_result_dom_inspection.json",
+    "p_stage_html": "D:\\site-ai\\law_data\\output\\development_density_management_area_gangseo_bbs_result_response.html",
+    "p_stage_json_exists": true,
+    "p_stage_html_exists": true
+  },
+  "method": {
+    "site_specific_bbs_result_extraction": true,
+    "bbs_result_marker_required": true,
+    "search_result_is_final_positive": false,
+    "detail_document_body_target_required": true,
+    "official_notice_context_required": true,
+    "notice_action_required": true,
+    "notice_number_required_for_verified_positive": true,
+    "general_news_false_positive_guard": true,
+    "runtime_registration_allowed": false
+  },
+  "search_result": {
+    "expected_bbs_count": 3,
+    "html_marker_found": true,
+    "all_detail_candidate_count": 3,
+    "bbs_detail_candidate_count": 3,
+    "filtered_detail_candidate_count": 3,
+    "core_detail_seed_count": 3
+  },
+  "core_detail_seeds": [
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "label": "강서구, 도시개발예측시스템 구축 완료",
+      "url": "https://www.gangseo.seoul.kr/gs100206/175169?srchStdg=STDG_1",
+      "source_position": 83869,
+      "after_bbs_marker": true,
+      "target_in_label": false,
+      "source": "GANGSEO_BBS_SEARCH_RESULT"
+    },
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "label": "강서구, 도시개발예측시스템 구축 완료",
+      "url": "https://www.gangseo.seoul.kr/gs100206/175134?srchStdg=STDG_1",
+      "source_position": 86000,
+      "after_bbs_marker": true,
+      "target_in_label": false,
+      "source": "GANGSEO_BBS_SEARCH_RESULT"
+    },
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "label": "도시개발예측시스템 올 12월 시행",
+      "url": "https://www.gangseo.seoul.kr/gs100206/172848?srchStdg=STDG_1",
+      "source_position": 88131,
+      "after_bbs_marker": true,
+      "target_in_label": false,
+      "source": "GANGSEO_BBS_SEARCH_RESULT"
+    }
+  ],
+  "verification_records": [
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "label": "강서구, 도시개발예측시스템 구축 완료",
+      "url": "https://www.gangseo.seoul.kr/gs100206/175169?srchStdg=STDG_1",
+      "source_position": 83869,
+      "after_bbs_marker": true,
+      "target_in_label": false,
+      "source": "GANGSEO_BBS_SEARCH_RESULT",
+      "final_url": "https://www.gangseo.seoul.kr/gs100206/175169?srchStdg=STDG_1",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "target_in_document_body": false,
+      "strong_official_context": true,
+      "notice_action_context": true,
+      "notice_numbers": [],
+      "dates": [
+        "2007-12-04"
+      ],
+      "general_news_false_positive": true,
+      "search_url": false,
+      "verified_positive": false,
+      "verification_reasons": [
+        "TARGET_NOT_IN_DOCUMENT_BODY",
+        "GENERAL_NEWS_FALSE_POSITIVE",
+        "NO_NOTICE_NUMBER_EVIDENCE"
+      ],
+      "preview": "공지 및 소식(상세화면) - 우리동 소식 - 가양1동 - 동주민센터 주메뉴 바로가기 본문 바로가기 태극기 이 누리집은 대한민국 공식 전자정부 누리집입니다. 최상단으로 이동 강서구 구의회 문화관광 보건소 아동·청소년 부서 동주민 주요사이트 강서구 주요 사이트 모아보기 주요사이트 자치회관 강서구의회 협치강서 i강서TV --> 강서뉴미디어지원센터 강서구 구립도서관 강서구 장학회 강서구 전자도서관 평생학습관 주차민원센터 강서구 시설관리공단 강서구 자원봉사센터 의료관광특구 강서구 일자리센터 강서구사회적경제통합지원센터 강서구 노동복지센터 강서별빛우주과학관 마곡안전체험관 유관기관 강서구 가족센터 강서구 육아종합지원센터 강서구 노동복지센터 강서구 마을자치센터 강서진로직업체험지원센터 강서아트리움 겸재정선미술관 허준박물관 강서구지역사회보장협의체 강서청소년 회관 서울시 자치구 서울시청 강남구 강동구 강북구 강서구 관악구 광진구 구로구 금천구 노원구 도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English --> --> 종합민원 민원안내 민원실 창구 안내 민원여권 지적 세무 교통 주차 강서구청 민원대기 현황 조회 주민센터 민원대기 현황 조회 무인민원발급기 안내 설치장소 발급받을 수 있는 증명 민원서비스 안내 민원수수료/구술가능민원사무 사전심사청구제 사회배려 대상자 여권신청 우선창구 민원사무편람(서식) 정부24(인터넷민원) 120 다산콜센터 행정서비스헌장 민원상담/신청 새올전자민원창구 모바일 우수자원봉사증 응답소 현장민원 대형폐기물처리신청 배출신고 안내 처리방법 수집·운반 수수료 배출신청 무료법률상담 무료법률상담 강서로콜 안내 무료법률상담 강서로콜 예약 무료법률상담 강서로콜 예약조회 현수막지정게시대 민원신고 공익신고 하도급부조리신고 공직자 부조리 신고 갑질피해 신고 분야별민원 여권 여권안내 여권접수 인터넷 사전예약 세무 월별 지방세 납부 안내 주민세"
+    },
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "label": "강서구, 도시개발예측시스템 구축 완료",
+      "url": "https://www.gangseo.seoul.kr/gs100206/175134?srchStdg=STDG_1",
+      "source_position": 86000,
+      "after_bbs_marker": true,
+      "target_in_label": false,
+      "source": "GANGSEO_BBS_SEARCH_RESULT",
+      "final_url": "https://www.gangseo.seoul.kr/gs100206/175134?srchStdg=STDG_1",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "target_in_document_body": false,
+      "strong_official_context": true,
+      "notice_action_context": true,
+      "notice_numbers": [],
+      "dates": [
+        "2007-12-03"
+      ],
+      "general_news_false_positive": true,
+      "search_url": false,
+      "verified_positive": false,
+      "verification_reasons": [
+        "TARGET_NOT_IN_DOCUMENT_BODY",
+        "GENERAL_NEWS_FALSE_POSITIVE",
+        "NO_NOTICE_NUMBER_EVIDENCE"
+      ],
+      "preview": "공지 및 소식(상세화면) - 우리동 소식 - 가양1동 - 동주민센터 주메뉴 바로가기 본문 바로가기 태극기 이 누리집은 대한민국 공식 전자정부 누리집입니다. 최상단으로 이동 강서구 구의회 문화관광 보건소 아동·청소년 부서 동주민 주요사이트 강서구 주요 사이트 모아보기 주요사이트 자치회관 강서구의회 협치강서 i강서TV --> 강서뉴미디어지원센터 강서구 구립도서관 강서구 장학회 강서구 전자도서관 평생학습관 주차민원센터 강서구 시설관리공단 강서구 자원봉사센터 의료관광특구 강서구 일자리센터 강서구사회적경제통합지원센터 강서구 노동복지센터 강서별빛우주과학관 마곡안전체험관 유관기관 강서구 가족센터 강서구 육아종합지원센터 강서구 노동복지센터 강서구 마을자치센터 강서진로직업체험지원센터 강서아트리움 겸재정선미술관 허준박물관 강서구지역사회보장협의체 강서청소년 회관 서울시 자치구 서울시청 강남구 강동구 강북구 강서구 관악구 광진구 구로구 금천구 노원구 도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English --> --> 종합민원 민원안내 민원실 창구 안내 민원여권 지적 세무 교통 주차 강서구청 민원대기 현황 조회 주민센터 민원대기 현황 조회 무인민원발급기 안내 설치장소 발급받을 수 있는 증명 민원서비스 안내 민원수수료/구술가능민원사무 사전심사청구제 사회배려 대상자 여권신청 우선창구 민원사무편람(서식) 정부24(인터넷민원) 120 다산콜센터 행정서비스헌장 민원상담/신청 새올전자민원창구 모바일 우수자원봉사증 응답소 현장민원 대형폐기물처리신청 배출신고 안내 처리방법 수집·운반 수수료 배출신청 무료법률상담 무료법률상담 강서로콜 안내 무료법률상담 강서로콜 예약 무료법률상담 강서로콜 예약조회 현수막지정게시대 민원신고 공익신고 하도급부조리신고 공직자 부조리 신고 갑질피해 신고 분야별민원 여권 여권안내 여권접수 인터넷 사전예약 세무 월별 지방세 납부 안내 주민세"
+    },
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "label": "도시개발예측시스템 올 12월 시행",
+      "url": "https://www.gangseo.seoul.kr/gs100206/172848?srchStdg=STDG_1",
+      "source_position": 88131,
+      "after_bbs_marker": true,
+      "target_in_label": false,
+      "source": "GANGSEO_BBS_SEARCH_RESULT",
+      "final_url": "https://www.gangseo.seoul.kr/gs100206/172848?srchStdg=STDG_1",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "target_in_document_body": false,
+      "strong_official_context": true,
+      "notice_action_context": true,
+      "notice_numbers": [],
+      "dates": [
+        "2007-08-01"
+      ],
+      "general_news_false_positive": false,
+      "search_url": false,
+      "verified_positive": false,
+      "verification_reasons": [
+        "TARGET_NOT_IN_DOCUMENT_BODY",
+        "NO_NOTICE_NUMBER_EVIDENCE"
+      ],
+      "preview": "공지 및 소식(상세화면) - 우리동 소식 - 가양1동 - 동주민센터 주메뉴 바로가기 본문 바로가기 태극기 이 누리집은 대한민국 공식 전자정부 누리집입니다. 최상단으로 이동 강서구 구의회 문화관광 보건소 아동·청소년 부서 동주민 주요사이트 강서구 주요 사이트 모아보기 주요사이트 자치회관 강서구의회 협치강서 i강서TV --> 강서뉴미디어지원센터 강서구 구립도서관 강서구 장학회 강서구 전자도서관 평생학습관 주차민원센터 강서구 시설관리공단 강서구 자원봉사센터 의료관광특구 강서구 일자리센터 강서구사회적경제통합지원센터 강서구 노동복지센터 강서별빛우주과학관 마곡안전체험관 유관기관 강서구 가족센터 강서구 육아종합지원센터 강서구 노동복지센터 강서구 마을자치센터 강서진로직업체험지원센터 강서아트리움 겸재정선미술관 허준박물관 강서구지역사회보장협의체 강서청소년 회관 서울시 자치구 서울시청 강남구 강동구 강북구 강서구 관악구 광진구 구로구 금천구 노원구 도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English --> --> 종합민원 민원안내 민원실 창구 안내 민원여권 지적 세무 교통 주차 강서구청 민원대기 현황 조회 주민센터 민원대기 현황 조회 무인민원발급기 안내 설치장소 발급받을 수 있는 증명 민원서비스 안내 민원수수료/구술가능민원사무 사전심사청구제 사회배려 대상자 여권신청 우선창구 민원사무편람(서식) 정부24(인터넷민원) 120 다산콜센터 행정서비스헌장 민원상담/신청 새올전자민원창구 모바일 우수자원봉사증 응답소 현장민원 대형폐기물처리신청 배출신고 안내 처리방법 수집·운반 수수료 배출신청 무료법률상담 무료법률상담 강서로콜 안내 무료법률상담 강서로콜 예약 무료법률상담 강서로콜 예약조회 현수막지정게시대 민원신고 공익신고 하도급부조리신고 공직자 부조리 신고 갑질피해 신고 분야별민원 여권 여권안내 여권접수 인터넷 사전예약 세무 월별 지방세 납부 안내 주민세"
+    }
+  ],
+  "verified_positive_documents": [],
+  "summary": {
+    "request_count": 3,
+    "http_success_count": 3,
+    "transport_error_count": 0,
+    "html_parse_count": 3,
+    "target_bearing_detail_count": 0,
+    "general_news_false_positive_count": 2,
+    "verified_positive_count": 0
+  },
+  "resolution": "GANGSEO_BBS_DETAIL_SEEDS_VERIFIED_TARGET_NOT_IN_DETAIL_BODY",
+  "runtime_registration_blocked": true,
+  "site_false_interpretation_blocked": true,
+  "next_action": "강서구 게시판 검색 결과의 상세 URL은 확보했지만 상세 본문에서는 target이 확인되지 않았다. 검색 엔진 index의 과거 cache/snippet 또는 추가 3번째 결과를 분석하고 공보 archive로 역추적한다."
+}

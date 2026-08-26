@@ -1,0 +1,73 @@
+{
+  "step": "STEP 17-21-C-16-8-N Development Density Management Area Gangseo Integrated Search Category Result Extraction",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "input": {
+    "m_stage_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_dynamic_detail_reconstruction.json",
+    "m_stage_exists": true,
+    "m_stage_parsed": true
+  },
+  "method": {
+    "actual_search_form_reused": true,
+    "hidden_fields_preserved": true,
+    "category_count_extraction": true,
+    "category_block_extraction": true,
+    "search_by_category_analysis": true,
+    "search_echo_guard": true,
+    "target_result_item_requires_visible_target": true,
+    "search_url_prohibited_as_detail_seed": true,
+    "detail_seed_is_final_positive": false
+  },
+  "search": {
+    "form": {
+      "form_index": 1,
+      "method": "POST",
+      "action_url": "https://www.gangseo.seoul.kr/search",
+      "search_field": "searchText",
+      "fields": {
+        "colTarget": "TOTAL",
+        "curPage": "1",
+        "lang": "KO",
+        "searchText": ""
+      }
+    },
+    "category_counts": {
+      "업무": 0,
+      "민원사무편람": 0,
+      "웹페이지": 0,
+      "게시판": 3,
+      "첨부파일": 0,
+      "통합예약": 0
+    },
+    "search_by_category_calls": [
+      "TOTAL",
+      "menu",
+      "employee",
+      "cvlcpt",
+      "webpage",
+      "bbs",
+      "attach",
+      "reserve"
+    ],
+    "search_by_category_function": null
+  },
+  "summary": {
+    "request_count": 2,
+    "http_success_count": 2,
+    "transport_error_count": 0,
+    "category_block_count": 0,
+    "anchor_item_count": 0,
+    "search_echo_item_count": 0,
+    "target_result_item_count": 0,
+    "detail_seed_candidate_count": 0
+  },
+  "category_blocks": [],
+  "result_items": [],
+  "detail_seed_candidates": [],
+  "resolution": "GANGSEO_CATEGORY_RESULTS_EXIST_BUT_TARGET_ITEM_NOT_EXTRACTED",
+  "runtime_registration_blocked": true,
+  "site_false_interpretation_blocked": true,
+  "next_action": "강서구 통합검색에는 게시판/첨부파일 결과 개수가 존재하지만 현재 HTML category block에서 실제 result item을 추출하지 못했다. 검색 결과가 JavaScript/AJAX 후처리되는지 확인하고 category별 요청 endpoint를 직접 재현한다."
+}

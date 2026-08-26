@@ -1,0 +1,2452 @@
+{
+  "step": "STEP 17-21-C-16-8-S-3 Historical Source Family Entry Endpoint Qualification Hardening",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "inputs": {
+    "s2_stage_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_historical_source_family_entry_endpoint_qualification.json",
+    "h_stage_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_official_board_endpoint_refinement.json",
+    "s2_stage_resolution": "HISTORICAL_SOURCE_FAMILY_ENTRY_ENDPOINT_QUALIFICATION_COMPLETED"
+  },
+  "method": {
+    "s2_qualified_only": true,
+    "direct_network_requery": true,
+    "http_2xx_required": true,
+    "final_host_go_kr_required": true,
+    "page_body_substring_role_matching_disabled": true,
+    "endpoint_local_evidence_only": true,
+    "title_evidence_enabled": true,
+    "heading_evidence_enabled": true,
+    "breadcrumb_evidence_enabled": true,
+    "url_evidence_enabled": true,
+    "hostname_evidence_enabled": true,
+    "form_action_evidence_enabled": true,
+    "gazette_exact_context_guard_enabled": true,
+    "bare_dobo_token_disabled": true,
+    "notice_false_positive_board_guard_enabled": true,
+    "municipality_exact_region_binding_enabled": true,
+    "municipality_url_alias_binding_enabled": true,
+    "province_only_match_for_municipality_disabled": true,
+    "s2_structured_region_recovery_enabled": true,
+    "s2_region_match_evidence_fallback_enabled": true,
+    "page_level_region_inheritance_enabled": false,
+    "detail_document_endpoint_promotion_disabled": true,
+    "modern_endpoint_repeat_disabled": true,
+    "max_response_bytes": 12582912,
+    "verified_positive_promotion_allowed": false,
+    "runtime_registration_allowed": false,
+    "site_positive_allowed": false
+  },
+  "summary": {
+    "s2_qualified_endpoint_count": 23,
+    "s2_region_recovery_count": 23,
+    "s2_region_missing_count": 0,
+    "request_count": 23,
+    "http_success_count": 23,
+    "transport_error_count": 0,
+    "canonical_record_count": 23,
+    "duplicate_endpoint_removed": 0,
+    "qualified_endpoint_count": 7,
+    "rejected_endpoint_count": 16,
+    "next_stage_endpoint_pool_count": 7
+  },
+  "qualified_family_counts": {
+    "LEGACY_LOCAL_GAZETTE": 2,
+    "LEGACY_LOCAL_NOTICE": 5
+  },
+  "classification_counts": {
+    "QUALIFIED_HARDENED_HISTORICAL_GAZETTE_ENDPOINT": 2,
+    "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT": 5,
+    "REJECTED_REGION_UNBOUND": 8,
+    "REJECTED_ROLE_WEAK": 8
+  },
+  "qualified_endpoints": [
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/bsgsNscvrg/list.do?mid=0605010000",
+      "final_url": "https://bsgangseo.go.kr/portal/bsgsNscvrg/list.do?mid=0605010000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 463258,
+      "encoding": "UTF-8",
+      "title": "강서구보 | 강서구보 | 강서소개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "강서구보",
+        "Bright Gangseo 강서소개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/portal/bsgsNscvrg/list.do?mid=0605010000",
+        "/portal/satisfaction/voteSatis.do?mid=0605010000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/bsgsNscvrg/list.do?mid=0605010000 bsgangseo.go.kr 강서구보 | 강서구보 | 강서소개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 강서구보 Bright Gangseo 강서소개 /RSA/front/Search.jsp /portal/bsgsNscvrg/list.do?mid=0605010000 /portal/satisfaction/voteSatis.do?mid=0605010000 /file/direct/download.do",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_GAZETTE_ENDPOINT",
+      "reasons": [
+        "GAZETTE_LOCAL:강서구보",
+        "GAZETTE_URL:nscvrg",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/nscvrgRmrk/list.do?mid=0605020000",
+      "final_url": "https://bsgangseo.go.kr/portal/nscvrgRmrk/list.do?mid=0605020000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 460648,
+      "encoding": "UTF-8",
+      "title": "구보부록 | 강서구보 | 강서소개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "구보부록",
+        "Bright Gangseo 강서소개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/portal/nscvrgRmrk/list.do?mid=0605020000",
+        "/portal/nscvrgRmrk/view.do?mid=0605020000",
+        "/portal/satisfaction/voteSatis.do?mid=0605020000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/nscvrgRmrk/list.do?mid=0605020000 bsgangseo.go.kr 구보부록 | 강서구보 | 강서소개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 구보부록 Bright Gangseo 강서소개 /RSA/front/Search.jsp /portal/nscvrgRmrk/list.do?mid=0605020000 /portal/nscvrgRmrk/view.do?mid=0605020000 /portal/satisfaction/voteSatis.do?mid=0605020000 /file/direct/download.do",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_GAZETTE_ENDPOINT",
+      "reasons": [
+        "GAZETTE_LOCAL:강서구보",
+        "GAZETTE_LOCAL:구보부록",
+        "GAZETTE_URL:nscvrg",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [
+        "경기도 평택시"
+      ],
+      "input_url": "http://119.gg.go.kr/pyeongtaek",
+      "final_url": "http://119.gg.go.kr/pyeongtaek",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "response_bytes": 345707,
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "의용소방대 활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "팝업존",
+        "평택소방서",
+        "고시/공고",
+        "바로가기",
+        "소방활동 사진",
+        "팝업제목"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "endpoint_local_evidence_preview": "http://119.gg.go.kr/pyeongtaek 119.gg.go.kr WiniFramework_V4.1 {{:thema}} 화재안전조사 공개 의용소방대 활동내용 최근 본 메뉴 소방민원 소통참여 알림마당 소방안전 자료실 소방안전 교육신청 소방서 소개 의용소방대 팝업존 평택소방서 고시/공고 바로가기 소방활동 사진 팝업제목",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 평택시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [
+        "경기도 평택시"
+      ],
+      "input_url": "http://119.gg.go.kr/pyeongtaek/ntt/index.do?bbsId=gg_12_58&menuId=pt_003_001",
+      "final_url": "http://119.gg.go.kr/pyeongtaek/ntt/index.do?bbsId=gg_12_58&menuId=pt_003_001",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "response_bytes": 319077,
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "의용소방대 활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "고시/공고",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 알림마당 고시/공고"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "http://119.gg.go.kr/pyeongtaek/ntt/index.do?bbsId=gg_12_58&menuId=pt_003_001 119.gg.go.kr WiniFramework_V4.1 {{:thema}} 화재안전조사 공개 의용소방대 활동내용 최근 본 메뉴 소방민원 소통참여 알림마당 소방안전 자료실 소방안전 교육신청 소방서 소개 의용소방대 고시/공고 팝업제목 비밀번호 입력 홈 알림마당 고시/공고",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 평택시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [
+        "경기도 성남시"
+      ],
+      "input_url": "https://119.gg.go.kr/seongnam",
+      "final_url": "https://119.gg.go.kr/seongnam",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "response_bytes": 340188,
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "팝업존",
+        "성남소방서",
+        "고시/공고",
+        "바로가기",
+        "소방활동 사진",
+        "팝업제목"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "endpoint_local_evidence_preview": "https://119.gg.go.kr/seongnam 119.gg.go.kr WiniFramework_V4.1 {{:thema}} 화재안전조사 공개 활동내용 최근 본 메뉴 소방민원 소통참여 알림마당 소방안전 자료실 소방안전 교육신청 소방서 소개 의용소방대 팝업존 성남소방서 고시/공고 바로가기 소방활동 사진 팝업제목",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 성남시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [
+        "경기도 성남시"
+      ],
+      "input_url": "https://119.gg.go.kr/seongnam/ntt/index.do?bbsId=gg_3_45&menuId=sn_003_001",
+      "final_url": "https://119.gg.go.kr/seongnam/ntt/index.do?bbsId=gg_3_45&menuId=sn_003_001",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "response_bytes": 316198,
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "고시/공고",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 알림마당 고시/공고"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://119.gg.go.kr/seongnam/ntt/index.do?bbsId=gg_3_45&menuId=sn_003_001 119.gg.go.kr WiniFramework_V4.1 {{:thema}} 화재안전조사 공개 활동내용 최근 본 메뉴 소방민원 소통참여 알림마당 소방안전 자료실 소방안전 교육신청 소방서 소개 의용소방대 고시/공고 팝업제목 비밀번호 입력 홈 알림마당 고시/공고",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 성남시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501020000",
+      "final_url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501020000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 431556,
+      "encoding": "UTF-8",
+      "title": "고시공고 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "고시공고",
+        "Bright Gangseo 정보공개",
+        "배너 모음"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/portal/satisfaction/voteSatis.do?mid=0501020000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/contents.do?mid=0501020000 bsgangseo.go.kr 고시공고 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 고시공고 Bright Gangseo 정보공개 배너 모음 /RSA/front/Search.jsp /portal/satisfaction/voteSatis.do?mid=0501020000 /file/direct/download.do",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "reasons": [
+        "NOTICE_LOCAL:고시공고",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    }
+  ],
+  "rejected_endpoints": [
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "경기도 성남시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://airsms.gg.go.kr/service/form.asp",
+      "final_url": "https://airsms.gg.go.kr/service/form.asp",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "encoding": "utf-8",
+      "title": "경기도 대기질정보 알림톡서비스 가입 - 경기도 대기질정보 알림톡서비스",
+      "headings": [
+        "경기도 대기질정보 알림톡서비스",
+        "경기도 대기질정보 알림톡서비스 가입을 위한 개인정보 수집·이용 동의서",
+        "이용약관"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "충청남도 당진시"
+      ],
+      "matched_regions": [
+        "충청남도 당진시"
+      ],
+      "input_url": "https://beogeunae.dangjin.go.kr/",
+      "final_url": "https://beogeunae.dangjin.go.kr/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 36912,
+      "encoding": "utf-8",
+      "title": "버그내 순례길 - 역사 깃든 천주교 성지 따라 순례에 나서다",
+      "headings": [
+        "팝업레이어 알림",
+        "천주교 순교의 발자취를 따라 당진 버그내 순례길 을 걷다.",
+        "순례길 성지소개",
+        "커뮤니티",
+        "버그내 순례길 코스안내"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "endpoint_local_evidence_preview": "https://beogeunae.dangjin.go.kr/ beogeunae.dangjin.go.kr 버그내 순례길 - 역사 깃든 천주교 성지 따라 순례에 나서다 팝업레이어 알림 천주교 순교의 발자취를 따라 당진 버그내 순례길 을 걷다. 순례길 성지소개 커뮤니티 버그내 순례길 코스안내",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "REGION_BOUND:충청남도 당진시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "충청남도 당진시"
+      ],
+      "matched_regions": [
+        "충청남도 당진시"
+      ],
+      "input_url": "https://beogeunae.dangjin.go.kr/pil1.html?tab=g",
+      "final_url": "https://beogeunae.dangjin.go.kr/pil1.html?tab=g",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 40835,
+      "encoding": "utf-8",
+      "title": "버그내 순례길 - 역사 깃든 천주교 성지 따라 순례에 나서다",
+      "headings": [
+        "버그내 순례길 Beogeunae Pilgrimage Route",
+        "원시장,원시보우물",
+        "복자 원시장(베드로), 원시보(야고보) 우물",
+        "Won Si-jang and Won Si-bo Well",
+        "복자 원시장(베드로), 원시보(야고보)",
+        "오시는 길"
+      ],
+      "breadcrumbs": [
+        "Home 버그내 순례길"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "endpoint_local_evidence_preview": "https://beogeunae.dangjin.go.kr/pil1.html?tab=g beogeunae.dangjin.go.kr 버그내 순례길 - 역사 깃든 천주교 성지 따라 순례에 나서다 버그내 순례길 Beogeunae Pilgrimage Route 원시장,원시보우물 복자 원시장(베드로), 원시보(야고보) 우물 Won Si-jang and Won Si-bo Well 복자 원시장(베드로), 원시보(야고보) 오시는 길 Home 버그내 순례길",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "REGION_BOUND:충청남도 당진시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/",
+      "final_url": "https://119.gg.go.kr/",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "안전터",
+        "소방서비스",
+        "소방서비스 신청",
+        "신고센터",
+        "도민참여",
+        "신규채용",
+        "승진시험",
+        "공지사항",
+        "소방SNS",
+        "정보공개",
+        "통계자료실",
+        "화재사고 대처요령",
+        "소방재난본부소개",
+        "본부조직도",
+        "상징 및 그림말",
+        "추모의 방",
+        "최근 본 메뉴",
+        "소방재난민원",
+        "참여공간",
+        "시험정보",
+        "알림마당",
+        "자료실",
+        "국민행동요령",
+        "경기도소방재난본부에서 알려주는 소방소식",
+        "출동현황",
+        "경기도소방재난본부 즐겨찾는 메뉴",
+        "경기도소방재난본부 최근 소식",
+        "경기소방 브리핑",
+        "최신 SNS소식",
+        "경기도소방재난본부 최근 활동사진",
+        "경기도소방재난본부 최신 활동소식",
+        "고시공고",
+        "보도자료",
+        "안전정보제공 종합 길라잡이",
+        "경기도 지역별 소방서 안내",
+        "경기도소방재난본부 유용한 정보 팝업존",
+        "팝업제목"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/bundang",
+      "final_url": "https://119.gg.go.kr/bundang",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "팝업존",
+        "분당소방서",
+        "고시/공고",
+        "바로가기",
+        "소방활동 사진",
+        "팝업제목"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/bundang/ntt/index.do?bbsId=gg_4_88&menuId=bd_003_001",
+      "final_url": "https://119.gg.go.kr/bundang/ntt/index.do?bbsId=gg_4_88&menuId=bd_003_001",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "고시/공고",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 알림마당 고시/공고"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_772&menuId=main_004_002",
+      "final_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_772&menuId=main_004_002",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "안전터",
+        "소방서비스",
+        "소방서비스 신청",
+        "신고센터",
+        "도민참여",
+        "신규채용",
+        "승진시험",
+        "공지사항",
+        "소방SNS",
+        "정보공개",
+        "통계자료실",
+        "화재사고 대처요령",
+        "소방재난본부소개",
+        "본부조직도",
+        "상징 및 그림말",
+        "추모의 방",
+        "최근 본 메뉴",
+        "소방재난민원",
+        "참여공간",
+        "시험정보",
+        "알림마당",
+        "자료실",
+        "국민행동요령",
+        "고시/공고",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 알림마당 고시/공고"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_78983&menuId=main_003_001_001",
+      "final_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_78983&menuId=main_003_001_001",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "안전터",
+        "소방서비스",
+        "소방서비스 신청",
+        "신고센터",
+        "도민참여",
+        "신규채용",
+        "승진시험",
+        "공지사항",
+        "소방SNS",
+        "정보공개",
+        "통계자료실",
+        "화재사고 대처요령",
+        "소방재난본부소개",
+        "본부조직도",
+        "상징 및 그림말",
+        "추모의 방",
+        "최근 본 메뉴",
+        "소방재난민원",
+        "참여공간",
+        "시험정보",
+        "알림마당",
+        "자료실",
+        "국민행동요령",
+        "신규채용 공고/고시",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 시험정보 신규채용 신규채용 공고/고시"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_78990&menuId=main_003_002_001",
+      "final_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_78990&menuId=main_003_002_001",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "안전터",
+        "소방서비스",
+        "소방서비스 신청",
+        "신고센터",
+        "도민참여",
+        "신규채용",
+        "승진시험",
+        "공지사항",
+        "소방SNS",
+        "정보공개",
+        "통계자료실",
+        "화재사고 대처요령",
+        "소방재난본부소개",
+        "본부조직도",
+        "상징 및 그림말",
+        "추모의 방",
+        "최근 본 메뉴",
+        "소방재난민원",
+        "참여공간",
+        "시험정보",
+        "알림마당",
+        "자료실",
+        "국민행동요령",
+        "승진시험 공고/고시",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 시험정보 승진시험 승진시험 공고/고시"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/prog/publicNotice/list.do",
+      "final_url": "https://119.gg.go.kr/prog/publicNotice/list.do",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "안전터",
+        "소방서비스",
+        "소방서비스 신청",
+        "신고센터",
+        "도민참여",
+        "신규채용",
+        "승진시험",
+        "공지사항",
+        "소방SNS",
+        "정보공개",
+        "통계자료실",
+        "화재사고 대처요령",
+        "소방재난본부소개",
+        "본부조직도",
+        "상징 및 그림말",
+        "추모의 방",
+        "최근 본 메뉴",
+        "소방재난민원",
+        "참여공간",
+        "시험정보",
+        "알림마당",
+        "자료실",
+        "국민행동요령"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/board/post/list.do?bcIdx=527&mid=0501090000",
+      "final_url": "https://bsgangseo.go.kr/portal/board/post/list.do?bcIdx=527&mid=0501090000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 432907,
+      "encoding": "UTF-8",
+      "title": "분묘개장공고 정보공개>행정알림>분묘개장공고 게시글 목록 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "분묘개장공고",
+        "Bright Gangseo 정보공개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/portal/board/post/list.do?bcIdx=527&mid=0501090000",
+        "/portal/board/post/write.do?bcIdx=527&mid=0501090000",
+        "/portal/board/post/view.do?bcIdx=527&mid=0501090000&idx=a",
+        "/portal/satisfaction/voteSatis.do?mid=0501090000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/board/post/list.do?bcIdx=527&mid=0501090000 bsgangseo.go.kr 분묘개장공고 정보공개>행정알림>분묘개장공고 게시글 목록 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 분묘개장공고 Bright Gangseo 정보공개 /RSA/front/Search.jsp /portal/board/post/list.do?bcIdx=527&mid=0501090000 /portal/board/post/write.do?bcIdx=527&mid=0501090000 /portal/board/post/view.do?bcIdx=527&mid=0501090000&idx=a /portal/satisfaction/voteSatis.do?mid=0501090000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:분묘개장공고",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409449&mid=0501010000",
+      "final_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409449&mid=0501010000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 424397,
+      "encoding": "UTF-8",
+      "title": "알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "알림사항",
+        "Bright Gangseo 정보공개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/file/viewer.do",
+        "/portal/board/post/secured/view.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/pwd.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/reply.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/list.do?bcIdx=500&mid=0501010000",
+        "/portal/satisfaction/voteSatis.do?mid=0501010000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": true,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409449&mid=0501010000 bsgangseo.go.kr 알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 알림사항 Bright Gangseo 정보공개 /RSA/front/Search.jsp /file/viewer.do /portal/board/post/secured/view.do?bcIdx=500&mid=0501010000 /portal/board/post/pwd.do?bcIdx=500&mid=0501010000 /portal/board/post/reply.do?bcIdx=500&mid=0501010000 /portal/board/post/list.do?bcIdx=500&mid=0501010000 /portal/satisfaction/voteSatis.do?mid=0501010000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:알림사항",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409458&mid=0501010000",
+      "final_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409458&mid=0501010000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 425134,
+      "encoding": "UTF-8",
+      "title": "알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "알림사항",
+        "Bright Gangseo 정보공개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/file/viewer.do",
+        "/portal/board/post/secured/view.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/pwd.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/reply.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/list.do?bcIdx=500&mid=0501010000",
+        "/portal/satisfaction/voteSatis.do?mid=0501010000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": true,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409458&mid=0501010000 bsgangseo.go.kr 알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 알림사항 Bright Gangseo 정보공개 /RSA/front/Search.jsp /file/viewer.do /portal/board/post/secured/view.do?bcIdx=500&mid=0501010000 /portal/board/post/pwd.do?bcIdx=500&mid=0501010000 /portal/board/post/reply.do?bcIdx=500&mid=0501010000 /portal/board/post/list.do?bcIdx=500&mid=0501010000 /portal/satisfaction/voteSatis.do?mid=0501010000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:알림사항",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409481&mid=0501010000",
+      "final_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409481&mid=0501010000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 427234,
+      "encoding": "UTF-8",
+      "title": "알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "알림사항",
+        "Bright Gangseo 정보공개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/file/viewer.do",
+        "/portal/board/post/secured/view.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/pwd.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/reply.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/list.do?bcIdx=500&mid=0501010000",
+        "/portal/satisfaction/voteSatis.do?mid=0501010000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": true,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409481&mid=0501010000 bsgangseo.go.kr 알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 알림사항 Bright Gangseo 정보공개 /RSA/front/Search.jsp /file/viewer.do /portal/board/post/secured/view.do?bcIdx=500&mid=0501010000 /portal/board/post/pwd.do?bcIdx=500&mid=0501010000 /portal/board/post/reply.do?bcIdx=500&mid=0501010000 /portal/board/post/list.do?bcIdx=500&mid=0501010000 /portal/satisfaction/voteSatis.do?mid=0501010000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:알림사항",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=526&idx=409406&mid=0501050000",
+      "final_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=526&idx=409406&mid=0501050000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 428233,
+      "encoding": "UTF-8",
+      "title": "보도자료 정보공개>행정알림>보도자료 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "보도자료",
+        "Bright Gangseo 정보공개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/file/viewer.do",
+        "/portal/board/post/secured/view.do?bcIdx=526&mid=0501050000",
+        "/portal/board/post/pwd.do?bcIdx=526&mid=0501050000",
+        "/portal/board/post/reply.do?bcIdx=526&mid=0501050000",
+        "/portal/board/post/list.do?bcIdx=526&mid=0501050000",
+        "/portal/satisfaction/voteSatis.do?mid=0501050000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": true,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=526&idx=409406&mid=0501050000 bsgangseo.go.kr 보도자료 정보공개>행정알림>보도자료 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 보도자료 Bright Gangseo 정보공개 /RSA/front/Search.jsp /file/viewer.do /portal/board/post/secured/view.do?bcIdx=526&mid=0501050000 /portal/board/post/pwd.do?bcIdx=526&mid=0501050000 /portal/board/post/reply.do?bcIdx=526&mid=0501050000 /portal/board/post/list.do?bcIdx=526&mid=0501050000 /portal/satisfaction/voteSatis.do?mid=0501050000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:보도자료",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501040000",
+      "final_url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501040000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 431504,
+      "encoding": "UTF-8",
+      "title": "입찰공고 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "입찰공고",
+        "Bright Gangseo 정보공개",
+        "배너 모음"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/portal/satisfaction/voteSatis.do?mid=0501040000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/contents.do?mid=0501040000 bsgangseo.go.kr 입찰공고 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 입찰공고 Bright Gangseo 정보공개 배너 모음 /RSA/front/Search.jsp /portal/satisfaction/voteSatis.do?mid=0501040000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:입찰공고",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    }
+  ],
+  "next_stage_endpoint_pool": [
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_GAZETTE_ENDPOINT",
+      "url": "https://bsgangseo.go.kr/portal/bsgsNscvrg/list.do?mid=0605010000",
+      "title": "강서구보 | 강서구보 | 강서소개 | 부산 강서구청 홈페이지",
+      "reasons": [
+        "GAZETTE_LOCAL:강서구보",
+        "GAZETTE_URL:nscvrg",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "endpoint_only": true,
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_GAZETTE_ENDPOINT",
+      "url": "https://bsgangseo.go.kr/portal/nscvrgRmrk/list.do?mid=0605020000",
+      "title": "구보부록 | 강서구보 | 강서소개 | 부산 강서구청 홈페이지",
+      "reasons": [
+        "GAZETTE_LOCAL:강서구보",
+        "GAZETTE_LOCAL:구보부록",
+        "GAZETTE_URL:nscvrg",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "endpoint_only": true,
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 평택시"
+      ],
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "url": "http://119.gg.go.kr/pyeongtaek",
+      "title": "WiniFramework_V4.1",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 평택시"
+      ],
+      "endpoint_only": true,
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 평택시"
+      ],
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "url": "http://119.gg.go.kr/pyeongtaek/ntt/index.do?bbsId=gg_12_58&menuId=pt_003_001",
+      "title": "WiniFramework_V4.1",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 평택시"
+      ],
+      "endpoint_only": true,
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시"
+      ],
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "url": "https://119.gg.go.kr/seongnam",
+      "title": "WiniFramework_V4.1",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 성남시"
+      ],
+      "endpoint_only": true,
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시"
+      ],
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "url": "https://119.gg.go.kr/seongnam/ntt/index.do?bbsId=gg_3_45&menuId=sn_003_001",
+      "title": "WiniFramework_V4.1",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 성남시"
+      ],
+      "endpoint_only": true,
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501020000",
+      "title": "고시공고 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "reasons": [
+        "NOTICE_LOCAL:고시공고",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "endpoint_only": true,
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    }
+  ],
+  "all_canonical_records": [
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/bsgsNscvrg/list.do?mid=0605010000",
+      "final_url": "https://bsgangseo.go.kr/portal/bsgsNscvrg/list.do?mid=0605010000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 463258,
+      "encoding": "UTF-8",
+      "title": "강서구보 | 강서구보 | 강서소개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "강서구보",
+        "Bright Gangseo 강서소개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/portal/bsgsNscvrg/list.do?mid=0605010000",
+        "/portal/satisfaction/voteSatis.do?mid=0605010000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/bsgsNscvrg/list.do?mid=0605010000 bsgangseo.go.kr 강서구보 | 강서구보 | 강서소개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 강서구보 Bright Gangseo 강서소개 /RSA/front/Search.jsp /portal/bsgsNscvrg/list.do?mid=0605010000 /portal/satisfaction/voteSatis.do?mid=0605010000 /file/direct/download.do",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_GAZETTE_ENDPOINT",
+      "reasons": [
+        "GAZETTE_LOCAL:강서구보",
+        "GAZETTE_URL:nscvrg",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/nscvrgRmrk/list.do?mid=0605020000",
+      "final_url": "https://bsgangseo.go.kr/portal/nscvrgRmrk/list.do?mid=0605020000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 460648,
+      "encoding": "UTF-8",
+      "title": "구보부록 | 강서구보 | 강서소개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "구보부록",
+        "Bright Gangseo 강서소개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/portal/nscvrgRmrk/list.do?mid=0605020000",
+        "/portal/nscvrgRmrk/view.do?mid=0605020000",
+        "/portal/satisfaction/voteSatis.do?mid=0605020000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/nscvrgRmrk/list.do?mid=0605020000 bsgangseo.go.kr 구보부록 | 강서구보 | 강서소개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 구보부록 Bright Gangseo 강서소개 /RSA/front/Search.jsp /portal/nscvrgRmrk/list.do?mid=0605020000 /portal/nscvrgRmrk/view.do?mid=0605020000 /portal/satisfaction/voteSatis.do?mid=0605020000 /file/direct/download.do",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_GAZETTE_ENDPOINT",
+      "reasons": [
+        "GAZETTE_LOCAL:강서구보",
+        "GAZETTE_LOCAL:구보부록",
+        "GAZETTE_URL:nscvrg",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [
+        "경기도 평택시"
+      ],
+      "input_url": "http://119.gg.go.kr/pyeongtaek",
+      "final_url": "http://119.gg.go.kr/pyeongtaek",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "response_bytes": 345707,
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "의용소방대 활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "팝업존",
+        "평택소방서",
+        "고시/공고",
+        "바로가기",
+        "소방활동 사진",
+        "팝업제목"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "endpoint_local_evidence_preview": "http://119.gg.go.kr/pyeongtaek 119.gg.go.kr WiniFramework_V4.1 {{:thema}} 화재안전조사 공개 의용소방대 활동내용 최근 본 메뉴 소방민원 소통참여 알림마당 소방안전 자료실 소방안전 교육신청 소방서 소개 의용소방대 팝업존 평택소방서 고시/공고 바로가기 소방활동 사진 팝업제목",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 평택시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [
+        "경기도 평택시"
+      ],
+      "input_url": "http://119.gg.go.kr/pyeongtaek/ntt/index.do?bbsId=gg_12_58&menuId=pt_003_001",
+      "final_url": "http://119.gg.go.kr/pyeongtaek/ntt/index.do?bbsId=gg_12_58&menuId=pt_003_001",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "response_bytes": 319077,
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "의용소방대 활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "고시/공고",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 알림마당 고시/공고"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "http://119.gg.go.kr/pyeongtaek/ntt/index.do?bbsId=gg_12_58&menuId=pt_003_001 119.gg.go.kr WiniFramework_V4.1 {{:thema}} 화재안전조사 공개 의용소방대 활동내용 최근 본 메뉴 소방민원 소통참여 알림마당 소방안전 자료실 소방안전 교육신청 소방서 소개 의용소방대 고시/공고 팝업제목 비밀번호 입력 홈 알림마당 고시/공고",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 평택시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [
+        "경기도 성남시"
+      ],
+      "input_url": "https://119.gg.go.kr/seongnam",
+      "final_url": "https://119.gg.go.kr/seongnam",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "response_bytes": 340188,
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "팝업존",
+        "성남소방서",
+        "고시/공고",
+        "바로가기",
+        "소방활동 사진",
+        "팝업제목"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "endpoint_local_evidence_preview": "https://119.gg.go.kr/seongnam 119.gg.go.kr WiniFramework_V4.1 {{:thema}} 화재안전조사 공개 활동내용 최근 본 메뉴 소방민원 소통참여 알림마당 소방안전 자료실 소방안전 교육신청 소방서 소개 의용소방대 팝업존 성남소방서 고시/공고 바로가기 소방활동 사진 팝업제목",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 성남시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [
+        "경기도 성남시"
+      ],
+      "input_url": "https://119.gg.go.kr/seongnam/ntt/index.do?bbsId=gg_3_45&menuId=sn_003_001",
+      "final_url": "https://119.gg.go.kr/seongnam/ntt/index.do?bbsId=gg_3_45&menuId=sn_003_001",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "response_bytes": 316198,
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "고시/공고",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 알림마당 고시/공고"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://119.gg.go.kr/seongnam/ntt/index.do?bbsId=gg_3_45&menuId=sn_003_001 119.gg.go.kr WiniFramework_V4.1 {{:thema}} 화재안전조사 공개 활동내용 최근 본 메뉴 소방민원 소통참여 알림마당 소방안전 자료실 소방안전 교육신청 소방서 소개 의용소방대 고시/공고 팝업제목 비밀번호 입력 홈 알림마당 고시/공고",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "reasons": [
+        "NOTICE_LOCAL:고시/공고",
+        "REGION_BOUND:경기도 성남시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501020000",
+      "final_url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501020000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 431556,
+      "encoding": "UTF-8",
+      "title": "고시공고 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "고시공고",
+        "Bright Gangseo 정보공개",
+        "배너 모음"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/portal/satisfaction/voteSatis.do?mid=0501020000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/contents.do?mid=0501020000 bsgangseo.go.kr 고시공고 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 고시공고 Bright Gangseo 정보공개 배너 모음 /RSA/front/Search.jsp /portal/satisfaction/voteSatis.do?mid=0501020000 /file/direct/download.do",
+      "qualified": true,
+      "classification": "QUALIFIED_HARDENED_HISTORICAL_NOTICE_ENDPOINT",
+      "reasons": [
+        "NOTICE_LOCAL:고시공고",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "경기도 성남시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://airsms.gg.go.kr/service/form.asp",
+      "final_url": "https://airsms.gg.go.kr/service/form.asp",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "encoding": "utf-8",
+      "title": "경기도 대기질정보 알림톡서비스 가입 - 경기도 대기질정보 알림톡서비스",
+      "headings": [
+        "경기도 대기질정보 알림톡서비스",
+        "경기도 대기질정보 알림톡서비스 가입을 위한 개인정보 수집·이용 동의서",
+        "이용약관"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "충청남도 당진시"
+      ],
+      "matched_regions": [
+        "충청남도 당진시"
+      ],
+      "input_url": "https://beogeunae.dangjin.go.kr/",
+      "final_url": "https://beogeunae.dangjin.go.kr/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 36912,
+      "encoding": "utf-8",
+      "title": "버그내 순례길 - 역사 깃든 천주교 성지 따라 순례에 나서다",
+      "headings": [
+        "팝업레이어 알림",
+        "천주교 순교의 발자취를 따라 당진 버그내 순례길 을 걷다.",
+        "순례길 성지소개",
+        "커뮤니티",
+        "버그내 순례길 코스안내"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "endpoint_local_evidence_preview": "https://beogeunae.dangjin.go.kr/ beogeunae.dangjin.go.kr 버그내 순례길 - 역사 깃든 천주교 성지 따라 순례에 나서다 팝업레이어 알림 천주교 순교의 발자취를 따라 당진 버그내 순례길 을 걷다. 순례길 성지소개 커뮤니티 버그내 순례길 코스안내",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "REGION_BOUND:충청남도 당진시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_GAZETTE",
+      "regions": [
+        "충청남도 당진시"
+      ],
+      "matched_regions": [
+        "충청남도 당진시"
+      ],
+      "input_url": "https://beogeunae.dangjin.go.kr/pil1.html?tab=g",
+      "final_url": "https://beogeunae.dangjin.go.kr/pil1.html?tab=g",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 40835,
+      "encoding": "utf-8",
+      "title": "버그내 순례길 - 역사 깃든 천주교 성지 따라 순례에 나서다",
+      "headings": [
+        "버그내 순례길 Beogeunae Pilgrimage Route",
+        "원시장,원시보우물",
+        "복자 원시장(베드로), 원시보(야고보) 우물",
+        "Won Si-jang and Won Si-bo Well",
+        "복자 원시장(베드로), 원시보(야고보)",
+        "오시는 길"
+      ],
+      "breadcrumbs": [
+        "Home 버그내 순례길"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "endpoint_local_evidence_preview": "https://beogeunae.dangjin.go.kr/pil1.html?tab=g beogeunae.dangjin.go.kr 버그내 순례길 - 역사 깃든 천주교 성지 따라 순례에 나서다 버그내 순례길 Beogeunae Pilgrimage Route 원시장,원시보우물 복자 원시장(베드로), 원시보(야고보) 우물 Won Si-jang and Won Si-bo Well 복자 원시장(베드로), 원시보(야고보) 오시는 길 Home 버그내 순례길",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "REGION_BOUND:충청남도 당진시"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/",
+      "final_url": "https://119.gg.go.kr/",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "안전터",
+        "소방서비스",
+        "소방서비스 신청",
+        "신고센터",
+        "도민참여",
+        "신규채용",
+        "승진시험",
+        "공지사항",
+        "소방SNS",
+        "정보공개",
+        "통계자료실",
+        "화재사고 대처요령",
+        "소방재난본부소개",
+        "본부조직도",
+        "상징 및 그림말",
+        "추모의 방",
+        "최근 본 메뉴",
+        "소방재난민원",
+        "참여공간",
+        "시험정보",
+        "알림마당",
+        "자료실",
+        "국민행동요령",
+        "경기도소방재난본부에서 알려주는 소방소식",
+        "출동현황",
+        "경기도소방재난본부 즐겨찾는 메뉴",
+        "경기도소방재난본부 최근 소식",
+        "경기소방 브리핑",
+        "최신 SNS소식",
+        "경기도소방재난본부 최근 활동사진",
+        "경기도소방재난본부 최신 활동소식",
+        "고시공고",
+        "보도자료",
+        "안전정보제공 종합 길라잡이",
+        "경기도 지역별 소방서 안내",
+        "경기도소방재난본부 유용한 정보 팝업존",
+        "팝업제목"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/bundang",
+      "final_url": "https://119.gg.go.kr/bundang",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "팝업존",
+        "분당소방서",
+        "고시/공고",
+        "바로가기",
+        "소방활동 사진",
+        "팝업제목"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": false,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/bundang/ntt/index.do?bbsId=gg_4_88&menuId=bd_003_001",
+      "final_url": "https://119.gg.go.kr/bundang/ntt/index.do?bbsId=gg_4_88&menuId=bd_003_001",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "화재안전조사 공개",
+        "활동내용",
+        "최근 본 메뉴",
+        "소방민원",
+        "소통참여",
+        "알림마당",
+        "소방안전 자료실",
+        "소방안전 교육신청",
+        "소방서 소개",
+        "의용소방대",
+        "고시/공고",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 알림마당 고시/공고"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_772&menuId=main_004_002",
+      "final_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_772&menuId=main_004_002",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "안전터",
+        "소방서비스",
+        "소방서비스 신청",
+        "신고센터",
+        "도민참여",
+        "신규채용",
+        "승진시험",
+        "공지사항",
+        "소방SNS",
+        "정보공개",
+        "통계자료실",
+        "화재사고 대처요령",
+        "소방재난본부소개",
+        "본부조직도",
+        "상징 및 그림말",
+        "추모의 방",
+        "최근 본 메뉴",
+        "소방재난민원",
+        "참여공간",
+        "시험정보",
+        "알림마당",
+        "자료실",
+        "국민행동요령",
+        "고시/공고",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 알림마당 고시/공고"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_78983&menuId=main_003_001_001",
+      "final_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_78983&menuId=main_003_001_001",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "안전터",
+        "소방서비스",
+        "소방서비스 신청",
+        "신고센터",
+        "도민참여",
+        "신규채용",
+        "승진시험",
+        "공지사항",
+        "소방SNS",
+        "정보공개",
+        "통계자료실",
+        "화재사고 대처요령",
+        "소방재난본부소개",
+        "본부조직도",
+        "상징 및 그림말",
+        "추모의 방",
+        "최근 본 메뉴",
+        "소방재난민원",
+        "참여공간",
+        "시험정보",
+        "알림마당",
+        "자료실",
+        "국민행동요령",
+        "신규채용 공고/고시",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 시험정보 신규채용 신규채용 공고/고시"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_78990&menuId=main_003_002_001",
+      "final_url": "https://119.gg.go.kr/main/ntt/index.do?bbsId=gg_1_78990&menuId=main_003_002_001",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "안전터",
+        "소방서비스",
+        "소방서비스 신청",
+        "신고센터",
+        "도민참여",
+        "신규채용",
+        "승진시험",
+        "공지사항",
+        "소방SNS",
+        "정보공개",
+        "통계자료실",
+        "화재사고 대처요령",
+        "소방재난본부소개",
+        "본부조직도",
+        "상징 및 그림말",
+        "추모의 방",
+        "최근 본 메뉴",
+        "소방재난민원",
+        "참여공간",
+        "시험정보",
+        "알림마당",
+        "자료실",
+        "국민행동요령",
+        "승진시험 공고/고시",
+        "팝업제목",
+        "비밀번호 입력"
+      ],
+      "breadcrumbs": [
+        "홈 시험정보 승진시험 승진시험 공고/고시"
+      ],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "경기도 성남시",
+        "경기도 평택시"
+      ],
+      "matched_regions": [],
+      "input_url": "https://119.gg.go.kr/prog/publicNotice/list.do",
+      "final_url": "https://119.gg.go.kr/prog/publicNotice/list.do",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "encoding": "utf-8",
+      "title": "WiniFramework_V4.1",
+      "headings": [
+        "{{:thema}}",
+        "안전터",
+        "소방서비스",
+        "소방서비스 신청",
+        "신고센터",
+        "도민참여",
+        "신규채용",
+        "승진시험",
+        "공지사항",
+        "소방SNS",
+        "정보공개",
+        "통계자료실",
+        "화재사고 대처요령",
+        "소방재난본부소개",
+        "본부조직도",
+        "상징 및 그림말",
+        "추모의 방",
+        "최근 본 메뉴",
+        "소방재난민원",
+        "참여공간",
+        "시험정보",
+        "알림마당",
+        "자료실",
+        "국민행동요령"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "qualified": false,
+      "classification": "REJECTED_REGION_UNBOUND",
+      "reasons": [
+        "MUNICIPAL_REGION_LOCAL_EVIDENCE_MISSING"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/board/post/list.do?bcIdx=527&mid=0501090000",
+      "final_url": "https://bsgangseo.go.kr/portal/board/post/list.do?bcIdx=527&mid=0501090000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 432907,
+      "encoding": "UTF-8",
+      "title": "분묘개장공고 정보공개>행정알림>분묘개장공고 게시글 목록 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "분묘개장공고",
+        "Bright Gangseo 정보공개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/portal/board/post/list.do?bcIdx=527&mid=0501090000",
+        "/portal/board/post/write.do?bcIdx=527&mid=0501090000",
+        "/portal/board/post/view.do?bcIdx=527&mid=0501090000&idx=a",
+        "/portal/satisfaction/voteSatis.do?mid=0501090000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/board/post/list.do?bcIdx=527&mid=0501090000 bsgangseo.go.kr 분묘개장공고 정보공개>행정알림>분묘개장공고 게시글 목록 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 분묘개장공고 Bright Gangseo 정보공개 /RSA/front/Search.jsp /portal/board/post/list.do?bcIdx=527&mid=0501090000 /portal/board/post/write.do?bcIdx=527&mid=0501090000 /portal/board/post/view.do?bcIdx=527&mid=0501090000&idx=a /portal/satisfaction/voteSatis.do?mid=0501090000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:분묘개장공고",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409449&mid=0501010000",
+      "final_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409449&mid=0501010000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 424397,
+      "encoding": "UTF-8",
+      "title": "알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "알림사항",
+        "Bright Gangseo 정보공개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/file/viewer.do",
+        "/portal/board/post/secured/view.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/pwd.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/reply.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/list.do?bcIdx=500&mid=0501010000",
+        "/portal/satisfaction/voteSatis.do?mid=0501010000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": true,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409449&mid=0501010000 bsgangseo.go.kr 알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 알림사항 Bright Gangseo 정보공개 /RSA/front/Search.jsp /file/viewer.do /portal/board/post/secured/view.do?bcIdx=500&mid=0501010000 /portal/board/post/pwd.do?bcIdx=500&mid=0501010000 /portal/board/post/reply.do?bcIdx=500&mid=0501010000 /portal/board/post/list.do?bcIdx=500&mid=0501010000 /portal/satisfaction/voteSatis.do?mid=0501010000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:알림사항",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409458&mid=0501010000",
+      "final_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409458&mid=0501010000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 425134,
+      "encoding": "UTF-8",
+      "title": "알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "알림사항",
+        "Bright Gangseo 정보공개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/file/viewer.do",
+        "/portal/board/post/secured/view.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/pwd.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/reply.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/list.do?bcIdx=500&mid=0501010000",
+        "/portal/satisfaction/voteSatis.do?mid=0501010000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": true,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409458&mid=0501010000 bsgangseo.go.kr 알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 알림사항 Bright Gangseo 정보공개 /RSA/front/Search.jsp /file/viewer.do /portal/board/post/secured/view.do?bcIdx=500&mid=0501010000 /portal/board/post/pwd.do?bcIdx=500&mid=0501010000 /portal/board/post/reply.do?bcIdx=500&mid=0501010000 /portal/board/post/list.do?bcIdx=500&mid=0501010000 /portal/satisfaction/voteSatis.do?mid=0501010000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:알림사항",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409481&mid=0501010000",
+      "final_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409481&mid=0501010000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 427234,
+      "encoding": "UTF-8",
+      "title": "알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "알림사항",
+        "Bright Gangseo 정보공개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/file/viewer.do",
+        "/portal/board/post/secured/view.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/pwd.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/reply.do?bcIdx=500&mid=0501010000",
+        "/portal/board/post/list.do?bcIdx=500&mid=0501010000",
+        "/portal/satisfaction/voteSatis.do?mid=0501010000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": true,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=500&idx=409481&mid=0501010000 bsgangseo.go.kr 알림사항 공통게시판 > 알림사항 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 알림사항 Bright Gangseo 정보공개 /RSA/front/Search.jsp /file/viewer.do /portal/board/post/secured/view.do?bcIdx=500&mid=0501010000 /portal/board/post/pwd.do?bcIdx=500&mid=0501010000 /portal/board/post/reply.do?bcIdx=500&mid=0501010000 /portal/board/post/list.do?bcIdx=500&mid=0501010000 /portal/satisfaction/voteSatis.do?mid=0501010000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:알림사항",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=526&idx=409406&mid=0501050000",
+      "final_url": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=526&idx=409406&mid=0501050000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 428233,
+      "encoding": "UTF-8",
+      "title": "보도자료 정보공개>행정알림>보도자료 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "보도자료",
+        "Bright Gangseo 정보공개"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/file/viewer.do",
+        "/portal/board/post/secured/view.do?bcIdx=526&mid=0501050000",
+        "/portal/board/post/pwd.do?bcIdx=526&mid=0501050000",
+        "/portal/board/post/reply.do?bcIdx=526&mid=0501050000",
+        "/portal/board/post/list.do?bcIdx=526&mid=0501050000",
+        "/portal/satisfaction/voteSatis.do?mid=0501050000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": true,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/board/post/view.do?bcIdx=526&idx=409406&mid=0501050000 bsgangseo.go.kr 보도자료 정보공개>행정알림>보도자료 게시글 상세 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 보도자료 Bright Gangseo 정보공개 /RSA/front/Search.jsp /file/viewer.do /portal/board/post/secured/view.do?bcIdx=526&mid=0501050000 /portal/board/post/pwd.do?bcIdx=526&mid=0501050000 /portal/board/post/reply.do?bcIdx=526&mid=0501050000 /portal/board/post/list.do?bcIdx=526&mid=0501050000 /portal/satisfaction/voteSatis.do?mid=0501050000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:보도자료",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    },
+    {
+      "source_family": "LEGACY_LOCAL_NOTICE",
+      "regions": [
+        "부산광역시 강서구"
+      ],
+      "matched_regions": [
+        "부산광역시 강서구"
+      ],
+      "input_url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501040000",
+      "final_url": "https://bsgangseo.go.kr/portal/contents.do?mid=0501040000",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 431504,
+      "encoding": "UTF-8",
+      "title": "입찰공고 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지",
+      "headings": [
+        "부산광역시 강서구",
+        "메뉴 구성",
+        "전자민원",
+        "소통참여",
+        "분야별정보",
+        "정보공개",
+        "강서소개",
+        "이용안내",
+        "입찰공고",
+        "Bright Gangseo 정보공개",
+        "배너 모음"
+      ],
+      "breadcrumbs": [],
+      "form_actions": [
+        "/RSA/front/Search.jsp",
+        "/portal/satisfaction/voteSatis.do?mid=0501040000",
+        "/file/direct/download.do"
+      ],
+      "detail_document": false,
+      "list_or_entry_structure": true,
+      "endpoint_local_evidence_preview": "https://bsgangseo.go.kr/portal/contents.do?mid=0501040000 bsgangseo.go.kr 입찰공고 | 행정알림 | 정보공개 | 부산 강서구청 홈페이지 부산광역시 강서구 메뉴 구성 전자민원 소통참여 분야별정보 정보공개 강서소개 이용안내 입찰공고 Bright Gangseo 정보공개 배너 모음 /RSA/front/Search.jsp /portal/satisfaction/voteSatis.do?mid=0501040000 /file/direct/download.do",
+      "qualified": false,
+      "classification": "REJECTED_ROLE_WEAK",
+      "reasons": [
+        "NOTICE_FALSE_POSITIVE:입찰공고",
+        "REGION_BOUND:부산광역시 강서구"
+      ],
+      "verified_positive": false,
+      "runtime_registration_allowed": false,
+      "site_positive_allowed": false
+    }
+  ],
+  "resolution": "HISTORICAL_SOURCE_FAMILY_ENTRY_ENDPOINT_QUALIFICATION_HARDENING_COMPLETED",
+  "next_action": "S-3에서 의미론적으로 hardening된 historical entry endpoint만 T-stage 입력으로 사용한다. source-family 및 기초지자체 region별 P-stage query를 제한 실행하고, endpoint 자체가 아닌 발견된 detail/attachment/gazette document identity만 후속 verification으로 넘긴다.",
+  "verified_positive": false,
+  "runtime_registration_allowed": false,
+  "site_positive_allowed": false,
+  "final_positive_promotion_allowed": false
+}

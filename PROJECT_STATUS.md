@@ -483,3 +483,45 @@ FastAPI end-to-end              PASS
 ```
 
 현재 상태에서 다음 단계 개발을 진행해도 된다.
+
+STEP 17-21-C-16-8
+
+Target:
+- 개발밀도관리구역
+- UQQ700
+
+Resolution type:
+- HYBRID_SPATIAL_NOTICE
+
+Completed:
+- regulation resolution type registry
+- S-3 historical endpoint qualification hardening
+- municipality exact region binding
+- T-1 bounded historical target document discovery
+- T-2 canonical reverse discovery
+- T-2-S1 semantic candidate gate hardening
+
+T-2-S1 result:
+- S-3 endpoints: 7
+- requests: 120
+- query contamination rejected: 41,664
+- raw candidates: 0
+- canonical candidates: 0
+- next-stage documents: 0
+- all_pass: True
+
+Interpretation:
+- previous reverse-discovery candidates were query-contaminated false positives
+- current source scope provides no verified UQQ700 historical document
+- absence is not negative evidence
+- SITE remains UNKNOWN
+
+Safety:
+- verified positive: blocked
+- runtime registration: blocked
+- SITE TRUE: blocked
+- SITE FALSE from source failure: blocked
+
+Next:
+STEP 17-21-C-16-8-T-3
+Historical Search Form Action & Notice Identity Recovery

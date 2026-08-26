@@ -1,0 +1,2921 @@
+{
+  "step": "STEP 17-21-C-16-8-L Development Density Management Area Official Board POST Search / Dynamic Detail Discovery",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "input": {
+    "i_stage_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_official_board_search_form_discovery.json",
+    "k_stage_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_official_board_target_row_discovery.json",
+    "k_stage_resolution": "ROW_LEVEL_PAGINATION_DISCOVERY_COMPLETED_NO_TARGET_ROW"
+  },
+  "method": {
+    "actual_form_only_submission": true,
+    "hidden_field_preservation": true,
+    "get_search_submission": true,
+    "post_search_submission": true,
+    "form_echo_removal": true,
+    "row_level_target_evidence_required": true,
+    "url_query_only_target_prohibited": true,
+    "dynamic_href_discovery": true,
+    "dynamic_onclick_discovery": true,
+    "dynamic_data_attribute_discovery": true,
+    "search_page_final_positive_allowed": false,
+    "runtime_registration_allowed": false,
+    "site_false_interpretation_allowed": false
+  },
+  "summary": {
+    "endpoint_count": 54,
+    "request_count": 142,
+    "http_success_count": 142,
+    "transport_error_count": 0,
+    "html_parse_count": 142,
+    "endpoint_fetch_count": 54,
+    "form_count": 207,
+    "safe_form_count": 83,
+    "get_submission_count": 34,
+    "post_submission_count": 54,
+    "submission_target_response_count": 27,
+    "form_echo_removed_response_count": 0,
+    "raw_row_count": 14527,
+    "target_row_count": 1,
+    "detail_seed_candidate_count": 0,
+    "url_query_only_row_leakage": 44
+  },
+  "target_rows": [
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "endpoint_url": "https://www.gangseo.seoul.kr/gs040301",
+      "response_url": "https://www.gangseo.seoul.kr/search",
+      "submission_index": 1,
+      "row_index": 127,
+      "row_text": "개발밀도관리구역 내가 찾은 검색어 삭제",
+      "row_preview": "개발밀도관리구역 내가 찾은 검색어 삭제",
+      "target_in_text": true,
+      "target_in_anchor_label": false,
+      "target_in_href_only": false,
+      "row_target_evidence": true,
+      "dynamic_detail_candidates": []
+    }
+  ],
+  "detail_seed_candidates": [],
+  "endpoint_results": [
+    {
+      "region": "경기도 성남시",
+      "agency": "경기도 성남시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시 공고",
+      "url": "https://www.seongnam.go.kr/pm010301",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.seongnam.go.kr/pm010301",
+      "form_count": 3,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/pm010301",
+          "search_fields": [
+            "srchText"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/pm010301",
+          "search_fields": [
+            "query"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/pm010301",
+          "search_field": "srchText",
+          "http_status": 200,
+          "final_url": "https://www.seongnam.go.kr/pm010301",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/pm010301",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.seongnam.go.kr/pm010301",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경기도 성남시",
+      "agency": "경기도 성남시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시 공고",
+      "url": "https://www.seongnam.go.kr/sn01040101",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.seongnam.go.kr/sn01040101",
+      "form_count": 3,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/pm010301",
+          "search_fields": [
+            "srchText"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/sn01040101",
+          "search_fields": [
+            "query"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/pm010301",
+          "search_field": "srchText",
+          "http_status": 200,
+          "final_url": "https://www.seongnam.go.kr/pm010301",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/sn01040101",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.seongnam.go.kr/sn01040101",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경기도 평택시",
+      "agency": "경기도 평택시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "2026년 제4회 평택시 도시계획위원회 개최 결과",
+      "url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/view.do?bcIdx=41&idx=354179&mid=0401010000",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/view.do?bcIdx=41&idx=354179&mid=0401010000",
+      "form_count": 9,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경기도 평택시",
+      "agency": "경기도 평택시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "「2026년 제4회 평택시 도시계획위원회」 개최 결과",
+      "url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/view.do?bcIdx=41&idx=357598&mid=0401010000",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/view.do?bcIdx=41&idx=357598&mid=0401010000",
+      "form_count": 9,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경기도 평택시",
+      "agency": "경기도 평택시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시공고 더보기",
+      "url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100&seCode=01",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100&seCode=01",
+      "form_count": 3,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100",
+          "search_fields": [
+            "searchTxt"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "GET",
+          "action_url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100&seCode=01",
+          "search_fields": [
+            "researchContent"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100",
+          "search_field": "searchTxt",
+          "http_status": 200,
+          "final_url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100&seCode=01",
+          "search_field": "researchContent",
+          "http_status": 200,
+          "final_url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100&seCode=01&researchContent=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상남도 김해시",
+      "agency": "경상남도 김해시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시공고",
+      "url": "https://www.gimhae.go.kr/03360/00023/00029.web",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.gimhae.go.kr/03360/00023/00029.web",
+      "form_count": 3,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.gimhae.go.kr/search.web",
+          "search_fields": [
+            "sstring"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.gimhae.go.kr/03360/00023/00029.web",
+          "search_fields": [
+            "sstring"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.gimhae.go.kr/search.web",
+          "search_field": "sstring",
+          "http_status": 200,
+          "final_url": "https://www.gimhae.go.kr/search.web?sstring=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.gimhae.go.kr/03360/00023/00029.web",
+          "search_field": "sstring",
+          "http_status": 200,
+          "final_url": "https://www.gimhae.go.kr/03360/00023/00029.web?cpage=1&sstring=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&deptCode=53503250000&stype=title",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시공고",
+      "url": "https://www.changwon.go.kr/cwportal/10310/10438/10439.web",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.changwon.go.kr/cwportal/10310/10438/10439.web",
+      "form_count": 4,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 3,
+          "method": "GET",
+          "action_url": "https://www.changwon.go.kr/cwportal/10310/10438/10439.web",
+          "search_fields": [
+            "sstring"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.changwon.go.kr/cwportal/10310/10438/10439.web",
+          "search_field": "sstring",
+          "http_status": 200,
+          "final_url": "https://www.changwon.go.kr/cwportal/10310/10438/10439.web?cpage=1&sstring=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&pbsDivision=new&stype=title&upunit=10",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상북도 구미시",
+      "agency": "경상북도 구미시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고/입법 더보기",
+      "url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401040000&seCode=01",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401040000&seCode=01",
+      "form_count": 5,
+      "safe_form_count": 3,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401040000&seCode=01",
+          "search_fields": [
+            "searchTxt"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401040000&seCode=01",
+          "search_fields": [
+            "searchTxt"
+          ]
+        },
+        {
+          "form_index": 4,
+          "method": "POST",
+          "action_url": "https://www.gumi.go.kr/portal/satisfaction/voteSatis.do?mid=0401040000",
+          "search_fields": [
+            "researchContent"
+          ]
+        }
+      ],
+      "submission_count": 3,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401040000&seCode=01",
+          "search_field": "searchTxt",
+          "http_status": 200,
+          "final_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401040000&seCode=01&searchTxt=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401040000&seCode=01",
+          "search_field": "searchTxt",
+          "http_status": 200,
+          "final_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?seCode=01&mid=0401040000",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 3,
+          "method": "POST",
+          "action_url": "https://www.gumi.go.kr/portal/satisfaction/voteSatis.do?mid=0401040000",
+          "search_field": "researchContent",
+          "http_status": 200,
+          "final_url": "https://www.gumi.go.kr/portal/satisfaction/voteSatis.do?mid=0401040000",
+          "content_type": "application/json;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상북도 구미시",
+      "agency": "경상북도 구미시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "분묘개장 더보기",
+      "url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401070100&seCode=99",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401070100&seCode=99",
+      "form_count": 5,
+      "safe_form_count": 3,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401070100&seCode=99",
+          "search_fields": [
+            "searchTxt"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401070100&seCode=99",
+          "search_fields": [
+            "searchTxt"
+          ]
+        },
+        {
+          "form_index": 4,
+          "method": "POST",
+          "action_url": "https://www.gumi.go.kr/portal/satisfaction/voteSatis.do?mid=0401070100",
+          "search_fields": [
+            "researchContent"
+          ]
+        }
+      ],
+      "submission_count": 3,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401070100&seCode=99",
+          "search_field": "searchTxt",
+          "http_status": 200,
+          "final_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401070100&seCode=99&searchTxt=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401070100&seCode=99",
+          "search_field": "searchTxt",
+          "http_status": 200,
+          "final_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?seCode=99&mid=0401070100",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 3,
+          "method": "POST",
+          "action_url": "https://www.gumi.go.kr/portal/satisfaction/voteSatis.do?mid=0401070100",
+          "search_field": "researchContent",
+          "http_status": 200,
+          "final_url": "https://www.gumi.go.kr/portal/satisfaction/voteSatis.do?mid=0401070100",
+          "content_type": "application/json;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상북도 포항시",
+      "agency": "경상북도 포항시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "구)고시공고(2021.01.31.이전)",
+      "url": "https://www.pohang.go.kr/portal/board/post/list.do?bcIdx=647&mid=0202030000",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.pohang.go.kr/portal/board/post/list.do?bcIdx=647&mid=0202030000",
+      "form_count": 8,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/board/post/list.do?bcIdx=647&mid=0202030000",
+          "search_fields": [
+            "searchTxt"
+          ]
+        },
+        {
+          "form_index": 6,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0202030000",
+          "search_fields": [
+            "researchContent"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/board/post/list.do?bcIdx=647&mid=0202030000",
+          "search_field": "searchTxt",
+          "http_status": 200,
+          "final_url": "https://www.pohang.go.kr/portal/board/post/list.do?bcIdx=647&mid=0202030000",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0202030000",
+          "search_field": "researchContent",
+          "http_status": 200,
+          "final_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0202030000",
+          "content_type": "application/json;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상북도 포항시",
+      "agency": "경상북도 포항시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고 더보기",
+      "url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0202010000",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0202010000",
+      "form_count": 5,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0202010000",
+          "search_fields": [
+            "searchTxt"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0202010000",
+          "search_fields": [
+            "researchContent"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0202010000",
+          "search_field": "searchTxt",
+          "http_status": 200,
+          "final_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0202010000",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0202010000",
+          "search_field": "researchContent",
+          "http_status": 200,
+          "final_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0202010000",
+          "content_type": "application/json;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상북도 포항시",
+      "agency": "경상북도 포항시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "개인정보 제3자 제공/위탁 공고",
+      "url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0208000000&seCode=06",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0208000000&seCode=06",
+      "form_count": 5,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0208000000",
+          "search_fields": [
+            "searchTxt"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0208000000",
+          "search_fields": [
+            "researchContent"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0208000000",
+          "search_field": "searchTxt",
+          "http_status": 200,
+          "final_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0208000000",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0208000000",
+          "search_field": "researchContent",
+          "http_status": 200,
+          "final_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0208000000",
+          "content_type": "application/json;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상북도 포항시",
+      "agency": "경상북도 포항시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "입법예고 더보기",
+      "url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0315030000&seCode=03",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0315030000&seCode=03",
+      "form_count": 5,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0315030000",
+          "search_fields": [
+            "searchTxt"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0315030000",
+          "search_fields": [
+            "researchContent"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0315030000",
+          "search_field": "searchTxt",
+          "http_status": 200,
+          "final_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0315030000",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0315030000",
+          "search_field": "researchContent",
+          "http_status": 200,
+          "final_url": "https://www.pohang.go.kr/portal/satisfaction/voteSatis.do?mid=0315030000",
+          "content_type": "application/json;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "대구광역시 달서구",
+      "agency": "대구광역시 달서구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000104",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000104",
+      "form_count": 2,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dalseo.daegu.kr/search/search_page.jsp",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.dalseo.daegu.kr/search/search_page.jsp",
+          "search_fields": [
+            "query"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dalseo.daegu.kr/search/search_page.jsp",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.dalseo.daegu.kr/search/search_page.jsp",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 41,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.dalseo.daegu.kr/search/search_page.jsp",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.dalseo.daegu.kr/search/search_page.jsp?query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&_total_category_elect=ALL",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 41,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "대구광역시 달성군",
+      "agency": "대구광역시 달성군",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "대구광역시도시계획조례개정(안) 입법예고",
+      "url": "http://dalseong.daegu.kr/index.do?bbsAttrbCode=BBSA03&bbsId=BBS_00152&bbsTyCode=BBST03&menu_id=00001991&menu_link=%2Ficms%2Fbbs%2FselectBoardArticle.do&nttId=26",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.dalseong.daegu.kr/index.do?bbsAttrbCode=BBSA03&bbsId=BBS_00152&bbsTyCode=BBST03&menu_id=00001991&menu_link=%252Ficms%252Fbbs%252FselectBoardArticle.do&nttId=26",
+      "form_count": 2,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_fields": [
+            "query"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 47,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 47,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "대구광역시 달성군",
+      "agency": "대구광역시 달성군",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "",
+      "url": "https://dalseong.daegu.kr/filePreview.do?atchFileId=BBS_00152_26&fileSn=0",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://dalseong.daegu.kr/resource/sn3hcv/skin/doc.html;jsessionid=0BAAE1CABBC01FCF798BF212F6C0A4B7.tomcat1?fn=%EC%9E%85%EB%B2%95%EC%98%88%EA%B3%A0%EC%95%88%2897%29.hwp&rs=/resource/sn3hcv/preview/202608/",
+      "form_count": 0,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "대구광역시 달성군",
+      "agency": "대구광역시 달성군",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000194",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000194",
+      "form_count": 2,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_fields": [
+            "query"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 47,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 47,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시공고",
+      "url": "https://www.gangseo.seoul.kr/gs040301",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.gangseo.seoul.kr/gs040301",
+      "form_count": 4,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.gangseo.seoul.kr/search",
+          "search_fields": [
+            "searchText"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.gangseo.seoul.kr/gs040301",
+          "search_fields": [
+            "srchText"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.gangseo.seoul.kr/search",
+          "search_field": "searchText",
+          "http_status": 200,
+          "final_url": "https://www.gangseo.seoul.kr/search",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 137,
+          "target_row_count": 1,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.gangseo.seoul.kr/gs040301",
+          "search_field": "srchText",
+          "http_status": 200,
+          "final_url": "https://www.gangseo.seoul.kr/gs040301?srchText=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&srchPage=10&srchKey=regNo",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 1,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "울산광역시 울주군",
+      "agency": "울산광역시 울주군",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "",
+      "url": "https://www.ulju.ulsan.kr/ulju/saeol/gosi/view.do?mId=0403020000%C2%ACAncmtMgtNo%3D66991",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.ulju.ulsan.kr/ulju/saeol/gosi/view.do?mId=0403020000%C2%ACAncmtMgtNo%3D66991",
+      "form_count": 5,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "울산광역시 울주군",
+      "agency": "울산광역시 울주군",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "",
+      "url": "https://www.ulju.ulsan.kr/ulju/saeol/gosi/view.do?mId=0403020000%C2%ACAncmtMgtNo%3D67234",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.ulju.ulsan.kr/ulju/saeol/gosi/view.do?mId=0403020000%C2%ACAncmtMgtNo%3D67234",
+      "form_count": 5,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "인천광역시 남동구",
+      "agency": "인천광역시 남동구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "도시관리계획(도시계획시설, 구월업무지구단위계획) 결정(변경) 및 지형도면 고시",
+      "url": "https://www.namdong.go.kr/main/bbs/bbsMsgDetail.do?bcd=other_notice&msg_seq=2078",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.namdong.go.kr/main/bbs/bbsMsgDetail.do?bcd=other_notice&msg_seq=2078",
+      "form_count": 1,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/search/",
+          "search_fields": [
+            "query"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/search/",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.namdong.go.kr/search/?query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 28,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "인천광역시 남동구",
+      "agency": "인천광역시 남동구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "",
+      "url": "https://www.namdong.go.kr/main/eminwon/eminwonAnnounceDetail.do?keyfield=noticeno&keyword=230&mgt_no=69607",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.namdong.go.kr/main/eminwon/eminwonAnnounceDetail.do?keyfield=noticeno&keyword=230&mgt_no=69607",
+      "form_count": 4,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/search/",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/main/organization/organizationPhoneMainList.do",
+          "search_fields": [
+            "keyword"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/search/",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.namdong.go.kr/search/?query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 28,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/main/organization/organizationPhoneMainList.do",
+          "search_field": "keyword",
+          "http_status": 200,
+          "final_url": "https://www.namdong.go.kr/main/organization/organizationPhoneMainList.do?keyfield=deptwork&keyword=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "인천광역시 남동구",
+      "agency": "인천광역시 남동구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "",
+      "url": "https://www.namdong.go.kr/main/eminwon/eminwonAnnounceDetail.do?mgt_no=71702",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.namdong.go.kr/main/eminwon/eminwonAnnounceDetail.do?mgt_no=71702",
+      "form_count": 4,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/search/",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/main/organization/organizationPhoneMainList.do",
+          "search_fields": [
+            "keyword"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/search/",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.namdong.go.kr/search/?query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 28,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/main/organization/organizationPhoneMainList.do",
+          "search_field": "keyword",
+          "http_status": 200,
+          "final_url": "https://www.namdong.go.kr/main/organization/organizationPhoneMainList.do?keyfield=deptwork&keyword=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "인천광역시 남동구",
+      "agency": "인천광역시 남동구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "url": "https://www.namdong.go.kr/main/news/announce.jsp",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.namdong.go.kr/main/news/announce.jsp",
+      "form_count": 7,
+      "safe_form_count": 3,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/search/",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/main/eminwon/eminwonAnnounceList.do",
+          "search_fields": [
+            "keyword"
+          ]
+        },
+        {
+          "form_index": 6,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/main/organization/organizationPhoneMainList.do",
+          "search_fields": [
+            "keyword"
+          ]
+        }
+      ],
+      "submission_count": 3,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/search/",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.namdong.go.kr/search/?query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 28,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/main/eminwon/eminwonAnnounceList.do",
+          "search_field": "keyword",
+          "http_status": 200,
+          "final_url": "https://www.namdong.go.kr/main/eminwon/eminwonAnnounceList.do?keyword=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&keyfield=title",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 3,
+          "method": "GET",
+          "action_url": "https://www.namdong.go.kr/main/organization/organizationPhoneMainList.do",
+          "search_field": "keyword",
+          "http_status": 200,
+          "final_url": "https://www.namdong.go.kr/main/organization/organizationPhoneMainList.do?keyfield=deptwork&keyword=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "인천광역시 연수구",
+      "agency": "인천광역시 연수구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고/입법예고",
+      "url": "https://www.yeonsu.go.kr/main/community/notify/gosi.asp",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.yeonsu.go.kr/main/community/notify/gosi.asp",
+      "form_count": 1,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "전라남도 목포시",
+      "agency": "전라남도 목포시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "url": "https://www.mokpo.go.kr/www/mokpo_news/notification",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification",
+      "form_count": 4,
+      "safe_form_count": 4,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+          "search_fields": [
+            "search_word"
+          ]
+        },
+        {
+          "form_index": 4,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/ybscript.io/common/satisfaction_survey",
+          "search_fields": [
+            "point_text"
+          ]
+        }
+      ],
+      "submission_count": 4,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/total_search/total_search.html?csrf_token=bdfd36d447c14841b63911bdd63597ea86eff261f86ccdcda1021b3a154bf6f1&query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 27,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/total_search/total_search.html?csrf_token=bdfd36d447c14841b63911bdd63597ea86eff261f86ccdcda1021b3a154bf6f1&query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 27,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 3,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+          "search_field": "search_word",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 4,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/ybscript.io/common/satisfaction_survey",
+          "search_field": "point_text",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/ybscript.io/common/satisfaction_survey",
+          "content_type": "text/html;charset=utf-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "전라남도 목포시",
+      "agency": "전라남도 목포시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "지난 고시/공고",
+      "url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice",
+      "form_count": 4,
+      "safe_form_count": 4,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice",
+          "search_fields": [
+            "search_word"
+          ]
+        },
+        {
+          "form_index": 4,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/ybscript.io/common/satisfaction_survey",
+          "search_fields": [
+            "point_text"
+          ]
+        }
+      ],
+      "submission_count": 4,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/total_search/total_search.html?csrf_token=059596ef43143a8615d96ccae179cfd2bc07454f1c6df8d88080363bf3f1d033&query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 27,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/total_search/total_search.html?csrf_token=059596ef43143a8615d96ccae179cfd2bc07454f1c6df8d88080363bf3f1d033&query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 27,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 3,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice",
+          "search_field": "search_word",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 4,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/ybscript.io/common/satisfaction_survey",
+          "search_field": "point_text",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/ybscript.io/common/satisfaction_survey",
+          "content_type": "text/html;charset=utf-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "전라남도 목포시",
+      "agency": "전라남도 목포시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+      "form_count": 4,
+      "safe_form_count": 4,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+          "search_fields": [
+            "search_word"
+          ]
+        },
+        {
+          "form_index": 4,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/ybscript.io/common/satisfaction_survey",
+          "search_fields": [
+            "point_text"
+          ]
+        }
+      ],
+      "submission_count": 4,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/total_search/total_search.html?csrf_token=aeea3acabee0f62583b5acd9a95102e11ecf2d16cc1c61f7e6c445e92fa3b18b&query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 27,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.mokpo.go.kr/total_search/total_search.html",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/total_search/total_search.html?csrf_token=aeea3acabee0f62583b5acd9a95102e11ecf2d16cc1c61f7e6c445e92fa3b18b&query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 27,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 3,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+          "search_field": "search_word",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 4,
+          "method": "POST",
+          "action_url": "https://www.mokpo.go.kr/ybscript.io/common/satisfaction_survey",
+          "search_field": "point_text",
+          "http_status": 200,
+          "final_url": "https://www.mokpo.go.kr/ybscript.io/common/satisfaction_survey",
+          "content_type": "text/html;charset=utf-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "전라남도 순천시",
+      "agency": "전라남도 순천시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "url": "https://www.suncheon.go.kr/kr/news/0004/0005/0001/",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.suncheon.go.kr/kr/news/0004/0005/0001/",
+      "form_count": 3,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.suncheon.go.kr/kr/news/0004/0005/0001/",
+          "search_fields": [
+            "searchKeyword"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.suncheon.go.kr/kr/news/0004/0005/0001/",
+          "search_field": "searchKeyword",
+          "http_status": 200,
+          "final_url": "https://www.suncheon.go.kr/kr/news/0004/0005/0001/?searchKeyword=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&pageSize=10&searchCondition=title",
+          "content_type": "text/html;charset=utf-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "충청남도 당진시",
+      "agency": "충청남도 당진시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+      "form_count": 3,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+          "search_fields": [
+            "searchKeyword"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+          "search_fields": [
+            "research_descript"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+          "search_field": "searchKeyword",
+          "http_status": 200,
+          "final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+          "search_field": "research_descript",
+          "http_status": 200,
+          "final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "충청남도 천안시",
+      "agency": "충청남도 천안시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "공고알림",
+      "url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do",
+      "form_count": 2,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do",
+          "search_fields": [
+            "searchKeyword"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do",
+          "search_field": "searchKeyword",
+          "http_status": 200,
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "충청남도 천안시",
+      "agency": "충청남도 천안시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "입법예고",
+      "url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do",
+      "form_count": 2,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do",
+          "search_fields": [
+            "searchKeyword"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do",
+          "search_field": "searchKeyword",
+          "http_status": 200,
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "충청남도 천안시",
+      "agency": "충청남도 천안시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "입찰정보",
+      "url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_04/kor/sub02_02_06/list.do",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_04/kor/sub02_02_06/list.do",
+      "form_count": 2,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_04/kor/sub02_02_06/list.do",
+          "search_fields": [
+            "searchKeyword"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_04/kor/sub02_02_06/list.do",
+          "search_field": "searchKeyword",
+          "http_status": 200,
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_04/kor/sub02_02_06/list.do",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경기도 성남시",
+      "agency": "경기도 성남시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "성남 시보",
+      "url": "https://www.seongnam.go.kr/bbs010308",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.seongnam.go.kr/bbs010308",
+      "form_count": 5,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/bbs010308",
+          "search_fields": [
+            "srchText",
+            "srchText"
+          ]
+        },
+        {
+          "form_index": 5,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/bbs010308",
+          "search_fields": [
+            "query"
+          ]
+        }
+      ],
+      "submission_count": 3,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/bbs010308",
+          "search_field": "srchText",
+          "http_status": 200,
+          "final_url": "https://www.seongnam.go.kr/bbs010308",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/bbs010308",
+          "search_field": "srchText",
+          "http_status": 200,
+          "final_url": "https://www.seongnam.go.kr/bbs010308",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 3,
+          "method": "POST",
+          "action_url": "https://www.seongnam.go.kr/bbs010308",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.seongnam.go.kr/bbs010308",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경기도 평택시",
+      "agency": "경기도 평택시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "평택시보",
+      "url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/list.do?bcIdx=51&mid=0402050000",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/list.do?bcIdx=51&mid=0402050000",
+      "form_count": 7,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/list.do?bcIdx=51&mid=0402050000",
+          "search_fields": [
+            "searchTxt"
+          ]
+        },
+        {
+          "form_index": 7,
+          "method": "GET",
+          "action_url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/list.do?bcIdx=51&mid=0402050000",
+          "search_fields": [
+            "researchContent"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/list.do?bcIdx=51&mid=0402050000",
+          "search_field": "searchTxt",
+          "http_status": 200,
+          "final_url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/list.do?bcIdx=51&mid=0402050000",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/list.do?bcIdx=51&mid=0402050000",
+          "search_field": "researchContent",
+          "http_status": 200,
+          "final_url": "https://www.pyeongtaek.go.kr/pyeongtaek/board/post/list.do?bcIdx=51&mid=0402050000&researchContent=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상남도 김해시",
+      "agency": "경상남도 김해시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "김해시보",
+      "url": "https://www.gimhae.go.kr/00001.web",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.gimhae.go.kr/00001.web",
+      "form_count": 1,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.gimhae.go.kr/03641.web",
+          "search_fields": [
+            "sstring"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.gimhae.go.kr/03641.web",
+          "search_field": "sstring",
+          "http_status": 200,
+          "final_url": "https://www.gimhae.go.kr/03641.web?sstring=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 33,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상남도 김해시",
+      "agency": "경상남도 김해시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "김해시공보",
+      "url": "https://www.gimhae.go.kr/03360/00023/00016.web",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.gimhae.go.kr/03360/00023/00016.web",
+      "form_count": 3,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "GET",
+          "action_url": "https://www.gimhae.go.kr/search.web",
+          "search_fields": [
+            "sstring"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.gimhae.go.kr/03360/00023/00016.web",
+          "search_fields": [
+            "sstring"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.gimhae.go.kr/search.web",
+          "search_field": "sstring",
+          "http_status": 200,
+          "final_url": "https://www.gimhae.go.kr/search.web?sstring=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.gimhae.go.kr/03360/00023/00016.web",
+          "search_field": "sstring",
+          "http_status": 200,
+          "final_url": "https://www.gimhae.go.kr/03360/00023/00016.web?gcode=1166&amode=list&wmode=&cpage=1&sstring=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&stype=title",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "창원시보(PDF)",
+      "url": "https://www.changwon.go.kr/cwportal/10310/10445/10446.web",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.changwon.go.kr/cwportal/10310/10445/10446.web",
+      "form_count": 11,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "창원시보",
+      "url": "https://www.changwon.go.kr/cwportal/10310/10445/10921.web",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.changwon.go.kr/cwportal/10310/10445/10921.web",
+      "form_count": 4,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 3,
+          "method": "GET",
+          "action_url": "https://www.changwon.go.kr/cwportal/10310/10445/10921.web",
+          "search_fields": [
+            "sstring"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.changwon.go.kr/cwportal/10310/10445/10921.web",
+          "search_field": "sstring",
+          "http_status": 200,
+          "final_url": "https://www.changwon.go.kr/cwportal/10310/10445/10921.web?cpage=1&newsSidx=0&sstring=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&newsHoidx=3168&stype=news_daetitle",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "창원공보",
+      "url": "https://www.changwon.go.kr/cwportal/10310/10449.web",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.changwon.go.kr/cwportal/10310/10449.web",
+      "form_count": 4,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 3,
+          "method": "GET",
+          "action_url": "https://www.changwon.go.kr/cwportal/10310/10449.web",
+          "search_fields": [
+            "sstring"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.changwon.go.kr/cwportal/10310/10449.web",
+          "search_field": "sstring",
+          "http_status": 200,
+          "final_url": "https://www.changwon.go.kr/cwportal/10310/10449.web?gcode=1017&amode=list&wmode=&cpage=1&sstring=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&stype=title",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "대구광역시 달서구",
+      "agency": "대구광역시 달서구",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "달서구공보",
+      "url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+      "form_count": 3,
+      "safe_form_count": 3,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dalseo.daegu.kr/search/search_page.jsp",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.dalseo.daegu.kr/search/search_page.jsp",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+          "search_fields": [
+            "searchBgnDe",
+            "searchEndDe",
+            "searchWrd"
+          ]
+        }
+      ],
+      "submission_count": 5,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dalseo.daegu.kr/search/search_page.jsp",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.dalseo.daegu.kr/search/search_page.jsp",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 41,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.dalseo.daegu.kr/search/search_page.jsp",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.dalseo.daegu.kr/search/search_page.jsp?query=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&_total_category_elect=ALL",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 41,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 3,
+          "method": "POST",
+          "action_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+          "search_field": "searchBgnDe",
+          "http_status": 200,
+          "final_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 4,
+          "method": "POST",
+          "action_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+          "search_field": "searchEndDe",
+          "http_status": 200,
+          "final_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 5,
+          "method": "POST",
+          "action_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+          "search_field": "searchWrd",
+          "http_status": 200,
+          "final_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "대구광역시 달성군",
+      "agency": "대구광역시 달성군",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "달성군공보",
+      "url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+      "form_count": 3,
+      "safe_form_count": 3,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_fields": [
+            "query"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+          "search_fields": [
+            "searchBgnDe",
+            "searchEndDe",
+            "searchWrd"
+          ]
+        }
+      ],
+      "submission_count": 5,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 47,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "search_field": "query",
+          "http_status": 200,
+          "final_url": "https://www.dalseong.daegu.kr/search_page/search_page.jsp",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 47,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 3,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+          "search_field": "searchBgnDe",
+          "http_status": 200,
+          "final_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 4,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+          "search_field": "searchEndDe",
+          "http_status": 200,
+          "final_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 5,
+          "method": "POST",
+          "action_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+          "search_field": "searchWrd",
+          "http_status": 200,
+          "final_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "인천광역시 연수구",
+      "agency": "인천광역시 연수구",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "구보",
+      "url": "https://www.yeonsu.go.kr/main/community/notify/word.asp",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp",
+      "form_count": 3,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp",
+          "search_fields": [
+            "keyword"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "GET",
+          "action_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp",
+          "search_fields": [
+            "keyword"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp",
+          "search_field": "keyword",
+          "http_status": 200,
+          "final_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?s_date=&e_date=&keyword=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&listCnt=15&keyfield=title",
+          "content_type": "text/html; Charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "GET",
+          "action_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp",
+          "search_field": "keyword",
+          "http_status": 200,
+          "final_url": "https://www.yeonsu.go.kr/share/error.asp",
+          "content_type": "text/html",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "전라남도 순천시",
+      "agency": "전라남도 순천시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "순천시보",
+      "url": "https://www.suncheon.go.kr/kr/news/0004/0001/",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.suncheon.go.kr/kr/news/0004/0001/",
+      "form_count": 2,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 2,
+          "method": "GET",
+          "action_url": "https://www.suncheon.go.kr/kr/news/0004/0001/;jsessionid=33C4F59128D7EF4E6423DB4673DDC46B",
+          "search_fields": [
+            "searchKeyword"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.suncheon.go.kr/kr/news/0004/0001/;jsessionid=33C4F59128D7EF4E6423DB4673DDC46B",
+          "search_field": "searchKeyword",
+          "http_status": 200,
+          "final_url": "https://www.suncheon.go.kr/kr/news/0004/0001/;jsessionid=33C4F59128D7EF4E6423DB4673DDC46B?mode=&boardId=BBS_0000000000000195&searchKeyword=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&pageIdx=&searchCondition=all",
+          "content_type": "text/html;charset=utf-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "전북특별자치도 전주시",
+      "agency": "전북특별자치도 전주시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "전주시보",
+      "url": "https://www.jeonju.go.kr/planweb/board/list.9is?boardUid=ff8080818b5bc5cf018ba8a3891a633e&contentUid=ff8080818990c349018b041a87cd395d&subPath=",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.jeonju.go.kr/planweb/board/list.9is?boardUid=ff8080818b5bc5cf018ba8a3891a633e&contentUid=ff8080818990c349018b041a87cd395d&subPath=",
+      "form_count": 3,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.jeonju.go.kr/index.9is?contentUid=ff8080818bb37ae9018bcd7845cb201c",
+          "search_fields": [
+            "keyword"
+          ]
+        },
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.jeonju.go.kr/planweb/board/list.9is",
+          "search_fields": [
+            "keyword"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.jeonju.go.kr/index.9is?contentUid=ff8080818bb37ae9018bcd7845cb201c",
+          "search_field": "keyword",
+          "http_status": 200,
+          "final_url": "https://www.jeonju.go.kr/index.9is?contentUid=ff8080818bb37ae9018bcd7845cb201c",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.jeonju.go.kr/planweb/board/list.9is",
+          "search_field": "keyword",
+          "http_status": 200,
+          "final_url": "https://www.jeonju.go.kr/planweb/board/list.9is",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "충청남도 당진시",
+      "agency": "충청남도 당진시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "당진시보",
+      "url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+      "form_count": 3,
+      "safe_form_count": 2,
+      "forms": [
+        {
+          "form_index": 2,
+          "method": "POST",
+          "action_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+          "search_fields": [
+            "searchWrd"
+          ]
+        },
+        {
+          "form_index": 3,
+          "method": "POST",
+          "action_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+          "search_fields": [
+            "research_descript"
+          ]
+        }
+      ],
+      "submission_count": 2,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+          "search_field": "searchWrd",
+          "http_status": 200,
+          "final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        },
+        {
+          "submission_index": 2,
+          "method": "POST",
+          "action_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+          "search_field": "research_descript",
+          "http_status": 200,
+          "final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "충청남도 천안시",
+      "agency": "충청남도 천안시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "천안시보",
+      "url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do",
+      "form_count": 3,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do",
+          "search_fields": [
+            "searchKeyword"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do",
+          "search_field": "searchKeyword",
+          "http_status": 200,
+          "final_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do",
+          "content_type": "text/html;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "창원 도시계획정보포털",
+      "url": "https://changwon.go.kr/urbanplanning/cu/",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://changwon.go.kr/urbanplanning/cu/",
+      "form_count": 0,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "부산광역시 강서구",
+      "agency": "부산광역시 강서구",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "총무과 가덕도 시간당 최대 101㎜ 집중호우… 강서구, 현장 대응·복구 총력 ◇ 8월 15~17일 침수·토사유실 등 61건 접수 ◇ 492명 비상근무…구청장도 피해 현장 찾아 주민 불편 살펴 지난 8월 15일부터 17일까지 부산 강서구에 집중호우가 쏟아지면서 도로와 주택가 침수, 토사 유실, 수목 전도 등 피해가 잇따랐다. 특히 가덕도에는 사흘간 475.5㎜의 많은 비가 내렸으며, 17일 새벽에는 시간당 최대 101㎜의 폭우가 집중됐다. 대저1동의 누적강수량도 169.7㎜를 기록했다. 부산 강서구(구청장 박상준)는 호우특보 해제 다음 날인 8월 18일 오후 2시 40분 구청 3층 대회의실에서 ‘8.15.~17. 호우 피해 발생 및 조치사항 보고회’를 열고 부서별 피해 현황과 조치사항, 향후 대응계획을 점검했다. 안전관리과를 비롯해 녹지공원·해양수산·교통행정·도시관리·건설 등 분야별로 피해와 복구 상황을 종합적으로 살폈다. 구는 앞서 16일 오후 1시 호우주의보 발효와 함께 비상근무에 들어가 4차례에 걸쳐 약 492명을 투입했다. 집중호우에 대비해 15일 오후부터 10시간 동안 사전 배수를 실시하는 등 선제 대응에도 나섰다. 이번 호우로 접수된 피해는 총 61건으로 침수 44건, 토사 유실 8건, 포트홀 2건, 장애물 6건, 기타 1건이다. 피해는 가덕도와 명지·녹산·강동·대저 등 지역 곳곳에서 발생했으며, 구는 현장 인력을 긴급 투입해 배수와 토사 제거, 도로 복구 등을 실시했다. 가장 많은 비가 내린 가덕도에서는 주택과 도로 침수, 토사 유실이 집중됐다. 가덕해안로와 동선새바지길 등에서는 중장비를 동원해 도로에 쌓인 토사와 암석, 나무 잔해 등을 제거했다. 천성동 한 주택은 침투수로 붕괴 우려가 높아져 거주자 1명을 민간 숙박시설로 일시 대피시키고 방수포와 안전테이프를 설치하는 등 안전조치를 했다. 도로와 시설물에 대한 긴급 복구도 이어졌다. 서낙동로 죽림동 일원과 봉림지하차도의 포트홀을 보수하고, 천성IC와 동선새바지길의 비탈면 토사를 제거했다. 명지동에서는 강풍과 호우로 쓰러진 차선분리대를 수거하고, 건축물 외장재가 떨어진 현장에는 출입 통제와 낙하물 정리 등 안전조치를 실시했다. 박상준 강서구청장도 피해 현장을 직접 찾아 복구 상황과 주민 불편을 살폈다. 강동동에서는 우드칩 등이 우수받이를 막아 발생한 도로 침수 현장을 점검했으며, 가덕도 외양포에서는 배수로와 방파제 인근 토사 유실, 수국단지 피해, 배수시설 상태 등을 확인하고 주민들의 피해 내용을 청취했다. 현장에서 확인된 정비 필요사항은 관련 부서에 전달해 후속 조치를 이어가도록 했다. 강서구는 응급복구와 함께 피해가구의 조속한 일상 회복을 위한 지원에도 나설 계획이다. 향후 피해가구 가운데 복구 인력이 필요한 곳에는 강서구자원봉사센터(센터장 한희필)와 연계해 자원봉사자를 투입하고, 침수 주택 정리와 토사·오염물 제거 등 현장 복구를 지원할 예정이다. 아울러 추가 강수에 대비해 산사태 취약지역 42개소와 급경사지 산림 8개소, 공원 20개소 등 재해취약지역에 대한 예찰을 강화하고 도로와 배수시설 등 추가 피해 여부를 지속적으로 점검하는 등 주민들의 안전과 신속한 피해 회복에 행정력을 집중할 방침이다. 26.08. 20",
+      "url": "https://www.bsgangseo.go.kr/portal/board/post/view.do?bcIdx=526&idx=409406&mid=0501050000",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.bsgangseo.go.kr/portal/board/post/view.do?bcIdx=526&idx=409406&mid=0501050000",
+      "form_count": 9,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 8,
+          "method": "POST",
+          "action_url": "https://www.bsgangseo.go.kr/portal/satisfaction/voteSatis.do?mid=0501050000",
+          "search_fields": [
+            "researchContent"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.bsgangseo.go.kr/portal/satisfaction/voteSatis.do?mid=0501050000",
+          "search_field": "researchContent",
+          "http_status": 200,
+          "final_url": "https://www.bsgangseo.go.kr/portal/satisfaction/voteSatis.do?mid=0501050000",
+          "content_type": "application/json;charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 0,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "도시계획과",
+      "url": "https://www.gangseo.seoul.kr/gs050351",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.gangseo.seoul.kr/gs050351",
+      "form_count": 3,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 1,
+          "method": "POST",
+          "action_url": "https://www.gangseo.seoul.kr/search",
+          "search_fields": [
+            "searchText"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "POST",
+          "action_url": "https://www.gangseo.seoul.kr/search",
+          "search_field": "searchText",
+          "http_status": 200,
+          "final_url": "https://www.gangseo.seoul.kr/search",
+          "content_type": "text/html; charset=UTF-8",
+          "target_in_raw_response": true,
+          "target_in_cleaned_response": true,
+          "row_count": 137,
+          "target_row_count": 1,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 1,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "인천광역시 연수구",
+      "agency": "인천광역시 연수구",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "지구단위계획",
+      "url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp",
+      "form_count": 5,
+      "safe_form_count": 1,
+      "forms": [
+        {
+          "form_index": 3,
+          "method": "GET",
+          "action_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp",
+          "search_fields": [
+            "keyword"
+          ]
+        }
+      ],
+      "submission_count": 1,
+      "submissions": [
+        {
+          "submission_index": 1,
+          "method": "GET",
+          "action_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp",
+          "search_field": "keyword",
+          "http_status": 200,
+          "final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?keyfield=&keyword=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&category=&s_dept_idx=&gotopage=",
+          "content_type": "text/html; Charset=UTF-8",
+          "target_in_raw_response": false,
+          "target_in_cleaned_response": false,
+          "row_count": 300,
+          "target_row_count": 0,
+          "detail_seed_count": 0
+        }
+      ],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "인천광역시 연수구",
+      "agency": "인천광역시 연수구",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "도시계획정보",
+      "url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan_term.asp",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan_term.asp",
+      "form_count": 1,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "제주특별자치도 서귀포시",
+      "agency": "제주특별자치도 서귀포시",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "2030 서귀포 도시관리계획 재정비 새창",
+      "url": "https://www.seogwipo.go.kr/group/environment/city/2030citymanagement/info.htm",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.seogwipo.go.kr/group/environment/city/2030citymanagement/info.htm",
+      "form_count": 3,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    },
+    {
+      "region": "제주특별자치도 서귀포시",
+      "agency": "제주특별자치도 서귀포시",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "",
+      "url": "https://www.seogwipo.go.kr/group/environment/city/notice.htm?act=view&seq=154493035",
+      "endpoint_http": 200,
+      "endpoint_final_url": "https://www.seogwipo.go.kr/group/environment/city/notice.htm?act=view&seq=154493035",
+      "form_count": 3,
+      "safe_form_count": 0,
+      "forms": [],
+      "submission_count": 0,
+      "submissions": [],
+      "target_row_count": 0,
+      "detail_seed_count": 0
+    }
+  ],
+  "resolution": "POST_SEARCH_TARGET_ROW_DISCOVERED_NO_DETAIL_ENDPOINT",
+  "runtime_registration_blocked": true,
+  "site_false_interpretation_blocked": true,
+  "next_action": "target-bearing row는 확인되었으나 상세 endpoint를 URL로 복원하지 못했다. onclick 함수 인자, hidden document key, data-* 식별자를 이용한 M-stage site-specific dynamic detail reconstruction을 수행한다."
+}

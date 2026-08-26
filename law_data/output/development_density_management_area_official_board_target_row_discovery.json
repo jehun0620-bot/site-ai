@@ -1,0 +1,2374 @@
+{
+  "step": "STEP 17-21-C-16-8-K Development Density Management Area Official Board Target Row / Pagination Discovery",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700"
+  },
+  "input": {
+    "path": "D:\\site-ai\\law_data\\output\\development_density_management_area_official_board_search_form_discovery.json",
+    "searchable_endpoint_count": 38
+  },
+  "method": {
+    "row_level_target_evidence_required": true,
+    "url_query_only_target_prohibited": true,
+    "search_page_final_positive_allowed": false,
+    "pagination_discovery_enabled": true,
+    "synthetic_pagination_enabled": true,
+    "detail_seed_requires_target_row": true,
+    "runtime_registration_allowed": false,
+    "site_false_interpretation_allowed": false,
+    "max_pages_per_endpoint": 8
+  },
+  "summary": {
+    "endpoint_count": 38,
+    "request_count": 167,
+    "http_success_count": 167,
+    "transport_error_count": 0,
+    "html_parse_count": 160,
+    "page_probe_count": 167,
+    "pagination_page_probe_count": 129,
+    "raw_row_count": 38664,
+    "target_row_count": 0,
+    "detail_seed_candidate_count": 0,
+    "url_query_only_row_leakage": 0
+  },
+  "target_rows": [],
+  "detail_seed_candidates": [],
+  "endpoint_results": [
+    {
+      "region": "경기도 성남시",
+      "agency": "경기도 성남시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시 공고",
+      "endpoint_url": "https://www.seongnam.go.kr/pm010301",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.seongnam.go.kr/pm010301",
+          "final_url": "https://www.seongnam.go.kr/pm010301",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/pm010301?curPage=2",
+          "final_url": "https://www.seongnam.go.kr/pm010301?curPage=2",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/pm010301?curPage=3",
+          "final_url": "https://www.seongnam.go.kr/pm010301?curPage=3",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/pm010301?curPage=4",
+          "final_url": "https://www.seongnam.go.kr/pm010301?curPage=4",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/pm010301?curPage=5",
+          "final_url": "https://www.seongnam.go.kr/pm010301?curPage=5",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/pm010301?curPage=6",
+          "final_url": "https://www.seongnam.go.kr/pm010301?curPage=6",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/pm010301?curPage=7",
+          "final_url": "https://www.seongnam.go.kr/pm010301?curPage=7",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/pm010301?curPage=8",
+          "final_url": "https://www.seongnam.go.kr/pm010301?curPage=8",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경기도 성남시",
+      "agency": "경기도 성남시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시 공고",
+      "endpoint_url": "https://www.seongnam.go.kr/sn01040101",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.seongnam.go.kr/sn01040101",
+          "final_url": "https://www.seongnam.go.kr/sn01040101",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/sn01040101?curPage=2",
+          "final_url": "https://www.seongnam.go.kr/sn01040101?curPage=2",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/sn01040101?curPage=3",
+          "final_url": "https://www.seongnam.go.kr/sn01040101?curPage=3",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/sn01040101?curPage=4",
+          "final_url": "https://www.seongnam.go.kr/sn01040101?curPage=4",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/sn01040101?curPage=5",
+          "final_url": "https://www.seongnam.go.kr/sn01040101?curPage=5",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/sn01040101?curPage=6",
+          "final_url": "https://www.seongnam.go.kr/sn01040101?curPage=6",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/sn01040101?curPage=7",
+          "final_url": "https://www.seongnam.go.kr/sn01040101?curPage=7",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/sn01040101?curPage=8",
+          "final_url": "https://www.seongnam.go.kr/sn01040101?curPage=8",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경기도 평택시",
+      "agency": "경기도 평택시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시공고 더보기",
+      "endpoint_url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100&seCode=01",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100&seCode=01",
+          "final_url": "https://www.pyeongtaek.go.kr/pyeongtaek/saeol/gosi/list.do?mid=0401020100&seCode=01",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상남도 김해시",
+      "agency": "경상남도 김해시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시공고",
+      "endpoint_url": "https://www.gimhae.go.kr/03360/00023/00029.web",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.gimhae.go.kr/03360/00023/00029.web",
+          "final_url": "https://www.gimhae.go.kr/03360/00023/00029.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gimhae.go.kr/00643.web",
+          "final_url": "https://www.gimhae.go.kr/00610/00639/00643.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gimhae.go.kr/00610/00639/00675.web",
+          "final_url": "https://www.gimhae.go.kr/00610/00639/00675.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gimhae.go.kr/00610/00639/00679.web",
+          "final_url": "https://www.gimhae.go.kr/00610/00639/00679.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gimhae.go.kr/00708/00710/00723.web",
+          "final_url": "https://www.gimhae.go.kr/00708/00710/00723.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gimhae.go.kr/00708/00740/05121.web",
+          "final_url": "https://www.gimhae.go.kr/00708/00740/05121.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gimhae.go.kr/00761/00745/02304.web",
+          "final_url": "https://www.gimhae.go.kr/00761/00745/02304.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gimhae.go.kr/00954/01023/01141.web?amode=list&cpage=1&gcode=1095&sstring=%EA%B0%90%EC%82%AC+%EA%B2%B0%EA%B3%BC&stype=title&wmode=",
+          "final_url": "https://www.gimhae.go.kr/00954/01023/01141.web?amode=list&cpage=1&gcode=1095&sstring=%EA%B0%90%EC%82%AC+%EA%B2%B0%EA%B3%BC&stype=title&wmode=",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시공고",
+      "endpoint_url": "https://www.changwon.go.kr/cwportal/10310/10438/10439.web",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.changwon.go.kr/cwportal/10310/10438/10439.web",
+          "final_url": "https://www.changwon.go.kr/cwportal/10310/10438/10439.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상북도 구미시",
+      "agency": "경상북도 구미시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고/입법 더보기",
+      "endpoint_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401040000&seCode=01",
+      "pagination_params": [],
+      "page_probe_count": 2,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401040000&seCode=01",
+          "final_url": "https://www.gumi.go.kr/portal/saeol/gosi/list.do?mid=0401040000&seCode=01",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gumi.go.kr/portal/contents.do?mid=0301050800",
+          "final_url": "https://www.gumi.go.kr/portal/board/post/list.do?bcIdx=158&cateList[0].cateIdx=369&cateList[0].inputValue=%EA%B8%B0%ED%83%80&mid=0301050800&token=1787549720829",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상북도 포항시",
+      "agency": "경상북도 포항시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고 더보기",
+      "endpoint_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0202010000",
+      "pagination_params": [],
+      "page_probe_count": 4,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0202010000",
+          "final_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0202010000",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.pohang.go.kr/portal/contents.do?mid=0202030000",
+          "final_url": "https://www.pohang.go.kr/portal/board/post/list.do?bcIdx=647&mid=0202030000&token=1787549722357",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.pohang.go.kr/portal/contents.do?mid=0203020000",
+          "final_url": "https://www.pohang.go.kr/portal/board/post/list.do?bcIdx=648&mid=0203020000&token=1787549723240",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.pohang.go.kr/portal/contents.do?mid=0315040000",
+          "final_url": "https://www.pohang.go.kr/portal/board/post/list.do?bcIdx=649&mid=0315040000&token=1787549724485",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상북도 포항시",
+      "agency": "경상북도 포항시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "입법예고 더보기",
+      "endpoint_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0315030000&seCode=03",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0315030000&seCode=03",
+          "final_url": "https://www.pohang.go.kr/portal/saeol/gosi/list.do?mid=0315030000&seCode=03",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "대구광역시 달서구",
+      "agency": "대구광역시 달서구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "endpoint_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000104",
+      "pagination_params": [],
+      "page_probe_count": 2,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000104",
+          "final_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000104",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000200",
+          "final_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000200",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "대구광역시 달성군",
+      "agency": "대구광역시 달성군",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "endpoint_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000194",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000194",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000194",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00001637",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00001637",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 3,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=1",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 3,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=2",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=2",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 3,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=3",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=3",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 3,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=4",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=4",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 3,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=5",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=5",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 3,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=6",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=6",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시공고",
+      "endpoint_url": "https://www.gangseo.seoul.kr/gs040301",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.gangseo.seoul.kr/gs040301",
+          "final_url": "https://www.gangseo.seoul.kr/gs040301",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs2025",
+          "final_url": "https://www.gangseo.seoul.kr/gs2025",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs2024",
+          "final_url": "https://www.gangseo.seoul.kr/gs2024",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs2023",
+          "final_url": "https://www.gangseo.seoul.kr/gs2023",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs2022",
+          "final_url": "https://www.gangseo.seoul.kr/gs2022",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs2021",
+          "final_url": "https://www.gangseo.seoul.kr/gs2021",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs031001",
+          "final_url": "https://www.gangseo.seoul.kr/gs031001",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs031002",
+          "final_url": "https://www.gangseo.seoul.kr/gs031002",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "인천광역시 남동구",
+      "agency": "인천광역시 남동구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "endpoint_url": "https://www.namdong.go.kr/main/news/announce.jsp",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.namdong.go.kr/main/news/announce.jsp",
+          "final_url": "https://www.namdong.go.kr/main/news/announce.jsp",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "인천광역시 연수구",
+      "agency": "인천광역시 연수구",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고/입법예고",
+      "endpoint_url": "https://www.yeonsu.go.kr/main/community/notify/gosi.asp",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.yeonsu.go.kr/main/community/notify/gosi.asp",
+          "final_url": "https://www.yeonsu.go.kr/main/community/notify/gosi.asp",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "전라남도 목포시",
+      "agency": "전라남도 목포시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "endpoint_url": "https://www.mokpo.go.kr/www/mokpo_news/notification",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/press_release/report_material_old",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/press_release/report_material_old",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification?page=1&page=1&print=true",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification?page=1&page=1&print=true",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 20,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice/screen_print.jpg?page=1",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice/screen_print.jpg?page=1",
+          "http_status": 200,
+          "content_type": "image/jpeg",
+          "is_pagination_page": true,
+          "row_count": 0,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice/screen_print.pdf?page=1",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice/screen_print.pdf?page=1",
+          "http_status": 200,
+          "content_type": "application/pdf",
+          "is_pagination_page": true,
+          "row_count": 0,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?idx=55013&mode=view",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?idx=55013&mode=view",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=2",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=2",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=3",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=3",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "전라남도 목포시",
+      "agency": "전라남도 목포시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "지난 고시/공고",
+      "endpoint_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice?page=1&page=1&print=true",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice?page=1&page=1&print=true",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 19,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice/screen_print.jpg?page=1",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice/screen_print.jpg?page=1",
+          "http_status": 200,
+          "content_type": "image/jpeg",
+          "is_pagination_page": true,
+          "row_count": 0,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice/screen_print.pdf?page=1",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice/screen_print.pdf?page=1",
+          "http_status": 200,
+          "content_type": "application/pdf",
+          "is_pagination_page": true,
+          "row_count": 0,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice?page=2",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice?page=2",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice?page=3",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice?page=3",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice?page=4",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice?page=4",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice?page=5",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/old_public_notice?page=5",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "전라남도 목포시",
+      "agency": "전라남도 목포시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "endpoint_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?device=default&mode=system_change&page=1&page=1&print=true&redirect_url=%2Fwww%2Fmokpo_news%2Fnotification%2Fpublic_notice",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?device=default&mode=system_change&page=1&page=1&print=true&redirect_url=%2Fwww%2Fmokpo_news%2Fnotification%2Fpublic_notice",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 20,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice/screen_print.jpg?device=default&mode=system_change&page=1&redirect_url=%2Fwww%2Fmokpo_news%2Fnotification%2Fpublic_notice",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice/screen_print.jpg?device=default&mode=system_change&page=1&redirect_url=%2Fwww%2Fmokpo_news%2Fnotification%2Fpublic_notice",
+          "http_status": 200,
+          "content_type": "image/jpeg",
+          "is_pagination_page": true,
+          "row_count": 0,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice/screen_print.pdf?device=default&mode=system_change&page=1&redirect_url=%2Fwww%2Fmokpo_news%2Fnotification%2Fpublic_notice",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice/screen_print.pdf?device=default&mode=system_change&page=1&redirect_url=%2Fwww%2Fmokpo_news%2Fnotification%2Fpublic_notice",
+          "http_status": 200,
+          "content_type": "application/pdf",
+          "is_pagination_page": true,
+          "row_count": 0,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=4",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=4",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=5",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=5",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=6",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=6",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=7",
+          "final_url": "https://www.mokpo.go.kr/www/mokpo_news/notification/public_notice?page=7",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "전라남도 순천시",
+      "agency": "전라남도 순천시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "endpoint_url": "https://www.suncheon.go.kr/kr/news/0004/0005/0001/",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.suncheon.go.kr/kr/news/0004/0005/0001/",
+          "final_url": "https://www.suncheon.go.kr/kr/news/0004/0005/0001/",
+          "http_status": 200,
+          "content_type": "text/html;charset=utf-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "충청남도 당진시",
+      "agency": "충청남도 당진시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "고시/공고",
+      "endpoint_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+          "final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/list.do",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57195&pageIndex=1",
+          "final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57195&pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57194&pageIndex=1",
+          "final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57194&pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57193&pageIndex=1",
+          "final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57193&pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57184&pageIndex=1",
+          "final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57184&pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57181&pageIndex=1",
+          "final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57181&pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57176&pageIndex=1",
+          "final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57176&pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57170&pageIndex=1",
+          "final_url": "https://www.dangjin.go.kr/prog/publicNotice/kor/sub03_02_01_01/view.do?not_ancmt_mgt_no=57170&pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "충청남도 천안시",
+      "agency": "충청남도 천안시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "공고알림",
+      "endpoint_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/view.do?notAncmtMgtNo=114761",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/view.do?notAncmtMgtNo=114761",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=1",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=2",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=2",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=3",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=3",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=4",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=4",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=5",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=5",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=6",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI/kor/sub02_02_01/list.do?pageIndex=6",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "충청남도 천안시",
+      "agency": "충청남도 천안시",
+      "endpoint_class": "PRIMARY_GOSI_BOARD",
+      "label": "입법예고",
+      "endpoint_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=1",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=2",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=2",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=3",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=3",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=4",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=4",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=5",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=5",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=6",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=6",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=7",
+          "final_url": "https://www.cheonan.go.kr/prog/saeolGosi/GOSI_03/kor/sub02_02_05/list.do?pageIndex=7",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경기도 성남시",
+      "agency": "경기도 성남시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "성남 시보",
+      "endpoint_url": "https://www.seongnam.go.kr/bbs010308",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.seongnam.go.kr/bbs010308",
+          "final_url": "https://www.seongnam.go.kr/bbs010308",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/bbs010308?curPage=2",
+          "final_url": "https://www.seongnam.go.kr/bbs010308?curPage=2",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/bbs010308?curPage=3",
+          "final_url": "https://www.seongnam.go.kr/bbs010308?curPage=3",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/bbs010308?curPage=4",
+          "final_url": "https://www.seongnam.go.kr/bbs010308?curPage=4",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/bbs010308?curPage=5",
+          "final_url": "https://www.seongnam.go.kr/bbs010308?curPage=5",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/bbs010308?curPage=6",
+          "final_url": "https://www.seongnam.go.kr/bbs010308?curPage=6",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/bbs010308?curPage=7",
+          "final_url": "https://www.seongnam.go.kr/bbs010308?curPage=7",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seongnam.go.kr/bbs010308?curPage=8",
+          "final_url": "https://www.seongnam.go.kr/bbs010308?curPage=8",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상남도 김해시",
+      "agency": "경상남도 김해시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "김해시보",
+      "endpoint_url": "https://www.gimhae.go.kr/00001.web",
+      "pagination_params": [],
+      "page_probe_count": 2,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.gimhae.go.kr/00001.web",
+          "final_url": "https://www.gimhae.go.kr/00001.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gimhae.go.kr/05547/05747.web",
+          "final_url": "https://www.gimhae.go.kr/05547/05747.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 36,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상남도 김해시",
+      "agency": "경상남도 김해시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "김해시공보",
+      "endpoint_url": "https://www.gimhae.go.kr/03360/00023/00016.web",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.gimhae.go.kr/03360/00023/00016.web",
+          "final_url": "https://www.gimhae.go.kr/03360/00023/00016.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "창원시보(PDF)",
+      "endpoint_url": "https://www.changwon.go.kr/cwportal/10310/10445/10446.web",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.changwon.go.kr/cwportal/10310/10445/10446.web",
+          "final_url": "https://www.changwon.go.kr/cwportal/10310/10445/10446.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "창원시보",
+      "endpoint_url": "https://www.changwon.go.kr/cwportal/10310/10445/10921.web",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.changwon.go.kr/cwportal/10310/10445/10921.web",
+          "final_url": "https://www.changwon.go.kr/cwportal/10310/10445/10921.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "창원공보",
+      "endpoint_url": "https://www.changwon.go.kr/cwportal/10310/10449.web",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.changwon.go.kr/cwportal/10310/10449.web",
+          "final_url": "https://www.changwon.go.kr/cwportal/10310/10449.web",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "대구광역시 달서구",
+      "agency": "대구광역시 달서구",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "달서구공보",
+      "endpoint_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+          "final_url": "https://www.dalseo.daegu.kr/index.do?menu_id=10000107",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "대구광역시 달성군",
+      "agency": "대구광역시 달성군",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "달성군공보",
+      "endpoint_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+      "pagination_params": [],
+      "page_probe_count": 7,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?menu_id=00000201",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=7",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=7",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=8",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=8",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=9",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=9",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=10",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=10",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=11",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=11",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=47",
+          "final_url": "https://www.dalseong.daegu.kr/index.do?pageIndex=47",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "인천광역시 연수구",
+      "agency": "인천광역시 연수구",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "구보",
+      "endpoint_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp",
+          "final_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1230",
+          "final_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1230",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1229",
+          "final_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1229",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1228",
+          "final_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1228",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1227",
+          "final_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1227",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1226",
+          "final_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1226",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1225",
+          "final_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1225",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1223",
+          "final_url": "https://www.yeonsu.go.kr/main/community/notify/word.asp?category=&dept_idx=&e_date=&eminwon=&gotopage=1&head_idx=&head_idx_cateYN=&keyfield=&keyword=&listCnt=&page=v&s_date=&se_dept_idx=&seq=1223",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "전라남도 순천시",
+      "agency": "전라남도 순천시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "순천시보",
+      "endpoint_url": "https://www.suncheon.go.kr/kr/news/0004/0001/",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.suncheon.go.kr/kr/news/0004/0001/",
+          "final_url": "https://www.suncheon.go.kr/kr/news/0004/0001/",
+          "http_status": 200,
+          "content_type": "text/html;charset=utf-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "전북특별자치도 전주시",
+      "agency": "전북특별자치도 전주시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "전주시보",
+      "endpoint_url": "https://www.jeonju.go.kr/planweb/board/list.9is?boardUid=ff8080818b5bc5cf018ba8a3891a633e&contentUid=ff8080818990c349018b041a87cd395d&subPath=",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.jeonju.go.kr/planweb/board/list.9is?boardUid=ff8080818b5bc5cf018ba8a3891a633e&contentUid=ff8080818990c349018b041a87cd395d&subPath=",
+          "final_url": "https://www.jeonju.go.kr/planweb/board/list.9is?boardUid=ff8080818b5bc5cf018ba8a3891a633e&contentUid=ff8080818990c349018b041a87cd395d&subPath=",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "충청남도 당진시",
+      "agency": "충청남도 당진시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "당진시보",
+      "endpoint_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+          "final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=1",
+          "final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=2",
+          "final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=2",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=3",
+          "final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=3",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=4",
+          "final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=4",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=5",
+          "final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=5",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=6",
+          "final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=6",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=7",
+          "final_url": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000000017/selectBoardList.do?pageIndex=7",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "충청남도 천안시",
+      "agency": "충청남도 천안시",
+      "endpoint_class": "GAZETTE_ARCHIVE",
+      "label": "천안시보",
+      "endpoint_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do",
+          "final_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=1",
+          "final_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=1",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=2",
+          "final_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=2",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=3",
+          "final_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=3",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=4",
+          "final_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=4",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=5",
+          "final_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=5",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=6",
+          "final_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=6",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=7",
+          "final_url": "https://www.cheonan.go.kr/bbs/BBSMSTR_000000000039/list.do?pageIndex=7",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "경상남도 창원시",
+      "agency": "경상남도 창원시",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "창원 도시계획정보포털",
+      "endpoint_url": "https://changwon.go.kr/urbanplanning/cu/",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://changwon.go.kr/urbanplanning/cu/",
+          "final_url": "https://changwon.go.kr/urbanplanning/cu/",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 23,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "서울특별시 강서구",
+      "agency": "서울특별시 강서구",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "도시계획과",
+      "endpoint_url": "https://www.gangseo.seoul.kr/gs050351",
+      "pagination_params": [],
+      "page_probe_count": 5,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.gangseo.seoul.kr/gs050351",
+          "final_url": "https://www.gangseo.seoul.kr/gs050351",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs031003",
+          "final_url": "https://www.gangseo.seoul.kr/gs031003",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs031004",
+          "final_url": "https://www.gangseo.seoul.kr/gs031004",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs031005",
+          "final_url": "https://www.gangseo.seoul.kr/gs031005",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.gangseo.seoul.kr/gs031006",
+          "final_url": "https://www.gangseo.seoul.kr/gs031006",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "인천광역시 연수구",
+      "agency": "인천광역시 연수구",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "지구단위계획",
+      "endpoint_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp",
+      "pagination_params": [],
+      "page_probe_count": 8,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp",
+          "final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4302&strDong=&strZone=",
+          "final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4302&strDong=&strZone=",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4301&strDong=&strZone=",
+          "final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4301&strDong=&strZone=",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4300&strDong=&strZone=",
+          "final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4300&strDong=&strZone=",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4299&strDong=&strZone=",
+          "final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4299&strDong=&strZone=",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4298&strDong=&strZone=",
+          "final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4298&strDong=&strZone=",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4297&strDong=&strZone=",
+          "final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4297&strDong=&strZone=",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4296&strDong=&strZone=",
+          "final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan.asp?gotopage=1&IntOrigin=&Intvice=&page=v&seq=4296&strDong=&strZone=",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "인천광역시 연수구",
+      "agency": "인천광역시 연수구",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "도시계획정보",
+      "endpoint_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan_term.asp",
+      "pagination_params": [],
+      "page_probe_count": 1,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan_term.asp",
+          "final_url": "https://www.yeonsu.go.kr/main/part/cityplan/cityplan_term.asp",
+          "http_status": 200,
+          "content_type": "text/html; Charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 250,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    },
+    {
+      "region": "제주특별자치도 서귀포시",
+      "agency": "제주특별자치도 서귀포시",
+      "endpoint_class": "URBAN_PLANNING_BOARD",
+      "label": "2030 서귀포 도시관리계획 재정비 새창",
+      "endpoint_url": "https://www.seogwipo.go.kr/group/environment/city/2030citymanagement/info.htm",
+      "pagination_params": [],
+      "page_probe_count": 2,
+      "target_row_count": 0,
+      "detail_seed_count": 0,
+      "pages": [
+        {
+          "page_number": 1,
+          "request_url": "https://www.seogwipo.go.kr/group/environment/city/2030citymanagement/info.htm",
+          "final_url": "https://www.seogwipo.go.kr/group/environment/city/2030citymanagement/info.htm",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "is_pagination_page": false,
+          "row_count": 46,
+          "target_row_count": 0,
+          "target_rows": []
+        },
+        {
+          "page_number": 2,
+          "request_url": "https://www.seogwipo.go.kr/group/environment/city/2030citymanagement/info.htm?act=download&no=1&seq=127593298",
+          "final_url": "https://www.seogwipo.go.kr/group/environment/city/2030citymanagement/info.htm?act=download&no=1&seq=127593298",
+          "http_status": 200,
+          "content_type": "video/mp4;charset=UTF-8",
+          "is_pagination_page": true,
+          "row_count": 0,
+          "target_row_count": 0,
+          "target_rows": []
+        }
+      ]
+    }
+  ],
+  "resolution": "ROW_LEVEL_PAGINATION_DISCOVERY_COMPLETED_NO_TARGET_ROW",
+  "runtime_registration_blocked": true,
+  "site_false_interpretation_blocked": true,
+  "next_action": "현재 searchable endpoint의 GET pagination에서는 target row가 확인되지 않았다. POST pagination, hidden field 유지 검색, 과거 공보 archive, 동적 JavaScript API 및 전용 행정전자민원 고시공고 endpoint로 탐색 범위를 확장한다."
+}

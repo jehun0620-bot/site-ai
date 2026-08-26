@@ -1,0 +1,375 @@
+{
+  "step": "STEP 17-21-C-16-8-O Development Density Management Area Gangseo searchByCategory Request Reconstruction",
+  "target": {
+    "name": "개발밀도관리구역",
+    "standard_code": "UQQ700",
+    "category": "bbs"
+  },
+  "input": {
+    "n_stage_path": "D:\\site-ai\\law_data\\output\\development_density_management_area_gangseo_category_result_extraction.json",
+    "n_stage_exists": true,
+    "n_stage_parsed": true
+  },
+  "method": {
+    "actual_search_form_reused": true,
+    "hidden_fields_preserved": true,
+    "arbitrary_category_parameter_injection": false,
+    "category_field_requires_evidence": true,
+    "inline_javascript_analysis": true,
+    "external_official_javascript_analysis": true,
+    "search_by_category_function_analysis": true,
+    "bbs_category_reconstruction": true,
+    "visible_target_required_for_result_item": true,
+    "search_echo_guard": true,
+    "detail_seed_is_final_positive": false
+  },
+  "initial_search": {
+    "form_index": 1,
+    "method": "POST",
+    "action_url": "https://www.gangseo.seoul.kr/search",
+    "search_field": "searchText",
+    "http_status": 200,
+    "target_response": true,
+    "category_counts": {
+      "업무": 0,
+      "민원사무편람": 0,
+      "웹페이지": 0,
+      "게시판": 3,
+      "첨부파일": 0,
+      "통합예약": 0
+    }
+  },
+  "discovery": {
+    "board_form_count": 4,
+    "search_page_form_count": 2,
+    "search_field_records": [
+      {
+        "form_index": 1,
+        "method": "POST",
+        "action_url": "https://www.gangseo.seoul.kr/search",
+        "field_name": "searchText",
+        "current_value": ""
+      },
+      {
+        "form_index": 2,
+        "method": "GET",
+        "action_url": "https://www.gangseo.seoul.kr/gs040301",
+        "field_name": "srchText",
+        "current_value": ""
+      }
+    ],
+    "category_field_records": [
+      {
+        "form_index": 1,
+        "form_id": "frmSearch",
+        "form_name": "frmSearch",
+        "method": "GET",
+        "action_url": "https://www.gangseo.seoul.kr/search",
+        "field_name": "colTarget",
+        "current_value": "TOTAL",
+        "field_type": "hidden",
+        "evidence": [
+          "KNOWN_CATEGORY_VALUE",
+          "JAVASCRIPT_ASSIGNMENT_EVIDENCE"
+        ]
+      },
+      {
+        "form_index": 1,
+        "form_id": "frmSearch",
+        "form_name": "frmSearch",
+        "method": "GET",
+        "action_url": "https://www.gangseo.seoul.kr/search",
+        "field_name": "sortType",
+        "current_value": "",
+        "field_type": "hidden",
+        "evidence": [
+          "CATEGORY_FIELD_NAME_HINT"
+        ]
+      },
+      {
+        "form_index": 1,
+        "form_id": "frmSearch",
+        "form_name": "frmSearch",
+        "method": "GET",
+        "action_url": "https://www.gangseo.seoul.kr/search",
+        "field_name": "curPage",
+        "current_value": "1",
+        "field_type": "hidden",
+        "evidence": [
+          "JAVASCRIPT_ASSIGNMENT_EVIDENCE"
+        ]
+      }
+    ],
+    "inline_script_count": 5,
+    "external_script_count": 18,
+    "external_js_records": [
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/theme/global/assets/script/jquery-1.12.4.min.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/theme/global/assets/plugin/jquery-ui/jquery-ui.min.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/theme/global/assets/plugin/jquery-ui/datepicker-ko.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/global/assets/vendor/jquery-placeholder/jquery-placeholder.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/global/assets/vendor/jquery.validate/jquery.validate.min.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/global/assets/vendor/jquery.validate/localization/messages_ko.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/global/assets/vendor/loadingoverlay.min.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/global/assets/vendor/sweetalert/sweet-alert.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/EDotXPressHtml/js/edotxpress-html.min.js?t=20240703",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/EDotXPressHtml/js/edotxpress-common.js?t=20240703",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/EDotXPressHtml/js/edotxpress-config-gangseo.js?t=20240703",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/theme/gangseo_kor/assets/script/common.js?t=20231208",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/global/assets/script/global.js",
+        "http_status": 200,
+        "search_by_category_found": true
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/global/assets/script/global-sns.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/global/assets/script/countUp.min.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/theme/global/assets/plugin/swiper/swiper.js",
+        "http_status": 200,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/theme/gangseo_kor/assets/script/html5shiv.min.js",
+        "http_status": 404,
+        "search_by_category_found": false
+      },
+      {
+        "url": "https://www.gangseo.seoul.kr/humanframe/theme/gangseo_kor/assets/script/respond.min.js",
+        "http_status": 404,
+        "search_by_category_found": false
+      }
+    ],
+    "search_by_category_function_evidence": [
+      {
+        "source": "https://www.gangseo.seoul.kr/humanframe/global/assets/script/global.js",
+        "args": [
+          "category"
+        ],
+        "category_argument": "category",
+        "body": "\r\n\t$('#colTarget').val(category);\r\n\t$('#curPage').val(1);\r\n\t$('#frmSearch').submit();\r\n",
+        "assignment_candidates": [
+          "colTarget",
+          "curPage"
+        ],
+        "generic_assignments": [],
+        "form_submit_detected": true,
+        "ajax_urls": []
+      }
+    ],
+    "javascript_field_names": [
+      "colTarget",
+      "curPage"
+    ]
+  },
+  "submission_plans": [
+    {
+      "form_index": 1,
+      "method": "GET",
+      "action_url": "https://www.gangseo.seoul.kr/search",
+      "search_field": "searchText",
+      "category_field": "colTarget",
+      "category_field_evidence": [
+        "KNOWN_CATEGORY_VALUE",
+        "JAVASCRIPT_ASSIGNMENT_EVIDENCE"
+      ],
+      "payload": {
+        "dateAll": "",
+        "preKwds": "개발밀도관리구역",
+        "colTarget": "bbs",
+        "sortType": "",
+        "rangeTarget": "",
+        "curPage": "1",
+        "lang": "KO",
+        "searchText": "개발밀도관리구역",
+        "chkResearch": "Y"
+      }
+    },
+    {
+      "form_index": 1,
+      "method": "GET",
+      "action_url": "https://www.gangseo.seoul.kr/search",
+      "search_field": "searchText",
+      "category_field": "sortType",
+      "category_field_evidence": [
+        "CATEGORY_FIELD_NAME_HINT"
+      ],
+      "payload": {
+        "dateAll": "",
+        "preKwds": "개발밀도관리구역",
+        "colTarget": "TOTAL",
+        "sortType": "bbs",
+        "rangeTarget": "",
+        "curPage": "1",
+        "lang": "KO",
+        "searchText": "개발밀도관리구역",
+        "chkResearch": "Y"
+      }
+    },
+    {
+      "form_index": 1,
+      "method": "GET",
+      "action_url": "https://www.gangseo.seoul.kr/search",
+      "search_field": "searchText",
+      "category_field": "curPage",
+      "category_field_evidence": [
+        "JAVASCRIPT_ASSIGNMENT_EVIDENCE"
+      ],
+      "payload": {
+        "dateAll": "",
+        "preKwds": "개발밀도관리구역",
+        "colTarget": "TOTAL",
+        "sortType": "",
+        "rangeTarget": "",
+        "curPage": "bbs",
+        "lang": "KO",
+        "searchText": "개발밀도관리구역",
+        "chkResearch": "Y"
+      }
+    }
+  ],
+  "submission_records": [
+    {
+      "submission_index": 1,
+      "form_index": 1,
+      "method": "GET",
+      "action_url": "https://www.gangseo.seoul.kr/search",
+      "search_field": "searchText",
+      "category_field": "colTarget",
+      "category_field_evidence": [
+        "KNOWN_CATEGORY_VALUE",
+        "JAVASCRIPT_ASSIGNMENT_EVIDENCE"
+      ],
+      "http_status": 200,
+      "final_url": "https://www.gangseo.seoul.kr/search?dateAll=&preKwds=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&colTarget=bbs&sortType=&rangeTarget=&curPage=1&lang=KO&searchText=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&chkResearch=Y",
+      "target_response": true,
+      "category_counts": {
+        "게시판": 3
+      },
+      "anchor_count": 300,
+      "target_result_item_count": 0,
+      "detail_seed_count": 0,
+      "target_items": [],
+      "response_preview": "검색결과 주메뉴 바로가기 본문 바로가기 태극기 이 누리집은 대한민국 공식 전자정부 누리집입니다. 최상단으로 이동 강서구 구의회 문화관광 보건소 아동·청소년 부서 동주민 주요사이트 강서구 주요 사이트 모아보기 주요사이트 자치회관 강서구의회 협치강서 i강서TV --> 강서뉴미디어지원센터 강서구 구립도서관 강서구 장학회 강서구 전자도서관 평생학습관 주차민원센터 강서구 시설관리공단 강서구 자원봉사센터 의료관광특구 강서구 일자리센터 강서구사회적경제통합지원센터 강서구 노동복지센터 강서별빛우주과학관 마곡안전체험관 유관기관 강서구 가족센터 강서구 육아종합지원센터 강서구 노동복지센터 강서구 마을자치센터 강서진로직업체험지원센터 강서아트리움 겸재정선미술관 허준박물관 강서구지역사회보장협의체 강서청소년 회관 서울시 자치구 서울시청 강남구 강동구 강북구 강서구 관악구 광진구 구로구 금천구 노원구 도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 가양2동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 가양3동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 공항동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 등촌1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 등촌2동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 등촌3동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 발산1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 방화1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 방화2동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 방화3동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 우장산동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 염창동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 화곡본동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 화곡1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 화곡2동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 화곡3동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 화곡4동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직"
+    },
+    {
+      "submission_index": 2,
+      "form_index": 1,
+      "method": "GET",
+      "action_url": "https://www.gangseo.seoul.kr/search",
+      "search_field": "searchText",
+      "category_field": "sortType",
+      "category_field_evidence": [
+        "CATEGORY_FIELD_NAME_HINT"
+      ],
+      "http_status": 200,
+      "final_url": "https://www.gangseo.seoul.kr/search?dateAll=&preKwds=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&colTarget=TOTAL&sortType=bbs&rangeTarget=&curPage=1&lang=KO&searchText=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&chkResearch=Y",
+      "target_response": true,
+      "category_counts": {
+        "업무": 0,
+        "민원사무편람": 0,
+        "웹페이지": 0,
+        "게시판": 0,
+        "첨부파일": 0,
+        "통합예약": 0
+      },
+      "anchor_count": 300,
+      "target_result_item_count": 0,
+      "detail_seed_count": 0,
+      "target_items": [],
+      "response_preview": "검색결과 주메뉴 바로가기 본문 바로가기 태극기 이 누리집은 대한민국 공식 전자정부 누리집입니다. 최상단으로 이동 강서구 구의회 문화관광 보건소 아동·청소년 부서 동주민 주요사이트 강서구 주요 사이트 모아보기 주요사이트 자치회관 강서구의회 협치강서 i강서TV --> 강서뉴미디어지원센터 강서구 구립도서관 강서구 장학회 강서구 전자도서관 평생학습관 주차민원센터 강서구 시설관리공단 강서구 자원봉사센터 의료관광특구 강서구 일자리센터 강서구사회적경제통합지원센터 강서구 노동복지센터 강서별빛우주과학관 마곡안전체험관 유관기관 강서구 가족센터 강서구 육아종합지원센터 강서구 노동복지센터 강서구 마을자치센터 강서진로직업체험지원센터 강서아트리움 겸재정선미술관 허준박물관 강서구지역사회보장협의체 강서청소년 회관 서울시 자치구 서울시청 강남구 강동구 강북구 강서구 관악구 광진구 구로구 금천구 노원구 도봉구 동대문구 동작구 마포구 서대문구 서초구 성동구 성북구 송파구 양천구 영등포구 용산구 은평구 종로구 중 구 중랑구 강서구 주요사이트, 모아보기 닫기 통합예약 로그인 회원가입 English 검색영역 검색어를 입력하세요 검색버튼 결과 내 재검색 전체메뉴 로그인 회원가입 ENGLISH 강서구 구의회 문화관광 보건소 어린이 통합예약 부서 동주민 동안내 가양1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 가양2동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 가양3동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 공항동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 등촌1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 등촌2동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 등촌3동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 발산1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 방화1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 방화2동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 방화3동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 우장산동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 염창동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 화곡본동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 화곡1동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 화곡2동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 화곡3동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직원안내 오시는길 우리동 소식 공지 및 소식 고시(채용)공고 · 입법예고 포토갤러리 자치회관 프로그램 민원업무안내 동에서 하는일 민원서식 화곡4동 우리동 소개 동장인사말 동현황 동유래 및 연혁 직"
+    },
+    {
+      "submission_index": 3,
+      "form_index": 1,
+      "method": "GET",
+      "action_url": "https://www.gangseo.seoul.kr/search",
+      "search_field": "searchText",
+      "category_field": "curPage",
+      "category_field_evidence": [
+        "JAVASCRIPT_ASSIGNMENT_EVIDENCE"
+      ],
+      "http_status": 200,
+      "final_url": "https://www.gangseo.seoul.kr/search?dateAll=&preKwds=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&colTarget=TOTAL&sortType=&rangeTarget=&curPage=bbs&lang=KO&searchText=%EA%B0%9C%EB%B0%9C%EB%B0%80%EB%8F%84%EA%B4%80%EB%A6%AC%EA%B5%AC%EC%97%AD&chkResearch=Y",
+      "target_response": false,
+      "category_counts": {},
+      "anchor_count": 0,
+      "target_result_item_count": 0,
+      "detail_seed_count": 0,
+      "target_items": [],
+      "response_preview": ""
+    }
+  ],
+  "detail_seed_candidates": [],
+  "summary": {
+    "request_count": 23,
+    "http_success_count": 21,
+    "transport_error_count": 0,
+    "external_js_request_count": 18,
+    "function_evidence_count": 1,
+    "category_field_candidate_count": 3,
+    "submission_plan_count": 3,
+    "successful_category_submission_count": 3,
+    "bbs_count_confirmed_submission_count": 1,
+    "target_result_submission_count": 0,
+    "detail_seed_candidate_count": 0
+  },
+  "resolution": "GANGSEO_BBS_CATEGORY_REQUEST_RECONSTRUCTED_NO_TARGET_ITEM",
+  "runtime_registration_blocked": true,
+  "site_false_interpretation_blocked": true,
+  "next_action": "searchByCategory 구조를 근거로 bbs category 요청은 복원했으나 실제 target-bearing result item이 아직 확인되지 않았다. category response의 AJAX fragment 또는 후속 detail handler를 분석한다."
+}
