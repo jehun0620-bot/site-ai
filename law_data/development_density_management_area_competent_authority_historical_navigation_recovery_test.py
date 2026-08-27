@@ -11,26 +11,17 @@ T-11에서 확정한 PRIMARY designation-authority source만 직접 재조회하
 UQQ700 target query를 실행하지 않고 source-local historical navigation
 identity를 복원한다.
 
-탐색 대상
+이번 hardening
 ======================================================================
-- pagination/list navigation
-- archive/history/year/month navigation
-- 고시공고 상세/list URL identity
-- 도시계획/도시관리계획/지형도면 관련 source-local navigation
-- 첨부/다운로드 URL은 이 단계에서 document candidate로 승격하지 않는다.
-
-핵심 원칙
-======================================================================
-1. T-11 next_stage_primary_source_pool만 사용한다.
-2. PRIMARY designation-authority source만 허용한다.
-3. direct HTTP requery 필수.
-4. final host go.kr + same-host 필수.
-5. UQQ700 target query 실행 금지.
-6. query 문자열을 evidence로 사용하지 않는다.
-7. source endpoint 자체를 historical document로 승격하지 않는다.
-8. navigation contract는 verified positive가 아니다.
-9. SITE TRUE/FALSE 및 runtime registration 금지.
-10. no navigation != SITE FALSE; UNKNOWN 유지.
+1. canonical navigation identity는 source family가 아니라 canonical URL 단독.
+2. 동일 URL이 여러 PRIMARY source에서 발견되면 provenance만 병합.
+3. 채용/시험/입찰/일반공고/정보공개/역사/홍보성 메뉴는 historical
+   designation navigation으로 승격하지 않는다.
+4. 단순 '도시·주택' 상위 메뉴만으로 urban historical navigation으로
+   승격하지 않는다.
+5. 현재 고시공고 board pagination과 도시계획 source pagination 등
+   source-local structural navigation만 유지한다.
+6. target query, document candidate, SITE TRUE/FALSE 승격은 계속 금지한다.
 """
 
 from __future__ import annotations
@@ -67,6 +58,9 @@ RESOLUTION_TYPE = "HYBRID_SPATIAL_NOTICE"
 NEGATIVE_EVIDENCE_ALLOWED = False
 PRIMARY_ROLE = "PRIMARY_DESIGNATION_AUTHORITY_SOURCE"
 
+FAMILY_NOTICE = "CURRENT_MUNICIPAL_OFFICIAL_NOTICE_ARCHIVE"
+FAMILY_URBAN = "CURRENT_URBAN_PLANNING_INFORMATION_ARCHIVE"
+
 
 # ============================================================
 # CLASS
@@ -85,6 +79,7 @@ CLASS_REJECTED_CROSS_HOST = "REJECTED_CROSS_HOST_NAVIGATION"
 CLASS_REJECTED_DOCUMENT_DOWNLOAD = "REJECTED_DOCUMENT_DOWNLOAD_AT_NAVIGATION_STAGE"
 CLASS_REJECTED_WEAK = "REJECTED_HISTORICAL_NAVIGATION_EVIDENCE_WEAK"
 CLASS_REJECTED_INVALID = "REJECTED_INVALID_NAVIGATION_URL"
+CLASS_REJECTED_ROLE_INCOMPATIBLE = "REJECTED_ROLE_INCOMPATIBLE_NAVIGATION"
 
 VALID_CLASSES = {
     CLASS_HISTORICAL_LIST,
@@ -99,13 +94,23 @@ VALID_CLASSES = {
     CLASS_REJECTED_DOCUMENT_DOWNLOAD,
     CLASS_REJECTED_WEAK,
     CLASS_REJECTED_INVALID,
+    CLASS_REJECTED_ROLE_INCOMPATIBLE,
 }
+
 QUALIFIED_CLASSES = {
     CLASS_HISTORICAL_LIST,
     CLASS_PAGINATION,
     CLASS_NOTICE_DETAIL,
     CLASS_URBAN_NAV,
     CLASS_ARCHIVE_NAV,
+}
+
+CLASS_PRIORITY = {
+    CLASS_NOTICE_DETAIL: 50,
+    CLASS_ARCHIVE_NAV: 40,
+    CLASS_URBAN_NAV: 30,
+    CLASS_PAGINATION: 20,
+    CLASS_HISTORICAL_LIST: 10,
 }
 
 
@@ -116,6 +121,7 @@ QUALIFIED_CLASSES = {
 TIMEOUT = 20
 MAX_RESPONSE_BYTES = 12 * 1024 * 1024
 MAX_LINKS_PER_SOURCE = 3000
+
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
@@ -132,34 +138,57 @@ COMMENT_PATTERN = re.compile(r"<!--.*?-->", re.S)
 
 
 # ============================================================
-# SEMANTIC TERMS
+# SEMANTIC RULES
 # ============================================================
 
-ARCHIVE_TERMS = {
-    "archive", "history", "historical", "past", "old", "previous",
-    "연혁", "과거", "지난", "이전", "년도", "연도", "년", "월",
-}
-LIST_TERMS = {
-    "list", "bbslist", "boardlist", "notice/list", "gosi", "gonggo",
-    "고시", "공고", "고시공고", "목록",
-}
-NOTICE_DETAIL_TERMS = {
-    "view", "detail", "read", "bbsview", "board/view", "article", "post/view",
-    "고시공고번호", "공고번호", "고시번호",
-}
-URBAN_TERMS = {
-    "도시계획", "도시관리계획", "지형도면", "도시·주택", "urban", "cityplan", "city-plan",
-}
 PAGINATION_KEYS = {
     "page", "curpage", "pagenum", "pageindex", "page_no", "pageno", "currentpage",
 }
 YEAR_KEYS = {"year", "yyyy", "searchyear", "srchyear", "schyear"}
-DOWNLOAD_TERMS = {
-    "download", "filedown", "filedownload", "attach", "attachment", ".pdf", ".hwp", ".hwpx", ".zip",
+
+NOTICE_BOARD_PATHS = {
+    "/pm010301",
+    "/pm010301/list",
+    "/sn01040101",
 }
+
+URBAN_SOURCE_PATHS = {
+    "/ct020100",
+}
+
+NOTICE_DETAIL_TERMS = {
+    "view", "detail", "read", "bbsview", "board/view", "article", "post/view",
+    "고시공고번호", "공고번호", "고시번호",
+}
+
+ARCHIVE_STRONG_TERMS = {
+    "고시공고 연혁", "고시 공고 연혁", "과거 고시", "지난 고시", "archive",
+    "historical notice", "notice archive",
+}
+
+URBAN_STRONG_TERMS = {
+    "도시관리계획", "지형도면", "도시계획 고시", "도시계획 공고",
+    "urban planning notice", "cityplan", "city-plan",
+}
+
+DOWNLOAD_TERMS = {
+    "download", "filedown", "filedownload", "attach", "attachment",
+    ".pdf", ".hwp", ".hwpx", ".zip",
+}
+
 GENERIC_TERMS = {
     "login", "member", "sitemap", "privacy", "facebook", "youtube", "instagram",
     "로그인", "회원가입", "사이트맵", "개인정보", "조직도", "오시는길", "민원신청",
+}
+
+ROLE_INCOMPATIBLE_TERMS = {
+    "채용", "시험공고", "채용/시험공고", "입찰", "입찰 공고", "일반 공고",
+    "채용정보", "정보공개", "성남 역사", "성남시사", "50년사", "청년희망도시",
+    "홍보", "보도자료", "행사", "복지", "관광",
+}
+
+WEAK_URBAN_ROOT_TERMS = {
+    "도시·주택", "도시주택",
 }
 
 VOLATILE_QUERY_KEYS = {
@@ -206,23 +235,32 @@ def canonicalize_url(url: str) -> str:
         return ""
     if not parsed.hostname:
         return ""
+
     scheme = (parsed.scheme or "https").lower()
     host = (parsed.hostname or "").lower()
     path = re.sub(r";jsessionid=[^/?]+", "", parsed.path or "/", flags=re.I)
     path = re.sub(r"/{2,}", "/", path)
-    items: List[Tuple[str, str]] = []
-    seen: Set[Tuple[str, str]] = set()
-    for key, val in parse_qsl(parsed.query, keep_blank_values=True):
+
+    query_items: List[Tuple[str, str]] = []
+    seen_pairs: Set[Tuple[str, str]] = set()
+    for key, value_part in parse_qsl(parsed.query, keep_blank_values=True):
         key = normalize_space(key)
         lowered = key.lower()
-        if not key or lowered in VOLATILE_QUERY_KEYS or lowered in TRACKING_QUERY_KEYS or "csrf" in lowered or "session" in lowered:
+        if not key:
             continue
-        pair = (key, val)
-        if pair not in seen:
-            seen.add(pair)
-            items.append(pair)
-    items.sort(key=lambda pair: (pair[0].lower(), pair[1]))
-    return urlunparse((scheme, host, path, "", urlencode(items, doseq=True), ""))
+        if lowered in VOLATILE_QUERY_KEYS or lowered in TRACKING_QUERY_KEYS:
+            continue
+        if "csrf" in lowered or "session" in lowered:
+            continue
+        pair = (key, value_part)
+        if pair in seen_pairs:
+            continue
+        seen_pairs.add(pair)
+        query_items.append(pair)
+
+    query_items.sort(key=lambda item: (item[0].lower(), item[1]))
+    query = urlencode(query_items, doseq=True)
+    return urlunparse((scheme, host, path, "", query, ""))
 
 
 def hostname(url: str) -> str:
@@ -230,6 +268,23 @@ def hostname(url: str) -> str:
         return (urlparse(url).hostname or "").lower()
     except Exception:
         return ""
+
+
+def url_path(url: str) -> str:
+    try:
+        return (urlparse(url).path or "/").rstrip("/") or "/"
+    except Exception:
+        return "/"
+
+
+def url_query_dict(url: str) -> Dict[str, str]:
+    try:
+        return {
+            normalize_space(key).lower(): normalize_space(value)
+            for key, value in parse_qsl(urlparse(url).query, keep_blank_values=True)
+        }
+    except Exception:
+        return {}
 
 
 def is_government_host(host: str) -> bool:
@@ -241,17 +296,15 @@ def same_host(a: str, b: str) -> bool:
     return bool(hostname(a)) and hostname(a) == hostname(b)
 
 
-def url_query_dict(url: str) -> Dict[str, str]:
-    try:
-        return {normalize_space(k).lower(): normalize_space(v) for k, v in parse_qsl(urlparse(url).query, keep_blank_values=True)}
-    except Exception:
-        return {}
-
-
 def same_endpoint_identity(a: str, b: str) -> bool:
     ca = canonicalize_url(a)
     cb = canonicalize_url(b)
     return bool(ca and cb and ca == cb)
+
+
+def contains_any(value: str, terms: Iterable[str]) -> bool:
+    lowered = normalize_space(value).lower()
+    return any(normalize_space(term).lower() in lowered for term in terms if normalize_space(term))
 
 
 # ============================================================
@@ -262,17 +315,21 @@ def load_primary_sources(data: Dict[str, Any]) -> List[Dict[str, Any]]:
     raw = data.get("next_stage_primary_source_pool")
     if not isinstance(raw, list):
         return []
+
     result: List[Dict[str, Any]] = []
     seen: Set[str] = set()
+
     for item in raw:
         if not isinstance(item, dict):
             continue
         if normalize_space(item.get("authority_role")) != PRIMARY_ROLE:
             continue
+
         url = canonicalize_url(item.get("url") or "")
         if not url or url in seen:
             continue
         seen.add(url)
+
         result.append({
             "region": normalize_space(item.get("region")),
             "source_family": normalize_space(item.get("source_family")),
@@ -281,6 +338,7 @@ def load_primary_sources(data: Dict[str, Any]) -> List[Dict[str, Any]]:
             "url": url,
             "reasons": unique_strings(item.get("reasons") or []),
         })
+
     return result
 
 
@@ -289,15 +347,16 @@ def load_primary_sources(data: Dict[str, Any]) -> List[Dict[str, Any]]:
 # ============================================================
 
 def decode_html(response: requests.Response, data: bytes) -> str:
-    candidates: List[str] = []
+    encodings: List[str] = []
     content_type = normalize_space(response.headers.get("Content-Type"))
     match = re.search(r"charset\s*=\s*[\"']?([^;\"'\s]+)", content_type, flags=re.I)
     if match:
-        candidates.append(match.group(1))
+        encodings.append(match.group(1))
     if response.encoding:
-        candidates.append(response.encoding)
-    candidates.extend(["utf-8", "cp949", "euc-kr"])
-    for encoding in unique_strings(candidates):
+        encodings.append(response.encoding)
+    encodings.extend(["utf-8", "cp949", "euc-kr"])
+
+    for encoding in unique_strings(encodings):
         try:
             return data.decode(encoding)
         except (UnicodeDecodeError, LookupError):
@@ -307,14 +366,20 @@ def decode_html(response: requests.Response, data: bytes) -> str:
 
 def fetch_page(session: requests.Session, url: str) -> Dict[str, Any]:
     result: Dict[str, Any] = {
-        "final_url": "", "http_status": None, "content_type": "", "response_bytes": 0,
-        "raw_html": "", "error": "",
+        "final_url": "",
+        "http_status": None,
+        "content_type": "",
+        "response_bytes": 0,
+        "raw_html": "",
+        "error": "",
     }
+
     try:
         with session.get(url, timeout=TIMEOUT, allow_redirects=True, stream=True) as response:
             result["http_status"] = response.status_code
             result["final_url"] = canonicalize_url(str(response.url))
             result["content_type"] = normalize_space(response.headers.get("Content-Type"))
+
             chunks: List[bytes] = []
             total = 0
             for chunk in response.iter_content(chunk_size=128 * 1024):
@@ -324,19 +389,29 @@ def fetch_page(session: requests.Session, url: str) -> Dict[str, Any]:
                 if total > MAX_RESPONSE_BYTES:
                     raise ValueError(f"response exceeds {MAX_RESPONSE_BYTES} bytes")
                 chunks.append(chunk)
+
             data = b"".join(chunks)
             result["response_bytes"] = len(data)
-            ctype = result["content_type"].lower()
+
+            content_type_lower = result["content_type"].lower()
             prefix = data[:1000].lstrip().lower()
-            if "html" in ctype or "text/" in ctype or prefix.startswith(b"<!doctype html") or prefix.startswith(b"<html"):
+            html_like = (
+                "html" in content_type_lower
+                or "text/" in content_type_lower
+                or prefix.startswith(b"<!doctype html")
+                or prefix.startswith(b"<html")
+            )
+            if html_like:
                 result["raw_html"] = decode_html(response, data)
+
     except Exception as exc:
         result["error"] = repr(exc)
+
     return result
 
 
 # ============================================================
-# HTML LINK EXTRACTION
+# HTML
 # ============================================================
 
 def extract_title(raw_html: str) -> str:
@@ -347,22 +422,30 @@ def extract_title(raw_html: str) -> str:
 def extract_links(raw_html: str, base_url: str) -> List[Dict[str, str]]:
     result: List[Dict[str, str]] = []
     seen: Set[Tuple[str, str]] = set()
+
     for match in ANCHOR_PATTERN.finditer(raw_html or ""):
         href = html.unescape(normalize_space(match.group("href")))
         text = strip_html(match.group("body"))
         attrs = normalize_space((match.group("attrs") or "") + " " + (match.group("tail") or ""))
-        if not href or href.lower().startswith(("javascript:", "mailto:", "tel:", "#")):
+
+        if not href:
             continue
+        if href.lower().startswith(("javascript:", "mailto:", "tel:", "#")):
+            continue
+
         absolute = canonicalize_url(urljoin(base_url, href))
         if not absolute:
             continue
+
         key = (absolute, text)
         if key in seen:
             continue
         seen.add(key)
+
         result.append({"url": absolute, "text": text, "attrs": attrs})
         if len(result) >= MAX_LINKS_PER_SOURCE:
             break
+
     return result
 
 
@@ -370,61 +453,199 @@ def extract_links(raw_html: str, base_url: str) -> List[Dict[str, str]]:
 # CLASSIFICATION
 # ============================================================
 
-def contains_any(value: str, terms: Iterable[str]) -> bool:
-    lowered = normalize_space(value).lower()
-    return any(normalize_space(term).lower() in lowered for term in terms if normalize_space(term))
+def classify_navigation(
+    *,
+    source_family: str,
+    source_url: str,
+    candidate_url: str,
+    text: str,
+    attrs: str,
+) -> Dict[str, Any]:
 
-
-def classify_navigation(source_url: str, candidate_url: str, text: str, attrs: str) -> Dict[str, Any]:
     candidate_url = canonicalize_url(candidate_url)
     if not candidate_url:
         return {"qualified": False, "classification": CLASS_REJECTED_INVALID, "reasons": ["INVALID_URL"]}
+
     if not is_government_host(hostname(candidate_url)):
         return {"qualified": False, "classification": CLASS_REJECTED_NON_OFFICIAL, "reasons": ["NON_GO_KR"]}
+
     if not same_host(source_url, candidate_url):
         return {"qualified": False, "classification": CLASS_REJECTED_CROSS_HOST, "reasons": ["CROSS_HOST"]}
+
     if same_endpoint_identity(source_url, candidate_url):
         return {"qualified": False, "classification": CLASS_REJECTED_SOURCE_ENDPOINT, "reasons": ["SOURCE_ENDPOINT_SELF_LINK"]}
 
     evidence = normalize_space(" ".join([candidate_url, text, attrs]))
-    lowered = evidence.lower()
+    path = url_path(candidate_url)
     query = url_query_dict(candidate_url)
 
-    if contains_any(lowered, DOWNLOAD_TERMS):
-        return {"qualified": False, "classification": CLASS_REJECTED_DOCUMENT_DOWNLOAD, "reasons": ["DOWNLOAD_IDENTITY_DEFERRED_TO_DOCUMENT_STAGE"]}
-    if contains_any(lowered, GENERIC_TERMS):
-        return {"qualified": False, "classification": CLASS_REJECTED_GENERIC, "reasons": ["GENERIC_NAVIGATION"]}
+    if contains_any(evidence, DOWNLOAD_TERMS):
+        return {
+            "qualified": False,
+            "classification": CLASS_REJECTED_DOCUMENT_DOWNLOAD,
+            "reasons": ["DOWNLOAD_IDENTITY_DEFERRED_TO_DOCUMENT_STAGE"],
+        }
 
-    reasons: List[str] = []
-    classification = ""
+    if contains_any(evidence, GENERIC_TERMS):
+        return {
+            "qualified": False,
+            "classification": CLASS_REJECTED_GENERIC,
+            "reasons": ["GENERIC_NAVIGATION"],
+        }
+
+    if contains_any(evidence, ROLE_INCOMPATIBLE_TERMS):
+        return {
+            "qualified": False,
+            "classification": CLASS_REJECTED_ROLE_INCOMPATIBLE,
+            "reasons": ["ROLE_INCOMPATIBLE_NAVIGATION"],
+        }
 
     pagination_hits = sorted(key for key in query if key in PAGINATION_KEYS)
     year_hits = sorted(key for key in query if key in YEAR_KEYS)
-    if pagination_hits:
-        classification = CLASS_PAGINATION
-        reasons.extend("PAGINATION_KEY:" + key for key in pagination_hits)
 
-    if contains_any(evidence, ARCHIVE_TERMS) or year_hits:
-        classification = CLASS_ARCHIVE_NAV
-        reasons.append("ARCHIVE_OR_PERIOD_IDENTITY")
-        reasons.extend("YEAR_KEY:" + key for key in year_hits)
+    # --------------------------------------------------------
+    # 1. Notice-board pagination
+    # --------------------------------------------------------
+    if pagination_hits and (
+        path in NOTICE_BOARD_PATHS
+        or path.startswith("/pm010301/")
+    ):
+        return {
+            "qualified": True,
+            "classification": CLASS_PAGINATION,
+            "reasons": unique_strings(
+                ["NOTICE_BOARD_PAGINATION"]
+                + ["PAGINATION_KEY:" + key for key in pagination_hits]
+            ),
+        }
 
-    if contains_any(evidence, URBAN_TERMS):
-        classification = CLASS_URBAN_NAV
-        reasons.append("URBAN_PLANNING_NAVIGATION_IDENTITY")
+    # --------------------------------------------------------
+    # 2. Urban-source pagination
+    # --------------------------------------------------------
+    if pagination_hits and (
+        path in URBAN_SOURCE_PATHS
+        or path.startswith("/ct020100/")
+    ):
+        return {
+            "qualified": True,
+            "classification": CLASS_PAGINATION,
+            "reasons": unique_strings(
+                ["URBAN_SOURCE_PAGINATION"]
+                + ["PAGINATION_KEY:" + key for key in pagination_hits]
+            ),
+        }
 
-    if contains_any(evidence, NOTICE_DETAIL_TERMS):
-        classification = CLASS_NOTICE_DETAIL
-        reasons.append("NOTICE_DETAIL_URL_OR_TEXT_IDENTITY")
+    # --------------------------------------------------------
+    # 3. Explicit notice board entry/list identity
+    # --------------------------------------------------------
+    if path in NOTICE_BOARD_PATHS or path.startswith("/pm010301/"):
+        if contains_any(evidence, NOTICE_DETAIL_TERMS):
+            return {
+                "qualified": True,
+                "classification": CLASS_NOTICE_DETAIL,
+                "reasons": ["NOTICE_BOARD_DETAIL_IDENTITY"],
+            }
+        return {
+            "qualified": True,
+            "classification": CLASS_HISTORICAL_LIST,
+            "reasons": ["COMPETENT_AUTHORITY_NOTICE_BOARD_IDENTITY"],
+        }
 
-    if not classification and contains_any(evidence, LIST_TERMS):
-        classification = CLASS_HISTORICAL_LIST
-        reasons.append("NOTICE_OR_LIST_NAVIGATION_IDENTITY")
+    # --------------------------------------------------------
+    # 4. Explicit archive period identity
+    # --------------------------------------------------------
+    if year_hits or contains_any(evidence, ARCHIVE_STRONG_TERMS):
+        if source_family == FAMILY_NOTICE or path.startswith("/pm010301"):
+            return {
+                "qualified": True,
+                "classification": CLASS_ARCHIVE_NAV,
+                "reasons": unique_strings(
+                    ["NOTICE_ARCHIVE_IDENTITY"]
+                    + ["YEAR_KEY:" + key for key in year_hits]
+                ),
+            }
 
-    if not classification:
-        return {"qualified": False, "classification": CLASS_REJECTED_WEAK, "reasons": ["HISTORICAL_NAVIGATION_EVIDENCE_WEAK"]}
+    # --------------------------------------------------------
+    # 5. Strong urban planning identity
+    # --------------------------------------------------------
+    if contains_any(evidence, URBAN_STRONG_TERMS):
+        return {
+            "qualified": True,
+            "classification": CLASS_URBAN_NAV,
+            "reasons": ["STRONG_URBAN_PLANNING_NAVIGATION_IDENTITY"],
+        }
 
-    return {"qualified": True, "classification": classification, "reasons": unique_strings(reasons)}
+    # 단순 상위메뉴 '도시·주택'은 약한 evidence.
+    if contains_any(evidence, WEAK_URBAN_ROOT_TERMS):
+        return {
+            "qualified": False,
+            "classification": CLASS_REJECTED_WEAK,
+            "reasons": ["URBAN_ROOT_MENU_ONLY"],
+        }
+
+    return {
+        "qualified": False,
+        "classification": CLASS_REJECTED_WEAK,
+        "reasons": ["HISTORICAL_NAVIGATION_EVIDENCE_WEAK"],
+    }
+
+
+# ============================================================
+# PROVENANCE MERGE
+# ============================================================
+
+def singleton_string(value: Any) -> List[str]:
+    text = normalize_space(value)
+    return [text] if text else []
+
+
+def singleton_url(value: Any) -> List[str]:
+    url = canonicalize_url(value or "")
+    return [url] if url else []
+
+
+def merge_provenance(existing: Dict[str, Any], incoming: Dict[str, Any]) -> None:
+    existing["source_families"] = unique_strings(
+        (existing.get("source_families") or singleton_string(existing.get("source_family")))
+        + singleton_string(incoming.get("source_family"))
+    )
+    existing["source_urls"] = unique_strings(
+        (existing.get("source_urls") or singleton_url(existing.get("source_url")))
+        + singleton_url(incoming.get("source_url"))
+    )
+    existing["authority_entities"] = unique_strings(
+        (existing.get("authority_entities") or singleton_string(existing.get("authority_entity")))
+        + singleton_string(incoming.get("authority_entity"))
+    )
+    existing["regions"] = unique_strings(
+        (existing.get("regions") or singleton_string(existing.get("region")))
+        + singleton_string(incoming.get("region"))
+    )
+    existing["page_titles"] = unique_strings(
+        (existing.get("page_titles") or singleton_string(existing.get("page_title")))
+        + singleton_string(incoming.get("page_title"))
+    )
+    existing["link_text_variants"] = unique_strings(
+        (existing.get("link_text_variants") or singleton_string(existing.get("link_text")))
+        + singleton_string(incoming.get("link_text"))
+    )
+    existing["reasons"] = unique_strings(
+        (existing.get("reasons") or [])
+        + (incoming.get("reasons") or [])
+    )
+
+    if incoming.get("qualified") is True:
+        existing["qualified"] = True
+        incoming_class = normalize_space(incoming.get("classification"))
+        existing_class = normalize_space(existing.get("classification"))
+        if CLASS_PRIORITY.get(incoming_class, 0) > CLASS_PRIORITY.get(existing_class, 0):
+            existing["classification"] = incoming_class
+
+    existing["verified_positive"] = False
+    existing["runtime_registration_allowed"] = False
+    existing["site_positive_allowed"] = False
+    existing["site_negative_allowed"] = False
+    existing["final_positive_promotion_allowed"] = False
 
 
 # ============================================================
@@ -444,9 +665,11 @@ def main() -> None:
 
     if not INPUT_PATH.exists():
         raise FileNotFoundError(f"T-11 input not found: {INPUT_PATH}")
+
     input_data = json.loads(INPUT_PATH.read_text(encoding="utf-8"))
     if not isinstance(input_data, dict):
         raise TypeError("T-11 input must be JSON object")
+
     sources = load_primary_sources(input_data)
     print("Primary source count:", len(sources))
     print()
@@ -466,6 +689,7 @@ def main() -> None:
 
     for index, source in enumerate(sources, start=1):
         source_url = source["url"]
+
         print("-" * 60)
         print(f"SOURCE {index}")
         print("Family:", source["source_family"])
@@ -476,6 +700,7 @@ def main() -> None:
         request_count += 1
         response = fetch_page(session, source_url)
         status = response.get("http_status")
+
         if isinstance(status, int) and 200 <= status < 300:
             http_success_count += 1
         if response.get("error"):
@@ -485,19 +710,33 @@ def main() -> None:
         raw_html = str(response.get("raw_html") or "")
         title = extract_title(raw_html)
         links = extract_links(raw_html, final_url) if raw_html else []
+
         qualified_count = 0
 
         for link in links:
-            outcome = classify_navigation(source_url, link["url"], link["text"], link["attrs"])
+            outcome = classify_navigation(
+                source_family=source["source_family"],
+                source_url=source_url,
+                candidate_url=link["url"],
+                text=link["text"],
+                attrs=link["attrs"],
+            )
+
             record = {
                 "source_family": source["source_family"],
+                "source_families": singleton_string(source["source_family"]),
                 "authority_role": PRIMARY_ROLE,
                 "authority_entity": source["authority_entity"],
+                "authority_entities": singleton_string(source["authority_entity"]),
                 "region": source["region"],
+                "regions": singleton_string(source["region"]),
                 "source_url": source_url,
+                "source_urls": singleton_url(source_url),
                 "page_title": title,
+                "page_titles": singleton_string(title),
                 "url": canonicalize_url(link["url"]),
                 "link_text": link["text"],
+                "link_text_variants": singleton_string(link["text"]),
                 "qualified": outcome["qualified"],
                 "classification": outcome["classification"],
                 "reasons": outcome["reasons"],
@@ -510,8 +749,15 @@ def main() -> None:
                 "final_positive_promotion_allowed": False,
             }
             raw_records.append(record)
+
             if record["qualified"]:
                 qualified_count += 1
+
+        source_resolution = (
+            "HISTORICAL_NAVIGATION_RECOVERED"
+            if qualified_count
+            else "NO_HISTORICAL_NAVIGATION_RECOVERED"
+        )
 
         source_results.append({
             "source_family": source["source_family"],
@@ -523,55 +769,66 @@ def main() -> None:
             "title": title,
             "link_count": len(links),
             "qualified_navigation_count": qualified_count,
-            "resolution": "HISTORICAL_NAVIGATION_RECOVERED" if qualified_count else "NO_HISTORICAL_NAVIGATION_RECOVERED",
+            "resolution": source_resolution,
         })
 
         print("HTTP:", status)
         print("Title:", title)
         print("Links:", len(links))
         print("Qualified navigation:", qualified_count)
-        print("Resolution:", source_results[-1]["resolution"])
+        print("Resolution:", source_resolution)
         print()
 
     # ========================================================
-    # CANONICAL DEDUPE
+    # CANONICAL DEDUPE: URL ONLY
     # ========================================================
 
-    canonical_map: Dict[Tuple[str, str], Dict[str, Any]] = {}
+    canonical_map: Dict[str, Dict[str, Any]] = {}
     duplicate_count = 0
+
     for item in raw_records:
         url = canonicalize_url(item.get("url") or "")
         if not url:
             continue
-        key = (item.get("source_family") or "", url)
-        if key in canonical_map:
+
+        if url in canonical_map:
             duplicate_count += 1
-            existing = canonical_map[key]
-            existing["reasons"] = unique_strings((existing.get("reasons") or []) + (item.get("reasons") or []))
-            existing["link_text_variants"] = unique_strings(
-                (existing.get("link_text_variants") or [existing.get("link_text")]) + [item.get("link_text")]
-            )
-            if item.get("qualified") is True:
-                existing["qualified"] = True
-                if item.get("classification") in QUALIFIED_CLASSES:
-                    existing["classification"] = item.get("classification")
+            merge_provenance(canonical_map[url], item)
             continue
+
         canonical = dict(item)
-        canonical["link_text_variants"] = unique_strings([item.get("link_text")])
-        canonical_map[key] = canonical
+        canonical["url"] = url
+        canonical_map[url] = canonical
 
     canonical_records = list(canonical_map.values())
-    canonical_records.sort(key=lambda item: (-int(item.get("qualified") is True), item.get("source_family") or "", item.get("url") or ""))
-    qualified_navigation = [item for item in canonical_records if item.get("qualified") is True]
-    rejected_navigation = [item for item in canonical_records if item.get("qualified") is not True]
+    canonical_records.sort(
+        key=lambda item: (
+            -int(item.get("qualified") is True),
+            item.get("url") or "",
+        )
+    )
+
+    qualified_navigation = [
+        item for item in canonical_records
+        if item.get("qualified") is True
+    ]
+
+    rejected_navigation = [
+        item for item in canonical_records
+        if item.get("qualified") is not True
+    ]
 
     next_stage_navigation_pool = [
         {
             "source_family": item.get("source_family"),
-            "authority_role": item.get("authority_role"),
+            "source_families": item.get("source_families") or [],
+            "authority_role": PRIMARY_ROLE,
             "authority_entity": item.get("authority_entity"),
+            "authority_entities": item.get("authority_entities") or [],
             "region": item.get("region"),
+            "regions": item.get("regions") or [],
             "source_url": item.get("source_url"),
+            "source_urls": item.get("source_urls") or [],
             "url": item.get("url"),
             "classification": item.get("classification"),
             "link_text": item.get("link_text"),
@@ -592,14 +849,15 @@ def main() -> None:
     if next_stage_navigation_pool:
         resolution = "COMPETENT_AUTHORITY_HISTORICAL_NAVIGATION_RECOVERY_COMPLETED"
         next_action = (
-            "T-13에서 recovered authority-local navigation을 직접 검증하여 historical list/detail pattern을 분리한다. "
-            "그 후 notice number/date/title 기반 bounded identity discovery를 수행한다. target query 자체는 evidence로 사용하지 않는다."
+            "T-13에서 canonical authority-local navigation을 직접 검증하여 notice-board pagination, "
+            "urban-source pagination, historical list/detail identity를 분리한다. 이후 notice number/date/title 기반 "
+            "bounded identity discovery를 수행하며 target query 자체는 evidence로 사용하지 않는다."
         )
     else:
         resolution = "COMPETENT_AUTHORITY_HISTORICAL_NAVIGATION_RECOVERY_NO_NAVIGATION"
         next_action = (
-            "PRIMARY authority source에서 별도 historical navigation을 복원하지 못했다. SITE FALSE로 판정하지 않고 UNKNOWN을 유지한다. "
-            "다음 단계에서는 current notice board의 pagination/date range contract 또는 별도 municipal gazette archive를 구조적으로 복원한다."
+            "PRIMARY authority source에서 강한 historical navigation을 복원하지 못했다. SITE FALSE로 판정하지 않고 UNKNOWN을 유지한다. "
+            "current notice board의 date-range/pagination contract 또는 별도 municipal gazette archive를 구조적으로 복원한다."
         )
 
     output_data = {
@@ -621,6 +879,11 @@ def main() -> None:
             "query_evidence_enabled": False,
             "same_host_required": True,
             "go_kr_required": True,
+            "canonical_navigation_identity_by_url": True,
+            "cross_source_family_navigation_dedupe_enabled": True,
+            "navigation_provenance_merge_enabled": True,
+            "role_incompatible_navigation_guard_enabled": True,
+            "weak_urban_root_menu_guard_enabled": True,
             "pagination_navigation_recovery_enabled": True,
             "archive_navigation_recovery_enabled": True,
             "urban_navigation_recovery_enabled": True,
@@ -653,21 +916,86 @@ def main() -> None:
         "site_negative_allowed": False,
         "final_positive_promotion_allowed": False,
     }
-    OUTPUT_PATH.write_text(json.dumps(output_data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    OUTPUT_PATH.write_text(
+        json.dumps(output_data, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
     # ========================================================
     # VALIDATION
     # ========================================================
 
+    canonical_urls = [canonicalize_url(item.get("url") or "") for item in canonical_records]
+    qualified_urls = [canonicalize_url(item.get("url") or "") for item in qualified_navigation]
     next_urls = [canonicalize_url(item.get("url") or "") for item in next_stage_navigation_pool]
-    canonical_qualified_urls = [canonicalize_url(item.get("url") or "") for item in qualified_navigation]
-    invalid_url_leakage = sum(1 for url in next_urls if not url)
-    duplicate_url_leakage = len(next_urls) - len(set(next_urls))
-    non_go_kr_leakage = sum(1 for item in qualified_navigation if not is_government_host(hostname(item.get("url") or "")))
-    cross_host_leakage = sum(1 for item in qualified_navigation if not same_host(item.get("source_url") or "", item.get("url") or ""))
-    source_endpoint_leakage = sum(1 for item in qualified_navigation if same_endpoint_identity(item.get("source_url") or "", item.get("url") or ""))
-    document_candidate_leakage = sum(1 for item in canonical_records if item.get("document_candidate") is True)
-    target_query_leakage = sum(1 for item in canonical_records if item.get("target_query_executed") is True)
+
+    invalid_url_leakage = sum(1 for url in qualified_urls if not url)
+    duplicate_canonical_url_leakage = len(canonical_urls) - len(set(canonical_urls))
+    duplicate_qualified_url_leakage = len(qualified_urls) - len(set(qualified_urls))
+    duplicate_next_url_leakage = len(next_urls) - len(set(next_urls))
+
+    non_go_kr_leakage = sum(
+        1 for item in qualified_navigation
+        if not is_government_host(hostname(item.get("url") or ""))
+    )
+
+    cross_host_leakage = sum(
+        1 for item in qualified_navigation
+        if not all(
+            same_host(source_url, item.get("url") or "")
+            for source_url in (item.get("source_urls") or [])
+        )
+    )
+
+    source_endpoint_leakage = sum(
+        1 for item in qualified_navigation
+        if any(
+            same_endpoint_identity(source_url, item.get("url") or "")
+            for source_url in (item.get("source_urls") or [])
+        )
+    )
+
+    role_incompatible_leakage = sum(
+        1 for item in qualified_navigation
+        if contains_any(
+            " ".join(item.get("link_text_variants") or []),
+            ROLE_INCOMPATIBLE_TERMS,
+        )
+    )
+
+    weak_urban_root_leakage = sum(
+        1 for item in qualified_navigation
+        if (
+            contains_any(
+                " ".join(item.get("link_text_variants") or []),
+                WEAK_URBAN_ROOT_TERMS,
+            )
+            and not contains_any(
+                " ".join(item.get("link_text_variants") or []),
+                URBAN_STRONG_TERMS,
+            )
+        )
+    )
+
+    document_candidate_leakage = sum(
+        1 for item in canonical_records
+        if item.get("document_candidate") is True
+    )
+
+    target_query_leakage = sum(
+        1 for item in canonical_records
+        if item.get("target_query_executed") is True
+    )
+
+    provenance_missing = sum(
+        1 for item in qualified_navigation
+        if not (item.get("source_families") or [])
+        or not (item.get("source_urls") or [])
+        or not (item.get("authority_entities") or [])
+        or not (item.get("regions") or [])
+    )
+
     unsafe_leakage = sum(
         1 for item in next_stage_navigation_pool
         if item.get("verified_positive") is True
@@ -689,14 +1017,24 @@ def main() -> None:
         "direct network requery enabled": True,
         "target query execution disabled": target_query_leakage == 0,
         "document candidate generation disabled": document_candidate_leakage == 0,
+        "canonical identity by URL enabled": True,
+        "cross-source-family dedupe enabled": True,
+        "navigation provenance merge enabled": True,
+        "role-incompatible navigation guard enabled": True,
+        "weak urban root guard enabled": True,
         "all classes valid": all(item.get("classification") in VALID_CLASSES for item in canonical_records),
         "qualified classes valid": all(item.get("classification") in QUALIFIED_CLASSES for item in qualified_navigation),
         "qualified URLs valid": invalid_url_leakage == 0,
-        "qualified URLs unique": duplicate_url_leakage == 0,
-        "qualified and next-stage parity": set(canonical_qualified_urls) == set(next_urls),
+        "canonical URLs unique": duplicate_canonical_url_leakage == 0,
+        "qualified URLs unique": duplicate_qualified_url_leakage == 0,
+        "next-stage URLs unique": duplicate_next_url_leakage == 0,
+        "qualified and next-stage parity": set(qualified_urls) == set(next_urls),
+        "qualified provenance present": provenance_missing == 0,
         "qualified go.kr leakage zero": non_go_kr_leakage == 0,
         "qualified cross-host leakage zero": cross_host_leakage == 0,
         "source endpoint promotion leakage zero": source_endpoint_leakage == 0,
+        "role-incompatible navigation leakage zero": role_incompatible_leakage == 0,
+        "weak urban root leakage zero": weak_urban_root_leakage == 0,
         "next-stage safety leakage zero": unsafe_leakage == 0,
         "runtime registration remains blocked": output_data["runtime_registration_allowed"] is False,
         "SITE TRUE remains blocked": output_data["site_positive_allowed"] is False,
@@ -704,6 +1042,10 @@ def main() -> None:
         "final positive promotion remains blocked": output_data["final_positive_promotion_allowed"] is False,
         "output written": OUTPUT_PATH.exists() and OUTPUT_PATH.stat().st_size > 0,
     }
+
+    # ========================================================
+    # PRINT
+    # ========================================================
 
     print("=" * 60)
     print("COMPETENT AUTHORITY HISTORICAL NAVIGATION RESULT")
@@ -726,10 +1068,11 @@ def main() -> None:
         print("-" * 60)
         for index, item in enumerate(qualified_navigation, start=1):
             print(f"[{index}] {item.get('classification')}")
-            print("Family:", item.get("source_family"))
-            print("Region:", item.get("region"))
+            print("Primary family:", item.get("source_family"))
+            print("Source families:", item.get("source_families"))
+            print("Regions:", item.get("regions"))
             print("URL:", item.get("url"))
-            print("Text:", item.get("link_text"))
+            print("Text variants:", item.get("link_text_variants"))
             print("Reasons:", item.get("reasons"))
             print()
 
@@ -738,12 +1081,18 @@ def main() -> None:
     print("=" * 60)
     for name, passed in validations.items():
         print(f"{name}: {passed}")
+
     print()
     print("Invalid URL leakage:", invalid_url_leakage)
-    print("Duplicate URL leakage:", duplicate_url_leakage)
+    print("Duplicate canonical URL leakage:", duplicate_canonical_url_leakage)
+    print("Duplicate qualified URL leakage:", duplicate_qualified_url_leakage)
+    print("Duplicate next-stage URL leakage:", duplicate_next_url_leakage)
+    print("Provenance missing:", provenance_missing)
     print("Non-go.kr leakage:", non_go_kr_leakage)
     print("Cross-host leakage:", cross_host_leakage)
     print("Source endpoint leakage:", source_endpoint_leakage)
+    print("Role-incompatible navigation leakage:", role_incompatible_leakage)
+    print("Weak urban root leakage:", weak_urban_root_leakage)
     print("Document candidate leakage:", document_candidate_leakage)
     print("Target query leakage:", target_query_leakage)
     print("Unsafe next-stage leakage:", unsafe_leakage)
@@ -751,12 +1100,16 @@ def main() -> None:
 
     all_pass = all(validations.values())
     print(f"all_pass: {all_pass}")
+
     if not all_pass:
         failed = [name for name, passed in validations.items() if not passed]
+        print()
         print("FAILED:")
         for name in failed:
             print("-", name)
-        raise AssertionError("UQQ700 competent authority historical navigation recovery regression failed")
+        raise AssertionError(
+            "UQQ700 competent authority historical navigation recovery regression failed"
+        )
 
 
 if __name__ == "__main__":
