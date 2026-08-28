@@ -51,7 +51,7 @@ def flatten_items(obj:Any)->List[Dict[str,Any]]:
  def walk(x):
   if isinstance(x,dict):
    keys={str(k).lower() for k in x.keys()}
-   if any(k in keys for k in ["fileno","file_no","atchfileno","orgnlfnm","fileNm".lower(),"streflnm"]):found.append(x)
+   if any(k in keys for k in ["fileno","file_no","atchfileno","orginlfilenm","strefilenm"]):found.append(x)
    for v in x.values():walk(v)
   elif isinstance(x,list):
    for v in x:walk(v)
@@ -71,21 +71,21 @@ def main():
  for item in items:
   lower={str(k).lower():v for k,v in item.items()}
   file_no=lower.get("fileno") or lower.get("file_no") or lower.get("atchfileno") or lower.get("fileid")
-  name=lower.get("orgnlfnm") or lower.get("filename") or lower.get("filenm") or lower.get("streflnm") or lower.get("orignlfilenm")
+  name=lower.get("orginlfilenm") or lower.get("orignlfilenm") or lower.get("filename") or lower.get("filenm") or lower.get("strefilenm")
+  stored_name=lower.get("strefilenm") or ""
   ext=lower.get("fileextsn") or lower.get("fileext") or ""
-  normalized.append({"file_no":str(file_no or ""),"file_name":n(name),"file_ext":n(ext),"raw":item})
- # dedup by file_no + name
+  normalized.append({"file_no":str(file_no or ""),"file_name":n(name),"stored_file_name":n(stored_name),"file_ext":n(ext),"file_size":lower.get("filesize"),"raw":item})
  seen=set();dedup=[]
  for x in normalized:
   key=(x["file_no"],x["file_name"])
   if key in seen:continue
   seen.add(key);dedup.append(x)
- out={"step":"STEP 17-21-C-16-8-T-26 Municipal Gazette Attachment Metadata Enumeration","target":{"name":TARGET_NAME,"standard_code":STANDARD_CODE},"resolution_policy":{"resolution_type":RESOLUTION_TYPE,"negative_evidence_allowed":False,"source_failure_site_status":"UNKNOWN"},"request":{"count":1,"method":"GET","endpoint":endpoint,"params":{"pstSn":KNOWN_PSTSN}},"response":{"http_status":r["http_status"],"final_url":r["final_url"],"response_bytes":r["response_bytes"],"json_detected":r["json"] is not None},"attachment_metadata":dedup,"summary":{"attachment_count":len(dedup)},"file_download_executed":False,"preview_request_executed":False,"verified_positive":False,"runtime_registration_allowed":False,"site_positive_allowed":False,"site_negative_allowed":False,"final_positive_promotion_allowed":False,"resolution":"MUNICIPAL_GAZETTE_ATTACHMENT_METADATA_ENUMERATION_COMPLETED"}
+ out={"step":"STEP 17-21-C-16-8-T-26 Municipal Gazette Attachment Metadata Enumeration","target":{"name":TARGET_NAME,"standard_code":STANDARD_CODE},"resolution_policy":{"resolution_type":RESOLUTION_TYPE,"negative_evidence_allowed":False,"source_failure_site_status":"UNKNOWN"},"request":{"count":1,"method":"GET","endpoint":endpoint,"params":{"pstSn":KNOWN_PSTSN}},"response":{"http_status":r["http_status"],"final_url":r["final_url"],"response_bytes":r["response_bytes"],"json_detected":r["json"] is not None},"attachment_metadata":dedup,"summary":{"attachment_count":len(dedup),"named_attachment_count":sum(1 for x in dedup if x["file_name"])},"file_download_executed":False,"preview_request_executed":False,"verified_positive":False,"runtime_registration_allowed":False,"site_positive_allowed":False,"site_negative_allowed":False,"final_positive_promotion_allowed":False,"resolution":"MUNICIPAL_GAZETTE_ATTACHMENT_METADATA_ENUMERATION_COMPLETED"}
  OUT.write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding="utf-8")
  unsafe=any([out["file_download_executed"],out["preview_request_executed"],out["verified_positive"],out["runtime_registration_allowed"],out["site_positive_allowed"],out["site_negative_allowed"],out["final_positive_promotion_allowed"]])
- vals={"T-25 input exists":T25.exists(),"HTTP 200":r["http_status"]==200,"official same host":gov(host(r["final_url"])) and host(r["final_url"])==host(endpoint),"single metadata request only":out["request"]["count"]==1,"JSON response detected":r["json"] is not None,"attachment metadata recovered":len(dedup)>0,"file download disabled":not out["file_download_executed"],"preview request disabled":not out["preview_request_executed"],"unsafe promotion leakage zero":not unsafe,"output written":OUT.exists() and OUT.stat().st_size>0}
- print("HTTP:",r["http_status"]);print("Final URL:",r["final_url"]);print("JSON detected:",r["json"] is not None);print("Attachment count:",len(dedup))
- for i,x in enumerate(dedup[:10],1):print(f"ATTACHMENT {i}",{"file_no":x["file_no"],"file_name":x["file_name"],"file_ext":x["file_ext"]})
+ vals={"T-25 input exists":T25.exists(),"HTTP 200":r["http_status"]==200,"official same host":gov(host(r["final_url"])) and host(r["final_url"])==host(endpoint),"single metadata request only":out["request"]["count"]==1,"JSON response detected":r["json"] is not None,"attachment metadata recovered":len(dedup)>0,"original filenames recovered":all(bool(x["file_name"]) for x in dedup),"file download disabled":not out["file_download_executed"],"preview request disabled":not out["preview_request_executed"],"unsafe promotion leakage zero":not unsafe,"output written":OUT.exists() and OUT.stat().st_size>0}
+ print("HTTP:",r["http_status"]);print("Final URL:",r["final_url"]);print("JSON detected:",r["json"] is not None);print("Attachment count:",len(dedup));print("Named attachment count:",out["summary"]["named_attachment_count"])
+ for i,x in enumerate(dedup[:10],1):print(f"ATTACHMENT {i}",{"file_no":x["file_no"],"file_name":x["file_name"],"stored_file_name":x["stored_file_name"],"file_ext":x["file_ext"],"file_size":x["file_size"]})
  print("Resolution:",out["resolution"]);print("Output:",OUT);print();print("VALIDATION")
  for k,v in vals.items():print(f"{k}: {v}")
  print("all_pass:",all(vals.values()))
