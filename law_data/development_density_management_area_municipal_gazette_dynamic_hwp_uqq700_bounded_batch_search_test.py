@@ -16,12 +16,19 @@ State repair
 - Keeps successfully processed rows.
 - Removes prior EXTRACTION_OR_REQUEST_UNKNOWN rows from processed/results so they
   are retried with the correct signature-routed parser.
+- Never marks a newly unresolved row as processed.
 
 Routing
 -------
 - HWP3 signature -> validated HWP3 extractor from T-32 module
 - OLE/CFB HWP5 signature -> validated HWP5 extractor from T-33 module
 - anything else -> UNKNOWN
+
+Candidate semantics
+-------------------
+- Direct terms remain candidate triggers.
+- High-signal related terms (개발밀도, 밀도관리) may trigger RELATED_CANDIDATE.
+- Generic 관리구역 is retained in telemetry but cannot trigger a candidate alone.
 
 Scope remains Gazette 526 through Gazette 1872, because Gazette 1873 onward is HWPX.
 Zero matches remain UNKNOWN, never FALSE.
@@ -47,6 +54,8 @@ BATCH_SIZE = 10
 MAX_REQUESTS = 20
 HWP3_SIG = b"HWP Document File V3.00"
 HWP5_SIG = bytes.fromhex("D0CF11E0A1B11AE1")
+HIGH_SIGNAL_RELATED = ("개발밀도", "밀도관리")
+LOW_SIGNAL_RELATED = ("관리구역",)
 
 
 def classify_signature(raw: bytes) -> str:
@@ -67,6 +76,7 @@ def main() -> None:
     print("Batch size:", BATCH_SIZE)
     print("Max requests:", MAX_REQUESTS)
     print("Parser routing: FILE SIGNATURE")
+    print("Related candidate trigger: HIGH-SIGNAL ONLY")
     print("OCR: DISABLED")
     print("PDF search: DISABLED")
     print()
@@ -113,6 +123,8 @@ def main() -> None:
             "parser_used": "",
             "direct_matches": {},
             "related_matches": {},
+            "high_signal_related_matches": {},
+            "low_signal_related_matches": {},
             "error": "",
         }
         try:
@@ -156,9 +168,11 @@ def main() -> None:
             text = ext["text"]
             rec["direct_matches"] = {t: text.count(t) for t in hwp5.DIRECT}
             rec["related_matches"] = {t: text.count(t) for t in hwp5.RELATED}
+            rec["high_signal_related_matches"] = {t: rec["related_matches"].get(t, 0) for t in HIGH_SIGNAL_RELATED}
+            rec["low_signal_related_matches"] = {t: rec["related_matches"].get(t, 0) for t in LOW_SIGNAL_RELATED}
             if any(rec["direct_matches"].values()):
                 rec["status"] = "DIRECT_CANDIDATE"
-            elif any(rec["related_matches"].values()):
+            elif any(rec["high_signal_related_matches"].values()):
                 rec["status"] = "RELATED_CANDIDATE"
             else:
                 rec["status"] = "NO_TERM_IN_EXTRACTED_SAMPLE"
@@ -167,10 +181,11 @@ def main() -> None:
             rec["status"] = "EXTRACTION_OR_REQUEST_UNKNOWN"
 
         batch.append(rec)
-        print("ROW:", {k: rec.get(k) for k in ["gazette_number", "date", "pstSn", "signature_class", "parser_used", "status", "download_bytes", "hwp_flags", "section_count", "paragraphs", "text_chars", "direct_matches", "related_matches", "error"]})
+        print("ROW:", {k: rec.get(k) for k in ["gazette_number", "date", "pstSn", "signature_class", "parser_used", "status", "download_bytes", "hwp_flags", "section_count", "paragraphs", "text_chars", "direct_matches", "high_signal_related_matches", "low_signal_related_matches", "error"]})
 
     merged_results = kept_results + batch
-    processed = list(dict.fromkeys(kept_processed + [r["pstSn"] for r in batch]))
+    successful_batch_pst = [r["pstSn"] for r in batch if r.get("status") != "EXTRACTION_OR_REQUEST_UNKNOWN"]
+    processed = list(dict.fromkeys(kept_processed + successful_batch_pst))
     candidates = [r for r in merged_results if r.get("status") in {"DIRECT_CANDIDATE", "RELATED_CANDIDATE"}]
     unresolved = [r for r in merged_results if r.get("status") == "EXTRACTION_OR_REQUEST_UNKNOWN"]
     signature_counts: Dict[str, int] = {}
@@ -243,6 +258,8 @@ def main() -> None:
         "request budget respected": req <= MAX_REQUESTS,
         "all response hosts official": all((not r.get("metadata_url") or hwp5.host(r.get("metadata_url")) == "www.seongnam.go.kr") and (not r.get("download_url") or hwp5.host(r.get("download_url")) == "www.seongnam.go.kr") for r in batch),
         "all accepted rows signature routed": all(r.get("status") == "EXTRACTION_OR_REQUEST_UNKNOWN" or r.get("parser_used") in {"HWP3", "HWP5"} for r in batch),
+        "unresolved rows not processed": all(hwp5.norm(r.get("pstSn")) not in processed for r in unresolved),
+        "generic related term cannot trigger alone": all(not (r.get("status") == "RELATED_CANDIDATE" and not any((r.get("high_signal_related_matches") or {}).values())) for r in batch),
         "negative evidence disabled": not output["negative_evidence_allowed"],
         "unsafe promotion leakage zero": not unsafe,
         "state written": STATE.exists() and STATE.stat().st_size > 0,
