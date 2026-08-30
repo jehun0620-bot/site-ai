@@ -1,6 +1,6 @@
 # AI 대지분석 자동화 시스템 - PROJECT STATUS
 
-최종 업데이트: 2026-08-26
+최종 업데이트: 2026-08-30
 
 > 이 문서는 현재 개발 상태, 최근 검증 결과, 체크포인트와 바로 다음 작업을 기록한다.
 > 장기 전체 설계와 시작→완성 로드맵은 `PROJECT_ARCHITECTURE.md`를 기준으로 한다.
@@ -17,10 +17,10 @@ Runtime Spatial Condition 공통화와 방재지구까지의 안정화는 완료
 Target: 개발밀도관리구역
 Standard code: UQQ700
 Resolution type: HYBRID_SPATIAL_NOTICE
-Current detail: STEP 17-21-C-16-8-T-3
+Current detail: STEP 17-21-C-16-8-T-35-S85
 ```
 
-최근 hardened reverse discovery까지 수행했으나 UQQ700 historical target document identity는 아직 확인되지 않았다.
+현재 UQQ700 historical resolution은 다음 상태다.
 
 ```text
 SITE TRUE     BLOCKED
@@ -29,6 +29,8 @@ UNKNOWN       MAINTAINED
 ```
 
 현재 전체 상태: PASS / 안전 불변조건 유지
+
+현재 개발은 일시 중단 체크포인트 상태이며, 다음 재개 시 S85 결과 해석 보정부터 진행한다.
 
 ---
 
@@ -45,7 +47,7 @@ PHASE 4   Legal ingestion               IN PROGRESS
 PHASE 5   Rule Engine                   IN PROGRESS / CORE STABLE
 PHASE 6   Runtime spatial               CORE STABLE
 PHASE 7   Regulation Resolution         ACTIVE
-PHASE 8   Authority/Historical          STARTING
+PHASE 8   Authority/Historical          ACTIVE
 PHASE 9+  Nationwide/AI/Product         FUTURE
 ```
 
@@ -253,15 +255,11 @@ Building count  34
 all_pass        True
 ```
 
-과거 한 차례 `502 / 건축HUB 응답 JSON 파싱 실패`가 있었으나 재실행은 정상 통과했다. 지속 코드 결함보다 upstream 일시적 non-JSON 응답 가능성이 높다.
-
 운영 TODO: `fetch_building_items()` JSON parsing failure diagnostics에 HTTP status, Content-Type, response length, secret 제거 body preview를 추가한다.
 
 ---
 
 ## 9. STEP 17-21-C-16-8 — 개발밀도관리구역 UQQ700
-
-현재 핵심 target.
 
 ```text
 Name             개발밀도관리구역
@@ -286,117 +284,80 @@ UQQ700은 spatial dataset hit만으로 TRUE를 확정하지 않는다.
 
 ---
 
-## 10. UQQ700 현재까지 완료된 Resolution 기반
+## 10. UQQ700 안전 불변조건
 
-완료:
-
-- regulation resolution type registry
-- historical source family discovery/hardening
-- historical source family entry endpoint qualification
-- modern endpoint exclusion
-- municipality exact region binding
-- S-3 hardened endpoint qualification
-- T-1 bounded historical target document discovery
-- T-2 canonical reverse discovery
-- semantic candidate gate hardening
-- cross-source-family canonical URL dedupe
-- provenance merge
-- hardened reverse discovery
-- no-document safety behavior
-
-UQQ700을 `HYBRID_SPATIAL_NOTICE`로 분류한 결과 다음 safety를 유지한다.
+현재까지 모든 UQQ700 discovery/recovery 단계에서 다음을 유지한다.
 
 ```text
-negative evidence disabled
-verified positive blocked
-runtime registration blocked
-SITE TRUE blocked
-SITE FALSE from source failure blocked
+negative_evidence_allowed = False
+verified_positive          = False
+runtime_registration       = BLOCKED
+SITE TRUE                  = BLOCKED
+SITE FALSE                 = BLOCKED
+final positive promotion   = BLOCKED
+```
+
+원칙:
+
+```text
+검색 결과 ≠ 법적 사실
+document 발견 ≠ current validity
+query failure ≠ FALSE
+source 미발견 ≠ FALSE
+technical unresolved ≠ FALSE
 ```
 
 ---
 
-## 11. S-3 Historical Endpoint Qualification Hardening
+## 11. Municipal Gazette Dynamic-HWP Source Family — TERMINALLY CLOSED
 
-Historical source family 탐색 과정에서 현대 게시판, generic navigation, unrelated official pages가 historical evidence로 오염되는 문제를 확인했다.
+성남시 시보 dynamic-HWP era에 대해 hardened recovery를 완료했다.
 
-이를 방지하기 위해 endpoint qualification을 강화했다.
-
-현재 hardened endpoint count:
+최종 terminal closure validation:
 
 ```text
-S-3 endpoints: 7
+STEP: S72
+Era rows: 1338
+Processed: 1328
+Quarantined: 10
+Remaining: 0
+Candidates: 0
+Unresolved: 10
+all_pass: True
 ```
 
-핵심 guard:
+Technical quarantines:
 
-- official host requirement
-- municipality exact region binding
-- modern endpoint exclusion
-- source-family qualification
-- query 자체를 evidence로 사용 금지
-- generic navigation 승격 금지
+```text
+29098
+29471
+181109
+181376
+221174
+323596
+339293
+343270
+343615
+343834
+```
+
+이 10건은 `TECHNICAL_UNRESOLVED_QUARANTINED`이며 법적 FALSE가 아니다.
+
+Dynamic-HWP source family는 UQQ700 관점에서 terminally exhausted/closed 처리한다.
+
+중요:
+
+```text
+S49 dynamic resume를 다시 실행하지 않는다.
+No hit ≠ legal absence.
+Final legal resolution = UNKNOWN.
+```
 
 ---
 
-## 12. T-1 / T-2 Historical Target Discovery
+## 12. Historical Hardened Reverse Discovery
 
-S-3 hardened endpoint 범위에서 search-engine scraping 없이 official same-host bounded historical target discovery를 수행했다.
-
-초기 reverse discovery에서는 검색 query 문자열, page-wide text, navigation, generic urban notice context에 의해 candidate가 잘못 승격될 가능성을 확인했다.
-
-이에 다음을 추가했다.
-
-```text
-canonical document identity
-canonical URL dedupe
-cross-source-family dedupe
-provenance merge
-semantic candidate gate
-```
-
-핵심 원칙:
-
-```text
-URL candidate ≠ verified document
-query evidence ≠ document evidence
-```
-
----
-
-## 13. Semantic Candidate Gate Hardening 결과
-
-Candidate 승격 조건:
-
-- official `go.kr` source
-- region binding
-- link-local target evidence
-- document identity evidence
-- navigation link 제외
-- query-only evidence 제외
-- page-title-only evidence 제외
-
-결과:
-
-```text
-S-3 endpoints                    7
-requests                       120
-query contamination rejected 41664
-raw candidates                   0
-canonical candidates             0
-next-stage documents             0
-all_pass                      True
-```
-
-이전 reverse-discovery candidate 일부는 query-contaminated false positive였으며, hardening 후 현재 source scope에서 검증 가능한 UQQ700 historical document가 남지 않았다.
-
-이 결과는 SITE FALSE가 아니다.
-
----
-
-## 14. Hardened Historical Target Document Reverse Discovery
-
-최종 실행 결과:
+기존 S-3 hardened endpoint 범위 결과:
 
 ```text
 S-3 endpoint count                         7
@@ -404,11 +365,7 @@ Request count                            120
 HTTP success count                       120
 Transport error count                      0
 Query contamination rejected          41664
-Page-title-only rejected                    0
-Navigation links rejected                   0
-Document identity rejected                  0
 Raw candidate count                         0
-Duplicate candidate removed                 0
 Canonical record count                      0
 Candidate document count                    0
 Next-stage document pool count              0
@@ -420,125 +377,347 @@ Resolution:
 HISTORICAL_TARGET_DOCUMENT_REVERSE_DISCOVERY_NO_DOCUMENT
 ```
 
-현재 S-3 source 범위의 hardened reverse discovery에서도 개발밀도관리구역 historical document identity는 확인되지 않았다.
-
-따라서:
+의미:
 
 ```text
-SITE FALSE로 판정하지 않음
+현재 source scope에서 verified historical document identity 미확인
+SITE FALSE 아님
 UNKNOWN 유지
 ```
 
 ---
 
-## 15. Hardened Reverse Discovery Validation
+## 13. Seongnam Official Notice Reverse Lookup — S73~S76
 
-전체 validation:
+공식 endpoint:
 
 ```text
+List/Search: https://www.seongnam.go.kr/pm010301
+Detail:      https://www.seongnam.go.kr/pm010301/{document_id}
+```
+
+S73/S74에서 실제 검색 계약 복원:
+
+```text
+Method: GET
+controls:
+  cntPerPage
+  curPage
+  sortType
+  srchKey
+  srchText
+
+srchKey:
+  sj    = 제목
+  cn    = 내용
+  depNm = 담당부서
+```
+
+S75에서 row-local navigation 계약 복원:
+
+```text
+onclick="javascript:f_view('<document_id>'); return false;"
+```
+
+S76에서 4개 sample로 detail identity contract 검증:
+
+```text
+f_view(document_id)
+→ /pm010301/{document_id}
+→ expected notice number identity match
 all_pass: True
 ```
 
-주요 안전 검증:
-
-- target name / standard code valid
-- resolution type hybrid spatial notice
-- negative evidence disabled
-- T-1 / S-3 input 존재 및 parsing 성공
-- hardened endpoints loaded
-- bounded reverse query matrix enabled
-- search engine scraping disabled
-- same-host reverse discovery enabled
-- endpoint brute-force repeat disabled
-- official go.kr candidate guard enabled
-- region binding required
-- generic urban notice promotion disabled
-- query contamination disabled
-- page title alone cannot qualify candidate
-- link-local target evidence required
-- generic navigation leakage zero
-- document identity leakage zero
-- canonical URL dedupe enabled
-- cross-source-family dedupe enabled
-- provenance merge enabled
-- verified positive leakage zero
-- runtime registration leakage zero
-- SITE TRUE leakage zero
-- final positive promotion leakage zero
-- false-from-no-document leakage zero
-
-Leakage counters는 전부 0이다.
-
 ---
 
-## 16. UQQ700 현재 해석
+## 14. Seongnam Notice Candidate Collection / Triage — S77~S79
 
-현재까지 확인된 사실:
-
-1. S-3 historical endpoint qualification은 정상 동작한다.
-2. same-host bounded reverse discovery transport는 정상이다.
-3. 120/120 request가 HTTP 성공했다.
-4. 기존 candidate contamination은 hardening으로 제거되었다.
-5. 현재 source scope에서 UQQ700 document identity는 발견되지 않았다.
-6. 이것은 규제가 존재하지 않는다는 증거가 아니다.
-7. 따라서 UNKNOWN이 올바른 현재 상태다.
-
-현재 막힌 지점은 transport가 아니라 discovery model이다.
-
-같은 endpoint에 brute-force query를 반복하지 않고 historical system이 실제 사용했던 검색 form/action 또는 notice-number identity를 복원해야 한다.
-
----
-
-## 17. UQQ700 다음 단계
-
-다음 핵심 작업:
+S77 bounded candidate collection:
 
 ```text
-STEP 17-21-C-16-8-T-3
-Historical Search Form Action & Notice Identity Recovery
+canonical_candidate_count              163
+direct_link_local_candidate_count        0
+related_link_local_candidate_count       0
+discovery_context_candidate_count      163
+all_pass                              True
 ```
 
-### A. Historical Search Form Action Recovery
-
-- historical page `<form>` 구조 분석
-- action endpoint 복원
-- GET / POST 확인
-- hidden input 확인
-- 실제 query parameter 이름 확인
-- category / board / region / date parameter 확인
-- JavaScript submit handler 확인
-
-목표: 추정 query matrix가 아니라 당시 게시판의 실제 search contract를 복원한다.
-
-### B. Notice-number Reverse Lookup Source Family
-
-Form 복원이 불가능하거나 불충분한 경우:
-
-- 고시번호 기반 index
-- 시보/군보/구보 archive
-- gazette issue index
-- 첨부파일 index
-- historical notice-number lookup
-
-source family를 추가한다.
-
-### C. Competent Authority / Source Scope
-
-`go.kr`만으로 source authority를 인정하지 않는다.
+정확/광범위 target query:
 
 ```text
-OFFICIAL HOST
-→ REGION BINDING
-→ SOURCE ROLE
-→ LEGAL AUTHORITY SCOPE
-→ TARGET REGULATION COMPATIBILITY
+개발밀도관리구역
+개발밀도
 ```
 
-UQQ700 지정권한과 source role을 확인한 뒤 document discovery 범위를 결정한다.
+제목/내용 검색에서 direct result row는 0건이었다.
+이것은 legal absence가 아니다.
+
+S78 triage:
+
+```text
+input_candidate_count   163
+ranked_candidate_count  163
+priority_pool_count      40
+observed years        2020~2026
+all_pass                True
+```
+
+S79 priority detail probe:
+
+```text
+용도구역 포함 상위 5건 상세 HTML 검사
+DIRECT_DETAIL_TEXT_CANDIDATE   0
+STRONG_CONTEXT_DETAIL_CANDIDATE 0
+RELATED_DETAIL_TEXT_CANDIDATE  0
+NO_TARGET_TERM                  5
+all_pass                     True
+```
 
 ---
 
-## 18. UQQ700 Runtime Registration Gate
+## 15. /pm010301 Historical Coverage Boundary — S80~S82
+
+S80에서 broad query 전체 pagination을 확인했다.
+
+### 도시관리계획
+
+```text
+page 1~9 reachable
+last page row count: 28
+oldest observed year: 2010
+next page 10: 0 rows
+```
+
+### 지형도면
+
+```text
+page 1~7 reachable
+last page row count: 28
+oldest observed year: 2010
+next page 8: 0 rows
+```
+
+전체 관측 연도:
+
+```text
+2010~2026
+```
+
+S82 결과:
+
+```text
+pre2010_notice_year_observed: False
+도시관리계획 last_nonempty_page: 9
+도시관리계획 first_empty_page: 10
+지형도면 last_nonempty_page: 7
+지형도면 first_empty_page: 8
+all_pass: True
+```
+
+현재 해석:
+
+```text
+/pm010301에서 검증한 broad-query 결과의 관측 하한은 2010년.
+이것은 2009년 이전 UQQ700 부재 증거가 아니다.
+```
+
+---
+
+## 16. 2010~2015 Historical Candidate Probe — S81
+
+2010~2015 broad-query candidate:
+
+```text
+historical_candidate_count: 72
+detail_target_count: 18
+direct_detail_candidate_count: 0
+related_detail_candidate_count: 0
+no_target_term_count: 18
+oldest_candidate_year: 2010
+newest_candidate_year: 2015
+all_pass: True
+```
+
+우선순위 상위에는 다음 유형이 포함됐다.
+
+- 용도지역 결정(변경)
+- 도시관리계획 재정비
+- 지구단위계획
+- 도시계획시설
+
+상위 18개 상세 HTML에서 `개발밀도관리구역` / `개발밀도` 직접 문구는 확인되지 않았다.
+
+법적 negative evidence로 사용하지 않는다.
+
+---
+
+## 17. Pre-2010 Legacy Source Family Entry — S83
+
+S82 page HTML에서 legacy candidate endpoint를 확보했다.
+
+Qualification 결과:
+
+```text
+LEGACY_LOCAL_GAZETTE
+  https://www.seongnam.go.kr/bbs010308
+  qualified: True
+
+LEGACY_LOCAL_NOTICE
+  https://www.seongnam.go.kr/bbs010101
+  qualified: True
+
+LEGACY_LOCAL_NOTICE
+  https://www.seongnam.go.kr/bbs010402
+  qualified: True
+
+LEGACY_LOCAL_NOTICE
+  https://www.seongnam.go.kr/bbs010403
+  qualified: True
+```
+
+요약:
+
+```text
+qualified_endpoint_count: 4
+qualified_gazette_endpoint_count: 1
+any_pre2010_year_visible_on_entry: False
+next_stage_source_family_ready: True
+all_pass: True
+```
+
+---
+
+## 18. Legacy Gazette Search Contract — S84
+
+`bbs010308` 시보 family에서 실제 form contract를 복원했다.
+
+검색 form:
+
+```text
+Method: POST
+Action: https://www.seongnam.go.kr/bbs010308
+
+controls:
+  bbsCrtSn
+  cntPerPage
+  csrfToken
+  pstCn
+  pstSn
+  pstTtl
+  radio
+  sortType
+  srchBgngYmd
+  srchDtType
+  srchEndYmd
+  srchText
+  srchTypeCd
+```
+
+검색 field:
+
+```text
+srchTypeCd=pstTtl  제목
+srchTypeCd=pstCn   내용
+```
+
+Pagination:
+
+```text
+curPage
+```
+
+Attachment endpoints도 form에서 확인됨:
+
+```text
+/bbs010308/getFile
+/bbs010308/filePreview
+```
+
+현재 단계에서는 attachment download 금지 유지.
+
+---
+
+## 19. Legacy Gazette Pre-2010 Reachability — S85
+
+S85에서 날짜 범위를 다음처럼 probe했다.
+
+```text
+2009
+2008
+2005-2007
+2000-2004
+```
+
+HTTP transport는 모두 정상이다.
+
+```text
+http_status: 200
+official_host: True
+all_pass: True
+```
+
+그러나 현재 S85의 `row_count_hint`는 실제 시보 결과행을 신뢰성 있게 식별하지 못했다.
+
+관측된 sample:
+
+```text
+※ 초미세먼지(PM-2.5) 발령강화(2018.7.1.) ...
+2017~2024년 월별 누적 발령 횟수
+```
+
+이는 날짜 검색 결과가 아니라 page-wide/common UI contamination일 가능성이 높다.
+
+따라서 S85 결과 해석:
+
+```text
+pre-2010 reachability VERIFIED 아님
+pre-2010 absence VERIFIED 아님
+POST date-filter contract 적용 여부 UNRESOLVED
+row selector / hidden form state / CSRF handling 재검증 필요
+```
+
+특히 다음을 아직 확인하지 못했다.
+
+```text
+- csrfToken 실제 제출 필요 여부
+- bbsCrtSn / hidden field 유지 필요 여부
+- srchDtType 유효 값
+- POST 후 date filter가 실제 적용됐는지
+- 실제 시보 result row DOM selector
+- 실제 pstSn/detail navigation extraction
+```
+
+S85의 `any_row_hint=True`를 historical reachability 증거로 사용하지 않는다.
+
+---
+
+## 20. 다음 재개 지점 — S86
+
+다음 작업은 대량 검색이 아니다.
+
+```text
+STEP 17-21-C-16-8-T-35-S86
+Legacy Gazette POST Search State / Result Row Contract Hardening
+```
+
+우선순위:
+
+1. GET base page에서 hidden input 전체 복원
+2. `csrfToken`, `bbsCrtSn`, 기타 hidden state 확보
+3. `srchDtType` option/value 복원
+4. 실제 브라우저 form POST와 동일 payload 구성
+5. 날짜 filter 적용 전/후 결과 identity 비교
+6. 실제 result-row selector 복원
+7. result row에서 `pstSn`, 시보 호수/제목/게시일 직접 추출
+8. query echo / common page UI contamination 제거
+9. 그 뒤에만 pre-2010 reachability 판정
+10. reachability 확인 후 UQQ700 exact/broad term reverse discovery 진행
+
+S86 전에는 `bbs010308`의 pre-2010 coverage를 확정하지 않는다.
+
+---
+
+## 21. UQQ700 Runtime Registration Gate
 
 현재 UQQ700 runtime spatial condition registry 등록은 금지 상태다.
 
@@ -564,11 +743,9 @@ FALSE 역시 authoritative negative evidence 확보 전에는 생성하지 않�
 
 ---
 
-## 19. Git / Large Output 관리
+## 22. Git / Large Output 관리
 
-최근 GitHub push에서 대용량 discovery JSON이 100 MB 제한을 초과한 문제가 발생했고, 해당 대용량 artifact를 Git history에서 제거한 후 push를 완료했다.
-
-향후 Git 포함 권장:
+Git 포함 권장:
 
 - source code
 - small regression fixtures
@@ -584,11 +761,41 @@ Git 제외:
 - temporary extraction
 - API raw dump
 
-필요 시 `.gitignore` 및 별도 artifact storage를 사용한다.
+`.env`는 절대 commit하지 않는다.
+
+Git stage 정책:
+
+```text
+git add . 금지
+git add -A 금지
+git add --all 금지
+명시적 intended file만 stage
+```
 
 ---
 
-## 20. 최근 주요 회귀 검증 상태
+## 23. 최근 UQQ700 주요 Commit Checkpoint
+
+```text
+S72 terminal closure validation     0d4d0b9ac852cb6c75012dc573bd73462f962a5d
+S73 notice endpoint discovery       3a0b65d8cc5a92ab5b62881dcfc1ff1ecb841964
+S74 search contract forensic        7f6acd531fa2130a3894c8bcb86002b23cf37ec0
+S75 result-row detail forensic      64371f8e214851299ab7ca1ff19807694c20b606
+S76 detail-ID validation            0bee13897972e9a9293df0d723a36f940fd9b036
+S77 candidate collection            541518af52d757072096fce10fb087a14f04b578
+S78 candidate triage                06be7282848199089ad1c3dbe2efd9c94d630405
+S79 priority detail probe           e4abde8da2e11667a16421da649807e01daeac0c
+S80 coverage boundary               ff140e845a39c4db6e49d07c8c7bea16ccacd779
+S81 2010-2015 candidate probe       fd958d38c7f7a43e50616096b5f611addb445ef1
+S82 pre-2010 boundary forensic      6297a2d989403259b06030a7957bec7d6158409f
+S83 legacy entry qualification      d679d268e220037e4a6abdd0a0cd5b3b2725f09a
+S84 legacy search contract          4c624c01fa08587709313dddbaa2b439c622e92a
+S85 pre-2010 reachability probe     e00a88305fd6dbd1e8322e3dd78d3b239700a813
+```
+
+---
+
+## 24. 최근 주요 회귀 검증 상태
 
 Runtime / SITE / API 주요 regression은 PASS 상태다.
 
@@ -609,44 +816,52 @@ Runtime / SITE / API 주요 regression은 PASS 상태다.
 UQQ700 Historical Resolution:
 
 ```text
-resolution type registry                 PASS
-historical source-family qualification  PASS
-endpoint qualification hardening        PASS
-municipality exact region binding       PASS
-bounded historical target discovery     PASS
-canonical reverse discovery hardening   PASS
-semantic candidate gate hardening       PASS
-hardened reverse discovery              PASS
-safety leakage checks                    PASS
+resolution type registry                    PASS
+historical source-family qualification     PASS
+endpoint qualification hardening           PASS
+municipality exact region binding          PASS
+hardened reverse discovery                 PASS
+dynamic HWP terminal closure               PASS
+notice search/detail contract              PASS
+2010~2026 coverage boundary                PASS
+2010~2015 historical candidate probe       PASS
+legacy source entry qualification          PASS
+legacy gazette search contract             PASS
+S85 transport/safety validation             PASS
+S85 pre-2010 semantic reachability          UNRESOLVED
 ```
 
 ---
 
-## 21. 현재 완료 판정
+## 25. 현재 완료 판정
 
 ```text
 C-16-5 Runtime Spatial Generalization       COMPLETE
 C-16-7 Disaster Prevention District        COMPLETE
-C-16-8 Development Density Management      IN PROGRESS
+C-16-8 Development Density Management      IN PROGRESS / CHECKPOINTED
 ```
 
 C-16-8 완료된 부분:
 
 - resolution type registry
-- source family discovery/hardening
+- historical source family discovery/hardening
 - S-3 endpoint qualification
 - exact region binding
-- T-1 bounded target discovery
-- T-2 canonical reverse discovery
-- semantic candidate hardening
 - hardened reverse discovery
-- no-document safety behavior
+- dynamic-HWP source family terminal closure
+- official notice `/pm010301` search contract recovery
+- official notice detail-ID contract validation
+- bounded candidate collection/triage
+- `/pm010301` 2010~2026 coverage qualification
+- 2010~2015 bounded detail probe
+- pre-2010 legacy source-family entry qualification
+- legacy gazette form/pagination contract recovery
 
 미완료:
 
+- S85 legacy POST semantics/result-row hardening
+- pre-2010 legacy gazette reachability verification
 - competent authority final resolution
-- actual historical search form contract recovery
-- notice-number reverse lookup
 - verified designation document identity
 - designation timeline / current validity
 - authoritative spatial scope
@@ -657,7 +872,7 @@ C-16-8 완료된 부분:
 
 ---
 
-## 22. 핵심 설계 원칙
+## 26. 핵심 설계 원칙
 
 SITE / Spatial:
 
@@ -687,6 +902,7 @@ Regulation Resolution:
 - page title ≠ document identity
 - generic navigation ≠ target document
 - source 미발견 ≠ FALSE
+- technical unresolved ≠ FALSE
 - UNKNOWN은 정상적인 판정 상태
 
 Provenance:
@@ -695,7 +911,7 @@ Provenance:
 
 ---
 
-## 23. 현재 안정 상태 요약
+## 27. 현재 안정 상태 요약
 
 ```text
 Runtime Spatial Conditions                 4
@@ -716,71 +932,62 @@ FastAPI end-to-end                         PASS
 
 UQQ700 resolution type                     PASS
 UQQ700 source hardening                    PASS
-UQQ700 region binding                      PASS
 UQQ700 candidate contamination guard       PASS
-UQQ700 canonical dedupe                    PASS
-UQQ700 provenance merge                    PASS
-UQQ700 hardened reverse discovery          PASS
-UQQ700 positive leakage                    0
-UQQ700 false-from-no-document leakage      0
+UQQ700 dynamic-HWP closure                 PASS
+UQQ700 /pm010301 contract                  PASS
+UQQ700 2010 boundary                       PASS
+UQQ700 legacy entry qualification          PASS
+UQQ700 S85 transport/safety                PASS
 
 UQQ700 verified historical document        NOT FOUND
+UQQ700 pre-2010 gazette reachability        UNRESOLVED
 UQQ700 runtime registration                BLOCKED
 UQQ700 SITE status                         UNKNOWN
 ```
 
 ---
 
-## 24. 바로 다음 실행 순서
+## 28. 재개 시 실행 순서
 
 ```text
-1. Historical Search Form Action Recovery
-2. Notice-number Reverse Lookup Source Family
-3. Competent Authority / Source Scope Resolution
-4. Verified Designation Document Identity
-5. Designation Timeline / Current Validity
-6. Authoritative Spatial Scope Recovery
-7. Positive / Negative Parcel Regression
-8. UQQ700 Runtime Registry Registration
-9. Rule Propagation
-10. Multi-SITE / FastAPI Regression
+1. S86 Legacy Gazette POST Search State / Result Row Contract Hardening
+2. Verify CSRF / hidden form state / srchDtType
+3. Recover exact result-row DOM + pstSn identity
+4. Re-run bounded pre-2010 reachability with hardened selector
+5. If pre-2010 rows verified, run bounded UQQ700 exact/broad reverse discovery
+6. If candidate appears, stop bulk and perform document identity/context qualification
+7. Competent Authority / Source Scope Resolution
+8. Verified Designation Document Identity
+9. Designation Timeline / Current Validity
+10. Authoritative Spatial Scope Recovery
+11. Positive / Negative Parcel Regression
+12. UQQ700 Runtime Registry Registration
+13. Rule Propagation
+14. Multi-SITE / FastAPI Regression
 ```
 
-1~3 조사 결과에 따라 순서는 조정할 수 있다.
-같은 hardened endpoint에 동일 brute-force query를 반복하지 않는다.
+같은 endpoint에 동일한 brute-force query를 반복하지 않는다.
 
 ---
 
-## 25. 다음 작업 성공 기준
-
-다음 T-3 계열 작업에서 성공은 document 발견만을 의미하지 않는다.
-
-성공 조건:
-
-```text
-A. 실제 historical search contract를 복원하거나
-B. notice-number lookup source family를 공식 근거와 함께 확보하거나
-C. 현재 source가 UQQ700 지정문서를 보유할 수 없는 authority/source임을 검증
-```
-
-어느 경우든 false positive 없이 다음 discovery scope를 좁히는 것이 목표다.
-
-문서가 발견되지 않더라도 authoritative negative evidence가 없다면 UNKNOWN을 유지한다.
-
----
-
-## 26. 현재 체크포인트 결론
+## 29. 현재 체크포인트 결론
 
 SITE / spatial / Rule Engine / API 기반은 안정적인 회귀 상태다.
 
-UQQ700에서는 기존 단순 spatial dataset 확장 방식에서 벗어나 `HYBRID_SPATIAL_NOTICE` 규제를 위한 Regulation Resolution architecture가 실제 적용되고 있다.
+UQQ700은 `HYBRID_SPATIAL_NOTICE` 규제를 위한 Regulation Resolution architecture로 처리 중이다.
 
-Historical reverse discovery에서 target document가 발견되지 않았지만 false positive를 제거하고 TRUE/FALSE leakage를 차단했으므로 이를 실패로 판정하지 않는다.
+현재까지:
 
-현재 올바른 판정:
+- dynamic-HWP gazette family는 terminally closed
+- `/pm010301`은 2010~2026까지 historical notice search coverage가 검증됨
+- 2010~2015 bounded detail probe에서는 target direct/related term 미확인
+- pre-2010 legacy gazette endpoint와 form contract는 복원됨
+- S85 POST date-range probe는 transport는 성공했으나 실제 결과행 식별에 contamination이 있어 semantic reachability는 미확정
+
+따라서 현재 올바른 판정은 계속:
 
 ```text
 UQQ700 = UNKNOWN
 ```
 
-다음 개발은 검색량을 늘리는 것이 아니라 실제 historical search form action, notice identity, competent authority/source scope를 복원하는 방향으로 진행한다.
+프로젝트 재개 시 S85를 법적/검색 부재 근거로 사용하지 않고, S86에서 POST hidden state와 실제 result-row identity부터 hardening한다.
