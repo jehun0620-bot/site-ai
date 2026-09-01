@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-"""S99: inventory the live /bbs010308 corpus and compare it to the prior dynamic-HWP state corpus.
+"""S99: inventory the live /bbs010308 corpus and compare it to prior dynamic-HWP identities.
 
-The live list boundary is now known exactly: 162 pages, 1,612 rows. The prior dynamic-HWP
-processing covered 1,338 rows, so this stage identifies which live row identities are not
-represented in the existing dynamic-HWP cumulative state. It reads list identity/year only
-and local state JSON only. It does not request details/attachments or search UQQ700 terms.
+The live list boundary is known exactly: 162 pages, 1,612 rows. This stage identifies
+which live row identities are not represented in locally retained dynamic-HWP output/state
+JSON. Because output JSON is intentionally not committed to git, discovery is filename-
+agnostic: scan law_data/output JSON files for UQQ700 municipal-gazette artifacts carrying
+pstSn identities, prefer a 1,338-identity corpus if available, and union compatible files
+only when needed. No detail/attachment request or UQQ700 target-term search is performed.
 """
 from __future__ import annotations
 import html, json, re
@@ -15,11 +17,6 @@ import requests
 BASE=Path(__file__).resolve().parent.parent
 OUT_DIR=BASE/'law_data'/'output'; OUT_DIR.mkdir(parents=True,exist_ok=True)
 OUT=OUT_DIR/'development_density_management_area_seongnam_legacy_gazette_live_vs_dynamic_hwp_delta_inventory.json'
-STATE_CANDIDATES=[
- OUT_DIR/'development_density_management_area_municipal_gazette_hwp5_uqq700_cumulative_state.json',
- OUT_DIR/'development_density_management_area_municipal_gazette_dynamic_hwp_uqq700_dynamic_quarantine_resume.json',
- OUT_DIR/'development_density_management_area_municipal_gazette_dynamic_hwp_uqq700_quarantine_resume.json',
-]
 URL='https://www.seongnam.go.kr/bbs010308'; HOST='www.seongnam.go.kr'; TIMEOUT=20; MAX_REQ=165
 TOTAL_PAGES=162; EXPECTED_LIVE_ROWS=1612; EXPECTED_DYNAMIC_ROWS=1338
 UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36'
@@ -68,19 +65,45 @@ def extract_pstsn(obj):
    for v in x: walk(v)
  walk(obj); return vals
 
+def discover_prior_ids():
+ artifacts=[]
+ for p in sorted(OUT_DIR.glob('*.json')):
+  name=p.name.lower()
+  if p==OUT: continue
+  if 'development_density_management_area' not in name: continue
+  if 'gazette' not in name: continue
+  try: obj=json.loads(p.read_text(encoding='utf-8'))
+  except Exception: continue
+  ids=extract_pstsn(obj)
+  if not ids: continue
+  artifacts.append({'path':p,'count':len(ids),'ids':ids})
+ exact=[a for a in artifacts if a['count']==EXPECTED_DYNAMIC_ROWS]
+ if exact:
+  chosen=max(exact,key=lambda a:a['path'].stat().st_mtime)
+  return chosen['ids'],[chosen],artifacts,'EXACT_1338_ARTIFACT'
+ # Prefer the largest individual retained artifact; if it is close to the expected corpus,
+ # union all compatible artifacts to recover identities distributed across stage outputs.
+ if artifacts:
+  largest=max(artifacts,key=lambda a:a['count'])
+  union=set()
+  for a in artifacts: union.update(a['ids'])
+  if len(union)==EXPECTED_DYNAMIC_ROWS:
+   return union,artifacts,artifacts,'UNION_EXACT_1338'
+  return largest['ids'],[largest],artifacts,'LARGEST_AVAILABLE_ARTIFACT'
+ return set(),[],[],'NO_LOCAL_GAZETTE_JSON'
+
 def main():
  print('='*60); print('SEONGNAM LEGACY GAZETTE LIVE VS DYNAMIC-HWP DELTA INVENTORY - S99'); print('='*60)
  print('Target-term search: DISABLED'); print('Detail/attachment request: DISABLED'); print('Negative evidence: DISABLED')
- state_path=next((p for p in STATE_CANDIDATES if p.exists()),None)
- if state_path is None:
-  print('STATE CANDIDATES:')
-  for p in STATE_CANDIDATES: print(' -',p)
-  raise FileNotFoundError('dynamic-HWP cumulative state JSON not found')
- state=json.loads(state_path.read_text(encoding='utf-8')); prior_ids=extract_pstsn(state)
- state_results=state.get('results') if isinstance(state,dict) else None
- state_result_count=len(state_results) if isinstance(state_results,list) else None
- print('STATE:',state_path); print('STATE RESULT COUNT:',state_result_count); print('PRIOR PSTSN COUNT:',len(prior_ids))
- if not prior_ids: raise AssertionError('no pstSn identity recovered from cumulative state')
+ prior_ids,selected,artifacts,discovery_mode=discover_prior_ids()
+ print('LOCAL GAZETTE JSON ARTIFACT COUNT:',len(artifacts)); print('STATE DISCOVERY MODE:',discovery_mode)
+ for a in selected: print('SELECTED STATE:',a['path'],'PSTSN',a['count'])
+ print('PRIOR PSTSN COUNT:',len(prior_ids))
+ if not prior_ids:
+  print('No local dynamic-HWP identity artifact is retained under law_data/output.')
+  print('This is a local artifact-retention issue, not legal/data negative evidence.')
+  print('Available JSON sample:',[p.name for p in sorted(OUT_DIR.glob('*.json'))[:30]])
+  raise FileNotFoundError('no local gazette output JSON with pstSn identities found')
  s=requests.Session(); s.headers.update({'User-Agent':UA,'Accept-Language':'ko-KR,ko;q=0.9'}); req=0; live=[]
  for page in range(1,TOTAL_PAGES+1):
   if req>=MAX_REQ: raise AssertionError('request budget exceeded')
@@ -93,8 +116,8 @@ def main():
  delta_years={}
  for x in delta:
   for y in x['years']: delta_years[str(y)]=delta_years.get(str(y),0)+1
- summary={'request_count':req,'state_result_count':state_result_count,'live_row_count':len(live),'live_unique_pstsn_count':len(live_ids),'live_duplicate_count':dup,'prior_state_unique_pstsn_count':len(prior_ids),'overlap_count':len(overlap),'live_not_in_dynamic_state_count':len(delta),'expected_live_rows':EXPECTED_LIVE_ROWS,'expected_dynamic_rows':EXPECTED_DYNAMIC_ROWS,'expected_nominal_delta':EXPECTED_LIVE_ROWS-EXPECTED_DYNAMIC_ROWS,'delta_year_counts':dict(sorted(delta_years.items())),'delta_min_page':min((x['page'] for x in delta),default=None),'delta_max_page':max((x['page'] for x in delta),default=None),'semantic_state':'LIVE_DYNAMIC_DELTA_INVENTORIED','negative_evidence_allowed':False,'uqq700_final_resolution':'UNKNOWN'}
- out={'step':'STEP 17-21-C-16-8-T-35-S99','target_name':'개발밀도관리구역','standard_code':'UQQ700','source_family':'LEGACY_LOCAL_GAZETTE','state_path':str(state_path),'summary':summary,'delta_rows':delta,'target_term_search_executed':False,'detail_request_executed':False,'attachment_body_download_executed':False,'negative_evidence_allowed':False,'site_positive_allowed':False,'site_negative_allowed':False,'runtime_registration_allowed':False}
+ summary={'request_count':req,'state_discovery_mode':discovery_mode,'local_gazette_artifact_count':len(artifacts),'selected_state_artifact_count':len(selected),'live_row_count':len(live),'live_unique_pstsn_count':len(live_ids),'live_duplicate_count':dup,'prior_state_unique_pstsn_count':len(prior_ids),'overlap_count':len(overlap),'live_not_in_dynamic_state_count':len(delta),'expected_live_rows':EXPECTED_LIVE_ROWS,'expected_dynamic_rows':EXPECTED_DYNAMIC_ROWS,'expected_nominal_delta':EXPECTED_LIVE_ROWS-EXPECTED_DYNAMIC_ROWS,'delta_year_counts':dict(sorted(delta_years.items())),'delta_min_page':min((x['page'] for x in delta),default=None),'delta_max_page':max((x['page'] for x in delta),default=None),'semantic_state':'LIVE_DYNAMIC_DELTA_INVENTORIED','negative_evidence_allowed':False,'uqq700_final_resolution':'UNKNOWN'}
+ out={'step':'STEP 17-21-C-16-8-T-35-S99','target_name':'개발밀도관리구역','standard_code':'UQQ700','source_family':'LEGACY_LOCAL_GAZETTE','selected_state_paths':[str(a['path']) for a in selected],'summary':summary,'delta_rows':delta,'target_term_search_executed':False,'detail_request_executed':False,'attachment_body_download_executed':False,'negative_evidence_allowed':False,'site_positive_allowed':False,'site_negative_allowed':False,'runtime_registration_allowed':False}
  OUT.write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding='utf-8')
  vals={'state pstSn recovered':len(prior_ids)>0,'live row count exact':len(live)==EXPECTED_LIVE_ROWS,'live unique exact':len(live_ids)==EXPECTED_LIVE_ROWS,'no live duplicates':dup==0,'request budget respected':req<=MAX_REQ,'target-term search disabled':not out['target_term_search_executed'],'detail request disabled':not out['detail_request_executed'],'negative evidence disabled':not out['negative_evidence_allowed'],'unsafe promotion leakage zero':not any(out[k] for k in ['site_positive_allowed','site_negative_allowed','runtime_registration_allowed']),'output written':OUT.exists() and OUT.stat().st_size>0}
  print('\nSUMMARY'); [print(f'{k}: {v}') for k,v in summary.items()]; print('Output:',OUT); print('\nVALIDATION'); [print(f'{k}: {v}') for k,v in vals.items()]; print('all_pass:',all(vals.values()))
