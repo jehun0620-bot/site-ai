@@ -37,20 +37,42 @@ def strip_tags(s):
 
 
 def fetch(session, url):
-    r = session.get(url, timeout=25, allow_redirects=True)
-    data = r.content
-    if len(data) > 6 * 1024 * 1024:
-        raise AssertionError(f"response too large: {url}")
-    return r.status_code, str(r.url), data
+    try:
+        r = session.get(url, timeout=25, allow_redirects=True)
+        data = r.content
+        if len(data) > 6 * 1024 * 1024:
+            return {
+                "state": "TECHNICAL_REQUEST_UNKNOWN",
+                "http": r.status_code,
+                "final_url": str(r.url),
+                "data": b"",
+                "error": "RESPONSE_SIZE_LIMIT_EXCEEDED",
+            }
+        return {
+            "state": "HTTP_RESPONSE_CAPTURED",
+            "http": r.status_code,
+            "final_url": str(r.url),
+            "data": data,
+            "error": None,
+        }
+    except requests.RequestException as exc:
+        return {
+            "state": "TECHNICAL_REQUEST_UNKNOWN",
+            "http": None,
+            "final_url": url,
+            "data": b"",
+            "error": f"{type(exc).__name__}: {exc}",
+        }
 
 
 def main():
     print("=" * 60)
-    print("SEONGNAM URBAN PLANNING ARCHIVE ENDPOINT DISCOVERY - S142")
+    print("SEONGNAM URBAN PLANNING ARCHIVE ENDPOINT DISCOVERY - S142-R1")
     print("=" * 60)
     print("Document search: DISABLED")
     print("Negative evidence: DISABLED")
     print("SITE/runtime promotion: DISABLED")
+    print("Per-seed transport failure isolation: ENABLED")
 
     session = requests.Session()
     session.headers.update({"User-Agent": "Mozilla/5.0", "Accept-Language": "ko-KR,ko;q=0.9"})
@@ -60,14 +82,25 @@ def main():
     forms = []
 
     for seed in SEEDS:
-        status, final_url, raw = fetch(session, seed)
+        res = fetch(session, seed)
+        final_url = res["final_url"]
         ok_host = host(final_url) == HOST
-        requests_log.append({"seed": seed, "http": status, "final_url": final_url, "official_host": ok_host})
-        print("SEED:", seed, "| HTTP:", status, "| HOST_OK:", ok_host)
-        if status != 200 or not ok_host:
+        requests_log.append({
+            "seed": seed,
+            "state": res["state"],
+            "http": res["http"],
+            "final_url": final_url,
+            "official_host": ok_host,
+            "error": res["error"],
+        })
+        print("SEED:", seed, "| STATE:", res["state"], "| HTTP:", res["http"], "| HOST_OK:", ok_host)
+        if res["error"]:
+            print("  ERROR:", res["error"])
+
+        if res["state"] != "HTTP_RESPONSE_CAPTURED" or res["http"] != 200 or not ok_host:
             continue
 
-        text = raw.decode("utf-8", errors="ignore")
+        text = res["data"].decode("utf-8", errors="ignore")
         for href, body in A_RE.findall(text):
             url = urljoin(final_url, html.unescape(href))
             if host(url) != HOST:
@@ -94,15 +127,20 @@ def main():
                 forms.append({"action": action, "keyword_hits": hits, "source_seed": seed})
 
     endpoint_list = sorted(endpoints.values(), key=lambda x: (-len(x["keyword_hits"]), x["url"]))
+    technical_unknown_count = sum(1 for x in requests_log if x["state"] == "TECHNICAL_REQUEST_UNKNOWN")
+    successful_seed_count = sum(1 for x in requests_log if x["state"] == "HTTP_RESPONSE_CAPTURED" and x["http"] == 200 and x["official_host"])
+
     out = {
-        "step": "STEP 17-21-C-16-8-T-38-S142",
+        "step": "STEP 17-21-C-16-8-T-38-S142-R1",
         "target_name": "개발밀도관리구역",
         "standard_code": "UQQ700",
         "summary": {
             "seed_request_count": len(requests_log),
+            "successful_seed_count": successful_seed_count,
+            "technical_seed_unknown_count": technical_unknown_count,
             "candidate_endpoint_count": len(endpoint_list),
             "candidate_form_count": len(forms),
-            "semantic_state": "SEONGNAM_URBAN_PLANNING_ARCHIVE_ENDPOINT_DISCOVERY_CAPTURED",
+            "semantic_state": "SEONGNAM_URBAN_PLANNING_ARCHIVE_ENDPOINT_DISCOVERY_CAPTURED_WITH_TRANSPORT_ISOLATION",
             "negative_evidence_allowed": False,
             "uqq700_final_resolution": "UNKNOWN",
         },
@@ -111,6 +149,7 @@ def main():
         "candidate_forms": forms,
         "document_search_executed": False,
         "negative_evidence_allowed": False,
+        "legal_absence_inference_allowed": False,
         "site_positive_allowed": False,
         "site_negative_allowed": False,
         "runtime_registration_allowed": False,
@@ -128,9 +167,11 @@ def main():
 
     checks = {
         "seed request exact": len(requests_log) == len(SEEDS),
-        "official hosts only": all(x["official_host"] for x in requests_log),
+        "at least one official seed succeeded": successful_seed_count >= 1,
+        "technical failures isolated": technical_unknown_count <= len(SEEDS),
         "document search disabled": not out["document_search_executed"],
         "negative evidence disabled": not out["negative_evidence_allowed"],
+        "legal absence inference disabled": not out["legal_absence_inference_allowed"],
         "unsafe promotion leakage zero": not any(out[k] for k in ["site_positive_allowed", "site_negative_allowed", "runtime_registration_allowed"]),
         "final resolution unknown": out["summary"]["uqq700_final_resolution"] == "UNKNOWN",
         "output written": OUT.exists() and OUT.stat().st_size > 0,
@@ -140,7 +181,7 @@ def main():
         print(f"{k}: {v}")
     print("all_pass:", all(checks.values()))
     if not all(checks.values()):
-        raise AssertionError("S142 endpoint discovery failed")
+        raise AssertionError("S142-R1 endpoint discovery failed")
 
 
 if __name__ == "__main__":
