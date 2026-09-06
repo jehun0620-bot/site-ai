@@ -92,9 +92,18 @@ def extract_script_srcs(text: str):
 
 
 def extract_function(text: str, name: str):
-    start = re.search(rf"function\s+{re.escape(name)}\s*\([^)]*\)\s*\{{", text or "", re.I)
-    if not start:
+    patterns = (
+        re.compile(rf"function\s+{re.escape(name)}\s*\([^)]*\)\s*\{{", re.I),
+        re.compile(rf"(?:var|let|const)\s+{re.escape(name)}\s*=\s*function\s*\([^)]*\)\s*\{{", re.I),
+    )
+    starts = []
+    for rx in patterns:
+        m = rx.search(text or "")
+        if m:
+            starts.append(m)
+    if not starts:
         return None
+    start = min(starts, key=lambda m: m.start())
     i = start.end() - 1
     depth = 0
     quote = None
