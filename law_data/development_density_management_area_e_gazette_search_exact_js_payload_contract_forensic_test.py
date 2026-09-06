@@ -24,6 +24,41 @@ CORE_SELECTORS = tuple(f"#{x}" for x in CORE_FIELDS) + ("#searchForm", "#detail_
 ENDPOINT_MARKERS = ("searchKeyword.do", "searchDetail.do")
 SUBMIT_MARKERS = ("submit(", ".submit", "serialize", "action", "location.href", "location.replace", "$.ajax", "$.post", "$.get")
 
+# Keep these deliberately simple and compile them once at import time.  S221A is a
+# forensic parser: a malformed regex must fail with its own name before any source
+# interpretation is attempted.
+_ASSIGNMENT_PATTERN_SPECS = (
+    (
+        "jquery_val",
+        r"(?P<lhs>\$\(\s*['\"]#[^'\"]+['\"]\s*\)\.val)\s*\(\s*(?P<rhs>[^;\n]{0,250})\s*\)",
+    ),
+    (
+        "dom_value",
+        r"(?P<lhs>document\.getElementById\(\s*['\"][^'\"]+['\"]\s*\)\.value)\s*=\s*(?P<rhs>[^;\n]{0,250})",
+    ),
+    (
+        "object_action_method",
+        r"(?P<lhs>[A-Za-z_$][A-Za-z0-9_$]*\.(?:action|method))\s*=\s*(?P<rhs>[^;\n]{0,250})",
+    ),
+    (
+        "object_key",
+        r"(?P<lhs>[A-Za-z_$][A-Za-z0-9_$]*\s*\[\s*['\"][^'\"]+['\"]\s*\])\s*=\s*(?P<rhs>[^;\n]{0,250})",
+    ),
+)
+
+
+def _compile_assignment_patterns():
+    compiled = []
+    for name, pattern in _ASSIGNMENT_PATTERN_SPECS:
+        try:
+            compiled.append((name, re.compile(pattern, re.I)))
+        except re.error as ex:
+            raise RuntimeError(f"invalid S221A assignment regex {name}: {ex}") from ex
+    return tuple(compiled)
+
+
+ASSIGNMENT_PATTERNS = _compile_assignment_patterns()
+
 
 def norm(s: str) -> str:
     return re.sub(r"\s+", " ", s or "").strip()
@@ -54,18 +89,20 @@ def score_text(text: str) -> tuple[int, list[str]]:
 
 def extract_assignments(text: str):
     out = []
-    patterns = [
-        r"(?P<lhs>\$\(\s*['\"]#[^'\"]+['\"]\s*\)\.val\s*\(\s*(?P<rhs>[^)]{0,250})\)",
-        r"(?P<lhs>document\.getElementById\(\s*['\"][^'\"]+['\"]\s*\)\.value)\s*=\s*(?P<rhs>[^;]{0,250})",
-        r"(?P<lhs>[A-Za-z_$][\w$]*\.(?:action|method))\s*=\s*(?P<rhs>[^;]{0,250})",
-        r"(?P<lhs>[A-Za-z_$][\w$]*\[['\"][^'\"]+['\"]\])\s*=\s*(?P<rhs>[^;]{0,250})",
-    ]
-    for pat in patterns:
-        for m in re.finditer(pat, text or "", re.I):
-            item = {"lhs": norm(m.group("lhs")), "rhs": norm(m.group("rhs"))}
+    source = text or ""
+    for pattern_name, regex in ASSIGNMENT_PATTERNS:
+        for m in regex.finditer(source):
+            lhs = norm(m.group("lhs"))
+            rhs = norm(m.group("rhs"))
+            # A forensic signal is useful only when both sides contain content.
+            if not lhs or not rhs:
+                continue
+            item = {"pattern": pattern_name, "lhs": lhs, "rhs": rhs}
             if item not in out:
                 out.append(item)
-    return out[:200]
+            if len(out) >= 200:
+                return out
+    return out
 
 
 def extract_actions(text: str):
@@ -244,6 +281,8 @@ def main():
     }
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    print("ASSIGNMENT REGEX COUNT:", len(ASSIGNMENT_PATTERNS))
+    print("ASSIGNMENT REGEX COMPILE CHECK: True")
     print("RANKED CANDIDATE COUNT:", len(cands))
     for i, c in enumerate(cands[:12], 1):
         print(f"[{i:02d}] score={c['score']} source={c['source']} hits={c['hits'][:12]}")
@@ -274,6 +313,7 @@ def main():
     print("Output:", OUT)
 
     checks = {
+        "assignment regex compile check": len(ASSIGNMENT_PATTERNS) == len(_ASSIGNMENT_PATTERN_SPECS),
         "S220A contract gate": gate220a,
         "S221 unresolved replay gate": gate221_unresolved,
         "ranked candidate contexts emitted": len(cands) > 0,
