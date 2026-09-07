@@ -76,14 +76,14 @@ def main() -> None:
         and (s224a.get("summary") or {}).get("uqq700_final_resolution") == "UNKNOWN"
     )
 
-    coverage = s224b.get("coverage") or {}
+    coverage = s224b.get("coverage_summary") or {}
     summary_b = s224b.get("summary") or {}
     gate_224b = (
         s224b.get("classification") == EXPECTED_S224B_CLASSIFICATION
         and coverage.get("query_count") == 6
-        and coverage.get("query_no_hit_count") == 6
+        and coverage.get("query_technical_no_hit_count") == 6
         and coverage.get("query_hit_count") == 0
-        and coverage.get("query_unknown_count") == 0
+        and coverage.get("query_unresolved_count") == 0
         and coverage.get("canonical_candidate_count") == 0
         and coverage.get("bounded_search_exhausted") is True
         and summary_b.get("uqq700_final_resolution") == "UNKNOWN"
@@ -145,9 +145,9 @@ def main() -> None:
             "next_action": next_action,
             "operational_source_family_closure": operational_source_family_closure,
             "bounded_query_count": coverage.get("query_count"),
-            "bounded_query_technical_no_hit_count": coverage.get("query_no_hit_count"),
+            "bounded_query_technical_no_hit_count": coverage.get("query_technical_no_hit_count"),
             "bounded_query_hit_count": coverage.get("query_hit_count"),
-            "bounded_query_unresolved_count": coverage.get("query_unknown_count"),
+            "bounded_query_unresolved_count": coverage.get("query_unresolved_count"),
             "canonical_candidate_count": coverage.get("canonical_candidate_count"),
             "bounded_search_exhausted": coverage.get("bounded_search_exhausted"),
             "search_hit_equals_legal_fact": False,
@@ -178,9 +178,9 @@ def main() -> None:
 
     print("\nTERMINAL SUMMARY")
     print("BOUNDED QUERY COUNT:", coverage.get("query_count"))
-    print("BOUNDED TECHNICAL NO-HIT COUNT:", coverage.get("query_no_hit_count"))
+    print("BOUNDED TECHNICAL NO-HIT COUNT:", coverage.get("query_technical_no_hit_count"))
     print("BOUNDED HIT COUNT:", coverage.get("query_hit_count"))
-    print("BOUNDED UNRESOLVED COUNT:", coverage.get("query_unknown_count"))
+    print("BOUNDED UNRESOLVED COUNT:", coverage.get("query_unresolved_count"))
     print("CANONICAL CANDIDATE COUNT:", coverage.get("canonical_candidate_count"))
     print("BOUNDED SEARCH EXHAUSTED:", coverage.get("bounded_search_exhausted"))
     print("OPERATIONAL SOURCE-FAMILY CLOSURE:", operational_source_family_closure)
