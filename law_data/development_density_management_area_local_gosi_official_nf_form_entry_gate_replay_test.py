@@ -183,7 +183,7 @@ def main() -> None:
 
     if selected_form:
         action = selected_form["action_absolute"]
-        official_action = urlparse(action).netloc == "local.gosi.go.kr"
+        official_action = urlparse(action).hostname == "local.gosi.go.kr"
         method_post = selected_form.get("method") == "POST"
         payload_keys = sorted((selected_form.get("hidden_payload") or {}).keys())
         exact_safe_payload = payload_keys == ["nf_token"]
@@ -205,7 +205,7 @@ def main() -> None:
     entry_signals = page_signals(entry_html, entry_url) if entry is not None else {}
     post_signals = page_signals(post_html, post_url or ENTRY_URL) if replay is not None else {}
 
-    same_official_host = bool(post_url and urlparse(post_url).netloc == "local.gosi.go.kr")
+    same_official_host = bool(post_url and urlparse(post_url).hostname == "local.gosi.go.kr")
     post_http_ok = bool(replay is not None and replay.status_code == 200 and same_official_host)
     escaped_gate = bool(
         post_http_ok
