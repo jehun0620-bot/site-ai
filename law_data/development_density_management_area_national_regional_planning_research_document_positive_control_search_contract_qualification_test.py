@@ -33,6 +33,28 @@ ROUTE_HINTS = [
     "report", "search", "archive",
 ]
 
+# Semantic hardening: only these field/action combinations are eligible for
+# canonical reuse. Everything else remains diagnostic only even if a generic
+# echo/result heuristic looked positive.
+SEMANTIC_ALLOWLIST = {
+    "GRI": {
+        ("GET", "/web/contents/webSearch.do", "kwd"): "GLOBAL_SEARCH",
+        ("GET", "/web/contents/resreport.do", "schStr"): "RESEARCH_REPORT_SEARCH",
+    },
+}
+
+# These are selector/filter/date fields and must never be promoted to target
+# query fields for this source family.
+SEMANTIC_DENY_FIELDS = {
+    "schFld",
+    "searchStartDate",
+    "searchEndDate",
+    "search_kind",
+    "startDay",
+    "endDay",
+    "proposer",
+}
+
 
 def curl(url: str, method: str = "GET", data: dict | None = None, referer: str | None = None) -> dict:
     exe = shutil.which("curl.exe") or shutil.which("curl")
@@ -238,13 +260,48 @@ def replay_form(source_id: str, page_url: str, form: dict, field: str) -> dict:
     }
 
 
+def semantic_contract_role(source_id: str, method: str, action_url: str, field: str) -> str | None:
+    if field in SEMANTIC_DENY_FIELDS:
+        return None
+    path = urlparse(action_url).path
+    return SEMANTIC_ALLOWLIST.get(source_id, {}).get((method.upper(), path, field))
+
+
+def canonicalize_contracts(raw_contracts: list[dict]) -> tuple[list[dict], list[dict]]:
+    canonical: list[dict] = []
+    rejected: list[dict] = []
+    seen = set()
+    for row in raw_contracts:
+        role = semantic_contract_role(row["source_id"], row["method"], row["action_url"], row["query_field"])
+        if not role:
+            rejected.append({
+                **row,
+                "semantic_rejection_reason": "NOT_IN_SEMANTIC_ALLOWLIST_OR_FILTER_SELECTOR_FIELD",
+            })
+            continue
+        path = urlparse(row["action_url"]).path
+        key = (row["source_id"], row["method"].upper(), path, row["query_field"])
+        if key in seen:
+            continue
+        seen.add(key)
+        canonical.append({
+            **row,
+            "canonical_action_path": path,
+            "semantic_contract_role": role,
+            "canonical_contract_key": "|".join(key),
+            "semantically_hardened": True,
+        })
+    return canonical, rejected
+
+
 def main() -> None:
     print("=" * 78)
-    print("NATIONAL / REGIONAL PLANNING RESEARCH DOCUMENT POSITIVE CONTROL SEARCH CONTRACT QUALIFICATION - S229B")
+    print("NATIONAL / REGIONAL PLANNING RESEARCH DOCUMENT POSITIVE CONTROL SEARCH CONTRACT QUALIFICATION - S229B HARDENED")
     print("=" * 78)
-    print("Purpose: qualify reusable official document/search contracts using positive control only")
+    print("Purpose: positive-control qualification plus semantic hardening and canonical deduplication")
     print("Positive control:", POSITIVE_CONTROL)
     print("UQQ700 target search: DISABLED")
+    print("Only semantically allowlisted canonical contracts may advance")
     print("Planning/research hit != designation/current validity/site inclusion")
     print("Planning/research no-hit != legal absence")
     print("UQQ700 final resolution: UNKNOWN")
@@ -256,7 +313,7 @@ def main() -> None:
     selected = [x for x in ranked if x.get("source_id") in {"GG", "GRI", "KRIHS"}][:3]
 
     source_results = []
-    qualified_contracts = []
+    raw_qualified_contracts = []
     total_route_probes = 0
     total_form_replays = 0
 
@@ -294,9 +351,14 @@ def main() -> None:
                     replay = replay_form(source_id, final_url, form, field)
                     source_replays += 1
                     total_form_replays += 1
-                    form_rows.append({"form_index": form_index, "form": form, "replay": replay})
+                    semantic_role = semantic_contract_role(source_id, replay["method"], replay["action_url"], replay["query_field"])
+                    form_rows.append({
+                        "form_index": form_index,
+                        "form": form,
+                        "replay": {**replay, "semantic_role": semantic_role},
+                    })
                     if replay["qualified"]:
-                        qualified_contracts.append({
+                        raw_qualified_contracts.append({
                             "source_id": source_id,
                             "name": src["name"],
                             "expected_role": src["expected_role"],
@@ -317,7 +379,6 @@ def main() -> None:
                 "form_replays": form_rows,
             })
 
-        source_q = [q for q in qualified_contracts if q["source_id"] == source_id]
         source_results.append({
             "source_id": source_id,
             "name": src["name"],
@@ -330,24 +391,32 @@ def main() -> None:
             "route_candidate_count": len(routes),
             "pages": page_rows,
             "positive_control_replay_count": source_replays,
-            "qualified_contract_count": len(source_q),
-            "contract_qualified": bool(source_q),
         })
 
-    qualified_source_count = sum(1 for r in source_results if r["contract_qualified"])
-    qualified_contract_count = len(qualified_contracts)
+    canonical_contracts, semantically_rejected_raw_contracts = canonicalize_contracts(raw_qualified_contracts)
 
-    if qualified_contract_count > 0:
-        classification = "NATIONAL_REGIONAL_PLANNING_RESEARCH_DOCUMENT_POSITIVE_CONTROL_SEARCH_CONTRACT_QUALIFIED"
-        semantic = "ONE_OR_MORE_OFFICIAL_PLANNING_OR_RESEARCH_DOCUMENT_SEARCH_CONTRACTS_WERE_POSITIVE_CONTROL_QUALIFIED"
-        next_action = "RUN_BOUNDED_UQQ700_TARGET_SEARCH_ONLY_ON_QUALIFIED_CONTRACTS_AS_CONTEXT_AND_REVERSE_LOOKUP_ANCHORS"
+    for r in source_results:
+        raw_source_q = [q for q in raw_qualified_contracts if q["source_id"] == r["source_id"]]
+        canonical_source_q = [q for q in canonical_contracts if q["source_id"] == r["source_id"]]
+        r["raw_qualified_contract_count"] = len(raw_source_q)
+        r["canonical_qualified_contract_count"] = len(canonical_source_q)
+        r["contract_qualified"] = bool(canonical_source_q)
+
+    qualified_source_count = sum(1 for r in source_results if r["contract_qualified"])
+    raw_qualified_contract_count = len(raw_qualified_contracts)
+    canonical_qualified_contract_count = len(canonical_contracts)
+
+    if canonical_qualified_contract_count > 0:
+        classification = "NATIONAL_REGIONAL_PLANNING_RESEARCH_DOCUMENT_POSITIVE_CONTROL_SEARCH_CONTRACT_SEMANTICALLY_HARDENED_QUALIFIED"
+        semantic = "ONLY_SEMANTICALLY_VALID_CANONICAL_PLANNING_RESEARCH_SEARCH_CONTRACTS_WERE_RETAINED_AFTER_POSITIVE_CONTROL_QUALIFICATION"
+        next_action = "RUN_BOUNDED_UQQ700_TARGET_SEARCH_ONLY_ON_CANONICAL_SEMANTICALLY_HARDENED_CONTRACTS_AS_CONTEXT_AND_REVERSE_LOOKUP_ANCHORS"
     else:
-        classification = "NATIONAL_REGIONAL_PLANNING_RESEARCH_DOCUMENT_POSITIVE_CONTROL_SEARCH_CONTRACT_TECHNICAL_UNKNOWN"
-        semantic = "QUALIFIED_SOURCE_ENTRIES_WERE_PROBED_BUT_NO_REUSABLE_DOCUMENT_SEARCH_CONTRACT_WAS_POSITIVE_CONTROL_QUALIFIED"
+        classification = "NATIONAL_REGIONAL_PLANNING_RESEARCH_DOCUMENT_POSITIVE_CONTROL_SEARCH_CONTRACT_SEMANTICALLY_HARDENED_TECHNICAL_UNKNOWN"
+        semantic = "RAW_POSITIVE_CONTROL_RESPONSES_WERE_OBSERVED_BUT_NO_SEMANTICALLY_VALID_CANONICAL_CONTRACT_REMAINED"
         next_action = "HARDEN_ONLY_SOURCE_SPECIFIC_PUBLICATION_OR_SEARCH_ROUTES_WITHOUT_UQQ700_NEGATIVE_INFERENCE"
 
     out = {
-        "step": "STEP 17-21-C-16-8-T-162-S229B",
+        "step": "STEP 17-21-C-16-8-T-162-S229B-HARDENED",
         "target_name": TARGET,
         "standard_code": STANDARD_CODE,
         "resolution_type": RESOLUTION_TYPE,
@@ -358,15 +427,22 @@ def main() -> None:
         "source_results": source_results,
         "route_probe_count": total_route_probes,
         "positive_control_replay_count": total_form_replays,
+        "raw_qualified_search_contract_count": raw_qualified_contract_count,
+        "raw_qualified_search_contracts": raw_qualified_contracts,
+        "canonical_qualified_search_contract_count": canonical_qualified_contract_count,
+        "canonical_qualified_search_contracts": canonical_contracts,
+        "semantically_rejected_raw_contract_count": len(semantically_rejected_raw_contracts),
+        "semantically_rejected_raw_contracts": semantically_rejected_raw_contracts,
         "qualified_source_count": qualified_source_count,
-        "qualified_search_contract_count": qualified_contract_count,
-        "qualified_search_contracts": qualified_contracts,
         "classification": classification,
         "summary": {
             "semantic_state": semantic,
             "next_action": next_action,
             "target_search_executed": False,
             "positive_control_search_executed": total_form_replays > 0,
+            "semantic_allowlist_enforced": True,
+            "canonical_deduplication_enforced": True,
+            "filter_selector_fields_blocked": True,
             "source_role_context_and_reverse_lookup_only": True,
             "planning_research_hit_equals_designation_notice": False,
             "planning_research_hit_equals_current_validity": False,
@@ -397,7 +473,8 @@ def main() -> None:
             "entry_official_signal": r["entry_official_signal"],
             "route_candidate_count": r["route_candidate_count"],
             "positive_control_replay_count": r["positive_control_replay_count"],
-            "qualified_contract_count": r["qualified_contract_count"],
+            "raw_qualified_contract_count": r["raw_qualified_contract_count"],
+            "canonical_qualified_contract_count": r["canonical_qualified_contract_count"],
             "contract_qualified": r["contract_qualified"],
         }, ensure_ascii=False))
         for p in r["pages"]:
@@ -405,12 +482,16 @@ def main() -> None:
                 print(f"  PAGE label={p['label']} http={p['http']} official={p['official_signal']} forms={p['form_candidate_count']} url={p['final_url']}")
                 for fr in p["form_replays"]:
                     x = fr["replay"]
-                    print(f"    FORM[{fr['form_index']}] FIELD={x['query_field']} METHOD={x['method']} HTTP={x['http']} QUALIFIED={x['qualified']} OFFICIAL={x['official_signal']} ECHO={x['query_echo']} RESULT={x['result_signal']} ERROR={x['error_signal']} ACTION={x['action_url']}")
+                    print(f"    FORM[{fr['form_index']}] FIELD={x['query_field']} METHOD={x['method']} HTTP={x['http']} RAW_QUALIFIED={x['qualified']} SEMANTIC_ROLE={x['semantic_role']} OFFICIAL={x['official_signal']} ECHO={x['query_echo']} RESULT={x['result_signal']} ERROR={x['error_signal']} ACTION={x['action_url']}")
 
-    print("\nQUALIFIED SEARCH CONTRACTS")
+    print("\nCANONICAL QUALIFIED SEARCH CONTRACTS")
     print("-" * 78)
-    for q in qualified_contracts:
-        print(json.dumps({k: q.get(k) for k in ["source_id", "name", "page_url", "query_field", "method", "action_url", "http", "query_echo", "result_signal", "qualified"]}, ensure_ascii=False))
+    for q in canonical_contracts:
+        print(json.dumps({k: q.get(k) for k in [
+            "source_id", "name", "semantic_contract_role", "query_field", "method",
+            "action_url", "canonical_action_path", "canonical_contract_key",
+            "http", "query_echo", "result_signal", "semantically_hardened",
+        ]}, ensure_ascii=False))
 
     print("\n" + "=" * 78)
     print("RESOLUTION")
@@ -418,8 +499,9 @@ def main() -> None:
     print(f"SELECTED SOURCE COUNT: {len(selected)}")
     print(f"ROUTE PROBE COUNT: {total_route_probes}")
     print(f"POSITIVE CONTROL REPLAY COUNT: {total_form_replays}")
+    print(f"RAW QUALIFIED SEARCH CONTRACT COUNT: {raw_qualified_contract_count}")
+    print(f"CANONICAL QUALIFIED SEARCH CONTRACT COUNT: {canonical_qualified_contract_count}")
     print(f"QUALIFIED SOURCE COUNT: {qualified_source_count}")
-    print(f"QUALIFIED SEARCH CONTRACT COUNT: {qualified_contract_count}")
     print(f"CLASSIFICATION: {classification}")
     print(f"Semantic: {semantic}")
     print(f"Next action: {next_action}")
@@ -429,6 +511,11 @@ def main() -> None:
     print("Runtime registration allowed: False")
     print("UQQ700 final resolution: UNKNOWN")
 
+    canonical_keys = {q["canonical_contract_key"] for q in canonical_contracts}
+    expected_gri_keys = {
+        "GRI|GET|/web/contents/webSearch.do|kwd",
+        "GRI|GET|/web/contents/resreport.do|schStr",
+    }
     validation = {
         "target name": out["target_name"] == TARGET,
         "standard code": out["standard_code"] == STANDARD_CODE,
@@ -438,6 +525,11 @@ def main() -> None:
         "bounded route probes": total_route_probes <= len(selected) * MAX_ROUTE_PROBES_PER_SOURCE,
         "bounded positive control replays": total_form_replays <= len(selected) * MAX_FORM_REPLAYS_PER_SOURCE,
         "target search not executed": out["summary"]["target_search_executed"] is False,
+        "semantic allowlist enforced": out["summary"]["semantic_allowlist_enforced"] is True,
+        "canonical deduplication enforced": out["summary"]["canonical_deduplication_enforced"] is True,
+        "filter selector fields blocked": out["summary"]["filter_selector_fields_blocked"] is True,
+        "canonical contracts unique": len(canonical_keys) == len(canonical_contracts),
+        "only expected GRI canonical contracts": canonical_keys.issubset(expected_gri_keys),
         "source role context/reverse lookup only": out["summary"]["source_role_context_and_reverse_lookup_only"] is True,
         "planning research hit not designation": out["summary"]["planning_research_hit_equals_designation_notice"] is False,
         "planning research hit not validity": out["summary"]["planning_research_hit_equals_current_validity"] is False,
@@ -453,8 +545,8 @@ def main() -> None:
         "runtime registration blocked": out["summary"]["runtime_registration_allowed"] is False,
         "UQQ700 remains UNKNOWN": out["summary"]["uqq700_final_resolution"] == "UNKNOWN",
         "classification emitted": classification in {
-            "NATIONAL_REGIONAL_PLANNING_RESEARCH_DOCUMENT_POSITIVE_CONTROL_SEARCH_CONTRACT_QUALIFIED",
-            "NATIONAL_REGIONAL_PLANNING_RESEARCH_DOCUMENT_POSITIVE_CONTROL_SEARCH_CONTRACT_TECHNICAL_UNKNOWN",
+            "NATIONAL_REGIONAL_PLANNING_RESEARCH_DOCUMENT_POSITIVE_CONTROL_SEARCH_CONTRACT_SEMANTICALLY_HARDENED_QUALIFIED",
+            "NATIONAL_REGIONAL_PLANNING_RESEARCH_DOCUMENT_POSITIVE_CONTROL_SEARCH_CONTRACT_SEMANTICALLY_HARDENED_TECHNICAL_UNKNOWN",
         },
         "output written": OUT.exists() and OUT.stat().st_size > 0,
     }
@@ -467,7 +559,7 @@ def main() -> None:
     print(f"all_pass: {all(validation.values())}")
     print(f"Output: {OUT}")
     if not all(validation.values()):
-        raise AssertionError("S229B validation failed")
+        raise AssertionError("S229B hardened validation failed")
 
 
 if __name__ == "__main__":
