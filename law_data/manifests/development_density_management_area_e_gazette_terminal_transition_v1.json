@@ -1,0 +1,29 @@
+{
+  "manifest_version": 1,
+  "manifest_type": "IMMUTABLE_SOURCE_FAMILY_TRANSITION",
+  "target_name": "개발밀도관리구역",
+  "standard_code": "UQQ700",
+  "resolution_type": "HYBRID_SPATIAL_NOTICE",
+  "source_family": "E_GAZETTE",
+  "classification": "E_GAZETTE_BOUNDED_DESIGNATION_SEARCH_EXHAUSTED_NO_QUALIFIED_DESIGNATION_DOCUMENT",
+  "semantic_state": "E_GAZETTE_BOUNDED_SEARCH_OPERATIONALLY_CLOSED_WITHOUT_LEGAL_ABSENCE_INFERENCE",
+  "operational_source_family_closure": true,
+  "next_source_family": "GYEONGGI_OFFICIAL_RECORD",
+  "official_designation_identity_verified": false,
+  "current_validity_verified": false,
+  "site_spatial_inclusion_verified": false,
+  "search_no_hit_equals_legal_absence": false,
+  "negative_evidence_allowed": false,
+  "legal_absence_inference_allowed": false,
+  "site_false_inference_allowed": false,
+  "site_positive_allowed": false,
+  "site_negative_allowed": false,
+  "runtime_registration_allowed": false,
+  "uqq700_final_resolution": "UNKNOWN",
+  "provenance": {
+    "source_step": "S221S",
+    "source_file": "law_data/development_density_management_area_e_gazette_candidate_reconciliation_closure_test.py",
+    "source_commit": "d82a298dceb36eee2fe0548a8043ada3977a8f18",
+    "notes": "Immutable transition snapshot of an already-validated operational source-family closure. It is not legal-absence evidence and must never be used to infer SITE FALSE."
+  }
+}
