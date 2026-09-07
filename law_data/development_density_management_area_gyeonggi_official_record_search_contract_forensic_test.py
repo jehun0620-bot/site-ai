@@ -5,12 +5,12 @@ import json
 import re
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urljoin, urlparse, parse_qs
+from urllib.parse import parse_qs, urljoin, urlparse
 
 import requests
 
 BASE = Path(__file__).resolve().parent.parent
-S221S = BASE / "law_data" / "output" / "development_density_management_area_e_gazette_candidate_reconciliation_closure.json"
+TRANSITION_MANIFEST = BASE / "law_data" / "manifests" / "development_density_management_area_e_gazette_terminal_transition_v1.json"
 OUT = BASE / "law_data" / "output" / "development_density_management_area_gyeonggi_official_record_search_contract_forensic.json"
 
 ROOT = "https://www.gg.go.kr/"
@@ -50,12 +50,7 @@ class SurfaceParser(HTMLParser):
                 "value": a.get("value"),
             })
         elif tag == "select":
-            row = {
-                "tag": "select",
-                "name": a.get("name"),
-                "id": a.get("id"),
-                "options": [],
-            }
+            row = {"tag": "select", "name": a.get("name"), "id": a.get("id"), "options": []}
             if self.current_form is not None:
                 self.current_form["fields"].append(row)
             self.select_stack.append(row)
@@ -94,11 +89,10 @@ def parse_surface(html: str):
 
 def extract_count(text: str, label: str):
     compact = re.sub(r"\s+", " ", text or "")
-    patterns = [
+    for pattern in [
         rf"{re.escape(label)}\s*\(?\s*([0-9,]+)\s*건\s*\)?",
         rf"{re.escape(label)}\s*\(?\s*([0-9,]+)\s*\)?",
-    ]
-    for pattern in patterns:
+    ]:
         m = re.search(pattern, compact)
         if m:
             try:
@@ -135,6 +129,7 @@ def main():
     print("=" * 78)
     print("Purpose: qualify the official Gyeonggi search surface before UQQ700 replay")
     print("Positive control only; target no-hit inference is NOT performed")
+    print("Immutable E-Gazette transition manifest prerequisite")
     print("Search hit != legal fact")
     print("Search no-hit != legal absence")
     print("Negative evidence: DISABLED")
@@ -142,15 +137,25 @@ def main():
     print("Runtime registration: BLOCKED")
     print("UQQ700 resolution: UNKNOWN")
 
-    s221s = json.loads(S221S.read_text(encoding="utf-8"))
+    transition = json.loads(TRANSITION_MANIFEST.read_text(encoding="utf-8"))
     gate_s = (
-        s221s.get("classification") == "E_GAZETTE_BOUNDED_DESIGNATION_SEARCH_EXHAUSTED_NO_QUALIFIED_DESIGNATION_DOCUMENT"
-        and (s221s.get("summary") or {}).get("operational_source_family_closure") is True
-        and (s221s.get("summary") or {}).get("uqq700_final_resolution") == "UNKNOWN"
-        and s221s.get("official_designation_identity_verified") is False
+        transition.get("manifest_version") == 1
+        and transition.get("manifest_type") == "IMMUTABLE_SOURCE_FAMILY_TRANSITION"
+        and transition.get("target_name") == TARGET
+        and transition.get("standard_code") == "UQQ700"
+        and transition.get("resolution_type") == "HYBRID_SPATIAL_NOTICE"
+        and transition.get("source_family") == "E_GAZETTE"
+        and transition.get("classification") == "E_GAZETTE_BOUNDED_DESIGNATION_SEARCH_EXHAUSTED_NO_QUALIFIED_DESIGNATION_DOCUMENT"
+        and transition.get("operational_source_family_closure") is True
+        and transition.get("legal_absence_inference_allowed") is False
+        and transition.get("site_false_inference_allowed") is False
+        and transition.get("official_designation_identity_verified") is False
+        and transition.get("current_validity_verified") is False
+        and transition.get("site_spatial_inclusion_verified") is False
+        and transition.get("uqq700_final_resolution") == "UNKNOWN"
     )
     if not gate_s:
-        raise AssertionError("S222 prerequisite S221S closure gate not satisfied")
+        raise AssertionError("S222 immutable E-Gazette transition manifest gate not satisfied")
 
     session = requests.Session()
     session.headers.update({
@@ -194,7 +199,6 @@ def main():
             break
 
     positive_text = " ".join(positive_surface.text_parts)
-    empty_text = " ".join(empty_surface.text_parts)
     positive_term_visible = POSITIVE_CONTROL in positive_text
     official_record_label_visible = OFFICIAL_RECORD_LABEL in positive_text
     total_result_match = re.search(r"검색결과\s*[\"']?([0-9,]+)[\"']?건", positive_text)
@@ -229,21 +233,15 @@ def main():
         "standard_code": "UQQ700",
         "resolution_type": "HYBRID_SPATIAL_NOTICE",
         "source_family": "GYEONGGI_OFFICIAL_RECORD",
-        "entrypoints": {
-            "root": ROOT,
-            "search": SEARCH_URL,
+        "prerequisite": {
+            "type": "IMMUTABLE_SOURCE_FAMILY_TRANSITION",
+            "manifest": str(TRANSITION_MANIFEST),
+            "gate": gate_s,
         },
+        "entrypoints": {"root": ROOT, "search": SEARCH_URL},
         "requests": {
-            "root": {
-                "http": root.status_code if root is not None else None,
-                "final_url": root.url if root is not None else None,
-                "error": root_error,
-            },
-            "search_empty": {
-                "http": search_empty.status_code if search_empty is not None else None,
-                "final_url": search_empty.url if search_empty is not None else None,
-                "error": search_empty_error,
-            },
+            "root": {"http": root.status_code if root is not None else None, "final_url": root.url if root is not None else None, "error": root_error},
+            "search_empty": {"http": search_empty.status_code if search_empty is not None else None, "final_url": search_empty.url if search_empty is not None else None, "error": search_empty_error},
             "positive_control": {
                 "term": POSITIVE_CONTROL,
                 "params": {"category": "", "kwd": POSITIVE_CONTROL},
@@ -296,8 +294,11 @@ def main():
         "site_negative_allowed": False,
         "runtime_registration_allowed": False,
     }
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    print("TRANSITION MANIFEST:", TRANSITION_MANIFEST)
+    print("TRANSITION MANIFEST GATE:", gate_s)
     print("ROOT HTTP:", out["requests"]["root"]["http"])
     print("SEARCH EMPTY HTTP:", out["requests"]["search_empty"]["http"])
     print("POSITIVE CONTROL HTTP:", out["requests"]["positive_control"]["http"])
@@ -334,7 +335,7 @@ def main():
     print("Output:", OUT)
 
     checks = {
-        "S221S operational closure gate": gate_s,
+        "immutable E-Gazette transition gate": gate_s,
         "official root attempted": root is not None,
         "official search empty attempted": search_empty is not None,
         "positive control attempted": positive is not None,
