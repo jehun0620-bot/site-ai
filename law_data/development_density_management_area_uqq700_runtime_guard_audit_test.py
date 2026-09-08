@@ -77,6 +77,7 @@ def collect_baseline_matches(data: Any) -> tuple[list[dict[str, Any]], list[dict
 
                 if (
                     scalar.get("name") == TARGET_NAME
+                    or scalar.get("condition") == TARGET_NAME
                     or scalar.get("standard_code") == TARGET_CODE
                     or scalar.get("code") == TARGET_CODE
                     or scalar.get("standardCode") == TARGET_CODE
@@ -92,6 +93,59 @@ def collect_baseline_matches(data: Any) -> tuple[list[dict[str, Any]], list[dict
 
     walk(data)
     return raw_matches, condition_like_matches
+
+
+def collect_uqq700_runtime_state(baseline: dict[str, Any]) -> dict[str, Any]:
+    rules = baseline.get("rules", []) if isinstance(baseline, dict) else []
+
+    condition_rows: list[dict[str, Any]] = []
+    unknown_by_rows: list[dict[str, Any]] = []
+    blocked_by_rows: list[dict[str, Any]] = []
+
+    for rule_index, rule in enumerate(rules):
+        if not isinstance(rule, dict):
+            continue
+
+        for group_name, target in (
+            ("conditions", condition_rows),
+            ("unknown_by", unknown_by_rows),
+            ("blocked_by", blocked_by_rows),
+        ):
+            for item_index, condition in enumerate(rule.get(group_name, [])):
+                if not isinstance(condition, dict):
+                    continue
+                if condition.get("name") != TARGET_NAME:
+                    continue
+                target.append(
+                    {
+                        "path": f"$.rules[{rule_index}].{group_name}[{item_index}]",
+                        "state": condition.get("state"),
+                        "confidence": condition.get("confidence"),
+                        "source": condition.get("source"),
+                    }
+                )
+
+    guard = baseline.get("uqq700_guard", {})
+    if not isinstance(guard, dict):
+        guard = {}
+
+    states = [row.get("state") for row in condition_rows]
+
+    return {
+        "condition_rows": condition_rows,
+        "unknown_by_rows": unknown_by_rows,
+        "blocked_by_rows": blocked_by_rows,
+        "condition_count": len(condition_rows),
+        "unknown_condition_count": sum(1 for state in states if state == "UNKNOWN"),
+        "false_condition_count": sum(1 for state in states if state == "FALSE"),
+        "true_condition_count": sum(1 for state in states if state == "TRUE"),
+        "other_condition_count": sum(
+            1 for state in states if state not in {"UNKNOWN", "FALSE", "TRUE"}
+        ),
+        "unknown_by_count": len(unknown_by_rows),
+        "blocked_by_count": len(blocked_by_rows),
+        "guard": guard,
+    }
 
 
 def main() -> int:
@@ -114,25 +168,21 @@ def main() -> int:
         reconciliation = load_json(RECONCILIATION_PATH)
     except Exception as exc:
         reconciliation = {}
-        diagnostics.append(
-            {
-                "type": "reconciliation_load_error",
-                "path": str(RECONCILIATION_PATH),
-                "error": repr(exc),
-            }
-        )
+        diagnostics.append({
+            "type": "reconciliation_load_error",
+            "path": str(RECONCILIATION_PATH),
+            "error": repr(exc),
+        })
 
     try:
         baseline = load_json(BASELINE_PATH)
     except Exception as exc:
         baseline = {}
-        diagnostics.append(
-            {
-                "type": "baseline_load_error",
-                "path": str(BASELINE_PATH),
-                "error": repr(exc),
-            }
-        )
+        diagnostics.append({
+            "type": "baseline_load_error",
+            "path": str(BASELINE_PATH),
+            "error": repr(exc),
+        })
 
     reconciliation_classification = reconciliation.get("classification")
     reconciliation_resolution = (
@@ -143,31 +193,19 @@ def main() -> int:
 
     official_designation_verified = deep_find_bool(
         reconciliation,
-        (
-            "official_designation_identity_verified",
-            "OFFICIAL DESIGNATION IDENTITY VERIFIED",
-        ),
+        ("official_designation_identity_verified", "OFFICIAL DESIGNATION IDENTITY VERIFIED"),
     )
     current_validity_verified = deep_find_bool(
         reconciliation,
-        (
-            "current_validity_verified",
-            "CURRENT VALIDITY VERIFIED",
-        ),
+        ("current_validity_verified", "CURRENT VALIDITY VERIFIED"),
     )
     site_spatial_inclusion_verified = deep_find_bool(
         reconciliation,
-        (
-            "site_spatial_inclusion_verified",
-            "SITE SPATIAL INCLUSION VERIFIED",
-        ),
+        ("site_spatial_inclusion_verified", "SITE SPATIAL INCLUSION VERIFIED"),
     )
     minimum_registration_gate_satisfied = deep_find_bool(
         reconciliation,
-        (
-            "minimum_registration_gate_satisfied",
-            "Minimum registration gate satisfied",
-        ),
+        ("minimum_registration_gate_satisfied", "Minimum registration gate satisfied"),
     )
     negative_evidence_allowed = deep_find_bool(
         reconciliation,
@@ -198,6 +236,8 @@ def main() -> int:
     derived_runtime_registration_allowed = derived_minimum_gate
 
     raw_matches, condition_like_matches = collect_baseline_matches(baseline)
+    runtime_state = collect_uqq700_runtime_state(baseline)
+    baseline_guard = runtime_state["guard"]
 
     required_guard_values_present = all(
         value is not None
@@ -224,22 +264,41 @@ def main() -> int:
         "official_designation_identity_verified_is_false": official_designation_verified is False,
         "current_validity_verified_is_false": current_validity_verified is False,
         "site_spatial_inclusion_verified_is_false": site_spatial_inclusion_verified is False,
-        "reported_minimum_registration_gate_is_false": (
-            minimum_registration_gate_satisfied is False
-        ),
+        "reported_minimum_registration_gate_is_false": minimum_registration_gate_satisfied is False,
         "derived_minimum_registration_gate_is_false": derived_minimum_gate is False,
         "negative_evidence_allowed_is_false": negative_evidence_allowed is False,
         "legal_absence_inference_allowed_is_false": legal_absence_inference_allowed is False,
         "site_false_inference_allowed_is_false": site_false_inference_allowed is False,
         "site_promotion_allowed_is_false": site_promotion_allowed is False,
         "runtime_registration_allowed_is_false": runtime_registration_allowed is False,
-        "derived_runtime_registration_allowed_is_false": (
-            derived_runtime_registration_allowed is False
-        ),
+        "derived_runtime_registration_allowed_is_false": derived_runtime_registration_allowed is False,
         "all_required_guard_values_present": required_guard_values_present,
-        "baseline_raw_uqq700_match_count_is_zero": len(raw_matches) == 0,
-        "baseline_condition_like_uqq700_match_count_is_zero": (
-            len(condition_like_matches) == 0
+        "baseline_uqq700_conditions_present": runtime_state["condition_count"] > 0,
+        "baseline_all_uqq700_conditions_are_unknown": (
+            runtime_state["condition_count"] > 0
+            and runtime_state["unknown_condition_count"] == runtime_state["condition_count"]
+        ),
+        "baseline_uqq700_false_condition_count_is_zero": runtime_state["false_condition_count"] == 0,
+        "baseline_uqq700_true_condition_count_is_zero": runtime_state["true_condition_count"] == 0,
+        "baseline_uqq700_other_condition_count_is_zero": runtime_state["other_condition_count"] == 0,
+        "baseline_uqq700_blocked_by_count_is_zero": runtime_state["blocked_by_count"] == 0,
+        "baseline_uqq700_unknown_by_present": runtime_state["unknown_by_count"] > 0,
+        "baseline_guard_resolution_is_unknown": baseline_guard.get("resolution") == "UNKNOWN",
+        "baseline_guard_false_blocker_count_is_zero": baseline_guard.get("false_blocker_count") == 0,
+        "baseline_guard_negative_evidence_allowed_is_false": (
+            baseline_guard.get("negative_evidence_allowed") is False
+        ),
+        "baseline_guard_legal_absence_inference_allowed_is_false": (
+            baseline_guard.get("legal_absence_inference_allowed") is False
+        ),
+        "baseline_guard_site_false_inference_allowed_is_false": (
+            baseline_guard.get("site_false_inference_allowed") is False
+        ),
+        "baseline_guard_site_promotion_allowed_is_false": (
+            baseline_guard.get("site_promotion_allowed") is False
+        ),
+        "baseline_guard_runtime_registration_allowed_is_false": (
+            baseline_guard.get("runtime_registration_allowed") is False
         ),
     }
 
@@ -262,18 +321,21 @@ def main() -> int:
     print(f"Derived runtime registration allowed: {derived_runtime_registration_allowed}")
     print()
 
-    print("CLEAN BASELINE AUDIT")
+    print("BASELINE UQQ700 SAFETY AUDIT")
     print("-" * 88)
     print(f"baseline file exists: {BASELINE_PATH.exists()}")
     print(f"raw UQQ700/target matching object count: {len(raw_matches)}")
     print(f"condition-like UQQ700/target match count: {len(condition_like_matches)}")
-
-    for index, item in enumerate(condition_like_matches, 1):
-        print()
-        print(f"[{index}] path={item['path']}")
-        print(json.dumps(item["scalar"], ensure_ascii=False, indent=2))
-
+    print(f"UQQ700 condition count: {runtime_state['condition_count']}")
+    print(f"UQQ700 UNKNOWN condition count: {runtime_state['unknown_condition_count']}")
+    print(f"UQQ700 FALSE condition count: {runtime_state['false_condition_count']}")
+    print(f"UQQ700 TRUE condition count: {runtime_state['true_condition_count']}")
+    print(f"UQQ700 unknown_by count: {runtime_state['unknown_by_count']}")
+    print(f"UQQ700 blocked_by count: {runtime_state['blocked_by_count']}")
+    print(f"baseline guard resolution: {baseline_guard.get('resolution')}")
+    print(f"baseline guard false_blocker_count: {baseline_guard.get('false_blocker_count')}")
     print()
+
     print("REGRESSION CHECKS")
     print("-" * 88)
     for name, value in checks.items():
@@ -319,6 +381,7 @@ def main() -> int:
             "minimum_registration_gate_satisfied": derived_minimum_gate,
             "runtime_registration_allowed": derived_runtime_registration_allowed,
         },
+        "baseline_runtime_state": runtime_state,
         "baseline_matches": {
             "raw": raw_matches,
             "condition_like": condition_like_matches,
