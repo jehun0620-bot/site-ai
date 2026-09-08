@@ -11,9 +11,15 @@ STEP 17
 Target: 개발밀도관리구역
 Standard code: UQQ700
 Resolution type: HYBRID_SPATIAL_NOTICE
-Latest validated stage: POST-SEONGNAM RESIDUAL TERMINAL RECONCILIATION
+Latest validated stage: UQQ700 RUNTIME GUARD AUDIT PASS
 Current resolution: UNKNOWN
 Latest classification:
+UQQ700_RUNTIME_GUARD_AUDIT_PASS
+```
+
+직전 legal/source-family terminal reconciliation:
+
+```text
 STEP17_POST_SEONGNAM_RESIDUAL_SOURCE_FAMILIES_TERMINALLY_RECONCILED_UQQ700_UNKNOWN
 ```
 
@@ -38,6 +44,21 @@ runtime registration     BLOCKED
 ```
 
 `UQQ700 = UNKNOWN`을 유지한다.
+
+현재 SITE baseline guard 상태:
+
+```text
+SITE stage: INCOMPLETE_GUARDED_UQQ700_UNKNOWN
+rule_engine_ready: False
+UQQ700 condition count: 11
+UQQ700 UNKNOWN condition count: 11
+UQQ700 FALSE condition count: 0
+UQQ700 TRUE condition count: 0
+UQQ700 unknown_by count: 11
+UQQ700 blocked_by count: 0
+baseline guard resolution: UNKNOWN
+baseline guard false_blocker_count: 0
+```
 
 ## 2. Architecture 상태
 
@@ -109,6 +130,9 @@ publication/research document ≠ designation notice
 ```text
 negative_evidence_allowed=False
 legal_absence_inference_allowed=False
+site_false_inference_allowed=False
+site_promotion_allowed=False
+runtime_registration_allowed=False
 verified positive=False
 verified negative=False
 UQQ700=UNKNOWN
@@ -154,7 +178,7 @@ history technical unknown: 0
 
 이 chain은 authority/context/timeline anchor용이며 designation notice 자체를 대체하지 않는다.
 
-이후 source-family discovery 및 residual recovery를 진행했고 현재 terminal reconciliation까지 완료됐다. 과거 S217 예정이었던 42-version scan은 더 이상 `PROJECT_STATUS.md`의 current next action이 아니다.
+이후 source-family discovery 및 residual recovery를 진행했고 terminal reconciliation까지 완료됐다. 과거 S217 예정이었던 42-version scan은 더 이상 current next action이 아니다.
 
 ## 7. Gyeonggi alternate gazette — operational closure
 
@@ -355,9 +379,9 @@ EXACT_SIX_LEGACY_FILE_ACCESS_OPERATIONALLY_BOUNDED_TECHNICAL_UNRESOLVED
 새 URL 생성/변형/추측 금지.
 기존 기록에 제3의 literal route family가 없으므로 새 evidence 없이 route hunting 반복 금지.
 
-## 11. STEP 17 current terminal reconciliation
+## 11. STEP 17 legal/source-family terminal reconciliation
 
-최신 output:
+최신 legal reconciliation output:
 
 ```text
 law_data/output/development_density_management_area_step17_post_seongnam_residual_terminal_reconciliation.json
@@ -392,7 +416,79 @@ all_pass: True
 
 `all_pass=True`는 UQQ700 판정 성공이 아니라, 현재 evidence/safety/reconciliation 조건이 일관되게 통과했다는 뜻이다.
 
-## 12. 다음 허용 작업
+## 12. UQQ700 stale baseline contamination correction — PASS
+
+과거 `development_density_management_evidence_resolution_test.py`에는 다음 금지된 추론이 존재했다.
+
+```text
+Seoul announcement no-hit
++ UQ145 candidate layer no-hit
++ EUM target-name absence
+→ UQQ700 FALSE / HIGH
+→ blocked_by
+→ NOT_APPLICABLE / INACTIVE
+```
+
+이 경로는 현재 UQQ700 policy와 충돌하므로 producer부터 downstream baseline까지 정화했다. output JSON 직접 수정을 primary fix로 사용하지 않았다.
+
+수정/검증 chain:
+
+```text
+development_density_management_evidence_resolution_test.py
+→ development_density_management_overlay_test.py
+→ school_relocation_site_overlay_test.py
+→ site_rule_evaluation_site_complete_test.py
+→ development_density_management_area_uqq700_runtime_guard_audit_test.py
+```
+
+검증된 semantics:
+
+```text
+negative evidence → diagnostic only
+UQQ700 → UNKNOWN / NONE
+UQQ700 → unknown_by
+UQQ700 FALSE blocker → 0
+SITE promotion → False
+runtime registration → False
+```
+
+최종 baseline:
+
+```text
+SITE stage: INCOMPLETE_GUARDED_UQQ700_UNKNOWN
+rule_engine_ready: False
+UQQ700 condition count: 11
+UQQ700 UNKNOWN condition count: 11
+UQQ700 FALSE condition count: 0
+UQQ700 TRUE condition count: 0
+UQQ700 unknown_by count: 11
+UQQ700 blocked_by count: 0
+baseline guard resolution: UNKNOWN
+baseline guard false_blocker_count: 0
+```
+
+최종 runtime guard audit:
+
+```text
+CLASSIFICATION: UQQ700_RUNTIME_GUARD_AUDIT_PASS
+all_pass: True
+Next action:
+KEEP_UQQ700_UNKNOWN_AND_OUT_OF_RUNTIME_REGISTRATION_UNTIL_ALL_THREE_POSITIVE_REGISTRATION_GATES_ARE_VERIFIED
+```
+
+raw UQQ700/target matching object와 condition-like object의 존재 자체는 contamination이 아니다. Rule condition으로 UQQ700을 참조하는 것은 정상이며, audit은 이제 객체 0건이 아니라 unsafe TRUE/FALSE promotion, blocked_by, guard violation 여부를 검사한다.
+
+관련 commit chain:
+
+```text
+415313c  UQQ700 evidence resolution UNKNOWN
+4ba8c6c  density overlay UNKNOWN preservation
+fcc31cc  school overlay UNKNOWN preservation
+2803ce7  site-complete fail-closed UQQ700 guard
+8a4f0e7  runtime audit safe-UNKNOWN semantics
+```
+
+## 13. 다음 허용 작업
 
 현재 단계에서는 UQQ700을 TRUE/FALSE로 승격할 근거가 없다.
 
@@ -417,7 +513,7 @@ OFFICIAL DESIGNATION IDENTITY
 
 셋 중 하나라도 미검증이면 runtime registration 금지.
 
-## 13. UQQ700 이후 남은 개발 단계
+## 14. UQQ700 이후 남은 개발 단계
 
 A. UQQ700 legal identity resolution — ACTIVE but evidence-gated
 
@@ -455,7 +551,7 @@ G. FastAPI hardening, observability, reports, UI, security, deployment
 
 현재 가장 큰 병목은 historical regulation resolver이며, UQQ700에서 검증한 safety pattern을 전국 고시형 규제로 일반화한다.
 
-## 14. Git / local rules
+## 15. Git / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `checkpoint/c12-fastapi-20260821`
@@ -480,7 +576,7 @@ git fetch origin checkpoint/c12-fastapi-20260821
 git pull
 ```
 
-## 15. 채팅 handoff 정책
+## 16. 채팅 handoff 정책
 
 현재는 같은 채팅에서 계속 진행한다. 별도 handoff 파일은 이번 업데이트에서 생성하지 않았다.
 
