@@ -21,7 +21,7 @@
 아키텍처를 수정하되, 변경 이유를 명시하고 기존 안전 원칙을 훼손하지 않는다.
 
 최초 작성 기준일: 2026-08-26
-Architecture Baseline: v1.0
+Architecture Baseline: v1.1
 
 
 1. 프로젝트 최종 목표
@@ -298,6 +298,7 @@ SPATIAL_DATA_CONFIRMED
 NOTICE_CONFIRMED
 LEGAL_RULE_CALCULATED
 HYBRID_SPATIAL_NOTICE
+HISTORICAL_SITE_EVENT
 EXTERNAL_AUTHORITY_REQUIRED
 ```
 
@@ -308,7 +309,29 @@ EXTERNAL_AUTHORITY_REQUIRED
 ```text
 UQQ700 개발밀도관리구역
 → HYBRID_SPATIAL_NOTICE
+
+도시지역편입해제구역과 같은 SITE_HISTORY 조건
+→ HISTORICAL_SITE_EVENT 후보
 ```
+
+`HISTORICAL_SITE_EVENT`는 과거 법적 사건의 존재 여부를 단순 검색 결과로 판단하지 않는다.
+공통 contract는 다음 책임을 분리한다.
+
+```text
+VERIFIED EVENT IDENTITY
++
+HISTORICAL SITE APPLICABILITY
++
+TEMPORAL RELATION
++
+HISTORY COMPLETENESS
+→ TRUE_CANDIDATE / FALSE / UNKNOWN
+```
+
+FALSE는 search no-hit 또는 일부 공식 DB의 candidate 0건만으로 허용하지 않는다.
+공식 history source, 범위 completeness, 필요한 원문 해결, candidate universe 전수 열거 및
+non-target 분류가 모두 positive evidence로 검증된 exhaustive disproof에서만 허용한다.
+미확정 historical source가 남아 있으면 UNKNOWN을 유지한다.
 
 규제별 policy는 최소 다음을 정의한다.
 
@@ -1119,6 +1142,12 @@ PHASE 7 — REGULATION RESOLUTION
 UQQ700 개발밀도관리구역
 ```
 
+PHASE 7에서 반복 가능한 resolver family를 일반화하는 과정에서
+PHASE 8의 authority / historical provenance 공통 kernel을 선행 구축할 수 있다.
+이 선행 구축은 pure resolver, adapter, shadow regression 수준으로 제한하며,
+condition별 standard code, policy, provenance가 충분히 확정되기 전에는
+production registry, SITE overlay, runtime registration으로 연결하지 않는다.
+
 
 PHASE 8 — AUTHORITY / HISTORICAL PROVENANCE
 
@@ -1129,8 +1158,9 @@ PHASE 8 — AUTHORITY / HISTORICAL PROVENANCE
 - historical archive adapter
 - designation timeline
 - release/cancellation verification
+- historical event provenance / history completeness
 
-완료 상태: 다음 핵심 구간
+완료 상태: 선행 기반 구축 시작, 본격 registry 통합은 다음 핵심 구간
 
 
 PHASE 9 — NATIONWIDE REGULATION REGISTRY
@@ -1372,6 +1402,28 @@ reverse verification
 
 36. ARCHITECTURE CHANGE LOG
 ======================================================================
+
+### v1.1 — 2026-09-09
+
+Regulation Resolution 일반화 과정에서 확인된 historical SITE condition family를 반영했다.
+
+반영 내용:
+
+- `HISTORICAL_SITE_EVENT` resolution family 추가
+- historical event identity / SITE applicability / temporal relation / history completeness 책임 분리
+- search no-hit 또는 일부 DB negative를 FALSE로 승격하지 않는 exhaustive-disproof 원칙 명시
+- PHASE 7 resolver generalization 과정에서 PHASE 8 provenance kernel을 선행 구축할 수 있음을 명시
+- standard code / policy / provenance 확정 전 production registry 및 overlay 연결 금지
+
+기존 behavior 영향:
+
+- 없음. 현재 변경은 architecture documentation 정합성 보완이다.
+- UQQ700 및 기존 production resolution behavior는 변경하지 않는다.
+
+regression 영향:
+
+- 기존 generalized historical resolver와 shadow parity regression을 architecture 기준선에 반영한다.
+
 
 ### v1.0 — 2026-08-26
 
