@@ -78,8 +78,14 @@ def main() -> int:
     checks: list[tuple[str, bool]] = []
 
     seed_result = adapt_verified_uqq700_identity_to_validity_seed(verified_identity_stage())
-    seed_act = seed_result["verified_notice_act"]
-    checks.append(("verified Gate 1 produces DESIGNATE seed", seed_act is not None))
+    seed_acts = seed_result["verified_notice_acts"]
+    seed_act = seed_acts[0] if len(seed_acts) == 1 else None
+    checks.append(
+        (
+            "verified Gate 1 produces exactly one DESIGNATE seed",
+            seed_result["seed_accepted"] is True and seed_act is not None,
+        )
+    )
 
     amend_result = verify_uqq700_downstream_notice_provenance(
         downstream_evidence(
