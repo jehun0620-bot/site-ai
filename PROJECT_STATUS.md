@@ -2,7 +2,7 @@
 
 최종 업데이트: 2026-09-09
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `b5cd8565361fdda168ab8454415d01de33021b3b`
+기준 개발 HEAD: `84b553775cad1a83e05e10cfeace9d3c6cf948d2`
 
 > 현재 개발 상태와 안전 불변조건을 기록한다. 장기 로드맵은 `PROJECT_ARCHITECTURE.md` 기준.
 
@@ -14,21 +14,30 @@ Target: 개발밀도관리구역
 Standard code: UQQ700
 Resolution type: HYBRID_SPATIAL_NOTICE
 Current resolution: UNKNOWN
-Production wiring of generalized resolver: NOT YET
 Runtime registration: BLOCKED
 ```
 
-직전 legal/source-family terminal reconciliation:
+현재 terminal classification:
 
 ```text
-STEP17_POST_SEONGNAM_RESIDUAL_SOURCE_FAMILIES_TERMINALLY_RECONCILED_UQQ700_UNKNOWN
+UQQ700_HYBRID_SPATIAL_NOTICE_SPATIAL_IDENTITY_EXTERNAL_EVIDENCE_BLOCKED
+```
+
+의미:
+
+```text
+SITE parcel geometry provenance는 확보됨 / TEST-ONLY
+UQQ700 authoritative spatial source identity는 UNVERIFIED
+UQQ700 designation geometry identity는 UNVERIFIED
+positive SITE/designation intersection은 UNVERIFIED
+따라서 Gate 3 / SITE promotion / runtime registration은 계속 차단
 ```
 
 현재 positive registration gate:
 
 ```text
-OFFICIAL DESIGNATION IDENTITY VERIFIED: False
-CURRENT VALIDITY VERIFIED: False
+OFFICIAL DESIGNATION IDENTITY VERIFIED: False   # REAL evidence
+CURRENT VALIDITY VERIFIED: False                # REAL evidence
 SITE SPATIAL INCLUSION VERIFIED: False
 Minimum registration gate satisfied: False
 ```
@@ -97,6 +106,10 @@ historical no-hit ≠ legal absence
 qualified search no-result ≠ legal absence
 조례 문구/연혁 hit ≠ 지정고시 identity
 publication/research document ≠ designation notice
+candidate spatial layer/code ≠ authoritative UQQ700 spatial identity
+address/name hit ≠ SITE spatial inclusion
+source-family exhaustion ≠ legal absence
+latest document found ≠ latest legal act
 ```
 
 현재:
@@ -146,40 +159,22 @@ SITE promotion → False
 runtime registration → False
 ```
 
-관련 commit chain:
+## 5. HYBRID_SPATIAL_NOTICE generalization — COMMON LAYER COMPLETE
 
-```text
-415313c  UQQ700 evidence resolution UNKNOWN
-4ba8c6c  density overlay UNKNOWN preservation
-fcc31cc  school overlay UNKNOWN preservation
-2803ce7  site-complete fail-closed UQQ700 guard
-8a4f0e7  runtime audit safe-UNKNOWN semantics
-bbae3ac  record UQQ700 runtime guard audit pass
-```
-
-## 5. HYBRID_SPATIAL_NOTICE generalization — SHADOW/COMMON LAYER COMPLETE
-
-UQQ700의 안전 패턴을 공통 resolver 구조로 일반화했다. 현재 이 계층은 shadow/common layer이며 production UQQ700 evidence chain에 아직 직접 연결하지 않았다.
+UQQ700에서 검증한 safety pattern을 공통 resolver 구조로 일반화했다.
 
 완료 구성요소:
 
 ```text
-80a472f  HYBRID_SPATIAL_NOTICE safety kernel
-65d38a4  UQQ700 shadow parity test
-21cffc8  authority resolver
-57c0871  authority resolver test
-bf65aea  historical candidate resolver
-8885ad2  historical candidate resolver test
-ed4b572  designation identity verifier
-90ca5a0  designation identity verifier test
-fdaa3a7  current validity resolver
-7812a14  current validity resolver test
-a1d71d2  SITE spatial inclusion verifier
-4649523  SITE spatial inclusion verifier test
-6915dbf  end-to-end orchestrator
-f44951e  UQQ700 end-to-end shadow test
-3627580  orchestrator regression matrix test
-b5cd856  UQQ700 generalization guard test
+HYBRID_SPATIAL_NOTICE safety kernel
+authority resolver
+historical candidate resolver
+designation identity verifier
+current validity resolver
+SITE spatial inclusion verifier
+end-to-end orchestrator
+8-case regression matrix
+UQQ700 generalization guard
 ```
 
 공통 safety kernel contract:
@@ -194,23 +189,6 @@ runtime_registration_allowed = minimum_registration_gate
 ```
 
 중요: T/T/T는 registration eligibility만 연다. 그것만으로 SITE TRUE, SITE promotion 또는 UQQ700 resolution 변경을 자동 수행하지 않는다.
-
-## 6. 최신 local validated generalization tests
-
-사용자 로컬 실행으로 다음 PASS가 확인됐다.
-
-```text
-HYBRID_SPATIAL_NOTICE safety kernel                         PASS
-UQQ700 HYBRID_SPATIAL_NOTICE shadow parity                 PASS
-HYBRID_SPATIAL_NOTICE authority resolver                   PASS
-HYBRID_SPATIAL_NOTICE historical candidate resolver        PASS
-HYBRID_SPATIAL_NOTICE designation identity verifier        PASS
-HYBRID_SPATIAL_NOTICE current validity resolver             PASS
-HYBRID_SPATIAL_NOTICE SITE spatial inclusion verifier      PASS
-UQQ700 HYBRID_SPATIAL_NOTICE end-to-end shadow             PASS
-HYBRID_SPATIAL_NOTICE orchestrator 8-case regression       PASS
-UQQ700 HYBRID_SPATIAL_NOTICE generalization guard          PASS
-```
 
 8-case truth table:
 
@@ -227,9 +205,97 @@ T/T/T -> runtime True (eligibility only)
 
 모든 case에서 safety kernel resolution은 UNKNOWN을 유지하고 negative evidence/legal absence/SITE FALSE/SITE promotion은 허용하지 않는다.
 
-## 7. production integration boundary
+## 6. UQQ700 Gate 1 / Gate 2 contract 상태
 
-현재 production-like UQQ700 chain:
+Gate 1 관련 pure components:
+
+```text
+UQQ700 identity evidence adapter
+historical identity bridge
+designation document provenance verifier
+verified provenance identity adapter
+production contract regression
+production seam isolation regression
+```
+
+Gate 1 synthetic contract는 PASS지만 REAL positive designation evidence는 아직 없다.
+
+Gate 2 관련 pure components:
+
+```text
+UQQ700 validity seed adapter
+UQQ700 downstream notice provenance verifier
+UQQ700 history completeness verifier
+UQQ700 Gate 2 composition regression
+```
+
+Gate 2 synthetic contract는 PASS지만 REAL current validity evidence는 아직 없다.
+
+원칙:
+
+```text
+search/no-hit로 history completeness를 만들지 않는다.
+source-family exhaustion으로 current validity를 만들지 않는다.
+RELEASE는 current release이며 current validity가 아니다.
+negative discovery는 legal absence / SITE FALSE를 만들 수 없다.
+```
+
+## 7. UQQ700 SITE geometry / Gate 3 상태
+
+SITE-side geometry provenance는 다음 순서로 검증됐다.
+
+```text
+MapPlan parcel spatial recovery
+→ UQQ700 SITE geometry provenance adapter
+→ UQQ700 SITE geometry recovery bridge
+```
+
+로컬 validated classifications:
+
+```text
+UQQ700_HYBRID_SPATIAL_NOTICE_SITE_GEOMETRY_PROVENANCE_ADAPTER_PASS
+UQQ700_HYBRID_SPATIAL_NOTICE_SITE_GEOMETRY_RECOVERY_BRIDGE_PASS
+```
+
+확정된 SITE-side contract:
+
+```text
+Canonical SITE ID: 11680-10300-0012-0000
+Canonical SITE PNU: 1168010300100120000
+SITE ID/PNU exact binding required
+geometry PNU exact match required
+Polygon/MultiPolygon + verified source snapshot required
+wrong SITE ID / wrong PNU / geometry PNU mismatch → fail-closed
+CRS guessing prohibited
+explicit CRS verification도 provenance일 뿐 intersection_ready=False
+```
+
+현재 spatial blocker:
+
+```text
+UQQ700 legal/designation identity
+→ authoritative spatial management code
+→ authoritative dataset/layer identity
+→ designation feature identity
+→ designation Polygon
+→ common CRS / transform provenance
+→ positive SITE intersection
+```
+
+현재 repo 내부 evidence로는 위 chain을 verified 상태로 연결할 수 없다.
+
+최신 local validated blocker regression:
+
+```text
+CLASSIFICATION: UQQ700_HYBRID_SPATIAL_NOTICE_SPATIAL_IDENTITY_EXTERNAL_EVIDENCE_BLOCKED
+all_pass: True
+```
+
+이 BLOCKED는 legal absence가 아니다. 현재 검증된 positive evidence만으로 더 진행할 수 없다는 engineering blocker다.
+
+## 8. production integration boundary
+
+production-like UQQ700 chain:
 
 ```text
 development_density_management_evidence_resolution_test.py
@@ -239,13 +305,24 @@ development_density_management_evidence_resolution_test.py
 → downstream runtime guard/audit
 ```
 
-공통 orchestrator는 현재 generalized stage output을 조합하는 passive composition layer이며 shadow/generalization tests에서 검증됐다.
+UQQ700 production adapter는 generalized stage output을 받을 수 있는 compatibility boundary로 존재한다.
 
-따라서 향후 production seam은 `development_density_management_evidence_resolution_test.py` 또는 그 직전 adapter boundary가 우선 검토 대상이다. SITE-complete, school overlay, runtime audit에 common orchestrator를 직접 주입하지 않는다.
+하지만 현재 production seam의 positive stage input은 비어 있으며 REAL Gate 1/2/3 positive evidence는 주입되지 않는다.
 
-production wiring 전에는 별도의 compatibility/production adapter를 먼저 추가하고 shadow regression을 통과시킨다.
+따라서 production state는 계속:
 
-## 8. CLOSED / CONCLUDED source families — DO NOT REPEAT
+```text
+official_designation_identity_verified=False
+current_validity_verified=False
+site_spatial_inclusion_verified=False
+minimum_registration_gate_satisfied=False
+runtime_registration_allowed=False
+resolution=UNKNOWN
+```
+
+SITE-complete, school overlay, runtime audit에 common orchestrator를 직접 주입하지 않는다.
+
+## 9. CLOSED / CONCLUDED source families — DO NOT REPEAT
 
 주요 operational closure / concluded path:
 
@@ -272,7 +349,20 @@ EXACT_SIX_LEGACY_FILE_ACCESS_OPERATIONALLY_BOUNDED_TECHNICAL_UNRESOLVED
 
 새 evidence 없이 URL guessing/mutation 또는 closed source-family 반복 탐색 금지.
 
-## 9. Architecture 상태
+또한 기존 UQQ700 spatial source probing을 새 evidence 없이 반복하지 않는다.
+
+금지:
+
+```text
+MapPlan code guessing
+VWorld dataset code guessing
+candidate layer → UQQ700 official layer 승격
+EUM target-name hit → SITE inclusion 승격
+coordinate appearance → EPSG:5179 추정
+arbitrary candidate Polygon과 parcel intersection
+```
+
+## 10. Architecture 상태
 
 ```text
 PHASE 0 Foundation              COMPLETE
@@ -291,33 +381,34 @@ PHASE 9+ Nationwide/AI/Product  FUTURE
 
 `OFFICIAL FACT → SITE FACT → REGULATION RESOLUTION → LEGAL RULE → DETERMINISTIC ENGINE → AI ANALYSIS → VERIFICATION`
 
-## 10. 다음 허용 작업
+## 11. 다음 허용 작업
 
-현재 UQQ700을 TRUE/FALSE로 승격할 근거가 없다.
+UQQ700 내부 spatial 구현은 현재 external-evidence blocker에서 중단한다.
 
-다음 작업 순서:
+현재 다음 작업 순서:
 
 ```text
 1. UQQ700 UNKNOWN 유지
 2. SITE/runtime registry 등록 금지
-3. generalized resolver와 production chain 사이의 pure adapter/compatibility bridge 추가
-4. adapter는 explicit stage/gate result만 수용
-5. adapter 자체 legal inference 금지
-6. 8-case truth table + UQQ700 baseline shadow regression 검증
-7. adapter PASS 이후에만 production wiring scope를 별도 승인받아 검토
+3. UQQ700 closed/concluded source-family 및 spatial probing 반복 금지
+4. UQQ700 authoritative spatial identity에 새 official positive evidence가 생기기 전까지 intersection 구현 금지
+5. HYBRID_SPATIAL_NOTICE common resolver pattern을 다음 일반화 대상/조건에 적용
+6. 새 target도 authority → identity → validity → spatial inclusion 순서 유지
+7. production wiring은 각 target의 explicit positive stage evidence가 있을 때만 별도 승인 후 검토
 ```
 
-새 official evidence가 발견될 경우에도 반드시:
+새 UQQ700 official evidence가 발견될 경우에도 반드시:
 
 ```text
 OFFICIAL DESIGNATION IDENTITY
 → CURRENT VALIDITY
+→ AUTHORITATIVE SPATIAL IDENTITY / DESIGNATION GEOMETRY
 → SITE SPATIAL INCLUSION
 ```
 
 순으로 positive verification한다.
 
-## 11. Git / local rules
+## 12. Git / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `checkpoint/c12-fastapi-20260821`
@@ -336,7 +427,7 @@ Large mutable output/PDF/HWP/HWPX commit 금지
 
 `law_data/output/*`는 테스트 fixture/baseline과 실행 산출물이 역사적으로 혼재한다. 기존 tracked baseline을 무작정 `git rm --cached`하지 않는다. 신규 generated output은 `.gitignore`로 차단하고, 기존 tracked output 변경은 commit 전에 반드시 명시적으로 검토한다.
 
-## 12. repository hygiene audit — 2026-09-09
+## 13. repository hygiene audit — 2026-09-09
 
 채팅 handoff 반복 이후 local/GitHub 상태를 재점검했다.
 
@@ -344,9 +435,8 @@ Large mutable output/PDF/HWP/HWPX commit 금지
 
 ```text
 branch: checkpoint/c12-fastapi-20260821
-pre-hygiene HEAD: b5cd8565361fdda168ab8454415d01de33021b3b
-local/origin divergence: none
-tracked source uncommitted modification: none
+local/origin divergence: none at validated checkpoints
+tracked source uncommitted modification: none at validated checkpoints
 staged generated outputs: detected then safely unstaged
 tracked output runtime modifications: restored to HEAD
 stray root pager-output file: identified and removed locally
@@ -355,7 +445,7 @@ GitHub source corruption: not detected
 
 대량 output staging은 source corruption이 아니라 `.gitignore`가 output 전체를 보호하지 않던 repository hygiene 문제였다.
 
-## 13. handoff 정책
+## 14. handoff 정책
 
 새 채팅으로 전환할 때는 최신 `PROJECT_STATUS.md`를 기준으로 한다. 불필요한 handoff 문서는 생성하지 않는다.
 
