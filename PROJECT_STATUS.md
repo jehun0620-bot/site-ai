@@ -1,6 +1,8 @@
 # AI 대지분석 자동화 시스템 - PROJECT STATUS
 
-최종 업데이트: 2026-09-08
+최종 업데이트: 2026-09-09
+기준 branch: `checkpoint/c12-fastapi-20260821`
+기준 개발 HEAD: `b5cd8565361fdda168ab8454415d01de33021b3b`
 
 > 현재 개발 상태와 안전 불변조건을 기록한다. 장기 로드맵은 `PROJECT_ARCHITECTURE.md` 기준.
 
@@ -11,10 +13,9 @@ STEP 17
 Target: 개발밀도관리구역
 Standard code: UQQ700
 Resolution type: HYBRID_SPATIAL_NOTICE
-Latest validated stage: UQQ700 RUNTIME GUARD AUDIT PASS
 Current resolution: UNKNOWN
-Latest classification:
-UQQ700_RUNTIME_GUARD_AUDIT_PASS
+Production wiring of generalized resolver: NOT YET
+Runtime registration: BLOCKED
 ```
 
 직전 legal/source-family terminal reconciliation:
@@ -23,7 +24,7 @@ UQQ700_RUNTIME_GUARD_AUDIT_PASS
 STEP17_POST_SEONGNAM_RESIDUAL_SOURCE_FAMILIES_TERMINALLY_RECONCILED_UQQ700_UNKNOWN
 ```
 
-현재 등록 gate:
+현재 positive registration gate:
 
 ```text
 OFFICIAL DESIGNATION IDENTITY VERIFIED: False
@@ -45,57 +46,31 @@ runtime registration     BLOCKED
 
 `UQQ700 = UNKNOWN`을 유지한다.
 
-현재 SITE baseline guard 상태:
+## 2. 현재 baseline / runtime guard
+
+검증된 baseline semantics:
 
 ```text
 SITE stage: INCOMPLETE_GUARDED_UQQ700_UNKNOWN
 rule_engine_ready: False
-UQQ700 condition count: 11
-UQQ700 UNKNOWN condition count: 11
 UQQ700 FALSE condition count: 0
 UQQ700 TRUE condition count: 0
-UQQ700 unknown_by count: 11
-UQQ700 blocked_by count: 0
 baseline guard resolution: UNKNOWN
 baseline guard false_blocker_count: 0
 ```
 
-## 2. Architecture 상태
+기존 runtime guard audit:
 
 ```text
-PHASE 0 Foundation              COMPLETE
-PHASE 1 Building/SITE           COMPLETE
-PHASE 2 Land/Spatial            CORE COMPLETE
-PHASE 3 SITE Analysis           CORE COMPLETE
-PHASE 4 Legal ingestion         IN PROGRESS
-PHASE 5 Rule Engine             CORE STABLE / IN PROGRESS
-PHASE 6 Runtime spatial         CORE STABLE
-PHASE 7 Regulation Resolution   ACTIVE
-PHASE 8 Authority/Historical    ACTIVE
-PHASE 9+ Nationwide/AI/Product  FUTURE
+CLASSIFICATION: UQQ700_RUNTIME_GUARD_AUDIT_PASS
+all_pass: True
+Next action:
+KEEP_UQQ700_UNKNOWN_AND_OUT_OF_RUNTIME_REGISTRATION_UNTIL_ALL_THREE_POSITIVE_REGISTRATION_GATES_ARE_VERIFIED
 ```
 
-개발 순서:
-`OFFICIAL FACT → SITE FACT → REGULATION RESOLUTION → LEGAL RULE → DETERMINISTIC ENGINE → AI ANALYSIS → VERIFICATION`
+재귀 shadow/guard 검증에서는 UQQ700-tagged SITE row 25개가 관찰되었고, UNKNOWN 23 / FALSE 0 / TRUE 0이었다. 이는 기존 11-condition baseline 집계와 수집 범위가 다르므로 단순 regression으로 해석하지 않는다. 핵심 invariant는 FALSE/TRUE promotion이 0이라는 점이다.
 
-## 3. 안정화된 runtime spatial
-
-```text
-지구단위계획 LT_C_UPISUQ161 PASS
-개발진흥지구 LT_C_UQ129     PASS
-취락지구     LT_C_UQ128     PASS
-방재지구     LT_C_UQ125     PASS
-```
-
-UQQ700은 아래 3개가 모두 검증되기 전 registry 등록 금지.
-
-```text
-OFFICIAL DESIGNATION IDENTITY VERIFIED
-CURRENT VALIDITY VERIFIED
-SITE SPATIAL INCLUSION VERIFIED
-```
-
-## 4. UQQ700 evidence chain / 불변조건
+## 3. UQQ700 evidence / safety contract
 
 ```text
 COMPETENT AUTHORITY
@@ -103,7 +78,7 @@ COMPETENT AUTHORITY
 → DESIGNATION DOCUMENT IDENTITY
 → CURRENT VALIDITY
 → SITE SPATIAL INCLUSION
-→ TRUE / FALSE / UNKNOWN
+→ registration eligibility
 ```
 
 반드시 유지:
@@ -115,7 +90,6 @@ search hit ≠ current validity
 search hit ≠ site inclusion
 document 발견 ≠ current validity
 HTTP 200 ≠ document identity
-%PDF signature ≠ designation/current validity/site inclusion
 query failure ≠ FALSE
 source 미발견 ≠ FALSE
 technical unresolved ≠ FALSE
@@ -133,292 +107,14 @@ legal_absence_inference_allowed=False
 site_false_inference_allowed=False
 site_promotion_allowed=False
 runtime_registration_allowed=False
-verified positive=False
-verified negative=False
 UQQ700=UNKNOWN
 ```
 
-## 5. CLOSED / CONCLUDED source families — DO NOT REPEAT
+3개 positive gate 중 하나라도 미검증이면 runtime registration 금지.
 
-기존 closure:
+## 4. stale baseline contamination correction — PASS
 
-```text
-CLOSED Seongnam Dynamic HWP Gazette — S72
-CLOSED Seongnam POST-HWP5 Gazette — S133
-CLOSED Seongnam PRE-HWP5 Gazette — S140 (47 HWP3 technical UNKNOWN)
-CLOSED Seongnam /pm010301 Official Notice
-CLOSED Seongnam EMINWON — S157
-CLOSED EUM qualified metadata/detail HTML; live attachment technical UNKNOWN — S188
-CLOSED National Archives of Korea — S205
-```
-
-Dynamic HWP: 1338 rows, processed 1328, quarantined 10, candidate 0. `S49` 재실행 금지.
-
-EUM: Seongnam metadata 3409 rows/73 pages, title candidate 0, detail HTML 3409/3409 candidate 0. 현재 live surface 반복 probing 금지.
-
-National Archives S205: qualified GET/POST search + result identity + org filter positive controls 완료. Seongnam organization-filtered bounded UQQ700 candidate 0 / technical unknown 0. Operational closure only이며 legal absence는 성립하지 않음.
-
-## 6. National Law local ordinance chain — S207 이후
-
-S207~S216에서 `성남시 도시계획 조례` current/search/history contract와 42-version identity chain을 qualification했다.
-
-주요 확인값:
-
-```text
-ordinance: 성남시 도시계획 조례
-current ordinSeq: 2111431
-ordinId: 2146953
-ancNo: 4356
-ancYd: 20260224
-gubun: ELIS
-history version rows: 42
-older versions: 41
-history technical unknown: 0
-```
-
-이 chain은 authority/context/timeline anchor용이며 designation notice 자체를 대체하지 않는다.
-
-이후 source-family discovery 및 residual recovery를 진행했고 terminal reconciliation까지 완료됐다. 과거 S217 예정이었던 42-version scan은 더 이상 current next action이 아니다.
-
-## 7. Gyeonggi alternate gazette — operational closure
-
-다음 두 alternate source family를 실제 계약 수준에서 확인했다.
-
-```text
-GG_EBOOK_GAZETTE_ARCHIVE
-GG_GAZETTE_BOARD
-```
-
-`GG_GAZETTE_BOARD` actual AJAX contract:
-
-```text
-POST https://www.gg.go.kr/ajax/board/getList.do
-```
-
-exact / variant / weak 결과 모두 target 0, technical unknown 0.
-
-Terminal classification:
-
-```text
-GYEONGGI_HISTORICAL_LOCAL_GAZETTE_ALTERNATE_SOURCE_FAMILY_OPERATIONALLY_CLOSED_NO_VERIFIED_UQQ700_TARGET
-```
-
-해석:
-- operational closure only
-- no-hit을 legal absence로 승격 금지
-- SITE FALSE 금지
-
-## 8. KRIHS path — non-dispositive context concluded
-
-KRIHS 공식 search contract qualification 완료:
-
-```text
-POST https://www.krihs.re.kr/aivorySearch.es?mid=a11800000000
-keyword field: allKeyWord
-_csrf preserved
-semantic unique contract count: 1
-```
-
-UQQ700 bounded search와 result-container inspection 후 다음 3개 publication identity를 library detail에서 검증했다.
-
-```text
-1. 도시성장관리를 위한 개발밀도에 관한 연구 (2001)
-2. [KRIHS 보고서 1] 주거환경을 고려한 개발밀도론 제시... (2005)
-3. 도시개발밀도 관리를 위한 공간 관리방안 / Brief 842 (2024)
-```
-
-Library identities verified classification:
-
-```text
-KRIHS_LIBRARY_THREE_PUBLICATION_IDENTITIES_VERIFIED
-```
-
-Terminal state:
-
-```text
-NON_DISPOSITIVE_CONTEXT_PATH_CONCLUDED
-```
-
-이 자료들은 연구/맥락 lead일 뿐 designation identity, current validity, site inclusion 증거가 아니다. 새 evidence가 없는 한 KRIHS 추가 반복 탐색 금지.
-
-## 9. MOLIT I0204 path — qualified title-search operational closure
-
-MOLIT official I0204 surface qualification 완료:
-
-```text
-GET https://www.molit.go.kr/USR/I0204/m_45/lst.jsp
-```
-
-초기 GET-style replay는 validator false positive/baseline contamination으로 폐기했다.
-
-실제 검색 submit semantics:
-
-```text
-method: POST
-action: lst.jsp
-query field: search
-title checkbox: srch_usr_titl=Y
-```
-
-positive control로 qualified 후 UQQ700 exact / variant / weak bounded title search 수행 결과:
-
-```text
-EXACT results=0 technical_unknown=False
-VARIANT results=0 technical_unknown=False
-WEAK results=0 technical_unknown=False
-```
-
-Classification:
-
-```text
-MOLIT_I0204_POST_BOUNDED_UQQ700_TITLE_SEARCH_NO_RESULT
-```
-
-Terminal state:
-
-```text
-QUALIFIED_TITLE_SEARCH_OPERATIONALLY_CLOSED_NO_RESULT
-```
-
-이 no-result는 qualified POST title-search path에만 적용되며 legal absence가 아니다. unrelated MOLIT row detail verification 반복 금지.
-
-## 10. Seongnam legacy PDF residual — exact-six technical unresolved
-
-Residual family:
-
-```text
-SEONGNAM_CITY_PLANNING_PLAN_DOCUMENT_ARCHIVE_LEGACY_PDF_BINARY_ACCESS
-```
-
-과거 residual carry-forward count 6의 producer schema를 local output에서 구조적으로 복원했다.
-
-Exact-six:
-
-```text
-1. pstSn=100259 fileNo=58460 산성2 지구단위계획지침도 1-1.pdf
-2. pstSn=100259 fileNo=58461 산성2 지구단위계획지침도 1-2.pdf
-3. pstSn=100259 fileNo=58462 산성2 지구단위계획지침도 2-1.pdf
-4. pstSn=100259 fileNo=58463 산성2 지구단위계획지침도 2-2.pdf
-5. pstSn=100259 fileNo=58464 산성2 지구단위계획지침도 2-3.pdf
-6. pstSn=100258 fileNo=58465 산성2 시행지침(2009.07.24).pdf
-```
-
-Producer schema classification:
-
-```text
-SEONGNAM_LEGACY_PDF_EXACT_SIX_PRODUCER_SCHEMA_RECOVERED
-```
-
-Leaf provenance reconciliation 결과 exact-six 모두에서 direct route provenance가 확인됐다.
-
-기록된 route family는 정확히 두 종류뿐이다.
-
-```text
-ASIS_PHYSICAL_STORAGE: 6/6
-GETFILE_CONTROLLER:   6/6
-other recorded literal route family: 0
-```
-
-Route-family reconciliation:
-
-```text
-Scanned local JSON files: 121
-Targets with GETFILE_CONTROLLER: 6
-Targets with ASIS_PHYSICAL_STORAGE: 6
-Targets with other recorded route family: 0
-classification:
-SEONGNAM_LEGACY_PDF_EXACT_SIX_RECORDED_ROUTE_FAMILIES_RECONCILED_NO_ADDITIONAL_LITERAL_FAMILY
-```
-
-### 10.1 ASIS physical route access
-
-Exact-six ASIS HTTPS route를 Python `requests`로 bounded GET한 결과 6/6 동일 TLS handshake failure.
-
-```text
-SSLV3_ALERT_HANDSHAKE_FAILURE
-HTTP response reached: 0/6
-technical_unknown: 6/6
-```
-
-이는 file absence가 아니라 transport technical unknown이다.
-
-### 10.2 GETFILE controller access
-
-Exact-six leaf-level recorded route:
-
-```text
-https://www.seongnam.go.kr/ct-bbs020101/getFile?bbsCrtSn=19008&pstSn=<...>&fileNo=<...>
-```
-
-Python `requests`에서는 ASIS와 동일 TLS handshake failure.
-
-Windows system `curl.exe` / Schannel로 동일 literal URL을 재검증:
-
-```text
-curl: 8.21.0
-TLS backend: Schannel
-ssl_verify_result=0 for 6/6
-HTTP response reached: 6/6
-HTTP status: 404 for 6/6
-content-type: text/html;charset=UTF-8
-PDF signature: 0/6
-```
-
-해석:
-- Python/OpenSSL 계열 client TLS incompatibility 가능성 확인
-- Schannel에서는 transport/TLS 자체는 정상
-- 현재 recorded GETFILE route는 HTTP 404
-- 404를 file absence / legal absence / UQQ700 absence로 사용 금지
-
-### 10.3 Seongnam terminal state
-
-```text
-EXACT_SIX_LEGACY_FILE_ACCESS_OPERATIONALLY_BOUNDED_TECHNICAL_UNRESOLVED
-```
-
-새 URL 생성/변형/추측 금지.
-기존 기록에 제3의 literal route family가 없으므로 새 evidence 없이 route hunting 반복 금지.
-
-## 11. STEP 17 legal/source-family terminal reconciliation
-
-최신 legal reconciliation output:
-
-```text
-law_data/output/development_density_management_area_step17_post_seongnam_residual_terminal_reconciliation.json
-```
-
-최신 source-family terminal states:
-
-```text
-GYEONGGI_HISTORICAL_LOCAL_GAZETTE_ALTERNATE_SOURCE_FAMILY
-→ OPERATIONALLY_CLOSED_NO_VERIFIED_TARGET
-
-KRIHS_SEARCH_AND_PUBLICATION_CONTEXT_PATH
-→ NON_DISPOSITIVE_CONTEXT_PATH_CONCLUDED
-
-MOLIT_I0204_QUALIFIED_POST_TITLE_SEARCH
-→ QUALIFIED_TITLE_SEARCH_OPERATIONALLY_CLOSED_NO_RESULT
-
-SEONGNAM_CITY_PLANNING_PLAN_DOCUMENT_ARCHIVE_LEGACY_PDF_BINARY_ACCESS
-→ EXACT_SIX_LEGACY_FILE_ACCESS_OPERATIONALLY_BOUNDED_TECHNICAL_UNRESOLVED
-```
-
-Final reconciliation:
-
-```text
-Source family count: 4
-All inputs valid: True
-CLASSIFICATION:
-STEP17_POST_SEONGNAM_RESIDUAL_SOURCE_FAMILIES_TERMINALLY_RECONCILED_UQQ700_UNKNOWN
-UQQ700: UNKNOWN
-all_pass: True
-```
-
-`all_pass=True`는 UQQ700 판정 성공이 아니라, 현재 evidence/safety/reconciliation 조건이 일관되게 통과했다는 뜻이다.
-
-## 12. UQQ700 stale baseline contamination correction — PASS
-
-과거 `development_density_management_evidence_resolution_test.py`에는 다음 금지된 추론이 존재했다.
+과거 금지된 추론:
 
 ```text
 Seoul announcement no-hit
@@ -429,9 +125,7 @@ Seoul announcement no-hit
 → NOT_APPLICABLE / INACTIVE
 ```
 
-이 경로는 현재 UQQ700 policy와 충돌하므로 producer부터 downstream baseline까지 정화했다. output JSON 직접 수정을 primary fix로 사용하지 않았다.
-
-수정/검증 chain:
+이 경로는 producer부터 downstream baseline까지 정화했다.
 
 ```text
 development_density_management_evidence_resolution_test.py
@@ -452,32 +146,6 @@ SITE promotion → False
 runtime registration → False
 ```
 
-최종 baseline:
-
-```text
-SITE stage: INCOMPLETE_GUARDED_UQQ700_UNKNOWN
-rule_engine_ready: False
-UQQ700 condition count: 11
-UQQ700 UNKNOWN condition count: 11
-UQQ700 FALSE condition count: 0
-UQQ700 TRUE condition count: 0
-UQQ700 unknown_by count: 11
-UQQ700 blocked_by count: 0
-baseline guard resolution: UNKNOWN
-baseline guard false_blocker_count: 0
-```
-
-최종 runtime guard audit:
-
-```text
-CLASSIFICATION: UQQ700_RUNTIME_GUARD_AUDIT_PASS
-all_pass: True
-Next action:
-KEEP_UQQ700_UNKNOWN_AND_OUT_OF_RUNTIME_REGISTRATION_UNTIL_ALL_THREE_POSITIVE_REGISTRATION_GATES_ARE_VERIFIED
-```
-
-raw UQQ700/target matching object와 condition-like object의 존재 자체는 contamination이 아니다. Rule condition으로 UQQ700을 참조하는 것은 정상이며, audit은 이제 객체 0건이 아니라 unsafe TRUE/FALSE promotion, blocked_by, guard violation 여부를 검사한다.
-
 관련 commit chain:
 
 ```text
@@ -486,24 +154,160 @@ raw UQQ700/target matching object와 condition-like object의 존재 자체는 c
 fcc31cc  school overlay UNKNOWN preservation
 2803ce7  site-complete fail-closed UQQ700 guard
 8a4f0e7  runtime audit safe-UNKNOWN semantics
+bbae3ac  record UQQ700 runtime guard audit pass
 ```
 
-## 13. 다음 허용 작업
+## 5. HYBRID_SPATIAL_NOTICE generalization — SHADOW/COMMON LAYER COMPLETE
 
-현재 단계에서는 UQQ700을 TRUE/FALSE로 승격할 근거가 없다.
+UQQ700의 안전 패턴을 공통 resolver 구조로 일반화했다. 현재 이 계층은 shadow/common layer이며 production UQQ700 evidence chain에 아직 직접 연결하지 않았다.
 
-다음 원칙을 따른다.
+완료 구성요소:
+
+```text
+80a472f  HYBRID_SPATIAL_NOTICE safety kernel
+65d38a4  UQQ700 shadow parity test
+21cffc8  authority resolver
+57c0871  authority resolver test
+bf65aea  historical candidate resolver
+8885ad2  historical candidate resolver test
+ed4b572  designation identity verifier
+90ca5a0  designation identity verifier test
+fdaa3a7  current validity resolver
+7812a14  current validity resolver test
+a1d71d2  SITE spatial inclusion verifier
+4649523  SITE spatial inclusion verifier test
+6915dbf  end-to-end orchestrator
+f44951e  UQQ700 end-to-end shadow test
+3627580  orchestrator regression matrix test
+b5cd856  UQQ700 generalization guard test
+```
+
+공통 safety kernel contract:
+
+```text
+minimum_registration_gate =
+    official_designation_identity_verified
+    AND current_validity_verified
+    AND site_spatial_inclusion_verified
+
+runtime_registration_allowed = minimum_registration_gate
+```
+
+중요: T/T/T는 registration eligibility만 연다. 그것만으로 SITE TRUE, SITE promotion 또는 UQQ700 resolution 변경을 자동 수행하지 않는다.
+
+## 6. 최신 local validated generalization tests
+
+사용자 로컬 실행으로 다음 PASS가 확인됐다.
+
+```text
+HYBRID_SPATIAL_NOTICE safety kernel                         PASS
+UQQ700 HYBRID_SPATIAL_NOTICE shadow parity                 PASS
+HYBRID_SPATIAL_NOTICE authority resolver                   PASS
+HYBRID_SPATIAL_NOTICE historical candidate resolver        PASS
+HYBRID_SPATIAL_NOTICE designation identity verifier        PASS
+HYBRID_SPATIAL_NOTICE current validity resolver             PASS
+HYBRID_SPATIAL_NOTICE SITE spatial inclusion verifier      PASS
+UQQ700 HYBRID_SPATIAL_NOTICE end-to-end shadow             PASS
+HYBRID_SPATIAL_NOTICE orchestrator 8-case regression       PASS
+UQQ700 HYBRID_SPATIAL_NOTICE generalization guard          PASS
+```
+
+8-case truth table:
+
+```text
+F/F/F -> runtime False
+F/F/T -> runtime False
+F/T/F -> runtime False
+F/T/T -> runtime False
+T/F/F -> runtime False
+T/F/T -> runtime False
+T/T/F -> runtime False
+T/T/T -> runtime True (eligibility only)
+```
+
+모든 case에서 safety kernel resolution은 UNKNOWN을 유지하고 negative evidence/legal absence/SITE FALSE/SITE promotion은 허용하지 않는다.
+
+## 7. production integration boundary
+
+현재 production-like UQQ700 chain:
+
+```text
+development_density_management_evidence_resolution_test.py
+→ development_density_management_overlay_test.py
+→ school_relocation_site_overlay_test.py
+→ site_rule_evaluation_site_complete_test.py
+→ downstream runtime guard/audit
+```
+
+공통 orchestrator는 현재 generalized stage output을 조합하는 passive composition layer이며 shadow/generalization tests에서 검증됐다.
+
+따라서 향후 production seam은 `development_density_management_evidence_resolution_test.py` 또는 그 직전 adapter boundary가 우선 검토 대상이다. SITE-complete, school overlay, runtime audit에 common orchestrator를 직접 주입하지 않는다.
+
+production wiring 전에는 별도의 compatibility/production adapter를 먼저 추가하고 shadow regression을 통과시킨다.
+
+## 8. CLOSED / CONCLUDED source families — DO NOT REPEAT
+
+주요 operational closure / concluded path:
+
+```text
+Seongnam Dynamic HWP Gazette
+Seongnam POST-HWP5 Gazette
+Seongnam PRE-HWP5 Gazette (HWP3 technical UNKNOWN 포함)
+Seongnam /pm010301 Official Notice
+Seongnam EMINWON
+EUM qualified metadata/detail HTML
+National Archives of Korea
+Gyeonggi alternate gazette families
+KRIHS search/publication context path
+MOLIT I0204 qualified POST title-search path
+```
+
+이 closure들은 operational closure일 뿐 legal absence를 성립시키지 않는다.
+
+Seongnam legacy PDF exact-six는 recorded route family를 reconciliation했으며 현재 상태는:
+
+```text
+EXACT_SIX_LEGACY_FILE_ACCESS_OPERATIONALLY_BOUNDED_TECHNICAL_UNRESOLVED
+```
+
+새 evidence 없이 URL guessing/mutation 또는 closed source-family 반복 탐색 금지.
+
+## 9. Architecture 상태
+
+```text
+PHASE 0 Foundation              COMPLETE
+PHASE 1 Building/SITE           COMPLETE
+PHASE 2 Land/Spatial            CORE COMPLETE
+PHASE 3 SITE Analysis           CORE COMPLETE
+PHASE 4 Legal ingestion         IN PROGRESS
+PHASE 5 Rule Engine             CORE STABLE / IN PROGRESS
+PHASE 6 Runtime spatial         CORE STABLE
+PHASE 7 Regulation Resolution   ACTIVE
+PHASE 8 Authority/Historical    ACTIVE
+PHASE 9+ Nationwide/AI/Product  FUTURE
+```
+
+개발 순서:
+
+`OFFICIAL FACT → SITE FACT → REGULATION RESOLUTION → LEGAL RULE → DETERMINISTIC ENGINE → AI ANALYSIS → VERIFICATION`
+
+## 10. 다음 허용 작업
+
+현재 UQQ700을 TRUE/FALSE로 승격할 근거가 없다.
+
+다음 작업 순서:
 
 ```text
 1. UQQ700 UNKNOWN 유지
 2. SITE/runtime registry 등록 금지
-3. closed/concluded source family 무의미한 반복 탐색 금지
-4. Seongnam legacy exact-six URL guessing/mutation 금지
-5. no-hit / HTTP 404 / technical failure를 negative evidence로 사용 금지
-6. 새롭고 독립적인 official designation source family 또는 verified designation document identity evidence가 생긴 경우에만 UQQ700 legal identity resolution 재개
+3. generalized resolver와 production chain 사이의 pure adapter/compatibility bridge 추가
+4. adapter는 explicit stage/gate result만 수용
+5. adapter 자체 legal inference 금지
+6. 8-case truth table + UQQ700 baseline shadow regression 검증
+7. adapter PASS 이후에만 production wiring scope를 별도 승인받아 검토
 ```
 
-새 official evidence가 발견될 경우에도 반드시 아래 순서로 검증한다.
+새 official evidence가 발견될 경우에도 반드시:
 
 ```text
 OFFICIAL DESIGNATION IDENTITY
@@ -511,78 +315,51 @@ OFFICIAL DESIGNATION IDENTITY
 → SITE SPATIAL INCLUSION
 ```
 
-셋 중 하나라도 미검증이면 runtime registration 금지.
+순으로 positive verification한다.
 
-## 14. UQQ700 이후 남은 개발 단계
-
-A. UQQ700 legal identity resolution — ACTIVE but evidence-gated
-
-```text
-historical designation notice identity
-competent authority / effective date
-amendment/release history
-current validity
-spatial scope / parcel relationship
-```
-
-B. UQQ700 runtime integration — A 해결 전 BLOCKED
-
-```text
-provider/registry
-parcel intersection
-TRUE/FALSE/UNKNOWN regression
-Rule Engine/API propagation
-```
-
-C. HYBRID_SPATIAL_NOTICE resolver generalization
-
-```text
-authority resolver
-historical notice resolver
-identity/provenance
-validity timeline
-spatial evidence binding
-```
-
-D. Legal ingestion / Rule Engine expansion
-E. Nationwide official-source adapters / common notice schema
-F. AI/RAG/evidence explanation/verification
-G. FastAPI hardening, observability, reports, UI, security, deployment
-
-현재 가장 큰 병목은 historical regulation resolver이며, UQQ700에서 검증한 safety pattern을 전국 고시형 규제로 일반화한다.
-
-## 15. Git / local rules
+## 11. Git / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `checkpoint/c12-fastapi-20260821`
 Local root: `D:\site-ai`
 
-`.env` commit 금지. `git add .`, `git add -A`, `git add --all` 금지. intended files만 명시적으로 stage/commit.
-Large mutable output/PDF/HWP/HWPX는 commit하지 않는다. 의도적으로 versioned한 immutable manifest만 예외.
+```text
+.env commit 금지
+git add . 금지
+git add -A 금지
+git add --all 금지
+intended files만 명시적으로 stage/commit
+law_data/output/* 신규 generated output은 ignore
+기존 tracked baseline output은 일괄 untrack하지 않음
+Large mutable output/PDF/HWP/HWPX commit 금지
+```
 
-Local-only dependency:
+`law_data/output/*`는 테스트 fixture/baseline과 실행 산출물이 역사적으로 혼재한다. 기존 tracked baseline을 무작정 `git rm --cached`하지 않는다. 신규 generated output은 `.gitignore`로 차단하고, 기존 tracked output 변경은 commit 전에 반드시 명시적으로 검토한다.
+
+## 12. repository hygiene audit — 2026-09-09
+
+채팅 handoff 반복 이후 local/GitHub 상태를 재점검했다.
+
+확인 결과:
 
 ```text
-xlrd==2.0.2
-pypdf==6.16.2
-Crypto/pycryptodome 미설치 상태 가정
+branch: checkpoint/c12-fastapi-20260821
+pre-hygiene HEAD: b5cd8565361fdda168ab8454415d01de33021b3b
+local/origin divergence: none
+tracked source uncommitted modification: none
+staged generated outputs: detected then safely unstaged
+tracked output runtime modifications: restored to HEAD
+stray root pager-output file: identified and removed locally
+GitHub source corruption: not detected
 ```
 
-Known remote-tracking ref-lock recovery:
+대량 output staging은 source corruption이 아니라 `.gitignore`가 output 전체를 보호하지 않던 repository hygiene 문제였다.
 
-```powershell
-git update-ref -d refs/remotes/origin/checkpoint/c12-fastapi-20260821
-git fetch origin checkpoint/c12-fastapi-20260821
-git pull
-```
+## 13. handoff 정책
 
-## 16. 채팅 handoff 정책
+새 채팅으로 전환할 때는 최신 `PROJECT_STATUS.md`를 기준으로 한다. 불필요한 handoff 문서는 생성하지 않는다.
 
-현재는 같은 채팅에서 계속 진행한다. 별도 handoff 파일은 이번 업데이트에서 생성하지 않았다.
-
-향후 새 채팅으로 전환할 때는 최신 `PROJECT_STATUS.md`를 기준으로 별도 handoff package를 만든다.
-
-handoff package에는 반드시 아래를 포함한다.
+handoff에는 최소한 다음을 포함한다.
 
 ```text
 repo / branch / local root
@@ -593,6 +370,5 @@ closed/concluded source families / DO-NOT-REPEAT
 latest validated semantic/output
 current unresolved issue
 next exact allowed action
-Git ref-lock recovery
-local dependency notes
+Git write approval rule
 ```
