@@ -7,6 +7,8 @@ from typing import Any, Mapping
 TARGET_NAME = "개발밀도관리구역"
 STANDARD_CODE = "UQQ700"
 RESOLUTION_TYPE = "HYBRID_SPATIAL_NOTICE"
+TARGET_SITE_ID = "11680-10300-0012-0000"
+TARGET_SITE_PNU = "1168010300100120000"
 
 
 @dataclass(frozen=True)
@@ -19,6 +21,8 @@ class Uqq700SiteGeometryProvenance:
     geometry_pnu: str
     source_id: str
     source_snapshot_verified: bool
+    crs_id: str = ""
+    crs_verified: bool = False
 
 
 def _text(value: Any) -> str:
@@ -30,11 +34,16 @@ def adapt_uqq700_site_geometry_provenance(
     *,
     diagnostics: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Bind an already recovered parcel geometry to the target SITE.
+    """Bind an already recovered parcel geometry to the canonical target SITE.
 
     This is a SITE-side provenance adapter only. It does not identify UQQ700
     designation geometry, verify an official UQQ700 spatial source, perform an
     intersection, verify Gate 3, promote SITE, or mutate runtime state.
+
+    The SITE binding is fail-closed: both the canonical SITE ID and canonical
+    PNU must match exactly, and the recovered geometry PNU must match that PNU.
+    CRS provenance is exposed separately and never makes this adapter
+    intersection-ready by itself.
     """
 
     site_id = _text(evidence.site_id)
@@ -43,10 +52,17 @@ def adapt_uqq700_site_geometry_provenance(
     geometry_type = _text(evidence.geometry_type)
     geometry_pnu = _text(evidence.geometry_pnu)
     source_id = _text(evidence.source_id)
+    crs_id = _text(evidence.crs_id)
 
-    site_identity_present = bool(site_id and site_pnu)
+    canonical_site_identity_matches = bool(
+        site_id == TARGET_SITE_ID
+        and site_pnu == TARGET_SITE_PNU
+    )
     geometry_identity_present = bool(geometry_id and source_id)
-    parcel_identity_matches = bool(site_pnu and geometry_pnu and site_pnu == geometry_pnu)
+    parcel_identity_matches = bool(
+        site_pnu == TARGET_SITE_PNU
+        and geometry_pnu == TARGET_SITE_PNU
+    )
     polygon_geometry_present = bool(
         evidence.geometry_present is True
         and geometry_type in {"Polygon", "MultiPolygon"}
@@ -54,9 +70,12 @@ def adapt_uqq700_site_geometry_provenance(
     source_snapshot_verified = bool(
         source_id and evidence.source_snapshot_verified is True
     )
+    explicit_crs_verified = bool(
+        crs_id and evidence.crs_verified is True
+    )
 
     site_geometry_bound = bool(
-        site_identity_present
+        canonical_site_identity_matches
         and geometry_identity_present
         and parcel_identity_matches
         and polygon_geometry_present
@@ -72,13 +91,20 @@ def adapt_uqq700_site_geometry_provenance(
         "site_geometry_provenance": {
             "site_id": site_id,
             "site_pnu": site_pnu,
+            "canonical_site_id": TARGET_SITE_ID,
+            "canonical_site_pnu": TARGET_SITE_PNU,
+            "canonical_site_identity_matches": canonical_site_identity_matches,
             "geometry_pnu": geometry_pnu,
             "geometry_type": geometry_type,
             "source_id": source_id if source_snapshot_verified else "",
             "source_snapshot_verified": source_snapshot_verified,
             "parcel_identity_matches": parcel_identity_matches,
             "polygon_geometry_present": polygon_geometry_present,
+            "crs_id": crs_id if explicit_crs_verified else "",
+            "crs_verified": explicit_crs_verified,
         },
+        "crs_verified": explicit_crs_verified,
+        "intersection_ready": False,
         "official_spatial_source_verified": False,
         "designation_geometry_bound": False,
         "positive_spatial_intersection_verified": False,
