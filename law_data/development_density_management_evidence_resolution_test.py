@@ -20,6 +20,11 @@ import json
 from pathlib import Path
 from typing import Any, Dict
 
+from hybrid_spatial_notice_uqq700_production_adapter import (
+    Uqq700ProductionAdapterInput,
+    adapt_uqq700_production_state,
+)
+
 
 STEP_NAME = (
     "STEP 17-21-C-10-3B-3 "
@@ -187,10 +192,21 @@ def main() -> int:
         ) if value
     )
 
-    # Critical guard: negative evidence is diagnostic only.
-    # No-hit / non-display / candidate-layer absence cannot establish
-    # legal absence, SITE FALSE, SITE promotion, or runtime registration.
-    resolution = "UNKNOWN"
+    # Production seam: legacy discovery evidence remains diagnostic only.
+    # No generalized positive verification stage is wired yet, so the adapter
+    # receives an intentionally empty positive-gate input and must stay fail-closed.
+    adapter_result = adapt_uqq700_production_state(
+        Uqq700ProductionAdapterInput(),
+        search_hit=current_positive_evidence,
+        http_200=(eum_http == 200),
+        negative_evidence={
+            "announcement_no_hit": announcement_negative,
+            "candidate_layer_no_hit": uq145_negative,
+            "site_non_display": eum_negative,
+        },
+    )
+
+    resolution = str(adapter_result.get("resolution", "UNKNOWN"))
     confidence = "MEDIUM" if current_positive_evidence else "NONE"
     if current_positive_evidence:
         reason = (
@@ -205,6 +221,26 @@ def main() -> int:
             "current validity, SITE spatial inclusion이 모두 positive verification될 때까지 "
             "개발밀도관리구역은 UNKNOWN을 유지한다."
         )
+
+    positive_gates = dict(adapter_result.get("positive_gates", {}))
+    minimum_gate = bool(
+        adapter_result.get("minimum_registration_gate_satisfied", False)
+    )
+    runtime_registration_allowed = bool(
+        adapter_result.get("runtime_registration_allowed", False)
+    )
+    negative_evidence_allowed = bool(
+        adapter_result.get("negative_evidence_allowed", False)
+    )
+    legal_absence_inference_allowed = bool(
+        adapter_result.get("legal_absence_inference_allowed", False)
+    )
+    site_false_inference_allowed = bool(
+        adapter_result.get("site_false_inference_allowed", False)
+    )
+    site_promotion_allowed = bool(
+        adapter_result.get("site_promotion_allowed", False)
+    )
 
     expected_overlay = {
         "condition": "개발밀도관리구역",
@@ -232,11 +268,24 @@ def main() -> int:
         "affected clauses 11": affected_clause_count == 11,
         "negative evidence 3종": negative_evidence_count == 3,
         "resolution UNKNOWN": resolution == "UNKNOWN",
-        "negative evidence non-dispositive": True,
-        "legal absence inference disabled": True,
-        "SITE FALSE inference disabled": True,
-        "SITE promotion disabled": True,
-        "runtime registration disabled": True,
+        "identity gate unverified": positive_gates.get(
+            "official_designation_identity_verified"
+        ) is False,
+        "validity gate unverified": positive_gates.get(
+            "current_validity_verified"
+        ) is False,
+        "spatial gate unverified": positive_gates.get(
+            "site_spatial_inclusion_verified"
+        ) is False,
+        "minimum gate unsatisfied": minimum_gate is False,
+        "negative evidence non-dispositive": negative_evidence_allowed is False,
+        "legal absence inference disabled": legal_absence_inference_allowed is False,
+        "SITE FALSE inference disabled": site_false_inference_allowed is False,
+        "SITE promotion disabled": site_promotion_allowed is False,
+        "runtime registration disabled": runtime_registration_allowed is False,
+        "production registry not mutated": adapter_result.get(
+            "runtime_registry_mutated"
+        ) is False,
     }
     all_pass = all(validations.values())
 
@@ -245,7 +294,9 @@ def main() -> int:
         "site": SITE,
         "condition": "개발밀도관리구역",
         "standard_code": "UQQ700",
-        "resolution_type": "HYBRID_SPATIAL_NOTICE",
+        "resolution_type": adapter_result.get(
+            "resolution_type", "HYBRID_SPATIAL_NOTICE"
+        ),
         "legal_character": {
             "designation_requires_public_notice": True,
             "current_effect": (
@@ -254,11 +305,20 @@ def main() -> int:
         },
         "evidence": evidence,
         "negative_evidence_count": negative_evidence_count,
-        "negative_evidence_allowed": False,
-        "legal_absence_inference_allowed": False,
-        "site_false_inference_allowed": False,
-        "site_promotion_allowed": False,
-        "runtime_registration_allowed": False,
+        "positive_gates": positive_gates,
+        "minimum_registration_gate_satisfied": minimum_gate,
+        "negative_evidence_allowed": negative_evidence_allowed,
+        "legal_absence_inference_allowed": legal_absence_inference_allowed,
+        "site_false_inference_allowed": site_false_inference_allowed,
+        "site_promotion_allowed": site_promotion_allowed,
+        "runtime_registration_allowed": runtime_registration_allowed,
+        "production_adapter": {
+            "wired": True,
+            "positive_stage_inputs_wired": False,
+            "runtime_registry_mutated": adapter_result.get(
+                "runtime_registry_mutated", False
+            ),
+        },
         "previous_resolution": previous.get("resolution"),
         "current_resolution": {
             "status": resolution,
@@ -290,11 +350,13 @@ def main() -> int:
     print("Affected clauses:", affected_clause_count)
     print()
     print("개발밀도관리구역:", resolution, "/", confidence)
-    print("Negative evidence allowed: False")
-    print("Legal absence inference allowed: False")
-    print("SITE FALSE inference allowed: False")
-    print("SITE promotion allowed: False")
-    print("Runtime registration allowed: False")
+    print("Positive gates:", positive_gates)
+    print("Minimum registration gate satisfied:", minimum_gate)
+    print("Negative evidence allowed:", negative_evidence_allowed)
+    print("Legal absence inference allowed:", legal_absence_inference_allowed)
+    print("SITE FALSE inference allowed:", site_false_inference_allowed)
+    print("SITE promotion allowed:", site_promotion_allowed)
+    print("Runtime registration allowed:", runtime_registration_allowed)
     print()
     print("all_pass:", all_pass)
     print("OUTPUT:", OUTPUT_PATH)
