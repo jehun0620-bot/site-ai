@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hybrid_spatial_notice_uqq700_site_geometry_provenance_adapter import (
+from law_data.hybrid_spatial_notice_uqq700_site_geometry_provenance_adapter import (
     Uqq700SiteGeometryProvenance,
     adapt_uqq700_site_geometry_provenance,
 )
