@@ -52,8 +52,11 @@ def adapt_urban_area_conversion_history_completeness(
     - announcement query success -> complete official historical source set
     - official database negative -> global candidate-universe completeness
     - row count / no-hit -> authority/time-scope completeness
+    - missing unresolved-source evidence -> resolved originals
 
-    Only unresolved-original state is directly mappable from the current producer.
+    The current producer can support the originals gate only when all original-state
+    diagnostics are explicitly present and they positively show no unresolved
+    original/source state. Missing or partial diagnostics fail closed.
     The adapter is read-only and production-unwired.
     """
 
@@ -97,8 +100,19 @@ def adapt_urban_area_conversion_history_completeness(
         and direct_not_target
     )
 
+    original_resolution_state_observed = all(
+        key in checks
+        for key in (
+            "historic_chain_has_missing_content",
+            "historic_missing_content_notice_count",
+            "national_archive_original_pending",
+            "national_archive_original_unverified_count",
+        )
+    )
+
     required_original_documents_resolved = (
-        not unresolved_historical_source_present
+        original_resolution_state_observed
+        and not unresolved_historical_source_present
     )
 
     evidence = HistoricalHistoryCompletenessEvidence(
@@ -133,6 +147,9 @@ def adapt_urban_area_conversion_history_completeness(
             "unresolved_historical_source_present": (
                 unresolved_historical_source_present
             ),
+            "original_resolution_state_observed": (
+                original_resolution_state_observed
+            ),
             "required_original_documents_resolved": (
                 required_original_documents_resolved
             ),
@@ -141,6 +158,7 @@ def adapt_urban_area_conversion_history_completeness(
             "announcement_query_success_promoted_to_official_source_set": False,
             "official_database_negative_promoted_to_global_candidate_universe": False,
             "row_count_promoted_to_authority_time_scope_completeness": False,
+            "missing_original_state_promoted_to_resolved_originals": False,
         },
         "output_written": False,
         "production_wiring_applied": False,
