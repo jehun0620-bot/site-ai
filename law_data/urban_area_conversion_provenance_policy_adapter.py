@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
+from law_data.authority_source_scope import normalize_authority_source_scope
 from law_data.historical_site_event_provenance_policy import (
     HistoricalSiteEventProvenanceEvidence,
     evaluate_historical_site_event_provenance_policy,
@@ -18,6 +19,14 @@ def _first_mapping(data: Mapping[str, Any], *keys: str) -> Mapping[str, Any]:
         if isinstance(value, Mapping):
             return value
     return {}
+
+
+def _first_text(data: Mapping[str, Any], *keys: str) -> str | None:
+    for key in keys:
+        value = data.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return None
 
 
 def extract_checks(previous_payload: Mapping[str, Any]) -> Mapping[str, Any]:
@@ -39,12 +48,13 @@ def extract_checks(previous_payload: Mapping[str, Any]) -> Mapping[str, Any]:
 def adapt_urban_area_conversion_provenance_policy(
     previous_payload: Mapping[str, Any],
 ) -> dict[str, Any]:
-    """Bind current condition diagnostics to the common provenance policy.
+    """Bind current condition diagnostics to common authority/provenance policies.
 
     Existing producer/adapter fields preserve useful diagnostic provenance, but they
-    do not yet positively verify the six production provenance gates. Therefore all
-    provenance gates remain false and the condition-specific provenance policy stays
-    blocked.
+    do not yet positively verify competent authority, source role, or the remaining
+    six production provenance gates. Descriptive source metadata is normalized
+    through AuthoritySourceScope without carrying any verification flags from the
+    diagnostic payload. The provenance policy therefore remains fail-closed.
 
     This adapter is read-only. It does not promote diagnostics into legal evidence,
     write output, apply production wiring, mutate SITE overlay, or mutate a runtime
@@ -73,9 +83,64 @@ def adapt_urban_area_conversion_provenance_policy(
         or checks.get("national_archive_candidate_count", 0)
     )
 
+    source_uri = _first_text(
+        checks,
+        "source_uri",
+        "source_url",
+        "announcement_url",
+        "document_url",
+    ) or _first_text(
+        previous_payload,
+        "source_uri",
+        "source_url",
+        "announcement_url",
+        "document_url",
+    )
+    region_binding = _first_text(
+        checks,
+        "region_binding",
+        "region",
+        "jurisdiction",
+    ) or _first_text(
+        previous_payload,
+        "region_binding",
+        "region",
+        "jurisdiction",
+    )
+    source_role = _first_text(checks, "source_role") or _first_text(
+        previous_payload,
+        "source_role",
+    )
+    legal_authority_scope = _first_text(
+        checks,
+        "legal_authority_scope",
+        "authority_scope",
+    ) or _first_text(
+        previous_payload,
+        "legal_authority_scope",
+        "authority_scope",
+    )
+
+    authority_scope = normalize_authority_source_scope(
+        {
+            "source_uri": source_uri,
+            "region_binding": region_binding,
+            "source_role": source_role,
+            "legal_authority_scope": legal_authority_scope,
+            "target_regulation": CONDITION_NAME,
+            "diagnostics": {
+                "candidate_hit": candidate_hit,
+                "title_match": title_match,
+                "source_url_present": source_url_present,
+                "archive_candidate_present": archive_candidate_present,
+                "dispositive": False,
+            },
+        }
+    )
+
     evidence = HistoricalSiteEventProvenanceEvidence(
-        source_authority_identity_verified=False,
-        source_role_explicit=False,
+        source_authority_identity_verified=authority_scope.authority_chain_verified,
+        source_role_explicit=authority_scope.source_role_verified,
         document_identity_traceable=False,
         original_document_traceable=False,
         site_applicability_traceable=False,
@@ -118,16 +183,24 @@ def adapt_urban_area_conversion_provenance_policy(
     return {
         "condition": CONDITION_NAME,
         "adapter_mode": ADAPTER_MODE,
+        "authority_source_scope": authority_scope.to_dict(),
         "provenance_policy": policy,
         "semantic_contract": {
             "diagnostic_provenance_present_does_not_mean_gate_verified": True,
+            "descriptive_authority_metadata_does_not_mean_authority_verified": True,
+            "official_looking_host_does_not_mean_competent_authority": True,
+            "source_role_value_does_not_mean_source_role_verified": True,
+            "authority_scope_binding_does_not_mean_legal_evidence_verified": True,
             "original_diagnostics_do_not_mean_complete_production_provenance": True,
             "policy_binding_does_not_mean_provenance_policy_verified": True,
             "provenance_policy_verified_does_not_mean_legal_evidence_verified": True,
         },
         "condition_specific_blockers": {
-            "source_authority_identity_unverified": True,
-            "source_role_unverified": True,
+            "authority_chain_unverified": not authority_scope.authority_chain_verified,
+            "source_authority_identity_unverified": (
+                not authority_scope.authority_chain_verified
+            ),
+            "source_role_unverified": not authority_scope.source_role_verified,
             "document_identity_traceability_unverified": True,
             "original_document_traceability_unverified": True,
             "site_applicability_traceability_unverified": True,
@@ -136,6 +209,9 @@ def adapt_urban_area_conversion_provenance_policy(
         "promotion_guards": {
             "candidate_promoted_to_provenance": False,
             "notice_identity_promoted_to_provenance": False,
+            "official_host_promoted_to_competent_authority": False,
+            "source_role_metadata_promoted_to_verified_role": False,
+            "authority_metadata_promoted_to_legal_evidence": False,
             "current_geometry_promoted_to_historical_site_provenance": False,
             "archive_candidate_promoted_to_original_traceability": False,
             "provenance_promoted_to_legal_resolution": False,
