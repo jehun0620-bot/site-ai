@@ -353,6 +353,9 @@ def analyze_site_by_parcel(
     procedure_profile: Optional[
         Dict[str, str]
     ] = None,
+    production_condition_shadow_sources: Optional[
+        Any
+    ] = None,
     include_debug: bool = False,
     service_key: Optional[str] = None,
 ) -> Dict[str, Any]:
@@ -431,6 +434,10 @@ def analyze_site_by_parcel(
             procedure_profile=(
                 procedure_profile
                 or {}
+            ),
+
+            production_condition_shadow_sources=(
+                production_condition_shadow_sources
             ),
         )
     )
