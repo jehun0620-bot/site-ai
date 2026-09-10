@@ -140,8 +140,13 @@ def main() -> None:
     runtime_policy = result["runtime_registration_policy"]
     assert_equal(runtime_policy["current_resolution"], "UNKNOWN", "runtime UNKNOWN")
     assert_false(
-        runtime_policy["runtime_registration_policy"]["runtime_registration_allowed"],
+        runtime_policy["runtime_registration_policy"]["registration_eligible"],
         "runtime registration policy blocked",
+    )
+    assert_equal(
+        runtime_policy["runtime_registration_policy"]["registration_state"],
+        "BLOCKED",
+        "runtime registration state blocked",
     )
 
     guards = result["promotion_guards"]
