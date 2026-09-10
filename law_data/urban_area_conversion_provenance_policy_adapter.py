@@ -7,6 +7,12 @@ from law_data.historical_site_event_provenance_policy import (
     HistoricalSiteEventProvenanceEvidence,
     evaluate_historical_site_event_provenance_policy,
 )
+from law_data.regulation_authority_requirement import (
+    evaluate_regulation_authority_requirement,
+)
+from law_data.regulation_resolution_profile_registry import (
+    get_regulation_resolution_profile,
+)
 
 
 CONDITION_NAME = "도시지역편입해제구역"
@@ -54,7 +60,14 @@ def adapt_urban_area_conversion_provenance_policy(
     do not yet positively verify competent authority, source role, or the remaining
     six production provenance gates. Descriptive source metadata is normalized
     through AuthoritySourceScope without carrying any verification flags from the
-    diagnostic payload. The provenance policy therefore remains fail-closed.
+    diagnostic payload.
+
+    The regulation profile and authority scope are then bound through the common
+    RegulationAuthorityRequirement boundary. Profile presence, matching names, and
+    descriptive authority metadata remain non-dispositive; only an independently
+    verified positive authority chain for the exact profile target could satisfy the
+    authority requirement. Current diagnostics provide no such verified evidence,
+    so the provenance policy remains fail-closed.
 
     This adapter is read-only. It does not promote diagnostics into legal evidence,
     write output, apply production wiring, mutate SITE overlay, or mutate a runtime
@@ -138,8 +151,16 @@ def adapt_urban_area_conversion_provenance_policy(
         }
     )
 
+    profile = get_regulation_resolution_profile(CONDITION_NAME)
+    authority_requirement = evaluate_regulation_authority_requirement(
+        profile,
+        authority_scope,
+    )
+
     evidence = HistoricalSiteEventProvenanceEvidence(
-        source_authority_identity_verified=authority_scope.authority_chain_verified,
+        source_authority_identity_verified=(
+            authority_requirement.authority_requirement_satisfied
+        ),
         source_role_explicit=authority_scope.source_role_verified,
         document_identity_traceable=False,
         original_document_traceable=False,
@@ -183,22 +204,32 @@ def adapt_urban_area_conversion_provenance_policy(
     return {
         "condition": CONDITION_NAME,
         "adapter_mode": ADAPTER_MODE,
+        "resolution_profile": profile.to_dict() if profile is not None else None,
         "authority_source_scope": authority_scope.to_dict(),
+        "regulation_authority_requirement": authority_requirement.to_dict(),
         "provenance_policy": policy,
         "semantic_contract": {
             "diagnostic_provenance_present_does_not_mean_gate_verified": True,
             "descriptive_authority_metadata_does_not_mean_authority_verified": True,
             "official_looking_host_does_not_mean_competent_authority": True,
             "source_role_value_does_not_mean_source_role_verified": True,
+            "profile_presence_does_not_mean_authority_requirement_satisfied": True,
+            "profile_name_match_does_not_mean_authority_verified": True,
             "authority_scope_binding_does_not_mean_legal_evidence_verified": True,
+            "authority_requirement_binding_does_not_mean_legal_evidence_verified": True,
+            "source_policy_requirements_are_diagnostic_not_auto_satisfied": True,
             "original_diagnostics_do_not_mean_complete_production_provenance": True,
             "policy_binding_does_not_mean_provenance_policy_verified": True,
             "provenance_policy_verified_does_not_mean_legal_evidence_verified": True,
         },
         "condition_specific_blockers": {
+            "profile_missing": profile is None,
+            "authority_requirement_unsatisfied": (
+                not authority_requirement.authority_requirement_satisfied
+            ),
             "authority_chain_unverified": not authority_scope.authority_chain_verified,
             "source_authority_identity_unverified": (
-                not authority_scope.authority_chain_verified
+                not authority_requirement.authority_requirement_satisfied
             ),
             "source_role_unverified": not authority_scope.source_role_verified,
             "document_identity_traceability_unverified": True,
@@ -209,9 +240,13 @@ def adapt_urban_area_conversion_provenance_policy(
         "promotion_guards": {
             "candidate_promoted_to_provenance": False,
             "notice_identity_promoted_to_provenance": False,
+            "profile_presence_promoted_to_authority_verification": False,
+            "profile_name_match_promoted_to_authority_verification": False,
             "official_host_promoted_to_competent_authority": False,
             "source_role_metadata_promoted_to_verified_role": False,
             "authority_metadata_promoted_to_legal_evidence": False,
+            "authority_requirement_promoted_to_legal_resolution": False,
+            "source_policy_requirement_promoted_to_verified_evidence": False,
             "current_geometry_promoted_to_historical_site_provenance": False,
             "archive_candidate_promoted_to_original_traceability": False,
             "provenance_promoted_to_legal_resolution": False,
