@@ -3,9 +3,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Mapping
 
-from law_data.historical_site_event_resolver import (
-    HistoricalSiteEventEvidenceState,
-    resolve_historical_site_event,
+from law_data.historical_site_event_evidence_state_assembler import (
+    assemble_historical_site_event_evidence_state,
+)
+from law_data.historical_site_event_resolver import resolve_historical_site_event
+from law_data.urban_area_conversion_history_completeness_adapter import (
+    adapt_urban_area_conversion_history_completeness,
+)
+from law_data.urban_area_conversion_positive_evidence_adapter import (
+    adapt_urban_area_conversion_positive_evidence,
 )
 
 
@@ -115,41 +121,35 @@ def build_shadow_diagnostics(
 def adapt_urban_area_conversion_history_shadow(
     previous_payload: Mapping[str, Any],
 ) -> dict[str, Any]:
-    """Adapt existing condition evidence into the generalized kernel in shadow mode.
+    """Run the condition through the canonical generalized historical path.
 
-    This adapter intentionally refuses these promotions:
-    1. a legacy positive candidate is not a verified qualifying historical event;
-    2. announcement-query success verifies, at most, one official source identity;
-    3. official-database negative coverage is not global history completeness;
-    4. official-database negative coverage is not global candidate-universe exhaustion.
-
-    The adapter is read-only, performs no discovery, writes no output, and does not
-    mutate production overlays or runtime registration.
+    The shadow adapter owns no direct evidence-state promotions. TRUE-side evidence
+    comes through the positive adapter, completeness evidence comes through the
+    completeness adapter, and the generalized assembler remains authoritative for
+    canonical evidence-state construction. Separate exhaustive-disproof proof is not
+    available from the current producer, so the assembler receives no such promotion.
     """
 
     checks = extract_checks(previous_payload)
     diagnostics = build_shadow_diagnostics(checks)
-
     candidate_count = _safe_int(checks.get("combined_candidate_count"))
 
-    evidence_state = HistoricalSiteEventEvidenceState(
-        verified_qualifying_event_present=False,
-        official_history_source_verified=bool(
-            checks.get("announcement_query_success", False)
-        ),
-        history_scope_complete_verified=False,
-        required_originals_resolved=(
-            not diagnostics.unresolved_historical_source_present
-        ),
-        candidate_universe_exhaustively_enumerated=False,
-        all_candidates_classified_non_target=False,
-        unresolved_historical_source_present=(
-            diagnostics.unresolved_historical_source_present
+    positive_adapter_result = adapt_urban_area_conversion_positive_evidence(
+        previous_payload
+    )
+    completeness_adapter_result = (
+        adapt_urban_area_conversion_history_completeness(previous_payload)
+    )
+
+    assembled = assemble_historical_site_event_evidence_state(
+        positive_verification=positive_adapter_result["positive_verification"],
+        completeness_verification=(
+            completeness_adapter_result["completeness_verification"]
         ),
     )
 
     generalized = resolve_historical_site_event(
-        evidence_state,
+        assembled["evidence_state"],
         search_hit=(candidate_count > 0),
         http_200=None,
         candidate_count=candidate_count,
@@ -162,6 +162,9 @@ def adapt_urban_area_conversion_history_shadow(
         "condition": CONDITION_NAME,
         "shadow_mode": SHADOW_MODE,
         "generalized_resolution": generalized,
+        "canonical_assembly": assembled,
+        "positive_adapter_result": positive_adapter_result,
+        "completeness_adapter_result": completeness_adapter_result,
         "shadow_diagnostics": {
             "positive_candidate_present": diagnostics.positive_candidate_present,
             "official_database_negative": diagnostics.official_database_negative,
@@ -173,9 +176,12 @@ def adapt_urban_area_conversion_history_shadow(
         "promotion_guards": {
             "legacy_positive_candidate_promoted_to_verified_event": False,
             "announcement_query_success_promoted_to_complete_source_set": False,
+            "announcement_query_success_promoted_to_official_history_source": False,
             "official_database_negative_promoted_to_global_history_completeness": False,
             "official_database_negative_promoted_to_global_candidate_universe": False,
             "official_database_negative_promoted_to_all_candidates_non_target": False,
+            "absence_of_unresolved_diagnostic_promoted_to_verified_absence": False,
+            "direct_evidence_state_construction_used": False,
         },
         "production_wiring_applied": False,
         "overlay_mutated": False,
