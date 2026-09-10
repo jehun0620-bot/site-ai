@@ -2,367 +2,411 @@
 
 최종 업데이트: 2026-09-10
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `eae80b4dbbb46afba545aa8e5cc2b5ab1aee1957`
+기준 개발 HEAD: `91dce9f1aa40948ebec403852c353c6d53c5a6b9`
 
 > 현재 개발 상태와 안전 불변조건을 기록한다. 장기 로드맵은 `PROJECT_ARCHITECTURE.md` 기준.
 
 ## 1. 현재 단계
 
 ```text
-STEP 17
-Target: 개발밀도관리구역
-Standard code: UQQ700
+STEP 18
+Focus: PRODUCTION_SITE_CONDITION_RESOLUTION_BOUNDARY
+State: TERMINALLY RECONCILED / LOCAL VALIDATION PENDING
+Terminal classification: STEP18_PRODUCTION_SITE_CONDITION_BOUNDARY_TERMINALLY_RECONCILED
+```
+
+STEP 17 terminal targets remain legally unresolved and fail-closed:
+
+```text
+개발밀도관리구역 / UQQ700
+- Resolution type: HYBRID_SPATIAL_NOTICE
+- Current resolution: UNKNOWN
+- Runtime registration: BLOCKED
+
+도시지역편입해제구역
+- Resolution type: HISTORICAL_SITE_EVENT
+- Standard code: UNVERIFIED / DO NOT GUESS
+- Current resolution: UNKNOWN / MEDIUM
+- Production wiring: BLOCKED
+- Runtime registration: BLOCKED
+```
+
+## 2. STEP 18 production SITE condition boundary
+
+STEP 18 generalized the production-facing SITE condition contract without changing Rule Engine dispositive semantics.
+
+Implemented chain:
+
+```text
+SPATIAL runtime condition
+→ production spatial adapter
+→ ProductionSiteCondition
+                         \
+                          → common shadow collector
+                          → site_analysis_builder
+                          → site_analysis_service passthrough
+                          → site_analysis_orchestrator passthrough
+                          → INTERNAL production_condition_contracts
+                         /
+pre-normalized SITE_HISTORY production contract
+```
+
+The builder does not execute or interpret raw historical resolvers. Historical producer/resolver execution remains outside the builder/service/orchestrator boundary.
+
+## 3. ProductionSiteCondition contract
+
+Common contract:
+
+```text
+condition_type: SITE | SITE_HISTORY
+resolution_type: SNAPSHOT | SPATIAL | HYBRID_SPATIAL_NOTICE | HISTORICAL_SITE_EVENT
+state: TRUE | FALSE | UNKNOWN
+confidence
+source
+provenance
+production_eligible
+runtime_registered
+negative_evidence_allowed
+legal_absence_inference_allowed
+site_promotion_allowed
+diagnostics
+```
+
+Safety defaults:
+
+```text
+invalid/missing state → UNKNOWN
+production_eligible=False
+runtime_registered=False
+negative_evidence_allowed=False
+legal_absence_inference_allowed=False
+site_promotion_allowed=False
+```
+
+No contract normalization may infer production eligibility or runtime registration.
+
+## 4. Rule Engine semantic isolation
+
+Existing Rule Engine semantics remain unchanged:
+
+```text
+FALSE   → blocked_by → NOT_APPLICABLE
+UNKNOWN → unknown_by → UNKNOWN
+UNSET   → CONDITIONAL
+else    → APPLICABLE
+
+NOT_APPLICABLE → INACTIVE
+CONDITIONAL    → POTENTIAL_CONDITIONAL
+UNKNOWN        → POTENTIAL_UNKNOWN
+else           → ACTIVE_CANDIDATE
+```
+
+STEP 18 does not replace `site_condition_context` with production contracts.
+
+```text
+production_condition_contracts
+≠ Rule Engine site_condition_context
+```
+
+The Rule Engine continues receiving the existing spatial runtime condition context only.
+
+## 5. SPATIAL production shadow
+
+Existing spatial runtime evaluator output is adapted read-only into the common production contract.
+
+```text
+runtime spatial state TRUE/FALSE/UNKNOWN
+→ same production shadow state
+```
+
+Preserved:
+
+```text
+confidence
+PNU / geometry verification diagnostics
+runtime source
+provenance
+```
+
+Not inferred:
+
+```text
+production eligibility
+runtime registration
+negative evidence permission
+legal absence permission
+SITE promotion permission
+```
+
+Important:
+
+```text
+spatial evaluator executes at runtime
+≠ runtime_registered=True
+
+geometry_verified=True
+≠ production_eligible=True
+```
+
+## 6. HISTORICAL_SITE_EVENT production shadow
+
+Historical resolver output is mapped conservatively:
+
+```text
+resolver UNKNOWN
+→ production UNKNOWN
+
+resolver TRUE_CANDIDATE
+→ production UNKNOWN
+→ TRUE_CANDIDATE preserved in diagnostics/provenance only
+
+resolver FALSE
+→ production FALSE only when exhaustive_disproof_verified=True
+```
+
+Therefore:
+
+```text
+TRUE_CANDIDATE
+≠ production TRUE
+
+contract readiness
+≠ evidence verified
+
+history candidate
+≠ verified historical SITE event
+```
+
+## 7. 도시지역편입해제구역 production boundary
+
+Condition-specific read-only production shadow exists, but automatic production wiring remains blocked.
+
+Current state:
+
+```text
+Condition: 도시지역편입해제구역
+Resolution type: HISTORICAL_SITE_EVENT
+Standard code: UNVERIFIED / DO NOT GUESS
+Current resolution: UNKNOWN / MEDIUM
+verified qualifying historical event = False
+history scope completeness verified = False
+provenance policy verified = False
+standard code verified = False
+production_eligible = False
+runtime_registered = False
+production wiring = BLOCKED
+runtime registration = BLOCKED
+```
+
+Production readiness remains:
+
+```text
+condition_identity_verified             = True
+standard_code_verified                  = False
+positive_evidence_contract_ready        = True
+history_completeness_contract_ready     = True
+provenance_policy_verified              = False
+runtime_registration_policy_verified    = False
+
+verified gates = 3 / 6
+production_wiring_ready = False
+```
+
+No automatic historical producer execution is added to the orchestrator. This is an intentional safety boundary, not a missing seam.
+
+## 8. Collector / builder / service / orchestrator boundary
+
+The common collector merges already-created production contracts only.
+
+Collector rules:
+
+```text
+SITE and SITE_HISTORY may coexist
+duplicate condition names → fail-closed ValueError
+malformed/missing state → ignored; no legal-state manufacture
+SITE_HISTORY + SPATIAL → rejected
+source objects are not mutated
+```
+
+Builder:
+
+```text
+existing spatial runtime context
+→ spatial production contracts
++
+optional caller-supplied pre-normalized production shadow
+→ common collector
+→ site["production_condition_contracts"]
+```
+
+Service and orchestrator only pass `production_condition_shadow_sources` through. They do not resolve, interpret, promote, register, or mutate the supplied contracts.
+
+## 9. Public API boundary
+
+`SITE_ANALYSIS_API_V1` does NOT expose `production_condition_contracts`.
+
+Current policy:
+
+```text
+internal shadow availability
+≠ public API exposure
+
+public API exposure
+≠ production eligibility
+
+production eligibility
+≠ runtime registration
+```
+
+The shadow remains an internal production-resolution/diagnostic boundary until a separate, positively justified public schema decision is made.
+
+## 10. STEP 18 validated classifications
+
+Local validated classifications before terminal closure:
+
+```text
+STEP18_PRODUCTION_SITE_CONDITION_CONTRACT_PASS
+STEP18_PRODUCTION_SPATIAL_CONDITION_ADAPTER_PASS
+STEP18_PRODUCTION_SPATIAL_CONDITION_SHADOW_PASS
+STEP18_PRODUCTION_SPATIAL_CONDITION_BUILDER_PASS
+STEP18_PRODUCTION_HISTORICAL_SITE_EVENT_ADAPTER_PASS
+STEP18_URBAN_AREA_CONVERSION_PRODUCTION_CONDITION_SHADOW_PASS
+STEP18_PRODUCTION_SITE_CONDITION_SHADOW_COLLECTOR_PASS
+STEP18_PRODUCTION_SITE_CONDITION_BUILDER_COLLECTOR_PASS
+STEP18_PRODUCTION_CONDITION_SHADOW_SERVICE_PASSTHROUGH_PASS
+STEP18_PRODUCTION_CONDITION_SHADOW_ORCHESTRATOR_PASSTHROUGH_PASS
+```
+
+Read-only audits:
+
+```text
+STEP18_BUILDER_COLLECTOR_SEAM_SEMANTIC_EQUIVALENCE_AUDIT_PASS
+STEP18_PRODUCTION_SITE_CONDITION_BOUNDARY_TERMINAL_AUDIT_PASS
+```
+
+Terminal regression classification to validate locally:
+
+```text
+STEP18_PRODUCTION_SITE_CONDITION_BOUNDARY_TERMINALLY_RECONCILED
+```
+
+## 11. UQQ700 safety invariants — unchanged
+
+Target: `개발밀도관리구역 / UQQ700`
+
+```text
 Resolution type: HYBRID_SPATIAL_NOTICE
 Current resolution: UNKNOWN
-Runtime registration: BLOCKED
-```
-
-현재 terminal classification:
-
-```text
-UQQ700_HYBRID_SPATIAL_NOTICE_SPATIAL_IDENTITY_EXTERNAL_EVIDENCE_BLOCKED
-```
-
-의미:
-
-```text
-SITE parcel geometry provenance는 확보됨 / TEST-ONLY
-UQQ700 authoritative spatial source identity는 UNVERIFIED
-UQQ700 designation geometry identity는 UNVERIFIED
-positive SITE/designation intersection은 UNVERIFIED
-따라서 Gate 3 / SITE promotion / runtime registration은 계속 차단
-```
-
-현재 positive registration gate:
-
-```text
-OFFICIAL DESIGNATION IDENTITY VERIFIED: False   # REAL evidence
-CURRENT VALIDITY VERIFIED: False                # REAL evidence
-SITE SPATIAL INCLUSION VERIFIED: False
-Minimum registration gate satisfied: False
-```
-
-안전 불변조건:
-
-```text
-SITE TRUE                BLOCKED
-SITE FALSE               BLOCKED
-negative evidence        DISABLED
-legal absence inference  DISABLED
-SITE promotion           BLOCKED
-runtime registration     BLOCKED
-```
-
-`UQQ700 = UNKNOWN`을 유지한다.
-
-## 2. 현재 baseline / runtime guard
-
-검증된 baseline semantics:
-
-```text
-SITE stage: INCOMPLETE_GUARDED_UQQ700_UNKNOWN
-rule_engine_ready: False
-UQQ700 FALSE condition count: 0
-UQQ700 TRUE condition count: 0
-baseline guard resolution: UNKNOWN
-baseline guard false_blocker_count: 0
-```
-
-기존 runtime guard audit:
-
-```text
-CLASSIFICATION: UQQ700_RUNTIME_GUARD_AUDIT_PASS
-all_pass: True
-Next action:
-KEEP_UQQ700_UNKNOWN_AND_OUT_OF_RUNTIME_REGISTRATION_UNTIL_ALL_THREE_POSITIVE_REGISTRATION_GATES_ARE_VERIFIED
-```
-
-재귀 shadow/guard 검증에서는 UQQ700-tagged SITE row 25개가 관찰되었고, UNKNOWN 23 / FALSE 0 / TRUE 0이었다. 이는 기존 11-condition baseline 집계와 수집 범위가 다르므로 단순 regression으로 해석하지 않는다. 핵심 invariant는 FALSE/TRUE promotion이 0이라는 점이다.
-
-## 3. UQQ700 evidence / safety contract
-
-```text
-COMPETENT AUTHORITY
-→ OFFICIAL SOURCE
-→ DESIGNATION DOCUMENT IDENTITY
-→ CURRENT VALIDITY
-→ SITE SPATIAL INCLUSION
-→ registration eligibility
-```
-
-반드시 유지:
-
-```text
-검색 결과 ≠ 법적 사실
-search hit ≠ designation
-search hit ≠ current validity
-search hit ≠ site inclusion
-document 발견 ≠ current validity
-HTTP 200 ≠ document identity
-query failure ≠ FALSE
-source 미발견 ≠ FALSE
-technical unresolved ≠ FALSE
-historical no-hit ≠ legal absence
-qualified search no-result ≠ legal absence
-조례 문구/연혁 hit ≠ 지정고시 identity
-publication/research document ≠ designation notice
-candidate spatial layer/code ≠ authoritative UQQ700 spatial identity
-address/name hit ≠ SITE spatial inclusion
-source-family exhaustion ≠ legal absence
-latest document found ≠ latest legal act
-```
-
-현재:
-
-```text
 negative_evidence_allowed=False
 legal_absence_inference_allowed=False
 site_false_inference_allowed=False
 site_promotion_allowed=False
 runtime_registration_allowed=False
-UQQ700=UNKNOWN
 ```
 
-3개 positive gate 중 하나라도 미검증이면 runtime registration 금지.
-
-## 4. stale baseline contamination correction — PASS
-
-과거 금지된 추론:
+Minimum positive registration gate remains:
 
 ```text
-Seoul announcement no-hit
-+ UQ145 candidate layer no-hit
-+ EUM target-name absence
-→ UQQ700 FALSE / HIGH
-→ blocked_by
-→ NOT_APPLICABLE / INACTIVE
+OFFICIAL DESIGNATION IDENTITY VERIFIED
+AND CURRENT VALIDITY VERIFIED
+AND SITE SPATIAL INCLUSION VERIFIED
 ```
 
-이 경로는 producer부터 downstream baseline까지 정화했다.
-
-```text
-development_density_management_evidence_resolution_test.py
-→ development_density_management_overlay_test.py
-→ school_relocation_site_overlay_test.py
-→ site_rule_evaluation_site_complete_test.py
-→ development_density_management_area_uqq700_runtime_guard_audit_test.py
-```
-
-검증된 semantics:
-
-```text
-negative evidence → diagnostic only
-UQQ700 → UNKNOWN / NONE
-UQQ700 → unknown_by
-UQQ700 FALSE blocker → 0
-SITE promotion → False
-runtime registration → False
-```
-
-## 5. HYBRID_SPATIAL_NOTICE generalization — COMMON LAYER COMPLETE
-
-UQQ700에서 검증한 safety pattern을 공통 resolver 구조로 일반화했다.
-
-완료 구성요소:
-
-```text
-HYBRID_SPATIAL_NOTICE safety kernel
-authority resolver
-historical candidate resolver
-designation identity verifier
-current validity resolver
-SITE spatial inclusion verifier
-end-to-end orchestrator
-8-case regression matrix
-UQQ700 generalization guard
-```
-
-공통 safety kernel contract:
-
-```text
-minimum_registration_gate =
-    official_designation_identity_verified
-    AND current_validity_verified
-    AND site_spatial_inclusion_verified
-
-runtime_registration_allowed = minimum_registration_gate
-```
-
-중요: T/T/T는 registration eligibility만 연다. 그것만으로 SITE TRUE, SITE promotion 또는 UQQ700 resolution 변경을 자동 수행하지 않는다.
-
-8-case truth table:
-
-```text
-F/F/F -> runtime False
-F/F/T -> runtime False
-F/T/F -> runtime False
-F/T/T -> runtime False
-T/F/F -> runtime False
-T/F/T -> runtime False
-T/T/F -> runtime False
-T/T/T -> runtime True (eligibility only)
-```
-
-모든 case에서 safety kernel resolution은 UNKNOWN을 유지하고 negative evidence/legal absence/SITE FALSE/SITE promotion은 허용하지 않는다.
-
-## 6. UQQ700 Gate 1 / Gate 2 contract 상태
-
-Gate 1 관련 pure components:
-
-```text
-UQQ700 identity evidence adapter
-historical identity bridge
-designation document provenance verifier
-verified provenance identity adapter
-production contract regression
-production seam isolation regression
-```
-
-Gate 1 synthetic contract는 PASS지만 REAL positive designation evidence는 아직 없다.
-
-Gate 2 관련 pure components:
-
-```text
-UQQ700 validity seed adapter
-UQQ700 downstream notice provenance verifier
-UQQ700 history completeness verifier
-UQQ700 Gate 2 composition regression
-```
-
-Gate 2 synthetic contract는 PASS지만 REAL current validity evidence는 아직 없다.
-
-원칙:
-
-```text
-search/no-hit로 history completeness를 만들지 않는다.
-source-family exhaustion으로 current validity를 만들지 않는다.
-RELEASE는 current release이며 current validity가 아니다.
-negative discovery는 legal absence / SITE FALSE를 만들 수 없다.
-```
-
-## 7. UQQ700 SITE geometry / Gate 3 상태
-
-SITE-side geometry provenance는 다음 순서로 검증됐다.
-
-```text
-MapPlan parcel spatial recovery
-→ UQQ700 SITE geometry provenance adapter
-→ UQQ700 SITE geometry recovery bridge
-```
-
-로컬 validated classifications:
-
-```text
-UQQ700_HYBRID_SPATIAL_NOTICE_SITE_GEOMETRY_PROVENANCE_ADAPTER_PASS
-UQQ700_HYBRID_SPATIAL_NOTICE_SITE_GEOMETRY_RECOVERY_BRIDGE_PASS
-```
-
-확정된 SITE-side contract:
-
-```text
-Canonical SITE ID: 11680-10300-0012-0000
-Canonical SITE PNU: 1168010300100120000
-SITE ID/PNU exact binding required
-geometry PNU exact match required
-Polygon/MultiPolygon + verified source snapshot required
-wrong SITE ID / wrong PNU / geometry PNU mismatch → fail-closed
-CRS guessing prohibited
-explicit CRS verification도 provenance일 뿐 intersection_ready=False
-```
-
-현재 spatial blocker:
-
-```text
-UQQ700 legal/designation identity
-→ authoritative spatial management code
-→ authoritative dataset/layer identity
-→ designation feature identity
-→ designation Polygon
-→ common CRS / transform provenance
-→ positive SITE intersection
-```
-
-현재 repo 내부 evidence로는 위 chain을 verified 상태로 연결할 수 없다.
-
-최신 local validated blocker regression:
-
-```text
-CLASSIFICATION: UQQ700_HYBRID_SPATIAL_NOTICE_SPATIAL_IDENTITY_EXTERNAL_EVIDENCE_BLOCKED
-all_pass: True
-```
-
-이 BLOCKED는 legal absence가 아니다. 현재 검증된 positive evidence만으로 더 진행할 수 없다는 engineering blocker다.
-
-## 8. production integration boundary
-
-production-like UQQ700 chain:
-
-```text
-development_density_management_evidence_resolution_test.py
-→ development_density_management_overlay_test.py
-→ school_relocation_site_overlay_test.py
-→ site_rule_evaluation_site_complete_test.py
-→ downstream runtime guard/audit
-```
-
-UQQ700 production adapter는 generalized stage output을 받을 수 있는 compatibility boundary로 존재한다.
-
-하지만 현재 production seam의 positive stage input은 비어 있으며 REAL Gate 1/2/3 positive evidence는 주입되지 않는다.
-
-따라서 production state는 계속:
+Current real evidence:
 
 ```text
 official_designation_identity_verified=False
 current_validity_verified=False
 site_spatial_inclusion_verified=False
 minimum_registration_gate_satisfied=False
-runtime_registration_allowed=False
-resolution=UNKNOWN
 ```
 
-SITE-complete, school overlay, runtime audit에 common orchestrator를 직접 주입하지 않는다.
+No new official positive evidence was introduced by STEP 18. UQQ700 remains UNKNOWN and out of runtime registration.
 
-## 9. CLOSED / CONCLUDED source families — DO NOT REPEAT
-
-주요 operational closure / concluded path:
+## 12. STEP 17 terminal closure remains binding
 
 ```text
-Seongnam Dynamic HWP Gazette
-Seongnam POST-HWP5 Gazette
-Seongnam PRE-HWP5 Gazette (HWP3 technical UNKNOWN 포함)
-Seongnam /pm010301 Official Notice
-Seongnam EMINWON
-EUM qualified metadata/detail HTML
-National Archives of Korea
-Gyeonggi alternate gazette families
-KRIHS search/publication context path
-MOLIT I0204 qualified POST title-search path
+CLASSIFICATION: STEP17_TERMINAL_CLOSURE_AUDIT_PASS
+STEP 17 state: TERMINALLY CLOSED
 ```
 
-이 closure들은 operational closure일 뿐 legal absence를 성립시키지 않는다.
+STEP 17 terminal targets are not legally resolved. They are engineering-terminal because no additional safe internal inference is available without new official positive evidence.
 
-Seongnam legacy PDF exact-six는 recorded route family를 reconciliation했으며 현재 상태는:
+Do not repeat without new official evidence:
 
 ```text
-EXACT_SIX_LEGACY_FILE_ACCESS_OPERATIONALLY_BOUNDED_TECHNICAL_UNRESOLVED
+UQQ700 closed/concluded source-family probing
+UQQ700 spatial source/code guessing
+도시지역편입해제구역 source-family re-probing
+standard-code guessing
+search/no-hit based FALSE inference
+legal absence inference
+SITE promotion
+runtime registration
 ```
 
-새 evidence 없이 URL guessing/mutation 또는 closed source-family 반복 탐색 금지.
-
-또한 기존 UQQ700 spatial source probing을 새 evidence 없이 반복하지 않는다.
-
-금지:
+## 13. Core semantic locks
 
 ```text
-MapPlan code guessing
-VWorld dataset code guessing
-candidate layer → UQQ700 official layer 승격
-EUM target-name hit → SITE inclusion 승격
-coordinate appearance → EPSG:5179 추정
-arbitrary candidate Polygon과 parcel intersection
+announcement/query success
+≠ official historical source set verified
+
+absence of unresolved-original indicators
+≠ verified unresolved-historical-source absence
+
+originals resolved
+≠ history complete
+
+candidate enumeration
+≠ all candidates positively classified non-target
+
+candidate/document/current state
+≠ verified qualifying historical event
+
+candidate presence
+≠ TRUE_CANDIDATE
+
+TRUE_CANDIDATE
+≠ production TRUE
+
+contract implementation ready
+≠ actual legal evidence satisfied
+
+condition name known
+≠ standard code verified
+
+diagnostic provenance preserved
+≠ production provenance policy verified
+
+production readiness READY
+≠ production wiring applied
+
+runtime registration policy verified
+≠ runtime registration applied
+
+provenance policy verified
+≠ legal resolution verified
+
+archive candidate
+≠ original document
+
+current geometry
+≠ historical SITE applicability
+
+source endpoint/query success
+≠ source authority identity
+
+production shadow collected
+≠ production eligibility
+
+production shadow propagated
+≠ runtime registration
+
+internal production shadow
+≠ public API legal fact
 ```
 
-## 10. Architecture 상태
+## 14. Architecture state
 
 ```text
 PHASE 0 Foundation              COMPLETE
@@ -377,38 +421,32 @@ PHASE 8 Authority/Historical    ACTIVE
 PHASE 9+ Nationwide/AI/Product  FUTURE
 ```
 
-개발 순서:
-
-`OFFICIAL FACT → SITE FACT → REGULATION RESOLUTION → LEGAL RULE → DETERMINISTIC ENGINE → AI ANALYSIS → VERIFICATION`
-
-## 11. 다음 허용 작업
-
-UQQ700 내부 spatial 구현은 현재 external-evidence blocker에서 중단한다.
-
-현재 다음 작업 순서:
+Development order remains:
 
 ```text
-1. UQQ700 UNKNOWN 유지
-2. SITE/runtime registry 등록 금지
-3. UQQ700 closed/concluded source-family 및 spatial probing 반복 금지
-4. UQQ700 authoritative spatial identity에 새 official positive evidence가 생기기 전까지 intersection 구현 금지
-5. HYBRID_SPATIAL_NOTICE common resolver pattern을 다음 일반화 대상/조건에 적용
-6. 새 target도 authority → identity → validity → spatial inclusion 순서 유지
-7. production wiring은 각 target의 explicit positive stage evidence가 있을 때만 별도 승인 후 검토
+OFFICIAL FACT
+→ SITE FACT
+→ REGULATION RESOLUTION
+→ LEGAL RULE
+→ DETERMINISTIC ENGINE
+→ AI ANALYSIS
+→ VERIFICATION
 ```
 
-새 UQQ700 official evidence가 발견될 경우에도 반드시:
+## 15. Next allowed work after STEP 18 closure
+
+After the terminal regression passes locally:
 
 ```text
-OFFICIAL DESIGNATION IDENTITY
-→ CURRENT VALIDITY
-→ AUTHORITATIVE SPATIAL IDENTITY / DESIGNATION GEOMETRY
-→ SITE SPATIAL INCLUSION
+1. Mark STEP 18 production SITE condition boundary TERMINALLY CLOSED.
+2. Keep UQQ700 and 도시지역편입해제구역 UNKNOWN / blocked from runtime registration.
+3. Do not expose production_condition_contracts in SITE_ANALYSIS_API_V1 without a separate schema decision.
+4. Do not auto-run blocked historical producers from builder/service/orchestrator.
+5. Begin the next architecture step only after a read-only gap audit.
+6. New official positive evidence may reopen the relevant terminal condition, but must pass its existing positive verification gates.
 ```
 
-순으로 positive verification한다.
-
-## 12. Git / local rules
+## 16. Git / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `checkpoint/c12-fastapi-20260821`
@@ -425,264 +463,23 @@ law_data/output/* 신규 generated output은 ignore
 Large mutable output/PDF/HWP/HWPX commit 금지
 ```
 
-`law_data/output/*`는 테스트 fixture/baseline과 실행 산출물이 역사적으로 혼재한다. 기존 tracked baseline을 무작정 `git rm --cached`하지 않는다. 신규 generated output은 `.gitignore`로 차단하고, 기존 tracked output 변경은 commit 전에 반드시 명시적으로 검토한다.
+Existing tracked output modifications must not be included in STEP 18 closure commits.
 
-## 13. repository hygiene audit — 2026-09-09
+## 17. Handoff policy
 
-채팅 handoff 반복 이후 local/GitHub 상태를 재점검했다.
+Use the latest `PROJECT_STATUS.md` when moving to a new chat. Do not create unnecessary handoff documents.
 
-확인 결과:
-
-```text
-branch: checkpoint/c12-fastapi-20260821
-local/origin divergence: none at validated checkpoints
-tracked source uncommitted modification: none at validated checkpoints
-staged generated outputs: detected then safely unstaged
-tracked output runtime modifications: restored to HEAD
-stray root pager-output file: identified and removed locally
-GitHub source corruption: not detected
-```
-
-대량 output staging은 source corruption이 아니라 `.gitignore`가 output 전체를 보호하지 않던 repository hygiene 문제였다.
-
-## 14. handoff 정책
-
-새 채팅으로 전환할 때는 최신 `PROJECT_STATUS.md`를 기준으로 한다. 불필요한 handoff 문서는 생성하지 않는다.
-
-handoff에는 최소한 다음을 포함한다.
+Minimum handoff content:
 
 ```text
 repo / branch / local root
 latest commit
 current STEP / validated classification
+STEP 18 production boundary state
 UQQ700 safety invariants
+historical SITE_EVENT safety invariants
 closed/concluded source families / DO-NOT-REPEAT
-latest validated semantic/output
-current unresolved issue
+current unresolved external evidence gaps
 next exact allowed action
 Git write approval rule
-```
-
-## 15. 도시지역편입해제구역 — HISTORICAL_SITE_EVENT terminal reconciliation
-
-STEP 17에서 `도시지역편입해제구역`을 generalized `HISTORICAL_SITE_EVENT` contract로 정리했다.
-
-현재 condition 상태:
-
-```text
-Condition: 도시지역편입해제구역
-Resolution type: HISTORICAL_SITE_EVENT
-Standard code: UNVERIFIED / DO NOT GUESS
-Current resolution: UNKNOWN
-Confidence: MEDIUM
-Production wiring: BLOCKED
-Runtime registration: BLOCKED
-```
-
-현재 terminal classification:
-
-```text
-URBAN_AREA_CONVERSION_HISTORICAL_SITE_EVENT_EXTERNAL_EVIDENCE_BLOCKED_TERMINALLY_RECONCILED
-```
-
-검증된 generalized components:
-
-```text
-historical positive evidence verifier
-history completeness verifier
-evidence-state assembler
-HISTORICAL_SITE_EVENT resolver
-production readiness gate
-runtime registration policy
-provenance policy
-```
-
-condition-specific read-only adapters:
-
-```text
-urban_area_conversion_positive_evidence_adapter.py
-urban_area_conversion_history_completeness_adapter.py
-urban_area_conversion_production_readiness_adapter.py
-urban_area_conversion_runtime_registration_policy_adapter.py
-urban_area_conversion_provenance_policy_adapter.py
-```
-
-로컬 validated classifications:
-
-```text
-HISTORICAL_SITE_EVENT_PROVENANCE_POLICY_PASS
-URBAN_AREA_CONVERSION_PROVENANCE_POLICY_ADAPTER_PASS
-```
-
-현재 production readiness:
-
-```text
-condition_identity_verified             = True
-standard_code_verified                  = False
-positive_evidence_contract_ready        = True
-history_completeness_contract_ready     = True
-provenance_policy_verified              = False
-runtime_registration_policy_verified    = False
-
-verified gates = 3 / 6
-production_wiring_ready = False
-```
-
-중요 semantic lock:
-
-```text
-contract implementation exists
-≠ actual evidence verified
-
-provenance policy exists
-≠ provenance_policy_verified
-
-runtime registration policy exists
-≠ runtime registration applied
-
-condition-specific adapter exists
-≠ production binding verified
-
-candidate/document/current state
-≠ verified qualifying historical event
-
-search/no-hit/database negative
-≠ legal absence
-
-current geometry
-≠ historical SITE applicability
-
-archive candidate
-≠ original document traceability
-```
-
-현재 provenance 6-gate 상태:
-
-```text
-source_authority_identity_verified = False
-source_role_explicit               = False
-document_identity_traceable        = False
-original_document_traceable        = False
-site_applicability_traceable       = False
-temporal_relation_traceable        = False
-
-verified provenance gates = 0 / 6
-provenance_policy_verified = False
-```
-
-repo 내부 evidence salvage audit에서도 diagnostic evidence는 존재하지만 production-grade provenance evidence는 추가로 확인되지 않았다.
-
-현재 확인된 diagnostic material:
-
-```text
-서울시 공식 결정고시 DB query success
-combined notice candidates
-notice 123 / 534 identity diagnostics
-historic chain diagnostics
-current urban-area / greenbelt state
-National Archives candidates
-```
-
-그러나 일부 historical original은 missing/unverified이고, 현재 producer schema에는 다음 positive proof chain이 없다.
-
-```text
-VERIFIED EVENT IDENTITY
-+
-HISTORICAL SITE APPLICABILITY
-+
-TEMPORAL RELATION
-```
-
-따라서 현재 상태는 계속:
-
-```text
-verified qualifying historical event = False
-history scope completeness verified   = False
-provenance policy verified            = False
-standard code verified                = False
-resolution                            = UNKNOWN / MEDIUM
-SITE promotion                        = BLOCKED
-production wiring                     = BLOCKED
-runtime registration                  = BLOCKED
-negative evidence inference           = DISABLED
-legal absence inference               = DISABLED
-```
-
-현재 dominant blocker:
-
-```text
-EXTERNAL / POSITIVE EVIDENCE GAP
-- exact official standard code
-- authoritative historical event document identity
-- original document
-- historical SITE applicability
-- event/SITE temporal evidence
-```
-
-새 공식 positive evidence가 들어오기 전까지 이 condition에 대해 source-family re-probing, standard-code guessing, search/no-hit 기반 FALSE 추론, SITE promotion, production/runtime registration을 수행하지 않는다.
-
-새 evidence가 들어올 경우에도 반드시 다음 순서로 검증한다.
-
-```text
-OFFICIAL SOURCE AUTHORITY / ROLE
-→ DOCUMENT IDENTITY
-→ ORIGINAL DOCUMENT TRACEABILITY
-→ HISTORICAL SITE APPLICABILITY
-→ TEMPORAL RELATION
-→ POSITIVE EVENT / COMPLETENESS EVALUATION
-→ PRODUCTION READINESS
-→ RUNTIME REGISTRATION ELIGIBILITY
-```
-
-## 16. STEP 17 terminal closure — PASS
-
-STEP 17의 terminal closure audit를 완료했다.
-
-```text
-CLASSIFICATION: STEP17_TERMINAL_CLOSURE_AUDIT_PASS
-STEP 17 state: TERMINALLY CLOSED
-```
-
-closure 기준:
-
-```text
-UQQ700
-- resolution = UNKNOWN
-- TRUE/FALSE promotion = BLOCKED
-- negative evidence inference = DISABLED
-- legal absence inference = DISABLED
-- SITE promotion = BLOCKED
-- runtime registration = BLOCKED
-- terminal reconciliation = COMPLETE
-
-도시지역편입해제구역
-- resolution = UNKNOWN / MEDIUM
-- verified qualifying event = False
-- history completeness = False
-- provenance = 0 / 6
-- standard code = UNVERIFIED
-- TRUE/FALSE promotion = BLOCKED
-- SITE promotion = BLOCKED
-- production wiring = BLOCKED
-- runtime registration = BLOCKED
-- terminal reconciliation = COMPLETE
-```
-
-현재 baseline 기준 remaining unresolved SITE target은 없다.
-
-```text
-remaining unresolved SITE targets = NONE
-```
-
-STEP 17 종료는 두 UNKNOWN condition을 법적으로 해소했다는 뜻이 아니다. 내부 resolver/adapter/runtime safety contract 관점에서 더 진행할 수 있는 positive evidence가 없으며, 새 공식 evidence가 들어오기 전까지 fail-closed UNKNOWN 상태를 유지한다는 뜻이다.
-
-다음 단계 진입 원칙:
-
-```text
-1. STEP 17 terminal target 재탐색 금지 — 새 official positive evidence가 있을 때만 재개
-2. UQQ700 / 도시지역편입해제구역 UNKNOWN 유지
-3. search/no-hit / source exhaustion 기반 FALSE inference 금지
-4. SITE promotion / production wiring / runtime registration 금지
-5. 다음 개발 단계는 기존 STEP 17 terminal target과 분리하여 시작
-6. production integration은 명시적 positive evidence와 별도 승인 후 검토
 ```
