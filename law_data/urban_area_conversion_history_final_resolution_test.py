@@ -34,7 +34,9 @@ automation = HISTORICAL_SOURCE_PENDING
 중요
 ======================================================================
 UNKNOWN을 FALSE로 강제하지 않는다.
+후보 발견만으로 TRUE_CANDIDATE로 승격하지 않는다.
 공식 DB negative와 원문 해소만으로 global history completeness를 추정하지 않는다.
+현재 producer schema에는 verified qualifying event positive proof가 없으므로 TRUE도 열지 않는다.
 FALSE는 별도 history-scope completeness verifier가 도입되기 전까지 열지 않는다.
 """
 
@@ -86,11 +88,11 @@ def first_dict(data: Dict[str, Any], *keys: str) -> Dict[str, Any]:
 
 
 def resolve_final_state(checks: Dict[str, Any]) -> Dict[str, Any]:
-    """Resolve the condition without inferring global historical completeness.
+    """Resolve without weak TRUE or FALSE promotion.
 
-    Existing discovery/database negatives and resolved originals are not enough to
-    establish that the complete historical universe has been searched. Until a
-    dedicated completeness verifier supplies positive proof, FALSE remains closed.
+    Candidate/document discovery is diagnostic only and does not verify a qualifying
+    historical event. Existing discovery/database negatives and resolved originals
+    are also insufficient to establish global historical completeness.
     """
 
     announcement_ok = bool(checks.get("announcement_query_success", False))
@@ -131,11 +133,16 @@ def resolve_final_state(checks: Dict[str, Any]) -> Dict[str, Any]:
         or archive_unverified > 0
     )
 
-    positive_history_evidence = target_candidates > 0 or direct_target_events > 0
+    positive_history_candidate_present = (
+        target_candidates > 0 or direct_target_events > 0
+    )
+
+    # Current producer fields expose candidates/documents, not the canonical
+    # VERIFIED EVENT IDENTITY + HISTORICAL SITE APPLICABILITY + TEMPORAL RELATION
+    # positive-proof contract. Therefore TRUE_CANDIDATE remains closed here.
+    verified_qualifying_event_present = False
 
     # No current producer field proves global historical scope completeness.
-    # Do not derive this from DB success, row count, no-hit, candidate exhaustion,
-    # or the mere resolution of previously missing originals.
     history_scope_complete_verified = False
 
     exhaustive_disproof_verified = (
@@ -144,14 +151,20 @@ def resolve_final_state(checks: Dict[str, Any]) -> Dict[str, Any]:
         and history_scope_complete_verified
     )
 
-    if positive_history_evidence:
+    if verified_qualifying_event_present:
         status = "TRUE_CANDIDATE"
-        confidence = "MEDIUM"
-        automation_state = "SOURCE_REVIEW_REQUIRED"
+        confidence = "HIGH"
+        automation_state = "VERIFIED_EVENT_REVIEW_REQUIRED"
         overlay_action = "HOLD_FOR_REVIEW"
+        reason = "verified qualifying historical event positive proof가 확인됨"
+    elif positive_history_candidate_present:
+        status = "UNKNOWN"
+        confidence = "MEDIUM"
+        automation_state = "POSITIVE_EVIDENCE_VERIFICATION_PENDING"
+        overlay_action = "KEEP_UNKNOWN"
         reason = (
-            "도시지역 편입ㆍ해제에 해당할 가능성이 있는 직접 historical evidence가 "
-            "존재하므로 원문 확인 후 판정 필요"
+            "도시지역 편입ㆍ해제 후보 evidence는 존재하지만 candidate/document discovery만으로 "
+            "verified qualifying historical event를 입증할 수 없어 UNKNOWN을 유지한다."
         )
     elif official_database_negative and unresolved_historic_source:
         status = "UNKNOWN"
@@ -194,7 +207,9 @@ def resolve_final_state(checks: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "official_database_negative": official_database_negative,
         "unresolved_historic_source": unresolved_historic_source,
-        "positive_history_evidence": positive_history_evidence,
+        "positive_history_candidate_present": positive_history_candidate_present,
+        "positive_history_evidence": verified_qualifying_event_present,
+        "verified_qualifying_event_present": verified_qualifying_event_present,
         "history_scope_complete_verified": history_scope_complete_verified,
         "exhaustive_disproof_verified": exhaustive_disproof_verified,
         "status": status,
@@ -276,6 +291,9 @@ def main() -> int:
     final_state = resolve_final_state(checks)
     official_database_negative = final_state["official_database_negative"]
     unresolved_historic_source = final_state["unresolved_historic_source"]
+    positive_history_candidate_present = final_state[
+        "positive_history_candidate_present"
+    ]
     positive_history_evidence = final_state["positive_history_evidence"]
     history_scope_complete_verified = final_state[
         "history_scope_complete_verified"
@@ -308,6 +326,10 @@ def main() -> int:
         "historic missing content 존재": unresolved_historic_source,
         "archive candidates 존재": archive_candidates_confirmed and archive_candidates > 0,
         "archive original pending": archive_pending,
+        "candidate is not verified positive evidence": (
+            positive_history_candidate_present is False
+            and positive_history_evidence is False
+        ),
         "history scope completeness not inferred": history_scope_complete_verified is False,
         "exhaustive disproof not inferred": exhaustive_disproof_verified is False,
         "affected clauses 3": affected_clause_count == 3,
@@ -368,6 +390,7 @@ def main() -> int:
         "evidence_summary": {
             "official_database_negative": official_database_negative,
             "current_state_known": current_state_known,
+            "positive_history_candidate_present": positive_history_candidate_present,
             "positive_history_evidence": positive_history_evidence,
             "unresolved_historic_source": unresolved_historic_source,
             "history_scope_complete_verified": history_scope_complete_verified,
@@ -383,8 +406,8 @@ def main() -> int:
         "overlay_policy": {
             "action": overlay_action,
             "rule": (
-                "historical source 원문과 global history scope completeness가 모두 "
-                "positive verification 되기 전에는 negative DB 검색만으로 FALSE 처리하지 않는다."
+                "verified qualifying event 또는 verified exhaustive disproof가 없으면 "
+                "candidate/discovery 신호만으로 TRUE/FALSE 처리하지 않는다."
             ),
         },
         "validations": validations,
