@@ -41,1198 +41,326 @@ import json
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-
-from law_data.zone_base_numeric_resolver import (
-    resolve_zone_base_numeric,
-)
+from law_data.zone_base_numeric_resolver import resolve_zone_base_numeric
 from law_data.production_spatial_condition_adapter import (
     adapt_spatial_condition_to_production_contract,
 )
-
+from law_data.production_site_condition_shadow_collector import (
+    collect_production_site_condition_shadows,
+)
 
 try:
-
-    from .rule_evaluation_pipeline import (
-        evaluate_site_rules,
-    )
-
-    from .site_identity_resolver import (
-        resolve_site_identity,
-    )
-
-    from .site_spatial_payload_resolver import (
-        resolve_site_spatial_payload,
-    )
-
+    from .rule_evaluation_pipeline import evaluate_site_rules
+    from .site_identity_resolver import resolve_site_identity
+    from .site_spatial_payload_resolver import resolve_site_spatial_payload
 except ImportError:
-
-    from rule_evaluation_pipeline import (
-        evaluate_site_rules,
-    )
-
-    from site_identity_resolver import (
-        resolve_site_identity,
-    )
-
-    from site_spatial_payload_resolver import (
-        resolve_site_spatial_payload,
-    )
-
+    from rule_evaluation_pipeline import evaluate_site_rules
+    from site_identity_resolver import resolve_site_identity
+    from site_spatial_payload_resolver import resolve_site_spatial_payload
 
 try:
-
     from .spatial_condition_evaluator import (
         get_supported_spatial_conditions,
         resolve_site_spatial_condition,
     )
-
 except ImportError:
-
     from spatial_condition_evaluator import (
         get_supported_spatial_conditions,
         resolve_site_spatial_condition,
     )
 
 
-# ============================================================
-# PATH
-# ============================================================
-
-BASE_DIR = (
-    Path(__file__)
-    .resolve()
-    .parent
-    .parent
-)
-
-OUTPUT_DIR = (
-    BASE_DIR
-    / "law_data"
-    / "output"
-)
-
-SITE_COMPLETE_PATH = (
-    OUTPUT_DIR
-    / "site_rule_evaluation_site_complete.json"
-)
-
-BASE_NUMERIC_PATH = (
-    OUTPUT_DIR
-    / "base_numeric_regulation_hierarchy.json"
-)
+BASE_DIR = Path(__file__).resolve().parent.parent
+OUTPUT_DIR = BASE_DIR / "law_data" / "output"
+SITE_COMPLETE_PATH = OUTPUT_DIR / "site_rule_evaluation_site_complete.json"
+BASE_NUMERIC_PATH = OUTPUT_DIR / "base_numeric_regulation_hierarchy.json"
 
 
-# ============================================================
-# util
-# ============================================================
-
-def load_json(
-    path: Path,
-) -> Dict[str, Any]:
-
+def load_json(path: Path) -> Dict[str, Any]:
     if not path.exists():
-
-        raise FileNotFoundError(
-            f"입력 파일 없음: {path}"
-        )
-
-    with path.open(
-        "r",
-        encoding="utf-8",
-    ) as f:
-
+        raise FileNotFoundError(f"입력 파일 없음: {path}")
+    with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def safe_string(
-    value: Any,
-) -> str:
-
+def safe_string(value: Any) -> str:
     if value is None:
         return ""
+    return str(value).strip()
 
-    return str(
-        value
-    ).strip()
-
-
-# ============================================================
-# STEP 18 production spatial condition shadow
-# ============================================================
 
 def build_production_condition_contract_shadow(
     site_condition_context: Any,
 ) -> Dict[str, Dict[str, Any]]:
-    """Build read-only production contracts beside legacy runtime conditions.
-
-    The returned shadow is diagnostic only. It does not replace or mutate
-    `site_condition_context`, does not alter Rule Engine input, and keeps
-    production eligibility/runtime registration explicitly false.
-    """
-
+    """Build read-only SPATIAL production contracts beside legacy runtime conditions."""
     if not isinstance(site_condition_context, dict):
         return {}
 
     shadow: Dict[str, Dict[str, Any]] = {}
-
     for name, raw_condition in site_condition_context.items():
         if not isinstance(raw_condition, dict):
             continue
-
         condition = adapt_spatial_condition_to_production_contract(
             raw_condition,
             production_eligible=False,
             runtime_registered=False,
         )
-
         shadow[str(name)] = condition.to_dict()
-
     return shadow
 
-
-# ============================================================
-# land area reconciliation
-# ============================================================
 
 def build_land_area_result(
     site_input: Dict[str, Any],
     site: Dict[str, Any],
 ) -> Dict[str, Any]:
-
-    official_area = (
-        site_input.get(
-            "land_area"
-        )
-    )
-
-    parcel = (
-        site.get(
-            "spatial",
-            {},
-        ).get(
-            "parcel",
-            {},
-        )
-    )
-
-    spatial_area = (
-        parcel.get(
-            "area",
-            {},
-        ).get(
-            "value"
-        )
-    )
+    official_area = site_input.get("land_area")
+    parcel = site.get("spatial", {}).get("parcel", {})
+    spatial_area = parcel.get("area", {}).get("value")
 
     difference = None
     difference_ratio = None
-
-    if (
-        official_area is not None
-        and spatial_area is not None
-    ):
-
-        difference = (
-            float(
-                official_area
-            )
-            - float(
-                spatial_area
-            )
-        )
-
-        if (
-            float(
-                official_area
-            )
-            != 0
-        ):
-
-            difference_ratio = (
-                abs(
-                    difference
-                )
-                / float(
-                    official_area
-                )
-                * 100.0
-            )
+    if official_area is not None and spatial_area is not None:
+        difference = float(official_area) - float(spatial_area)
+        if float(official_area) != 0:
+            difference_ratio = abs(difference) / float(official_area) * 100.0
 
     return {
-
         "official": {
-
-            "value": (
-                official_area
-            ),
-
-            "unit": (
-                "square_meter"
-            ),
-
-            "source": (
-                "VWORLD_LAND_CHARACTERISTICS"
-            ),
-
-            "role": (
-                "LEGAL_OR_ATTRIBUTE_LAND_AREA"
-            ),
+            "value": official_area,
+            "unit": "square_meter",
+            "source": "VWORLD_LAND_CHARACTERISTICS",
+            "role": "LEGAL_OR_ATTRIBUTE_LAND_AREA",
         },
-
         "spatial": {
-
-            "value": (
-                spatial_area
-            ),
-
-            "unit": (
-                "native_crs_square_units"
-            ),
-
-            "source": (
-                "MAPPLAN_PARCEL_GEOMETRY"
-            ),
-
-            "role": (
-                "SPATIAL_GEOMETRY_AREA"
-            ),
-
-            "crs": (
-                parcel.get(
-                    "crs"
-                )
-            ),
-
-            "crs_status": (
-                parcel.get(
-                    "crs_status"
-                )
-            ),
+            "value": spatial_area,
+            "unit": "native_crs_square_units",
+            "source": "MAPPLAN_PARCEL_GEOMETRY",
+            "role": "SPATIAL_GEOMETRY_AREA",
+            "crs": parcel.get("crs"),
+            "crs_status": parcel.get("crs_status"),
         },
-
         "difference": {
-
-            "value": (
-                difference
-            ),
-
-            "ratio_percent": (
-                difference_ratio
-            ),
+            "value": difference,
+            "ratio_percent": difference_ratio,
         },
-
-        "resolution": (
-            "KEEP_BOTH_WITH_SOURCE_ROLES"
-        ),
-
-        "primary": (
-            "official"
-        ),
+        "resolution": "KEEP_BOTH_WITH_SOURCE_ROLES",
+        "primary": "official",
     }
 
 
-# ============================================================
-# regulation result
-# ============================================================
-
-def build_regulation_result(
-    engine_result: Dict[str, Any],
-) -> Dict[str, Any]:
-
-    numeric = (
-        engine_result.get(
-            "numeric",
-            {},
-        )
-    )
-
+def build_regulation_result(engine_result: Dict[str, Any]) -> Dict[str, Any]:
+    numeric = engine_result.get("numeric", {})
     return {
-
         "building_coverage_ratio": {
-
-            "value": (
-                numeric.get(
-                    "building_coverage_ratio"
-                )
-            ),
-
-            "unit": (
-                "percent"
-            ),
-
+            "value": numeric.get("building_coverage_ratio"),
+            "unit": "percent",
             "status": (
                 "CONFIRMED"
-                if numeric.get(
-                    "building_coverage_ratio"
-                )
-                is not None
+                if numeric.get("building_coverage_ratio") is not None
                 else "PENDING"
             ),
         },
-
         "floor_area_ratio": {
-
-            "value": (
-                numeric.get(
-                    "floor_area_ratio"
-                )
-            ),
-
-            "unit": (
-                "percent"
-            ),
-
+            "value": numeric.get("floor_area_ratio"),
+            "unit": "percent",
             "status": (
                 "CONFIRMED"
-                if numeric.get(
-                    "floor_area_ratio"
-                )
-                is not None
+                if numeric.get("floor_area_ratio") is not None
                 else "PENDING"
             ),
         },
-
-        "numeric_resolution": (
-            numeric.get(
-                "resolution"
-            )
-        ),
-
-        "direct_relaxation_count": (
-            numeric.get(
-                "direct_relaxation_count",
-                0,
-            )
-        ),
-
-        "numeric_active_before_guard": (
-            numeric.get(
-                "active_before_guard",
-                0,
-            )
-        ),
-
-        "numeric_excluded_count": (
-            numeric.get(
-                "excluded_count",
-                0,
-            )
-        ),
-
-        "numeric_retained_count": (
-            numeric.get(
-                "retained_count",
-                0,
-            )
-        ),
+        "numeric_resolution": numeric.get("resolution"),
+        "direct_relaxation_count": numeric.get("direct_relaxation_count", 0),
+        "numeric_active_before_guard": numeric.get("active_before_guard", 0),
+        "numeric_excluded_count": numeric.get("excluded_count", 0),
+        "numeric_retained_count": numeric.get("retained_count", 0),
     }
 
 
-# ============================================================
-# rule summary
-# ============================================================
-
-def build_rule_summary(
-    engine_result: Dict[str, Any],
-) -> Dict[str, Any]:
-
-    summary = (
-        engine_result.get(
-            "rule_summary",
-            {},
-        )
-    )
-
-    applicable = int(
-        summary.get(
-            "APPLICABLE",
-            0,
-        )
-        or 0
-    )
-
-    not_applicable = int(
-        summary.get(
-            "NOT_APPLICABLE",
-            0,
-        )
-        or 0
-    )
-
-    conditional = int(
-        summary.get(
-            "CONDITIONAL",
-            0,
-        )
-        or 0
-    )
-
-    unknown = int(
-        summary.get(
-            "UNKNOWN",
-            0,
-        )
-        or 0
-    )
-
+def build_rule_summary(engine_result: Dict[str, Any]) -> Dict[str, Any]:
+    summary = engine_result.get("rule_summary", {})
+    applicable = int(summary.get("APPLICABLE", 0) or 0)
+    not_applicable = int(summary.get("NOT_APPLICABLE", 0) or 0)
+    conditional = int(summary.get("CONDITIONAL", 0) or 0)
+    unknown = int(summary.get("UNKNOWN", 0) or 0)
     return {
-
-        "total": (
-            applicable
-            + not_applicable
-            + conditional
-            + unknown
-        ),
-
-        "applicable": (
-            applicable
-        ),
-
-        "not_applicable": (
-            not_applicable
-        ),
-
-        "conditional": (
-            conditional
-        ),
-
-        "unknown": (
-            unknown
-        ),
+        "total": applicable + not_applicable + conditional + unknown,
+        "applicable": applicable,
+        "not_applicable": not_applicable,
+        "conditional": conditional,
+        "unknown": unknown,
     }
 
 
-# ============================================================
-# input requirements
-# ============================================================
-
-def build_input_requirements(
-    engine_result: Dict[str, Any],
-) -> Dict[str, Any]:
-
-    remaining = (
-        engine_result.get(
-            "remaining_inputs",
-            {},
-        )
-    )
-
-    project = copy.deepcopy(
-        remaining.get(
-            "project",
-            [],
-        )
-    )
-
-    procedure = copy.deepcopy(
-        remaining.get(
-            "procedure",
-            [],
-        )
-    )
-
+def build_input_requirements(engine_result: Dict[str, Any]) -> Dict[str, Any]:
+    remaining = engine_result.get("remaining_inputs", {})
+    project = copy.deepcopy(remaining.get("project", []))
+    procedure = copy.deepcopy(remaining.get("procedure", []))
     return {
-
-        "project": (
-            project
-        ),
-
-        "procedure": (
-            procedure
-        ),
-
-        "project_count": (
-            len(
-                project
-            )
-        ),
-
-        "procedure_count": (
-            len(
-                procedure
-            )
-        ),
-
-        "requires_additional_input": (
-            bool(
-                project
-                or procedure
-            )
-        ),
+        "project": project,
+        "procedure": procedure,
+        "project_count": len(project),
+        "procedure_count": len(procedure),
+        "requires_additional_input": bool(project or procedure),
     }
 
 
-# ============================================================
-# external dependency
-# ============================================================
-
-def build_external_dependencies(
-    engine_result: Dict[str, Any],
-) -> Dict[str, Any]:
-
-    dependencies = copy.deepcopy(
-        engine_result.get(
-            "external_dependencies",
-            {},
-        )
-    )
-
-    historical = (
-        dependencies.get(
-            "historical",
-            {},
-        )
-    )
-
+def build_external_dependencies(engine_result: Dict[str, Any]) -> Dict[str, Any]:
+    dependencies = copy.deepcopy(engine_result.get("external_dependencies", {}))
+    historical = dependencies.get("historical", {})
     active = []
-
     if historical:
-
         active.append(
             {
-
-                "category": (
-                    "SITE_HISTORY"
-                ),
-
-                "condition": (
-                    historical.get(
-                        "condition"
-                    )
-                ),
-
-                "status": (
-                    historical.get(
-                        "status"
-                    )
-                ),
-
-                "confidence": (
-                    historical.get(
-                        "confidence"
-                    )
-                ),
-
-                "automation_state": (
-                    historical.get(
-                        "automation_state"
-                    )
-                ),
-
-                "blocking_analysis": (
-                    historical.get(
-                        "blocking_site_stage",
-                        False,
-                    )
-                ),
+                "category": "SITE_HISTORY",
+                "condition": historical.get("condition"),
+                "status": historical.get("status"),
+                "confidence": historical.get("confidence"),
+                "automation_state": historical.get("automation_state"),
+                "blocking_analysis": historical.get("blocking_site_stage", False),
             }
         )
+    return {"count": len(active), "items": active}
 
-    return {
-
-        "count": (
-            len(
-                active
-            )
-        ),
-
-        "items": (
-            active
-        ),
-    }
-
-
-# ============================================================
-# analysis status
-# ============================================================
 
 def determine_analysis_status(
     engine_result: Dict[str, Any],
     regulation: Dict[str, Any],
 ) -> str:
-
-    engine_ready = (
-        engine_result.get(
-            "pipeline",
-            {},
-        ).get(
-            "ready"
-        )
-        is True
-    )
-
+    engine_ready = engine_result.get("pipeline", {}).get("ready") is True
     bcr_confirmed = (
-        regulation.get(
-            "building_coverage_ratio",
-            {},
-        ).get(
-            "status"
-        )
-        == "CONFIRMED"
+        regulation.get("building_coverage_ratio", {}).get("status") == "CONFIRMED"
     )
-
     far_confirmed = (
-        regulation.get(
-            "floor_area_ratio",
-            {},
-        ).get(
-            "status"
-        )
-        == "CONFIRMED"
+        regulation.get("floor_area_ratio", {}).get("status") == "CONFIRMED"
     )
-
-    if (
-        engine_ready
-        and bcr_confirmed
-        and far_confirmed
-    ):
-
-        return (
-            "READY"
-        )
-
+    if engine_ready and bcr_confirmed and far_confirmed:
+        return "READY"
     if engine_ready:
+        return "PARTIAL"
+    return "NOT_READY"
 
-        return (
-            "PARTIAL"
-        )
-
-    return (
-        "NOT_READY"
-    )
-
-
-# ============================================================
-# public API
-# ============================================================
 
 def build_site_analysis(
-    project_profile: Optional[
-        Dict[str, str]
-    ] = None,
-    procedure_profile: Optional[
-        Dict[str, str]
-    ] = None,
-    site_input: Optional[
-        Dict[str, Any]
-    ] = None,
+    project_profile: Optional[Dict[str, str]] = None,
+    procedure_profile: Optional[Dict[str, str]] = None,
+    site_input: Optional[Dict[str, Any]] = None,
+    production_condition_shadow_sources: Optional[Any] = None,
 ) -> Dict[str, Any]:
+    project_profile = project_profile or {}
+    procedure_profile = procedure_profile or {}
+    site_input = site_input or {}
 
-    project_profile = (
-        project_profile
-        or {}
-    )
+    site_complete = load_json(SITE_COMPLETE_PATH)
+    base_numeric = load_json(BASE_NUMERIC_PATH)
 
-    procedure_profile = (
-        procedure_profile
-        or {}
-    )
+    base_site = copy.deepcopy(site_complete.get("site", {}))
+    if not safe_string(base_site.get("zone")):
+        base_site["zone"] = base_numeric.get("site_zone")
+    if not safe_string(base_site.get("land_use_zone")):
+        base_site["land_use_zone"] = base_numeric.get("site_zone")
 
-    site_input = (
-        site_input
-        or {}
-    )
+    site = resolve_site_identity(base_site=base_site, site_input=site_input)
+    spatial = resolve_site_spatial_payload(site=site)
+    site["spatial"] = spatial
+    parcel = spatial.get("parcel", {})
 
-    # ========================================================
-    # source
-    # ========================================================
-
-    site_complete = (
-        load_json(
-            SITE_COMPLETE_PATH
+    runtime_condition_names = get_supported_spatial_conditions()
+    site_condition_context: Dict[str, Dict[str, Any]] = {}
+    for condition_name in runtime_condition_names:
+        condition_result = resolve_site_spatial_condition(
+            condition_name=condition_name,
+            site=site,
+            parcel=parcel,
         )
-    )
+        site_condition_context[condition_name] = condition_result
 
-    base_numeric = (
-        load_json(
-            BASE_NUMERIC_PATH
-        )
-    )
+    site["runtime_conditions"] = copy.deepcopy(site_condition_context)
 
-    # ========================================================
-    # base SITE
-    # ========================================================
-
-    base_site = copy.deepcopy(
-        site_complete.get(
-            "site",
-            {},
-        )
-    )
-
-    # --------------------------------------------------------
-    # zone fallback
-    # --------------------------------------------------------
-
-    if not safe_string(
-        base_site.get(
-            "zone"
-        )
-    ):
-
-        base_site[
-            "zone"
-        ] = (
-            base_numeric.get(
-                "site_zone"
-            )
-        )
-
-    if not safe_string(
-        base_site.get(
-            "land_use_zone"
-        )
-    ):
-
-        base_site[
-            "land_use_zone"
-        ] = (
-            base_numeric.get(
-                "site_zone"
-            )
-        )
-
-    # ========================================================
-    # resolved SITE identity
-    # ========================================================
-
-    site = (
-        resolve_site_identity(
-            base_site=(
-                base_site
-            ),
-
-            site_input=(
-                site_input
-            ),
-        )
-    )
-
-    # ========================================================
-    # spatial payload
-    # ========================================================
-
-    spatial = (
-        resolve_site_spatial_payload(
-            site=(
-                site
-            )
-        )
-    )
-
-    site[
-        "spatial"
-    ] = (
-        spatial
-    )
-
-    parcel = (
-        spatial.get(
-            "parcel",
-            {},
-        )
-    )
-
-    # ========================================================
-    # C-16 runtime SITE spatial conditions
-    # ========================================================
-
-    runtime_condition_names = (
-        get_supported_spatial_conditions()
-    )
-
-    site_condition_context: Dict[
-        str,
-        Dict[str, Any],
-    ] = {}
-
-    for condition_name in (
-        runtime_condition_names
-    ):
-
-        condition_result = (
-            resolve_site_spatial_condition(
-                condition_name=(
-                    condition_name
-                ),
-
-                site=(
-                    site
-                ),
-
-                parcel=(
-                    parcel
-                ),
-            )
-        )
-
-        site_condition_context[
-            condition_name
-        ] = (
-            condition_result
-        )
-
-    site[
-        "runtime_conditions"
-    ] = (
-        copy.deepcopy(
-            site_condition_context
-        )
-    )
-
-    # ========================================================
-    # STEP 18-D production contract shadow
-    #
-    # IMPORTANT:
-    # - diagnostic/shadow only
-    # - does not replace site_condition_context
-    # - does not alter Rule Engine input
-    # - does not infer production eligibility/runtime registration
-    # ========================================================
-
-    site[
-        "production_condition_contracts"
-    ] = build_production_condition_contract_shadow(
+    spatial_shadow = build_production_condition_contract_shadow(
         site_condition_context
     )
-
-    # ========================================================
-    # representative coordinate promotion
-    # ========================================================
-
-    existing_coordinate = (
-        site.get(
-            "coordinate"
+    external_shadow_sources = copy.deepcopy(
+        production_condition_shadow_sources
+    )
+    site["production_condition_contracts"] = (
+        collect_production_site_condition_shadows(
+            spatial_shadow,
+            external_shadow_sources,
         )
     )
 
+    existing_coordinate = site.get("coordinate")
     existing_coordinate_valid = (
-        isinstance(
-            existing_coordinate,
-            dict,
-        )
-        and isinstance(
-            existing_coordinate.get(
-                "x"
-            ),
-            (
-                int,
-                float,
-            ),
-        )
-        and isinstance(
-            existing_coordinate.get(
-                "y"
-            ),
-            (
-                int,
-                float,
-            ),
-        )
+        isinstance(existing_coordinate, dict)
+        and isinstance(existing_coordinate.get("x"), (int, float))
+        and isinstance(existing_coordinate.get("y"), (int, float))
     )
-
     if not existing_coordinate_valid:
-
         live_coordinate = (
-            spatial.get(
-                "parcel",
-                {},
-            ).get(
-                "source",
-                {},
-            ).get(
-                "live",
-                {},
-            ).get(
-                "coordinate",
-                {},
-            )
+            spatial.get("parcel", {})
+            .get("source", {})
+            .get("live", {})
+            .get("coordinate", {})
         )
-
         live_coordinate_valid = (
-            isinstance(
-                live_coordinate,
-                dict,
-            )
-            and live_coordinate.get(
-                "crs"
-            )
-            == "EPSG:4326"
-            and isinstance(
-                live_coordinate.get(
-                    "x"
-                ),
-                (
-                    int,
-                    float,
-                ),
-            )
-            and isinstance(
-                live_coordinate.get(
-                    "y"
-                ),
-                (
-                    int,
-                    float,
-                ),
-            )
+            isinstance(live_coordinate, dict)
+            and live_coordinate.get("crs") == "EPSG:4326"
+            and isinstance(live_coordinate.get("x"), (int, float))
+            and isinstance(live_coordinate.get("y"), (int, float))
         )
-
         if live_coordinate_valid:
-
-            site[
-                "coordinate"
-            ] = {
-
-                "x": (
-                    live_coordinate.get(
-                        "x"
-                    )
-                ),
-
-                "y": (
-                    live_coordinate.get(
-                        "y"
-                    )
-                ),
-
-                "crs": (
-                    "EPSG:4326"
-                ),
-
-                "source": (
-                    live_coordinate.get(
-                        "source"
-                    )
-                    or "VWORLD_ADDRESS_SEARCH"
-                ),
-
-                "status": (
-                    "CONFIRMED"
-                ),
+            site["coordinate"] = {
+                "x": live_coordinate.get("x"),
+                "y": live_coordinate.get("y"),
+                "crs": "EPSG:4326",
+                "source": live_coordinate.get("source") or "VWORLD_ADDRESS_SEARCH",
+                "status": "CONFIRMED",
             }
 
-    # ========================================================
-    # zone base numeric
-    # ========================================================
+    zone_base_numeric = resolve_zone_base_numeric(site.get("zone"))
 
-    zone_base_numeric = (
-        resolve_zone_base_numeric(
-            site.get(
-                "zone"
-            )
-        )
+    engine_result = evaluate_site_rules(
+        project_profile=project_profile,
+        procedure_profile=procedure_profile,
+        base_numeric_context=zone_base_numeric,
+        site_zone_context=site.get("zone"),
+        site_condition_context=site_condition_context,
     )
 
-    # ========================================================
-    # rule engine
-    # ========================================================
-
-    engine_result = (
-        evaluate_site_rules(
-            project_profile=(
-                project_profile
-            ),
-
-            procedure_profile=(
-                procedure_profile
-            ),
-
-            base_numeric_context=(
-                zone_base_numeric
-            ),
-
-            site_zone_context=(
-                site.get(
-                    "zone"
-                )
-            ),
-
-            site_condition_context=(
-                site_condition_context
-            ),
-        )
+    land_area = build_land_area_result(site_input=site_input, site=site)
+    regulation = build_regulation_result(engine_result)
+    rule_summary = build_rule_summary(engine_result)
+    input_requirements = build_input_requirements(engine_result)
+    external_dependencies = build_external_dependencies(engine_result)
+    analysis_status = determine_analysis_status(
+        engine_result=engine_result,
+        regulation=regulation,
     )
-
-    # ========================================================
-    # land area
-    # ========================================================
-
-    land_area = (
-        build_land_area_result(
-            site_input=(
-                site_input
-            ),
-
-            site=(
-                site
-            ),
-        )
-    )
-
-    # ========================================================
-    # regulation
-    # ========================================================
-
-    regulation = (
-        build_regulation_result(
-            engine_result
-        )
-    )
-
-    # ========================================================
-    # rule summary
-    # ========================================================
-
-    rule_summary = (
-        build_rule_summary(
-            engine_result
-        )
-    )
-
-    # ========================================================
-    # input requirements
-    # ========================================================
-
-    input_requirements = (
-        build_input_requirements(
-            engine_result
-        )
-    )
-
-    # ========================================================
-    # external dependency
-    # ========================================================
-
-    external_dependencies = (
-        build_external_dependencies(
-            engine_result
-        )
-    )
-
-    # ========================================================
-    # final status
-    # ========================================================
-
-    analysis_status = (
-        determine_analysis_status(
-            engine_result=(
-                engine_result
-            ),
-
-            regulation=(
-                regulation
-            ),
-        )
-    )
-
-    # ========================================================
-    # final object
-    # ========================================================
 
     return {
-
         "analysis": {
-
-            "status": (
-                analysis_status
-            ),
-
-            "engine": (
-                "RULE_EVALUATION_PIPELINE"
-            ),
-
-            "engine_version": (
-                engine_result.get(
-                    "pipeline",
-                    {},
-                ).get(
-                    "version"
-                )
-            ),
+            "status": analysis_status,
+            "engine": "RULE_EVALUATION_PIPELINE",
+            "engine_version": engine_result.get("pipeline", {}).get("version"),
         },
-
-        "site": (
-            site
-        ),
-
+        "site": site,
         "input": {
-
-            "site": (
-                copy.deepcopy(
-                    site_input
-                )
-            ),
-
-            "project": (
-                copy.deepcopy(
-                    project_profile
-                )
-            ),
-
-            "procedure": (
-                copy.deepcopy(
-                    procedure_profile
-                )
-            ),
+            "site": copy.deepcopy(site_input),
+            "project": copy.deepcopy(project_profile),
+            "procedure": copy.deepcopy(procedure_profile),
         },
-
-        "land_area": (
-            land_area
-        ),
-
-        "regulation": (
-            regulation
-        ),
-
-        "rule_evaluation": (
-            rule_summary
-        ),
-
-        "input_requirements": (
-            input_requirements
-        ),
-
-        "external_dependencies": (
-            external_dependencies
-        ),
-
+        "land_area": land_area,
+        "regulation": regulation,
+        "rule_evaluation": rule_summary,
+        "input_requirements": input_requirements,
+        "external_dependencies": external_dependencies,
         "rule_engine": {
-
-            "baseline": (
-                engine_result.get(
-                    "baseline"
-                )
-            ),
-
-            "branch_overlay": (
-                engine_result.get(
-                    "branch_overlay"
-                )
-            ),
-
-            "dynamic_injection": (
-                engine_result.get(
-                    "dynamic_injection"
-                )
-            ),
-
-            "site_registry": (
-                engine_result.get(
-                    "site_registry"
-                )
-            ),
-
-            "site_repairs": (
-                engine_result.get(
-                    "site_repairs"
-                )
-            ),
-
-            "numeric": (
-                engine_result.get(
-                    "numeric"
-                )
-            ),
+            "baseline": engine_result.get("baseline"),
+            "branch_overlay": engine_result.get("branch_overlay"),
+            "dynamic_injection": engine_result.get("dynamic_injection"),
+            "site_registry": engine_result.get("site_registry"),
+            "site_repairs": engine_result.get("site_repairs"),
+            "numeric": engine_result.get("numeric"),
         },
     }
