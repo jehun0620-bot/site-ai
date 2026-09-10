@@ -21,7 +21,7 @@
 아키텍처를 수정하되, 변경 이유를 명시하고 기존 안전 원칙을 훼손하지 않는다.
 
 최초 작성 기준일: 2026-08-26
-Architecture Baseline: v1.1
+Architecture Baseline: v1.2
 
 
 1. 프로젝트 최종 목표
@@ -347,6 +347,20 @@ non-target 분류가 모두 positive evidence로 검증된 exhaustive disproof�
 - FALSE requirements
 - UNKNOWN conditions
 
+Regulation Resolution의 공통 metadata boundary는 resolver execution과 분리한다.
+
+```text
+RegulationResolutionProfile
+≠ resolver execution
+≠ SITE state
+≠ production registration
+≠ runtime registration
+≠ Rule Engine input
+```
+
+표준코드가 확인되지 않은 조건은 `standard_code=None`, `standard_code_verified=False`를 허용하며
+코드를 추측하지 않는다. profile 존재는 조건 identity/policy metadata일 뿐 legal evidence가 아니다.
+
 
 8. REGULATION RESOLUTION 내부 파이프라인
 ======================================================================
@@ -381,7 +395,7 @@ FINAL TRUE / FALSE / UNKNOWN
 9. COMPETENT AUTHORITY & SOURCE SCOPE
 ======================================================================
 
-향후 Regulation Resolution에서 반드시 포함해야 하는 공통 계층이다.
+Regulation Resolution에서 반드시 포함해야 하는 공통 계층이다.
 
 문제:
 
@@ -397,7 +411,7 @@ FINAL TRUE / FALSE / UNKNOWN
 → 공식 사이트지만 UQQ700 지정권한 source는 아님
 ```
 
-따라서 source qualification은 다음 구조로 발전한다.
+source qualification은 다음 구조로 분리한다.
 
 ```text
 OFFICIAL HOST
@@ -411,6 +425,32 @@ LEGAL AUTHORITY SCOPE
 TARGET REGULATION COMPATIBILITY
 ```
 
+현재 공통 `AuthoritySourceScope` boundary는 이 qualification metadata와 각 verification gate를
+fail-closed로 표현한다. descriptive metadata의 존재만으로 verification flag를 올리지 않는다.
+
+```text
+official-looking host
+≠ competent authority
+
+region metadata
+≠ verified region binding
+
+PRIMARY / SECONDARY role value
+≠ verified source role
+
+authority scope text
+≠ verified legal authority
+
+target regulation metadata
+≠ verified compatibility
+
+AuthoritySourceScope
+≠ authority registry
+≠ resolver execution
+≠ SITE state
+≠ runtime registration
+```
+
 향후 registry 후보:
 
 ```text
@@ -418,6 +458,10 @@ AUTHORITY_SCOPE
 SOURCE_AUTHORITY_REGISTRY
 REGULATION_AUTHORITY_REQUIREMENTS
 ```
+
+이 registry들은 pure boundary가 존재한다는 이유만으로 자동 도입하지 않는다.
+verified authority/source mapping의 반복 사용 필요가 확인되고, mapping provenance와
+regulation compatibility를 안정적으로 검증할 수 있을 때 별도 architecture decision으로 도입한다.
 
 Primary / Secondary source도 구분한다.
 
@@ -1134,7 +1178,7 @@ PHASE 7 — REGULATION RESOLUTION
 - notice/document verification
 - TRUE/FALSE/UNKNOWN
 
-완료 상태: 현재 핵심 개발 구간
+완료 상태: ACTIVE / common profile metadata boundary 구축 완료, condition별 evidence resolution 확장 중
 
 현재 대표 target:
 
@@ -1148,6 +1192,10 @@ PHASE 8의 authority / historical provenance 공통 kernel을 선행 구축할 �
 condition별 standard code, policy, provenance가 충분히 확정되기 전에는
 production registry, SITE overlay, runtime registration으로 연결하지 않는다.
 
+현재 `RegulationResolutionProfile`은 condition identity / standard-code verification state /
+resolution type / authority-source policy requirement를 표현하는 immutable metadata boundary다.
+profile registry는 exact-name read-only lookup이며 spatial runtime registry와 분리한다.
+
 
 PHASE 8 — AUTHORITY / HISTORICAL PROVENANCE
 
@@ -1160,7 +1208,15 @@ PHASE 8 — AUTHORITY / HISTORICAL PROVENANCE
 - release/cancellation verification
 - historical event provenance / history completeness
 
-완료 상태: 선행 기반 구축 시작, 본격 registry 통합은 다음 핵심 구간
+완료 상태: ACTIVE / historical provenance kernel 및 AuthoritySourceScope pure boundary 구축 완료,
+verified authority/source registry integration은 별도 검증 단계로 남아 있음
+
+AuthoritySourceScope는 registry 이전 단계의 qualification contract다.
+공식처럼 보이는 host, region, source role, authority scope, regulation name이 존재해도
+독립 verification 없이는 competent authority로 승격하지 않는다.
+
+registry 도입은 verified mapping과 provenance가 실제로 준비된 경우에만 진행한다.
+registry 존재 자체를 authority verification evidence로 사용하지 않는다.
 
 
 PHASE 9 — NATIONWIDE REGULATION REGISTRY
@@ -1288,7 +1344,7 @@ PHASE 19 — PRODUCTION QUALITY
 31. CURRENT ARCHITECTURE CHECKPOINT
 ======================================================================
 
-2026-08-26 기준 프로젝트는 MASTER ROADMAP상 대략 다음 위치다.
+2026-09-10 기준 프로젝트는 MASTER ROADMAP상 대략 다음 위치다.
 
 ```text
 PHASE 0   Foundation                    COMPLETE
@@ -1298,12 +1354,15 @@ PHASE 3   SITE Analysis                 CORE COMPLETE
 PHASE 4   Legal ingestion               IN PROGRESS
 PHASE 5   Rule Engine                   IN PROGRESS / CORE STABLE
 PHASE 6   Runtime spatial               CORE STABLE
-PHASE 7   Regulation Resolution         ACTIVE
-PHASE 8   Authority/Historical          STARTING
+PHASE 7   Regulation Resolution         ACTIVE / PROFILE BOUNDARY CLOSED
+PHASE 8   Authority/Historical          ACTIVE / AUTHORITY SOURCE SCOPE BOUNDARY CLOSED
 PHASE 9+  Nationwide/AI/Product         FUTURE
 ```
 
-현재 개발이 후반부라는 뜻이 아니다.
+STEP 18 production SITE condition boundary, STEP 19 regulation resolution profile boundary,
+STEP 20 authority/source scope boundary는 각각 terminally closed 상태다.
+
+이 closure는 production/runtime registration 완료를 뜻하지 않는다.
 현재는 향후 AI 분석의 정확성을 결정하는 deterministic data foundation을 구축하는 단계다.
 
 
@@ -1403,6 +1462,41 @@ reverse verification
 36. ARCHITECTURE CHANGE LOG
 ======================================================================
 
+### v1.2 — 2026-09-10
+
+Regulation Resolution profile boundary와 Authority/Source Scope boundary의 terminal closure를
+장기 architecture baseline에 반영했다.
+
+반영 내용:
+
+- `RegulationResolutionProfile`을 resolver/runtime와 분리된 immutable metadata boundary로 명시
+- standard-code identity/verification state와 legal evidence verification을 분리
+- `AuthoritySourceScope`의 OFFICIAL HOST → REGION BINDING → SOURCE ROLE → LEGAL AUTHORITY SCOPE → TARGET REGULATION COMPATIBILITY qualification chain 반영
+- descriptive authority/source metadata와 verified competent-authority evidence를 분리
+- `AuthoritySourceScope ≠ authority registry` 원칙 명시
+- authority/source registry는 verified mappings와 provenance가 준비된 이후 별도 architecture decision으로 도입하도록 명시
+- PHASE 7/8 및 current architecture checkpoint를 STEP 19/20 terminal closure 상태와 정합화
+- UQQ700 및 HISTORICAL_SITE_EVENT의 UNKNOWN/BLOCKED/no-promotion 안전 원칙 유지
+
+기존 behavior 영향:
+
+- 없음. architecture documentation 정합성 보완이다.
+- profile/authority metadata를 Rule Engine, spatial runtime registry, builder/service/orchestrator/public API에 자동 연결하지 않는다.
+- UQQ700의 UNKNOWN 및 production/runtime registration BLOCKED 상태를 변경하지 않는다.
+- 도시지역편입해제구역의 standard-code unverified, provenance BLOCKED 상태를 변경하지 않는다.
+
+regression 영향:
+
+- STEP 19 terminal classification `STEP19_REGULATION_RESOLUTION_PROFILE_BOUNDARY_TERMINALLY_RECONCILED` 반영
+- STEP 20 terminal classification `STEP20_AUTHORITY_SOURCE_SCOPE_BOUNDARY_TERMINALLY_RECONCILED` 반영
+
+STEP 21 architecture review classification:
+
+```text
+STEP21_ARCHITECTURE_BASELINE_PROFILE_AUTHORITY_SCOPE_RECONCILED
+```
+
+
 ### v1.1 — 2026-09-09
 
 Regulation Resolution 일반화 과정에서 확인된 historical SITE condition family를 반영했다.
@@ -1441,7 +1535,7 @@ regression 영향:
 
 다음 architecture review trigger:
 
-- Regulation Authority/Source Scope 계층 구현 완료 시
+- verified authority/source registry 설계 시작 시
 - UQQ700 최종 TRUE/FALSE/UNKNOWN resolution 완료 시
 - Nationwide regulation registry 설계 시작 시
 - Hybrid Retrieval / AI 단계 진입 시
