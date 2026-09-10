@@ -2,7 +2,7 @@
 
 최종 업데이트: 2026-09-10
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `d40216f3b55152fabe6a0d7d30f3ffde59211047`
+기준 개발 HEAD: `eae80b4dbbb46afba545aa8e5cc2b5ab1aee1957`
 
 > 현재 개발 상태와 안전 불변조건을 기록한다. 장기 로드맵은 `PROJECT_ARCHITECTURE.md` 기준.
 
@@ -632,4 +632,57 @@ OFFICIAL SOURCE AUTHORITY / ROLE
 → POSITIVE EVENT / COMPLETENESS EVALUATION
 → PRODUCTION READINESS
 → RUNTIME REGISTRATION ELIGIBILITY
+```
+
+## 16. STEP 17 terminal closure — PASS
+
+STEP 17의 terminal closure audit를 완료했다.
+
+```text
+CLASSIFICATION: STEP17_TERMINAL_CLOSURE_AUDIT_PASS
+STEP 17 state: TERMINALLY CLOSED
+```
+
+closure 기준:
+
+```text
+UQQ700
+- resolution = UNKNOWN
+- TRUE/FALSE promotion = BLOCKED
+- negative evidence inference = DISABLED
+- legal absence inference = DISABLED
+- SITE promotion = BLOCKED
+- runtime registration = BLOCKED
+- terminal reconciliation = COMPLETE
+
+도시지역편입해제구역
+- resolution = UNKNOWN / MEDIUM
+- verified qualifying event = False
+- history completeness = False
+- provenance = 0 / 6
+- standard code = UNVERIFIED
+- TRUE/FALSE promotion = BLOCKED
+- SITE promotion = BLOCKED
+- production wiring = BLOCKED
+- runtime registration = BLOCKED
+- terminal reconciliation = COMPLETE
+```
+
+현재 baseline 기준 remaining unresolved SITE target은 없다.
+
+```text
+remaining unresolved SITE targets = NONE
+```
+
+STEP 17 종료는 두 UNKNOWN condition을 법적으로 해소했다는 뜻이 아니다. 내부 resolver/adapter/runtime safety contract 관점에서 더 진행할 수 있는 positive evidence가 없으며, 새 공식 evidence가 들어오기 전까지 fail-closed UNKNOWN 상태를 유지한다는 뜻이다.
+
+다음 단계 진입 원칙:
+
+```text
+1. STEP 17 terminal target 재탐색 금지 — 새 official positive evidence가 있을 때만 재개
+2. UQQ700 / 도시지역편입해제구역 UNKNOWN 유지
+3. search/no-hit / source exhaustion 기반 FALSE inference 금지
+4. SITE promotion / production wiring / runtime registration 금지
+5. 다음 개발 단계는 기존 STEP 17 terminal target과 분리하여 시작
+6. production integration은 명시적 positive evidence와 별도 승인 후 검토
 ```
