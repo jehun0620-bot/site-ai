@@ -41,6 +41,20 @@ def main() -> int:
 
     empty = adapt_urban_area_conversion_history_completeness({})
     empty_v = empty["completeness_verification"]
+    empty_d = empty["condition_diagnostics"]
+    empty_g = empty["promotion_guards"]
+
+    partial = adapt_urban_area_conversion_history_completeness(
+        {
+            "checks": {
+                "historic_chain_has_missing_content": False,
+                "historic_missing_content_notice_count": 0,
+                "national_archive_original_pending": False,
+            }
+        }
+    )
+    partial_v = partial["completeness_verification"]
+    partial_d = partial["condition_diagnostics"]
 
     checks = {
         "current actual-like state remains incomplete": (
@@ -69,12 +83,14 @@ def main() -> int:
             ] is False
         ),
         "current unresolved originals remain unresolved": (
-            current_d["unresolved_historical_source_present"] is True
+            current_d["original_resolution_state_observed"] is True
+            and current_d["unresolved_historical_source_present"] is True
             and current_d["required_original_documents_resolved"] is False
             and current_v["required_original_documents_resolved"] is False
         ),
-        "resolving originals maps only the originals gate": (
-            resolved_d["unresolved_historical_source_present"] is False
+        "explicitly observed resolved originals map only originals gate": (
+            resolved_d["original_resolution_state_observed"] is True
+            and resolved_d["unresolved_historical_source_present"] is False
             and resolved_v["required_original_documents_resolved"] is True
             and resolved_v["positive_gate_count"] == 1
         ),
@@ -84,9 +100,21 @@ def main() -> int:
             and resolved_v["candidate_universe_exhaustively_enumerated"] is False
             and resolved_v["history_scope_complete_verified"] is False
         ),
-        "missing payload fails closed": (
-            empty_v["positive_gate_count"] == 1
+        "missing payload cannot manufacture resolved originals": (
+            empty_d["original_resolution_state_observed"] is False
+            and empty_d["required_original_documents_resolved"] is False
+            and empty_v["required_original_documents_resolved"] is False
+            and empty_v["positive_gate_count"] == 0
             and empty_v["history_scope_complete_verified"] is False
+            and empty_g[
+                "missing_original_state_promoted_to_resolved_originals"
+            ] is False
+        ),
+        "partial original diagnostics fail closed": (
+            partial_d["original_resolution_state_observed"] is False
+            and partial_d["required_original_documents_resolved"] is False
+            and partial_v["required_original_documents_resolved"] is False
+            and partial_v["positive_gate_count"] == 0
         ),
         "negative and legal absence inference stay disabled": (
             current_v["generic_negative_inference_allowed"] is False
