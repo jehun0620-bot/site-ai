@@ -33,17 +33,24 @@ def main() -> None:
     originals_resolved = adapt_urban_area_conversion_history_shadow(
         _payload(originals_resolved=True)
     )
+    empty = adapt_urban_area_conversion_history_shadow({})
 
     current_resolution = current["generalized_resolution"]
     current_evidence = current_resolution["evidence_state"]
     future_resolution = originals_resolved["generalized_resolution"]
     future_evidence = future_resolution["evidence_state"]
+    empty_resolution = empty["generalized_resolution"]
+    empty_evidence = empty_resolution["evidence_state"]
     diagnostics = originals_resolved["shadow_diagnostics"]
     guards = originals_resolved["promotion_guards"]
+    future_assembly = originals_resolved["canonical_assembly"]
 
     checks = {
         "current actual-like state remains UNKNOWN": (
             current_resolution["resolution"] == "UNKNOWN"
+        ),
+        "current canonical source-set gate remains false": (
+            current_evidence["official_history_source_verified"] is False
         ),
         "official DB negative remains available as diagnostic": (
             diagnostics["official_database_negative"] is True
@@ -54,20 +61,35 @@ def main() -> None:
         "DB negative does not promote all candidates non-target gate": (
             future_evidence["all_candidates_classified_non_target"] is False
         ),
-        "resolving originals maps only originals state": (
+        "explicitly observed resolved originals map only originals gate": (
             future_evidence["required_originals_resolved"] is True
-            and future_evidence["unresolved_historical_source_present"] is False
+            and future_evidence["official_history_source_verified"] is False
+            and future_evidence["history_scope_complete_verified"] is False
+        ),
+        "unresolved-source absence requires separate proof": (
+            future_evidence["unresolved_historical_source_present"] is True
+            and future_assembly["promotion_guards"][
+                "absence_of_unresolved_flag_promoted_to_verified_absence"
+            ]
+            is False
         ),
         "resolving originals still cannot open FALSE": (
             future_resolution["resolution"] == "UNKNOWN"
             and future_resolution["exhaustive_disproof_verified"] is False
         ),
-        "history completeness remains unverified": (
-            future_evidence["history_scope_complete_verified"] is False
+        "missing payload stays fully fail closed": (
+            empty_resolution["resolution"] == "UNKNOWN"
+            and empty_evidence["verified_qualifying_event_present"] is False
+            and empty_evidence["official_history_source_verified"] is False
+            and empty_evidence["history_scope_complete_verified"] is False
+            and empty_evidence["required_originals_resolved"] is False
+            and empty_evidence["candidate_universe_exhaustively_enumerated"] is False
+            and empty_evidence["all_candidates_classified_non_target"] is False
+            and empty_evidence["unresolved_historical_source_present"] is True
         ),
-        "announcement success is not complete source set promotion": (
+        "announcement success cannot promote official history source": (
             guards[
-                "announcement_query_success_promoted_to_complete_source_set"
+                "announcement_query_success_promoted_to_official_history_source"
             ]
             is False
         ),
@@ -82,6 +104,9 @@ def main() -> None:
                 "official_database_negative_promoted_to_all_candidates_non_target"
             ]
             is False
+        ),
+        "shadow no longer constructs evidence state directly": (
+            guards["direct_evidence_state_construction_used"] is False
         ),
         "negative and legal absence inference stay disabled": (
             future_resolution["generic_negative_inference_allowed"] is False
