@@ -342,6 +342,9 @@ def analyze_site_object(
     procedure_profile: Optional[
         Dict[str, str]
     ] = None,
+    production_condition_shadow_sources: Optional[
+        Any
+    ] = None,
 ) -> Dict[str, Any]:
 
     """
@@ -367,5 +370,9 @@ def analyze_site_object(
         procedure_profile=(
             procedure_profile
             or {}
+        ),
+
+        production_condition_shadow_sources=(
+            production_condition_shadow_sources
         ),
     )
