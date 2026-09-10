@@ -13,6 +13,9 @@ from law_data.regulation_authority_requirement import (
 from law_data.regulation_resolution_profile_registry import (
     get_regulation_resolution_profile,
 )
+from law_data.regulation_source_policy_requirement import (
+    evaluate_regulation_source_policy_requirement,
+)
 
 
 CONDITION_NAME = "도시지역편입해제구역"
@@ -62,12 +65,15 @@ def adapt_urban_area_conversion_provenance_policy(
     through AuthoritySourceScope without carrying any verification flags from the
     diagnostic payload.
 
-    The regulation profile and authority scope are then bound through the common
-    RegulationAuthorityRequirement boundary. Profile presence, matching names, and
-    descriptive authority metadata remain non-dispositive; only an independently
-    verified positive authority chain for the exact profile target could satisfy the
-    authority requirement. Current diagnostics provide no such verified evidence,
-    so the provenance policy remains fail-closed.
+    The regulation profile and authority scope are bound through the common
+    RegulationAuthorityRequirement boundary. The profile's declared source-policy
+    requirements are separately bound through RegulationSourcePolicyRequirement
+    using only explicit verified requirement facts. Profile presence, matching names,
+    contract readiness, and descriptive diagnostics remain non-dispositive.
+
+    This adapter does not verify history completeness. Provenance verification is
+    taken only from the common provenance policy result. Therefore current source-
+    policy requirements remain fail-closed and unsatisfied.
 
     This adapter is read-only. It does not promote diagnostics into legal evidence,
     write output, apply production wiring, mutate SITE overlay, or mutate a runtime
@@ -201,6 +207,15 @@ def adapt_urban_area_conversion_provenance_policy(
         },
     )
 
+    source_policy_requirement_facts = {
+        "HISTORY COMPLETENESS VERIFIED": False,
+        "PROVENANCE VERIFIED": policy.get("provenance_policy_verified") is True,
+    }
+    source_policy_requirement = evaluate_regulation_source_policy_requirement(
+        profile,
+        source_policy_requirement_facts,
+    )
+
     return {
         "condition": CONDITION_NAME,
         "adapter_mode": ADAPTER_MODE,
@@ -208,6 +223,7 @@ def adapt_urban_area_conversion_provenance_policy(
         "authority_source_scope": authority_scope.to_dict(),
         "regulation_authority_requirement": authority_requirement.to_dict(),
         "provenance_policy": policy,
+        "regulation_source_policy_requirement": source_policy_requirement.to_dict(),
         "semantic_contract": {
             "diagnostic_provenance_present_does_not_mean_gate_verified": True,
             "descriptive_authority_metadata_does_not_mean_authority_verified": True,
@@ -217,7 +233,12 @@ def adapt_urban_area_conversion_provenance_policy(
             "profile_name_match_does_not_mean_authority_verified": True,
             "authority_scope_binding_does_not_mean_legal_evidence_verified": True,
             "authority_requirement_binding_does_not_mean_legal_evidence_verified": True,
-            "source_policy_requirements_are_diagnostic_not_auto_satisfied": True,
+            "source_policy_requirement_declaration_does_not_mean_verified": True,
+            "profile_source_policy_verified_does_not_supply_requirement_facts": True,
+            "contract_readiness_does_not_supply_requirement_facts": True,
+            "history_completeness_not_verified_by_this_adapter": True,
+            "provenance_requirement_uses_common_policy_result_only": True,
+            "source_policy_requirement_satisfaction_does_not_mean_legal_resolution": True,
             "original_diagnostics_do_not_mean_complete_production_provenance": True,
             "policy_binding_does_not_mean_provenance_policy_verified": True,
             "provenance_policy_verified_does_not_mean_legal_evidence_verified": True,
@@ -226,6 +247,13 @@ def adapt_urban_area_conversion_provenance_policy(
             "profile_missing": profile is None,
             "authority_requirement_unsatisfied": (
                 not authority_requirement.authority_requirement_satisfied
+            ),
+            "source_policy_requirement_unsatisfied": (
+                not source_policy_requirement.source_policy_requirement_satisfied
+            ),
+            "history_completeness_unverified": True,
+            "provenance_policy_unverified": (
+                policy.get("provenance_policy_verified") is not True
             ),
             "authority_chain_unverified": not authority_scope.authority_chain_verified,
             "source_authority_identity_unverified": (
@@ -247,6 +275,8 @@ def adapt_urban_area_conversion_provenance_policy(
             "authority_metadata_promoted_to_legal_evidence": False,
             "authority_requirement_promoted_to_legal_resolution": False,
             "source_policy_requirement_promoted_to_verified_evidence": False,
+            "source_policy_requirement_promoted_to_legal_resolution": False,
+            "contract_readiness_promoted_to_source_policy_verification": False,
             "current_geometry_promoted_to_historical_site_provenance": False,
             "archive_candidate_promoted_to_original_traceability": False,
             "provenance_promoted_to_legal_resolution": False,
