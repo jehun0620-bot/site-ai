@@ -112,7 +112,22 @@ def main() -> None:
     # UQQ700 safety is intentionally not re-resolved here. The terminal audit
     # only proves STEP18 did not introduce a public/runtime promotion path.
     uqq700_status = read_text("PROJECT_STATUS.md")
-    require("UQQ700=UNKNOWN" in uqq700_status, "UQQ700 UNKNOWN lock missing")
+    require(
+        "개발밀도관리구역 / UQQ700" in uqq700_status,
+        "UQQ700 terminal target missing",
+    )
+    require(
+        "Resolution type: HYBRID_SPATIAL_NOTICE" in uqq700_status,
+        "UQQ700 resolution type lock missing",
+    )
+    require(
+        "Current resolution: UNKNOWN" in uqq700_status,
+        "UQQ700 UNKNOWN lock missing",
+    )
+    require(
+        "Runtime registration: BLOCKED" in uqq700_status,
+        "UQQ700 runtime-registration lock missing",
+    )
     require(
         "negative_evidence_allowed=False" in uqq700_status,
         "UQQ700 negative-evidence lock missing",
