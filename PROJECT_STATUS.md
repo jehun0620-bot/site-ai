@@ -2,7 +2,7 @@
 
 최종 업데이트: 2026-09-10
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `189ae33a76a4974382f1ccf27a81813c384568ee`
+기준 개발 HEAD: `ed9d2a0392d2899d1214ca4f61a034ae4f127579`
 
 > 현재 개발 상태와 안전 불변조건을 기록한다. 장기 로드맵은 `PROJECT_ARCHITECTURE.md` 기준.
 
@@ -11,18 +11,21 @@
 ```text
 STEP 22
 Focus: REGULATION_AUTHORITY_REQUIREMENT_BOUNDARY + HISTORICAL_PROVENANCE_INTEGRATION
-State: BOUNDARY + INTEGRATION LOCALLY VALIDATED
+State: TERMINALLY CLOSED
+Terminal classification: STEP22_REGULATION_AUTHORITY_REQUIREMENT_BOUNDARY_TERMINALLY_RECONCILED
 Validated classifications:
 - STEP22_REGULATION_AUTHORITY_REQUIREMENT_BOUNDARY_PASS
 - STEP22_REGULATION_AUTHORITY_REQUIREMENT_PROVENANCE_INTEGRATION_PASS
+- STEP22_REGULATION_AUTHORITY_REQUIREMENT_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-STEP 18/19/20은 사용자 로컬 검증까지 완료되어 TERMINALLY CLOSED 상태다.
+STEP 18/19/20/22는 사용자 로컬 검증까지 완료되어 TERMINALLY CLOSED 상태다.
 
 ```text
 STEP18_PRODUCTION_SITE_CONDITION_BOUNDARY_TERMINALLY_RECONCILED
 STEP19_REGULATION_RESOLUTION_PROFILE_BOUNDARY_TERMINALLY_RECONCILED
 STEP20_AUTHORITY_SOURCE_SCOPE_BOUNDARY_TERMINALLY_RECONCILED
+STEP22_REGULATION_AUTHORITY_REQUIREMENT_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
 STEP 21 architecture baseline reconciliation도 완료되었다.
@@ -350,7 +353,7 @@ Classification:
 STEP21_ARCHITECTURE_BASELINE_PROFILE_AUTHORITY_SCOPE_RECONCILED
 ```
 
-## 8. STEP 22 regulation authority requirement boundary — LOCALLY VALIDATED
+## 8. STEP 22 regulation authority requirement boundary — TERMINALLY CLOSED
 
 STEP 22 adds the missing fail-closed binding between `RegulationResolutionProfile` and `AuthoritySourceScope`.
 
@@ -399,15 +402,35 @@ source_policy_requirements
 
 The boundary does not resolve SITE state, evaluate spatial/history source-policy evidence, infer legal absence, or grant production/runtime registration.
 
-Local PASS:
+User local PASS:
 
 ```text
 STEP22_REGULATION_AUTHORITY_REQUIREMENT_BOUNDARY_PASS
+STEP22_REGULATION_AUTHORITY_REQUIREMENT_PROVENANCE_INTEGRATION_PASS
+STEP22_REGULATION_AUTHORITY_REQUIREMENT_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-## 9. STEP 22 historical provenance integration — LOCALLY VALIDATED
+Terminal audit confirms:
 
-`urban_area_conversion_provenance_policy_adapter.py` now binds the exact-name regulation profile and condition-specific `AuthoritySourceScope` through `RegulationAuthorityRequirementAssessment` before constructing the historical provenance authority gate.
+```text
+Missing profile/scope fail-closed: PASS
+Profile/scope descriptive identity -> authority verification: NONE
+Official-looking host / PRIMARY / authority text promotion: NONE
+Cross-regulation verified authority reuse: BLOCKED
+Positive authority requirement: EXPLICIT VERIFIED MATCHING CHAIN ONLY
+Source-policy requirement auto-satisfaction: NONE
+Historical standard code: ABSENT / UNVERIFIED
+Historical provenance state: BLOCKED
+Negative/legal absence/SITE promotion: NONE
+Production/runtime mutation: NONE
+UQQ700 cross-condition wiring: NONE
+Builder/service/orchestrator/public API/spatial runtime auto-wiring: NONE
+Authority registry requirement: NONE
+```
+
+## 9. STEP 22 historical provenance integration — VALIDATED AND CLOSED WITH BOUNDARY
+
+`urban_area_conversion_provenance_policy_adapter.py` binds the exact-name regulation profile and condition-specific `AuthoritySourceScope` through `RegulationAuthorityRequirementAssessment` before constructing the historical provenance authority gate.
 
 Current flow:
 
@@ -439,15 +462,6 @@ production/runtime mutation=NONE
 ```
 
 Verification-looking diagnostic fields still do not enter `AuthoritySourceScope` verification gates.
-
-Local PASS:
-
-```text
-STEP22_REGULATION_AUTHORITY_REQUIREMENT_PROVENANCE_INTEGRATION_PASS
-STEP20_AUTHORITY_SOURCE_SCOPE_PROVENANCE_INTEGRATION_PASS
-STEP19_REGULATION_RESOLUTION_PROFILE_BOUNDARY_TERMINALLY_RECONCILED
-STEP20_AUTHORITY_SOURCE_SCOPE_BOUNDARY_TERMINALLY_RECONCILED
-```
 
 STEP 22 has not introduced an authority registry, runtime wiring, production promotion, or public API exposure.
 
@@ -651,8 +665,8 @@ PHASE 3 SITE Analysis           CORE COMPLETE
 PHASE 4 Legal ingestion         IN PROGRESS
 PHASE 5 Rule Engine             CORE STABLE / IN PROGRESS
 PHASE 6 Runtime spatial         CORE STABLE
-PHASE 7 Regulation Resolution   ACTIVE / PROFILE + AUTHORITY REQUIREMENT BOUNDARIES BUILT
-PHASE 8 Authority/Historical    ACTIVE / AUTHORITY SOURCE SCOPE + HISTORICAL PROVENANCE BINDING BUILT
+PHASE 7 Regulation Resolution   ACTIVE / PROFILE + AUTHORITY REQUIREMENT BOUNDARIES CLOSED
+PHASE 8 Authority/Historical    ACTIVE / AUTHORITY SOURCE SCOPE + HISTORICAL PROVENANCE BINDING CLOSED
 PHASE 9+ Nationwide/AI/Product  FUTURE
 ```
 
@@ -668,19 +682,18 @@ OFFICIAL FACT
 → VERIFICATION
 ```
 
-## 16. Next allowed work after STEP 22 validation
+## 16. Next allowed work after STEP 22 closure
 
 ```text
-1. Keep STEP 18, STEP 19, and STEP 20 boundaries TERMINALLY CLOSED unless a new architecture decision is positively justified.
+1. Keep STEP 18, STEP 19, STEP 20, and STEP 22 boundaries TERMINALLY CLOSED unless a new architecture decision or new positive evidence justifies reopening a relevant boundary.
 2. Keep UQQ700 and 도시지역편입해제구역 UNKNOWN / blocked from production/runtime registration.
-3. Do not declare STEP 22 terminal closure until a dedicated terminal audit justifies it.
-4. Perform the next development choice through a read-only gap audit against current HEAD and Architecture Baseline v1.2.
-5. Do not create an authority/source registry merely because the authority requirement boundary now exists; require independently verified mappings/provenance and a separate architecture/data decision.
-6. Do not connect profile/authority/authority-requirement metadata to the spatial runtime registry.
-7. Do not auto-wire profile/authority lookup into builder/service/orchestrator/public API.
-8. Do not expose production_condition_contracts, resolution profiles, authority/source scope, or authority-requirement assessments as public legal facts in SITE_ANALYSIS_API_V1 without a separate schema decision.
-9. Do not auto-run blocked historical producers from builder/service/orchestrator.
-10. New official positive evidence may reopen a relevant terminal condition only through its existing positive verification gates.
+3. Select the next development step only after a read-only gap audit against current HEAD and Architecture Baseline v1.2.
+4. Do not create an authority/source registry merely because the authority requirement boundary exists; require independently verified mappings/provenance and a separate architecture/data decision.
+5. Do not connect profile/authority/authority-requirement metadata to the spatial runtime registry.
+6. Do not auto-wire profile/authority lookup into builder/service/orchestrator/public API.
+7. Do not expose production_condition_contracts, resolution profiles, authority/source scope, or authority-requirement assessments as public legal facts in SITE_ANALYSIS_API_V1 without a separate schema decision.
+8. Do not auto-run blocked historical producers from builder/service/orchestrator.
+9. New official positive evidence may reopen a relevant terminal condition only through its existing positive verification gates.
 ```
 
 ## 17. Git / local rules
@@ -720,7 +733,7 @@ STEP 18 terminal state
 STEP 19 terminal state
 STEP 20 terminal state
 STEP 21 architecture baseline reconciliation
-STEP 22 boundary/integration validation state
+STEP 22 terminal state
 UQQ700 safety invariants
 historical SITE_EVENT safety invariants
 authority/source scope safety invariants
