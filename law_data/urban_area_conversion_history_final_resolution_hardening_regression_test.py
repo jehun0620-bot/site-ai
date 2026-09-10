@@ -52,9 +52,13 @@ def main() -> int:
     )
     originals_resolved = resolve_final_state(originals_resolved_checks)
 
-    positive_checks = current_like_checks()
-    positive_checks["combined_target_candidate_count"] = 1
-    positive = resolve_final_state(positive_checks)
+    candidate_checks = current_like_checks()
+    candidate_checks["combined_target_candidate_count"] = 1
+    candidate = resolve_final_state(candidate_checks)
+
+    direct_candidate_checks = current_like_checks()
+    direct_candidate_checks["direct_target_event_count"] = 1
+    direct_candidate = resolve_final_state(direct_candidate_checks)
 
     no_database_negative_checks = current_like_checks()
     no_database_negative_checks["announcement_query_success"] = False
@@ -87,11 +91,24 @@ def main() -> int:
             and originals_resolved["history_scope_complete_verified"] is False
             and originals_resolved["exhaustive_disproof_verified"] is False
         ),
-        "legacy positive candidate behavior is preserved": (
-            positive["status"] == "TRUE_CANDIDATE"
-            and positive["confidence"] == "MEDIUM"
-            and positive["automation_state"] == "SOURCE_REVIEW_REQUIRED"
-            and positive["overlay_action"] == "HOLD_FOR_REVIEW"
+        "target candidate remains diagnostic UNKNOWN": (
+            candidate["positive_history_candidate_present"] is True
+            and candidate["verified_qualifying_event_present"] is False
+            and candidate["positive_history_evidence"] is False
+            and candidate["status"] == "UNKNOWN"
+            and candidate["automation_state"]
+            == "POSITIVE_EVIDENCE_VERIFICATION_PENDING"
+            and candidate["overlay_action"] == "KEEP_UNKNOWN"
+        ),
+        "direct target candidate remains diagnostic UNKNOWN": (
+            direct_candidate["positive_history_candidate_present"] is True
+            and direct_candidate["verified_qualifying_event_present"] is False
+            and direct_candidate["status"] == "UNKNOWN"
+            and direct_candidate["overlay_action"] == "KEEP_UNKNOWN"
+        ),
+        "candidate signals cannot manufacture TRUE_CANDIDATE": all(
+            result["status"] != "TRUE_CANDIDATE"
+            for result in (candidate, direct_candidate)
         ),
         "insufficient evidence remains fail-closed UNKNOWN": (
             insufficient["status"] == "UNKNOWN"
@@ -103,7 +120,8 @@ def main() -> int:
             for result in (
                 current,
                 originals_resolved,
-                positive,
+                candidate,
+                direct_candidate,
                 insufficient,
             )
         ),
