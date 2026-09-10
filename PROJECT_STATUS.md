@@ -1,8 +1,8 @@
 # AI 대지분석 자동화 시스템 - PROJECT STATUS
 
-최종 업데이트: 2026-09-09
+최종 업데이트: 2026-09-10
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `84b553775cad1a83e05e10cfeace9d3c6cf948d2`
+기준 개발 HEAD: `d40216f3b55152fabe6a0d7d30f3ffde59211047`
 
 > 현재 개발 상태와 안전 불변조건을 기록한다. 장기 로드맵은 `PROJECT_ARCHITECTURE.md` 기준.
 
@@ -461,4 +461,175 @@ latest validated semantic/output
 current unresolved issue
 next exact allowed action
 Git write approval rule
+```
+
+## 15. 도시지역편입해제구역 — HISTORICAL_SITE_EVENT terminal reconciliation
+
+STEP 17에서 `도시지역편입해제구역`을 generalized `HISTORICAL_SITE_EVENT` contract로 정리했다.
+
+현재 condition 상태:
+
+```text
+Condition: 도시지역편입해제구역
+Resolution type: HISTORICAL_SITE_EVENT
+Standard code: UNVERIFIED / DO NOT GUESS
+Current resolution: UNKNOWN
+Confidence: MEDIUM
+Production wiring: BLOCKED
+Runtime registration: BLOCKED
+```
+
+현재 terminal classification:
+
+```text
+URBAN_AREA_CONVERSION_HISTORICAL_SITE_EVENT_EXTERNAL_EVIDENCE_BLOCKED_TERMINALLY_RECONCILED
+```
+
+검증된 generalized components:
+
+```text
+historical positive evidence verifier
+history completeness verifier
+evidence-state assembler
+HISTORICAL_SITE_EVENT resolver
+production readiness gate
+runtime registration policy
+provenance policy
+```
+
+condition-specific read-only adapters:
+
+```text
+urban_area_conversion_positive_evidence_adapter.py
+urban_area_conversion_history_completeness_adapter.py
+urban_area_conversion_production_readiness_adapter.py
+urban_area_conversion_runtime_registration_policy_adapter.py
+urban_area_conversion_provenance_policy_adapter.py
+```
+
+로컬 validated classifications:
+
+```text
+HISTORICAL_SITE_EVENT_PROVENANCE_POLICY_PASS
+URBAN_AREA_CONVERSION_PROVENANCE_POLICY_ADAPTER_PASS
+```
+
+현재 production readiness:
+
+```text
+condition_identity_verified             = True
+standard_code_verified                  = False
+positive_evidence_contract_ready        = True
+history_completeness_contract_ready     = True
+provenance_policy_verified              = False
+runtime_registration_policy_verified    = False
+
+verified gates = 3 / 6
+production_wiring_ready = False
+```
+
+중요 semantic lock:
+
+```text
+contract implementation exists
+≠ actual evidence verified
+
+provenance policy exists
+≠ provenance_policy_verified
+
+runtime registration policy exists
+≠ runtime registration applied
+
+condition-specific adapter exists
+≠ production binding verified
+
+candidate/document/current state
+≠ verified qualifying historical event
+
+search/no-hit/database negative
+≠ legal absence
+
+current geometry
+≠ historical SITE applicability
+
+archive candidate
+≠ original document traceability
+```
+
+현재 provenance 6-gate 상태:
+
+```text
+source_authority_identity_verified = False
+source_role_explicit               = False
+document_identity_traceable        = False
+original_document_traceable        = False
+site_applicability_traceable       = False
+temporal_relation_traceable        = False
+
+verified provenance gates = 0 / 6
+provenance_policy_verified = False
+```
+
+repo 내부 evidence salvage audit에서도 diagnostic evidence는 존재하지만 production-grade provenance evidence는 추가로 확인되지 않았다.
+
+현재 확인된 diagnostic material:
+
+```text
+서울시 공식 결정고시 DB query success
+combined notice candidates
+notice 123 / 534 identity diagnostics
+historic chain diagnostics
+current urban-area / greenbelt state
+National Archives candidates
+```
+
+그러나 일부 historical original은 missing/unverified이고, 현재 producer schema에는 다음 positive proof chain이 없다.
+
+```text
+VERIFIED EVENT IDENTITY
++
+HISTORICAL SITE APPLICABILITY
++
+TEMPORAL RELATION
+```
+
+따라서 현재 상태는 계속:
+
+```text
+verified qualifying historical event = False
+history scope completeness verified   = False
+provenance policy verified            = False
+standard code verified                = False
+resolution                            = UNKNOWN / MEDIUM
+SITE promotion                        = BLOCKED
+production wiring                     = BLOCKED
+runtime registration                  = BLOCKED
+negative evidence inference           = DISABLED
+legal absence inference               = DISABLED
+```
+
+현재 dominant blocker:
+
+```text
+EXTERNAL / POSITIVE EVIDENCE GAP
+- exact official standard code
+- authoritative historical event document identity
+- original document
+- historical SITE applicability
+- event/SITE temporal evidence
+```
+
+새 공식 positive evidence가 들어오기 전까지 이 condition에 대해 source-family re-probing, standard-code guessing, search/no-hit 기반 FALSE 추론, SITE promotion, production/runtime registration을 수행하지 않는다.
+
+새 evidence가 들어올 경우에도 반드시 다음 순서로 검증한다.
+
+```text
+OFFICIAL SOURCE AUTHORITY / ROLE
+→ DOCUMENT IDENTITY
+→ ORIGINAL DOCUMENT TRACEABILITY
+→ HISTORICAL SITE APPLICABILITY
+→ TEMPORAL RELATION
+→ POSITIVE EVENT / COMPLETENESS EVALUATION
+→ PRODUCTION READINESS
+→ RUNTIME REGISTRATION ELIGIBILITY
 ```
