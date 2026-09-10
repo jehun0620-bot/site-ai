@@ -2,17 +2,23 @@
 
 최종 업데이트: 2026-09-10
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `91dce9f1aa40948ebec403852c353c6d53c5a6b9`
+기준 개발 HEAD: `4ccfe9ace59986dec6403d894517b175bfd92fa0`
 
 > 현재 개발 상태와 안전 불변조건을 기록한다. 장기 로드맵은 `PROJECT_ARCHITECTURE.md` 기준.
 
 ## 1. 현재 단계
 
 ```text
-STEP 18
-Focus: PRODUCTION_SITE_CONDITION_RESOLUTION_BOUNDARY
-State: TERMINALLY RECONCILED / LOCAL VALIDATION PENDING
-Terminal classification: STEP18_PRODUCTION_SITE_CONDITION_BOUNDARY_TERMINALLY_RECONCILED
+STEP 19
+Focus: REGULATION_RESOLUTION_PROFILE_BOUNDARY
+State: TERMINALLY CLOSED
+Terminal classification: STEP19_REGULATION_RESOLUTION_PROFILE_BOUNDARY_TERMINALLY_RECONCILED
+```
+
+STEP 18도 사용자 로컬 검증까지 완료되어 TERMINALLY CLOSED 상태다.
+
+```text
+STEP18_PRODUCTION_SITE_CONDITION_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
 STEP 17 terminal targets remain legally unresolved and fail-closed:
@@ -31,7 +37,7 @@ STEP 17 terminal targets remain legally unresolved and fail-closed:
 - Runtime registration: BLOCKED
 ```
 
-## 2. STEP 18 production SITE condition boundary
+## 2. STEP 18 production SITE condition boundary — TERMINALLY CLOSED
 
 STEP 18 generalized the production-facing SITE condition contract without changing Rule Engine dispositive semantics.
 
@@ -53,39 +59,160 @@ pre-normalized SITE_HISTORY production contract
 
 The builder does not execute or interpret raw historical resolvers. Historical producer/resolver execution remains outside the builder/service/orchestrator boundary.
 
-## 3. ProductionSiteCondition contract
-
-Common contract:
+Local terminal validation PASS:
 
 ```text
+STEP18_PRODUCTION_SITE_CONDITION_BOUNDARY_TERMINALLY_RECONCILED
+```
+
+## 3. STEP 19 regulation resolution profile boundary — TERMINALLY CLOSED
+
+STEP 19 introduced a pure read-only metadata boundary for regulation-resolution identity and policy requirements.
+
+Implemented chain:
+
+```text
+condition identity
+→ RegulationResolutionProfile
+→ immutable exact-name profile registry
+→ condition-specific readiness adapter metadata lookup
+→ existing common readiness gate
+```
+
+This chain is metadata/readiness only.
+
+```text
+profile lookup
+≠ resolver execution
+≠ SITE state resolution
+≠ production registration
+≠ runtime registration
+≠ Rule Engine input
+≠ public API exposure
+```
+
+### 3.1 RegulationResolutionProfile contract
+
+Common profile metadata:
+
+```text
+name
 condition_type: SITE | SITE_HISTORY
 resolution_type: SNAPSHOT | SPATIAL | HYBRID_SPATIAL_NOTICE | HISTORICAL_SITE_EVENT
-state: TRUE | FALSE | UNKNOWN
-confidence
-source
-provenance
-production_eligible
-runtime_registered
+standard_code: str | None
+standard_code_verified
+authority_requirements
+source_policy_requirements
+authority_identity_verified
+source_policy_verified
 negative_evidence_allowed
 legal_absence_inference_allowed
 site_promotion_allowed
+production_registration_allowed
+runtime_registration_allowed
 diagnostics
 ```
 
-Safety defaults:
+Safety defaults remain fail-closed:
 
 ```text
-invalid/missing state → UNKNOWN
-production_eligible=False
-runtime_registered=False
+standard_code missing → None
+standard_code_verified=False unless explicit code exists
 negative_evidence_allowed=False
 legal_absence_inference_allowed=False
 site_promotion_allowed=False
+production_registration_allowed=False
+runtime_registration_allowed=False
 ```
 
-No contract normalization may infer production eligibility or runtime registration.
+A profile never manufactures SITE state and never guesses a standard code.
 
-## 4. Rule Engine semantic isolation
+### 3.2 Immutable profile registry
+
+Built-in registry is immutable and exact-name only.
+
+```text
+known exact condition name → profile
+empty / alias / partial / standard-code lookup → None
+unknown condition → None
+mutation API → NONE
+resolver/evaluate/promote/runtime API → NONE
+```
+
+Current built-in profiles:
+
+```text
+개발밀도관리구역
+- condition_type: SITE
+- resolution_type: HYBRID_SPATIAL_NOTICE
+- standard_code: UQQ700
+- standard_code_verified: True
+- authority_identity_verified: False
+- source_policy_verified: False
+- negative_evidence_allowed: False
+- legal_absence_inference_allowed: False
+- site_promotion_allowed: False
+- production_registration_allowed: False
+- runtime_registration_allowed: False
+
+도시지역편입해제구역
+- condition_type: SITE_HISTORY
+- resolution_type: HISTORICAL_SITE_EVENT
+- standard_code: None
+- standard_code_verified: False
+- production_registration_allowed: False
+- runtime_registration_allowed: False
+```
+
+Known UQQ700 profile identity does not mean official designation/current validity/SITE applicability is verified.
+
+### 3.3 Historical readiness integration
+
+`urban_area_conversion_production_readiness_adapter.py` now reads condition identity and standard-code verification from the immutable profile registry.
+
+Current gates remain:
+
+```text
+condition_identity_verified             = True
+standard_code_verified                  = False
+positive_evidence_contract_ready        = True
+history_completeness_contract_ready     = True
+provenance_policy_verified              = False
+runtime_registration_policy_verified    = False
+
+verified gates = 3 / 6
+production_wiring_ready = False
+readiness_state = BLOCKED
+```
+
+Profile presence is identity metadata only and does not verify evidence/provenance/runtime policy.
+
+## 4. STEP 19 validated classifications
+
+User local PASS:
+
+```text
+STEP19_REGULATION_RESOLUTION_PROFILE_BOUNDARY_PASS
+STEP19_REGULATION_RESOLUTION_PROFILE_REGISTRY_PASS
+STEP19_REGULATION_RESOLUTION_PROFILE_READINESS_INTEGRATION_PASS
+STEP19_REGULATION_RESOLUTION_PROFILE_BOUNDARY_TERMINALLY_RECONCILED
+```
+
+Terminal audit confirms:
+
+```text
+Profile contract SITE-state manufacture: NONE
+Immutable exact-name registry boundary: PASS
+Unknown/alias/code inference: NONE
+Historical standard code: ABSENT / UNVERIFIED
+Historical production readiness: BLOCKED
+UQQ700 identity/profile safety locks: PRESERVED
+Profile registry -> spatial runtime registry wiring: NONE
+Builder/service/orchestrator/public API auto-wiring: NONE
+Resolver/SITE/runtime mutation: NONE
+```
+
+## 5. Rule Engine / production / runtime isolation
 
 Existing Rule Engine semantics remain unchanged:
 
@@ -101,196 +228,19 @@ UNKNOWN        → POTENTIAL_UNKNOWN
 else           → ACTIVE_CANDIDATE
 ```
 
-STEP 18 does not replace `site_condition_context` with production contracts.
+STEP 18/19 do not replace `site_condition_context` with production/profile contracts.
 
 ```text
 production_condition_contracts
 ≠ Rule Engine site_condition_context
+
+regulation_resolution_profile_registry
+≠ spatial runtime registry
 ```
 
-The Rule Engine continues receiving the existing spatial runtime condition context only.
+No STEP 19 auto-wiring exists in builder/service/orchestrator/public API.
 
-## 5. SPATIAL production shadow
-
-Existing spatial runtime evaluator output is adapted read-only into the common production contract.
-
-```text
-runtime spatial state TRUE/FALSE/UNKNOWN
-→ same production shadow state
-```
-
-Preserved:
-
-```text
-confidence
-PNU / geometry verification diagnostics
-runtime source
-provenance
-```
-
-Not inferred:
-
-```text
-production eligibility
-runtime registration
-negative evidence permission
-legal absence permission
-SITE promotion permission
-```
-
-Important:
-
-```text
-spatial evaluator executes at runtime
-≠ runtime_registered=True
-
-geometry_verified=True
-≠ production_eligible=True
-```
-
-## 6. HISTORICAL_SITE_EVENT production shadow
-
-Historical resolver output is mapped conservatively:
-
-```text
-resolver UNKNOWN
-→ production UNKNOWN
-
-resolver TRUE_CANDIDATE
-→ production UNKNOWN
-→ TRUE_CANDIDATE preserved in diagnostics/provenance only
-
-resolver FALSE
-→ production FALSE only when exhaustive_disproof_verified=True
-```
-
-Therefore:
-
-```text
-TRUE_CANDIDATE
-≠ production TRUE
-
-contract readiness
-≠ evidence verified
-
-history candidate
-≠ verified historical SITE event
-```
-
-## 7. 도시지역편입해제구역 production boundary
-
-Condition-specific read-only production shadow exists, but automatic production wiring remains blocked.
-
-Current state:
-
-```text
-Condition: 도시지역편입해제구역
-Resolution type: HISTORICAL_SITE_EVENT
-Standard code: UNVERIFIED / DO NOT GUESS
-Current resolution: UNKNOWN / MEDIUM
-verified qualifying historical event = False
-history scope completeness verified = False
-provenance policy verified = False
-standard code verified = False
-production_eligible = False
-runtime_registered = False
-production wiring = BLOCKED
-runtime registration = BLOCKED
-```
-
-Production readiness remains:
-
-```text
-condition_identity_verified             = True
-standard_code_verified                  = False
-positive_evidence_contract_ready        = True
-history_completeness_contract_ready     = True
-provenance_policy_verified              = False
-runtime_registration_policy_verified    = False
-
-verified gates = 3 / 6
-production_wiring_ready = False
-```
-
-No automatic historical producer execution is added to the orchestrator. This is an intentional safety boundary, not a missing seam.
-
-## 8. Collector / builder / service / orchestrator boundary
-
-The common collector merges already-created production contracts only.
-
-Collector rules:
-
-```text
-SITE and SITE_HISTORY may coexist
-duplicate condition names → fail-closed ValueError
-malformed/missing state → ignored; no legal-state manufacture
-SITE_HISTORY + SPATIAL → rejected
-source objects are not mutated
-```
-
-Builder:
-
-```text
-existing spatial runtime context
-→ spatial production contracts
-+
-optional caller-supplied pre-normalized production shadow
-→ common collector
-→ site["production_condition_contracts"]
-```
-
-Service and orchestrator only pass `production_condition_shadow_sources` through. They do not resolve, interpret, promote, register, or mutate the supplied contracts.
-
-## 9. Public API boundary
-
-`SITE_ANALYSIS_API_V1` does NOT expose `production_condition_contracts`.
-
-Current policy:
-
-```text
-internal shadow availability
-≠ public API exposure
-
-public API exposure
-≠ production eligibility
-
-production eligibility
-≠ runtime registration
-```
-
-The shadow remains an internal production-resolution/diagnostic boundary until a separate, positively justified public schema decision is made.
-
-## 10. STEP 18 validated classifications
-
-Local validated classifications before terminal closure:
-
-```text
-STEP18_PRODUCTION_SITE_CONDITION_CONTRACT_PASS
-STEP18_PRODUCTION_SPATIAL_CONDITION_ADAPTER_PASS
-STEP18_PRODUCTION_SPATIAL_CONDITION_SHADOW_PASS
-STEP18_PRODUCTION_SPATIAL_CONDITION_BUILDER_PASS
-STEP18_PRODUCTION_HISTORICAL_SITE_EVENT_ADAPTER_PASS
-STEP18_URBAN_AREA_CONVERSION_PRODUCTION_CONDITION_SHADOW_PASS
-STEP18_PRODUCTION_SITE_CONDITION_SHADOW_COLLECTOR_PASS
-STEP18_PRODUCTION_SITE_CONDITION_BUILDER_COLLECTOR_PASS
-STEP18_PRODUCTION_CONDITION_SHADOW_SERVICE_PASSTHROUGH_PASS
-STEP18_PRODUCTION_CONDITION_SHADOW_ORCHESTRATOR_PASSTHROUGH_PASS
-```
-
-Read-only audits:
-
-```text
-STEP18_BUILDER_COLLECTOR_SEAM_SEMANTIC_EQUIVALENCE_AUDIT_PASS
-STEP18_PRODUCTION_SITE_CONDITION_BOUNDARY_TERMINAL_AUDIT_PASS
-```
-
-Terminal regression classification to validate locally:
-
-```text
-STEP18_PRODUCTION_SITE_CONDITION_BOUNDARY_TERMINALLY_RECONCILED
-```
-
-## 11. UQQ700 safety invariants — unchanged
+## 6. UQQ700 safety invariants — unchanged
 
 Target: `개발밀도관리구역 / UQQ700`
 
@@ -301,6 +251,7 @@ negative_evidence_allowed=False
 legal_absence_inference_allowed=False
 site_false_inference_allowed=False
 site_promotion_allowed=False
+production_registration_allowed=False
 runtime_registration_allowed=False
 ```
 
@@ -312,7 +263,7 @@ AND CURRENT VALIDITY VERIFIED
 AND SITE SPATIAL INCLUSION VERIFIED
 ```
 
-Current real evidence:
+Current verified evidence remains insufficient:
 
 ```text
 official_designation_identity_verified=False
@@ -321,18 +272,40 @@ site_spatial_inclusion_verified=False
 minimum_registration_gate_satisfied=False
 ```
 
-No new official positive evidence was introduced by STEP 18. UQQ700 remains UNKNOWN and out of runtime registration.
+Known profile/code identity does not satisfy any of these three positive evidence gates.
 
-## 12. STEP 17 terminal closure remains binding
+## 7. 도시지역편입해제구역 safety invariants — unchanged
+
+```text
+Resolution type: HISTORICAL_SITE_EVENT
+Standard code: UNVERIFIED / DO NOT GUESS
+Profile standard_code: None
+Profile standard_code_verified: False
+Current resolution: UNKNOWN / MEDIUM
+verified qualifying historical event = False
+history scope completeness verified = False
+provenance policy verified = False
+production wiring = BLOCKED
+runtime registration = BLOCKED
+```
+
+Preserve:
+
+```text
+TRUE_CANDIDATE ≠ production TRUE
+contract readiness ≠ evidence verified
+current geometry ≠ historical SITE applicability
+search no-hit ≠ legal absence
+```
+
+## 8. STEP 17 terminal closure remains binding
 
 ```text
 CLASSIFICATION: STEP17_TERMINAL_CLOSURE_AUDIT_PASS
 STEP 17 state: TERMINALLY CLOSED
 ```
 
-STEP 17 terminal targets are not legally resolved. They are engineering-terminal because no additional safe internal inference is available without new official positive evidence.
-
-Do not repeat without new official evidence:
+Do not repeat without new official positive evidence:
 
 ```text
 UQQ700 closed/concluded source-family probing
@@ -345,35 +318,38 @@ SITE promotion
 runtime registration
 ```
 
-## 13. Core semantic locks
+## 9. Core semantic locks
 
 ```text
+condition name known
+≠ standard code verified
+
+profile exists
+≠ resolver exists
+
+profile exists
+≠ SITE applicability verified
+
+profile exists
+≠ runtime support
+
+profile metadata verified
+≠ legal evidence verified
+
 announcement/query success
 ≠ official historical source set verified
-
-absence of unresolved-original indicators
-≠ verified unresolved-historical-source absence
 
 originals resolved
 ≠ history complete
 
-candidate enumeration
-≠ all candidates positively classified non-target
-
 candidate/document/current state
 ≠ verified qualifying historical event
-
-candidate presence
-≠ TRUE_CANDIDATE
 
 TRUE_CANDIDATE
 ≠ production TRUE
 
 contract implementation ready
 ≠ actual legal evidence satisfied
-
-condition name known
-≠ standard code verified
 
 diagnostic provenance preserved
 ≠ production provenance policy verified
@@ -384,29 +360,17 @@ production readiness READY
 runtime registration policy verified
 ≠ runtime registration applied
 
-provenance policy verified
-≠ legal resolution verified
-
-archive candidate
-≠ original document
-
 current geometry
 ≠ historical SITE applicability
 
-source endpoint/query success
-≠ source authority identity
-
 production shadow collected
 ≠ production eligibility
-
-production shadow propagated
-≠ runtime registration
 
 internal production shadow
 ≠ public API legal fact
 ```
 
-## 14. Architecture state
+## 10. Architecture state
 
 ```text
 PHASE 0 Foundation              COMPLETE
@@ -416,7 +380,7 @@ PHASE 3 SITE Analysis           CORE COMPLETE
 PHASE 4 Legal ingestion         IN PROGRESS
 PHASE 5 Rule Engine             CORE STABLE / IN PROGRESS
 PHASE 6 Runtime spatial         CORE STABLE
-PHASE 7 Regulation Resolution   ACTIVE
+PHASE 7 Regulation Resolution   ACTIVE / PROFILE BOUNDARY CLOSED
 PHASE 8 Authority/Historical    ACTIVE
 PHASE 9+ Nationwide/AI/Product  FUTURE
 ```
@@ -433,39 +397,43 @@ OFFICIAL FACT
 → VERIFICATION
 ```
 
-## 15. Next allowed work after STEP 18 closure
-
-After the terminal regression passes locally:
+## 11. Next allowed work after STEP 19 closure
 
 ```text
-1. Mark STEP 18 production SITE condition boundary TERMINALLY CLOSED.
-2. Keep UQQ700 and 도시지역편입해제구역 UNKNOWN / blocked from runtime registration.
-3. Do not expose production_condition_contracts in SITE_ANALYSIS_API_V1 without a separate schema decision.
-4. Do not auto-run blocked historical producers from builder/service/orchestrator.
-5. Begin the next architecture step only after a read-only gap audit.
-6. New official positive evidence may reopen the relevant terminal condition, but must pass its existing positive verification gates.
+1. Keep STEP 18 and STEP 19 boundaries TERMINALLY CLOSED unless a new architecture decision is positively justified.
+2. Keep UQQ700 and 도시지역편입해제구역 UNKNOWN / blocked from production/runtime registration.
+3. Do not connect the profile registry to the spatial runtime registry.
+4. Do not auto-wire profile lookup into builder/service/orchestrator/public API.
+5. Do not expose production_condition_contracts or resolution profiles in SITE_ANALYSIS_API_V1 without a separate schema decision.
+6. Do not auto-run blocked historical producers from builder/service/orchestrator.
+7. Begin the next architecture step only after a read-only gap audit against PROJECT_ARCHITECTURE.md and current HEAD.
+8. New official positive evidence may reopen a relevant terminal condition only through its existing positive verification gates.
 ```
 
-## 16. Git / local rules
+## 12. Git / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `checkpoint/c12-fastapi-20260821`
 Local root: `D:\site-ai`
 
 ```text
-.env commit 금지
+GitHub write 직전 exact file scope / purpose / non-targets 설명 후 사용자 승인 필수
+.env 수정/commit 금지
+law_data/output/* 수정/commit 금지
 git add . 금지
 git add -A 금지
 git add --all 금지
 intended files만 명시적으로 stage/commit
-law_data/output/* 신규 generated output은 ignore
-기존 tracked baseline output은 일괄 untrack하지 않음
 Large mutable output/PDF/HWP/HWPX commit 금지
 ```
 
-Existing tracked output modifications must not be included in STEP 18 closure commits.
+Known local dirty tracked output must remain untouched unless the user explicitly directs otherwise:
 
-## 17. Handoff policy
+```text
+law_data/output/urban_area_conversion_history_final_resolution.json
+```
+
+## 13. Handoff policy
 
 Use the latest `PROJECT_STATUS.md` when moving to a new chat. Do not create unnecessary handoff documents.
 
@@ -475,7 +443,8 @@ Minimum handoff content:
 repo / branch / local root
 latest commit
 current STEP / validated classification
-STEP 18 production boundary state
+STEP 18 terminal state
+STEP 19 terminal state
 UQQ700 safety invariants
 historical SITE_EVENT safety invariants
 closed/concluded source families / DO-NOT-REPEAT
