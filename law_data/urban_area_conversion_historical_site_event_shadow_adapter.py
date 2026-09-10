@@ -115,11 +115,13 @@ def build_shadow_diagnostics(
 def adapt_urban_area_conversion_history_shadow(
     previous_payload: Mapping[str, Any],
 ) -> dict[str, Any]:
-    """Adapt the existing condition evidence into the generalized kernel in shadow mode.
+    """Adapt existing condition evidence into the generalized kernel in shadow mode.
 
-    This adapter intentionally refuses two promotions:
+    This adapter intentionally refuses these promotions:
     1. a legacy positive candidate is not a verified qualifying historical event;
-    2. official-database negative coverage is not global history-scope completeness.
+    2. announcement-query success verifies, at most, one official source identity;
+    3. official-database negative coverage is not global history completeness;
+    4. official-database negative coverage is not global candidate-universe exhaustion.
 
     The adapter is read-only, performs no discovery, writes no output, and does not
     mutate production overlays or runtime registration.
@@ -139,12 +141,8 @@ def adapt_urban_area_conversion_history_shadow(
         required_originals_resolved=(
             not diagnostics.unresolved_historical_source_present
         ),
-        candidate_universe_exhaustively_enumerated=(
-            diagnostics.official_database_negative
-        ),
-        all_candidates_classified_non_target=(
-            diagnostics.official_database_negative
-        ),
+        candidate_universe_exhaustively_enumerated=False,
+        all_candidates_classified_non_target=False,
         unresolved_historical_source_present=(
             diagnostics.unresolved_historical_source_present
         ),
@@ -174,7 +172,10 @@ def adapt_urban_area_conversion_history_shadow(
         },
         "promotion_guards": {
             "legacy_positive_candidate_promoted_to_verified_event": False,
+            "announcement_query_success_promoted_to_complete_source_set": False,
             "official_database_negative_promoted_to_global_history_completeness": False,
+            "official_database_negative_promoted_to_global_candidate_universe": False,
+            "official_database_negative_promoted_to_all_candidates_non_target": False,
         },
         "production_wiring_applied": False,
         "overlay_mutated": False,
