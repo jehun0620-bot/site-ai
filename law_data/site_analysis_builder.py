@@ -45,6 +45,9 @@ from typing import Any, Dict, Optional
 from law_data.zone_base_numeric_resolver import (
     resolve_zone_base_numeric,
 )
+from law_data.production_spatial_condition_adapter import (
+    adapt_spatial_condition_to_production_contract,
+)
 
 
 try:
@@ -151,6 +154,40 @@ def safe_string(
     return str(
         value
     ).strip()
+
+
+# ============================================================
+# STEP 18 production spatial condition shadow
+# ============================================================
+
+def build_production_condition_contract_shadow(
+    site_condition_context: Any,
+) -> Dict[str, Dict[str, Any]]:
+    """Build read-only production contracts beside legacy runtime conditions.
+
+    The returned shadow is diagnostic only. It does not replace or mutate
+    `site_condition_context`, does not alter Rule Engine input, and keeps
+    production eligibility/runtime registration explicitly false.
+    """
+
+    if not isinstance(site_condition_context, dict):
+        return {}
+
+    shadow: Dict[str, Dict[str, Any]] = {}
+
+    for name, raw_condition in site_condition_context.items():
+        if not isinstance(raw_condition, dict):
+            continue
+
+        condition = adapt_spatial_condition_to_production_contract(
+            raw_condition,
+            production_eligible=False,
+            runtime_registered=False,
+        )
+
+        shadow[str(name)] = condition.to_dict()
+
+    return shadow
 
 
 # ============================================================
@@ -757,11 +794,6 @@ def build_site_analysis(
 
     # ========================================================
     # resolved SITE identity
-    #
-    # priority:
-    # 1. caller/site_builder input
-    # 2. clean SITE baseline
-    # 3. spatial query context / parcel probe
     # ========================================================
 
     site = (
@@ -803,12 +835,6 @@ def build_site_analysis(
 
     # ========================================================
     # C-16 runtime SITE spatial conditions
-    #
-    # 중요:
-    # builder는 개별 condition 이름이나 dataset을 알지 않는다.
-    #
-    # spatial_condition_evaluator registry가 지원하는
-    # runtime condition 전체를 자동으로 실행한다.
     # ========================================================
 
     runtime_condition_names = (
@@ -846,10 +872,6 @@ def build_site_analysis(
             condition_result
         )
 
-    # --------------------------------------------------------
-    # 모든 runtime condition 평가 완료 후 한 번만 저장한다.
-    # --------------------------------------------------------
-
     site[
         "runtime_conditions"
     ] = (
@@ -859,13 +881,23 @@ def build_site_analysis(
     )
 
     # ========================================================
+    # STEP 18-D production contract shadow
+    #
+    # IMPORTANT:
+    # - diagnostic/shadow only
+    # - does not replace site_condition_context
+    # - does not alter Rule Engine input
+    # - does not infer production eligibility/runtime registration
+    # ========================================================
+
+    site[
+        "production_condition_contracts"
+    ] = build_production_condition_contract_shadow(
+        site_condition_context
+    )
+
+    # ========================================================
     # representative coordinate promotion
-    #
-    # 기존 SITE coordinate가 이미 있으면 유지한다.
-    #
-    # coordinate가 없고 live parcel provider에서
-    # EPSG:4326 좌표가 검증된 경우에만
-    # representative coordinate로 승격한다.
     # ========================================================
 
     existing_coordinate = (
@@ -1164,10 +1196,6 @@ def build_site_analysis(
         "external_dependencies": (
             external_dependencies
         ),
-
-        # ----------------------------------------------------
-        # 아래는 향후 보고서 / 디버깅 / evidence 확인용
-        # ----------------------------------------------------
 
         "rule_engine": {
 
