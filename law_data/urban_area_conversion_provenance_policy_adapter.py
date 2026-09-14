@@ -3,6 +3,10 @@ from __future__ import annotations
 from typing import Any, Mapping
 
 from law_data.authority_source_scope import normalize_authority_source_scope
+from law_data.historical_history_completeness import (
+    HistoricalHistoryCompletenessEvidence,
+    evaluate_historical_history_completeness,
+)
 from law_data.historical_site_event_provenance_policy import (
     HistoricalSiteEventProvenanceEvidence,
     evaluate_historical_site_event_provenance_policy,
@@ -56,6 +60,8 @@ def extract_checks(previous_payload: Mapping[str, Any]) -> Mapping[str, Any]:
 
 def adapt_urban_area_conversion_provenance_policy(
     previous_payload: Mapping[str, Any],
+    *,
+    history_completeness_evidence: HistoricalHistoryCompletenessEvidence | None = None,
 ) -> dict[str, Any]:
     """Bind current condition diagnostics to common authority/provenance policies.
 
@@ -71,10 +77,12 @@ def adapt_urban_area_conversion_provenance_policy(
     using only explicit verified requirement facts. Profile presence, matching names,
     contract readiness, and descriptive diagnostics remain non-dispositive.
 
-    This adapter does not verify history completeness. Provenance verification is
-    taken only from the common provenance policy result. Therefore current source-
-    policy requirements remain fail-closed and unsatisfied.
+    History completeness is evaluated only from an explicitly supplied independent
+    ``HistoricalHistoryCompletenessEvidence`` object. Existing diagnostic fields do
+    not manufacture or populate that evidence. Missing, partial, or unresolved
+    history coverage therefore remains fail-closed.
 
+    Provenance verification is taken only from the common provenance policy result.
     This adapter is read-only. It does not promote diagnostics into legal evidence,
     write output, apply production wiring, mutate SITE overlay, or mutate a runtime
     registry.
@@ -207,8 +215,14 @@ def adapt_urban_area_conversion_provenance_policy(
         },
     )
 
+    history_completeness = evaluate_historical_history_completeness(
+        history_completeness_evidence
+    )
+
     source_policy_requirement_facts = {
-        "HISTORY COMPLETENESS VERIFIED": False,
+        "HISTORY COMPLETENESS VERIFIED": (
+            history_completeness.history_completeness_verified
+        ),
         "PROVENANCE VERIFIED": policy.get("provenance_policy_verified") is True,
     }
     source_policy_requirement = evaluate_regulation_source_policy_requirement(
@@ -222,6 +236,7 @@ def adapt_urban_area_conversion_provenance_policy(
         "resolution_profile": profile.to_dict() if profile is not None else None,
         "authority_source_scope": authority_scope.to_dict(),
         "regulation_authority_requirement": authority_requirement.to_dict(),
+        "history_completeness": history_completeness.to_dict(),
         "provenance_policy": policy,
         "regulation_source_policy_requirement": source_policy_requirement.to_dict(),
         "semantic_contract": {
@@ -236,7 +251,8 @@ def adapt_urban_area_conversion_provenance_policy(
             "source_policy_requirement_declaration_does_not_mean_verified": True,
             "profile_source_policy_verified_does_not_supply_requirement_facts": True,
             "contract_readiness_does_not_supply_requirement_facts": True,
-            "history_completeness_not_verified_by_this_adapter": True,
+            "history_completeness_uses_explicit_independent_evidence_only": True,
+            "diagnostics_do_not_supply_history_completeness_evidence": True,
             "provenance_requirement_uses_common_policy_result_only": True,
             "source_policy_requirement_satisfaction_does_not_mean_legal_resolution": True,
             "original_diagnostics_do_not_mean_complete_production_provenance": True,
@@ -251,7 +267,9 @@ def adapt_urban_area_conversion_provenance_policy(
             "source_policy_requirement_unsatisfied": (
                 not source_policy_requirement.source_policy_requirement_satisfied
             ),
-            "history_completeness_unverified": True,
+            "history_completeness_unverified": (
+                not history_completeness.history_completeness_verified
+            ),
             "provenance_policy_unverified": (
                 policy.get("provenance_policy_verified") is not True
             ),
@@ -274,6 +292,8 @@ def adapt_urban_area_conversion_provenance_policy(
             "source_role_metadata_promoted_to_verified_role": False,
             "authority_metadata_promoted_to_legal_evidence": False,
             "authority_requirement_promoted_to_legal_resolution": False,
+            "diagnostics_promoted_to_history_completeness_evidence": False,
+            "history_completeness_promoted_to_legal_resolution": False,
             "source_policy_requirement_promoted_to_verified_evidence": False,
             "source_policy_requirement_promoted_to_legal_resolution": False,
             "contract_readiness_promoted_to_source_policy_verification": False,
