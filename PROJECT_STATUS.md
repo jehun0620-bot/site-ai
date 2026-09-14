@@ -2,27 +2,77 @@
 
 최종 업데이트: 2026-09-14
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `a4c651d36ea8d4780acee9b74333cf85c353f3b7`
+기준 개발 HEAD: `568ba5bea0d30dccc2fec1d893dc46f8031659d0`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
 ```text
-STEP 24
-Focus: HISTORICAL_HISTORY_COMPLETENESS_BOUNDARY + SOURCE_POLICY_INTEGRATION
+STEP 25
+Focus: HISTORICAL_SITE_EVENT_QUALIFICATION_BOUNDARY
 State: TERMINALLY CLOSED
-Terminal classification: STEP24_HISTORICAL_HISTORY_COMPLETENESS_BOUNDARY_TERMINALLY_RECONCILED
+Terminal classification: STEP25_HISTORICAL_SITE_EVENT_QUALIFICATION_BOUNDARY_TERMINALLY_RECONCILED
 Validated classifications:
+- STEP25_HISTORICAL_SITE_EVENT_QUALIFICATION_BOUNDARY_TERMINALLY_RECONCILED
 - STEP24_HISTORICAL_HISTORY_COMPLETENESS_BOUNDARY_TERMINALLY_RECONCILED
 - STEP24_HISTORICAL_HISTORY_COMPLETENESS_SOURCE_POLICY_INTEGRATION_PASS
 - STEP23_REGULATION_SOURCE_POLICY_REQUIREMENT_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-STEP 18/19/20/22/23/24는 사용자 로컬 검증까지 완료되어 TERMINALLY CLOSED 상태다. STEP 21 Architecture Baseline v1.2 reconciliation도 완료되었다.
+STEP 18/19/20/22/23/24/25는 사용자 로컬 검증까지 완료되어 TERMINALLY CLOSED 상태다. STEP 21 Architecture Baseline v1.2 reconciliation도 완료되었다.
 
-## 2. STEP 24 historical history-completeness boundary
+## 2. STEP 25 historical SITE event qualification boundary
 
-STEP24는 historical coverage completeness를 독립적인 fail-closed boundary로 검증한다.
+STEP25는 HISTORICAL_SITE_EVENT의 substantive qualification을 독립적인 fail-closed boundary로 검증한다.
+
+```text
+VERIFIED HISTORICAL EVENT IDENTITY
+AND VERIFIED HISTORICAL SITE APPLICABILITY
+AND VERIFIED TEMPORAL RELATION
+→ HistoricalSiteEventQualificationAssessment
+→ qualifying_historical_event_verified
+```
+
+Positive verification requires all three gates to be explicit exact boolean `True`:
+
+```text
+historical_event_identity_verified=True
+historical_site_applicability_verified=True
+temporal_relation_verified=True
+```
+
+Safety locks:
+
+```text
+candidate/document discovery ≠ event identity verified
+title/notice/region match ≠ event identity verified
+current geometry ≠ historical SITE applicability
+address/region text match ≠ parcel applicability
+date metadata exists ≠ temporal relation verified
+provenance traceability ≠ substantive qualification
+provenance verified ≠ qualifying historical event
+history completeness verified ≠ qualifying historical event
+contract readiness ≠ qualifying historical event
+search no-hit/exhaustion ≠ FALSE or legal absence
+qualifying historical event verified ≠ final regulation TRUE
+qualification ≠ SITE state / production permission / runtime registration
+truthy non-bool value ≠ verified fact
+```
+
+The STEP25 core boundary does not search sources, discover documents, evaluate provenance/history completeness, infer legal absence, create registries, mutate SITE/Rule Engine/runtime state, write outputs, or expose a public API.
+
+Local PASS:
+
+```text
+STEP25_HISTORICAL_SITE_EVENT_QUALIFICATION_BOUNDARY_TERMINALLY_RECONCILED
+STEP24_HISTORICAL_HISTORY_COMPLETENESS_BOUNDARY_TERMINALLY_RECONCILED
+STEP24_HISTORICAL_HISTORY_COMPLETENESS_SOURCE_POLICY_INTEGRATION_PASS
+STEP23_REGULATION_SOURCE_POLICY_REQUIREMENT_BOUNDARY_TERMINALLY_RECONCILED
+```
+
+## 3. STEP 24 historical history-completeness boundary
+
+STEP24 verifies historical coverage completeness independently and fail-closed.
 
 ```text
 explicit HistoricalHistoryCompletenessEvidence
@@ -41,22 +91,9 @@ AND every required coverage item is explicitly exact boolean True
 AND unresolved_gaps is empty
 ```
 
-Safety locks:
+Search completion/exhaustion/no-hit, discovered-record processing, source-family enumeration, provenance, contract readiness, and current geometry do not verify history completeness.
 
-```text
-search completed/exhausted/no-hit ≠ history complete
-some records found ≠ history complete
-all discovered records processed ≠ all legally relevant history covered
-source-family enumeration complete ≠ historical event coverage complete
-provenance verified ≠ history completeness verified
-contract ready ≠ history completeness verified
-current geometry ≠ historical applicability complete
-truthy non-bool value ≠ verified fact
-```
-
-The STEP24 core boundary does not search sources, discover documents, infer legal absence, create registries, mutate SITE/Rule Engine/runtime state, write outputs, or expose a public API.
-
-## 3. STEP 24 → STEP 23 minimal integration
+## 4. STEP 24 → STEP 23 minimal integration
 
 `urban_area_conversion_provenance_policy_adapter.py` accepts optional explicit `HistoricalHistoryCompletenessEvidence` and evaluates it through STEP24.
 
@@ -72,15 +109,7 @@ Existing diagnostic payload fields do not manufacture STEP24 evidence. Missing, 
 
 Complete explicit coverage may supply only `HISTORY COMPLETENESS VERIFIED=True`. It does not manufacture `PROVENANCE VERIFIED`, legal resolution, SITE state, production wiring, or runtime registration. History completeness alone therefore cannot satisfy the full historical source-policy requirement.
 
-Local PASS:
-
-```text
-STEP24_HISTORICAL_HISTORY_COMPLETENESS_BOUNDARY_TERMINALLY_RECONCILED
-STEP24_HISTORICAL_HISTORY_COMPLETENESS_SOURCE_POLICY_INTEGRATION_PASS
-STEP23_REGULATION_SOURCE_POLICY_REQUIREMENT_BOUNDARY_TERMINALLY_RECONCILED
-```
-
-## 4. 도시지역편입해제구역 — unchanged / fail-closed
+## 5. 도시지역편입해제구역 — unchanged / fail-closed
 
 ```text
 Resolution type: HISTORICAL_SITE_EVENT
@@ -96,6 +125,8 @@ production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
 
+STEP25 creates the substantive qualification contract, but no verified evidence has been supplied for this condition. Therefore `verified qualifying historical event` remains FALSE and the condition remains UNKNOWN/BLOCKED.
+
 Preserve:
 
 ```text
@@ -106,9 +137,10 @@ search no-hit ≠ legal absence
 source discovery ≠ competent authority verification
 requirement declaration ≠ requirement verification
 history completeness verified ≠ provenance verified
+qualifying historical event verified ≠ final legal resolution
 ```
 
-## 5. 개발밀도관리구역 / UQQ700 — unchanged
+## 6. 개발밀도관리구역 / UQQ700 — unchanged
 
 ```text
 Resolution type: HYBRID_SPATIAL_NOTICE
@@ -129,9 +161,9 @@ AND CURRENT VALIDITY VERIFIED
 AND SITE SPATIAL INCLUSION VERIFIED
 ```
 
-Current three positive evidence gates remain unverified. STEP24 has no UQQ700 cross-condition wiring.
+Current three positive evidence gates remain unverified. STEP25 has no UQQ700 cross-condition wiring.
 
-## 6. Prior terminal boundaries
+## 7. Prior terminal boundaries
 
 ```text
 STEP17: TERMINALLY CLOSED
@@ -142,11 +174,12 @@ STEP21_ARCHITECTURE_BASELINE_PROFILE_AUTHORITY_SCOPE_RECONCILED
 STEP22_REGULATION_AUTHORITY_REQUIREMENT_BOUNDARY_TERMINALLY_RECONCILED
 STEP23_REGULATION_SOURCE_POLICY_REQUIREMENT_BOUNDARY_TERMINALLY_RECONCILED
 STEP24_HISTORICAL_HISTORY_COMPLETENESS_BOUNDARY_TERMINALLY_RECONCILED
+STEP25_HISTORICAL_SITE_EVENT_QUALIFICATION_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-No authority/source/source-policy/history-completeness registry is required by these closures. No STEP24 auto-wiring exists in builder/service/orchestrator/public API/spatial runtime.
+No authority/source/source-policy/history-completeness/qualification registry is required by these closures. No STEP25 auto-wiring exists in STEP23/24 adapter/source-policy, builder/service/orchestrator/public API/spatial runtime.
 
-## 7. Rule Engine / runtime isolation
+## 8. Rule Engine / runtime isolation
 
 Existing Rule Engine semantics remain unchanged:
 
@@ -162,9 +195,9 @@ UNKNOWN        → POTENTIAL_UNKNOWN
 else           → ACTIVE_CANDIDATE
 ```
 
-Internal profile/authority/source-policy/history-completeness assessments are not Rule Engine SITE state and are not production/runtime permission.
+Internal profile/authority/source-policy/history-completeness/qualification assessments are not Rule Engine SITE state and are not production/runtime permission.
 
-## 8. Architecture state
+## 9. Architecture state
 
 ```text
 PHASE 0 Foundation              COMPLETE
@@ -175,26 +208,27 @@ PHASE 4 Legal ingestion         IN PROGRESS
 PHASE 5 Rule Engine             CORE STABLE / IN PROGRESS
 PHASE 6 Runtime spatial         CORE STABLE
 PHASE 7 Regulation Resolution   ACTIVE / PROFILE + AUTHORITY + SOURCE-POLICY REQUIREMENT BOUNDARIES CLOSED
-PHASE 8 Authority/Historical    ACTIVE / AUTHORITY + PROVENANCE + HISTORY-COMPLETENESS BOUNDARIES CLOSED
+PHASE 8 Authority/Historical    ACTIVE / AUTHORITY + PROVENANCE + HISTORY-COMPLETENESS + EVENT-QUALIFICATION BOUNDARIES CLOSED
 PHASE 9+ Nationwide/AI/Product  FUTURE
 ```
 
-Architecture Baseline remains v1.2; STEP24 implements the existing historical-completeness verification axis and does not require a baseline version change.
+Architecture Baseline remains v1.2; STEP25 implements the existing HISTORICAL_SITE_EVENT positive qualification axis and does not require a baseline version change.
 
-## 9. Next allowed work after STEP 24 closure
+## 10. Next allowed work after STEP 25 closure
 
 ```text
-1. Keep STEP 18/19/20/22/23/24 terminal boundaries closed unless a new architecture decision or new positive evidence justifies reopening.
+1. Keep STEP 18/19/20/22/23/24/25 terminal boundaries closed unless a new architecture decision or new positive evidence justifies reopening.
 2. Keep UQQ700 and 도시지역편입해제구역 UNKNOWN and blocked from production/runtime registration.
 3. Select the next development step only after a read-only gap audit against current HEAD and Architecture Baseline v1.2.
-4. Do not create authority/source/source-policy/history-completeness registries without a separate justified architecture/data decision and independently verified evidence.
+4. Do not create authority/source/source-policy/history-completeness/qualification registries without a separate justified architecture/data decision and independently verified evidence.
 5. Do not connect these internal boundaries to the spatial runtime registry or public API without a separate architecture/schema decision.
 6. Do not auto-run blocked historical producers from builder/service/orchestrator.
-7. Contract readiness must never substitute for actual provenance/history/source-policy evidence verification.
-8. New official positive evidence may reopen a relevant terminal condition only through its existing positive verification gates.
+7. Contract readiness must never substitute for actual provenance/history/source-policy/qualification evidence verification.
+8. STEP25 qualification must not be combined with STEP24 history completeness into final legal resolution without a separately reviewed composition boundary.
+9. New official positive evidence may reopen a relevant terminal condition only through its existing positive verification gates.
 ```
 
-## 10. Git / local rules
+## 11. Git / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `checkpoint/c12-fastapi-20260821`
@@ -202,6 +236,6 @@ Local root: `D:\site-ai\site-ai`
 
 GitHub write requires explicit scope/purpose/non-target approval. Protected environment configuration, mutable generated outputs, unrelated files, and bulk staging remain outside normal write scope.
 
-## 11. Handoff policy
+## 12. Handoff policy
 
 Use the latest `PROJECT_STATUS.md` when moving to a new chat. Minimum handoff should preserve repo/branch/local root, latest commit, current STEP/classifications, Architecture Baseline, UQQ700 and historical SITE_EVENT safety invariants, closed source families, unresolved evidence gaps, next allowed action, and Git write approval rule.
