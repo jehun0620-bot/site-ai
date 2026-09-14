@@ -2,30 +2,84 @@
 
 최종 업데이트: 2026-09-14
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `9d740c30eac97b1eba1fbd6b0c77220428893369`
+기준 개발 HEAD: `f672ee06203afa76f96dce7816eda9edd3596c98`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
 ```text
-STEP 29
-Focus: HISTORICAL_SITE_EVENT_NEGATIVE_RESOLUTION_CANDIDATE_BOUNDARY
+STEP 30
+Focus: HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_CANDIDATE_BOUNDARY
 State: TERMINALLY CLOSED
-Terminal classification: STEP29_HISTORICAL_SITE_EVENT_NEGATIVE_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECONCILED
+Terminal classification: STEP30_HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-사용자 로컬 검증에서 STEP29과 STEP28/27/26 backward regression이 모두 PASS했다.
+사용자 로컬 검증에서 STEP30과 STEP29/28/27/26 backward regression이 모두 PASS했다.
 
 Validated classifications:
 
 ```text
+STEP30_HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECONCILED
 STEP29_HISTORICAL_SITE_EVENT_NEGATIVE_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECONCILED
 STEP28_HISTORICAL_SITE_EVENT_NEGATIVE_EVIDENCE_ELIGIBILITY_BOUNDARY_TERMINALLY_RECONCILED
 STEP27_HISTORICAL_SITE_EVENT_EXHAUSTIVE_DISPROOF_BOUNDARY_TERMINALLY_RECONCILED
 STEP26_HISTORICAL_SITE_EVENT_RESOLUTION_COMPOSITION_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-## 2. STEP 29 negative-resolution candidate contract
+## 2. STEP 30 final-resolution candidate normalization contract
+
+STEP30은 STEP26의 positive candidate와 STEP29의 negative candidate를 하나의 internal candidate state로 정규화한다. 이 경계는 final production TRUE/FALSE를 만들지 않고, conflicting candidates를 fail-closed로 UNKNOWN 처리한다.
+
+```text
+profile is RegulationResolutionProfile
+AND profile.resolution_type == HISTORICAL_SITE_EVENT
+AND profile.condition_type == SITE_HISTORY
+AND positive is a concrete STEP26 assessment aligned to profile.name
+AND negative is a concrete STEP29 assessment aligned to profile.name
+
+CASE A
+positive.resolution_candidate == TRUE_CANDIDATE
+AND negative.resolution_candidate == UNKNOWN
+→ final_resolution_candidate=TRUE_CANDIDATE
+
+CASE B
+positive.resolution_candidate == UNKNOWN
+AND negative.resolution_candidate == FALSE_CANDIDATE
+→ final_resolution_candidate=FALSE_CANDIDATE
+
+CASE C
+positive.resolution_candidate == UNKNOWN
+AND negative.resolution_candidate == UNKNOWN
+→ final_resolution_candidate=UNKNOWN
+
+CASE D
+positive.resolution_candidate == TRUE_CANDIDATE
+AND negative.resolution_candidate == FALSE_CANDIDATE
+→ final_resolution_candidate=UNKNOWN
+→ conflict_detected=True
+
+otherwise
+→ final_resolution_candidate=UNKNOWN
+```
+
+Missing assessment, wrong profile, invalid candidate string, positive/negative conflict는 모두 UNKNOWN으로 fail-closed한다. Positive와 negative가 동시에 성립해도 어떤 우선순위도 자동 적용하지 않는다.
+
+보존 원칙:
+
+```text
+final_resolution_candidate != SITE state
+TRUE_CANDIDATE != final production TRUE
+FALSE_CANDIDATE != final production FALSE
+candidate conflict != arbitrary precedence
+UNKNOWN != FALSE
+no Rule Engine mutation
+no production/runtime registration
+no public API exposure
+```
+
+STEP30 자체는 source search/discovery, evidence verification, legal absence inference, SITE/Rule Engine mutation, output write, builder/service/orchestrator wiring 또는 public API exposure를 수행하지 않는다.
+
+## 3. STEP 29 negative-resolution candidate contract
 
 STEP29는 STEP27 exhaustive-disproof fact와 STEP28 negative-evidence eligibility를 조합해, verified negative evidence가 internal negative resolution candidate로 승격될 수 있는지만 fail-closed로 평가한다.
 
@@ -61,7 +115,7 @@ UNKNOWN != FALSE
 
 STEP29 자체는 final FALSE/legal absence resolution을 생성하지 않는다. SITE/Rule Engine mutation, production/runtime registration, source search/discovery, output write, public API exposure도 수행하지 않는다.
 
-## 3. STEP 28 negative-evidence eligibility contract
+## 4. STEP 28 negative-evidence eligibility contract
 
 STEP28은 STEP27 exhaustive-disproof fact와 regulation-resolution profile의 explicit negative-evidence permission을 조합해, verified negative evidence가 이후 별도 resolution boundary에서 소비될 자격이 있는지만 fail-closed로 평가한다.
 
@@ -96,7 +150,7 @@ UNKNOWN != FALSE
 
 STEP28 자체는 FALSE/FALSE_CANDIDATE/legal absence resolution을 생성하지 않는다. SITE/Rule Engine mutation, production/runtime registration, source search/discovery, output write, public API exposure도 수행하지 않는다.
 
-## 4. STEP 27 exhaustive disproof contract
+## 5. STEP 27 exhaustive disproof contract
 
 STEP27은 HISTORICAL_SITE_EVENT의 negative-resolution shortcut을 만들지 않고, exhaustive disproof에 필요한 positive evidence fact만 fail-closed로 평가한다.
 
@@ -130,7 +184,7 @@ exhaustive_disproof_verified != runtime/production permission
 UNKNOWN != FALSE
 ```
 
-## 5. STEP 26 positive composition contract
+## 6. STEP 26 positive composition contract
 
 STEP26은 STEP22~25에서 이미 평가된 positive assessment만 조합한다.
 
@@ -150,7 +204,7 @@ otherwise
 
 `TRUE_CANDIDATE`는 production TRUE, SITE TRUE, Rule Engine registration, runtime registration 또는 public API exposure가 아니다.
 
-## 6. 도시지역편입해제구역
+## 7. 도시지역편입해제구역
 
 ```text
 Resolution type: HISTORICAL_SITE_EVENT
@@ -167,13 +221,14 @@ STEP27 exhaustive disproof verified=False
 negative_evidence_allowed=False
 STEP28 negative evidence eligible=False
 STEP29 resolution candidate=UNKNOWN
+STEP30 final resolution candidate=UNKNOWN
 production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
 
-STEP26~29는 composition/evidence/policy eligibility/internal candidate contract만 정의한다. 이 조건에 대한 새로운 verified substantive evidence는 공급되지 않았고 built-in profile도 negative evidence consumption을 허용하지 않으므로 실제 상태는 계속 UNKNOWN/BLOCKED다.
+STEP26~30은 composition/evidence/policy eligibility/internal candidate normalization contract만 정의한다. 이 조건에 대한 새로운 verified substantive evidence는 공급되지 않았고 built-in profile도 negative evidence consumption을 허용하지 않으므로 실제 상태는 계속 UNKNOWN/BLOCKED다.
 
-## 7. 개발밀도관리구역 / UQQ700
+## 8. 개발밀도관리구역 / UQQ700
 
 ```text
 Resolution type: HYBRID_SPATIAL_NOTICE
@@ -194,9 +249,9 @@ AND CURRENT VALIDITY VERIFIED
 AND SITE SPATIAL INCLUSION VERIFIED
 ```
 
-현재 세 gate는 모두 미검증 상태다. STEP29는 UQQ700과 연결되지 않는다.
+현재 세 gate는 모두 미검증 상태다. STEP30은 UQQ700과 연결되지 않는다.
 
-## 8. Terminal boundaries
+## 9. Terminal boundaries
 
 ```text
 STEP17: TERMINALLY CLOSED
@@ -212,11 +267,12 @@ STEP26_HISTORICAL_SITE_EVENT_RESOLUTION_COMPOSITION_BOUNDARY_TERMINALLY_RECONCIL
 STEP27_HISTORICAL_SITE_EVENT_EXHAUSTIVE_DISPROOF_BOUNDARY_TERMINALLY_RECONCILED
 STEP28_HISTORICAL_SITE_EVENT_NEGATIVE_EVIDENCE_ELIGIBILITY_BOUNDARY_TERMINALLY_RECONCILED
 STEP29_HISTORICAL_SITE_EVENT_NEGATIVE_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECONCILED
+STEP30_HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-No authority/source/source-policy/history-completeness/qualification/composition/exhaustive-disproof/negative-evidence-eligibility/negative-resolution-candidate registry is required by these closures.
+No authority/source/source-policy/history-completeness/qualification/composition/exhaustive-disproof/negative-evidence-eligibility/negative-resolution-candidate/final-candidate registry is required by these closures.
 
-## 9. Architecture state
+## 10. Architecture state
 
 ```text
 PHASE 0 Foundation              COMPLETE
@@ -227,28 +283,29 @@ PHASE 4 Legal ingestion         IN PROGRESS
 PHASE 5 Rule Engine             CORE STABLE / IN PROGRESS
 PHASE 6 Runtime spatial         CORE STABLE
 PHASE 7 Regulation Resolution   ACTIVE
-PHASE 8 Authority/Historical    ACTIVE / POSITIVE + NEGATIVE CANDIDATE COMPOSITION BOUNDARIES CLOSED
+PHASE 8 Authority/Historical    ACTIVE / INTERNAL HISTORICAL CANDIDATE NORMALIZATION CLOSED
 PHASE 9+ Nationwide/AI/Product  FUTURE
 ```
 
-Architecture Baseline remains v1.2. STEP29 adds only an internal fail-closed FALSE_CANDIDATE composition boundary and does not introduce final FALSE, SITE mutation, or runtime promotion, so no baseline version change is required.
+Architecture Baseline remains v1.2. STEP30 adds only internal candidate normalization and conflict fail-closed behavior. It does not create final production TRUE/FALSE, SITE mutation, Rule Engine mutation, runtime promotion, or API exposure, so no baseline version change is required.
 
-## 10. Next allowed work after STEP 29 closure
+## 11. Next allowed work after STEP 30 closure
 
 ```text
-1. Keep STEP18~29 terminal boundaries closed unless new architecture decisions or independently verified evidence justify reopening.
+1. Keep STEP18~30 terminal boundaries closed unless new architecture decisions or independently verified evidence justify reopening.
 2. Keep UQQ700 and 도시지역편입해제구역 UNKNOWN and blocked from production/runtime registration.
 3. Start the next step only after a read-only gap audit against current branch HEAD and Architecture Baseline v1.2.
 4. Do not create new registries without a separate architecture/data decision.
-5. Do not connect TRUE_CANDIDATE/FALSE_CANDIDATE, exhaustive-disproof facts, or negative-evidence eligibility to Rule Engine SITE state, runtime, builder/service/orchestrator, or public API without a separate architecture/schema decision.
+5. Do not connect STEP30 final_resolution_candidate, TRUE_CANDIDATE/FALSE_CANDIDATE, exhaustive-disproof facts, or negative-evidence eligibility to Rule Engine SITE state, runtime, builder/service/orchestrator, or public API without a separate architecture/schema decision.
 6. Do not auto-run blocked historical producers.
 7. Contract/composition/eligibility/candidate readiness must not substitute for independently verified evidence.
 8. Do not introduce historical FALSE from missing evidence, search no-hit, candidate zero, or search exhaustion.
-9. Any future final-resolution boundary must separately review how TRUE_CANDIDATE and FALSE_CANDIDATE are converted, if at all, into final TRUE/FALSE.
-10. The current built-in 도시지역편입해제구역 profile has negative_evidence_allowed=False, so actual negative-evidence eligibility and FALSE_CANDIDATE remain blocked unless separately reviewed evidence/policy changes justify reopening that decision.
+9. Any future final production resolution boundary must separately review whether and how STEP30 TRUE_CANDIDATE/FALSE_CANDIDATE can be converted into final TRUE/FALSE.
+10. Positive/negative candidate conflict must remain UNKNOWN unless a separately reviewed conflict-resolution architecture is introduced.
+11. The current built-in 도시지역편입해제구역 profile has negative_evidence_allowed=False, so actual negative-evidence eligibility, FALSE_CANDIDATE, and STEP30 negative promotion remain blocked unless separately reviewed evidence/policy changes justify reopening that decision.
 ```
 
-## 11. Git / local rules
+## 12. Git / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `checkpoint/c12-fastapi-20260821`
@@ -256,6 +313,6 @@ Local root: `D:\site-ai\site-ai`
 
 GitHub write requires explicit scope/purpose/non-target approval. `.env`, `law_data/output/*`, unrelated files, and bulk staging are outside normal write scope.
 
-## 12. Handoff policy
+## 13. Handoff policy
 
 Use the latest `PROJECT_STATUS.md` when moving to a new chat. Preserve repo/branch/local root, latest commit, current STEP/classifications, Architecture Baseline, UQQ700 and historical SITE_EVENT safety invariants, unresolved evidence gaps, next allowed action, and Git write approval rule.
