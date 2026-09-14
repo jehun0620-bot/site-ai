@@ -2,30 +2,65 @@
 
 최종 업데이트: 2026-09-14
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `5a8869f48d98a0eec64a9f173ace08731f36a9c2`
+기준 개발 HEAD: `14bab7fe245ca606b2a248b4fd5b6b102c4dfcb8`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
 ```text
-STEP 27
-Focus: HISTORICAL_SITE_EVENT_EXHAUSTIVE_DISPROOF_BOUNDARY
+STEP 28
+Focus: HISTORICAL_SITE_EVENT_NEGATIVE_EVIDENCE_ELIGIBILITY_BOUNDARY
 State: TERMINALLY CLOSED
-Terminal classification: STEP27_HISTORICAL_SITE_EVENT_EXHAUSTIVE_DISPROOF_BOUNDARY_TERMINALLY_RECONCILED
+Terminal classification: STEP28_HISTORICAL_SITE_EVENT_NEGATIVE_EVIDENCE_ELIGIBILITY_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-사용자 로컬 검증에서 STEP27과 STEP26/25/24 backward regression이 모두 PASS했다.
+사용자 로컬 검증에서 STEP28과 STEP27/26/25 backward regression이 모두 PASS했다.
 
 Validated classifications:
 
 ```text
+STEP28_HISTORICAL_SITE_EVENT_NEGATIVE_EVIDENCE_ELIGIBILITY_BOUNDARY_TERMINALLY_RECONCILED
 STEP27_HISTORICAL_SITE_EVENT_EXHAUSTIVE_DISPROOF_BOUNDARY_TERMINALLY_RECONCILED
 STEP26_HISTORICAL_SITE_EVENT_RESOLUTION_COMPOSITION_BOUNDARY_TERMINALLY_RECONCILED
 STEP25_HISTORICAL_SITE_EVENT_QUALIFICATION_BOUNDARY_TERMINALLY_RECONCILED
-STEP24_HISTORICAL_HISTORY_COMPLETENESS_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-## 2. STEP 27 exhaustive disproof contract
+## 2. STEP 28 negative-evidence eligibility contract
+
+STEP28은 STEP27 exhaustive-disproof fact와 regulation-resolution profile의 explicit negative-evidence permission을 조합해, verified negative evidence가 이후 별도 resolution boundary에서 소비될 자격이 있는지만 fail-closed로 평가한다.
+
+```text
+profile is RegulationResolutionProfile
+AND profile.resolution_type == HISTORICAL_SITE_EVENT
+AND profile.condition_type == SITE_HISTORY
+AND profile.negative_evidence_allowed is exactly True
+AND exhaustive_disproof is a concrete STEP27 assessment
+AND exhaustive_disproof.exhaustive_disproof_verified is exactly True
+→ negative_evidence_eligible=True
+
+otherwise
+→ negative_evidence_eligible=False
+```
+
+모든 gate는 exact boolean `True` 또는 concrete assessment identity를 요구한다. Truthy non-boolean 값, wrong resolution/condition type, profile permission 단독, STEP27 verification 단독은 eligibility로 승격하지 않는다.
+
+보존 원칙:
+
+```text
+negative_evidence_eligible != FALSE
+negative_evidence_eligible != FALSE_CANDIDATE
+negative_evidence_eligible != legal absence inference
+negative_evidence_eligible != SITE FALSE
+negative_evidence_eligible != production/runtime permission
+exhaustive_disproof_verified alone != negative-evidence eligibility
+profile permission alone != negative-evidence eligibility
+legal_absence_inference_allowed is diagnostic only and is not a STEP28 gate
+UNKNOWN != FALSE
+```
+
+STEP28 자체는 FALSE/FALSE_CANDIDATE/legal absence resolution을 생성하지 않는다. SITE/Rule Engine mutation, production/runtime registration, source search/discovery, output write, public API exposure도 수행하지 않는다.
+
+## 3. STEP 27 exhaustive disproof contract
 
 STEP27은 HISTORICAL_SITE_EVENT의 negative-resolution shortcut을 만들지 않고, exhaustive disproof에 필요한 positive evidence fact만 fail-closed로 평가한다.
 
@@ -41,8 +76,6 @@ AND NO UNRESOLVED HISTORICAL SOURCE
 otherwise
 → exhaustive_disproof_verified=False
 ```
-
-모든 gate는 exact boolean `True`여야 한다. Missing, partial, wrong-type, truthy non-boolean evidence는 exhaustive disproof로 승격하지 않는다.
 
 보존 원칙:
 
@@ -61,9 +94,7 @@ exhaustive_disproof_verified != runtime/production permission
 UNKNOWN != FALSE
 ```
 
-STEP27 자체는 FALSE/legal absence resolution을 생성하지 않는다. source search/discovery, registry creation, output write, SITE/Rule Engine mutation, production/runtime registration, public API exposure도 수행하지 않는다.
-
-## 3. STEP 26 positive composition contract
+## 4. STEP 26 positive composition contract
 
 STEP26은 STEP22~25에서 이미 평가된 positive assessment만 조합한다.
 
@@ -83,7 +114,7 @@ otherwise
 
 `TRUE_CANDIDATE`는 production TRUE, SITE TRUE, Rule Engine registration, runtime registration 또는 public API exposure가 아니다.
 
-## 4. 도시지역편입해제구역
+## 5. 도시지역편입해제구역
 
 ```text
 Resolution type: HISTORICAL_SITE_EVENT
@@ -97,13 +128,15 @@ authority requirement satisfied=False
 source-policy requirement satisfied=False
 STEP26 resolution candidate=UNKNOWN
 STEP27 exhaustive disproof verified=False
+negative_evidence_allowed=False
+STEP28 negative evidence eligible=False
 production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
 
-STEP26/27은 composition/evidence contract만 정의한다. 이 조건에 대한 새로운 verified substantive evidence는 공급되지 않았으므로 실제 상태는 계속 UNKNOWN/BLOCKED다.
+STEP26~28은 composition/evidence/policy eligibility contract만 정의한다. 이 조건에 대한 새로운 verified substantive evidence는 공급되지 않았고 built-in profile도 negative evidence consumption을 허용하지 않으므로 실제 상태는 계속 UNKNOWN/BLOCKED다.
 
-## 5. 개발밀도관리구역 / UQQ700
+## 6. 개발밀도관리구역 / UQQ700
 
 ```text
 Resolution type: HYBRID_SPATIAL_NOTICE
@@ -124,9 +157,9 @@ AND CURRENT VALIDITY VERIFIED
 AND SITE SPATIAL INCLUSION VERIFIED
 ```
 
-현재 세 gate는 모두 미검증 상태다. STEP27은 UQQ700과 연결되지 않는다.
+현재 세 gate는 모두 미검증 상태다. STEP28은 UQQ700과 연결되지 않는다.
 
-## 6. Terminal boundaries
+## 7. Terminal boundaries
 
 ```text
 STEP17: TERMINALLY CLOSED
@@ -140,11 +173,12 @@ STEP24_HISTORICAL_HISTORY_COMPLETENESS_BOUNDARY_TERMINALLY_RECONCILED
 STEP25_HISTORICAL_SITE_EVENT_QUALIFICATION_BOUNDARY_TERMINALLY_RECONCILED
 STEP26_HISTORICAL_SITE_EVENT_RESOLUTION_COMPOSITION_BOUNDARY_TERMINALLY_RECONCILED
 STEP27_HISTORICAL_SITE_EVENT_EXHAUSTIVE_DISPROOF_BOUNDARY_TERMINALLY_RECONCILED
+STEP28_HISTORICAL_SITE_EVENT_NEGATIVE_EVIDENCE_ELIGIBILITY_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-No authority/source/source-policy/history-completeness/qualification/composition/exhaustive-disproof registry is required by these closures.
+No authority/source/source-policy/history-completeness/qualification/composition/exhaustive-disproof/negative-evidence-eligibility registry is required by these closures.
 
-## 7. Architecture state
+## 8. Architecture state
 
 ```text
 PHASE 0 Foundation              COMPLETE
@@ -155,27 +189,28 @@ PHASE 4 Legal ingestion         IN PROGRESS
 PHASE 5 Rule Engine             CORE STABLE / IN PROGRESS
 PHASE 6 Runtime spatial         CORE STABLE
 PHASE 7 Regulation Resolution   ACTIVE
-PHASE 8 Authority/Historical    ACTIVE / POSITIVE COMPOSITION + EXHAUSTIVE-DISPROOF BOUNDARIES CLOSED
+PHASE 8 Authority/Historical    ACTIVE / POSITIVE COMPOSITION + EXHAUSTIVE-DISPROOF + NEGATIVE-EVIDENCE-ELIGIBILITY BOUNDARIES CLOSED
 PHASE 9+ Nationwide/AI/Product  FUTURE
 ```
 
-Architecture Baseline remains v1.2. STEP27 implements the baseline's exhaustive-disproof evidence boundary without introducing a final negative resolution, so no baseline version change is required.
+Architecture Baseline remains v1.2. STEP28 adds only a fail-closed eligibility boundary and does not introduce final negative resolution or runtime promotion, so no baseline version change is required.
 
-## 8. Next allowed work after STEP 27 closure
+## 9. Next allowed work after STEP 28 closure
 
 ```text
-1. Keep STEP18~27 terminal boundaries closed unless new architecture decisions or independently verified evidence justify reopening.
+1. Keep STEP18~28 terminal boundaries closed unless new architecture decisions or independently verified evidence justify reopening.
 2. Keep UQQ700 and 도시지역편입해제구역 UNKNOWN and blocked from production/runtime registration.
-3. Select STEP28 only after a read-only gap audit against current branch HEAD and Architecture Baseline v1.2.
+3. Start the next step only after a read-only gap audit against current branch HEAD and Architecture Baseline v1.2.
 4. Do not create new registries without a separate architecture/data decision.
-5. Do not connect internal historical candidates or exhaustive-disproof facts to Rule Engine SITE state, runtime, builder/service/orchestrator, or public API without a separate architecture/schema decision.
+5. Do not connect internal historical candidates, exhaustive-disproof facts, or negative-evidence eligibility to Rule Engine SITE state, runtime, builder/service/orchestrator, or public API without a separate architecture/schema decision.
 6. Do not auto-run blocked historical producers.
-7. Contract/composition readiness must not substitute for independently verified evidence.
+7. Contract/composition/eligibility readiness must not substitute for independently verified evidence.
 8. Do not introduce historical FALSE from missing evidence, search no-hit, candidate zero, or search exhaustion.
-9. Any future negative-resolution composition must separately review how exhaustive_disproof_verified is converted, if at all, into a negative candidate or final FALSE.
+9. Any future negative-resolution composition must separately review how negative_evidence_eligible and exhaustive_disproof_verified are converted, if at all, into a negative candidate or final FALSE.
+10. The current built-in 도시지역편입해제구역 profile has negative_evidence_allowed=False, so actual negative-evidence eligibility remains blocked unless separately reviewed evidence/policy changes justify reopening that decision.
 ```
 
-## 9. Git / local rules
+## 10. Git / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `checkpoint/c12-fastapi-20260821`
@@ -183,6 +218,6 @@ Local root: `D:\site-ai\site-ai`
 
 GitHub write requires explicit scope/purpose/non-target approval. `.env`, `law_data/output/*`, unrelated files, and bulk staging are outside normal write scope.
 
-## 10. Handoff policy
+## 11. Handoff policy
 
 Use the latest `PROJECT_STATUS.md` when moving to a new chat. Preserve repo/branch/local root, latest commit, current STEP/classifications, Architecture Baseline, UQQ700 and historical SITE_EVENT safety invariants, unresolved evidence gaps, next allowed action, and Git write approval rule.
