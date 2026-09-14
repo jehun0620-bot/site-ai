@@ -200,7 +200,7 @@ def test_diagnostic_shortcuts_are_non_dispositive() -> None:
     )
 
 
-def test_boundary_has_no_search_registry_mutation_or_integration_surface() -> None:
+def test_boundary_has_no_search_registry_mutation_or_unrelated_auto_wiring() -> None:
     source = _read_source("law_data/historical_history_completeness.py")
 
     forbidden_tokens = (
@@ -225,7 +225,6 @@ def test_boundary_has_no_search_registry_mutation_or_integration_surface() -> No
 
     isolated_paths = (
         "law_data/regulation_source_policy_requirement.py",
-        "law_data/urban_area_conversion_provenance_policy_adapter.py",
         "law_data/spatial_condition_evaluator.py",
         "law_data/site_analysis_builder.py",
         "site_data/site_analysis_service.py",
@@ -252,7 +251,7 @@ def run_terminal_audit() -> None:
     test_unresolved_gap_blocks_otherwise_complete_coverage()
     test_positive_verification_requires_complete_explicit_coverage()
     test_diagnostic_shortcuts_are_non_dispositive()
-    test_boundary_has_no_search_registry_mutation_or_integration_surface()
+    test_boundary_has_no_search_registry_mutation_or_unrelated_auto_wiring()
 
     print("=" * 88)
     print("STEP 24 HISTORICAL HISTORY COMPLETENESS BOUNDARY TERMINAL AUDIT")
@@ -267,7 +266,7 @@ def run_terminal_audit() -> None:
     print("Source discovery/search: NONE")
     print("Legal absence / SITE state inference: NONE")
     print("Production/runtime mutation: NONE")
-    print("STEP23 adapter/source-policy integration: NONE")
+    print("STEP23 adapter/source-policy integration: EXPLICIT EVIDENCE ONLY")
     print("Builder/service/orchestrator/public API/spatial runtime auto-wiring: NONE")
     print(f"CLASSIFICATION: {CLASSIFICATION}")
 
