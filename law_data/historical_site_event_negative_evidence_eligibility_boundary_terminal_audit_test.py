@@ -55,6 +55,7 @@ def main() -> None:
     verified_disproof = _verified_disproof()
     assert verified_disproof.exhaustive_disproof_verified is True
 
+    # STEP27 verification alone is not enough without explicit profile permission.
     blocked_profile = _historical_profile(negative_evidence_allowed=False)
     blocked = evaluate_historical_site_event_negative_evidence_eligibility(
         blocked_profile,
@@ -63,6 +64,7 @@ def main() -> None:
     assert blocked.negative_evidence_eligible is False
     assert "negative_evidence_allowed" in blocked.missing_gates
 
+    # Profile permission alone is not enough without a verified STEP27 assessment.
     allowed_profile = _historical_profile(negative_evidence_allowed=True)
     no_disproof = evaluate_historical_site_event_negative_evidence_eligibility(
         allowed_profile,
@@ -82,6 +84,7 @@ def main() -> None:
     )
     assert incomplete.negative_evidence_eligible is False
 
+    # Wrong resolution/condition semantics fail closed even with permission/evidence.
     wrong_resolution = RegulationResolutionProfile(
         name="STEP28_WRONG_RESOLUTION",
         condition_type="SITE_HISTORY",
@@ -110,6 +113,7 @@ def main() -> None:
         is False
     )
 
+    # Truthy non-booleans do not become explicit permission or verified evidence.
     truthy_profile = _historical_profile(negative_evidence_allowed=1)
     assert (
         evaluate_historical_site_event_negative_evidence_eligibility(
@@ -131,6 +135,7 @@ def main() -> None:
         is False
     )
 
+    # Only all explicit gates produce eligibility; this still is not FALSE.
     eligible = evaluate_historical_site_event_negative_evidence_eligibility(
         allowed_profile,
         verified_disproof,
@@ -151,6 +156,7 @@ def main() -> None:
     assert payload["runtime_registry_mutated"] is False
     assert payload["public_api_exposed"] is False
 
+    # The actual built-in historical profile remains blocked and therefore UNKNOWN-safe.
     actual_profile = get_regulation_resolution_profile(
         URBAN_AREA_CONVERSION_CONDITION_NAME
     )
