@@ -2,14 +2,25 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `2b6751c50e9f4b34939a7c1a60e125f0775f3e2d`
+기준 개발 HEAD: `aa5dc1c7ce12f4c7acd8c900d6b8ab50b53e13f7`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 78
-Focus: PHASE_9_REGULATION_PROFILE_REGISTRATION_ELIGIBILITY_AUDIT
+STEP 79
+Focus: PHASE_9_NATIONWIDE_CONDITION_CATALOGUE_DISCOVERY_BOUNDARY_AUDIT
 State: READ-ONLY AUDIT PENDING
+
+Previous terminal audit:
+STEP78_PHASE_9_REGULATION_PROFILE_REGISTRATION_ELIGIBILITY_AUDIT_RECONCILED
+
+STEP78 conclusion:
+- PROFILE_REGISTRATION_ELIGIBILITY_BOUNDARY_CONFIRMED
+- VERIFIED_STANDARD_CODE_NOT_REQUIRED_FOR_PROFILE_EXISTENCE
+- UNVERIFIED_STANDARD_CODE_MUST_REMAIN_ABSENT
+- PROFILE_REGISTRATION_DOES_NOT_AUTHORIZE_PRODUCTION_OR_RUNTIME
+- EXACT_NAME_FAIL_CLOSED_LOOKUP_PRESERVED
+- NO NEW REGISTRY IMPLEMENTATION REQUIRED
 
 Previous terminal audit:
 STEP77_PHASE_9_RESOLUTION_EXECUTION_SOURCE_ADAPTER_BOUNDARY_AUDIT_RECONCILED
@@ -255,7 +266,7 @@ PHASE 8 infrastructure closure does not convert unresolved historical conditions
 
 Next action:
 
-STEP78 read-only PHASE 9 Regulation Profile Registration Eligibility Audit. Determine the evidence and safety requirements a condition must satisfy before admission to the built-in regulation resolution profile registry, without treating profile registration as production or runtime activation.
+STEP79 read-only PHASE 9 Nationwide Condition Catalogue Discovery Boundary Audit. Determine whether an evidence-driven discovery-to-profile-admission boundary already exists for nationwide regulation conditions before approving any catalogue implementation or bulk profile registration.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
