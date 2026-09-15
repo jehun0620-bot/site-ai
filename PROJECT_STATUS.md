@@ -28,6 +28,12 @@ STEP27_HISTORICAL_SITE_EVENT_EXHAUSTIVE_DISPROOF_BOUNDARY_TERMINALLY_RECONCILED
 STEP26_HISTORICAL_SITE_EVENT_RESOLUTION_COMPOSITION_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
+### STEP 32 production-consumption eligibility contract
+
+STEP32는 concrete STEP31 semantic resolution과 RegulationResolutionProfile의 explicit promotion/registration permissions를 조합해 production consumption 자격만 fail-closed로 평가한다. Semantic TRUE/FALSE와 세 permission의 exact True가 모두 충족될 때만 production_consumption_eligible=True이며, UNKNOWN, profile mismatch, invalid semantic value, missing assessment, False 또는 truthy non-bool permission은 모두 eligibility를 차단한다.
+
+production_consumption_eligible은 SITE/Rule Engine mutation, production wiring, runtime registry mutation 또는 public API exposure를 수행하거나 허가하는 실행 동작이 아니다.
+
 ## 2. STEP 31 semantic final-resolution contract
 
 STEP31은 STEP30에서 이미 fail-closed 정규화된 internal candidate를 표준 semantic regulation state인 TRUE / FALSE / UNKNOWN으로 변환한다. 이 경계는 SITE state 또는 production/runtime registration을 변경하지 않는다.
@@ -218,7 +224,7 @@ production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
 
-STEP26~31은 composition/evidence/policy eligibility/candidate normalization/semantic resolution contract를 정의하지만, 이 조건에 대한 새로운 verified substantive evidence는 공급하지 않는다. Built-in profile도 negative evidence consumption을 허용하지 않으므로 실제 상태는 계속 UNKNOWN/BLOCKED다.
+STEP26~32는 composition/evidence/policy eligibility/candidate normalization/semantic resolution/production-consumption eligibility contract를 정의하지만, 이 조건에 대한 새로운 verified substantive evidence는 공급하지 않는다. Built-in profile도 negative evidence consumption을 허용하지 않으므로 실제 상태는 계속 UNKNOWN/BLOCKED다.
 
 ## 9. 개발밀도관리구역 / UQQ700
 
@@ -241,7 +247,7 @@ AND CURRENT VALIDITY VERIFIED
 AND SITE SPATIAL INCLUSION VERIFIED
 ```
 
-현재 세 gate는 모두 미검증 상태다. STEP31은 UQQ700과 연결되지 않는다.
+현재 세 gate는 모두 미검증 상태다. STEP32 production-consumption eligibility boundary도 UQQ700과 연결되지 않는다.
 
 ## 10. Terminal boundaries
 
@@ -261,9 +267,10 @@ STEP28_HISTORICAL_SITE_EVENT_NEGATIVE_EVIDENCE_ELIGIBILITY_BOUNDARY_TERMINALLY_R
 STEP29_HISTORICAL_SITE_EVENT_NEGATIVE_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECONCILED
 STEP30_HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECONCILED
 STEP31_HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_BOUNDARY_TERMINALLY_RECONCILED
+STEP32_HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_ELIGIBILITY_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-No authority/source/source-policy/history-completeness/qualification/composition/exhaustive-disproof/negative-evidence-eligibility/negative-resolution-candidate/final-candidate/final-resolution registry is required by these closures.
+No authority/source/source-policy/history-completeness/qualification/composition/exhaustive-disproof/negative-evidence-eligibility/negative-resolution-candidate/final-candidate/final-resolution/production-consumption-eligibility registry is required by these closures.
 
 ## 11. Architecture state
 
@@ -304,7 +311,7 @@ STEP32 adds only a read-only production-consumption eligibility boundary. produc
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `checkpoint/c12-fastapi-20260821`
-Local root: `D:\site-ai\site-ai`
+Local root: `D:\site-ai`
 
 GitHub write requires explicit scope/purpose/non-target approval. `.env`, `law_data/output/*`, unrelated files, and bulk staging are outside normal write scope.
 
