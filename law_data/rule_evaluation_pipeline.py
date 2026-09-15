@@ -2614,6 +2614,7 @@ def evaluate_site_rules(
     site_condition_context: Optional[
         Dict[str, Any]
     ] = None,
+    historical_registry_authorization: Optional[Any] = None,
 ) -> Dict[str, Any]:
 
     project_profile = (
@@ -2933,6 +2934,50 @@ def evaluate_site_rules(
     # 최종 runtime registry 기준으로 state/confidence/source를 동기화한다.
     # ========================================================
 
+    site_registry_for_consumption = site_registry
+
+    if historical_registry_authorization is not None:
+        # Lazy import is intentional.
+        # The STEP55 historical executor imports apply_site_registry from this
+        # module, so importing the STEP64 authorization type at module load
+        # time would create a circular dependency.
+        from law_data.historical_merged_registry_live_consumption_authorization import (
+            BOUNDARY_NAME as HISTORICAL_REGISTRY_AUTHORIZATION_BOUNDARY,
+            HistoricalMergedRegistryLiveConsumptionAuthorization,
+        )
+
+        authorization = historical_registry_authorization
+
+        authorization_valid = (
+            isinstance(
+                authorization,
+                HistoricalMergedRegistryLiveConsumptionAuthorization,
+            )
+            and authorization.boundary
+            == HISTORICAL_REGISTRY_AUTHORIZATION_BOUNDARY
+            and authorization.live_consumption_authorized is True
+        )
+
+        if not authorization_valid:
+            raise ValueError(
+                "historical registry live consumption authorization invalid"
+            )
+
+        authorized_registry = getattr(
+            authorization,
+            "authorized_merged_registry",
+            None,
+        )
+
+        if not isinstance(authorized_registry, dict):
+            raise ValueError(
+                "authorized historical merged registry invalid"
+            )
+
+        site_registry_for_consumption = copy.deepcopy(
+            authorized_registry
+        )
+
     site_repairs = (
         apply_site_registry(
             rules=(
@@ -2940,7 +2985,7 @@ def evaluate_site_rules(
             ),
 
             site_registry=(
-                site_registry
+                site_registry_for_consumption
             ),
         )
     )
