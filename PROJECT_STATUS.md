@@ -2,93 +2,54 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `18438b960cc88e8a8fef98256705b660065d66ff`
+기준 개발 HEAD: `6022c5e55eea9b1b2ed94a46918cad0a231f5132`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
-
 ```text
-STEP 50
-Focus: HISTORICAL_SITE_EVENT_SITE_REGISTRY_MUTATION_COMMIT_AUTHORIZATION_BOUNDARY
+STEP 51
+Focus: HISTORICAL_SITE_EVENT_SITE_REGISTRY_MUTATION_EXECUTOR_BOUNDARY
 State: IMPLEMENTED / LOCAL VALIDATION PENDING
-
 Previous terminal closure:
-STEP49_HISTORICAL_SITE_EVENT_SITE_REGISTRY_MUTATION_TRANSACTION_BOUNDARY_RECONCILED
+STEP50_HISTORICAL_SITE_EVENT_SITE_REGISTRY_MUTATION_COMMIT_AUTHORIZATION_BOUNDARY_RECONCILED
 ```
 
-STEP49 사용자 로컬 behavioral validation PASS:
+STEP50 user local behavioral validation PASS: TRUE/FALSE/UNKNOWN commit authorization, exact transaction/target/no-collision binding, snapshot/provenance alignment all PASS; registry mutation, apply_site_registry, refresh_rule, Rule Engine evaluation, builder/runtime/API all NONE.
+
+## 2. STEP50 terminal boundary
+STEP50 is the final non-executing commit authorization. `mutation_commit_authorized=True` is not registry mutation or Rule Engine consumption.
+
+## 3. STEP51 current boundary
+STEP51 is the first historical registry execution boundary. It accepts only a concrete STEP50 authorization, re-verifies exact target, historical provenance and authorized snapshot alignment, then returns a committed deep-copy registry.
 
 ```text
-Historical TRUE mutation transaction: PASS
-Historical FALSE mutation transaction: PASS
-Historical UNKNOWN mutation transaction: PASS
-No-collision policy / exact authorization binding: PASS
-Exactly-one historical condition guard: PASS
-Historical provenance preservation guards: PASS
-Transaction ready != registry mutation: PASS
-apply_site_registry / refresh_rule / Rule Engine evaluation: NONE
-Builder / production wiring / runtime registration / API: NONE
-```
-
-## 2. STEP49 terminal boundary
-STEP49 freezes a valid STEP48 no-collision authorization into an exact non-executing mutation transaction. It binds the future mutation target, registry snapshot, and exactly one historical condition without mutation.
-
-## 3. STEP50 current boundary
-STEP50 is the final explicit commit gate before any future executor. It accepts only a concrete ready STEP49 transaction and re-verifies target, no-collision policy, exactly-one historical condition, historical provenance, and exact snapshot/condition alignment.
-
-```text
-valid STEP49 transaction
-AND mutation_transaction_ready=True
+valid STEP50 authorization
+AND mutation_commit_authorized=True
 AND exact mutation target
-AND no-collision policy preserved
-AND exactly one SITE_HISTORY condition
-AND state=TRUE/FALSE/UNKNOWN
+AND SITE_HISTORY / TRUE|FALSE|UNKNOWN
 AND source=RUNTIME_HISTORICAL_SITE_EVENT
 AND original historical source preserved
-AND transaction snapshot contains exact historical condition
-→ mutation_commit_authorized=True
+AND authorized snapshot contains exact historical condition
+→ mutation_executed=True
+→ site_registry_overlaid=True
+→ committed_registry=deep-copy authorized snapshot
 ```
 
 Mandatory separation:
-
 ```text
-mutation_commit_authorized != mutation executed
-mutation_commit_authorized != original registry mutation
-mutation_commit_authorized != apply_site_registry / refresh_rule called
-mutation_commit_authorized != Rule Engine evaluation/applicability recalculation
-mutation_commit_authorized != builder/runtime/API wiring
+STEP51 mutation execution != apply_site_registry called
+STEP51 mutation execution != refresh_rule called
+STEP51 mutation execution != Rule Engine condition mutation/evaluation
+STEP51 mutation execution != builder/runtime/API wiring
 ```
-
-STEP50 local behavioral validation is required before terminal closure.
+The STEP50 authorization object is not mutated. Current `rule_evaluation_pipeline.py` and spatial overlay remain unchanged.
 
 ## 4. Historical safety chain
-```text
-STEP31 semantic resolution
-→ STEP32 production eligibility
-→ STEP33 application shadow
-→ STEP34 consumption authorization
-→ STEP35 consumption plan
-→ STEP36 Rule Engine input preparation
-→ STEP37 consumption authorization
-→ STEP38 consumption package
-→ STEP39 context projection
-→ STEP40 context merge candidate
-→ STEP41 builder injection authorization
-→ STEP42 builder injection payload
-→ STEP43 compatibility BLOCKED for current spatial overlay
-→ STEP44 provenance-preserving overlay contract
-→ STEP45 overlay application authorization
-→ STEP46 execution package
-→ STEP47 registry overlay preview
-→ STEP48 no-collision replacement policy authorization
-→ STEP49 mutation transaction
-→ STEP50 mutation commit authorization
-```
+STEP31~43 retain prior semantics. STEP44 provenance contract → STEP45 application authorization → STEP46 execution package → STEP47 preview → STEP48 no-collision policy → STEP49 transaction → STEP50 commit authorization → STEP51 historical registry mutation executor.
 
-Preserve: readiness/authorization is not execution; collision is not implicit replacement authorization; UNKNOWN != FALSE; positive/negative conflict → UNKNOWN; standard code must not be guessed.
+Preserve: readiness/authorization != execution; STEP51 registry execution != Rule Engine consumption; collision != implicit replacement authorization; UNKNOWN != FALSE; positive/negative conflict → UNKNOWN; standard code must not be guessed.
 
 ## 5. Real condition locks
-
 ### 도시지역편입해제구역
 ```text
 Resolution type: HISTORICAL_SITE_EVENT
@@ -119,11 +80,12 @@ STEP47 preview_ready=False / BLOCKED
 STEP48 replacement_policy_authorized=False / BLOCKED
 STEP49 mutation_transaction_ready=False / BLOCKED
 STEP50 mutation_commit_authorized=False / BLOCKED
+STEP51 mutation_executed=False / BLOCKED
 production consumption=BLOCKED
 production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
-STEP31~50 boundary/readiness work supplies no new substantive evidence.
+STEP31~51 boundary work supplies no new substantive evidence.
 
 ### 개발밀도관리구역 / UQQ700
 ```text
@@ -136,36 +98,28 @@ site_promotion_allowed=False
 production_registration_allowed=False
 runtime_registration_allowed=False
 ```
-Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~50 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
+All positive gates remain unverified. STEP32~51 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
 
 ## 6. Terminal boundaries
-STEP17~48 remain terminally/reconciled as previously recorded. Added terminal closure:
+STEP17~49 remain terminally/reconciled as previously recorded. Added:
 ```text
-STEP49_HISTORICAL_SITE_EVENT_SITE_REGISTRY_MUTATION_TRANSACTION_BOUNDARY_RECONCILED
+STEP50_HISTORICAL_SITE_EVENT_SITE_REGISTRY_MUTATION_COMMIT_AUTHORIZATION_BOUNDARY_RECONCILED
 ```
 
 ## 7. Architecture state / next action
-Architecture Baseline remains v1.2. STEP50 is commit authorization only; current Rule Engine and builder behavior remain unchanged.
-
+Architecture Baseline remains v1.2. STEP51 mutates only a deep-copy historical registry result; it does not modify Rule Engine/builder production behavior.
 ```text
 PHASE 8 Authority/Historical:
-ACTIVE / STEP49 MUTATION TRANSACTION CLOSED / STEP50 COMMIT AUTHORIZATION VALIDATION PENDING
+ACTIVE / STEP50 COMMIT AUTHORIZATION CLOSED / STEP51 MUTATION EXECUTOR VALIDATION PENDING
 ```
-
-Next action: user local compile/test validation of STEP50. If PASS, begin STEP51 read-only gap audit before any actual executor. Actual registry mutation, current Rule Engine modification, builder/runtime/API wiring require a separately approved boundary.
+Next action: user local compile/test validation of STEP51. If PASS, begin STEP52 read-only gap audit before any `apply_site_registry()` consumption or Rule Engine behavioral execution.
 
 ## 8. Git / local rules
 Repository: `jehun0620-bot/site-ai`
 Branch: `checkpoint/c12-fastapi-20260821`
 Local root: `D:\site-ai`
-
 GitHub write requires explicit scope/purpose/non-target approval. `.env`, `law_data/output/*`, unrelated files, and bulk staging are outside normal write scope.
-
-Known local-only modified artifact:
-```text
-law_data/output/urban_area_conversion_history_final_resolution.json
-```
-Do not modify, restore, delete, stage, or commit this artifact as part of unrelated work.
+Known local-only modified artifact: `law_data/output/urban_area_conversion_history_final_resolution.json`. Do not modify, restore, delete, stage, or commit it.
 
 ## 9. Handoff policy
-Use the latest `PROJECT_STATUS.md` when moving to a new chat. Preserve repo/branch/local root, latest commit, current STEP/classifications, Architecture Baseline, UQQ700 and HISTORICAL_SITE_EVENT safety invariants, unresolved evidence gaps, next allowed action, and Git write approval rule.
+Use latest `PROJECT_STATUS.md` for a new chat and preserve repo/branch/local root, latest commit, current STEP/classifications, Architecture Baseline, safety invariants, unresolved evidence gaps, next allowed action, and Git write approval rule.
