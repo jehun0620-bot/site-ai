@@ -48,6 +48,15 @@ from law_data.production_spatial_condition_adapter import (
 from law_data.production_site_condition_shadow_collector import (
     collect_production_site_condition_shadows,
 )
+from law_data.historical_site_event_rule_engine_registry_adapter import (
+    adapt_historical_site_event_rule_engine_registry,
+)
+from law_data.historical_spatial_registry_collision_policy import (
+    evaluate_historical_spatial_registry_collision_policy,
+)
+from law_data.historical_merged_registry_live_consumption_authorization import (
+    authorize_historical_merged_registry_live_consumption,
+)
 
 try:
     from .rule_evaluation_pipeline import evaluate_site_rules
@@ -334,6 +343,50 @@ def build_site_analysis(
         site_zone_context=site.get("zone"),
         site_condition_context=site_condition_context,
     )
+
+    if historical_rule_input is not None:
+        historical_registry = (
+            adapt_historical_site_event_rule_engine_registry(
+                historical_rule_input_snapshot
+            )
+        )
+
+        if not historical_registry.registry_ready:
+            raise ValueError(
+                "historical rule input registry adaptation failed"
+            )
+
+        collision_policy = (
+            evaluate_historical_spatial_registry_collision_policy(
+                engine_result.get("site_registry"),
+                historical_registry.historical_site_registry,
+            )
+        )
+
+        if not collision_policy.merge_candidate_ready:
+            raise ValueError(
+                "historical/spatial registry collision policy failed"
+            )
+
+        historical_authorization = (
+            authorize_historical_merged_registry_live_consumption(
+                collision_policy
+            )
+        )
+
+        if not historical_authorization.live_consumption_authorized:
+            raise ValueError(
+                "historical merged registry live consumption unauthorized"
+            )
+
+        engine_result = evaluate_site_rules(
+            project_profile=project_profile,
+            procedure_profile=procedure_profile,
+            base_numeric_context=zone_base_numeric,
+            site_zone_context=site.get("zone"),
+            site_condition_context=site_condition_context,
+            historical_registry_authorization=historical_authorization,
+        )
 
     land_area = build_land_area_result(site_input=site_input, site=site)
     regulation = build_regulation_result(engine_result)
