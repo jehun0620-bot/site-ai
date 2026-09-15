@@ -36,6 +36,7 @@ HTTP/FastAPI/Flask와 독립적이다.
 
 from __future__ import annotations
 
+import copy
 import os
 
 from pathlib import Path
@@ -456,8 +457,18 @@ def analyze_site_by_parcel(
                 "Historical handoff is not authorized"
             )
 
-        historical_rule_input = (
-            historical_handoff_authorization.handoff_rules
+        historical_rule_input = copy.deepcopy(
+            {
+                "channel": (
+                    historical_handoff_authorization.channel
+                ),
+                "provenance": (
+                    historical_handoff_authorization.provenance
+                ),
+                "repairs": list(
+                    historical_handoff_authorization.handoff_repairs
+                ),
+            }
         )
 
     # ========================================================

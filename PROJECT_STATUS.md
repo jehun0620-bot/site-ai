@@ -7,8 +7,8 @@ Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 74
-Focus: HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_END_TO_END_REGRESSION_BOUNDARY
+STEP 75
+Focus: PHASE_8_AUTHORITY_HISTORICAL_REMAINING_GAP_TERMINAL_AUDIT
 State: READ-ONLY AUDIT PENDING
 
 Previous terminal closures:
@@ -22,6 +22,7 @@ Previous terminal closures:
 - STEP71_HISTORICAL_TRUSTED_INTERNAL_SOURCE_AUTHORIZATION_CONTRACT_RECONCILED
 - STEP72_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_AUTHORIZATION_BOUNDARY_RECONCILED
 - STEP73_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_PRODUCTION_WIRING_BOUNDARY_RECONCILED
+- STEP74_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_END_TO_END_REGRESSION_BOUNDARY_RECONCILED
 
 STEP64 user local behavioral validation PASS:
 valid/zero-op authorization, conflict/readiness fail-closed, historical provenance guard and caller immutability PASS; Rule Engine/runtime/API mutation NONE.
@@ -183,6 +184,8 @@ STEP72_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_AUTHORIZATION_BOUNDARY_RECONCI
 
 STEP73_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_PRODUCTION_WIRING_BOUNDARY_RECONCILED
 
+STEP74_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_END_TO_END_REGRESSION_BOUNDARY_RECONCILED
+
 ## 7. Architecture state / next action
 
 Architecture Baseline remains v1.2.
@@ -215,11 +218,17 @@ Service, builder, Rule Engine, public API and spatial runtime are not modified b
 
 PHASE 8 Authority/Historical:
 
-ACTIVE / STEP71 TRUSTED SOURCE CONTRACT CLOSED / STEP72 HANDOFF AUTHORIZATION CLOSED / STEP73 PRODUCTION WIRING CLOSED / STEP74 READ-ONLY AUDIT PENDING
+ACTIVE / STEP71 TRUSTED SOURCE CONTRACT CLOSED / STEP72 HANDOFF AUTHORIZATION CLOSED / STEP73 PRODUCTION WIRING CLOSED / STEP74 END-TO-END REGRESSION CLOSED / STEP75 REMAINING-GAP READ-ONLY AUDIT PENDING
+
+STEP74 end-to-end regression confirmed the trusted historical path from a valid STEP72 handoff through orchestrator, service, builder and existing historical Rule Engine consumption.
+
+STEP74 identified and repaired the STEP73 production handoff-shape mismatch: the orchestrator now reconstructs the validated historical channel/provenance/repairs package required by the existing STEP62 adapter instead of forwarding only `handoff_rules`.
+
+Post-repair local validation passed twice. Historical merged-registry data is consumed by the Rule Engine while remaining excluded from the returned spatial registry and spatial runtime. Public API historical exposure and real-condition activation remain absent.
 
 Next action:
 
-STEP74 read-only audit of the end-to-end regression boundary from a valid STEP72 handoff through orchestrator, service, builder and existing historical Rule Engine consumption.
+STEP75 read-only terminal gap audit of PHASE 8 Authority/Historical to determine whether any additional implementation boundary is actually required before phase closure. Do not assume STEP76+ is required without a concrete unresolved implementation gap.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
