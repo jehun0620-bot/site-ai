@@ -2,14 +2,34 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `3fc25a44c4ae3565866824b76a193c0e0e4a1773`
+기준 개발 HEAD: `65152e459c35ade010a8dadc3150ea9728dbfc1c`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 90
-Focus: PHASE_9_EVIDENCE_TO_SEED_ADMISSION_CONTRACT_AUTHORIZATION_AUDIT
+STEP 91
+Focus: PHASE_9_LEGAL_ENUMERATION_SOURCE_FAMILY_VERIFIER_CONTRACT_AUDIT
 State: READ-ONLY AUDIT IN PROGRESS
+
+Previous terminal audit:
+STEP90_PHASE_9_EVIDENCE_TO_SEED_ADMISSION_CONTRACT_AUTHORIZATION_AUDIT_RECONCILED
+
+STEP90 conclusion:
+- SEED.PROVENANCE_VERIFIED ALONE IS NOT A COMPLETE ADMISSION SEAM
+- VERIFIED SOURCE EVIDENCE AND ITS VERIFICATION RESULT MUST REMAIN BOUND
+- ADMISSION MUST COPY IDENTITY FROM THE VERIFIED ORIGINAL EVIDENCE
+- METADATA / DIAGNOSTICS RECONSTRUCTION IS FORBIDDEN
+- CROSS_DOCUMENT / CROSS_VERSION FIELD RECONSTRUCTION IS FORBIDDEN
+- FAIL_CLOSED ADMISSION PATTERN IS JUSTIFIED
+- UQQ700 FAIL_CLOSED VERIFIED_EVIDENCE_TO_ADAPTER SAFETY PATTERN IS REUSABLE
+- UQQ700 CONDITION_SPECIFIC CONTRACT IS NOT REUSABLE
+- SOURCE_FAMILY_SPECIFIC RAW EVIDENCE SHAPES ARE REQUIRED
+- STATUTE_APPENDIX AND DECREE_APPENDIX MAY SHARE A LAW_VERSION_APPENDIX_ROW STRUCTURAL PATTERN WHILE PRESERVING SOURCE FAMILY
+- OFFICIAL_GAZETTE REQUIRES A DISTINCT PUBLICATION_IDENTITY SHAPE
+- EVIDENCE MUST NOT SELF_AUTHORIZE BY CARRYING VERIFICATION FLAGS
+- ADMISSION IMPLEMENTATION MUST WAIT UNTIL SOURCE_FAMILY VERIFIER POSITIVE GATES ARE DEFINED
+- NETWORK ACQUISITION / BULK ENUMERATION REMAIN OUTSIDE THE BOUNDARY
+- PROFILE / STANDARD_CODE / SITE / PRODUCTION / RUNTIME EFFECTS REMAIN OUTSIDE THE BOUNDARY
 
 Previous terminal audit:
 STEP89_PHASE_9_LEGAL_CATALOGUE_SEED_NEXT_BOUNDARY_AUDIT_RECONCILED
@@ -87,8 +107,9 @@ Historical boundaries remain disconnected from UQQ700.
 
 Architecture Baseline remains v1.2.
 
-STEP88 adds only the minimal immutable fail-closed pre-profile legal catalogue seed/provenance contract and focused contract test.
-STEP89 confirms that the next evidence-backed boundary is not generic acquisition or bulk enumeration, but source-family-specific evidence-to-seed admission.
+STEP88 implements only the minimal immutable fail-closed pre-profile legal catalogue seed/provenance destination contract.
+STEP89 identifies source-family-specific evidence-to-seed admission as the next evidence-backed architectural seam.
+STEP90 authorizes the fail-closed admission architecture pattern but defers implementation until source-family-specific verifier positive gates are defined.
 
 Standard development process for newly added Python files:
 IMPLEMENT -> REMOTE HEAD CONFIRM -> LOCAL STATUS CHECK -> git pull --ff-only -> NEW FILE EXISTENCE CHECK -> py_compile -> focused test -> optional regression test -> final git status -> STEP closure -> immediately continue the next authorized READ-ONLY audit.
@@ -96,7 +117,7 @@ IMPLEMENT -> REMOTE HEAD CONFIRM -> LOCAL STATUS CHECK -> git pull --ff-only -> 
 After user-provided local validation PASS, STEP closure documentation and the next READ-ONLY audit may proceed in the same workflow without a separate pause. Any new file modification, production wiring, or other write scope still requires explicit scope/purpose/non-target approval before writing.
 
 Next action:
-STEP90 read-only Evidence-to-Seed Admission Contract Authorization Audit. Inspect existing source qualification/verifier contracts and determine which safety patterns are reusable for admission of already-acquired official legal enumeration evidence into LegalConditionCatalogueSeed. Do not authorize network acquisition, bulk enumeration, profile admission, standard-code inference, SITE mutation, production resolution, runtime registration, public API exposure, or Rule Engine wiring.
+STEP91 read-only Legal Enumeration Source-Family Verifier Contract Audit. Define the minimum positive verification gates required to produce source_identity_verified and row_binding_verified for STATUTE_APPENDIX, DECREE_APPENDIX, and OFFICIAL_GAZETTE evidence. Preserve source-family-specific identity, prohibit evidence self-authorization and cross-document/cross-version reconstruction, and do not authorize acquisition, bulk enumeration, seed admission implementation, profile admission, standard-code inference, SITE mutation, production resolution, runtime registration, public API exposure, or Rule Engine wiring.
 
 ## 4. Git / local rules
 
