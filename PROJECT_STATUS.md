@@ -2,14 +2,32 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `65152e459c35ade010a8dadc3150ea9728dbfc1c`
+기준 개발 HEAD: `f48939d77a8c0b788237af73928f74f4438bfde2`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 91
-Focus: PHASE_9_LEGAL_ENUMERATION_SOURCE_FAMILY_VERIFIER_CONTRACT_AUDIT
+STEP 92
+Focus: PHASE_9_SOURCE_FAMILY_LEGAL_ENUMERATION_VERIFIER_IMPLEMENTATION_AUTHORIZATION_AUDIT
 State: READ-ONLY AUDIT IN PROGRESS
+
+Previous terminal audit:
+STEP91_PHASE_9_LEGAL_ENUMERATION_SOURCE_FAMILY_VERIFIER_CONTRACT_AUDIT_RECONCILED
+
+STEP91 conclusion:
+- SOURCE_IDENTITY_VERIFIED AND ROW_BINDING_VERIFIED ARE DISTINCT POSITIVE GATES
+- STATUTE_APPENDIX / DECREE_APPENDIX REQUIRE VERIFIED LAW + VERSION + EFFECTIVE_DATE + APPENDIX IDENTITY
+- STATUTE_APPENDIX / DECREE_APPENDIX ROW BINDING REQUIRES CONDITION_NAME + LEGAL_BASIS FROM THE SAME VERIFIED APPENDIX ROW
+- STATUTE / DECREE SOURCE FAMILY IDENTITY MUST REMAIN PRESERVED EVEN WHEN STRUCTURAL VERIFICATION LOGIC IS SHARED
+- OFFICIAL_GAZETTE REQUIRES VERIFIED ISSUE + PUBLICATION_DATE + DOCUMENT + ISSUING_AUTHORITY PUBLICATION IDENTITY
+- OFFICIAL_GAZETTE ROW/ENTRY BINDING REQUIRES CONDITION_NAME + LEGAL_BASIS FROM THE SAME VERIFIED PUBLICATION DOCUMENT/ENTRY
+- SEARCH METADATA ALONE CANNOT ESTABLISH ROW_BINDING_VERIFIED
+- CROSS_ROW / CROSS_DOCUMENT / CROSS_VERSION RECONSTRUCTION IS FORBIDDEN
+- EVIDENCE MUST NOT SELF_AUTHORIZE VERIFICATION
+- SOURCE-FAMILY VERIFIER MINIMUM POSITIVE GATES ARE NOW EVIDENCE-BACKED
+- GENERIC ONE-SHAPE SOURCE VERIFIER IS NOT JUSTIFIED
+- NETWORK ACQUISITION / BULK ENUMERATION / SEED ADMISSION IMPLEMENTATION REMAIN NOT AUTHORIZED
+- PROFILE / STANDARD_CODE / SITE / PRODUCTION / RUNTIME EFFECTS REMAIN OUTSIDE THE BOUNDARY
 
 Previous terminal audit:
 STEP90_PHASE_9_EVIDENCE_TO_SEED_ADMISSION_CONTRACT_AUTHORIZATION_AUDIT_RECONCILED
@@ -110,6 +128,7 @@ Architecture Baseline remains v1.2.
 STEP88 implements only the minimal immutable fail-closed pre-profile legal catalogue seed/provenance destination contract.
 STEP89 identifies source-family-specific evidence-to-seed admission as the next evidence-backed architectural seam.
 STEP90 authorizes the fail-closed admission architecture pattern but defers implementation until source-family-specific verifier positive gates are defined.
+STEP91 establishes evidence-backed minimum positive verification gates for law-appendix and official-gazette source families while preserving source-family identity.
 
 Standard development process for newly added Python files:
 IMPLEMENT -> REMOTE HEAD CONFIRM -> LOCAL STATUS CHECK -> git pull --ff-only -> NEW FILE EXISTENCE CHECK -> py_compile -> focused test -> optional regression test -> final git status -> STEP closure -> immediately continue the next authorized READ-ONLY audit.
@@ -117,7 +136,7 @@ IMPLEMENT -> REMOTE HEAD CONFIRM -> LOCAL STATUS CHECK -> git pull --ff-only -> 
 After user-provided local validation PASS, STEP closure documentation and the next READ-ONLY audit may proceed in the same workflow without a separate pause. Any new file modification, production wiring, or other write scope still requires explicit scope/purpose/non-target approval before writing.
 
 Next action:
-STEP91 read-only Legal Enumeration Source-Family Verifier Contract Audit. Define the minimum positive verification gates required to produce source_identity_verified and row_binding_verified for STATUTE_APPENDIX, DECREE_APPENDIX, and OFFICIAL_GAZETTE evidence. Preserve source-family-specific identity, prohibit evidence self-authorization and cross-document/cross-version reconstruction, and do not authorize acquisition, bulk enumeration, seed admission implementation, profile admission, standard-code inference, SITE mutation, production resolution, runtime registration, public API exposure, or Rule Engine wiring.
+STEP92 read-only Source-Family Legal Enumeration Verifier Implementation Authorization Audit. Determine the minimum implementation boundary, file/dataclass/result-contract shape, and focused validation scope for fail-closed source-family verification. Do not authorize network acquisition, bulk enumeration, seed admission implementation, profile admission, standard-code inference, SITE mutation, production resolution, runtime registration, public API exposure, or Rule Engine wiring.
 
 ## 4. Git / local rules
 
