@@ -1,4 +1,4 @@
-"""Focused contract tests for STEP93 source-family legal enumeration verifier."""
+"""Focused contract tests for STEP96 evidence identity binding."""
 
 from dataclasses import FrozenInstanceError
 
@@ -8,6 +8,7 @@ from .legal_enumeration_source_family_verifier import (
     VERIFIED,
     LawAppendixEnumerationEvidence,
     OfficialGazetteEnumerationEvidence,
+    evidence_matches_verification,
     verify_law_appendix_enumeration,
     verify_official_gazette_enumeration,
 )
@@ -63,17 +64,56 @@ def _gazette(**overrides):
 
 def main() -> None:
     statute = _law()
-    result = verify_law_appendix_enumeration(statute)
-    assert result.status == VERIFIED and result.verified
-    assert result.source_family == STATUTE_APPENDIX
+    statute_result = verify_law_appendix_enumeration(statute)
+    assert statute_result.status == VERIFIED and statute_result.verified
+    assert statute_result.source_family == STATUTE_APPENDIX
+    assert statute_result.evidence_fingerprint == statute.identity_fingerprint()
+    assert evidence_matches_verification(statute, statute_result)
 
     decree = _law(source_family=DECREE_APPENDIX)
-    result = verify_law_appendix_enumeration(decree)
-    assert result.status == VERIFIED and result.source_family == DECREE_APPENDIX
+    decree_result = verify_law_appendix_enumeration(decree)
+    assert decree_result.status == VERIFIED and decree_result.source_family == DECREE_APPENDIX
+    assert evidence_matches_verification(decree, decree_result)
+    assert decree.identity_fingerprint() != statute.identity_fingerprint()
+    assert not evidence_matches_verification(statute, decree_result)
+    assert not evidence_matches_verification(decree, statute_result)
 
     gazette = _gazette()
-    result = verify_official_gazette_enumeration(gazette)
-    assert result.status == VERIFIED and result.verified
+    gazette_result = verify_official_gazette_enumeration(gazette)
+    assert gazette_result.status == VERIFIED and gazette_result.verified
+    assert gazette_result.evidence_fingerprint == gazette.identity_fingerprint()
+    assert evidence_matches_verification(gazette, gazette_result)
+    assert not evidence_matches_verification(statute, gazette_result)
+    assert not evidence_matches_verification(gazette, statute_result)
+
+    # Any seed-relevant identity change must break the evidence/result pair.
+    for changed in (
+        _law(condition_name="다른구역"),
+        _law(legal_basis="다른 법적 근거"),
+        _law(law_id="LAW-2"),
+        _law(law_version_id="MST-2"),
+        _law(effective_date="2026-02-01"),
+        _law(appendix_id="APP-2"),
+        _law(row_id="ROW-2"),
+        _law(source_uri="https://www.law.go.kr/other"),
+    ):
+        assert not evidence_matches_verification(changed, statute_result)
+
+    for changed in (
+        _gazette(condition_name="다른구역"),
+        _gazette(legal_basis="다른 법적 근거"),
+        _gazette(gazette_issue_id="ISSUE-2"),
+        _gazette(publication_date="2026-02-02"),
+        _gazette(gazette_document_id="DOC-2"),
+        _gazette(issuing_authority="다른기관"),
+        _gazette(source_uri="https://gwanbo.go.kr/other"),
+    ):
+        assert not evidence_matches_verification(changed, gazette_result)
+
+    # Metadata and verification gate flags are deliberately outside the identity hash.
+    assert _law(metadata={"note": "A"}).identity_fingerprint() == statute.identity_fingerprint()
+    assert _law(metadata={"note": "B"}).identity_fingerprint() == statute.identity_fingerprint()
+    assert _law(official_source_qualified=False).identity_fingerprint() == statute.identity_fingerprint()
 
     for field, value in (
         ("official_source_qualified", False),
@@ -88,6 +128,8 @@ def main() -> None:
     ):
         result = verify_law_appendix_enumeration(_law(**{field: value}))
         assert result.status == UNVERIFIED and not result.verified
+        assert result.evidence_fingerprint is None
+        assert not evidence_matches_verification(_law(**{field: value}), result)
 
     for field in (
         "official_source_qualified", "issue_identity_bound",
@@ -95,8 +137,11 @@ def main() -> None:
         "issuing_authority_bound", "entry_identity_bound",
         "condition_name_bound", "legal_basis_bound", "same_entry_binding",
     ):
-        result = verify_official_gazette_enumeration(_gazette(**{field: False}))
+        evidence = _gazette(**{field: False})
+        result = verify_official_gazette_enumeration(evidence)
         assert result.status == UNVERIFIED and not result.verified
+        assert result.evidence_fingerprint is None
+        assert not evidence_matches_verification(evidence, result)
 
     try:
         _law(source_family="OFFICIAL_GAZETTE")
@@ -126,21 +171,12 @@ def main() -> None:
     assert result.status == UNVERIFIED
     assert not result.source_identity_verified
     assert not result.row_binding_verified
+    assert result.evidence_fingerprint is None
     assert not result.metadata_reconstruction_performed
 
-    result = verify_law_appendix_enumeration(_law(same_row_binding=False))
-    assert not result.row_binding_verified
-    result = verify_law_appendix_enumeration(_law(version_identity_bound=False))
-    assert not result.source_identity_verified
-    assert not result.row_binding_verified
-    result = verify_official_gazette_enumeration(_gazette(same_entry_binding=False))
-    assert not result.row_binding_verified
-    result = verify_official_gazette_enumeration(_gazette(document_identity_bound=False))
-    assert not result.source_identity_verified
-
-    assert not result.cross_document_reconstruction_performed
-    assert not result.cross_version_reconstruction_performed
-    assert not result.metadata_reconstruction_performed
+    assert not statute_result.cross_document_reconstruction_performed
+    assert not statute_result.cross_version_reconstruction_performed
+    assert not statute_result.metadata_reconstruction_performed
 
     try:
         statute.condition_name = "변경"
@@ -158,9 +194,9 @@ def main() -> None:
         "standard_code", "condition_type", "resolution_type", "seed",
         "site_applicable", "runtime_registration_allowed",
     }
-    assert forbidden.isdisjoint(result.__dataclass_fields__)
+    assert forbidden.isdisjoint(statute_result.__dataclass_fields__)
 
-    print("STEP93_SOURCE_FAMILY_LEGAL_ENUMERATION_VERIFIER_CONTRACT_PASS")
+    print("STEP96_VERIFIED_EVIDENCE_IDENTITY_BINDING_CONTRACT_PASS")
 
 
 if __name__ == "__main__":
