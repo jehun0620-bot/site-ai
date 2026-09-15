@@ -2,76 +2,61 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `f3b24792f8628fc6d17a34ef3aacca97de0f73d4`
+기준 개발 HEAD: `e70e6a43a812769c408cbc7efb8491bdaf960ac5`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
 ```text
-STEP 41
-Focus: HISTORICAL_SITE_EVENT_BUILDER_CONTEXT_INJECTION_AUTHORIZATION_BOUNDARY
+STEP 42
+Focus: HISTORICAL_SITE_EVENT_BUILDER_CONTEXT_INJECTION_PAYLOAD_BOUNDARY
 State: IMPLEMENTED / LOCAL VALIDATION PENDING
 
 Previous terminal closure:
-STEP40_HISTORICAL_SITE_EVENT_SITE_CONDITION_CONTEXT_MERGE_BOUNDARY_RECONCILED
+STEP41_HISTORICAL_SITE_EVENT_BUILDER_CONTEXT_INJECTION_AUTHORIZATION_BOUNDARY_RECONCILED
 ```
 
-STEP40 사용자 로컬 behavioral validation PASS:
+STEP41 사용자 로컬 behavioral validation PASS:
 
 ```text
-Existing spatial + historical TRUE merge candidate: PASS
-Empty existing + historical FALSE merge candidate: PASS
-Condition-name collision fail-closed: PASS
-Not-ready / malformed / contract guards: PASS
-Merge ready != context injected: PASS
+Merge-ready semantic TRUE authorization: PASS
+Merge-ready semantic FALSE authorization: PASS
+Not-ready / collision / malformed fail-closed: PASS
+Merge boundary / historical preservation / contract guards: PASS
+Builder injection authorized != injected: PASS
 SITE registry overlay / Rule Engine evaluation: NONE
-Builder / production wiring / runtime registration: NONE
+Builder modification / production wiring / runtime registration: NONE
 Historical producer auto-run / public API exposure: NONE
 ```
 
-STEP40 implementation commits:
+STEP41 implementation commits:
 
 ```text
-5d1a7141305127a78f1165c279a26bb9e41a7bc7
-feat: add step 40 site condition context merge
+064c6b8a1772ebbd66538ebdb02ae2a262cd415b
+feat: add step 41 builder context injection authorization
 
-0997b823cee692c9b83978b99b4ad54853146284
-test: add step 40 site condition context merge audit
+815e16f1a78f71c330a56e556aeae4d98778c0c6
+test: add step 41 builder injection authorization audit
 ```
 
-## 2. STEP40 terminal boundary
+## 2. STEP41 terminal boundary
 
-STEP40 creates a fail-closed merged context candidate from an existing runtime SITE condition mapping and one STEP39 historical projection. It requires a valid existing mapping, a ready/aligned STEP39 projection containing exactly one historical condition, and no condition-name collision. Existing runtime evidence is never overwritten by a historical name collision.
+STEP41 authorizes a concrete STEP40 merge candidate for a future builder injection only when the STEP40 boundary is exact, merge is ready, merged context is present, the historical condition remains present, no name collision occurred, and STEP40 upstream alignment diagnostics are preserved.
 
 ```text
-STEP39 context_projection_ready=True
-AND existing context valid
-AND exactly one historical projection
-AND no condition-name collision
-AND projection contract aligned
-→ merge_ready=True
+STEP40 merge_ready=True
+AND exact STEP40 boundary
+AND merged context present
+AND historical condition preserved
+AND no collision
+AND merge contract aligned
+→ builder_injection_authorized=True
 
 otherwise
-→ merge_ready=False
+→ builder_injection_authorized=False
 ```
 
 Mandatory separation:
-
-```text
-merge_ready != site_condition_context_injected
-merge_ready != rule_engine_input_consumed
-merge_ready != SITE registry overlay
-merge_ready != Rule Engine mutation/evaluation
-merge_ready != builder/service/orchestrator wiring
-merge_ready != runtime registration
-merge_ready != public API exposure
-```
-
-## 3. STEP41 current boundary
-
-STEP41 read-only audit confirmed that the current builder passes its `site_condition_context` mapping directly into `evaluate_site_rules`. Therefore a valid STEP40 merged candidate is immediately adjacent to actual Rule Engine consumption, and builder injection requires its own explicit authorization boundary before any builder modification.
-
-STEP41 authorizes a concrete STEP40 merge candidate for a future builder injection only when the STEP40 boundary is exact, merge is ready, merged context is present, the historical condition remains present, no name collision occurred, and STEP40 upstream alignment diagnostics are preserved.
 
 ```text
 builder_injection_authorized != site_analysis_builder modified
@@ -82,7 +67,22 @@ builder_injection_authorized != Rule Engine mutation/evaluation
 builder_injection_authorized != production wiring/runtime registration
 ```
 
-STEP41 does not modify `site_analysis_builder.py` or `rule_evaluation_pipeline.py`, and does not call builder/service/orchestrator, runtime registry, historical producer, or public API. Local behavioral validation is required before STEP41 terminal closure.
+## 3. STEP42 current boundary
+
+STEP42 read-only audit confirmed that the current builder constructs its spatial `site_condition_context` and passes that same mapping directly to `evaluate_site_rules`. Supplying STEP41 authorized context to that call would therefore begin actual Rule Engine consumption and may repair SITE conditions/applicability.
+
+STEP42 remains one boundary earlier: it converts a concrete STEP41 authorization into an explicit builder injection payload only. It validates the exact STEP41 boundary, exact target injection point, authorization, non-empty authorized context, and preserved upstream authorization contract.
+
+```text
+injection_ready != builder argument supplied
+injection_ready != site_analysis_builder modified
+injection_ready != site_condition_context injected
+injection_ready != rule_engine_input_consumed
+injection_ready != SITE registry overlay
+injection_ready != Rule Engine evaluation/applicability change
+```
+
+STEP42 does not modify `site_analysis_builder.py` or `rule_evaluation_pipeline.py`, and does not call builder/service/orchestrator, runtime registry, historical producer, or public API. Local behavioral validation is required before STEP42 terminal closure.
 
 ## 4. Historical safety chain
 
@@ -102,7 +102,8 @@ STEP37 Rule Engine consumption authorization → authorized True/False
 STEP38 Rule Engine consumption package → ready True/False
 STEP39 site_condition_context projection → projection-ready True/False
 STEP40 site_condition_context merge candidate → merge-ready True/False
-STEP41 builder context injection authorization → authorized only for guarded STEP40 merge; never injected here
+STEP41 builder context injection authorization → authorized True/False
+STEP42 builder context injection payload → injection-ready only; never supplied here
 ```
 
 Preserve:
@@ -121,6 +122,7 @@ STEP38 ready != consumed/applied
 STEP39 projected != injected/consumed/applied
 STEP40 merged != injected/consumed/applied
 STEP41 authorized != injected/consumed/applied
+STEP42 payload ready != supplied/injected/consumed/applied
 UNKNOWN != FALSE
 positive/negative conflict → UNKNOWN
 standard code must not be guessed
@@ -150,12 +152,13 @@ STEP38 consumption_ready=False / BLOCKED
 STEP39 context_projection_ready=False / BLOCKED
 STEP40 merge_ready=False / BLOCKED
 STEP41 builder_injection_authorized=False / BLOCKED
+STEP42 injection_ready=False / BLOCKED
 production consumption=BLOCKED
 production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
 
-STEP26~41 boundary/readiness work supplies no new substantive evidence.
+STEP26~42 boundary/readiness work supplies no new substantive evidence.
 
 ### 개발밀도관리구역 / UQQ700
 
@@ -170,7 +173,7 @@ production_registration_allowed=False
 runtime_registration_allowed=False
 ```
 
-Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~41 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
+Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~42 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
 
 ## 6. Terminal boundaries
 
@@ -199,18 +202,19 @@ STEP37_HISTORICAL_SITE_EVENT_RULE_ENGINE_CONSUMPTION_AUTHORIZATION_BOUNDARY_RECO
 STEP38_HISTORICAL_SITE_EVENT_RULE_ENGINE_CONSUMPTION_PACKAGE_BOUNDARY_RECONCILED
 STEP39_HISTORICAL_SITE_EVENT_SITE_CONDITION_CONTEXT_PROJECTION_BOUNDARY_RECONCILED
 STEP40_HISTORICAL_SITE_EVENT_SITE_CONDITION_CONTEXT_MERGE_BOUNDARY_RECONCILED
+STEP41_HISTORICAL_SITE_EVENT_BUILDER_CONTEXT_INJECTION_AUTHORIZATION_BOUNDARY_RECONCILED
 ```
 
 ## 7. Architecture state / next action
 
-Architecture Baseline remains v1.2. STEP40 is a non-injecting merge candidate and STEP41 is non-executing injection authorization, so `PROJECT_ARCHITECTURE.md` remains unchanged.
+Architecture Baseline remains v1.2. STEP41 is non-executing injection authorization and STEP42 is a non-supplied injection payload, so `PROJECT_ARCHITECTURE.md` remains unchanged.
 
 ```text
 PHASE 8 Authority/Historical:
-ACTIVE / STEP40 CONTEXT MERGE CLOSED / STEP41 BUILDER INJECTION AUTHORIZATION VALIDATION PENDING
+ACTIVE / STEP41 INJECTION AUTHORIZATION CLOSED / STEP42 INJECTION PAYLOAD VALIDATION PENDING
 ```
 
-Next action: user local compile/test validation of STEP41. If PASS, begin the next read-only gap audit first, then combine STEP41 closure with the next approved implementation scope. Do not modify builder injection behavior or connect STEP41 to Rule Engine/runtime registry/API without a separate architecture/schema decision and explicit approval.
+Next action: user local compile/test validation of STEP42. If PASS, begin the next read-only gap audit first, then combine STEP42 closure with the next approved implementation scope. Do not supply STEP42 payload to builder or connect it to Rule Engine/runtime registry/API without a separate architecture/schema decision and explicit approval.
 
 ## 8. Git / local rules
 
