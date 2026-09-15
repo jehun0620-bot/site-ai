@@ -2,14 +2,30 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `b396377ef0e04dd0ac3e7e87b1ff2f33ca81fb51`
+기준 개발 HEAD: `efde9307d17209bd5cbcfc1b654c16b8254db0f7`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 84
-Focus: PHASE_9_OFFICIAL_UPSTREAM_ENUMERATION_CONTRACT_AUDIT
+STEP 85
+Focus: PHASE_9_LEGAL_CONDITION_CATALOGUE_SEED_CONTRACT_AUDIT
 State: READ-ONLY AUDIT PENDING
+
+Previous terminal audit:
+STEP84_PHASE_9_OFFICIAL_UPSTREAM_ENUMERATION_CONTRACT_AUDIT_RECONCILED
+
+STEP84 conclusion:
+- LEGAL CONDITION ENUMERATION CONTRACT PROVEN
+- BASIC ACT ARTICLE 5 DEFINES THE LEGAL ADMISSION BOUNDARY
+- BASIC ACT APPENDIX ENUMERATES CONDITION IDENTITY + LEGAL BASIS
+- ENFORCEMENT DECREE APPENDIX EXTENDS THE LEGAL ENUMERATION FAMILY
+- OFFICIAL GAZETTE PATH REMAINS PART OF THE LEGAL UNIVERSE FOR ARTICLE 5(3)
+- NATIONWIDE SPATIAL / REGULATION INFORMATION SOURCE FAMILIES PROVEN
+- MASTER STANDARD_CODE ENUMERATION CONTRACT NOT PROVEN
+- ONE_SOURCE_COMPLETE_CATALOGUE CONTRACT NOT PROVEN
+- LEGAL IDENTITY MUST NOT BE EQUATED WITH SYSTEM STANDARD_CODE
+- NO BULK STANDARD_CODE MAPPING AUTHORIZED
+- NO BULK PROFILE ADMISSION AUTHORIZED
 
 Previous terminal audit:
 STEP83_PHASE_9_NATIONWIDE_CONDITION_UNIVERSE_AUTHORITY_SOURCE_ACQUISITION_AUDIT_RECONCILED
@@ -331,7 +347,7 @@ PHASE 8 infrastructure closure does not convert unresolved historical conditions
 
 Next action:
 
-STEP84 read-only PHASE 9 Official Upstream Enumeration Contract Audit. Verify official source and API contracts for nationwide condition enumeration, including full-list capability, condition identity, standard or authoritative codes, legal basis, nationwide scope, pagination, and versioning before authorizing any catalogue schema or discovery implementation.
+STEP85 read-only PHASE 9 Legal Condition Catalogue Seed Contract Audit. Determine the minimum fail-closed legal condition catalogue seed fields supported by authoritative enumeration evidence and verify that the seed remains distinct from RegulationResolutionProfile, standard-code verification, production registration, and runtime registration.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
