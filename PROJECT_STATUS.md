@@ -2,77 +2,60 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `8854cbf309cd3c3c0d7b2904734abebc41603603`
+기준 개발 HEAD: `a00cd6aa9421095b01e60e9b3a07ffc9b5f46a67`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
 ```text
-STEP 39
-Focus: HISTORICAL_SITE_EVENT_SITE_CONDITION_CONTEXT_PROJECTION_BOUNDARY
+STEP 40
+Focus: HISTORICAL_SITE_EVENT_SITE_CONDITION_CONTEXT_MERGE_BOUNDARY
 State: IMPLEMENTED / LOCAL VALIDATION PENDING
 
 Previous terminal closure:
-STEP38_HISTORICAL_SITE_EVENT_RULE_ENGINE_CONSUMPTION_PACKAGE_BOUNDARY_RECONCILED
+STEP39_HISTORICAL_SITE_EVENT_SITE_CONDITION_CONTEXT_PROJECTION_BOUNDARY_RECONCILED
 ```
 
-STEP38 사용자 로컬 behavioral validation PASS:
+STEP39 사용자 로컬 behavioral validation PASS:
 
 ```text
-Authorized semantic TRUE package: PASS
-Authorized semantic FALSE package: PASS
-Unauthorized / UNKNOWN / malformed fail-closed: PASS
-Authorization boundary / contract alignment guards: PASS
-Consumption ready != consumed: PASS
-SITE context / registry overlay: NONE
-Rule evaluation / production wiring / runtime registration: NONE
+Consumption-ready semantic TRUE projection: PASS
+Consumption-ready semantic FALSE projection: PASS
+Not-ready / UNKNOWN / malformed fail-closed: PASS
+Package boundary / target / identity / contract guards: PASS
+Projection ready != context injected: PASS
+SITE registry overlay / Rule Engine evaluation: NONE
+Builder / production wiring / runtime registration: NONE
 Historical producer auto-run / public API exposure: NONE
 ```
 
-STEP38 implementation commits:
+STEP39 implementation commits:
 
 ```text
-b768c0f933452ec0793e8af90c41504bb44f1895
-feat: add step 38 rule engine consumption package
+b322a1d5f910d24a41064a4cfbce6d6ec3c4556e
+feat: add step 39 site condition context projection
 
-afbe4b6652a18896811fa9654e16cbc8d535481e
-test: add step 38 rule engine consumption package audit
+213b91c6f31670e086fb80ddaa68922b622aa661
+test: add step 39 site condition context projection audit
 ```
 
-## 2. STEP38 terminal boundary
+## 2. STEP39 terminal boundary
 
-STEP38 builds a fail-closed, non-executing Rule Engine consumption package only from a valid STEP37 authorization. It preserves the target consumer, historical SITE_HISTORY condition identity, semantic TRUE/FALSE state, and upstream authorization contract alignment.
+STEP39 projects one valid STEP38 package into the exact mapping shape expected by Rule Engine `site_condition_context`, while remaining completely non-injecting. It validates STEP38 boundary, target consumer, readiness, condition identity, SITE_HISTORY type, semantic TRUE/FALSE state, and package contract alignment.
 
 ```text
-STEP37 authorization valid
-AND target == RULE_ENGINE_SITE_CONDITION
-AND SITE_HISTORY identity present
+STEP38 consumption_ready=True
+AND package boundary/target matched
+AND SITE_HISTORY identity aligned
 AND semantic state in {TRUE, FALSE}
-AND authorization contract aligned
-→ consumption_ready=True
+AND package contract aligned
+→ context_projection_ready=True
 
 otherwise
-→ consumption_ready=False
+→ context_projection_ready=False
 ```
 
 Mandatory separation:
-
-```text
-consumption_ready != rule_engine_input_consumed
-consumption_ready != site_condition_context injection
-consumption_ready != SITE registry overlay
-consumption_ready != Rule Engine mutation/evaluation
-consumption_ready != builder/service/orchestrator wiring
-consumption_ready != runtime registration/registry mutation
-consumption_ready != historical producer execution
-consumption_ready != public API exposure
-```
-
-## 3. STEP39 current boundary
-
-STEP39 read-only audit confirmed that the current builder collects spatial runtime conditions into `site_condition_context` and passes that mapping directly to `evaluate_site_rules`. Because the Rule Engine immediately overlays supplied context into its SITE registry, a historical package must not be added to the builder before a separate context-shape projection boundary is validated.
-
-STEP39 projects one valid STEP38 package into the exact mapping shape expected by Rule Engine `site_condition_context`, while remaining completely non-injecting. It validates STEP38 boundary, target consumer, readiness, condition identity, SITE_HISTORY type, semantic TRUE/FALSE state, and package contract alignment.
 
 ```text
 context_projection_ready != site_condition_context_injected
@@ -84,7 +67,23 @@ context_projection_ready != runtime registration
 context_projection_ready != public API exposure
 ```
 
-STEP39 does not modify `site_analysis_builder.py` or `rule_evaluation_pipeline.py`, and does not call builder/service/orchestrator, runtime registry, historical producer, or public API. Local behavioral validation is required before STEP39 terminal closure.
+## 3. STEP40 current boundary
+
+STEP40 read-only audit confirmed that the builder constructs spatial runtime conditions in one `site_condition_context` mapping and passes that same mapping directly to `evaluate_site_rules`. STEP39 historical projection therefore must not be added directly to the builder until merge behavior, especially condition-name collision behavior, is separately validated.
+
+STEP40 creates a fail-closed merged context candidate from an existing runtime SITE condition mapping and one STEP39 historical projection. It requires a valid existing mapping, a ready/aligned STEP39 projection containing exactly one historical condition, and no condition-name collision. A collision never overwrites existing runtime evidence.
+
+```text
+merge_ready != site_condition_context_injected
+merge_ready != rule_engine_input_consumed
+merge_ready != SITE registry overlay
+merge_ready != Rule Engine mutation/evaluation
+merge_ready != builder/service/orchestrator wiring
+merge_ready != runtime registration
+merge_ready != public API exposure
+```
+
+STEP40 does not modify `site_analysis_builder.py` or `rule_evaluation_pipeline.py`, and does not call builder/service/orchestrator, runtime registry, historical producer, or public API. Local behavioral validation is required before STEP40 terminal closure.
 
 ## 4. Historical safety chain
 
@@ -102,7 +101,8 @@ STEP35 production consumption plan → planned True/False
 STEP36 Rule Engine input preparation → prepared True/False
 STEP37 Rule Engine consumption authorization → authorized True/False
 STEP38 Rule Engine consumption package → ready True/False
-STEP39 site_condition_context projection → projection-ready only for guarded STEP38 package; never injected here
+STEP39 site_condition_context projection → projection-ready True/False
+STEP40 site_condition_context merge candidate → merge-ready only when projection is valid and collision-free; never injected here
 ```
 
 Preserve:
@@ -119,6 +119,7 @@ STEP36 prepared != consumed
 STEP37 authorized != consumed/applied
 STEP38 ready != consumed/applied
 STEP39 projected != injected/consumed/applied
+STEP40 merged != injected/consumed/applied
 UNKNOWN != FALSE
 positive/negative conflict → UNKNOWN
 standard code must not be guessed
@@ -146,12 +147,13 @@ STEP36 input_prepared=False / BLOCKED
 STEP37 rule_engine_consumption_authorized=False / BLOCKED
 STEP38 consumption_ready=False / BLOCKED
 STEP39 context_projection_ready=False / BLOCKED
+STEP40 merge_ready=False / BLOCKED
 production consumption=BLOCKED
 production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
 
-STEP26~39 boundary/readiness work supplies no new substantive evidence.
+STEP26~40 boundary/readiness work supplies no new substantive evidence.
 
 ### 개발밀도관리구역 / UQQ700
 
@@ -166,7 +168,7 @@ production_registration_allowed=False
 runtime_registration_allowed=False
 ```
 
-Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~39 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
+Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~40 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
 
 ## 6. Terminal boundaries
 
@@ -193,18 +195,19 @@ STEP35_HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_PLAN_BOUNDARY_RECONCILED
 STEP36_HISTORICAL_SITE_EVENT_RULE_ENGINE_INPUT_ADAPTER_BOUNDARY_RECONCILED
 STEP37_HISTORICAL_SITE_EVENT_RULE_ENGINE_CONSUMPTION_AUTHORIZATION_BOUNDARY_RECONCILED
 STEP38_HISTORICAL_SITE_EVENT_RULE_ENGINE_CONSUMPTION_PACKAGE_BOUNDARY_RECONCILED
+STEP39_HISTORICAL_SITE_EVENT_SITE_CONDITION_CONTEXT_PROJECTION_BOUNDARY_RECONCILED
 ```
 
 ## 7. Architecture state / next action
 
-Architecture Baseline remains v1.2. STEP38 is a non-executing package and STEP39 is a non-injecting projection, so `PROJECT_ARCHITECTURE.md` remains unchanged.
+Architecture Baseline remains v1.2. STEP39 is a non-injecting projection and STEP40 is a non-injecting merge candidate boundary, so `PROJECT_ARCHITECTURE.md` remains unchanged.
 
 ```text
 PHASE 8 Authority/Historical:
-ACTIVE / STEP38 CONSUMPTION PACKAGE CLOSED / STEP39 CONTEXT PROJECTION VALIDATION PENDING
+ACTIVE / STEP39 CONTEXT PROJECTION CLOSED / STEP40 CONTEXT MERGE VALIDATION PENDING
 ```
 
-Next action: user local compile/test validation of STEP39. If PASS, begin the next read-only gap audit first, then combine STEP39 closure with the next approved implementation scope. Do not inject STEP39 into `site_condition_context` or connect it to builder/service/orchestrator/Rule Engine/runtime registry/API without a separate architecture/schema decision and explicit approval.
+Next action: user local compile/test validation of STEP40. If PASS, begin the next read-only gap audit first, then combine STEP40 closure with the next approved implementation scope. Do not inject STEP40 into builder `site_condition_context` or connect it to Rule Engine/runtime registry/API without a separate architecture/schema decision and explicit approval.
 
 ## 8. Git / local rules
 
