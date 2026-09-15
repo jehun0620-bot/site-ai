@@ -89,6 +89,11 @@ def safe_string(value: Any) -> str:
     return str(value).strip()
 
 
+def accept_historical_rule_input(value: Any) -> Any:
+    """Accept a dedicated historical input by deep-copy only; do not consume it."""
+    return copy.deepcopy(value)
+
+
 def build_production_condition_contract_shadow(
     site_condition_context: Any,
 ) -> Dict[str, Dict[str, Any]]:
@@ -246,10 +251,12 @@ def build_site_analysis(
     procedure_profile: Optional[Dict[str, str]] = None,
     site_input: Optional[Dict[str, Any]] = None,
     production_condition_shadow_sources: Optional[Any] = None,
+    historical_rule_input: Optional[Any] = None,
 ) -> Dict[str, Any]:
     project_profile = project_profile or {}
     procedure_profile = procedure_profile or {}
     site_input = site_input or {}
+    historical_rule_input_snapshot = accept_historical_rule_input(historical_rule_input)
 
     site_complete = load_json(SITE_COMPLETE_PATH)
     base_numeric = load_json(BASE_NUMERIC_PATH)
@@ -338,6 +345,14 @@ def build_site_analysis(
         regulation=regulation,
     )
 
+    input_result = {
+        "site": copy.deepcopy(site_input),
+        "project": copy.deepcopy(project_profile),
+        "procedure": copy.deepcopy(procedure_profile),
+    }
+    if historical_rule_input is not None:
+        input_result["historical"] = copy.deepcopy(historical_rule_input_snapshot)
+
     return {
         "analysis": {
             "status": analysis_status,
@@ -345,11 +360,7 @@ def build_site_analysis(
             "engine_version": engine_result.get("pipeline", {}).get("version"),
         },
         "site": site,
-        "input": {
-            "site": copy.deepcopy(site_input),
-            "project": copy.deepcopy(project_profile),
-            "procedure": copy.deepcopy(procedure_profile),
-        },
+        "input": input_result,
         "land_area": land_area,
         "regulation": regulation,
         "rule_evaluation": rule_summary,
