@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Mapping
 
-from hybrid_spatial_notice_resolver import (
+from .hybrid_spatial_notice_resolver import (
     HybridSpatialNoticeGateState,
     resolve_hybrid_spatial_notice,
 )
