@@ -2,14 +2,26 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `59b2aa848cacabeb10554d5af84543cea2028fe3`
+기준 개발 HEAD: `f1a9dfab2e75519204ba4f692e51e3bebabba16f`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 80
-Focus: PHASE_9_CONDITION_DISCOVERY_CANDIDATE_BOUNDARY_AUDIT
+STEP 81
+Focus: PHASE_9_PRE_PROFILE_DISCOVERY_CANDIDATE_CONTRACT_REQUIREMENT_AUDIT
 State: READ-ONLY AUDIT PENDING
+
+Previous terminal audit:
+STEP80_PHASE_9_CONDITION_DISCOVERY_CANDIDATE_BOUNDARY_AUDIT_RECONCILED
+
+STEP80 conclusion:
+- NO GENERIC PRE_PROFILE CONDITION DISCOVERY CANDIDATE PROVEN
+- EXISTING CANDIDATE STRUCTURES ARE RESOLUTION_FAMILY_SPECIFIC
+- HISTORICAL QUALIFICATION IS POST_CLASSIFICATION FAMILY_SPECIFIC EVIDENCE
+- UQQ700 IDENTITY EVIDENCE IS CONDITION_SPECIFIC
+- HISTORICAL NOTICE CANDIDATE IS DOCUMENT_CANDIDATE, NOT CONDITION_CANDIDATE
+- SITE IDENTITY RESOLVER IS NOT REGULATION CONDITION IDENTITY
+- NO EXISTING STRUCTURE SHOULD BE REPURPOSED AS NATIONWIDE DISCOVERY CANDIDATE
 
 Previous terminal audit:
 STEP79_PHASE_9_NATIONWIDE_CONDITION_CATALOGUE_DISCOVERY_BOUNDARY_AUDIT_RECONCILED
@@ -277,7 +289,7 @@ PHASE 8 infrastructure closure does not convert unresolved historical conditions
 
 Next action:
 
-STEP80 read-only PHASE 9 Condition Discovery Candidate Boundary Audit. Determine whether existing evidence, candidate, qualification and identity structures provide a reusable fail-closed boundary between raw nationwide condition discovery and RegulationResolutionProfile admission before approving any new common contract.
+STEP81 read-only PHASE 9 Pre-Profile Discovery Candidate Contract Requirement Audit. Determine where RegulationResolutionProfile instances are constructed or normalized, what raw metadata those construction boundaries accept, and whether a new fail-closed pre-profile discovery candidate contract is actually required.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
