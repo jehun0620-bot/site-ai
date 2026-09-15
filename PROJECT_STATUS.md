@@ -2,14 +2,25 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `1e5d0dc3c4a2484f35d5fedf82db14a4a409a2f6`
+기준 개발 HEAD: `1a6840ea897569f6f1cb0956925818c6633e68a3`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 76
-Focus: PHASE_9_NATIONWIDE_REGULATION_REGISTRY_ENTRY_AUDIT
+STEP 77
+Focus: PHASE_9_RESOLUTION_EXECUTION_SOURCE_ADAPTER_BOUNDARY_AUDIT
 State: READ-ONLY AUDIT PENDING
+
+Previous terminal audit:
+STEP76_PHASE_9_NATIONWIDE_REGULATION_REGISTRY_ENTRY_AUDIT_RECONCILED
+
+STEP76 conclusion:
+- NO NEW CORE REGISTRY IMPLEMENTATION REQUIRED
+- Existing RegulationResolutionProfile boundary confirmed.
+- Existing condition-name profile registry confirmed.
+- Existing standard-code resolution-policy registry confirmed.
+- Common production execution / source-adapter contract is NOT YET PROVEN.
+- Nationwide catalogue expansion remains evidence-driven.
 
 Previous terminal closures:
 - STEP64_HISTORICAL_MERGED_REGISTRY_LIVE_CONSUMPTION_AUTHORIZATION_BOUNDARY_RECONCILED
@@ -235,7 +246,7 @@ PHASE 8 infrastructure closure does not convert unresolved historical conditions
 
 Next action:
 
-STEP76 read-only PHASE 9 Nationwide Regulation Registry entry audit. Determine the minimum reusable regulation-registry boundary from the existing resolution profiles, authority/source policies and validated resolver families before approving any implementation.
+STEP77 read-only PHASE 9 Resolution Execution / Source Adapter Boundary Audit. Compare the validated HYBRID_SPATIAL_NOTICE and HISTORICAL_SITE_EVENT resolver/verifier families to determine whether a genuinely reusable execution or source-adapter contract exists before approving any implementation.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
