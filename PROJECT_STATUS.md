@@ -7,8 +7,8 @@ Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 70
-Focus: HISTORICAL_INTERNAL_SOURCE_AUTHORIZATION_BOUNDARY
+STEP 71
+Focus: HISTORICAL_TRUSTED_INTERNAL_SOURCE_AUTHORIZATION_CONTRACT
 State: READ-ONLY AUDIT PENDING
 
 Previous terminal closures:
@@ -18,6 +18,7 @@ Previous terminal closures:
 - STEP67_HISTORICAL_PRODUCTION_RUNTIME_EXPOSURE_BOUNDARY_RECONCILED
 - STEP68_HISTORICAL_ORCHESTRATOR_API_EXPOSURE_AUTHORIZATION_BOUNDARY_RECONCILED
 - STEP69_HISTORICAL_PUBLIC_API_EXPOSURE_AUTHORIZATION_BOUNDARY_RECONCILED
+- STEP70_HISTORICAL_INTERNAL_SOURCE_AUTHORIZATION_BOUNDARY_RECONCILED
 
 STEP64 user local behavioral validation PASS:
 valid/zero-op authorization, conflict/readiness fail-closed, historical provenance guard and caller immutability PASS; Rule Engine/runtime/API mutation NONE.
@@ -86,6 +87,10 @@ STEP69 confirms raw historical caller injection is not part of the typed public 
 
 Public API historical input exposure is NOT AUTHORIZED.
 
+STEP70 confirms the current orchestrator/service historical seams are generic transport boundaries and do not establish trusted historical source/producer authorization.
+
+Raw internal historical producer authorization is NOT YET AUTHORIZED.
+
 Historical data remains excluded from the spatial runtime condition channel.
 
 ## 5. Real condition locks
@@ -104,7 +109,7 @@ Evidence/history/provenance/authority gates remain unverified.
 
 Negative evidence disabled.
 
-STEP31 semantic UNKNOWN and STEP32~69 real-condition path remains BLOCKED.
+STEP31 semantic UNKNOWN and STEP32~70 real-condition path remains BLOCKED.
 
 No new substantive evidence.
 
@@ -121,7 +126,7 @@ Negative evidence/legal absence/SITE FALSE/SITE promotion/production/runtime reg
 
 Positive gates remain unverified.
 
-STEP32~69 historical boundaries remain disconnected from UQQ700.
+STEP32~70 historical boundaries remain disconnected from UQQ700.
 
 ## 6. Terminal boundaries
 
@@ -141,6 +146,8 @@ STEP68_HISTORICAL_ORCHESTRATOR_API_EXPOSURE_AUTHORIZATION_BOUNDARY_RECONCILED
 
 STEP69_HISTORICAL_PUBLIC_API_EXPOSURE_AUTHORIZATION_BOUNDARY_RECONCILED
 
+STEP70_HISTORICAL_INTERNAL_SOURCE_AUTHORIZATION_BOUNDARY_RECONCILED
+
 ## 7. Architecture state / next action
 
 Architecture Baseline remains v1.2.
@@ -159,17 +166,21 @@ It does not add public API historical exposure or spatial runtime registration.
 
 STEP69 keeps the historical seam internal-only and does not authorize raw historical payload injection through the public API.
 
+STEP70 confirms that internal seam availability alone does not establish source trust and does not authorize a production historical producer.
+
 PHASE 8 Authority/Historical:
 
-ACTIVE / STEP67 SERVICE EXPOSURE CLOSED / STEP68 ORCHESTRATOR EXPOSURE CLOSED / STEP69 PUBLIC API NON-EXPOSURE CLOSED / STEP70 READ-ONLY AUDIT PENDING
+ACTIVE / STEP68 ORCHESTRATOR EXPOSURE CLOSED / STEP69 PUBLIC API NON-EXPOSURE CLOSED / STEP70 INTERNAL SOURCE AUTHORIZATION CLOSED / STEP71 READ-ONLY AUDIT PENDING
 
 Next action:
 
-STEP70 read-only audit of the authorized internal source/producer boundary for historical input supplied to the orchestrator seam.
+STEP71 read-only audit of the minimum trusted internal source authorization contract required before any historical producer can supply the orchestrator seam.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
-No new historical source/producer wiring before a new explicit write scope is approved.
+Raw internal historical producer authorization remains NOT YET AUTHORIZED.
+
+No production historical source/producer wiring before a new explicit write scope is approved.
 
 ## 8. Git / local rules
 
