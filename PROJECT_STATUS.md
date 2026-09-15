@@ -2,87 +2,86 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `ad6f3bdb5b4599205b87ecf493a7c035f49397fc`
+기준 개발 HEAD: `95e590c9ac4f0f016f751815041a6ec266c322da`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
 ```text
-STEP 33
-Focus: HISTORICAL_SITE_EVENT_PRODUCTION_APPLICATION_BOUNDARY
+STEP 34
+Focus: HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_AUTHORIZATION_BOUNDARY
 State: TERMINALLY CLOSED
-Terminal classification: STEP33_HISTORICAL_SITE_EVENT_PRODUCTION_APPLICATION_BOUNDARY_RECONCILED
+Terminal classification: STEP34_HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_AUTHORIZATION_BOUNDARY_RECONCILED
 ```
 
-사용자 로컬 behavioral validation에서 STEP33 adapter compile/test가 PASS했다.
+사용자 로컬 behavioral validation에서 STEP34 compile/test가 PASS했다.
 
 ```text
-Eligible semantic TRUE shadow: PASS
-Eligible semantic FALSE shadow: PASS
-UNKNOWN preservation: PASS
-Ineligible semantic state fail-closed: PASS
-STEP31/STEP32 alignment guards: PASS
+Eligible STEP33 semantic TRUE authorization: PASS
+Eligible STEP33 semantic FALSE authorization: PASS
+UNKNOWN / ineligible fail-closed: PASS
+Runtime registration / provenance / mutation guards: PASS
+Authorization != consumption: PASS
 SITE / Rule Engine mutation: NONE
 Production wiring / runtime registration: NONE
 Historical producer auto-run / public API exposure: NONE
 ```
 
-STEP33 구현 commit chain:
+STEP34 구현 commit chain:
 
 ```text
-b70f337e0793e52c280bc8e2dc50159472130e37
-feat: add step 33 historical production application adapter
+dd383b093797d8ae76a6a2f3da0931da0c5f4473
+feat: add step 34 historical production consumption authorization
 
-ad6f3bdb5b4599205b87ecf493a7c035f49397fc
-test: add step 33 historical production application boundary audit
+95e590c9ac4f0f016f751815041a6ec266c322da
+test: add step 34 historical production consumption authorization audit
 ```
 
-## 2. STEP 33 production application boundary
+## 2. STEP 34 production consumption authorization boundary
 
-STEP33은 STEP31 semantic resolution과 STEP32 production-consumption eligibility를 기존 STEP18 `ProductionSiteCondition` shadow contract로 안전하게 변환하는 read-only application-ready adapter boundary다.
+STEP34는 STEP33 `ProductionSiteCondition` application-ready shadow가 미래의 production consumer에 전달될 자격이 있는지만 판단하는 read-only authorization boundary다.
+
+최소 authorization gate:
 
 ```text
-concrete RegulationResolutionProfile
-AND resolution_type == HISTORICAL_SITE_EVENT
+concrete ProductionSiteCondition shadow
 AND condition_type == SITE_HISTORY
-AND concrete STEP31 final-resolution assessment
-AND concrete STEP32 eligibility assessment
-AND profile identity aligned across STEP31/STEP32
-AND STEP31 resolution == STEP32 semantic_resolution
-AND semantic resolution in {TRUE, FALSE}
-AND STEP32 production_consumption_eligible is exactly True
-→ ProductionSiteCondition shadow state = semantic TRUE/FALSE
-→ production_eligible=True
+AND resolution_type == HISTORICAL_SITE_EVENT
+AND state in {TRUE, FALSE}
+AND production_eligible is exactly True
+AND runtime_registered is exactly False
+AND STEP33 adapter provenance is verified/aligned
+AND STEP33 diagnostics application_ready is exactly True
+AND STEP33 diagnostics confirm no prior SITE/Rule Engine/wiring/runtime/API mutation
+→ production_consumption_authorized=True
 
 otherwise
-→ shadow state=UNKNOWN
-→ production_eligible=False
+→ production_consumption_authorized=False
 ```
 
 중요한 분리 원칙:
 
 ```text
-application-ready shadow != SITE mutation
-application-ready shadow != Rule Engine mutation
-application-ready shadow != production wiring
-application-ready shadow != runtime registration
-application-ready shadow != runtime registry mutation
-application-ready shadow != historical producer auto-run
-application-ready shadow != public API exposure
-runtime_registration_allowed != runtime_registered
-production_consumption_eligible != production consumed/applied
+production_consumption_authorized != production consumed
+production_consumption_authorized != Rule Engine applied
+production_consumption_authorized != SITE mutation
+production_consumption_authorized != production wiring
+production_consumption_authorized != runtime registration
+production_consumption_authorized != runtime registry mutation
+production_consumption_authorized != historical producer execution
+production_consumption_authorized != public API exposure
 UNKNOWN != FALSE
 ```
 
-STEP33 adapter는 `runtime_registered=False`, `site_promotion_allowed=False`, `negative_evidence_allowed=False`, `legal_absence_inference_allowed=False`를 유지한다. Permission/eligibility가 실제 application 또는 registration으로 자동 승격되지 않는다.
+STEP34는 이미 runtime-registered된 shadow, 잘못되거나 누락된 STEP33 provenance, application-ready가 아닌 shadow, prior mutation diagnostics, UNKNOWN/ineligible/malformed/missing input을 fail-closed로 차단한다.
 
-STEP33은 builder/service/orchestrator/Rule Engine/runtime registry/public API를 변경하지 않았다. 기존 historical producer를 자동 실행하지도 않는다.
+STEP34는 builder/service/orchestrator/Rule Engine/runtime registry/public API를 변경하지 않았다. 실제 production consumption을 수행하지 않고 historical producer도 자동 실행하지 않는다.
 
-## 3. STEP 31-32 upstream contracts
+## 3. STEP 31-33 upstream contracts
 
 STEP31은 STEP30 internal candidate를 표준 semantic regulation state TRUE/FALSE/UNKNOWN으로 fail-closed 변환한다. Candidate conflict, profile mismatch, missing/invalid assessment는 UNKNOWN이다.
 
-STEP32는 concrete STEP31 semantic resolution과 `RegulationResolutionProfile`의 explicit promotion/registration permissions를 조합해 production consumption 자격만 평가한다.
+STEP32는 concrete STEP31 semantic resolution과 `RegulationResolutionProfile`의 explicit promotion/registration permissions를 조합해 production consumption eligibility만 평가한다.
 
 ```text
 semantic resolution in {TRUE, FALSE}
@@ -95,7 +94,23 @@ otherwise
 → production_consumption_eligible=False
 ```
 
-STEP31/32 모두 SITE state, Rule Engine, production wiring, runtime registry 또는 public API를 직접 변경하지 않는다.
+STEP33은 concrete/aligned/eligible STEP31+32 결과만 기존 STEP18 `ProductionSiteCondition` shadow로 변환한다.
+
+```text
+STEP31 resolution == STEP32 semantic_resolution
+AND semantic resolution in {TRUE, FALSE}
+AND STEP32 production_consumption_eligible is exactly True
+→ shadow state=semantic TRUE/FALSE
+→ production_eligible=True
+
+otherwise
+→ shadow state=UNKNOWN
+→ production_eligible=False
+```
+
+STEP33 shadow는 `runtime_registered=False`, `site_promotion_allowed=False`, `negative_evidence_allowed=False`, `legal_absence_inference_allowed=False`를 유지한다.
+
+STEP31~34 모두 실제 SITE state, Rule Engine state, production wiring, runtime registry 또는 public API를 직접 변경하지 않는다.
 
 ## 4. Historical candidate/evidence safety chain
 
@@ -123,6 +138,9 @@ STEP32 production-consumption eligibility
 
 STEP33 application-ready production shadow
 → TRUE/FALSE only when STEP31+32 concrete/aligned/eligible; otherwise UNKNOWN
+
+STEP34 production-consumption authorization
+→ authorized True only for concrete, aligned, application-ready, non-mutated STEP33 TRUE/FALSE shadow; otherwise False
 ```
 
 보존 원칙:
@@ -141,12 +159,13 @@ STEP30 final candidate != production state
 STEP31 semantic state != SITE/Rule Engine/runtime state
 STEP32 eligibility != actual consumption/application
 STEP33 shadow != actual production application
+STEP34 authorization != actual production consumption/application
 positive/negative conflict → UNKNOWN
 UNKNOWN != FALSE
 standard code must not be guessed
 ```
 
-No new authority/source/source-policy/history-completeness/qualification/composition/exhaustive-disproof/negative-evidence/negative-candidate/final-candidate/final-resolution/production-consumption registry is introduced by STEP33.
+No new authority/source/source-policy/history-completeness/qualification/composition/exhaustive-disproof/negative-evidence/negative-candidate/final-candidate/final-resolution/production-consumption registry is introduced by STEP34.
 
 ## 5. 도시지역편입해제구역
 
@@ -172,11 +191,13 @@ production_registration_allowed=False
 runtime_registration_allowed=False
 STEP32 production_consumption_eligible=False
 STEP33 application-ready state=UNKNOWN / INELIGIBLE
+STEP34 production_consumption_authorized=False
+production consumption=BLOCKED
 production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
 
-STEP26~33 contract readiness는 이 조건에 대한 새로운 verified substantive evidence를 공급하지 않는다. 실제 상태는 계속 UNKNOWN/BLOCKED다.
+STEP26~34 contract readiness는 이 조건에 대한 새로운 verified substantive evidence를 공급하지 않는다. 실제 상태는 계속 UNKNOWN/BLOCKED다.
 
 ## 6. 개발밀도관리구역 / UQQ700
 
@@ -199,7 +220,7 @@ AND CURRENT VALIDITY VERIFIED
 AND SITE SPATIAL INCLUSION VERIFIED
 ```
 
-현재 세 gate는 모두 미검증 상태다. STEP32/33 HISTORICAL_SITE_EVENT boundary는 UQQ700과 연결되지 않는다. UQQ700에 대한 SITE FALSE inference, SITE promotion, runtime registration은 계속 금지한다.
+현재 세 gate는 모두 미검증 상태다. STEP32~34 HISTORICAL_SITE_EVENT boundary는 UQQ700과 연결되지 않는다. UQQ700에 대한 SITE FALSE inference, SITE promotion, runtime registration은 계속 금지한다.
 
 ## 7. Terminal boundaries
 
@@ -221,6 +242,7 @@ STEP30_HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECO
 STEP31_HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_BOUNDARY_TERMINALLY_RECONCILED
 STEP32_HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_ELIGIBILITY_BOUNDARY_TERMINALLY_RECONCILED
 STEP33_HISTORICAL_SITE_EVENT_PRODUCTION_APPLICATION_BOUNDARY_RECONCILED
+STEP34_HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_AUTHORIZATION_BOUNDARY_RECONCILED
 ```
 
 ## 8. Architecture state
@@ -234,28 +256,29 @@ PHASE 4 Legal ingestion         IN PROGRESS
 PHASE 5 Rule Engine             CORE STABLE / IN PROGRESS
 PHASE 6 Runtime spatial         CORE STABLE
 PHASE 7 Regulation Resolution   ACTIVE
-PHASE 8 Authority/Historical    ACTIVE / HISTORICAL APPLICATION-READY SHADOW BOUNDARY CLOSED
+PHASE 8 Authority/Historical    ACTIVE / HISTORICAL CONSUMPTION AUTHORIZATION BOUNDARY CLOSED
 PHASE 9+ Nationwide/AI/Product  FUTURE
 ```
 
-Architecture Baseline remains v1.2. STEP33 fills the read-only adaptation gap between STEP31/32 historical resolution contracts and the existing STEP18 `ProductionSiteCondition` shadow shape. It does not change the architecture baseline because no SITE mutation, Rule Engine consumption, runtime registration, producer auto-run, builder/service/orchestrator wiring, or public API exposure was introduced.
+Architecture Baseline remains v1.2. STEP34 adds only a read-only authorization gate after the STEP33 application-ready shadow. It does not introduce actual consumption, SITE mutation, Rule Engine application, runtime registration, producer execution, builder/service/orchestrator wiring, or public API exposure.
 
-`PROJECT_ARCHITECTURE.md` therefore does not require a baseline change for STEP33 closure.
+`PROJECT_ARCHITECTURE.md` therefore does not require a baseline change for STEP34 closure.
 
-## 9. Next allowed work after STEP 33 closure
+## 9. Next allowed work after STEP 34 closure
 
 ```text
-1. Keep STEP18~33 terminal boundaries closed unless a separate architecture decision or independently verified evidence justifies reopening.
+1. Keep STEP18~34 terminal boundaries closed unless a separate architecture decision or independently verified evidence justifies reopening.
 2. Keep UQQ700 and 도시지역편입해제구역 UNKNOWN and blocked from production/runtime registration.
 3. Start the next step with a read-only gap audit against current branch HEAD and Architecture Baseline v1.2.
 4. Do not create new registries without a separate architecture/data decision.
-5. Do not connect STEP33 application-ready shadow to Rule Engine, SITE mutation, runtime registry, builder/service/orchestrator execution, or public API without a separate architecture/schema decision and explicit approval.
-6. Do not auto-run blocked historical producers.
-7. Do not treat STEP32 eligibility or STEP33 application-ready shadow as proof that production consumption/application occurred.
-8. Contract/composition/eligibility/candidate/semantic readiness must not substitute for independently verified evidence.
-9. Do not introduce historical FALSE from missing evidence, search no-hit, candidate zero, or search exhaustion.
-10. Positive/negative candidate conflict remains semantic UNKNOWN; no precedence is implied.
-11. The built-in 도시지역편입해제구역 profile remains negative_evidence_allowed=False; FALSE_CANDIDATE, semantic FALSE, STEP32 eligibility, and STEP33 application-ready TRUE/FALSE remain blocked absent separately verified evidence/policy changes.
+5. Do not treat STEP34 authorization as actual consumption, Rule Engine application, SITE mutation, runtime registration, producer execution, or API exposure.
+6. Do not connect STEP34 authorization to builder/service/orchestrator/Rule Engine/runtime registry/public API without a separate architecture/schema decision and explicit approval.
+7. Keep Rule Engine consumption authorization and runtime registration/application as separate concepts.
+8. Do not auto-run blocked historical producers.
+9. Contract/composition/eligibility/candidate/semantic/authorization readiness must not substitute for independently verified evidence.
+10. Do not introduce historical FALSE from missing evidence, search no-hit, candidate zero, or search exhaustion.
+11. Positive/negative candidate conflict remains semantic UNKNOWN; no precedence is implied.
+12. The built-in 도시지역편입해제구역 profile remains negative_evidence_allowed=False; FALSE_CANDIDATE, semantic FALSE, STEP32 eligibility, STEP33 application-ready TRUE/FALSE, and STEP34 authorization remain blocked absent separately verified evidence/policy changes.
 ```
 
 ## 10. Git / local rules
