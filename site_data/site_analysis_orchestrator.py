@@ -356,6 +356,9 @@ def analyze_site_by_parcel(
     production_condition_shadow_sources: Optional[
         Any
     ] = None,
+    historical_rule_input: Optional[
+        Any
+    ] = None,
     include_debug: bool = False,
     service_key: Optional[str] = None,
 ) -> Dict[str, Any]:
@@ -438,6 +441,10 @@ def analyze_site_by_parcel(
 
             production_condition_shadow_sources=(
                 production_condition_shadow_sources
+            ),
+
+            historical_rule_input=(
+                historical_rule_input
             ),
         )
     )

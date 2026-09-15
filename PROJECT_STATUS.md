@@ -7,8 +7,8 @@ Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 68
-Focus: HISTORICAL_ORCHESTRATOR_API_EXPOSURE_AUTHORIZATION_BOUNDARY
+STEP 69
+Focus: HISTORICAL_PUBLIC_API_EXPOSURE_AUTHORIZATION_BOUNDARY
 State: READ-ONLY AUDIT PENDING
 
 Previous terminal closures:
@@ -16,6 +16,7 @@ Previous terminal closures:
 - STEP65_HISTORICAL_MERGED_REGISTRY_RULE_ENGINE_INTEGRATION_BOUNDARY_RECONCILED
 - STEP66_HISTORICAL_RULE_ENGINE_PRODUCTION_HANDOFF_BOUNDARY_RECONCILED
 - STEP67_HISTORICAL_PRODUCTION_RUNTIME_EXPOSURE_BOUNDARY_RECONCILED
+- STEP68_HISTORICAL_ORCHESTRATOR_API_EXPOSURE_AUTHORIZATION_BOUNDARY_RECONCILED
 
 STEP64 user local behavioral validation PASS:
 valid/zero-op authorization, conflict/readiness fail-closed, historical provenance guard and caller immutability PASS; Rule Engine/runtime/API mutation NONE.
@@ -76,7 +77,9 @@ STEP66 connects accepted historical builder input through the validated STEP62->
 
 STEP67 adds only the optional service adapter historical input seam.
 
-Orchestrator/API historical exposure remains absent.
+STEP68 adds only the optional orchestrator historical input seam.
+
+Public API historical exposure remains absent.
 
 Historical data remains excluded from the spatial runtime condition channel.
 
@@ -96,7 +99,7 @@ Evidence/history/provenance/authority gates remain unverified.
 
 Negative evidence disabled.
 
-STEP31 semantic UNKNOWN and STEP32~67 real-condition path remains BLOCKED.
+STEP31 semantic UNKNOWN and STEP32~68 real-condition path remains BLOCKED.
 
 No new substantive evidence.
 
@@ -113,7 +116,7 @@ Negative evidence/legal absence/SITE FALSE/SITE promotion/production/runtime reg
 
 Positive gates remain unverified.
 
-STEP32~67 historical boundaries remain disconnected from UQQ700.
+STEP32~68 historical boundaries remain disconnected from UQQ700.
 
 ## 6. Terminal boundaries
 
@@ -129,6 +132,8 @@ STEP66_HISTORICAL_RULE_ENGINE_PRODUCTION_HANDOFF_BOUNDARY_RECONCILED
 
 STEP67_HISTORICAL_PRODUCTION_RUNTIME_EXPOSURE_BOUNDARY_RECONCILED
 
+STEP68_HISTORICAL_ORCHESTRATOR_API_EXPOSURE_AUTHORIZATION_BOUNDARY_RECONCILED
+
 ## 7. Architecture state / next action
 
 Architecture Baseline remains v1.2.
@@ -137,21 +142,23 @@ STEP65 permits explicitly authorized historical merged-registry consumption at t
 
 STEP66 connects accepted `site_analysis_builder.py` historical input to that authorization through the validated historical safety chain.
 
-STEP67 exposes that builder handoff only at the `site_analysis_service.py` adapter seam.
+STEP67 exposes that builder handoff at the `site_analysis_service.py` adapter seam.
+
+STEP68 extends the same optional historical handoff through `site_analysis_orchestrator.py`.
 
 It does not modify the spatial overlay.
 
-It does not add orchestrator/API historical exposure or spatial runtime registration.
+It does not add public API historical exposure or spatial runtime registration.
 
 PHASE 8 Authority/Historical:
 
-ACTIVE / STEP65 RULE ENGINE INTEGRATION CLOSED / STEP66 PRODUCTION HANDOFF CLOSED / STEP67 SERVICE EXPOSURE CLOSED / STEP68 READ-ONLY AUDIT PENDING
+ACTIVE / STEP66 PRODUCTION HANDOFF CLOSED / STEP67 SERVICE EXPOSURE CLOSED / STEP68 ORCHESTRATOR EXPOSURE CLOSED / STEP69 READ-ONLY AUDIT PENDING
 
 Next action:
 
-STEP68 read-only audit of whether any orchestrator/API historical exposure is authorized or necessary.
+STEP69 read-only audit of whether public API historical exposure is authorized or necessary.
 
-No orchestrator/API historical exposure implementation before a new explicit write scope is approved.
+No public API historical exposure implementation before a new explicit write scope is approved.
 
 ## 8. Git / local rules
 
