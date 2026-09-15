@@ -1,7 +1,13 @@
 import copy
 from law_data.historical_site_event_rule_engine_consumption_executor import execute_historical_site_event_rule_engine_consumption
-from law_data.historical_site_event_rule_engine_consumption_execution_package_test import _package
+from law_data.historical_site_event_rule_engine_consumption_execution_package_test import _execution
+from law_data.historical_site_event_rule_engine_consumption_preview_authorization_test import _preview
+from law_data.historical_site_event_rule_engine_consumption_preview_authorization import authorize_historical_site_event_rule_engine_consumption_preview
+from law_data.historical_site_event_rule_engine_consumption_execution_package import package_historical_site_event_rule_engine_consumption_execution
 CLASSIFICATION="STEP55_HISTORICAL_SITE_EVENT_RULE_ENGINE_CONSUMPTION_EXECUTOR_BOUNDARY_RECONCILED"
+def _package(noop=False):
+    authorization=authorize_historical_site_event_rule_engine_consumption_preview(_preview(0 if noop else 1))
+    return package_historical_site_event_rule_engine_consumption_execution(authorization,_execution())
 def main():
     rules=[{"clause_index":1,"conditions":[{"name":"역사조건","type":"SITE_HISTORY","state":"UNKNOWN","confidence":"LOW","source":"BASE"}]}]
     original=copy.deepcopy(rules); changed=execute_historical_site_event_rule_engine_consumption(_package(False),rules); assert changed.execution_succeeded and changed.apply_site_registry_called and rules==original and changed.actual_repair_count==1
