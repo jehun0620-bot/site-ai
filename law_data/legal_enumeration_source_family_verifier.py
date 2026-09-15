@@ -8,6 +8,8 @@ types, decide SITE applicability, or authorize production/runtime behavior.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from hashlib import sha256
+import json
 from types import MappingProxyType
 from typing import Any, Mapping
 
@@ -27,19 +29,17 @@ def _clean_required(value: object, field_name: str) -> str:
     return value.strip()
 
 
-def _clean_optional(value: object) -> str | None:
-    if not isinstance(value, str):
-        return None
-    value = value.strip()
-    return value or None
-
-
 def _freeze(value: Mapping[str, Any] | None) -> Mapping[str, Any]:
     if value is None:
         return MappingProxyType({})
     if not isinstance(value, Mapping):
         raise TypeError("metadata must be a mapping")
     return MappingProxyType(dict(value))
+
+
+def _fingerprint(fields: tuple[str, ...]) -> str:
+    payload = json.dumps(fields, ensure_ascii=False, separators=(",", ":"))
+    return sha256(payload.encode("utf-8")).hexdigest()
 
 
 @dataclass(frozen=True)
@@ -76,6 +76,19 @@ class LawAppendixEnumerationEvidence:
             object.__setattr__(self, name, _clean_required(getattr(self, name), name))
         object.__setattr__(self, "metadata", _freeze(self.metadata))
 
+    def identity_fingerprint(self) -> str:
+        return _fingerprint((
+            self.source_family,
+            self.condition_name,
+            self.legal_basis,
+            self.law_id,
+            self.law_version_id,
+            self.effective_date,
+            self.appendix_id,
+            self.row_id,
+            self.source_uri,
+        ))
+
 
 @dataclass(frozen=True)
 class OfficialGazetteEnumerationEvidence:
@@ -106,6 +119,18 @@ class OfficialGazetteEnumerationEvidence:
             object.__setattr__(self, name, _clean_required(getattr(self, name), name))
         object.__setattr__(self, "metadata", _freeze(self.metadata))
 
+    def identity_fingerprint(self) -> str:
+        return _fingerprint((
+            OFFICIAL_GAZETTE,
+            self.condition_name,
+            self.legal_basis,
+            self.gazette_issue_id,
+            self.publication_date,
+            self.gazette_document_id,
+            self.issuing_authority,
+            self.source_uri,
+        ))
+
 
 @dataclass(frozen=True)
 class LegalEnumerationVerificationResult:
@@ -118,6 +143,7 @@ class LegalEnumerationVerificationResult:
     row_or_entry_identity_bound: bool
     condition_name_bound: bool
     legal_basis_bound: bool
+    evidence_fingerprint: str | None = None
     cross_document_reconstruction_performed: bool = False
     cross_version_reconstruction_performed: bool = False
     metadata_reconstruction_performed: bool = False
@@ -128,7 +154,29 @@ class LegalEnumerationVerificationResult:
             self.status == VERIFIED
             and self.source_identity_verified
             and self.row_binding_verified
+            and isinstance(self.evidence_fingerprint, str)
+            and bool(self.evidence_fingerprint)
         )
+
+
+def evidence_matches_verification(
+    evidence: LawAppendixEnumerationEvidence | OfficialGazetteEnumerationEvidence,
+    verification: LegalEnumerationVerificationResult,
+) -> bool:
+    """Return True only when a verified result is bound to this exact evidence."""
+    if not isinstance(verification, LegalEnumerationVerificationResult):
+        return False
+    if not verification.verified:
+        return False
+    if isinstance(evidence, LawAppendixEnumerationEvidence):
+        if verification.source_family != evidence.source_family:
+            return False
+    elif isinstance(evidence, OfficialGazetteEnumerationEvidence):
+        if verification.source_family != OFFICIAL_GAZETTE:
+            return False
+    else:
+        return False
+    return verification.evidence_fingerprint == evidence.identity_fingerprint()
 
 
 def verify_law_appendix_enumeration(
@@ -167,6 +215,7 @@ def verify_law_appendix_enumeration(
         row_or_entry_identity_bound=row_identity,
         condition_name_bound=condition_bound,
         legal_basis_bound=basis_bound,
+        evidence_fingerprint=evidence.identity_fingerprint() if row_binding else None,
     )
 
 
@@ -204,4 +253,5 @@ def verify_official_gazette_enumeration(
         row_or_entry_identity_bound=entry_identity,
         condition_name_bound=condition_bound,
         legal_basis_bound=basis_bound,
+        evidence_fingerprint=evidence.identity_fingerprint() if row_binding else None,
     )
