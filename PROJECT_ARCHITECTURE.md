@@ -1208,8 +1208,11 @@ PHASE 8 — AUTHORITY / HISTORICAL PROVENANCE
 - release/cancellation verification
 - historical event provenance / history completeness
 
-완료 상태: ACTIVE / historical provenance kernel 및 AuthoritySourceScope pure boundary 구축 완료,
-verified authority/source registry integration은 별도 검증 단계로 남아 있음
+완료 상태: CORE INFRASTRUCTURE TERMINALLY RECONCILED AT CURRENT EVIDENCE BOUNDARY.
+
+Historical provenance kernel, AuthoritySourceScope pure boundary, trusted internal source authorization, typed handoff authorization, production orchestrator handoff and end-to-end Rule Engine consumption are validated.
+
+Verified authority/source registry integration remains evidence-driven and deferred until verified mapping/provenance is actually available. This closure does not activate an unresolved real historical condition.
 
 AuthoritySourceScope는 registry 이전 단계의 qualification contract다.
 공식처럼 보이는 host, region, source role, authority scope, regulation name이 존재해도
@@ -1355,8 +1358,9 @@ PHASE 4   Legal ingestion               IN PROGRESS
 PHASE 5   Rule Engine                   IN PROGRESS / CORE STABLE
 PHASE 6   Runtime spatial               CORE STABLE
 PHASE 7   Regulation Resolution         ACTIVE / PROFILE BOUNDARY CLOSED
-PHASE 8   Authority/Historical          ACTIVE / AUTHORITY SOURCE SCOPE BOUNDARY CLOSED
-PHASE 9+  Nationwide/AI/Product         FUTURE
+PHASE 8   Authority/Historical          CORE INFRASTRUCTURE TERMINALLY RECONCILED / EVIDENCE-DRIVEN EXTENSIONS DEFERRED
+PHASE 9   Nationwide Regulation Registry NEXT / ENTRY AUDIT PENDING
+PHASE 10+ Knowledge/AI/Product           FUTURE
 ```
 
 STEP 18 production SITE condition boundary, STEP 19 regulation resolution profile boundary,
@@ -1364,6 +1368,15 @@ STEP 20 authority/source scope boundary는 각각 terminally closed 상태다.
 
 이 closure는 production/runtime registration 완료를 뜻하지 않는다.
 현재는 향후 AI 분석의 정확성을 결정하는 deterministic data foundation을 구축하는 단계다.
+
+
+PHASE 8 terminal reconciliation note:
+
+The closure above does not mean production/runtime registration of unresolved conditions. It means the common authority/historical infrastructure is reconciled at the currently verified evidence boundary.
+
+Verified authority/source mappings and real historical-condition evidence remain evidence-driven extensions. They may reopen PHASE 8 only when new verified evidence justifies implementation.
+
+The next architecture entry-audit target is PHASE 9 Nationwide Regulation Registry.
 
 
 32. 현재 UQQ700에서 얻은 아키텍처 교훈

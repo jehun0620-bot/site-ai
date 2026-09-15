@@ -7,8 +7,8 @@ Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 75
-Focus: PHASE_8_AUTHORITY_HISTORICAL_REMAINING_GAP_TERMINAL_AUDIT
+STEP 76
+Focus: PHASE_9_NATIONWIDE_REGULATION_REGISTRY_ENTRY_AUDIT
 State: READ-ONLY AUDIT PENDING
 
 Previous terminal closures:
@@ -23,6 +23,7 @@ Previous terminal closures:
 - STEP72_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_AUTHORIZATION_BOUNDARY_RECONCILED
 - STEP73_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_PRODUCTION_WIRING_BOUNDARY_RECONCILED
 - STEP74_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_END_TO_END_REGRESSION_BOUNDARY_RECONCILED
+- STEP75_PHASE_8_AUTHORITY_HISTORICAL_TERMINAL_RECONCILIATION
 
 STEP64 user local behavioral validation PASS:
 valid/zero-op authorization, conflict/readiness fail-closed, historical provenance guard and caller immutability PASS; Rule Engine/runtime/API mutation NONE.
@@ -186,6 +187,8 @@ STEP73_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_PRODUCTION_WIRING_BOUNDARY_REC
 
 STEP74_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_END_TO_END_REGRESSION_BOUNDARY_RECONCILED
 
+STEP75_PHASE_8_AUTHORITY_HISTORICAL_TERMINAL_RECONCILIATION
+
 ## 7. Architecture state / next action
 
 Architecture Baseline remains v1.2.
@@ -218,17 +221,21 @@ Service, builder, Rule Engine, public API and spatial runtime are not modified b
 
 PHASE 8 Authority/Historical:
 
-ACTIVE / STEP71 TRUSTED SOURCE CONTRACT CLOSED / STEP72 HANDOFF AUTHORIZATION CLOSED / STEP73 PRODUCTION WIRING CLOSED / STEP74 END-TO-END REGRESSION CLOSED / STEP75 REMAINING-GAP READ-ONLY AUDIT PENDING
+TERMINALLY RECONCILED AT CURRENT EVIDENCE BOUNDARY.
 
-STEP74 end-to-end regression confirmed the trusted historical path from a valid STEP72 handoff through orchestrator, service, builder and existing historical Rule Engine consumption.
+STEP71 trusted-source contract, STEP72 handoff authorization, STEP73 production orchestrator wiring and STEP74 end-to-end regression establish the validated internal historical provenance path through orchestrator, service, builder and Rule Engine.
 
-STEP74 identified and repaired the STEP73 production handoff-shape mismatch: the orchestrator now reconstructs the validated historical channel/provenance/repairs package required by the existing STEP62 adapter instead of forwarding only `handoff_rules`.
+STEP75 terminal gap audit found no additional PHASE 8 production implementation boundary justified by the currently verified evidence.
 
-Post-repair local validation passed twice. Historical merged-registry data is consumed by the Rule Engine while remaining excluded from the returned spatial registry and spatial runtime. Public API historical exposure and real-condition activation remain absent.
+Verified authority/source registry integration remains evidence-driven and deferred until verified mappings and provenance are actually available. Real historical condition activation remains blocked until its official evidence/history/authority gates are satisfied.
+
+Public API historical exposure remains NOT AUTHORIZED. Historical data remains excluded from the spatial runtime condition channel.
+
+PHASE 8 infrastructure closure does not convert unresolved historical conditions to TRUE or FALSE and does not authorize negative-evidence inference.
 
 Next action:
 
-STEP75 read-only terminal gap audit of PHASE 8 Authority/Historical to determine whether any additional implementation boundary is actually required before phase closure. Do not assume STEP76+ is required without a concrete unresolved implementation gap.
+STEP76 read-only PHASE 9 Nationwide Regulation Registry entry audit. Determine the minimum reusable regulation-registry boundary from the existing resolution profiles, authority/source policies and validated resolver families before approving any implementation.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
