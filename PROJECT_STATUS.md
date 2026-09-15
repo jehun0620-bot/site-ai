@@ -2,14 +2,37 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `201f0f7175532ddfad96389239031631cc9eb270`
+기준 개발 HEAD: `eb609834046b6ad0b971a6f269a0195d92a2c7b0`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 97
-Focus: PHASE_9_FINGERPRINT_BOUND_EVIDENCE_TO_SEED_ADMISSION_IMPLEMENTATION_AUTHORIZATION_AUDIT
-State: READ-ONLY AUDIT IN PROGRESS
+STEP 98
+Focus: PHASE_9_FINGERPRINT_BOUND_EVIDENCE_TO_SEED_ADMISSION_IMPLEMENTATION
+State: IMPLEMENTED / LOCAL VALIDATION REQUIRED
+
+Previous terminal audit:
+STEP97_PHASE_9_FINGERPRINT_BOUND_EVIDENCE_TO_SEED_ADMISSION_IMPLEMENTATION_AUTHORIZATION_AUDIT_RECONCILED
+
+STEP97 conclusion:
+- MINIMAL FAIL_CLOSED SEED ADMISSION IMPLEMENTATION IS JUSTIFIED
+- ADMISSION MUST REQUIRE EXACT `evidence_matches_verification(...)` SUCCESS
+- CONDITION_NAME / LEGAL_BASIS / SOURCE IDENTITY MUST BE COPIED ONLY FROM ORIGINAL EVIDENCE
+- VERIFICATION STATE MAY BE COPIED ONLY FROM THE EXACT BOUND VERIFICATION RESULT
+- METADATA / DIAGNOSTICS MUST NOT SUPPLY OR OVERRIDE LEGAL FACTS
+- MISMATCHED / CROSS_FAMILY / UNVERIFIED PAIRS MUST FAIL CLOSED
+- STANDARD_CODE / CONDITION_TYPE / RESOLUTION_TYPE / SITE / RUNTIME ARE OUTSIDE ADMISSION
+
+STEP98 implementation:
+- added `law_data/legal_enumeration_evidence_to_seed_admission.py`
+- added `law_data/legal_enumeration_evidence_to_seed_admission_contract_test.py`
+- `admit_verified_evidence_to_seed(...)` accepts only an exact verified evidence/result pair
+- statute/decree provenance is copied only from the original appendix evidence
+- official-gazette provenance is copied only from the original gazette evidence
+- provenance verification flags come only from the bound verification result
+- metadata is not propagated into seed provenance
+- mismatch, cross-family and unverified pairs raise a fail-closed admission error
+- no acquisition / bulk enumeration / profile / standard-code / SITE / production / runtime wiring added
 
 Previous terminal implementation:
 STEP96_PHASE_9_VERIFIED_EVIDENCE_IDENTITY_BINDING_IMPLEMENTATION_RECONCILED
@@ -28,32 +51,6 @@ STEP96 conclusion:
 - CONDITION_NAME / LEGAL_BASIS / COMPLETE SOURCE IDENTITY ARE PART OF THE BINDING
 - METADATA / DIAGNOSTICS / VERIFICATION GATE FLAGS DO NOT MANUFACTURE A MATCH
 - UNVERIFIED RESULTS CANNOT PASS EXACT EVIDENCE/RESULT MATCHING
-- THIS REMAINS AN INTERNAL INTEGRITY CONTRACT, NOT CALLER AUTHENTICATION
-- NO SEED ADMISSION / ACQUISITION / PROFILE / SITE / PRODUCTION / RUNTIME WIRING WAS ADDED
-
-Previous terminal audit:
-STEP95_PHASE_9_VERIFIED_EVIDENCE_BINDING_CONTRACT_IMPLEMENTATION_AUTHORIZATION_AUDIT_RECONCILED
-
-STEP95 conclusion:
-- PRIVATE / FROZEN WRAPPER CONSTRUCTION ALONE IS NOT A TRUST BOUNDARY
-- SEPARATE VERIFIED_EVIDENCE WRAPPER MODULE IS NOT REQUIRED
-- EXACT EVIDENCE IDENTITY FINGERPRINT IS THE MINIMUM JUSTIFIED BINDING
-- FINGERPRINT MUST BE PRODUCED INSIDE THE VERIFIER
-- FINGERPRINT COVERS SOURCE_FAMILY + CONDITION_NAME + LEGAL_BASIS + COMPLETE SOURCE IDENTITY
-- METADATA / DIAGNOSTICS / VERIFICATION FLAGS DO NOT ENTER THE FINGERPRINT
-- STATUTE / DECREE FAMILY IDENTITY REMAINS DISTINCT
-- MISSING OR MISMATCHED FINGERPRINT MUST FAIL CLOSED
-- SHA-256 BINDING IS AN INTERNAL INTEGRITY CONTRACT, NOT CALLER AUTHENTICATION
-- HMAC / SECRET TRUST INFRASTRUCTURE IS NOT JUSTIFIED
-
-Previous terminal audit:
-STEP94_PHASE_9_VERIFIED_EVIDENCE_TO_SEED_ADMISSION_IMPLEMENTATION_BOUNDARY_AUDIT_RECONCILED
-
-STEP94 conclusion:
-- RESULT.VERIFIED + SOURCE_FAMILY ALONE IS INSUFFICIENT FOR SEED ADMISSION
-- ARBITRARY EVIDENCE/RESULT PAIR ADMISSION MUST BE FORBIDDEN
-- IDENTITY RECONSTRUCTION FROM RESULT / METADATA / DIAGNOSTICS IS FORBIDDEN
-- ADMISSION MUST COPY CONDITION_NAME / LEGAL_BASIS / PROVENANCE IDENTITY ONLY FROM VERIFIED ORIGINAL EVIDENCE
 
 Previous terminal implementation:
 STEP93_PHASE_9_SOURCE_FAMILY_LEGAL_ENUMERATION_VERIFIER_IMPLEMENTATION_RECONCILED
@@ -88,15 +85,15 @@ Architecture Baseline remains v1.2.
 STEP88 provides the immutable pre-profile catalogue seed destination contract.
 STEP93 provides source-family evidence verification.
 STEP96 provides locally validated exact evidence/result identity binding.
-The remaining question is whether a minimal fail-closed seed-admission implementation is now justified without expanding into profile classification, standard-code inference, SITE applicability, or runtime behavior.
+STEP98 implements the narrow admission seam from an exact verified evidence/result pair into `LegalConditionCatalogueSeed`.
 
 Standard development process:
-IMPLEMENT -> REMOTE HEAD CONFIRM -> LOCAL STATUS CHECK -> git pull --ff-only -> py_compile -> focused test -> optional regression test -> final git status -> STEP closure -> immediately continue the next authorized READ-ONLY audit.
+IMPLEMENT -> REMOTE HEAD CONFIRM -> LOCAL STATUS CHECK -> git pull --ff-only -> NEW FILE EXISTENCE CHECK -> py_compile -> focused test -> optional regression test -> final git status -> STEP closure -> immediately continue the next authorized READ-ONLY audit.
 
 After user-provided local validation PASS, STEP closure documentation and the next READ-ONLY audit may proceed in the same workflow without a separate pause. Any new file modification, production wiring, or other write scope still requires explicit scope/purpose/non-target approval before writing.
 
 Next action:
-STEP97 read-only Fingerprint-Bound Evidence-to-Seed Admission Implementation Authorization Audit. Inspect the validated verifier/binding contract together with `LegalEnumerationProvenance` and `LegalConditionCatalogueSeed`. Determine the minimum admission API, exact rejection rules, provenance-copy rules, and focused test scope. Admission must require `evidence_matches_verification(...) == True`, copy condition_name/legal_basis/source identity only from the original evidence, set provenance verification state only from the bound verification result, and fail closed on any mismatch or unverified result. Do not authorize acquisition, bulk enumeration, profile admission, standard-code inference, SITE mutation, production resolution, runtime registration, public API exposure, or Rule Engine wiring.
+Locally fast-forward to the STEP98 implementation HEAD, confirm both new files exist, py_compile them, run `python -m law_data.legal_enumeration_evidence_to_seed_admission_contract_test`, and confirm final `git status --short` contains only the protected expected local output modification. Expected focused-test terminal: `STEP98_FINGERPRINT_BOUND_EVIDENCE_TO_SEED_ADMISSION_CONTRACT_PASS`. If PASS, close STEP98 and immediately begin the next READ-ONLY audit. The next audit must determine the minimum safe post-seed boundary and must not assume that a verified seed is already a `RegulationResolutionProfile`, has a standard code, applies to SITE, or is runtime-ready.
 
 ## 4. Git / local rules
 
