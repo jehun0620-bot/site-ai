@@ -2,14 +2,30 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `36ca8479a866eb75402ea4f6b281be69cfbd3ec2`
+기준 개발 HEAD: `6596e8910ba166712b5fd0fbea19b2584134b2f5`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 94
-Focus: PHASE_9_VERIFIED_EVIDENCE_TO_SEED_ADMISSION_IMPLEMENTATION_BOUNDARY_AUDIT
+STEP 95
+Focus: PHASE_9_VERIFIED_EVIDENCE_BINDING_CONTRACT_IMPLEMENTATION_AUTHORIZATION_AUDIT
 State: READ-ONLY AUDIT IN PROGRESS
+
+Previous terminal audit:
+STEP94_PHASE_9_VERIFIED_EVIDENCE_TO_SEED_ADMISSION_IMPLEMENTATION_BOUNDARY_AUDIT_RECONCILED
+
+STEP94 conclusion:
+- CURRENT VERIFICATION RESULT ALONE CANNOT PROVE EXACT EVIDENCE/RESULT PAIRING
+- RESULT.VERIFIED + SOURCE_FAMILY IS INSUFFICIENT FOR SEED ADMISSION
+- ARBITRARY EVIDENCE/RESULT PAIR ADMISSION MUST BE FORBIDDEN
+- IDENTITY RECONSTRUCTION FROM RESULT / METADATA / DIAGNOSTICS IS FORBIDDEN
+- IMMUTABLE VERIFIED_EVIDENCE WRAPPER IS THE MINIMUM PREFERRED BOUNDARY
+- WRAPPER MUST CONTAIN THE ORIGINAL EVIDENCE AND ITS VERIFIER-PRODUCED RESULT
+- CALLERS MUST NOT BE ABLE TO SELF-AUTHORIZE A VERIFIED PAIR
+- ADMISSION MUST COPY CONDITION_NAME / LEGAL_BASIS / PROVENANCE IDENTITY ONLY FROM WRAPPED ORIGINAL EVIDENCE
+- ADMISSION MAY COPY ONLY VERIFICATION STATE FROM THE BOUND VERIFICATION RESULT
+- STANDARD_CODE / CONDITION_TYPE / RESOLUTION_TYPE MUST NOT BE INTRODUCED
+- ACQUISITION / BULK ENUMERATION / PROFILE / SITE / PRODUCTION / RUNTIME EFFECTS REMAIN OUTSIDE SCOPE
 
 Previous terminal implementation:
 STEP93_PHASE_9_SOURCE_FAMILY_LEGAL_ENUMERATION_VERIFIER_IMPLEMENTATION_RECONCILED
@@ -48,21 +64,6 @@ STEP92 conclusion:
 - EVIDENCE MUST NOT SELF_AUTHORIZE VERIFICATION
 - CROSS_ROW / CROSS_DOCUMENT / CROSS_VERSION RECONSTRUCTION MUST FAIL CLOSED
 - METADATA / DIAGNOSTICS MUST NOT MANUFACTURE VERIFICATION
-- NETWORK ACQUISITION / BULK ENUMERATION / SEED ADMISSION ARE NOT AUTHORIZED
-- PROFILE / STANDARD_CODE / SITE / PRODUCTION / RUNTIME EFFECTS ARE NOT AUTHORIZED
-
-Previous terminal audit:
-STEP91_PHASE_9_LEGAL_ENUMERATION_SOURCE_FAMILY_VERIFIER_CONTRACT_AUDIT_RECONCILED
-
-STEP91 conclusion:
-- SOURCE_IDENTITY_VERIFIED AND ROW_BINDING_VERIFIED ARE DISTINCT POSITIVE GATES
-- STATUTE_APPENDIX / DECREE_APPENDIX REQUIRE VERIFIED LAW + VERSION + EFFECTIVE_DATE + APPENDIX IDENTITY
-- STATUTE_APPENDIX / DECREE_APPENDIX ROW BINDING REQUIRES CONDITION_NAME + LEGAL_BASIS FROM THE SAME VERIFIED APPENDIX ROW
-- OFFICIAL_GAZETTE REQUIRES VERIFIED ISSUE + PUBLICATION_DATE + DOCUMENT + ISSUING_AUTHORITY PUBLICATION IDENTITY
-- OFFICIAL_GAZETTE ROW/ENTRY BINDING REQUIRES CONDITION_NAME + LEGAL_BASIS FROM THE SAME VERIFIED PUBLICATION DOCUMENT/ENTRY
-- SEARCH METADATA ALONE CANNOT ESTABLISH ROW_BINDING_VERIFIED
-- CROSS_ROW / CROSS_DOCUMENT / CROSS_VERSION RECONSTRUCTION IS FORBIDDEN
-- EVIDENCE MUST NOT SELF_AUTHORIZE VERIFICATION
 
 Previous terminal audit:
 STEP90_PHASE_9_EVIDENCE_TO_SEED_ADMISSION_CONTRACT_AUTHORIZATION_AUDIT_RECONCILED
@@ -114,9 +115,8 @@ Architecture Baseline remains v1.2.
 
 STEP88 provides the immutable pre-profile catalogue seed destination contract.
 STEP90 requires verified source evidence and its verification result to remain bound before admission.
-STEP91 defines the source-family positive verification gates.
-STEP92 authorizes the minimal verifier implementation.
-STEP93 implements and locally validates that verifier boundary.
+STEP93 implements and locally validates source-family verification.
+STEP94 identifies exact evidence/result pairing as the remaining prerequisite before seed admission implementation.
 
 Standard development process for newly added Python files:
 IMPLEMENT -> REMOTE HEAD CONFIRM -> LOCAL STATUS CHECK -> git pull --ff-only -> NEW FILE EXISTENCE CHECK -> py_compile -> focused test -> optional regression test -> final git status -> STEP closure -> immediately continue the next authorized READ-ONLY audit.
@@ -124,7 +124,7 @@ IMPLEMENT -> REMOTE HEAD CONFIRM -> LOCAL STATUS CHECK -> git pull --ff-only -> 
 After user-provided local validation PASS, STEP closure documentation and the next READ-ONLY audit may proceed in the same workflow without a separate pause. Any new file modification, production wiring, or other write scope still requires explicit scope/purpose/non-target approval before writing.
 
 Next action:
-STEP94 read-only Verified-Evidence-to-Seed Admission Implementation Boundary Audit. Inspect the validated source-family evidence/result contracts together with LegalEnumerationProvenance and LegalConditionCatalogueSeed, determine the minimum fail-closed admission contract, and verify exact evidence/result binding requirements. Admission must copy condition_name, legal_basis, and provenance identity only from the verified original evidence; must reject mismatched or unverified results; must not reconstruct from metadata/diagnostics; and must not authorize acquisition, bulk enumeration, profile admission, standard-code inference, SITE mutation, production resolution, runtime registration, public API exposure, or Rule Engine wiring.
+STEP95 read-only Verified-Evidence Binding Contract Implementation Authorization Audit. Determine the minimum Python contract that can bind each original LawAppendixEnumerationEvidence or OfficialGazetteEnumerationEvidence to the exact verifier-produced LegalEnumerationVerificationResult without allowing caller self-authorization. Prefer an immutable verifier-issued wrapper or equivalent fail-closed capability; avoid duplicating legal identity into metadata or diagnostics. Determine whether the existing STEP93 verifier module can be minimally extended or whether a separate binding module is required. Do not implement seed admission yet and do not authorize acquisition, bulk enumeration, profile admission, standard-code inference, SITE mutation, production resolution, runtime registration, public API exposure, or Rule Engine wiring.
 
 ## 4. Git / local rules
 
