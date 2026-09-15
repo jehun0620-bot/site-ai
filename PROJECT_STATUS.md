@@ -2,84 +2,68 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `95cc333ac1d71470189627afbfd7aef666c654f5`
+기준 개발 HEAD: `38d4b54b2e1c05092a1ca1c139ae6764615dd6c0`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
 ```text
-STEP 44
-Focus: HISTORICAL_SITE_EVENT_PROVENANCE_PRESERVING_OVERLAY_CONTRACT_BOUNDARY
+STEP 45
+Focus: HISTORICAL_SITE_EVENT_PROVENANCE_PRESERVING_OVERLAY_APPLICATION_AUTHORIZATION_BOUNDARY
 State: IMPLEMENTED / LOCAL VALIDATION PENDING
 
 Previous terminal closure:
-STEP43_HISTORICAL_SITE_EVENT_RULE_ENGINE_CONTEXT_COMPATIBILITY_BOUNDARY_RECONCILED
+STEP44_HISTORICAL_SITE_EVENT_PROVENANCE_PRESERVING_OVERLAY_CONTRACT_BOUNDARY_RECONCILED
 ```
 
-STEP43 사용자 로컬 behavioral validation PASS:
+STEP44 사용자 로컬 behavioral validation PASS:
 
 ```text
-Historical TRUE context identified: PASS
-Historical FALSE context identified: PASS
-Current spatial overlay provenance mismatch fail-closed: PASS
-Not-ready / wrong boundary / malformed guards: PASS
-Historical type / source preservation guards: PASS
-Compatibility assessment != context injection: PASS
+Historical TRUE registry candidate: PASS
+Historical FALSE registry candidate: PASS
+Historical UNKNOWN registry candidate: PASS
+Historical registry source family preserved: PASS
+Original historical source retained: PASS
+Wrong type / invalid state / missing source fail-closed: PASS
+Overlay contract ready != SITE registry overlay: PASS
 Rule Engine / builder modification and evaluation: NONE
 Production wiring / runtime registration / public API exposure: NONE
 ```
 
-STEP43 implementation commits:
+## 2. STEP44 terminal boundary
+
+STEP44 defines a non-applied `SITE_HISTORY` registry representation with registry-level source `RUNTIME_HISTORICAL_SITE_EVENT` while retaining the original historical source separately. It does not mutate the SITE registry or current Rule Engine overlay implementation.
 
 ```text
-be9637504de706c367fe4a0f2dab3a79fadce1b8
-feat: add step 43 rule engine context compatibility
-
-ddc4c6a1bd9699d1f3bf6054409c6e5f5e357e50
-test: add step 43 rule engine context compatibility audit
+SITE_HISTORY + valid semantic state + original source
+→ provenance-preserving registry candidate
+→ contract_ready=True
 ```
 
-## 2. STEP43 terminal boundary
+## 3. STEP45 current boundary
 
-STEP43 confirms that a valid STEP42 `SITE_HISTORY` payload is not compatible with the current spatial-oriented Rule Engine overlay provenance semantics. The current overlay assigns `RUNTIME_SPATIAL_CONDITION` as registry-level source, so historical context remains fail-closed before injection.
+STEP45 authorizes a concrete STEP44 registry candidate for a future historical overlay only when the exact STEP44 boundary, contract readiness, historical type, semantic state, historical registry source, original source preservation, and STEP44 diagnostics all align.
 
 ```text
-valid historical STEP42 payload
-AND current overlay uses spatial provenance marker
-→ historical_context_compatible=False
-→ BLOCKED_CURRENT_OVERLAY_SPATIAL_PROVENANCE_SEMANTICS
+valid STEP44 contract
+AND type=SITE_HISTORY
+AND state=TRUE/FALSE/UNKNOWN
+AND source=RUNTIME_HISTORICAL_SITE_EVENT
+AND original historical source preserved
+→ overlay_application_authorized=True
 ```
-
-Compatibility assessment is not builder modification, context injection, registry overlay, Rule Engine evaluation, or applicability change.
-
-## 3. STEP44 current boundary
-
-STEP44 defines a non-applied provenance-preserving registry contract for future `SITE_HISTORY` overlay behavior.
-
-Required representation:
-
-```text
-SITE_HISTORY
-state = TRUE / FALSE / UNKNOWN
-registry source = RUNTIME_HISTORICAL_SITE_EVENT
-original source retained as historical_source/runtime_source
-historical type preserved
-```
-
-This contract deliberately rejects `SITE_SPATIAL`, invalid candidate states, missing historical source, empty names, and malformed conditions. It produces a registry condition candidate only; it does not change the current `overlay_runtime_site_conditions()` implementation and does not apply the candidate to a SITE registry.
 
 Mandatory separation:
 
 ```text
-contract_ready != SITE registry overlay
-contract_ready != rule_evaluation_pipeline modified
-contract_ready != site_analysis_builder modified
-contract_ready != site_condition_context injected
-contract_ready != Rule Engine input consumed/evaluated
-contract_ready != rule applicability changed
+overlay_application_authorized != SITE registry overlay
+overlay_application_authorized != apply_site_registry called
+overlay_application_authorized != rule_evaluation_pipeline modified
+overlay_application_authorized != site_analysis_builder modified
+overlay_application_authorized != Rule Engine evaluation/applicability recalculation
 ```
 
-STEP44 local behavioral validation is required before terminal closure.
+STEP45 local behavioral validation is required before terminal closure.
 
 ## 4. Historical safety chain
 
@@ -98,6 +82,7 @@ STEP41 builder context injection authorization → authorized True/False
 STEP42 builder context injection payload → injection-ready only
 STEP43 Rule Engine historical context compatibility → current overlay BLOCKED
 STEP44 provenance-preserving overlay contract → registry candidate only
+STEP45 historical overlay application authorization → authorized only; not applied
 ```
 
 Preserve:
@@ -113,6 +98,7 @@ exhaustive disproof fact != SITE FALSE
 STEP42 payload ready != supplied/injected/consumed/applied
 STEP43 compatibility != injected/consumed/applied
 STEP44 contract ready != registry overlay/Rule Engine evaluation
+STEP45 authorized != registry overlay/apply_site_registry/evaluation
 UNKNOWN != FALSE
 positive/negative conflict → UNKNOWN
 standard code must not be guessed
@@ -145,12 +131,13 @@ STEP41 builder_injection_authorized=False / BLOCKED
 STEP42 injection_ready=False / BLOCKED
 STEP43 historical_context_compatible=False / BLOCKED
 STEP44 overlay_contract_ready=False / BLOCKED
+STEP45 overlay_application_authorized=False / BLOCKED
 production consumption=BLOCKED
 production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
 
-STEP31~44 boundary/readiness work supplies no new substantive evidence.
+STEP31~45 boundary/readiness work supplies no new substantive evidence.
 
 ### 개발밀도관리구역 / UQQ700
 
@@ -165,7 +152,7 @@ production_registration_allowed=False
 runtime_registration_allowed=False
 ```
 
-Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~44 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
+Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~45 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
 
 ## 6. Terminal boundaries
 
@@ -197,18 +184,19 @@ STEP40_HISTORICAL_SITE_EVENT_SITE_CONDITION_CONTEXT_MERGE_BOUNDARY_RECONCILED
 STEP41_HISTORICAL_SITE_EVENT_BUILDER_CONTEXT_INJECTION_AUTHORIZATION_BOUNDARY_RECONCILED
 STEP42_HISTORICAL_SITE_EVENT_BUILDER_CONTEXT_INJECTION_PAYLOAD_BOUNDARY_RECONCILED
 STEP43_HISTORICAL_SITE_EVENT_RULE_ENGINE_CONTEXT_COMPATIBILITY_BOUNDARY_RECONCILED
+STEP44_HISTORICAL_SITE_EVENT_PROVENANCE_PRESERVING_OVERLAY_CONTRACT_BOUNDARY_RECONCILED
 ```
 
 ## 7. Architecture state / next action
 
-Architecture Baseline remains v1.2. STEP44 defines a candidate representation only; current Rule Engine and builder behavior remain unchanged.
+Architecture Baseline remains v1.2. STEP45 is authorization only; current Rule Engine and builder behavior remain unchanged.
 
 ```text
 PHASE 8 Authority/Historical:
-ACTIVE / STEP43 COMPATIBILITY CLOSED / STEP44 OVERLAY CONTRACT VALIDATION PENDING
+ACTIVE / STEP44 OVERLAY CONTRACT CLOSED / STEP45 OVERLAY AUTHORIZATION VALIDATION PENDING
 ```
 
-Next action: user local compile/test validation of STEP44. If PASS, begin the next read-only gap audit first, then combine STEP44 closure with the next approved implementation scope. Do not modify current spatial overlay semantics or connect historical context to builder/Rule Engine/runtime/API without a separate approved boundary.
+Next action: user local compile/test validation of STEP45. If PASS, begin the next read-only gap audit first. Do not apply the authorized registry candidate or modify current spatial overlay/builder/runtime/API without a separate approved boundary.
 
 ## 8. Git / local rules
 
