@@ -45,6 +45,13 @@ def _candidate_valid(candidate: Any) -> bool:
         for name, resolved in candidate.items()
     )
 
+def _historical_provenance_preserved(candidate: Mapping[str, Any]) -> bool:
+    for resolved in candidate.values():
+        source = str(resolved.get("source", "")).strip()
+        if source.startswith("RUNTIME_HISTORICAL") and source != PROVENANCE:
+            return False
+    return True
+
 def authorize_historical_merged_registry_live_consumption(policy: HistoricalSpatialRegistryCollisionPolicy | None):
     present = isinstance(policy, HistoricalSpatialRegistryCollisionPolicy)
     boundary_matched = bool(present and policy.boundary == POLICY_BOUNDARY_NAME)
@@ -52,10 +59,7 @@ def authorize_historical_merged_registry_live_consumption(policy: HistoricalSpat
     no_conflicts = bool(present and not policy.conflicting_collision_names)
     candidate = copy.deepcopy(dict(policy.merged_registry_candidate)) if present else {}
     candidate_valid = _candidate_valid(candidate)
-    historical_preserved = candidate_valid and all(
-        resolved.get("source") != PROVENANCE or resolved.get("source") == PROVENANCE
-        for resolved in candidate.values()
-    )
+    historical_preserved = bool(candidate_valid and _historical_provenance_preserved(candidate))
     gates = (
         ("policy_present", present),
         ("policy_boundary_matched", boundary_matched),
