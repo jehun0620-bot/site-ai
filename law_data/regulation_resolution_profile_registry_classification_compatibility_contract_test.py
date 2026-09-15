@@ -4,7 +4,7 @@ from dataclasses import replace
 
 from .legal_condition_catalogue_seed import (
     LegalConditionCatalogueSeed,
-    LegalConditionSourceProvenance,
+    LegalEnumerationProvenance,
 )
 from .legal_condition_classification_profile_admission import (
     LegalConditionClassificationEvidence,
@@ -27,19 +27,17 @@ def _verified_seed(name: str = "개발밀도관리구역") -> LegalConditionCata
     return LegalConditionCatalogueSeed(
         condition_name=name,
         legal_basis="국토의 계획 및 이용에 관한 법률",
-        provenance=LegalConditionSourceProvenance(
-            source_family="STATUTE",
+        provenance=LegalEnumerationProvenance(
+            source_family="STATUTE_APPENDIX",
             source_uri="https://example.invalid/statute",
             law_id="TEST-LAW",
             law_version_id="TEST-VERSION",
             effective_date="2026-01-01",
             appendix_id="APPENDIX-1",
             row_id="ROW-1",
+            source_identity_verified=True,
+            row_binding_verified=True,
         ),
-        source_verified=True,
-        condition_identity_verified=True,
-        legal_basis_verified=True,
-        provenance_verified=True,
     )
 
 
