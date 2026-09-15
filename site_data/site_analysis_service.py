@@ -345,6 +345,9 @@ def analyze_site_object(
     production_condition_shadow_sources: Optional[
         Any
     ] = None,
+    historical_rule_input: Optional[
+        Any
+    ] = None,
 ) -> Dict[str, Any]:
 
     """
@@ -374,5 +377,9 @@ def analyze_site_object(
 
         production_condition_shadow_sources=(
             production_condition_shadow_sources
+        ),
+
+        historical_rule_input=(
+            historical_rule_input
         ),
     )

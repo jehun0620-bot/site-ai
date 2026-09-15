@@ -2,19 +2,20 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `ffee2c6cdc76f83ebcaa64548741433b77edd0b7`
+기준 개발 HEAD: `262d670379111fc6901752ca662fe897f1d6f88d`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 67
-Focus: HISTORICAL_PRODUCTION_RUNTIME_EXPOSURE_BOUNDARY
+STEP 68
+Focus: HISTORICAL_ORCHESTRATOR_API_EXPOSURE_AUTHORIZATION_BOUNDARY
 State: READ-ONLY AUDIT PENDING
 
 Previous terminal closures:
 - STEP64_HISTORICAL_MERGED_REGISTRY_LIVE_CONSUMPTION_AUTHORIZATION_BOUNDARY_RECONCILED
 - STEP65_HISTORICAL_MERGED_REGISTRY_RULE_ENGINE_INTEGRATION_BOUNDARY_RECONCILED
 - STEP66_HISTORICAL_RULE_ENGINE_PRODUCTION_HANDOFF_BOUNDARY_RECONCILED
+- STEP67_HISTORICAL_PRODUCTION_RUNTIME_EXPOSURE_BOUNDARY_RECONCILED
 
 STEP64 user local behavioral validation PASS:
 valid/zero-op authorization, conflict/readiness fail-closed, historical provenance guard and caller immutability PASS; Rule Engine/runtime/API mutation NONE.
@@ -71,7 +72,13 @@ STEP44 contract
 
 Historical and spatial channels remain explicitly separated.
 
-STEP65 changes only the Rule Engine consumption seam; builder production handoff/runtime/API wiring remain absent.
+STEP66 connects accepted historical builder input through the validated STEP62->63->64->65 chain to Rule Engine consumption.
+
+STEP67 adds only the optional service adapter historical input seam.
+
+Orchestrator/API historical exposure remains absent.
+
+Historical data remains excluded from the spatial runtime condition channel.
 
 ## 5. Real condition locks
 
@@ -89,11 +96,11 @@ Evidence/history/provenance/authority gates remain unverified.
 
 Negative evidence disabled.
 
-STEP31 semantic UNKNOWN and STEP32~65 real-condition path remains BLOCKED.
+STEP31 semantic UNKNOWN and STEP32~67 real-condition path remains BLOCKED.
 
 No new substantive evidence.
 
-Production handoff/wiring/runtime registration remain BLOCKED.
+Real-condition production/runtime registration remains BLOCKED.
 
 ### 개발밀도관리구역 / UQQ700
 
@@ -106,7 +113,7 @@ Negative evidence/legal absence/SITE FALSE/SITE promotion/production/runtime reg
 
 Positive gates remain unverified.
 
-STEP32~65 historical boundaries remain disconnected from UQQ700.
+STEP32~67 historical boundaries remain disconnected from UQQ700.
 
 ## 6. Terminal boundaries
 
@@ -117,7 +124,10 @@ Added:
 STEP64_HISTORICAL_MERGED_REGISTRY_LIVE_CONSUMPTION_AUTHORIZATION_BOUNDARY_RECONCILED
 
 STEP65_HISTORICAL_MERGED_REGISTRY_RULE_ENGINE_INTEGRATION_BOUNDARY_RECONCILED
-- STEP66_HISTORICAL_RULE_ENGINE_PRODUCTION_HANDOFF_BOUNDARY_RECONCILED
+
+STEP66_HISTORICAL_RULE_ENGINE_PRODUCTION_HANDOFF_BOUNDARY_RECONCILED
+
+STEP67_HISTORICAL_PRODUCTION_RUNTIME_EXPOSURE_BOUNDARY_RECONCILED
 
 ## 7. Architecture state / next action
 
@@ -125,21 +135,23 @@ Architecture Baseline remains v1.2.
 
 STEP65 permits explicitly authorized historical merged-registry consumption at the existing Rule Engine `apply_site_registry()` seam.
 
-It does not connect `site_analysis_builder.py` historical input to that authorization.
+STEP66 connects accepted `site_analysis_builder.py` historical input to that authorization through the validated historical safety chain.
+
+STEP67 exposes that builder handoff only at the `site_analysis_service.py` adapter seam.
 
 It does not modify the spatial overlay.
 
-It does not add service/orchestrator/runtime/API wiring.
+It does not add orchestrator/API historical exposure or spatial runtime registration.
 
 PHASE 8 Authority/Historical:
 
-ACTIVE / STEP65 RULE ENGINE INTEGRATION CLOSED / STEP66 PRODUCTION HANDOFF CLOSED / STEP67 READ-ONLY AUDIT PENDING
+ACTIVE / STEP65 RULE ENGINE INTEGRATION CLOSED / STEP66 PRODUCTION HANDOFF CLOSED / STEP67 SERVICE EXPOSURE CLOSED / STEP68 READ-ONLY AUDIT PENDING
 
 Next action:
 
-STEP66 read-only audit of the builder-to-Rule-Engine historical production handoff boundary.
+STEP68 read-only audit of whether any orchestrator/API historical exposure is authorized or necessary.
 
-No production handoff implementation before a new explicit write scope is approved.
+No orchestrator/API historical exposure implementation before a new explicit write scope is approved.
 
 ## 8. Git / local rules
 
