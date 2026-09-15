@@ -2,14 +2,28 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `efde9307d17209bd5cbcfc1b654c16b8254db0f7`
+기준 개발 HEAD: `cd1b42df20bca1de260015e97a4ca1fe3426eaf6`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 85
-Focus: PHASE_9_LEGAL_CONDITION_CATALOGUE_SEED_CONTRACT_AUDIT
+STEP 86
+Focus: PHASE_9_LEGAL_ENUMERATION_PROVENANCE_IDENTITY_AUDIT
 State: READ-ONLY AUDIT PENDING
+
+Previous terminal audit:
+STEP85_PHASE_9_LEGAL_CONDITION_CATALOGUE_SEED_CONTRACT_AUDIT_RECONCILED
+
+STEP85 conclusion:
+- LEGAL CATALOGUE SEED MUST PRECEDE REGULATION_RESOLUTION_PROFILE
+- CONDITION_NAME IS AN ENUMERATION IDENTITY FIELD
+- LEGAL_BASIS IS AN ENUMERATION EVIDENCE FIELD
+- ENUMERATION SOURCE / VERSION PROVENANCE MUST BE PRESERVED
+- AUTHORITY_SOURCE_SCOPE IS REUSABLE AS A SAFETY PATTERN, NOT AS THE CATALOGUE ROW
+- CONDITION_TYPE MUST NOT BE INFERRED FROM LEGAL ENUMERATION
+- RESOLUTION_TYPE MUST NOT BE INFERRED FROM LEGAL ENUMERATION
+- STANDARD_CODE MUST REMAIN ABSENT UNTIL SEPARATELY VERIFIED
+- PROFILE / PRODUCTION / RUNTIME ADMISSION IS NOT IMPLIED
 
 Previous terminal audit:
 STEP84_PHASE_9_OFFICIAL_UPSTREAM_ENUMERATION_CONTRACT_AUDIT_RECONCILED
@@ -347,7 +361,7 @@ PHASE 8 infrastructure closure does not convert unresolved historical conditions
 
 Next action:
 
-STEP85 read-only PHASE 9 Legal Condition Catalogue Seed Contract Audit. Determine the minimum fail-closed legal condition catalogue seed fields supported by authoritative enumeration evidence and verify that the seed remains distinct from RegulationResolutionProfile, standard-code verification, production registration, and runtime registration.
+STEP86 read-only PHASE 9 Legal Enumeration Provenance Identity Audit. Determine which authoritative source identifiers and temporal/version fields are required to reproduce a legal enumeration row across statute appendix, enforcement-decree appendix, and official-gazette admission paths before authorizing any legal catalogue seed implementation.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
