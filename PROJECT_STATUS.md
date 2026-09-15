@@ -2,13 +2,13 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `3a071f60c2b75463aff62ff3ef47f5ceecac6036`
+기준 개발 HEAD: `1e5d0dc3c4a2484f35d5fedf82db14a4a409a2f6`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 73
-Focus: HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_PRODUCTION_WIRING_BOUNDARY
+STEP 74
+Focus: HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_END_TO_END_REGRESSION_BOUNDARY
 State: READ-ONLY AUDIT PENDING
 
 Previous terminal closures:
@@ -21,6 +21,7 @@ Previous terminal closures:
 - STEP70_HISTORICAL_INTERNAL_SOURCE_AUTHORIZATION_BOUNDARY_RECONCILED
 - STEP71_HISTORICAL_TRUSTED_INTERNAL_SOURCE_AUTHORIZATION_CONTRACT_RECONCILED
 - STEP72_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_AUTHORIZATION_BOUNDARY_RECONCILED
+- STEP73_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_PRODUCTION_WIRING_BOUNDARY_RECONCILED
 
 STEP64 user local behavioral validation PASS:
 valid/zero-op authorization, conflict/readiness fail-closed, historical provenance guard and caller immutability PASS; Rule Engine/runtime/API mutation NONE.
@@ -107,7 +108,17 @@ The handoff requires exact STEP71 type/boundary/authorization, historical channe
 
 Forged raw mappings and invalid authorization/boundary/channel/provenance fail closed.
 
-Production orchestrator handoff wiring remains NOT YET AUTHORIZED.
+STEP73 activates the production orchestrator handoff only for an exact valid STEP72 typed authorization.
+
+The orchestrator no longer exposes the raw historical_rule_input argument.
+
+Valid STEP72 handoff rules are forwarded through the existing service historical_rule_input seam.
+
+Forged mappings, wrong boundaries and unauthorized STEP72 handoffs fail closed.
+
+Service, builder and Rule Engine wiring remain unchanged.
+
+Public API historical input exposure remains NOT AUTHORIZED.
 
 Historical data remains excluded from the spatial runtime condition channel.
 
@@ -127,7 +138,7 @@ Evidence/history/provenance/authority gates remain unverified.
 
 Negative evidence disabled.
 
-STEP31 semantic UNKNOWN and STEP32~72 real-condition path remains BLOCKED.
+STEP31 semantic UNKNOWN and STEP32~73 real-condition path remains BLOCKED.
 
 No new substantive evidence.
 
@@ -144,7 +155,7 @@ Negative evidence/legal absence/SITE FALSE/SITE promotion/production/runtime reg
 
 Positive gates remain unverified.
 
-STEP32~72 historical boundaries remain disconnected from UQQ700.
+STEP32~73 historical boundaries remain disconnected from UQQ700.
 
 ## 6. Terminal boundaries
 
@@ -170,6 +181,8 @@ STEP71_HISTORICAL_TRUSTED_INTERNAL_SOURCE_AUTHORIZATION_CONTRACT_RECONCILED
 
 STEP72_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_AUTHORIZATION_BOUNDARY_RECONCILED
 
+STEP73_HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_PRODUCTION_WIRING_BOUNDARY_RECONCILED
+
 ## 7. Architecture state / next action
 
 Architecture Baseline remains v1.2.
@@ -194,21 +207,27 @@ STEP71 adds only the trusted internal source authorization contract. It does not
 
 STEP72 adds only the trusted internal source handoff authorization boundary. It does not wire the handoff to the orchestrator, service, builder, Rule Engine, public API or spatial runtime.
 
+STEP73 wires the exact valid STEP72 handoff authorization at the production orchestrator boundary and forwards only its historical handoff rules through the existing service seam.
+
+Raw historical orchestrator injection is removed.
+
+Service, builder, Rule Engine, public API and spatial runtime are not modified by STEP73.
+
 PHASE 8 Authority/Historical:
 
-ACTIVE / STEP70 INTERNAL SOURCE AUTHORIZATION CLOSED / STEP71 TRUSTED SOURCE CONTRACT CLOSED / STEP72 HANDOFF AUTHORIZATION CLOSED / STEP73 READ-ONLY AUDIT PENDING
+ACTIVE / STEP71 TRUSTED SOURCE CONTRACT CLOSED / STEP72 HANDOFF AUTHORIZATION CLOSED / STEP73 PRODUCTION WIRING CLOSED / STEP74 READ-ONLY AUDIT PENDING
 
 Next action:
 
-STEP73 read-only audit of the minimum production wiring boundary required before a valid STEP72 handoff authorization may reach the existing internal orchestrator historical seam.
+STEP74 read-only audit of the end-to-end regression boundary from a valid STEP72 handoff through orchestrator, service, builder and existing historical Rule Engine consumption.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
-Raw internal historical producer injection remains NOT AUTHORIZED.
+Raw historical orchestrator injection remains NOT AUTHORIZED.
 
-Production orchestrator handoff wiring remains NOT YET AUTHORIZED.
+Only exact valid STEP72 typed handoff authorization is accepted at the production orchestrator boundary.
 
-No production historical source/producer wiring before a new explicit write scope is approved.
+No public API historical exposure or spatial runtime registration before a new explicit write scope is approved.
 
 ## 8. Git / local rules
 

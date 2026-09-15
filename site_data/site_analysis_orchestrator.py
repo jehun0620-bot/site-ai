@@ -57,6 +57,11 @@ from site_data.site_analysis_response import (
     build_site_analysis_response,
 )
 
+from law_data.historical_trusted_internal_source_handoff_authorization import (
+    BOUNDARY_NAME as HISTORICAL_HANDOFF_BOUNDARY_NAME,
+    HistoricalTrustedInternalSourceHandoffAuthorization,
+)
+
 
 # ============================================================
 # PATH / ENV
@@ -356,8 +361,8 @@ def analyze_site_by_parcel(
     production_condition_shadow_sources: Optional[
         Any
     ] = None,
-    historical_rule_input: Optional[
-        Any
+    historical_handoff_authorization: Optional[
+        HistoricalTrustedInternalSourceHandoffAuthorization
     ] = None,
     include_debug: bool = False,
     service_key: Optional[str] = None,
@@ -420,7 +425,43 @@ def analyze_site_by_parcel(
         )
 
     # ========================================================
-    # 3. Rule / Spatial Analysis
+    # 3. Historical trusted handoff gate
+    # ========================================================
+
+    historical_rule_input = None
+
+    if historical_handoff_authorization is not None:
+
+        if not isinstance(
+            historical_handoff_authorization,
+            HistoricalTrustedInternalSourceHandoffAuthorization,
+        ):
+            raise SiteAnalysisError(
+                "Invalid historical handoff authorization type"
+            )
+
+        if (
+            historical_handoff_authorization.boundary
+            != HISTORICAL_HANDOFF_BOUNDARY_NAME
+        ):
+            raise SiteAnalysisError(
+                "Invalid historical handoff authorization boundary"
+            )
+
+        if (
+            historical_handoff_authorization.handoff_authorized
+            is not True
+        ):
+            raise SiteAnalysisError(
+                "Historical handoff is not authorized"
+            )
+
+        historical_rule_input = (
+            historical_handoff_authorization.handoff_rules
+        )
+
+    # ========================================================
+    # 4. Rule / Spatial Analysis
     # ========================================================
 
     analysis = (
@@ -450,7 +491,7 @@ def analyze_site_by_parcel(
     )
 
     # ========================================================
-    # 4. Public response
+    # 5. Public response
     # ========================================================
 
     response = (
@@ -463,7 +504,7 @@ def analyze_site_by_parcel(
     )
 
     # ========================================================
-    # 5. service metadata
+    # 6. service metadata
     # ========================================================
 
     response[
