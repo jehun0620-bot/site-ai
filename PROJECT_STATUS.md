@@ -2,14 +2,23 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `1a6840ea897569f6f1cb0956925818c6633e68a3`
+기준 개발 HEAD: `2b6751c50e9f4b34939a7c1a60e125f0775f3e2d`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 77
-Focus: PHASE_9_RESOLUTION_EXECUTION_SOURCE_ADAPTER_BOUNDARY_AUDIT
+STEP 78
+Focus: PHASE_9_REGULATION_PROFILE_REGISTRATION_ELIGIBILITY_AUDIT
 State: READ-ONLY AUDIT PENDING
+
+Previous terminal audit:
+STEP77_PHASE_9_RESOLUTION_EXECUTION_SOURCE_ADAPTER_BOUNDARY_AUDIT_RECONCILED
+
+STEP77 conclusion:
+- NO GENERIC FULL EXECUTION CONTRACT REQUIRED
+- NO GENERIC SOURCE_ADAPTER CONTRACT PROVEN
+- RESOLUTION_TYPE_SPECIFIC_EXECUTION_BOUNDARY PRESERVED
+- COMMON PROFILE / POLICY BOUNDARY SUFFICIENT AT CURRENT EVIDENCE
 
 Previous terminal audit:
 STEP76_PHASE_9_NATIONWIDE_REGULATION_REGISTRY_ENTRY_AUDIT_RECONCILED
@@ -246,7 +255,7 @@ PHASE 8 infrastructure closure does not convert unresolved historical conditions
 
 Next action:
 
-STEP77 read-only PHASE 9 Resolution Execution / Source Adapter Boundary Audit. Compare the validated HYBRID_SPATIAL_NOTICE and HISTORICAL_SITE_EVENT resolver/verifier families to determine whether a genuinely reusable execution or source-adapter contract exists before approving any implementation.
+STEP78 read-only PHASE 9 Regulation Profile Registration Eligibility Audit. Determine the evidence and safety requirements a condition must satisfy before admission to the built-in regulation resolution profile registry, without treating profile registration as production or runtime activation.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
