@@ -2,90 +2,88 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `1a81928b398d91d1a9336ceecc2551efbc5b8ad0`
+기준 개발 HEAD: `3eb77bc2ff985109d4045a6ad3596527ed440b1f`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
 ```text
-STEP 37
-Focus: HISTORICAL_SITE_EVENT_RULE_ENGINE_CONSUMPTION_AUTHORIZATION_BOUNDARY
+STEP 38
+Focus: HISTORICAL_SITE_EVENT_RULE_ENGINE_CONSUMPTION_PACKAGE_BOUNDARY
 State: IMPLEMENTED / LOCAL VALIDATION PENDING
 
 Previous terminal closure:
-STEP36_HISTORICAL_SITE_EVENT_RULE_ENGINE_INPUT_ADAPTER_BOUNDARY_RECONCILED
+STEP37_HISTORICAL_SITE_EVENT_RULE_ENGINE_CONSUMPTION_AUTHORIZATION_BOUNDARY_RECONCILED
 ```
 
-STEP36 사용자 로컬 behavioral validation PASS:
+STEP37 사용자 로컬 behavioral validation PASS:
 
 ```text
-Planned semantic TRUE input preparation: PASS
-Planned semantic FALSE input preparation: PASS
-Unplanned / missing fail-closed: PASS
-Target / condition / semantic alignment guards: PASS
-Prepared != consumed: PASS
-SITE / Rule Engine mutation: NONE
-Production wiring / runtime registration: NONE
+Prepared semantic TRUE authorization: PASS
+Prepared semantic FALSE authorization: PASS
+Unprepared / UNKNOWN / malformed fail-closed: PASS
+Boundary / type / identity / alignment guards: PASS
+Authorized != consumed: PASS
+SITE registry / Rule Engine mutation: NONE
+Rule evaluation / production wiring / runtime registration: NONE
 Historical producer auto-run / public API exposure: NONE
 ```
 
-STEP36 implementation chain:
+STEP37 implementation commits:
 
 ```text
-eb1c15a5718cf8961b0e89e588d17f9d14db9c9c
-feat: add step 36 historical rule engine input adapter
+0c3ff2207db97b1afa0e6043670e4d960eac81a4
+feat: add step 37 rule engine consumption authorization
 
-d81b51f642409307116eebd091e0ec4045a0f75c
-test: add step 36 historical rule engine input adapter audit
-
-1a81928b398d91d1a9336ceecc2551efbc5b8ad0
-test: align step 36 fixtures with current assessment schemas
+6d0e2ba2d73bffe102d5fbfc6124f4d2ce462651
+test: add step 37 rule engine consumption authorization audit
 ```
 
-## 2. STEP36 terminal boundary
+## 2. STEP37 terminal boundary
 
-STEP36 prepares a minimal Rule Engine-facing condition view only after a concrete/aligned STEP35 consumption plan. It does not consume that input or connect it to Rule Engine evaluation.
+STEP37 authorizes future Rule Engine consumption only for a concrete STEP36 preparation whose boundary, historical SITE_HISTORY shape, identity, semantic TRUE/FALSE state, and upstream plan/alignment diagnostics are valid.
 
 ```text
-STEP35 consumption_planned=True
-AND target == RULE_ENGINE_SITE_CONDITION
-AND SITE_HISTORY/HISTORICAL_SITE_EVENT shadow
+STEP36 input_prepared=True
+AND STEP36 boundary matched
+AND non-empty SITE_HISTORY identity
 AND semantic state in {TRUE, FALSE}
-AND plan/shadow identity and state alignment
-→ input_prepared=True + minimal condition_view
+AND STEP36 plan/alignment gates preserved
+→ rule_engine_consumption_authorized=True
 
 otherwise
-→ input_prepared=False + empty condition_view
+→ rule_engine_consumption_authorized=False
 ```
 
 Mandatory separation:
-
-```text
-input_prepared != input_consumed
-input_prepared != Rule Engine application/mutation
-input_prepared != SITE mutation
-input_prepared != production wiring
-input_prepared != runtime registration/registry mutation
-input_prepared != historical producer execution
-input_prepared != public API exposure
-```
-
-## 3. STEP37 current boundary
-
-STEP37 read-only audit found that the existing Rule Engine runtime overlay is dispositive: once a condition is supplied through `site_condition_context`, valid TRUE/FALSE/UNKNOWN values can overlay the SITE registry and affect rule evaluation. STEP36 prepared input therefore must not be wired directly into that path without a separate consumption authorization boundary.
-
-STEP37 adds that authorization boundary. It verifies a concrete STEP36 preparation, STEP36 boundary identity, `input_prepared=True`, non-empty historical SITE_HISTORY condition identity, semantic TRUE/FALSE, and successful STEP36 plan/alignment gates. Only then may `rule_engine_consumption_authorized=True` be emitted.
 
 ```text
 rule_engine_consumption_authorized != rule_engine_input_consumed
 rule_engine_consumption_authorized != SITE registry overlay
 rule_engine_consumption_authorized != Rule Engine mutation/evaluation
 rule_engine_consumption_authorized != builder/service/orchestrator wiring
-rule_engine_consumption_authorized != runtime registration
+rule_engine_consumption_authorized != runtime registration/registry mutation
+rule_engine_consumption_authorized != historical producer execution
 rule_engine_consumption_authorized != public API exposure
 ```
 
-STEP37 does not call `evaluate_site_rules`, `overlay_runtime_site_conditions`, builder/service/orchestrator, runtime registry, historical producer, or public API. Local behavioral validation is required before STEP37 terminal closure.
+## 3. STEP38 current boundary
+
+STEP38 read-only audit confirmed that `evaluate_site_rules(..., site_condition_context=...)` immediately passes SITE condition context into the runtime overlay path, after which the resulting SITE registry repairs rule conditions and can change applicability. Therefore STEP37 authorization must not be directly injected into `site_condition_context` without a distinct pre-execution package boundary.
+
+STEP38 creates one fail-closed, non-executing Rule Engine consumption package from STEP37 authorization. It preserves target consumer, condition identity, historical SITE_HISTORY type, semantic TRUE/FALSE state, and STEP37 contract alignment. Only a valid package may report `consumption_ready=True`.
+
+```text
+consumption_ready != rule_engine_input_consumed
+consumption_ready != site_condition_context injection
+consumption_ready != SITE registry overlay
+consumption_ready != Rule Engine mutation/evaluation
+consumption_ready != builder/service/orchestrator wiring
+consumption_ready != runtime registration
+consumption_ready != public API exposure
+```
+
+STEP38 does not call `evaluate_site_rules`, `overlay_runtime_site_conditions`, builder/service/orchestrator, runtime registry, historical producer, or public API. Local behavioral validation is required before STEP38 terminal closure.
 
 ## 4. Historical safety chain
 
@@ -101,7 +99,8 @@ STEP33 application-ready production shadow → guarded TRUE/FALSE or UNKNOWN
 STEP34 production consumption authorization → authorized True/False
 STEP35 production consumption plan → planned True/False
 STEP36 Rule Engine input preparation → prepared True/False
-STEP37 Rule Engine consumption authorization → authorized only for guarded prepared TRUE/FALSE input; never consumed here
+STEP37 Rule Engine consumption authorization → authorized True/False
+STEP38 Rule Engine consumption package → ready only after guarded STEP37 authorization; never consumed here
 ```
 
 Preserve:
@@ -116,6 +115,7 @@ history completeness != provenance verification
 exhaustive disproof fact != SITE FALSE
 STEP36 prepared != consumed
 STEP37 authorized != consumed/applied
+STEP38 ready != consumed/applied
 UNKNOWN != FALSE
 positive/negative conflict → UNKNOWN
 standard code must not be guessed
@@ -140,13 +140,14 @@ STEP33 application-ready state=UNKNOWN / INELIGIBLE
 STEP34 production_consumption_authorized=False
 STEP35 consumption_planned=False
 STEP36 input_prepared=False / BLOCKED
-STEP37 Rule Engine consumption authorization=BLOCKED
+STEP37 rule_engine_consumption_authorized=False / BLOCKED
+STEP38 consumption_ready=False / BLOCKED
 production consumption=BLOCKED
 production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
 
-STEP26~37 boundary/readiness work supplies no new substantive evidence.
+STEP26~38 boundary/readiness work supplies no new substantive evidence.
 
 ### 개발밀도관리구역 / UQQ700
 
@@ -161,7 +162,7 @@ production_registration_allowed=False
 runtime_registration_allowed=False
 ```
 
-Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~37 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
+Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~38 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
 
 ## 6. Terminal boundaries
 
@@ -186,18 +187,19 @@ STEP33_HISTORICAL_SITE_EVENT_PRODUCTION_APPLICATION_BOUNDARY_RECONCILED
 STEP34_HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_AUTHORIZATION_BOUNDARY_RECONCILED
 STEP35_HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_PLAN_BOUNDARY_RECONCILED
 STEP36_HISTORICAL_SITE_EVENT_RULE_ENGINE_INPUT_ADAPTER_BOUNDARY_RECONCILED
+STEP37_HISTORICAL_SITE_EVENT_RULE_ENGINE_CONSUMPTION_AUTHORIZATION_BOUNDARY_RECONCILED
 ```
 
 ## 7. Architecture state / next action
 
-Architecture Baseline remains v1.2. STEP36 is non-consuming input preparation and STEP37 is non-consuming authorization, so `PROJECT_ARCHITECTURE.md` remains unchanged.
+Architecture Baseline remains v1.2. STEP37 is non-consuming authorization and STEP38 is a non-executing package boundary, so `PROJECT_ARCHITECTURE.md` remains unchanged.
 
 ```text
 PHASE 8 Authority/Historical:
-ACTIVE / STEP36 INPUT PREPARATION CLOSED / STEP37 CONSUMPTION AUTHORIZATION VALIDATION PENDING
+ACTIVE / STEP37 CONSUMPTION AUTHORIZATION CLOSED / STEP38 CONSUMPTION PACKAGE VALIDATION PENDING
 ```
 
-Next action: user local compile/test validation of STEP37. If PASS, begin the next read-only gap audit first, then combine STEP37 closure with the next approved implementation scope. No connection to builder/service/orchestrator/Rule Engine runtime overlay/runtime registry/API without a separate architecture/schema decision and explicit approval.
+Next action: user local compile/test validation of STEP38. If PASS, begin the next read-only gap audit first, then combine STEP38 closure with the next approved implementation scope. Do not inject STEP38 into `site_condition_context` or connect it to builder/service/orchestrator/Rule Engine/runtime registry/API without a separate architecture/schema decision and explicit approval.
 
 ## 8. Git / local rules
 
