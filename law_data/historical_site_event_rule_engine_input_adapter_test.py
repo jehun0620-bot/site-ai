@@ -10,7 +10,6 @@ from law_data.historical_site_event_production_consumption_plan import (
     plan_historical_site_event_production_consumption,
 )
 from law_data.historical_site_event_rule_engine_input_adapter import (
-    TARGET_CONSUMER,
     prepare_historical_site_event_rule_engine_input,
 )
 from law_data.historical_site_event_final_resolution import (
@@ -37,23 +36,25 @@ def _upstream(state: str):
     )
     final = HistoricalSiteEventFinalResolutionAssessment(
         boundary="HISTORICAL_SITE_EVENT_FINAL_RESOLUTION",
-        condition_name=profile.name,
-        resolution_type=profile.resolution_type,
-        condition_type=profile.condition_type,
-        candidate_present=True,
         profile_present=True,
-        profile_identity_matched=True,
-        candidate_state=f"{state}_CANDIDATE",
-        semantic_resolution=state,
+        profile_name=profile.name,
+        historical_resolution_type_matched=True,
+        historical_condition_type_matched=True,
+        candidate_assessment_present=True,
+        candidate_profile_aligned=True,
+        candidate_conflict_detected=False,
+        final_resolution_candidate=f"{state}_CANDIDATE",
         missing_gates=(),
+        resolution=state,
     )
     eligibility = HistoricalSiteEventProductionConsumptionEligibilityAssessment(
         boundary="HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_ELIGIBILITY",
         profile_present=True,
-        final_resolution_present=True,
-        profile_identity_matched=True,
+        profile_name=profile.name,
         historical_resolution_type_matched=True,
         historical_condition_type_matched=True,
+        final_resolution_assessment_present=True,
+        final_resolution_profile_aligned=True,
         semantic_resolution=state,
         semantic_resolution_consumable=True,
         site_promotion_allowed=True,
