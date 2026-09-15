@@ -2,66 +2,65 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `e385d03f43ae547842e4add929fbbe3b01ba5f7f`
+기준 개발 HEAD: `85e806b02c7123864fd35de8e2199bfcbda93561`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
 ```text
-STEP 48
-Focus: HISTORICAL_SITE_EVENT_SITE_REGISTRY_REPLACEMENT_POLICY_AUTHORIZATION_BOUNDARY
+STEP 49
+Focus: HISTORICAL_SITE_EVENT_SITE_REGISTRY_MUTATION_TRANSACTION_BOUNDARY
 State: IMPLEMENTED / LOCAL VALIDATION PENDING
 
 Previous terminal closure:
-STEP47_HISTORICAL_SITE_EVENT_SITE_REGISTRY_OVERLAY_PREVIEW_BOUNDARY_RECONCILED
+STEP48_HISTORICAL_SITE_EVENT_SITE_REGISTRY_REPLACEMENT_POLICY_AUTHORIZATION_BOUNDARY_RECONCILED
 ```
 
-STEP47 사용자 로컬 behavioral validation PASS:
+STEP48 사용자 로컬 behavioral validation PASS:
 
 ```text
-Historical TRUE overlay preview: PASS
-Historical FALSE overlay preview: PASS
-Historical UNKNOWN overlay preview: PASS
-Existing spatial registry preserved in deep-copy preview: PASS
-Condition-name collision replacement diagnostics: PASS
-Boundary / target / readiness / provenance guards: PASS
-Preview ready != SITE registry mutation: PASS
+Historical TRUE no-collision authorization: PASS
+Historical FALSE no-collision authorization: PASS
+Historical UNKNOWN no-collision authorization: PASS
+Condition-name collision fail-closed: PASS
+Boundary / readiness / provenance guards: PASS
+Replacement policy authorized != registry mutation: PASS
 apply_site_registry / refresh_rule / Rule Engine evaluation: NONE
 Builder / production wiring / runtime registration / API: NONE
 ```
 
-## 2. STEP47 terminal boundary
+## 2. STEP48 terminal boundary
 
-STEP47 creates a deep-copy registry overlay preview and exposes condition-name collision plus before/after representations. A collision is diagnostic only and does not authorize replacement of a real registry entry.
+STEP48 authorizes only collision-free STEP47 previews under policy `NO_CONDITION_NAME_COLLISION`. Collision remains blocked and no historical-over-spatial/baseline replacement precedence is inferred.
 
-## 3. STEP48 current boundary
+## 3. STEP49 current boundary
 
-STEP48 defines the minimal fail-closed replacement policy for a future historical SITE registry mutation. Only a valid STEP47 preview with no condition-name collision may be authorized.
+STEP49 binds a concrete STEP48 authorization to the future mutation target `RULE_ENGINE_SITE_REGISTRY_HISTORICAL_OVERLAY` and freezes the authorized preview registry plus exactly one historical registry condition into a non-executing transaction snapshot.
 
 ```text
-valid STEP47 preview
-AND preview_ready=True
-AND condition_name_collision=False
-AND SITE_HISTORY
+valid STEP48 authorization
+AND policy=NO_CONDITION_NAME_COLLISION
+AND replacement_policy_authorized=True
+AND no collision
+AND authorized preview registry present
+AND exactly one SITE_HISTORY / RUNTIME_HISTORICAL_SITE_EVENT condition
 AND state=TRUE/FALSE/UNKNOWN
-AND source=RUNTIME_HISTORICAL_SITE_EVENT
 AND original historical source preserved
-→ replacement_policy_authorized=True
+→ mutation_transaction_ready=True
 ```
-
-If `condition_name_collision=True`, authorization is blocked. STEP48 does not infer UNKNOWN/FALSE from collision and does not define historical-over-spatial or historical-over-baseline precedence.
 
 Mandatory separation:
 
 ```text
-replacement_policy_authorized != collision replacement authorized
-replacement_policy_authorized != original registry mutation
-replacement_policy_authorized != SITE registry overlay executed
-replacement_policy_authorized != apply_site_registry / refresh_rule called
-replacement_policy_authorized != Rule Engine evaluation/applicability recalculation
+mutation_transaction_ready != mutation executed
+mutation_transaction_ready != original registry mutation
+mutation_transaction_ready != SITE registry overlay executed
+mutation_transaction_ready != apply_site_registry / refresh_rule called
+mutation_transaction_ready != Rule Engine evaluation/applicability recalculation
+mutation_transaction_ready != builder/runtime/API wiring
 ```
 
-STEP48 local behavioral validation is required before terminal closure.
+STEP49 local behavioral validation is required before terminal closure.
 
 ## 4. Historical safety chain
 
@@ -84,6 +83,7 @@ STEP45 historical overlay application authorization → authorized only
 STEP46 historical overlay execution package → execution-ready only
 STEP47 SITE registry overlay preview → deep-copy preview only
 STEP48 replacement policy authorization → no-collision authorization only
+STEP49 SITE registry mutation transaction → transaction-ready only
 ```
 
 Preserve:
@@ -101,6 +101,7 @@ STEP45 authorized != registry overlay/apply_site_registry/evaluation
 STEP46 execution ready != registry overlay/apply_site_registry/evaluation
 STEP47 preview ready != original registry mutation/apply_site_registry/refresh_rule/evaluation
 STEP48 replacement policy authorized != registry mutation/evaluation
+STEP49 transaction ready != registry mutation/apply_site_registry/refresh_rule/evaluation
 collision != implicit replacement authorization
 UNKNOWN != FALSE
 positive/negative conflict → UNKNOWN
@@ -138,12 +139,13 @@ STEP45 overlay_application_authorized=False / BLOCKED
 STEP46 execution_ready=False / BLOCKED
 STEP47 preview_ready=False / BLOCKED
 STEP48 replacement_policy_authorized=False / BLOCKED
+STEP49 mutation_transaction_ready=False / BLOCKED
 production consumption=BLOCKED
 production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
 
-STEP31~48 boundary/readiness work supplies no new substantive evidence.
+STEP31~49 boundary/readiness work supplies no new substantive evidence.
 
 ### 개발밀도관리구역 / UQQ700
 
@@ -158,7 +160,7 @@ production_registration_allowed=False
 runtime_registration_allowed=False
 ```
 
-Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~48 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
+Positive gate remains OFFICIAL DESIGNATION IDENTITY VERIFIED + CURRENT VALIDITY VERIFIED + SITE SPATIAL INCLUSION VERIFIED. All remain unverified. STEP32~49 HISTORICAL_SITE_EVENT boundaries are not connected to UQQ700.
 
 ## 6. Terminal boundaries
 
@@ -194,18 +196,19 @@ STEP44_HISTORICAL_SITE_EVENT_PROVENANCE_PRESERVING_OVERLAY_CONTRACT_BOUNDARY_REC
 STEP45_HISTORICAL_SITE_EVENT_PROVENANCE_PRESERVING_OVERLAY_APPLICATION_AUTHORIZATION_BOUNDARY_RECONCILED
 STEP46_HISTORICAL_SITE_EVENT_OVERLAY_EXECUTION_PACKAGE_BOUNDARY_RECONCILED
 STEP47_HISTORICAL_SITE_EVENT_SITE_REGISTRY_OVERLAY_PREVIEW_BOUNDARY_RECONCILED
+STEP48_HISTORICAL_SITE_EVENT_SITE_REGISTRY_REPLACEMENT_POLICY_AUTHORIZATION_BOUNDARY_RECONCILED
 ```
 
 ## 7. Architecture state / next action
 
-Architecture Baseline remains v1.2. STEP48 is policy authorization only; current Rule Engine and builder behavior remain unchanged.
+Architecture Baseline remains v1.2. STEP49 is a transaction snapshot only; current Rule Engine and builder behavior remain unchanged.
 
 ```text
 PHASE 8 Authority/Historical:
-ACTIVE / STEP47 OVERLAY PREVIEW CLOSED / STEP48 REPLACEMENT POLICY VALIDATION PENDING
+ACTIVE / STEP48 REPLACEMENT POLICY CLOSED / STEP49 MUTATION TRANSACTION VALIDATION PENDING
 ```
 
-Next action: user local compile/test validation of STEP48. If PASS, begin the next read-only gap audit first. Do not mutate the real SITE registry or define collision precedence without a separate approved boundary.
+Next action: user local compile/test validation of STEP49. If PASS, begin the next read-only gap audit first. Do not execute registry mutation or modify current spatial overlay/builder/runtime/API without a separate approved boundary.
 
 ## 8. Git / local rules
 
