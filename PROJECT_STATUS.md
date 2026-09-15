@@ -2,14 +2,29 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `6ec1356310e6f1a71a4f1b94975a37e4324c2106`
+기준 개발 HEAD: `5554aad6144b4e7faa7c7b23b3a9d402689c4fb1`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 87
-Focus: PHASE_9_LEGAL_CATALOGUE_SEED_IMPLEMENTATION_AUTHORIZATION_AUDIT
-State: READ-ONLY AUDIT PENDING
+STEP 88
+Focus: PHASE_9_MINIMAL_LEGAL_CATALOGUE_SEED_CONTRACT_IMPLEMENTATION
+State: WRITE SCOPE APPROVAL PENDING
+
+Previous terminal audit:
+STEP87_PHASE_9_LEGAL_CATALOGUE_SEED_IMPLEMENTATION_AUTHORIZATION_AUDIT_RECONCILED
+
+STEP87 conclusion:
+- MINIMAL PRE_PROFILE LEGAL CATALOGUE SEED IMPLEMENTATION IS JUSTIFIED
+- SEED RESPONSIBILITY IS LEGAL ENUMERATION IDENTITY + LEGAL BASIS + REPRODUCIBLE PROVENANCE ONLY
+- SOURCE_FAMILY_SPECIFIC PROVENANCE IS REQUIRED
+- FAIL_CLOSED EXPLICIT VERIFICATION IS REQUIRED
+- CROSS_SOURCE / CROSS_VERSION IDENTITY SYNTHESIS MUST BE FORBIDDEN
+- STANDARD_CODE IS OUTSIDE THE SEED CONTRACT
+- CONDITION_TYPE AND RESOLUTION_TYPE ARE OUTSIDE THE SEED CONTRACT
+- PROFILE ADMISSION IS NOT AUTHORIZED
+- ACQUISITION AND BULK POPULATION ARE NOT AUTHORIZED
+- SITE / PRODUCTION / RUNTIME EFFECTS ARE NOT AUTHORIZED
 
 Previous terminal audit:
 STEP86_PHASE_9_LEGAL_ENUMERATION_PROVENANCE_IDENTITY_AUDIT_RECONCILED
@@ -375,7 +390,7 @@ PHASE 8 infrastructure closure does not convert unresolved historical conditions
 
 Next action:
 
-STEP87 read-only PHASE 9 Legal Catalogue Seed Implementation Authorization Audit. Determine whether STEP84-86 evidence is sufficient to authorize the first immutable fail-closed pre-profile legal catalogue seed/provenance production contract without authorizing acquisition, bulk catalogue population, profile admission, standard-code inference, SITE mutation, production resolution, or runtime registration.
+STEP88 write-scope approval for the minimal immutable fail-closed pre-profile LegalConditionCatalogueSeed and source-family-specific provenance contract, with focused contract tests only. No acquisition, bulk population, profile admission, standard-code inference, SITE mutation, production resolution, runtime registration, public API exposure, or Rule Engine wiring is authorized by STEP87.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
