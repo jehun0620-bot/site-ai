@@ -2,23 +2,24 @@
 
 최종 업데이트: 2026-09-14
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `a29c69cc6c157064ad4fc06287cd1e0a85ee0349`
+기준 개발 HEAD: `595fa3b32a047f7620755483e0838a20329d4c95`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
 ```text
-STEP 31
-Focus: HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_BOUNDARY
+STEP 32
+Focus: HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_ELIGIBILITY_BOUNDARY
 State: TERMINALLY CLOSED
-Terminal classification: STEP31_HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_BOUNDARY_TERMINALLY_RECONCILED
+Terminal classification: STEP32_HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_ELIGIBILITY_BOUNDARY_TERMINALLY_RECONCILED
 ```
 
-사용자 로컬 검증에서 STEP31과 STEP30/29/28/27/26 backward regression이 모두 PASS했다.
+사용자 로컬 검증에서 STEP32와 STEP31/30/29/28/27/26 backward regression이 모두 PASS했다.
 
 Validated classifications:
 
 ```text
+STEP32_HISTORICAL_SITE_EVENT_PRODUCTION_CONSUMPTION_ELIGIBILITY_BOUNDARY_TERMINALLY_RECONCILED
 STEP31_HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_BOUNDARY_TERMINALLY_RECONCILED
 STEP30_HISTORICAL_SITE_EVENT_FINAL_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECONCILED
 STEP29_HISTORICAL_SITE_EVENT_NEGATIVE_RESOLUTION_CANDIDATE_BOUNDARY_TERMINALLY_RECONCILED
@@ -209,6 +210,10 @@ STEP28 negative evidence eligible=False
 STEP29 resolution candidate=UNKNOWN
 STEP30 final resolution candidate=UNKNOWN
 STEP31 semantic resolution=UNKNOWN
+site_promotion_allowed=False
+production_registration_allowed=False
+runtime_registration_allowed=False
+STEP32 production_consumption_eligible=False
 production wiring=BLOCKED
 runtime registration=BLOCKED
 ```
@@ -271,20 +276,22 @@ PHASE 4 Legal ingestion         IN PROGRESS
 PHASE 5 Rule Engine             CORE STABLE / IN PROGRESS
 PHASE 6 Runtime spatial         CORE STABLE
 PHASE 7 Regulation Resolution   ACTIVE
-PHASE 8 Authority/Historical    ACTIVE / HISTORICAL SEMANTIC RESOLUTION BOUNDARY CLOSED
+PHASE 8 Authority/Historical    ACTIVE / HISTORICAL PRODUCTION-CONSUMPTION ELIGIBILITY BOUNDARY CLOSED
 PHASE 9+ Nationwide/AI/Product  FUTURE
 ```
 
 Architecture Baseline remains v1.2. STEP31 implements the Layer 3 semantic TRUE/FALSE/UNKNOWN resolution boundary for HISTORICAL_SITE_EVENT without changing SITE state or downstream registration, so no baseline version change is required.
 
-## 12. Next allowed work after STEP 31 closure
+STEP32 adds only a read-only production-consumption eligibility boundary. production_consumption_eligible does not mutate SITE or Rule Engine state, apply production wiring, mutate the runtime registry, or expose a public API. Semantic UNKNOWN and missing/mismatched assessments remain ineligible.
+
+## 12. Next allowed work after STEP 32 closure
 
 ```text
-1. Keep STEP18~31 terminal boundaries closed unless new architecture decisions or independently verified evidence justify reopening.
+1. Keep STEP18~32 terminal boundaries closed unless new architecture decisions or independently verified evidence justify reopening.
 2. Keep UQQ700 and 도시지역편입해제구역 UNKNOWN and blocked from production/runtime registration.
 3. Start the next step only after a read-only gap audit against current branch HEAD and Architecture Baseline v1.2.
 4. Do not create new registries without a separate architecture/data decision.
-5. Do not connect STEP31 semantic resolution, STEP30 candidates, exhaustive-disproof facts, or negative-evidence eligibility to SITE state, Rule Engine, runtime, builder/service/orchestrator, or public API without a separate architecture/schema decision.
+5. Do not connect STEP32 production_consumption_eligible, STEP31 semantic resolution, STEP30 candidates, exhaustive-disproof facts, or negative-evidence eligibility to SITE state, Rule Engine, runtime, builder/service/orchestrator, or public API without a separate architecture/schema decision.
 6. Do not auto-run blocked historical producers.
 7. Contract/composition/eligibility/candidate/semantic-resolution readiness must not substitute for independently verified evidence.
 8. Do not introduce historical FALSE from missing evidence, search no-hit, candidate zero, or search exhaustion.
