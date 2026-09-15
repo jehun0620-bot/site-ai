@@ -2,13 +2,13 @@
 
 최종 업데이트: 2026-09-15
 기준 branch: `checkpoint/c12-fastapi-20260821`
-기준 개발 HEAD: `262d670379111fc6901752ca662fe897f1d6f88d`
+기준 개발 HEAD: `e7756c2148301097258b971bb8f0b9d7cb17c61b`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP 71
-Focus: HISTORICAL_TRUSTED_INTERNAL_SOURCE_AUTHORIZATION_CONTRACT
+STEP 72
+Focus: HISTORICAL_TRUSTED_INTERNAL_SOURCE_HANDOFF_AUTHORIZATION_BOUNDARY
 State: READ-ONLY AUDIT PENDING
 
 Previous terminal closures:
@@ -19,6 +19,7 @@ Previous terminal closures:
 - STEP68_HISTORICAL_ORCHESTRATOR_API_EXPOSURE_AUTHORIZATION_BOUNDARY_RECONCILED
 - STEP69_HISTORICAL_PUBLIC_API_EXPOSURE_AUTHORIZATION_BOUNDARY_RECONCILED
 - STEP70_HISTORICAL_INTERNAL_SOURCE_AUTHORIZATION_BOUNDARY_RECONCILED
+- STEP71_HISTORICAL_TRUSTED_INTERNAL_SOURCE_AUTHORIZATION_CONTRACT_RECONCILED
 
 STEP64 user local behavioral validation PASS:
 valid/zero-op authorization, conflict/readiness fail-closed, historical provenance guard and caller immutability PASS; Rule Engine/runtime/API mutation NONE.
@@ -91,6 +92,14 @@ STEP70 confirms the current orchestrator/service historical seams are generic tr
 
 Raw internal historical producer authorization is NOT YET AUTHORIZED.
 
+STEP71 establishes a non-wired trusted internal source authorization contract over the exact STEP57 typed payload.
+
+The contract requires exact payload type/boundary/readiness, production-integration authorization, historical non-spatial channel, historical provenance, repair alignment and provenance preservation.
+
+Forged raw mappings and invalid boundary/channel/provenance/readiness fail closed.
+
+Production historical source handoff/wiring remains NOT YET AUTHORIZED.
+
 Historical data remains excluded from the spatial runtime condition channel.
 
 ## 5. Real condition locks
@@ -109,7 +118,7 @@ Evidence/history/provenance/authority gates remain unverified.
 
 Negative evidence disabled.
 
-STEP31 semantic UNKNOWN and STEP32~70 real-condition path remains BLOCKED.
+STEP31 semantic UNKNOWN and STEP32~71 real-condition path remains BLOCKED.
 
 No new substantive evidence.
 
@@ -126,7 +135,7 @@ Negative evidence/legal absence/SITE FALSE/SITE promotion/production/runtime reg
 
 Positive gates remain unverified.
 
-STEP32~70 historical boundaries remain disconnected from UQQ700.
+STEP32~71 historical boundaries remain disconnected from UQQ700.
 
 ## 6. Terminal boundaries
 
@@ -148,6 +157,8 @@ STEP69_HISTORICAL_PUBLIC_API_EXPOSURE_AUTHORIZATION_BOUNDARY_RECONCILED
 
 STEP70_HISTORICAL_INTERNAL_SOURCE_AUTHORIZATION_BOUNDARY_RECONCILED
 
+STEP71_HISTORICAL_TRUSTED_INTERNAL_SOURCE_AUTHORIZATION_CONTRACT_RECONCILED
+
 ## 7. Architecture state / next action
 
 Architecture Baseline remains v1.2.
@@ -168,17 +179,21 @@ STEP69 keeps the historical seam internal-only and does not authorize raw histor
 
 STEP70 confirms that internal seam availability alone does not establish source trust and does not authorize a production historical producer.
 
+STEP71 adds only the trusted internal source authorization contract. It does not wire that authorization to the orchestrator, service, builder, Rule Engine, public API or spatial runtime.
+
 PHASE 8 Authority/Historical:
 
-ACTIVE / STEP68 ORCHESTRATOR EXPOSURE CLOSED / STEP69 PUBLIC API NON-EXPOSURE CLOSED / STEP70 INTERNAL SOURCE AUTHORIZATION CLOSED / STEP71 READ-ONLY AUDIT PENDING
+ACTIVE / STEP69 PUBLIC API NON-EXPOSURE CLOSED / STEP70 INTERNAL SOURCE AUTHORIZATION CLOSED / STEP71 TRUSTED SOURCE CONTRACT CLOSED / STEP72 READ-ONLY AUDIT PENDING
 
 Next action:
 
-STEP71 read-only audit of the minimum trusted internal source authorization contract required before any historical producer can supply the orchestrator seam.
+STEP72 read-only audit of the minimum authorization boundary required before a STEP71 trusted historical source authorization may be handed to the existing internal orchestrator seam.
 
 Public API historical input exposure remains NOT AUTHORIZED.
 
-Raw internal historical producer authorization remains NOT YET AUTHORIZED.
+Raw internal historical producer injection remains NOT AUTHORIZED.
+
+Production historical source handoff/wiring remains NOT YET AUTHORIZED.
 
 No production historical source/producer wiring before a new explicit write scope is approved.
 
