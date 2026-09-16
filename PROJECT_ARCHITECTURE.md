@@ -5,30 +5,18 @@
 
 이 문서는 `PROJECT_STATUS.md`와 역할이 다르다.
 
-- `PROJECT_STATUS.md`
-  - 현재 어디까지 개발되었는지 기록한다.
-  - 최근 테스트 결과, 체크포인트, 다음 작업을 기록한다.
-  - 단기 실행 상태 문서다.
-
-- `PROJECT_ARCHITECTURE.md`
-  - 프로젝트가 시작부터 최종 완성까지 어떤 구조로 발전해야 하는지 정의한다.
-  - 시스템의 레이어, 책임, 데이터 흐름, 판정 원칙, 완료 기준을 정의한다.
-  - 장기 설계 기준선이다.
-  - 실제 개발 결과에 따라 버전업하며 수정한다.
-
-이 문서는 현재 구현을 절대적인 최종안으로 고정하지 않는다.
-새로운 공식 데이터, 법적 구조, 제품 요구사항, 성능 요구사항이 확인되면
-아키텍처를 수정하되, 변경 이유를 명시하고 기존 안전 원칙을 훼손하지 않는다.
+- `PROJECT_STATUS.md`: 현재 개발/검증 상태와 다음 작업을 기록한다.
+- `PROJECT_ARCHITECTURE.md`: 장기 layer, 책임, 데이터 흐름, 판정 원칙과 완료 기준을 정의한다.
 
 최초 작성 기준일: 2026-08-26
+최종 reconciliation: 2026-09-16
 Architecture Baseline: v1.2
 
 
 1. 프로젝트 최종 목표
 ======================================================================
 
-사용자가 주소 또는 필지를 입력하면 시스템이 해당 SITE에 대해
-공식 데이터와 법적 근거를 추적하여 다음을 자동 생성한다.
+사용자가 주소 또는 필지를 입력하면 시스템이 해당 SITE에 대해 공식 데이터와 법적 근거를 추적하여 다음을 자동 생성한다.
 
 1. 정확한 필지 identity
 2. 토지/건축물 현황
@@ -42,39 +30,25 @@ Architecture Baseline: v1.2
 10. AI가 설명한 최종 대지분석 보고서
 11. 모든 결과의 citation / reverse verification
 
-최종 제품의 핵심 질문은 다음과 같다.
+핵심 질문:
 
-> 이 필지에는 정확히 어떤 규제가 적용되고,
-> 그 사실은 어느 공식 데이터·공간정보·지정고시·법령에서 확정되며,
-> 따라서 무엇을 얼마나 지을 수 있는가?
+> 이 필지에는 정확히 어떤 규제가 적용되고, 그 사실은 어느 공식 데이터·공간정보·지정고시·법령에서 확정되며, 따라서 무엇을 얼마나 지을 수 있는가?
 
 
 2. 최상위 설계 철학
 ======================================================================
 
-시스템은 다음 순서를 지킨다.
-
 ```text
 OFFICIAL FACT
-    ↓
-SITE FACT
-    ↓
-REGULATION RESOLUTION
-    ↓
-LEGAL RULE
-    ↓
-DETERMINISTIC ENGINE
-    ↓
-AI ANALYSIS
-    ↓
-VERIFICATION
+→ SITE FACT
+→ REGULATION RESOLUTION
+→ LEGAL RULE
+→ DETERMINISTIC ENGINE
+→ AI ANALYSIS
+→ VERIFICATION
 ```
 
-AI가 공식 사실을 추측하거나 규제 존재 여부를 임의 생성하지 않는다.
-AI는 확정된 데이터와 법적 근거 위에서 설명·쟁점 탐지·추론을 수행한다.
-
 핵심 원칙:
-
 - 검색 결과 ≠ 법적 사실
 - 문서 발견 ≠ 규제 TRUE
 - endpoint 발견 ≠ 문서 검증
@@ -84,202 +58,90 @@ AI는 확정된 데이터와 법적 근거 위에서 설명·쟁점 탐지·추�
 - source 미발견 ≠ FALSE
 - 조건 미충족 상태에서 수치 확정 금지
 - LLM 합의 ≠ source verification
+- resolver result ≠ parcel applicability
+- SITE-decision eligibility ≠ SITE truth
+- admission ≠ production/runtime registration authority
 
 
 3. 전체 시스템 아키텍처
 ======================================================================
 
 ```text
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 0 — USER / PROJECT INPUT                              │
-│ 주소, PNU, 프로젝트 용도, 규모, 사업조건                    │
-└────────────────────────────┬────────────────────────────────┘
-                             ↓
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 1 — PARCEL IDENTITY & OFFICIAL LAND DATA              │
-│ 주소 정규화 / 법정동 / PNU / 지번 / 토지 / 건축물대장       │
-└────────────────────────────┬────────────────────────────────┘
-                             ↓
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 2 — SITE FACT MODEL                                   │
-│ Parcel Geometry / Zoning / Building / Runtime Conditions    │
-└────────────────────────────┬────────────────────────────────┘
-                             ↓
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 3 — REGULATION RESOLUTION                             │
-│ 표준코드 / source policy / authority / notice / spatial     │
-│ TRUE / FALSE / UNKNOWN                                      │
-└────────────────────────────┬────────────────────────────────┘
-                             ↓
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 4 — LEGAL KNOWLEDGE                                   │
-│ 법률 → 시행령 → 시행규칙 → 조례 → 고시 → 별표 → 지침        │
-│ version history / delegation chain                          │
-└────────────────────────────┬────────────────────────────────┘
-                             ↓
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 5 — RULE NORMALIZATION                                │
-│ 조문 → predicate / condition / effect / numeric / source    │
-└────────────────────────────┬────────────────────────────────┘
-                             ↓
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 6 — DETERMINISTIC EVALUATION                          │
-│ applicability / BCR / FAR / height / parking / setback      │
-│ incentive / relaxation / ceiling / stacking                 │
-└────────────────────────────┬────────────────────────────────┘
-                             ↓
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 7 — RETRIEVAL & LEGAL CONTEXT                         │
-│ Rule / BM25 / Vector / Parent-Child / Delegation / Reranker │
-└────────────────────────────┬────────────────────────────────┘
-                             ↓
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 8 — AI ANALYSIS                                       │
-│ 쟁점 발견 / 설명 / 대안 / 충돌 탐지 / 보고서                │
-└────────────────────────────┬────────────────────────────────┘
-                             ↓
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 9 — VERIFICATION & PROVENANCE                         │
-│ citation reverse check / contradiction / confidence         │
-└────────────────────────────┬────────────────────────────────┘
-                             ↓
-┌─────────────────────────────────────────────────────────────┐
-│ LAYER 10 — PRODUCT / API / REPORT                            │
-│ FastAPI / Web UI / GIS Map / PDF Report / Batch Analysis    │
-└─────────────────────────────────────────────────────────────┘
+LAYER 0  USER / PROJECT INPUT
+    ↓
+LAYER 1  PARCEL IDENTITY & OFFICIAL LAND DATA
+    ↓
+LAYER 2  SITE FACT MODEL
+    ↓
+LAYER 3  REGULATION RESOLUTION
+    ↓
+LAYER 4  LEGAL KNOWLEDGE
+    ↓
+LAYER 5  RULE NORMALIZATION
+    ↓
+LAYER 6  DETERMINISTIC EVALUATION
+    ↓
+LAYER 7  RETRIEVAL & LEGAL CONTEXT
+    ↓
+LAYER 8  AI ANALYSIS
+    ↓
+LAYER 9  VERIFICATION & PROVENANCE
+    ↓
+LAYER 10 PRODUCT / API / REPORT
 ```
 
 
-4. LAYER 0 — USER / PROJECT INPUT
+4. SITE / PROJECT INPUT BOUNDARY
 ======================================================================
-
-목표:
-
-SITE 자체의 사실과 사용자가 계획하는 PROJECT 조건을 분리한다.
-
-SITE INPUT 예:
-
-- 주소
-- PNU
-- 지번
-
-PROJECT INPUT 예:
-
-- 건축물 용도
-- 층수
-- 연면적
-- 세대수
-- 공개공지 제공 여부
-- 재해예방시설 설치 여부
-- 인센티브 선택
-
-원칙:
 
 ```text
 SITE CONDITION != PROJECT CONDITION
 ```
 
-SITE에 존재하지 않는 프로젝트 조건을 자동으로 TRUE 처리하지 않는다.
-
-완료 기준:
-
-- SITE 입력 schema 확정
-- PROJECT 입력 schema 확정
-- optional / required 조건 분리
-- API validation 적용
+SITE identity는 주소/PNU/지번 등 현재 필지 사실을 나타낸다. PROJECT input은 용도, 규모, 층수, 세대수, 인센티브 선택 등 사용자의 계획조건이다. SITE에 존재하지 않는 PROJECT 조건을 자동 TRUE 처리하지 않는다.
 
 
-5. LAYER 1 — PARCEL IDENTITY & OFFICIAL LAND DATA
+5. PARCEL IDENTITY & OFFICIAL LAND DATA
 ======================================================================
 
-목표:
-
-모든 후속 판정이 동일한 실제 필지를 바라보도록 parcel identity를 확정한다.
-
-주요 데이터:
-
-- 주소
-- 법정동코드
-- 시군구코드
-- 본번/부번
-- PNU
-- 건축물대장
-- 토지특성
-- 용도지역/지구/구역
-
-핵심 흐름:
+모든 후속 판정이 동일한 실제 필지를 바라보도록 canonical parcel identity를 확정한다.
 
 ```text
 주소
 → 법정동 identity
 → PNU
-→ official land API
-→ building API
+→ official land/building data
 → SITE identity
 ```
 
 필수 불변조건:
+- 다른 PNU의 snapshot/geometry/evidence 재사용 금지
+- upstream API 오류와 규제 FALSE 분리
+- raw API data와 normalized SITE data 분리
+- API key source code 저장 금지
 
-- 다른 PNU의 snapshot 재사용 금지
-- API key는 source code에 저장 금지
-- upstream API 오류와 규제 FALSE를 구분
-- raw API data와 normalized SITE data를 분리
-
-현재 구현 기반:
-
-- Building HUB API
-- VWorld 기반 토지/공간정보
-- Site / Building model
-- FastAPI service orchestration
+현재 기반은 Building HUB, VWorld, Site/Building model, FastAPI service orchestration이다.
 
 
-6. LAYER 2 — SITE FACT MODEL
+6. SITE FACT / RUNTIME SPATIAL MODEL
 ======================================================================
 
-목표:
-
-공식 source에서 수집된 정보를 downstream rule engine이 사용할 수 있는
-일관된 SITE FACT로 변환한다.
-
-SITE FACT 예:
-
-```json
-{
-  "pnu": "...",
-  "parcel_geometry": "...",
-  "zone": "...",
-  "building_count": 0,
-  "runtime_conditions": {
-    "지구단위계획": {
-      "state": "TRUE",
-      "confidence": "HIGH",
-      "source": "RUNTIME_SPATIAL_CONDITION"
-    }
-  }
-}
-```
+공식 source를 downstream Rule Engine이 사용할 수 있는 일관된 SITE FACT로 변환한다.
 
 Runtime Spatial Condition 원칙:
-
 - POINT 단독 TRUE 확정 금지
 - Parcel Polygon / MultiPolygon 확보
 - target PNU 직접 검증
-- CRS 명시
-- parcel geometry와 regulation geometry `intersects()` 검증
-- spatial dataset 미응답과 FALSE 구분
+- CRS 확인
+- parcel geometry와 regulation geometry intersection 검증
+- spatial query 실패와 FALSE 분리
+- EPSG:4326 degree²를 법적 면적으로 사용 금지
 
-공통 evaluator registry를 사용하며 condition별 builder 하드코딩은 최소화한다.
+Historical provenance는 이 spatial runtime channel과 별도로 유지한다.
 
 
-7. LAYER 3 — REGULATION RESOLUTION
+7. REGULATION RESOLUTION
 ======================================================================
-
-이 프로젝트의 핵심 차별화 계층이다.
-
-목표:
-
-각 규제 표준코드에 대해 해당 SITE가 실제로 규제를 받는지
-공식 evidence를 조합하여 TRUE / FALSE / UNKNOWN으로 확정한다.
 
 표준 결과:
 
@@ -289,9 +151,9 @@ FALSE
 UNKNOWN
 ```
 
-UNKNOWN은 오류가 아니라 정식 상태다.
+UNKNOWN은 정식 상태다.
 
-현재 resolution type:
+현재 resolution family/type에는 다음이 포함된다.
 
 ```text
 SPATIAL_DATA_CONFIRMED
@@ -302,958 +164,17 @@ HISTORICAL_SITE_EVENT
 EXTERNAL_AUTHORITY_REQUIRED
 ```
 
-추후 필요하면 resolution type을 추가할 수 있다.
-
 예:
+- UQQ700 개발밀도관리구역 → `HYBRID_SPATIAL_NOTICE`
+- historical SITE condition → `HISTORICAL_SITE_EVENT`
 
-```text
-UQQ700 개발밀도관리구역
-→ HYBRID_SPATIAL_NOTICE
+Profile metadata는 resolver execution, SITE state, production registration, runtime registration, Rule Engine input과 동일하지 않다.
 
-도시지역편입해제구역과 같은 SITE_HISTORY 조건
-→ HISTORICAL_SITE_EVENT 후보
-```
 
-`HISTORICAL_SITE_EVENT`는 과거 법적 사건의 존재 여부를 단순 검색 결과로 판단하지 않는다.
-공통 contract는 다음 책임을 분리한다.
-
-```text
-VERIFIED EVENT IDENTITY
-+
-HISTORICAL SITE APPLICABILITY
-+
-TEMPORAL RELATION
-+
-HISTORY COMPLETENESS
-→ TRUE_CANDIDATE / FALSE / UNKNOWN
-```
-
-FALSE는 search no-hit 또는 일부 공식 DB의 candidate 0건만으로 허용하지 않는다.
-공식 history source, 범위 completeness, 필요한 원문 해결, candidate universe 전수 열거 및
-non-target 분류가 모두 positive evidence로 검증된 exhaustive disproof에서만 허용한다.
-미확정 historical source가 남아 있으면 UNKNOWN을 유지한다.
-
-규제별 policy는 최소 다음을 정의한다.
-
-- standard_code
-- regulation name
-- resolution type
-- official source requirement
-- designation notice requirement
-- historical notice requirement
-- spatial confirmation requirement
-- negative evidence policy
-- TRUE requirements
-- FALSE requirements
-- UNKNOWN conditions
-
-Regulation Resolution의 공통 metadata boundary는 resolver execution과 분리한다.
-
-```text
-RegulationResolutionProfile
-≠ resolver execution
-≠ SITE state
-≠ production registration
-≠ runtime registration
-≠ Rule Engine input
-```
-
-표준코드가 확인되지 않은 조건은 `standard_code=None`, `standard_code_verified=False`를 허용하며
-코드를 추측하지 않는다. profile 존재는 조건 identity/policy metadata일 뿐 legal evidence가 아니다.
-
-SITE applicability admission은 resolver verification과 별도의 fail-closed boundary로 둔다.
-
-```text
-resolver result
-≠ parcel applicability
-
-SITE-decision eligibility
-≠ SITE truth
-
-verified candidate SITE decision
-+
-canonical SITE identity / PNU
-+
-verified parcel applicability
-→ SITE applicability admission
-```
-
-필수 불변조건:
-
-- resolver 결과 또는 SITE-decision eligibility만으로 SITE TRUE/FALSE를 승격하지 않는다.
-- candidate decision은 현재 분석 중인 canonical SITE/PNU와 명시적으로 결합되어야 한다.
-- 다른 PNU의 evidence 또는 parcel binding이 확인되지 않은 evidence를 재사용하지 않는다.
-- parcel applicability가 검증되지 않으면 UNKNOWN 또는 admission rejection을 유지한다.
-- SITE applicability admission 통과 자체는 production/runtime registration 권한을 의미하지 않는다.
-- 별도의 두 번째 SITE truth path를 만들지 않고 기존 production consumption architecture에 합류시킨다.
-
-8. REGULATION RESOLUTION 내부 파이프라인
+8. PROVENANCE-BOUND RESOLUTION PIPELINE
 ======================================================================
 
-규제 성격에 따라 모든 단계를 실행하지 않는다.
-
-기본 구조:
-
-```text
-REGULATION STANDARD CODE
-        ↓
-RESOLUTION POLICY
-        ↓
-COMPETENT AUTHORITY RESOLUTION
-        ↓
-OFFICIAL SOURCE FAMILY DISCOVERY
-        ↓
-ENTRY ENDPOINT QUALIFICATION
-        ↓
-TARGET DOCUMENT DISCOVERY
-        ↓
-DOCUMENT DIRECT VERIFICATION
-        ↓
-DESIGNATION / CHANGE / RELEASE VALIDITY
-        ↓
-SPATIAL SCOPE VERIFICATION
-        ↓
-FINAL TRUE / FALSE / UNKNOWN
-```
-
-
-9. COMPETENT AUTHORITY & SOURCE SCOPE
-======================================================================
-
-Regulation Resolution에서 반드시 포함해야 하는 공통 계층이다.
-
-문제:
-
-`go.kr`이라고 해서 해당 규제를 지정할 권한이 있는 기관은 아니다.
-
-예:
-
-```text
-성남시청 고시공고
-→ 도시계획 규제 지정 source가 될 수 있음
-
-성남소방서 고시공고
-→ 공식 사이트지만 UQQ700 지정권한 source는 아님
-```
-
-source qualification은 다음 구조로 분리한다.
-
-```text
-OFFICIAL HOST
-    ↓
-REGION BINDING
-    ↓
-SOURCE ROLE
-    ↓
-LEGAL AUTHORITY SCOPE
-    ↓
-TARGET REGULATION COMPATIBILITY
-```
-
-현재 공통 `AuthoritySourceScope` boundary는 이 qualification metadata와 각 verification gate를
-fail-closed로 표현한다. descriptive metadata의 존재만으로 verification flag를 올리지 않는다.
-
-```text
-official-looking host
-≠ competent authority
-
-region metadata
-≠ verified region binding
-
-PRIMARY / SECONDARY role value
-≠ verified source role
-
-authority scope text
-≠ verified legal authority
-
-target regulation metadata
-≠ verified compatibility
-
-AuthoritySourceScope
-≠ authority registry
-≠ resolver execution
-≠ SITE state
-≠ runtime registration
-```
-
-향후 registry 후보:
-
-```text
-AUTHORITY_SCOPE
-SOURCE_AUTHORITY_REGISTRY
-REGULATION_AUTHORITY_REQUIREMENTS
-```
-
-이 registry들은 pure boundary가 존재한다는 이유만으로 자동 도입하지 않는다.
-verified authority/source mapping의 반복 사용 필요가 확인되고, mapping provenance와
-regulation compatibility를 안정적으로 검증할 수 있을 때 별도 architecture decision으로 도입한다.
-
-Primary / Secondary source도 구분한다.
-
-예:
-
-- PRIMARY: 실제 지정권자 고시
-- SECONDARY: 구보/시보 mirror 또는 재게시
-- SUPPORTING: 설명자료 / 보도자료
-- INCOMPATIBLE: target 규제 지정권한 없음
-
-
-10. HISTORICAL NOTICE / DOCUMENT DISCOVERY
-======================================================================
-
-목표:
-
-현재 API나 지도 데이터만으로 규제 validity를 확정할 수 없는 경우
-과거 지정·변경·해제 고시 identity를 복원한다.
-
-필수 안전 원칙:
-
-- endpoint 발견 ≠ target document 발견
-- query 자체를 candidate evidence로 사용 금지
-- search page title만으로 candidate 승격 금지
-- generic navigation link 승격 금지
-- detail/document identity 검증
-- municipality/authority binding
-- official host 검증
-- canonical URL dedupe
-- provenance merge
-- discovery 실패로 SITE FALSE 금지
-
-문서 형식:
-
-- HTML
-- PDF
-- HWP
-- HWPX
-- 첨부파일
-- gazette archive
-
-Raw artifact는 Git repository에 저장하지 않는 것을 기본 원칙으로 한다.
-
-
-11. DOCUMENT DIRECT VERIFICATION
-======================================================================
-
-후속 검증에서는 candidate URL만 믿지 않는다.
-
-직접 확인 항목:
-
-- document title
-- notice number
-- issuing authority
-- publication date
-- effective date
-- designation/change/release action
-- target regulation identity
-- target region
-- spatial scope
-- attachment identity
-- superseded/repealed 여부
-
-Document candidate 단계에서는:
-
-```text
-verified_positive = False
-runtime_registration_allowed = False
-site_positive_allowed = False
-```
-
-를 유지한다.
-
-
-12. DESIGNATION VALIDITY ENGINE
-======================================================================
-
-규제의 역사적 문서가 발견되더라도 현재 적용 여부를 판단해야 한다.
-
-기본 event model:
-
-```text
-DESIGNATED
-CHANGED
-EXPANDED
-REDUCED
-REPLACED
-RELEASED
-CANCELLED
-SUPERSEDED
-```
-
-규제 timeline:
-
-```text
-initial designation
-    ↓
-change 1
-    ↓
-change 2
-    ↓
-partial release
-    ↓
-current valid scope
-```
-
-최종 TRUE는 현재 validity가 확인되어야 한다.
-
-
-13. SPATIAL SCOPE VERIFICATION
-======================================================================
-
-지정 고시만으로 특정 parcel 포함 여부를 자동 TRUE 처리하지 않는다.
-
-가능한 evidence:
-
-- official GIS layer
-- official 지형도면
-- notice attachment polygon
-- parcel list
-- coordinate boundary
-- official map service
-
-HYBRID_SPATIAL_NOTICE의 TRUE 예:
-
-```text
-OFFICIAL_DESIGNATION_IDENTITY_VERIFIED
-+
-DESIGNATION_VALIDITY_VERIFIED
-+
-SITE_SPATIAL_INCLUSION_VERIFIED
-=
-TRUE
-```
-
-FALSE 예:
-
-```text
-OFFICIAL_SPATIAL_EXCLUSION_VERIFIED
-or
-OFFICIAL_RELEASE_OR_CANCELLATION_VERIFIED
-or
-AUTHORITATIVE_NON_DESIGNATION_VERIFIED
-```
-
-단순 검색 실패는 FALSE가 아니다.
-
-
-14. LAYER 4 — LEGAL KNOWLEDGE
-======================================================================
-
-목표:
-
-현재 SITE 규제와 계산에 필요한 법적 텍스트를 구조화한다.
-
-대상:
-
-- 법률
-- 시행령
-- 시행규칙
-- 행정규칙
-- 자치법규
-- 고시
-- 별표
-- 지침
-- 유권해석
-- 판례/행정심판
-
-Source of truth 우선순위는 공식 원문을 기본으로 한다.
-
-Versioning 원칙:
-
-- 개정 전 원문 삭제 금지
-- effective date 저장
-- promulgation date 저장
-- superseded 상태 유지
-- 특정 분석시점(as-of date) 조회 가능하도록 발전
-
-
-15. DELEGATION CHAIN
-======================================================================
-
-법령 검색은 단일 조문에서 끝나지 않는다.
-
-예:
-
-```text
-법률
-→ 시행령
-→ 시행규칙
-→ 조례
-→ 별표
-→ 고시
-```
-
-위임관계를 graph 형태로 저장하는 것을 목표로 한다.
-
-향후 필요 필드:
-
-- parent provision
-- delegated provision
-- delegation type
-- required follow-up source
-- effective period
-
-
-16. LAYER 5 — RULE NORMALIZATION
-======================================================================
-
-법령 원문을 deterministic engine이 사용할 수 있는 구조로 변환한다.
-
-Rule schema 예:
-
-```json
-{
-  "rule_id": "...",
-  "source": "...",
-  "clause": "...",
-  "predicates": [],
-  "site_conditions": [],
-  "project_conditions": [],
-  "numeric_effect": {},
-  "priority": "...",
-  "effective_from": "...",
-  "effective_to": null
-}
-```
-
-조건 유형을 구분한다.
-
-```text
-SITE
-PROJECT
-PROCEDURE
-AUTHORITY
-TEMPORAL
-SPATIAL
-```
-
-
-17. LAYER 6 — DETERMINISTIC EVALUATION
-======================================================================
-
-목표:
-
-계산 가능한 결과는 AI가 아니라 rule engine이 계산한다.
-
-주요 계산 대상:
-
-- 건폐율
-- 용적률
-- 높이
-- 층수
-- 주차
-- 조경
-- 도로/접도
-- 건축선
-- 이격
-- 공개공지
-- 인센티브
-- 완화
-- 상한
-- 중첩 적용
-
-Rule 상태:
-
-```text
-APPLICABLE
-NOT_APPLICABLE
-CONDITIONAL
-UNKNOWN
-```
-
-Numeric 상태 예:
-
-```text
-INACTIVE
-POTENTIAL_CONDITIONAL
-ACTIVE_CANDIDATE
-RECALC_REQUIRED
-RESOLVED
-```
-
-조건이 모두 확정되지 않았을 때 숫자를 임의 결정하지 않는다.
-
-
-18. RULE CONFLICT / PRIORITY ENGINE
-======================================================================
-
-향후 반드시 별도 계층으로 강화한다.
-
-처리 대상:
-
-- 상위법 / 하위법
-- 일반규정 / 특별규정
-- 조례 상한 / 시행령 상한
-- 완화 규정
-- 중복 인센티브
-- 누적 상한
-- 적용 시점 차이
-
-결과는 단순 숫자뿐 아니라 계산 trace를 보존한다.
-
-예:
-
-```text
-BASE FAR 200
-+ incentive A
-+ incentive B
-→ statutory ceiling 250
-→ final 250
-```
-
-
-19. LAYER 7 — HYBRID RETRIEVAL
-======================================================================
-
-Rule Engine이 모든 법적 설명을 대체하지 않는다.
-AI 분석에 필요한 legal context를 검색한다.
-
-권장 구조:
-
-```text
-Rule Matching
-+
-BM25
-+
-Vector Search
-+
-Parent–Child Retrieval
-+
-Delegation Chain
-+
-Reranker
-```
-
-법령은 정확한 용어 검색과 의미 검색이 모두 필요하므로
-vector-only architecture는 사용하지 않는다.
-
-Parent–Child 원칙:
-
-- 검색은 항/호 단위로 정밀하게 수행 가능
-- AI에 제공할 때는 부모 조문 context를 함께 제공
-
-
-20. LAYER 8 — AI ANALYSIS
-======================================================================
-
-AI의 역할:
-
-- 쟁점 발견
-- 법적 맥락 설명
-- 조건부 결과 설명
-- 규제 충돌 설명
-- 추가 확인 필요사항 제시
-- 설계 대안 비교
-- 사용자 친화적인 보고서 생성
-
-AI가 하지 않아야 하는 것:
-
-- 규제 TRUE/FALSE 임의 생성
-- PNU 추측
-- 법령 조문 존재 여부 추측
-- 수치 상한 임의 결정
-- 없는 고시번호 생성
-- citation 없는 법적 사실 확정
-
-Multi-Agent는 필요할 경우 사용하되 agent 수 자체를 목표로 하지 않는다.
-
-
-21. LAYER 9 — VERIFICATION
-======================================================================
-
-AI 출력 후 반드시 reverse verification한다.
-
-검증 대상:
-
-- 조문 번호
-- 법령명
-- 시행일
-- 고시번호
-- 판례번호
-- 수치값
-- SITE FACT
-- 규제 상태
-
-Verification 결과 예:
-
-```text
-VERIFIED
-PARTIALLY_VERIFIED
-CONFLICT
-UNVERIFIED
-```
-
-AI confidence와 source confidence를 분리한다.
-
-
-22. PROVENANCE MODEL
-======================================================================
-
-모든 중요한 결과에는 source chain을 남긴다.
-
-예:
-
-```text
-Final FAR
-→ Rule 123
-→ 서울특별시 도시계획 조례 제XX조
-→ law.go.kr ordinance ID
-→ effective version
-```
-
-규제 TRUE 예:
-
-```text
-UQQ700 TRUE
-→ parcel intersects official scope
-→ current designation event
-→ notice number
-→ issuing authority
-→ official document URL
-```
-
-향후 provenance는 graph 또는 structured trace로 관리한다.
-
-
-23. LAYER 10 — PRODUCT / API
-======================================================================
-
-최종 서비스 기능 후보:
-
-1. 단일 필지 분석
-2. 다중 필지 분석
-3. 블록 / polygon 분석
-4. 지도 overlay
-5. 법령 질의
-6. 개발가능규모 분석
-7. 인센티브 시뮬레이션
-8. 규제 변경이력
-9. as-of-date analysis
-10. PDF 보고서
-11. API 제공
-12. batch analysis
-
-현재 FastAPI는 이 최종 product layer의 기반으로 유지한다.
-
-
-24. 데이터 저장 아키텍처
-======================================================================
-
-Git repository와 runtime data를 분리한다.
-
-권장 구조:
-
-```text
-law_data/
-    source_registry/
-    rule_registry/
-    fixtures/
-    output/
-        summary/
-        raw/
-        cache/
-```
-
-Git에 포함 권장:
-
-- source code
-- 작은 regression fixture
-- summary JSON
-- registry
-- schema
-
-Git 제외 권장:
-
-- 대용량 raw discovery JSON
-- downloaded PDF/HWP binary
-- cache
-- temporary extraction files
-- API raw dumps
-
-대용량 artifact는 별도 storage strategy를 사용한다.
-
-
-25. TEST ARCHITECTURE
-======================================================================
-
-테스트를 다음 범주로 나눈다.
-
-A. UNIT
-
-- parser
-- normalization
-- URL canonicalization
-- predicates
-
-B. BEHAVIORAL REGRESSION
-
-- known TRUE
-- known FALSE
-- known UNKNOWN
-- known false positive
-
-C. INTEGRATION
-
-- Building API
-- VWorld
-- law.go.kr
-- municipality source
-
-D. END-TO-END
-
-```text
-address
-→ SITE
-→ regulation
-→ rules
-→ numeric result
-→ API response
-```
-
-E. POLICY ASSERTION
-
-- runtime registration blocked
-- discovery positive blocked
-- source failure does not create FALSE
-
-중요:
-
-`all_pass=True`는 실제 법적 정확성과 동일하지 않다.
-Behavioral test와 Policy assertion을 출력에서 명시적으로 구분한다.
-
-
-26. ERROR / UNKNOWN POLICY
-======================================================================
-
-다음 상태를 명확하게 분리한다.
-
-```text
-NOT_APPLICABLE
-UNKNOWN
-SOURCE_UNAVAILABLE
-SOURCE_ERROR
-UNVERIFIED
-```
-
-API 장애 또는 historical source 미발견을 규제 FALSE로 바꾸지 않는다.
-
-Fail-safe 원칙:
-
-```text
-잘못된 TRUE보다 UNKNOWN이 낫다.
-잘못된 FALSE보다 UNKNOWN이 낫다.
-```
-
-
-27. SECURITY / OPERATION
-======================================================================
-
-- API key `.env`
-- secret Git 저장 금지
-- request timeout 필수
-- maximum response size 필수
-- external source rate limit 고려
-- retry bounded
-- logging 시 secret 제거
-- raw HTML/body preview 크기 제한
-- source별 transport diagnostics
-
-
-28. 성능 아키텍처
-======================================================================
-
-초기에는 correctness를 우선한다.
-
-전국화 단계에서는 다음을 추가한다.
-
-- source cache
-- law cache
-- spatial tile/cache
-- document hash dedupe
-- request scheduler
-- municipality source registry
-- async/batch pipeline
-- incremental refresh
-
-동일 historical source를 SITE별로 무한 재탐색하지 않는다.
-
-향후 핵심 전환:
-
-```text
-SITE마다 crawling
-→ source registry 구축
-→ document index 구축
-→ SITE에서는 indexed evidence lookup
-```
-
-
-29. 전국화 전략
-======================================================================
-
-전국화를 위해 지자체별 코드를 무한 하드코딩하지 않는다.
-
-필요 registry:
-
-```text
-MUNICIPALITY_REGISTRY
-OFFICIAL_SOURCE_REGISTRY
-SOURCE_AUTHORITY_REGISTRY
-SPATIAL_DATASET_REGISTRY
-REGULATION_RESOLUTION_REGISTRY
-LEGAL_SOURCE_REGISTRY
-```
-
-지자체별 차이는 adapter/config로 흡수한다.
-
-
-30. 개발 단계 MASTER ROADMAP
-======================================================================
-
-PHASE 0 — FOUNDATION
-
-목표:
-
-- repository
-- Python environment
-- FastAPI skeleton
-- configuration
-- logging
-
-완료 상태: 현재 완료
-
-
-PHASE 1 — BUILDING / SITE DATA
-
-목표:
-
-- Building HUB 연결
-- Building model
-- Site model
-- address/PNU identity
-
-완료 상태: 현재 완료
-
-
-PHASE 2 — LAND / SPATIAL DATA
-
-목표:
-
-- VWorld 연결
-- 토지정보
-- parcel geometry
-- zoning
-
-완료 상태: 핵심 완료, 확장 지속
-
-
-PHASE 3 — SITE ANALYSIS CORE
-
-목표:
-
-- normalized SITE facts
-- analysis response
-- FastAPI E2E
-
-완료 상태: 핵심 완료
-
-
-PHASE 4 — LEGAL DATA INGESTION
-
-목표:
-
-- 국가법령
-- 시행령/시행규칙
-- 자치법규
-- 행정규칙
-- version metadata
-
-완료 상태: 상당 부분 진행, 지속 확장
-
-
-PHASE 5 — RULE ENGINE
-
-목표:
-
-- legal clause normalization
-- predicates
-- applicability
-- numeric effects
-
-완료 상태: 핵심 구조 진행 완료, 규제별 확장 중
-
-
-PHASE 6 — RUNTIME SPATIAL CONDITIONS
-
-목표:
-
-- common spatial registry/evaluator
-- parcel intersection
-- known positive/negative regressions
-
-완료 상태: 핵심 구조 완료, condition 추가 진행
-
-
-PHASE 7 — REGULATION RESOLUTION
-
-목표:
-
-- standard code registry
-- resolution type
-- authority
-- source discovery
-- notice/document verification
-- TRUE/FALSE/UNKNOWN
-
-완료 상태: ACTIVE / common profile metadata boundary 구축 완료, condition별 evidence resolution 확장 중
-
-현재 대표 target:
-
-```text
-UQQ700 개발밀도관리구역
-```
-
-PHASE 7에서 반복 가능한 resolver family를 일반화하는 과정에서
-PHASE 8의 authority / historical provenance 공통 kernel을 선행 구축할 수 있다.
-이 선행 구축은 pure resolver, adapter, shadow regression 수준으로 제한하며,
-condition별 standard code, policy, provenance가 충분히 확정되기 전에는
-production registry, SITE overlay, runtime registration으로 연결하지 않는다.
-
-현재 `RegulationResolutionProfile`은 condition identity / standard-code verification state /
-resolution type / authority-source policy requirement를 표현하는 immutable metadata boundary다.
-profile registry는 exact-name read-only lookup이며 spatial runtime registry와 분리한다.
-
-
-PHASE 8 — AUTHORITY / HISTORICAL PROVENANCE
-
-목표:
-
-- competent authority registry
-- official source registry
-- historical archive adapter
-- designation timeline
-- release/cancellation verification
-- historical event provenance / history completeness
-
-완료 상태: CORE INFRASTRUCTURE TERMINALLY RECONCILED AT CURRENT EVIDENCE BOUNDARY.
-
-Historical provenance kernel, AuthoritySourceScope pure boundary, trusted internal source authorization, typed handoff authorization, production orchestrator handoff and end-to-end Rule Engine consumption are validated.
-
-Verified authority/source registry integration remains evidence-driven and deferred until verified mapping/provenance is actually available. This closure does not activate an unresolved real historical condition.
-
-AuthoritySourceScope는 registry 이전 단계의 qualification contract다.
-공식처럼 보이는 host, region, source role, authority scope, regulation name이 존재해도
-독립 verification 없이는 competent authority로 승격하지 않는다.
-
-registry 도입은 verified mapping과 provenance가 실제로 준비된 경우에만 진행한다.
-registry 존재 자체를 authority verification evidence로 사용하지 않는다.
-
-
-PHASE 9 — NATIONWIDE REGULATION REGISTRY
-
-목표:
-
-각 규제를 resolution type에 따라 분류하고 반복 가능한 provenance-bound pipeline으로 전환한다.
-
-현재 locally validated architecture chain:
+현재 locally validated numbered chain:
 
 ```text
 STEP98 Evidence→Seed admission
@@ -1265,144 +186,309 @@ STEP98 Evidence→Seed admission
 → STEP110 resolver execution
 → STEP112 resolver result verification
 → STEP114 SITE-decision eligibility
-→ SITE applicability admission pending
 ```
 
-현재 상태:
+STEP114는 candidate SITE decision의 eligibility 경계이며 SITE truth가 아니다.
 
-- profile / registry / resolver-family dispatch 및 execution verification 경계 구축
-- STEP114 SITE-decision eligibility까지 provenance-bound contract 검증
-- STEP114 결과는 candidate decision이며 SITE truth가 아님
-- canonical SITE/PNU와의 parcel applicability admission은 다음 architecture boundary
-- production/runtime registration은 별도 authorization 전까지 BLOCKED
-- unresolved real-condition evidence는 UNKNOWN을 유지
-- 기존 historical production consumption path와 별도의 SITE truth path를 만들지 않음
-
-목표 흐름:
+STEP114 이후 현재 구현·검증된 기능 경계에는 아직 새 STEP 번호를 부여하지 않는다.
 
 ```text
-standard_code
-→ resolution policy
-→ source/provenance admission
-→ verified classification/profile
-→ resolver-family dispatch
-→ resolver execution
-→ resolver-result verification
-→ SITE-decision eligibility
-→ canonical SITE/PNU applicability admission
-→ existing production consumption boundary
+STEP114 verified candidate
++
+canonical SITE identity / PNU
++
+family-specific parcel applicability evidence
+↓
+fail-closed SITE applicability admission
+↓
+admitted historical Rule Input adapter
+↓
+existing production consumption architecture
 ```
 
-PHASE 10 — LEGAL KNOWLEDGE GRAPH / VERSIONING
 
-목표:
-
-- delegation chain
-- provision graph
-- effective version
-- superseded history
-
-
-PHASE 11 — NUMERIC / DESIGN RULE ENGINE COMPLETION
-
-목표:
-
-- FAR/BCR
-- height
-- parking
-- setback
-- landscaping
-- incentives
-- stacking ceiling
-
-
-PHASE 12 — HYBRID RETRIEVAL
-
-목표:
-
-- BM25
-- Vector
-- Parent-Child
-- Reranker
-- delegation-aware retrieval
-
-
-PHASE 13 — AI ANALYSIS
-
-목표:
-
-- structured legal analysis
-- issue detection
-- alternatives
-- explanation
-
-
-PHASE 14 — CITATION REVERSE VERIFICATION
-
-목표:
-
-AI가 언급한 모든 핵심 법적 사실을 source DB와 다시 대조한다.
-
-
-PHASE 15 — PRODUCTIZATION
-
-목표:
-
-- stable API
-- web UI
-- map
-- report
-- user/project input
-- error UX
-
-
-PHASE 16 — BLOCK / MULTI-PARCEL ANALYSIS
-
-목표:
-
-- GeoJSON polygon
-- multi parcel union
-- zoning overlay
-- area weighted calculation
-
-
-PHASE 17 — HISTORICAL / AS-OF ANALYSIS
-
-목표:
-
-특정 과거 날짜 기준 법령·고시·공간규제를 재현한다.
-
-
-PHASE 18 — SCALE / OPERATIONS
-
-목표:
-
-- nationwide cache
-- source refresh scheduler
-- monitoring
-- regression CI
-- document index
-- cost optimization
-
-
-PHASE 19 — PRODUCTION QUALITY
-
-완료 기준:
-
-- 주요 규제 coverage 목표 충족
-- 주요 도시 regression fixture 확보
-- source provenance complete
-- deterministic numeric coverage 확보
-- AI citation verification
-- failure-safe UNKNOWN policy
-- observability
-- performance target
-
-
-31. CURRENT ARCHITECTURE CHECKPOINT
+9. SITE APPLICABILITY ADMISSION
 ======================================================================
 
-2026-09-16 기준 프로젝트는 MASTER ROADMAP상 대략 다음 위치다.
+SITE applicability admission은 resolver verification과 분리된 fail-closed boundary다.
+
+```text
+verified candidate SITE decision
++
+canonical SITE identity / PNU
++
+verified parcel applicability
+→ SITE applicability admission
+```
+
+필수 불변조건:
+- candidate decision은 현재 canonical SITE/PNU와 명시적으로 결합한다.
+- target/evidence PNU가 canonical PNU와 다르면 거부한다.
+- family-specific evidence kind가 resolver family와 맞아야 한다.
+- parcel applicability가 검증되지 않으면 UNKNOWN 또는 rejection을 유지한다.
+- admission 자체로 SITE truth mutation/promotion을 허용하지 않는다.
+- admission 자체로 production/runtime registration을 허용하지 않는다.
+- 두 번째 SITE truth path를 만들지 않는다.
+
+`HISTORICAL_SITE_EVENT`에는 historical parcel event binding evidence contract가 구현되어 있으며 event identity, official source verification, parcel binding verification, event binding verification을 별도 gate로 요구한다.
+
+
+10. HISTORICAL PRODUCTION CONSUMPTION BOUNDARY
+======================================================================
+
+Historical production path는 기존 service/builder/Rule Engine 경로를 유지한다. 새 병렬 production path를 만들지 않는다.
+
+현재 흐름:
+
+```text
+PNU-bound SITE applicability ADMITTED
++
+typed trusted historical handoff authorized
+↓
+admitted historical Rule Input adapter READY
+↓
+orchestrator
+↓
+service
+↓
+builder
+↓
+historical registry/collision/live authorization
+↓
+Rule Engine
+```
+
+Fail-closed 규칙:
+- handoff만 존재 → 차단
+- applicability만 존재 → 차단
+- UNKNOWN/unverified applicability → 차단
+- unauthorized/forged handoff → 차단
+- raw `historical_rule_input` orchestrator 직접 주입 → 제거/차단
+
+일반 분석은 두 historical typed input이 모두 없으면 기존 경로를 유지한다.
+
+이 production wiring은 candidate decision 자체를 repair로 합성하지 않는다. 기존 trusted handoff의 authorized repairs가 실제 Rule Engine input의 source이고, PNU applicability는 그 input을 내보내기 위한 선행 admission gate다.
+
+
+11. PUBLIC API / RUNTIME EXPOSURE BOUNDARY
+======================================================================
+
+현재 public FastAPI request는 historical raw/typed inputs를 노출하지 않는다.
+
+Public API에 없는 내부 필드:
+- `historical_rule_input`
+- `historical_handoff_authorization`
+- `historical_site_applicability_admission`
+
+Historical provenance는 spatial runtime condition channel에 등록되지 않는다.
+
+따라서 현재 reconciliation은:
+- public API historical injection을 허용하지 않는다.
+- historical spatial runtime registration을 허용하지 않는다.
+- SITE truth promotion 권한을 새로 부여하지 않는다.
+
+
+12. COMPETENT AUTHORITY & SOURCE SCOPE
+======================================================================
+
+공식처럼 보이는 host만으로 competent authority가 되지 않는다.
+
+```text
+OFFICIAL HOST
+→ REGION BINDING
+→ SOURCE ROLE
+→ LEGAL AUTHORITY SCOPE
+→ TARGET REGULATION COMPATIBILITY
+```
+
+`AuthoritySourceScope`는 registry 이전 qualification contract다. descriptive metadata 존재만으로 verification flag를 올리지 않는다.
+
+Verified authority/source registry는 verified mapping과 provenance가 실제로 준비된 경우에만 도입한다.
+
+
+13. HISTORICAL NOTICE / DOCUMENT / VALIDITY
+======================================================================
+
+Historical discovery 안전 원칙:
+- endpoint 발견 ≠ target document 발견
+- query ≠ candidate evidence
+- search title ≠ document verification
+- official history source의 negative만으로 FALSE 금지
+- candidate universe completeness가 없는 exhaustive disproof 금지
+- discovery 실패 → UNKNOWN
+
+Historical event validity는 designation/change/release/cancellation/supersession timeline과 source provenance를 보존해야 한다.
+
+
+14. SPATIAL SCOPE VERIFICATION
+======================================================================
+
+HYBRID spatial/notice TRUE는 최소 다음을 요구한다.
+
+```text
+OFFICIAL_DESIGNATION_IDENTITY_VERIFIED
++
+DESIGNATION_VALIDITY_VERIFIED
++
+SITE_SPATIAL_INCLUSION_VERIFIED
+→ TRUE
+```
+
+단순 검색 실패는 FALSE가 아니다.
+
+
+15. LEGAL KNOWLEDGE / VERSIONING
+======================================================================
+
+법률 → 시행령 → 시행규칙 → 조례 → 고시 → 별표 → 지침의 delegation/version chain을 구조화한다.
+
+- 개정 전 원문 삭제 금지
+- effective/promulgation date 보존
+- superseded history 유지
+- as-of-date 분석 가능 구조로 발전
+
+
+16. RULE NORMALIZATION & DETERMINISTIC ENGINE
+======================================================================
+
+법령 원문을 predicate/condition/effect/numeric/source 구조로 변환한다.
+
+Condition family:
+
+```text
+SITE
+PROJECT
+PROCEDURE
+AUTHORITY
+TEMPORAL
+SPATIAL
+```
+
+계산 가능한 결과는 AI가 아니라 Rule Engine이 계산한다. 조건이 확정되지 않았을 때 숫자를 임의 결정하지 않는다.
+
+Rule 상태:
+
+```text
+APPLICABLE
+NOT_APPLICABLE
+CONDITIONAL
+UNKNOWN
+```
+
+
+17. RULE CONFLICT / PRIORITY
+======================================================================
+
+상위법/하위법, 일반/특별규정, 완화, 중복 인센티브, 누적 상한, 적용시점 차이를 별도 conflict/priority layer로 강화한다. 최종 숫자뿐 아니라 계산 trace를 보존한다.
+
+
+18. HYBRID RETRIEVAL / AI / VERIFICATION
+======================================================================
+
+권장 retrieval:
+
+```text
+Rule Matching + BM25 + Vector + Parent-Child + Delegation + Reranker
+```
+
+AI는 쟁점 발견, 법적 맥락 설명, 조건부 결과 설명, 추가 확인사항과 대안 설명을 담당한다. AI가 규제 TRUE/FALSE, PNU, 조문/고시, 수치 상한을 임의 생성하지 않는다.
+
+AI 출력 후 조문, 시행일, 고시번호, 수치, SITE FACT, 규제 상태를 reverse verification한다.
+
+
+19. PROVENANCE MODEL
+======================================================================
+
+모든 중요한 결과는 source까지 역추적 가능해야 한다.
+
+```text
+Final result
+→ Rule / resolution
+→ legal or official source
+→ version/event
+→ canonical SITE/PNU binding where applicable
+```
+
+
+20. PRODUCT / API
+======================================================================
+
+최종 후보 기능:
+- 단일/다중 필지 분석
+- 지도 overlay
+- 법령 질의
+- 개발가능규모/인센티브 분석
+- 규제 변경이력/as-of analysis
+- PDF 보고서
+- API/batch analysis
+
+현재 FastAPI는 product layer 기반으로 유지한다.
+
+
+21. DATA / TEST / ERROR POLICY
+======================================================================
+
+Git repository와 runtime raw/cache를 분리한다.
+
+Test categories:
+- UNIT
+- BEHAVIORAL REGRESSION
+- INTEGRATION
+- END-TO-END
+- POLICY ASSERTION
+
+`all_pass=True`는 실제 법적 정확성과 동일하지 않다.
+
+오류 상태를 분리한다.
+
+```text
+NOT_APPLICABLE
+UNKNOWN
+SOURCE_UNAVAILABLE
+SOURCE_ERROR
+UNVERIFIED
+```
+
+Fail-safe:
+
+```text
+잘못된 TRUE보다 UNKNOWN이 낫다.
+잘못된 FALSE보다 UNKNOWN이 낫다.
+```
+
+
+22. SECURITY / OPERATION / SCALE
+======================================================================
+
+- API key `.env`
+- secret Git 저장 금지
+- timeout / bounded retry / response-size limit
+- logging secret 제거
+- source rate limit 고려
+- 전국화 시 source/law/spatial cache, scheduler, document index, incremental refresh 사용
+
+전국화는 SITE별 무한 crawling이 아니라 source registry/document index 기반 lookup으로 발전한다.
+
+
+23. NATIONWIDE REGISTRY STRATEGY
+======================================================================
+
+필요 registry 후보:
+
+```text
+MUNICIPALITY_REGISTRY
+OFFICIAL_SOURCE_REGISTRY
+SOURCE_AUTHORITY_REGISTRY
+SPATIAL_DATASET_REGISTRY
+REGULATION_RESOLUTION_REGISTRY
+LEGAL_SOURCE_REGISTRY
+```
+
+지자체별 차이는 adapter/config로 흡수한다. Registry 존재 자체를 verification evidence로 사용하지 않는다.
+
+
+24. MASTER ROADMAP
+======================================================================
 
 ```text
 PHASE 0   Foundation                    COMPLETE
@@ -1413,12 +499,25 @@ PHASE 4   Legal ingestion               IN PROGRESS
 PHASE 5   Rule Engine                   IN PROGRESS / CORE STABLE
 PHASE 6   Runtime spatial               CORE STABLE
 PHASE 7   Regulation Resolution         ACTIVE / PROFILE + RESOLVER CONTRACTS ADVANCED
-PHASE 8   Authority/Historical          CORE INFRASTRUCTURE TERMINALLY RECONCILED / EVIDENCE-DRIVEN EXTENSIONS DEFERRED
-PHASE 9   Nationwide Regulation Registry ACTIVE / PROVENANCE-BOUND CHAIN VALIDATED THROUGH STEP114
-PHASE 10+ Knowledge/AI/Product           FUTURE
+PHASE 8   Authority/Historical          CORE INFRASTRUCTURE RECONCILED / EVIDENCE-DRIVEN EXTENSIONS DEFERRED
+PHASE 9   Nationwide Regulation Registry ACTIVE / PNU-BOUND HISTORICAL ADMISSION + EXISTING PRODUCTION WIRING VALIDATED
+PHASE 10  Legal Knowledge Graph         FUTURE
+PHASE 11  Numeric/Design Engine         FUTURE EXPANSION
+PHASE 12  Hybrid Retrieval              FUTURE
+PHASE 13  AI Analysis                   FUTURE
+PHASE 14  Citation Verification         FUTURE
+PHASE 15  Productization                FUTURE
+PHASE 16  Multi-Parcel                  FUTURE
+PHASE 17  Historical/As-of              FUTURE
+PHASE 18  Scale/Operations              FUTURE
+PHASE 19  Production Quality            FUTURE
 ```
 
-Current locally validated provenance-bound chain:
+
+25. CURRENT ARCHITECTURE CHECKPOINT
+======================================================================
+
+2026-09-16 user-local behavioral validation 기준:
 
 ```text
 STEP98
@@ -1430,230 +529,139 @@ STEP98
 → STEP110
 → STEP112
 → STEP114
-→ STOP
+→ historical parcel applicability evidence
+→ PNU-bound SITE applicability admission
+→ admitted historical Rule Input adapter
+→ typed trusted handoff + applicability orchestrator gate
+→ existing service / builder / Rule Engine path
 ```
 
-STEP114 is the current terminal candidate SITE-decision eligibility boundary.
+STEP114 이후 기능 경계에는 새 STEP 번호를 아직 부여하지 않는다.
 
-This does not mean SITE truth promotion or production/runtime registration.
+Current safety conclusion:
+- STEP114 candidate ≠ SITE truth
+- PNU admission requires exact canonical parcel binding
+- unverified applicability remains UNKNOWN/rejected
+- historical production path requires applicability + trusted handoff
+- raw historical orchestrator injection removed
+- public API historical exposure NOT AUTHORIZED
+- historical spatial runtime registration NONE
+- SITE truth mutation/promotion not authorized by these contracts
+- second SITE truth/production path not created
 
-The next architecture boundary must reconcile:
-
-```text
-STEP114 verified candidate
-+
-canonical SITE identity / PNU
-+
-verified parcel applicability
-→ fail-closed SITE applicability admission
-→ existing production consumption architecture
-```
-
-Cross-PNU or unbound evidence must not be promoted.
-Unverified parcel applicability remains UNKNOWN or rejected from admission.
-
-The architecture must not create a second parallel SITE truth path.
-
-PHASE 8 terminal reconciliation remains valid:
-verified authority/source mappings and unresolved real historical-condition evidence remain evidence-driven extensions.
+Locally reconciled historical regressions:
+- STEP67 production runtime exposure PASS
+- STEP68 orchestrator exposure PASS
+- STEP69 public API exposure PASS
+- STEP73 production wiring PASS
+- STEP74 end-to-end PASS
 
 
-
-32. 현재 UQQ700에서 얻은 아키텍처 교훈
+26. UQQ700 / REAL-CONDITION LOCKS
 ======================================================================
 
-개발밀도관리구역 historical discovery에서 다음 교훈을 얻었다.
+개발밀도관리구역:
+- standard code `UQQ700`
+- family `HYBRID_SPATIAL_NOTICE`
+- current legal-source resolution UNKNOWN
+- negative evidence / legal absence inference disabled
+- minimum gate: official designation identity + current validity + SITE spatial inclusion
+- SITE TRUE/FALSE promotion blocked
+- production/runtime registration blocked
 
-1. official host만으로 source qualification 불충분
-2. municipality identity만으로 source qualification 불충분
-3. target query는 document evidence가 될 수 없음
-4. page-wide text는 candidate contamination을 만들 수 있음
-5. canonical URL dedupe 필수
-6. historical source 실패는 UNKNOWN
-7. competent authority resolution이 discovery보다 앞에 있어야 함
-8. 모든 규제에 동일 crawling depth를 적용하면 비용이 과도함
+Current historical-family production reconciliation does not activate UQQ700 and does not change its family.
 
-따라서 Regulation Resolution architecture는 앞으로 다음 순서를 기본으로 한다.
+Unresolved historical real conditions likewise remain evidence-driven and fail-closed.
 
-```text
-RESOLUTION TYPE
-→ AUTHORITY
-→ SOURCE
-→ DOCUMENT
-→ VALIDITY
-→ SPATIAL
-→ FINAL STATUS
-```
+Legal-source investigation numbering (`S206`…`S216`/future S217) is independent from architecture STEP numbering.
 
 
-33. 향후 아키텍처 변경 규칙
+27. ARCHITECTURE DECISION PRINCIPLES
 ======================================================================
 
-이 문서는 개발 중 변경될 수 있다.
-
-변경 시 다음을 기록한다.
-
-- Architecture version
-- 변경 날짜
-- 변경 대상 layer
-- 변경 이유
-- 기존 behavior 영향
-- migration 필요 여부
-- regression test 필요 여부
-
-큰 구조 변경은 `PROJECT_STATUS.md`의 단기 작업과 별도로 이 문서를 먼저 수정한다.
-
-
-34. ARCHITECTURE DECISION PRINCIPLES
-======================================================================
-
-새 기능을 추가할 때 다음 질문을 우선한다.
-
-1. 이 정보는 SITE FACT인가 PROJECT INPUT인가?
+새 기능 추가 전 확인:
+1. SITE FACT인가 PROJECT INPUT인가?
 2. official source가 있는가?
 3. TRUE/FALSE를 deterministic하게 결정할 수 있는가?
-4. 미확정이면 UNKNOWN을 유지할 수 있는가?
-5. regulation resolution type은 무엇인가?
+4. 미확정이면 UNKNOWN을 유지하는가?
+5. resolution family/type은 무엇인가?
 6. competent authority는 누구인가?
-7. spatial verification이 필요한가?
-8. historical validity가 필요한가?
-9. AI가 아니라 rule engine에서 처리 가능한가?
-10. provenance를 끝까지 추적할 수 있는가?
+7. spatial/historical verification이 필요한가?
+8. canonical PNU binding이 필요한가?
+9. AI가 아니라 Rule Engine에서 처리 가능한가?
+10. provenance를 끝까지 추적 가능한가?
 11. regression fixture를 만들 수 있는가?
 12. 전국화 가능한 registry/adapter 구조인가?
+13. 기존 SITE truth/production path에 합류하는가, 아니면 잘못된 병렬 path를 만드는가?
 
 
-35. 프로젝트 성공 기준
+28. PROJECT SUCCESS CRITERIA
 ======================================================================
-
-이 프로젝트는 단순히 많은 법령을 검색하는 서비스가 되는 것을 목표로 하지 않는다.
-
-성공 기준은 다음에 가깝다.
 
 ```text
 INPUT SITE
-    ↓
-확정된 parcel identity
-    ↓
-공식 SITE facts
-    ↓
-규제별 TRUE / FALSE / UNKNOWN
-    ↓
-공식 designation / spatial / legal provenance
-    ↓
-결정론적 법규 계산
-    ↓
-AI 설명
-    ↓
-reverse verification
+→ 확정된 parcel identity
+→ 공식 SITE facts
+→ 규제별 TRUE / FALSE / UNKNOWN
+→ 공식 designation / spatial / legal provenance
+→ 결정론적 법규 계산
+→ AI 설명
+→ reverse verification
 ```
 
-최종 사용자에게는 간단한 결과를 보여주되,
-내부적으로는 모든 중요한 판단이 source까지 역추적 가능해야 한다.
+최종 사용자에게는 단순한 결과를 보여주되 내부 판단은 source와 parcel identity까지 역추적 가능해야 한다.
 
 
-36. ARCHITECTURE CHANGE LOG
+29. ARCHITECTURE CHANGE LOG
 ======================================================================
 
-### v1.2 reconciliation — 2026-09-16
-
-STEP114까지 실제 구현된 provenance-bound Regulation Resolution 흐름과
-다음 SITE/PNU applicability admission 경계를 기존 v1.2 baseline에 정합화했다.
+### v1.2 SITE applicability / production wiring reconciliation — 2026-09-16
 
 반영 내용:
+- STEP114 이후 historical parcel applicability evidence contract 반영
+- canonical PNU-bound SITE applicability admission 반영
+- cross-PNU / unbound evidence fail-closed 원칙을 실제 구현 상태와 정합화
+- admitted historical Rule Input adapter 반영
+- typed trusted handoff + applicability orchestrator gate 반영
+- 기존 service/builder/Rule Engine production path 재사용 명시
+- raw historical Rule Input orchestrator 직접 주입 제거 반영
+- STEP67/68/69/73/74 locally validated regression reconciliation 반영
+- public API historical exposure / spatial runtime registration 차단 유지
+- 새 STEP 번호를 임의 부여하지 않음
+
+Behavior 영향:
+- historical production admission은 이전 handoff-only 경계보다 엄격해져 PNU-bound applicability admission을 추가 요구한다.
+- 일반 non-historical 분석 경로는 유지된다.
+- SITE truth mutation/promotion authority는 부여하지 않는다.
+- UQQ700 UNKNOWN/BLOCKED 정책은 변경하지 않는다.
+
+### v1.2 STEP114 reconciliation — 2026-09-16
 
 - STEP98→STEP114 provenance/profile/resolver chain 반영
 - resolver result와 parcel applicability 분리
 - SITE-decision eligibility와 SITE truth 분리
-- canonical SITE/PNU binding을 후속 admission의 필수 조건으로 명시
-- cross-PNU / unbound evidence promotion 금지
-- parcel applicability 미검증 시 UNKNOWN/rejection 유지
-- 후속 admission을 기존 production consumption architecture와 합류시키도록 명시
+- canonical SITE/PNU binding을 후속 admission 필수조건으로 명시
 - 두 번째 독립 SITE truth path 생성 금지
-- PHASE 9 및 CURRENT ARCHITECTURE CHECKPOINT를 실제 STEP114 상태와 정합화
-
-기존 behavior 영향:
-
-- 없음. architecture documentation reconciliation이다.
-- SITE truth promotion 권한을 새로 부여하지 않는다.
-- production/runtime registration을 허용하지 않는다.
-- public API historical injection boundary를 변경하지 않는다.
-- UQQ700 및 unresolved historical condition의 UNKNOWN/BLOCKED 정책을 변경하지 않는다.
 
 ### v1.2 — 2026-09-10
 
-Regulation Resolution profile boundary와 Authority/Source Scope boundary의 terminal closure를
-장기 architecture baseline에 반영했다.
-
-반영 내용:
-
-- `RegulationResolutionProfile`을 resolver/runtime와 분리된 immutable metadata boundary로 명시
-- standard-code identity/verification state와 legal evidence verification을 분리
-- `AuthoritySourceScope`의 OFFICIAL HOST → REGION BINDING → SOURCE ROLE → LEGAL AUTHORITY SCOPE → TARGET REGULATION COMPATIBILITY qualification chain 반영
-- descriptive authority/source metadata와 verified competent-authority evidence를 분리
-- `AuthoritySourceScope ≠ authority registry` 원칙 명시
-- authority/source registry는 verified mappings와 provenance가 준비된 이후 별도 architecture decision으로 도입하도록 명시
-- PHASE 7/8 및 current architecture checkpoint를 STEP 19/20 terminal closure 상태와 정합화
-- UQQ700 및 HISTORICAL_SITE_EVENT의 UNKNOWN/BLOCKED/no-promotion 안전 원칙 유지
-
-기존 behavior 영향:
-
-- 없음. architecture documentation 정합성 보완이다.
-- profile/authority metadata를 Rule Engine, spatial runtime registry, builder/service/orchestrator/public API에 자동 연결하지 않는다.
-- UQQ700의 UNKNOWN 및 production/runtime registration BLOCKED 상태를 변경하지 않는다.
-- 도시지역편입해제구역의 standard-code unverified, provenance BLOCKED 상태를 변경하지 않는다.
-
-regression 영향:
-
-- STEP 19 terminal classification `STEP19_REGULATION_RESOLUTION_PROFILE_BOUNDARY_TERMINALLY_RECONCILED` 반영
-- STEP 20 terminal classification `STEP20_AUTHORITY_SOURCE_SCOPE_BOUNDARY_TERMINALLY_RECONCILED` 반영
-
-STEP 21 architecture review classification:
-
-```text
-STEP21_ARCHITECTURE_BASELINE_PROFILE_AUTHORITY_SCOPE_RECONCILED
-```
-
+- `RegulationResolutionProfile` metadata boundary 반영
+- `AuthoritySourceScope` qualification boundary 반영
+- verified authority/source mapping 전 registry 승격 금지
 
 ### v1.1 — 2026-09-09
 
-Regulation Resolution 일반화 과정에서 확인된 historical SITE condition family를 반영했다.
-
-반영 내용:
-
-- `HISTORICAL_SITE_EVENT` resolution family 추가
+- `HISTORICAL_SITE_EVENT` family 반영
 - historical event identity / SITE applicability / temporal relation / history completeness 책임 분리
-- search no-hit 또는 일부 DB negative를 FALSE로 승격하지 않는 exhaustive-disproof 원칙 명시
-- PHASE 7 resolver generalization 과정에서 PHASE 8 provenance kernel을 선행 구축할 수 있음을 명시
-- standard code / policy / provenance 확정 전 production registry 및 overlay 연결 금지
-
-기존 behavior 영향:
-
-- 없음. 현재 변경은 architecture documentation 정합성 보완이다.
-- UQQ700 및 기존 production resolution behavior는 변경하지 않는다.
-
-regression 영향:
-
-- 기존 generalized historical resolver와 shadow parity regression을 architecture 기준선에 반영한다.
-
+- search no-hit를 FALSE로 승격하지 않는 exhaustive-disproof 원칙 명시
 
 ### v1.0 — 2026-08-26
 
-초기 master architecture baseline 작성.
-
-반영 내용:
-
-- STEP 1~16에서 구축된 SITE / API / spatial foundation
-- STEP 17 Rule Engine 및 runtime spatial condition 구조
-- Regulation Resolution Type 도입
-- UrbanLaw 비교에서 도출한 deterministic-first 전략
-- UQQ700 historical discovery에서 확인한 false-positive 문제
-- competent authority layer 필요성
-- future legal knowledge / hybrid retrieval / AI / verification roadmap
+초기 master architecture baseline.
 
 다음 architecture review trigger:
-
-- verified authority/source registry 설계 시작 시
-- UQQ700 최종 TRUE/FALSE/UNKNOWN resolution 완료 시
-- Nationwide regulation registry 설계 시작 시
+- SITE truth/promotion authorization 설계 시
+- verified authority/source registry 설계 시
+- UQQ700 최종 resolution 완료 시
+- nationwide registry의 실제 condition 확장 시
 - Hybrid Retrieval / AI 단계 진입 시
