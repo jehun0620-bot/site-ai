@@ -92,6 +92,9 @@ def bridge_historical_site_event_site_truth_promotion_rule_input(
     state_valid = state in {"TRUE", "FALSE"}
 
     promoted = execution.promoted_condition if present and isinstance(execution.promoted_condition, Mapping) else {}
+    promoted_type_valid = bool(promoted and str(promoted.get("type") or "").strip().upper() == "SITE")
+    promoted_confidence = str(promoted.get("confidence") or "").strip().upper() if promoted else ""
+    promoted_confidence_present = bool(promoted_confidence)
     promoted_condition_aligned = bool(
         promoted
         and promoted.get("pnu") == pnu
@@ -106,6 +109,8 @@ def bridge_historical_site_event_site_truth_promotion_rule_input(
         ("pnu_valid", pnu_valid),
         ("condition_present", condition_present),
         ("state_valid", state_valid),
+        ("promoted_type_valid", promoted_type_valid),
+        ("promoted_confidence_present", promoted_confidence_present),
         ("promoted_condition_aligned", promoted_condition_aligned),
         ("provenance_preserved", provenance_preserved),
     )
@@ -123,7 +128,7 @@ def bridge_historical_site_event_site_truth_promotion_rule_input(
                 {
                     "condition": condition,
                     "after": state,
-                    "new_confidence": str(promoted.get("confidence") or "HIGH").strip().upper(),
+                    "new_confidence": promoted_confidence,
                     "new_source": PROVENANCE,
                     "pnu": pnu,
                 }
