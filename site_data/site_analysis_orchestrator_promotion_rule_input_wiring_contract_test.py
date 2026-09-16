@@ -10,6 +10,9 @@ from law_data.historical_site_event_site_truth_promotion_rule_input_bridge impor
     READY,
     HistoricalSiteEventSiteTruthPromotionRuleInputBridge,
 )
+from law_data.historical_verified_rule_input_envelope import (
+    HistoricalVerifiedRuleInputEnvelope,
+)
 from site_data.site_analysis_orchestrator import SiteAnalysisError, analyze_site_by_parcel
 
 PNU = "1168010300100120000"
@@ -79,8 +82,12 @@ def main():
 
     result, captured = run(bridge)
     assert result["ok"] is True
-    assert captured["historical_rule_input"] == RULE_INPUT
-    assert captured["historical_rule_input"] is not RULE_INPUT
+    envelope = captured["historical_rule_input"]
+    assert isinstance(envelope, HistoricalVerifiedRuleInputEnvelope)
+    assert envelope.ready
+    assert envelope.canonical_pnu == PNU
+    assert envelope.historical_rule_input == RULE_INPUT
+    assert envelope.historical_rule_input is not RULE_INPUT
 
     try:
         run(replace(bridge, bridge_ready=False))
