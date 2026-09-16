@@ -14,6 +14,35 @@ from typing import Any, Mapping
 BOUNDARY_NAME = "HISTORICAL_VERIFIED_RULE_INPUT_ENVELOPE"
 
 
+def _repair_pnu_binding_valid(
+    canonical_pnu: str,
+    historical_rule_input: Mapping[str, Any],
+) -> bool:
+    """Fail closed for PNU-bearing repairs without breaking the legacy shape.
+
+    Legacy admitted repairs do not carry a PNU because their canonical PNU is
+    proven by the separate applicability admission before sealing. Promotion
+    repairs do carry a PNU. If any repair carries one, every repair must carry
+    the same canonical PNU; mixed or cross-PNU payloads are rejected.
+    """
+    repairs = historical_rule_input.get("repairs")
+    if not isinstance(repairs, list) or not repairs:
+        return True
+
+    pnu_presence = []
+    for repair in repairs:
+        if not isinstance(repair, Mapping):
+            continue
+        repair_pnu = str(repair.get("pnu") or "").strip()
+        pnu_presence.append(bool(repair_pnu))
+        if repair_pnu and repair_pnu != canonical_pnu:
+            return False
+
+    if not pnu_presence or not any(pnu_presence):
+        return True
+    return all(pnu_presence)
+
+
 @dataclass(frozen=True)
 class HistoricalVerifiedRuleInputEnvelope:
     boundary: str
@@ -30,6 +59,10 @@ class HistoricalVerifiedRuleInputEnvelope:
             and self.canonical_pnu.isdigit()
             and isinstance(self.historical_rule_input, Mapping)
             and self.historical_rule_input
+            and _repair_pnu_binding_valid(
+                self.canonical_pnu,
+                self.historical_rule_input,
+            )
         )
 
     def to_dict(self):
@@ -56,7 +89,12 @@ def seal_verified_historical_rule_input(
         if isinstance(historical_rule_input, Mapping)
         else {}
     )
-    verified = bool(len(pnu) == 19 and pnu.isdigit() and value)
+    verified = bool(
+        len(pnu) == 19
+        and pnu.isdigit()
+        and value
+        and _repair_pnu_binding_valid(pnu, value)
+    )
     return HistoricalVerifiedRuleInputEnvelope(
         boundary=BOUNDARY_NAME,
         canonical_pnu=pnu,
