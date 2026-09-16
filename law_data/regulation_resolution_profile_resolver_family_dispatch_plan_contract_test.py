@@ -81,6 +81,18 @@ def main() -> None:
     assert hybrid_plan.planned is True
     assert hybrid_plan.resolver_family == "HYBRID_SPATIAL_NOTICE"
 
+    district_unit_plan = _admission(
+        name="지구단위계획",
+        condition_type="SITE",
+        resolution_type="HYBRID_SPATIAL_NOTICE",
+    )
+    district_unit_plan_dispatch = _plan(district_unit_plan)
+    assert district_unit_plan_dispatch.status == PLANNED
+    assert district_unit_plan_dispatch.planned is True
+    assert district_unit_plan_dispatch.resolver_family == "HYBRID_SPATIAL_NOTICE"
+    assert district_unit_plan[3].standard_code is None
+    assert district_unit_plan_dispatch.standard_code_used is False
+
     historical = _admission(
         name="도시지역편입해제구역",
         condition_type="SITE_HISTORY",
@@ -96,7 +108,7 @@ def main() -> None:
         "HISTORICAL_SITE_EVENT",
     }
 
-    for plan in (hybrid_plan, historical_plan):
+    for plan in (hybrid_plan, district_unit_plan_dispatch, historical_plan):
         assert plan.standard_code_used is False
         assert plan.resolver_callable_selected is False
         assert plan.resolver_input_built is False
