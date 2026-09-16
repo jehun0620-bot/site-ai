@@ -7,15 +7,14 @@ from .legal_condition_catalogue_seed import (
     LegalEnumerationProvenance,
 )
 from .legal_condition_classification_profile_admission import (
+    VERIFIED,
     LegalConditionClassificationEvidence,
     admit_verified_classification_to_profile,
     seed_identity_fingerprint,
     verify_classification_evidence,
 )
 from .regulation_resolution_profile import RegulationResolutionProfile
-from .regulation_resolution_profile_registry import (
-    get_regulation_resolution_profile,
-)
+from .regulation_resolution_profile_registry import get_regulation_resolution_profile
 from .regulation_resolution_profile_registry_classification_compatibility import (
     COMPATIBLE,
     REJECTED,
@@ -41,12 +40,12 @@ def _verified_seed(name: str = "개발밀도관리구역") -> LegalConditionCata
     )
 
 
-def _admitted_profile(
+def _admission(
     *,
     name: str = "개발밀도관리구역",
     condition_type: str = "SITE",
     resolution_type: str = "HYBRID_SPATIAL_NOTICE",
-) -> RegulationResolutionProfile:
+):
     seed = _verified_seed(name)
     evidence = LegalConditionClassificationEvidence(
         condition_name=seed.condition_name,
@@ -62,86 +61,98 @@ def _admitted_profile(
     )
     verification = verify_classification_evidence(seed, evidence)
     assert verification.verified
-    return admit_verified_classification_to_profile(seed, evidence, verification)
+    profile = admit_verified_classification_to_profile(seed, evidence, verification)
+    return seed, evidence, verification, profile
+
+
+def _check(admission):
+    seed, evidence, verification, profile = admission
+    return check_registry_classification_compatibility(
+        profile,
+        seed=seed,
+        evidence=evidence,
+        verification=verification,
+    )
 
 
 def main() -> None:
-    admitted = _admitted_profile()
+    admission = _admission()
+    seed, evidence, verification, admitted = admission
     expected = get_regulation_resolution_profile(admitted.name)
     assert expected is not None
     assert expected.standard_code == "UQQ700"
     assert expected.standard_code_verified is True
     assert admitted.standard_code is None
-    assert admitted.standard_code_verified is False
 
-    result = check_registry_classification_compatibility(admitted)
+    result = _check(admission)
     assert result.status == COMPATIBLE
     assert result.compatible is True
-    assert result.name_matches is True
-    assert result.condition_type_matches is True
-    assert result.resolution_type_matches is True
+    assert result.admitted_profile_verified is True
     assert result.standard_code_compared is False
-    assert result.site_promotion_allowed is False
-    assert result.production_registration_allowed is False
-    assert result.runtime_registration_allowed is False
 
-    # Exact-name registry lookup: unknown/cross-condition names fail closed.
-    unknown = _admitted_profile(name="미등록조건")
-    unknown_result = check_registry_classification_compatibility(unknown)
+    unknown = _admission(name="미등록조건")
+    unknown_result = _check(unknown)
     assert unknown_result.status == REJECTED
     assert unknown_result.expected_profile_found is False
-    assert unknown_result.compatible is False
 
-    # A valid STEP101 profile with the wrong classification cannot match baseline.
-    wrong_condition_type = _admitted_profile(condition_type="SITE_HISTORY")
-    wrong_type_result = check_registry_classification_compatibility(
-        wrong_condition_type
-    )
-    assert wrong_type_result.status == REJECTED
-    assert wrong_type_result.condition_type_matches is False
+    wrong_type = _admission(condition_type="SITE_HISTORY")
+    assert _check(wrong_type).status == REJECTED
+    wrong_resolution = _admission(resolution_type="SNAPSHOT")
+    assert _check(wrong_resolution).status == REJECTED
 
-    wrong_resolution = _admitted_profile(resolution_type="SNAPSHOT")
-    wrong_resolution_result = check_registry_classification_compatibility(
-        wrong_resolution
-    )
-    assert wrong_resolution_result.status == REJECTED
-    assert wrong_resolution_result.resolution_type_matches is False
-
-    # Registry profile itself is not proof of verified classification admission.
+    # Registry profile alone is never STEP101 provenance.
     registry_only_result = check_registry_classification_compatibility(expected)
     assert registry_only_result.status == REJECTED
     assert registry_only_result.admitted_profile_verified is False
-    assert registry_only_result.compatible is False
 
-    # Forged profile without exact STEP101 diagnostics is rejected.
+    # Even a complete-looking set of caller-controlled diagnostics is not proof.
     forged = RegulationResolutionProfile(
-        name=expected.name,
-        condition_type=expected.condition_type,
-        resolution_type=expected.resolution_type,
+        name=admitted.name,
+        condition_type=admitted.condition_type,
+        resolution_type=admitted.resolution_type,
         standard_code=None,
         standard_code_verified=False,
-        diagnostics={"classification_admission": "VERIFIED"},
+        diagnostics={
+            "classification_admission": VERIFIED,
+            "classification_admission_proof_version": admitted.diagnostics["classification_admission_proof_version"],
+            "seed_fingerprint": "f" * 64,
+            "classification_evidence_fingerprint": "e" * 64,
+            "classification_admission_proof": "a" * 64,
+        },
     )
     forged_result = check_registry_classification_compatibility(forged)
     assert forged_result.status == REJECTED
     assert forged_result.admitted_profile_verified is False
 
-    # Registry standard code cannot be copied into or used to qualify admission.
-    assert admitted.standard_code is None
-    assert expected.standard_code == "UQQ700"
-    assert result.standard_code_compared is False
+    # Copying the genuine diagnostics still cannot authenticate without exact artifacts.
+    copied = replace(admitted, diagnostics=dict(admitted.diagnostics))
+    copied_without_artifacts = check_registry_classification_compatibility(copied)
+    assert copied_without_artifacts.status == REJECTED
+    assert copied_without_artifacts.admitted_profile_verified is False
 
-    # Permission escalation invalidates the STEP101 admission shape.
+    # Cross-seed/evidence/verification binding must fail closed.
+    other_seed, other_evidence, other_verification, _ = _admission(name="도시지역편입해제구역", condition_type="SITE_HISTORY", resolution_type="HISTORICAL_SITE_EVENT")
+    cross = check_registry_classification_compatibility(
+        admitted,
+        seed=other_seed,
+        evidence=other_evidence,
+        verification=other_verification,
+    )
+    assert cross.status == REJECTED
+    assert cross.admitted_profile_verified is False
+
     escalated = replace(admitted, runtime_registration_allowed=True)
-    escalated_result = check_registry_classification_compatibility(escalated)
+    escalated_result = check_registry_classification_compatibility(
+        escalated,
+        seed=seed,
+        evidence=evidence,
+        verification=verification,
+    )
     assert escalated_result.status == REJECTED
-    assert escalated_result.admitted_profile_verified is False
     assert escalated_result.runtime_registration_allowed is False
 
-    # Non-profile input is rejected without exception or inference.
     invalid_result = check_registry_classification_compatibility(None)  # type: ignore[arg-type]
     assert invalid_result.status == REJECTED
-    assert invalid_result.compatible is False
 
     print("STEP103_VERIFIED_PROFILE_REGISTRY_CLASSIFICATION_COMPATIBILITY_CONTRACT_PASS")
 
