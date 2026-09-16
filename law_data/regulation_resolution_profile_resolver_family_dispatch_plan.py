@@ -10,6 +10,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from .legal_condition_catalogue_seed import LegalConditionCatalogueSeed
+from .legal_condition_classification_profile_admission import (
+    LegalConditionClassificationEvidence,
+    LegalConditionClassificationVerificationResult,
+)
 from .regulation_resolution_profile import RegulationResolutionProfile
 from .regulation_resolution_profile_resolver_family_eligibility import (
     evaluate_resolver_family_eligibility,
@@ -61,14 +66,24 @@ class RegulationResolutionProfileResolverFamilyDispatchPlan:
 
 def build_resolver_family_dispatch_plan(
     admitted_profile: RegulationResolutionProfile,
+    *,
+    seed: LegalConditionCatalogueSeed | None = None,
+    evidence: LegalConditionClassificationEvidence | None = None,
+    verification: LegalConditionClassificationVerificationResult | None = None,
 ) -> RegulationResolutionProfileResolverFamilyDispatchPlan:
-    """Build a non-executable plan only after STEP104 eligibility is rechecked.
+    """Build a non-executable plan only after STEP104 provenance is rechecked.
 
-    The resolver-family label comes only from STEP104 eligibility. Standard code,
-    registry data, condition-name heuristics, and caller metadata cannot select or
-    change the family. Unsupported families fail closed.
+    The exact STEP101 seed/evidence/verification artifacts are propagated into
+    STEP104 and therefore STEP103. Profile-only or cross-artifact calls fail
+    closed. The family never comes from standard_code, registry inference, or
+    caller metadata.
     """
-    eligibility = evaluate_resolver_family_eligibility(admitted_profile)
+    eligibility = evaluate_resolver_family_eligibility(
+        admitted_profile,
+        seed=seed,
+        evidence=evidence,
+        verification=verification,
+    )
     if not eligibility.eligible:
         return RegulationResolutionProfileResolverFamilyDispatchPlan(
             status=REJECTED,
