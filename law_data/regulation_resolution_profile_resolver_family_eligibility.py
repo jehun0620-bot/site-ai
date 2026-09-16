@@ -2,9 +2,8 @@
 
 This boundary does not discover, import, select, or execute a resolver callable.
 It only exposes the already-verified profile resolution_type as an eligible
-family label after STEP103 registry compatibility is recomputed successfully.
-Compatibility is recomputed from the supplied profile so no detached or stale
-compatibility result can be reused for another profile.
+family label after STEP103 registry compatibility is recomputed successfully
+from the exact STEP101 provenance artifacts.
 
 Eligibility is not SITE truth, resolver execution authority, production
 readiness, production registration, runtime registration, or SITE mutation.
@@ -15,6 +14,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from .legal_condition_catalogue_seed import LegalConditionCatalogueSeed
+from .legal_condition_classification_profile_admission import (
+    LegalConditionClassificationEvidence,
+    LegalConditionClassificationVerificationResult,
+)
 from .regulation_resolution_profile import RegulationResolutionProfile
 from .regulation_resolution_profile_registry_classification_compatibility import (
     check_registry_classification_compatibility,
@@ -56,12 +60,17 @@ class RegulationResolutionProfileResolverFamilyEligibilityResult:
 
 def evaluate_resolver_family_eligibility(
     admitted_profile: RegulationResolutionProfile,
+    *,
+    seed: LegalConditionCatalogueSeed | None = None,
+    evidence: LegalConditionClassificationEvidence | None = None,
+    verification: LegalConditionClassificationVerificationResult | None = None,
 ) -> RegulationResolutionProfileResolverFamilyEligibilityResult:
-    """Return the admitted resolution family only after exact STEP103 compatibility.
+    """Return the family only after exact STEP103 provenance compatibility.
 
-    The family label is copied from the admitted profile itself, never from the
-    built-in registry and never from standard_code. STEP103 is recomputed here;
-    callers cannot supply a detached compatibility result as proof.
+    STEP103 is recomputed from the profile plus the exact STEP101 seed,
+    classification evidence, and verification result. Profile-only calls and
+    cross-artifact reuse therefore fail closed. The family label is copied from
+    the admitted profile itself, never from registry data or standard_code.
     """
     if not isinstance(admitted_profile, RegulationResolutionProfile):
         return RegulationResolutionProfileResolverFamilyEligibilityResult(
@@ -70,7 +79,12 @@ def evaluate_resolver_family_eligibility(
             classification_compatible=False,
         )
 
-    compatibility = check_registry_classification_compatibility(admitted_profile)
+    compatibility = check_registry_classification_compatibility(
+        admitted_profile,
+        seed=seed,
+        evidence=evidence,
+        verification=verification,
+    )
     if not compatibility.compatible:
         return RegulationResolutionProfileResolverFamilyEligibilityResult(
             status=REJECTED,
