@@ -17,10 +17,18 @@ BOUNDARY_NAME = "LEGAL_CONDITION_CATALOGUE_SEED"
 
 STATUTE_APPENDIX = "STATUTE_APPENDIX"
 DECREE_APPENDIX = "DECREE_APPENDIX"
+STATUTE_ARTICLE = "STATUTE_ARTICLE"
+DECREE_ARTICLE = "DECREE_ARTICLE"
 OFFICIAL_GAZETTE = "OFFICIAL_GAZETTE"
 
 VALID_SOURCE_FAMILIES = frozenset(
-    {STATUTE_APPENDIX, DECREE_APPENDIX, OFFICIAL_GAZETTE}
+    {
+        STATUTE_APPENDIX,
+        DECREE_APPENDIX,
+        STATUTE_ARTICLE,
+        DECREE_ARTICLE,
+        OFFICIAL_GAZETTE,
+    }
 )
 
 
@@ -47,12 +55,12 @@ def _freeze_metadata(value: Mapping[str, Any] | None) -> Mapping[str, Any]:
 
 @dataclass(frozen=True)
 class LegalEnumerationProvenance:
-    """Reproducible source-family-specific identity for one enumeration row.
+    """Reproducible source-family-specific identity for one legal enumeration.
 
     Verification is explicit and fail-closed. Descriptive identifiers never
     manufacture verification. A verified provenance must contain one complete
-    identity family and may not mix statute/decree appendix identifiers with
-    official-gazette identifiers.
+    identity family and may not mix article, appendix, or official-gazette
+    identifiers.
     """
 
     source_family: str
@@ -62,6 +70,9 @@ class LegalEnumerationProvenance:
     law_id: str | None = None
     law_version_id: str | None = None
     effective_date: str | None = None
+    article_id: str | None = None
+    paragraph_id: str | None = None
+    item_id: str | None = None
     appendix_id: str | None = None
     row_id: str | None = None
 
@@ -87,6 +98,9 @@ class LegalEnumerationProvenance:
             "law_id": _clean_optional_text(self.law_id),
             "law_version_id": _clean_optional_text(self.law_version_id),
             "effective_date": _clean_optional_text(self.effective_date),
+            "article_id": _clean_optional_text(self.article_id),
+            "paragraph_id": _clean_optional_text(self.paragraph_id),
+            "item_id": _clean_optional_text(self.item_id),
             "appendix_id": _clean_optional_text(self.appendix_id),
             "row_id": _clean_optional_text(self.row_id),
             "gazette_issue_id": _clean_optional_text(self.gazette_issue_id),
@@ -95,10 +109,17 @@ class LegalEnumerationProvenance:
             "issuing_authority": _clean_optional_text(self.issuing_authority),
         }
 
-        appendix_fields = (
+        law_core_fields = (
             fields["law_id"],
             fields["law_version_id"],
             fields["effective_date"],
+        )
+        article_locator_fields = (
+            fields["article_id"],
+            fields["paragraph_id"],
+            fields["item_id"],
+        )
+        appendix_locator_fields = (
             fields["appendix_id"],
             fields["row_id"],
         )
@@ -110,15 +131,25 @@ class LegalEnumerationProvenance:
         )
 
         if source_family in {STATUTE_APPENDIX, DECREE_APPENDIX}:
-            if any(gazette_fields):
+            if any(article_locator_fields) or any(gazette_fields):
                 raise ValueError(
-                    "appendix provenance cannot contain official-gazette identity fields"
+                    "appendix provenance cannot contain article or official-gazette identity fields"
                 )
-            required = appendix_fields
-        else:
-            if any(appendix_fields):
+            required = law_core_fields + appendix_locator_fields
+        elif source_family in {STATUTE_ARTICLE, DECREE_ARTICLE}:
+            if any(appendix_locator_fields) or any(gazette_fields):
                 raise ValueError(
-                    "official-gazette provenance cannot contain statute/decree appendix identity fields"
+                    "article provenance cannot contain appendix or official-gazette identity fields"
+                )
+            required = law_core_fields + (fields["article_id"],)
+            if fields["item_id"] and not fields["paragraph_id"]:
+                raise ValueError("item_id requires paragraph_id for article provenance")
+        else:
+            if any(law_core_fields) or any(article_locator_fields) or any(
+                appendix_locator_fields
+            ):
+                raise ValueError(
+                    "official-gazette provenance cannot contain statute/decree identity fields"
                 )
             required = gazette_fields
 
@@ -154,6 +185,9 @@ class LegalEnumerationProvenance:
             "law_id": self.law_id,
             "law_version_id": self.law_version_id,
             "effective_date": self.effective_date,
+            "article_id": self.article_id,
+            "paragraph_id": self.paragraph_id,
+            "item_id": self.item_id,
             "appendix_id": self.appendix_id,
             "row_id": self.row_id,
             "gazette_issue_id": self.gazette_issue_id,
