@@ -361,6 +361,31 @@ RegulationResolutionProfile
 표준코드가 확인되지 않은 조건은 `standard_code=None`, `standard_code_verified=False`를 허용하며
 코드를 추측하지 않는다. profile 존재는 조건 identity/policy metadata일 뿐 legal evidence가 아니다.
 
+SITE applicability admission은 resolver verification과 별도의 fail-closed boundary로 둔다.
+
+```text
+resolver result
+≠ parcel applicability
+
+SITE-decision eligibility
+≠ SITE truth
+
+verified candidate SITE decision
++
+canonical SITE identity / PNU
++
+verified parcel applicability
+→ SITE applicability admission
+```
+
+필수 불변조건:
+
+- resolver 결과 또는 SITE-decision eligibility만으로 SITE TRUE/FALSE를 승격하지 않는다.
+- candidate decision은 현재 분석 중인 canonical SITE/PNU와 명시적으로 결합되어야 한다.
+- 다른 PNU의 evidence 또는 parcel binding이 확인되지 않은 evidence를 재사용하지 않는다.
+- parcel applicability가 검증되지 않으면 UNKNOWN 또는 admission rejection을 유지한다.
+- SITE applicability admission 통과 자체는 production/runtime registration 권한을 의미하지 않는다.
+- 별도의 두 번째 SITE truth path를 만들지 않고 기존 production consumption architecture에 합류시킨다.
 
 8. REGULATION RESOLUTION 내부 파이프라인
 ======================================================================
@@ -1226,17 +1251,47 @@ PHASE 9 — NATIONWIDE REGULATION REGISTRY
 
 목표:
 
-각 규제를 resolution type에 따라 분류하고 반복 가능한 pipeline으로 전환한다.
+각 규제를 resolution type에 따라 분류하고 반복 가능한 provenance-bound pipeline으로 전환한다.
 
-결과:
+현재 locally validated architecture chain:
+
+```text
+STEP98 Evidence→Seed admission
+→ STEP101 verified classification→profile admission
+→ STEP103 registry classification compatibility
+→ STEP104 resolver-family eligibility
+→ STEP106 dispatch plan
+→ STEP108 input admission
+→ STEP110 resolver execution
+→ STEP112 resolver result verification
+→ STEP114 SITE-decision eligibility
+→ SITE applicability admission pending
+```
+
+현재 상태:
+
+- profile / registry / resolver-family dispatch 및 execution verification 경계 구축
+- STEP114 SITE-decision eligibility까지 provenance-bound contract 검증
+- STEP114 결과는 candidate decision이며 SITE truth가 아님
+- canonical SITE/PNU와의 parcel applicability admission은 다음 architecture boundary
+- production/runtime registration은 별도 authorization 전까지 BLOCKED
+- unresolved real-condition evidence는 UNKNOWN을 유지
+- 기존 historical production consumption path와 별도의 SITE truth path를 만들지 않음
+
+목표 흐름:
 
 ```text
 standard_code
 → resolution policy
-→ source adapters
-→ verifier
+→ source/provenance admission
+→ verified classification/profile
+→ resolver-family dispatch
+→ resolver execution
+→ resolver-result verification
+→ SITE-decision eligibility
+→ canonical SITE/PNU applicability admission
+→ existing production consumption boundary
 ```
-
 
 PHASE 10 — LEGAL KNOWLEDGE GRAPH / VERSIONING
 
@@ -1347,7 +1402,7 @@ PHASE 19 — PRODUCTION QUALITY
 31. CURRENT ARCHITECTURE CHECKPOINT
 ======================================================================
 
-2026-09-10 기준 프로젝트는 MASTER ROADMAP상 대략 다음 위치다.
+2026-09-16 기준 프로젝트는 MASTER ROADMAP상 대략 다음 위치다.
 
 ```text
 PHASE 0   Foundation                    COMPLETE
@@ -1357,26 +1412,51 @@ PHASE 3   SITE Analysis                 CORE COMPLETE
 PHASE 4   Legal ingestion               IN PROGRESS
 PHASE 5   Rule Engine                   IN PROGRESS / CORE STABLE
 PHASE 6   Runtime spatial               CORE STABLE
-PHASE 7   Regulation Resolution         ACTIVE / PROFILE BOUNDARY CLOSED
+PHASE 7   Regulation Resolution         ACTIVE / PROFILE + RESOLVER CONTRACTS ADVANCED
 PHASE 8   Authority/Historical          CORE INFRASTRUCTURE TERMINALLY RECONCILED / EVIDENCE-DRIVEN EXTENSIONS DEFERRED
-PHASE 9   Nationwide Regulation Registry NEXT / ENTRY AUDIT PENDING
+PHASE 9   Nationwide Regulation Registry ACTIVE / PROVENANCE-BOUND CHAIN VALIDATED THROUGH STEP114
 PHASE 10+ Knowledge/AI/Product           FUTURE
 ```
 
-STEP 18 production SITE condition boundary, STEP 19 regulation resolution profile boundary,
-STEP 20 authority/source scope boundary는 각각 terminally closed 상태다.
+Current locally validated provenance-bound chain:
 
-이 closure는 production/runtime registration 완료를 뜻하지 않는다.
-현재는 향후 AI 분석의 정확성을 결정하는 deterministic data foundation을 구축하는 단계다.
+```text
+STEP98
+→ STEP101
+→ STEP103
+→ STEP104
+→ STEP106
+→ STEP108
+→ STEP110
+→ STEP112
+→ STEP114
+→ STOP
+```
 
+STEP114 is the current terminal candidate SITE-decision eligibility boundary.
 
-PHASE 8 terminal reconciliation note:
+This does not mean SITE truth promotion or production/runtime registration.
 
-The closure above does not mean production/runtime registration of unresolved conditions. It means the common authority/historical infrastructure is reconciled at the currently verified evidence boundary.
+The next architecture boundary must reconcile:
 
-Verified authority/source mappings and real historical-condition evidence remain evidence-driven extensions. They may reopen PHASE 8 only when new verified evidence justifies implementation.
+```text
+STEP114 verified candidate
++
+canonical SITE identity / PNU
++
+verified parcel applicability
+→ fail-closed SITE applicability admission
+→ existing production consumption architecture
+```
 
-The next architecture entry-audit target is PHASE 9 Nationwide Regulation Registry.
+Cross-PNU or unbound evidence must not be promoted.
+Unverified parcel applicability remains UNKNOWN or rejected from admission.
+
+The architecture must not create a second parallel SITE truth path.
+
+PHASE 8 terminal reconciliation remains valid:
+verified authority/source mappings and unresolved real historical-condition evidence remain evidence-driven extensions.
+
 
 
 32. 현재 UQQ700에서 얻은 아키텍처 교훈
@@ -1474,6 +1554,31 @@ reverse verification
 
 36. ARCHITECTURE CHANGE LOG
 ======================================================================
+
+### v1.2 reconciliation — 2026-09-16
+
+STEP114까지 실제 구현된 provenance-bound Regulation Resolution 흐름과
+다음 SITE/PNU applicability admission 경계를 기존 v1.2 baseline에 정합화했다.
+
+반영 내용:
+
+- STEP98→STEP114 provenance/profile/resolver chain 반영
+- resolver result와 parcel applicability 분리
+- SITE-decision eligibility와 SITE truth 분리
+- canonical SITE/PNU binding을 후속 admission의 필수 조건으로 명시
+- cross-PNU / unbound evidence promotion 금지
+- parcel applicability 미검증 시 UNKNOWN/rejection 유지
+- 후속 admission을 기존 production consumption architecture와 합류시키도록 명시
+- 두 번째 독립 SITE truth path 생성 금지
+- PHASE 9 및 CURRENT ARCHITECTURE CHECKPOINT를 실제 STEP114 상태와 정합화
+
+기존 behavior 영향:
+
+- 없음. architecture documentation reconciliation이다.
+- SITE truth promotion 권한을 새로 부여하지 않는다.
+- production/runtime registration을 허용하지 않는다.
+- public API historical injection boundary를 변경하지 않는다.
+- UQQ700 및 unresolved historical condition의 UNKNOWN/BLOCKED 정책을 변경하지 않는다.
 
 ### v1.2 — 2026-09-10
 
