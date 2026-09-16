@@ -31,6 +31,8 @@ OFFICIAL FACT
 - resolver result ≠ parcel applicability
 - SITE-decision eligibility ≠ SITE truth
 - SITE applicability admission ≠ production/runtime registration authority
+- promotion authorization ≠ second SITE truth store
+- verified envelope ≠ new Rule Engine
 - LLM 합의 ≠ source verification
 - 조건 미충족 상태에서 수치 확정 금지
 
@@ -54,46 +56,17 @@ SITE CONDITION과 PROJECT CONDITION을 분리한다. PROJECT 조건을 SITE 사�
 
 ## 4. Canonical SITE / PNU
 
-모든 후속 판정은 동일한 실제 필지를 바라봐야 한다.
-
-```text
-주소/지번
-→ 법정동 identity
-→ PNU
-→ official land/building data
-→ SITE identity
-```
-
-다른 PNU의 snapshot, geometry, evidence 재사용을 금지한다. API 오류와 규제 FALSE도 분리한다.
+모든 후속 판정은 동일한 실제 필지를 바라봐야 한다. 다른 PNU의 snapshot, geometry, evidence, admission, promotion input을 재사용하지 않는다.
 
 ## 5. Runtime spatial SITE fact
 
-Runtime spatial condition은 parcel geometry, target PNU, CRS, regulation geometry intersection을 검증한다. Spatial query 실패를 FALSE로 바꾸지 않으며 EPSG:4326 degree²를 법적 면적으로 사용하지 않는다.
+Runtime spatial condition은 parcel geometry, target PNU, CRS, regulation geometry intersection을 검증한다. Spatial query 실패를 FALSE로 바꾸지 않는다. Historical provenance는 spatial runtime condition channel과 별도로 유지한다.
 
-Historical provenance는 이 spatial runtime channel과 별도로 유지한다.
+## 6. Regulation resolution / numbered chain
 
-## 6. Regulation resolution
+표준 상태는 `TRUE / FALSE / UNKNOWN`이다. 주요 family는 `SPATIAL_DATA_CONFIRMED`, `NOTICE_CONFIRMED`, `LEGAL_RULE_CALCULATED`, `HYBRID_SPATIAL_NOTICE`, `HISTORICAL_SITE_EVENT`, `EXTERNAL_AUTHORITY_REQUIRED`다.
 
-표준 상태:
-```text
-TRUE / FALSE / UNKNOWN
-```
-
-주요 resolution family:
-```text
-SPATIAL_DATA_CONFIRMED
-NOTICE_CONFIRMED
-LEGAL_RULE_CALCULATED
-HYBRID_SPATIAL_NOTICE
-HISTORICAL_SITE_EVENT
-EXTERNAL_AUTHORITY_REQUIRED
-```
-
-Profile metadata는 resolver execution, SITE truth, production registration, runtime registration 또는 Rule Engine input과 동일하지 않다.
-
-## 7. Provenance-bound numbered chain
-
-현재 validated architecture STEP chain:
+현재 validated numbered architecture chain:
 
 ```text
 STEP98 Evidence→Seed admission
@@ -107,95 +80,81 @@ STEP98 Evidence→Seed admission
 → STEP114 SITE-decision eligibility
 ```
 
-STEP114는 candidate SITE decision eligibility이며 SITE truth가 아니다. STEP114 이후 구현된 경계에는 아직 새 STEP 번호를 부여하지 않는다.
+STEP114는 candidate SITE decision eligibility이며 SITE truth가 아니다. 이후 구현 경계에는 새 STEP 번호를 부여하지 않는다.
 
-## 8. Historical SITE applicability
+## 7. Historical SITE applicability / forwarding
 
 ```text
 STEP114 verified candidate
-+
-canonical SITE identity / PNU
-+
-family-specific verified parcel applicability evidence
++ canonical SITE/PNU
++ family-specific verified parcel applicability evidence
 → fail-closed SITE applicability admission
+→ actual Site PNU rebinding
+→ candidate↔repair state consistency
+→ candidate↔condition identity binding
+→ admitted historical Rule Input adapter
 ```
 
-Historical parcel evidence는 event identity, official source verification, parcel binding verification, event binding verification을 요구한다.
+Admission이나 forwarding gate 자체는 SITE truth mutation/promotion 권한이 아니다. Candidate decision을 새 repair로 합성하지 않고 trusted handoff의 condition/state/source를 보존한다.
 
-Admission 규칙:
-- canonical/target/evidence PNU 불일치 → 거부
-- family evidence kind 불일치 → 거부
-- unverified applicability → UNKNOWN/rejection
-- admission 자체로 SITE truth mutation/promotion 금지
-- admission 자체로 production/runtime registration 금지
+## 8. Historical SITE-truth promotion boundaries
 
-## 9. Historical production safety gates
-
-Historical path는 새 병렬 production path를 만들지 않고 기존 service/builder/Rule Engine 경로를 사용한다.
-
-현재 validated 흐름:
+Promotion은 기존 production truth/Rule Engine architecture를 우회하는 별도 store/path가 아니다.
 
 ```text
-PNU-bound SITE applicability ADMITTED
+applicability + trusted candidate/repair/condition
+→ pre-promotion same-fact binding authorization
+→ current canonical PNU binding authorization
+→ final non-executing promotion authorization
+→ isolated promotion executor
+→ promotion Rule Input bridge
+```
+
+각 경계의 역할:
+- same-fact binding: applicability, candidate state, trusted condition, historical mutation execution이 같은 사실을 가리키는지 검증
+- PNU binding: 현재 canonical PNU와 promotion 대상 PNU를 명시적으로 결합
+- final authorization: authorized repairs가 bound condition/state/provenance와 일치하는지 검증하되 mutation을 실행하지 않음
+- isolated executor: 승인된 promoted SITE condition snapshot을 만들지만 global registry/Rule Engine/runtime/API를 직접 변경하지 않음
+- promotion bridge: executor 결과의 type/state/confidence/source/PNU 정합성을 검증하고 기존 historical Rule Input shape로 변환
+
+## 9. Verified historical Rule Input envelope
+
+Production Orchestrator는 legacy typed historical path 또는 promotion bridge path의 검증을 끝낸 뒤 실제 Site PNU를 다시 확인한다. 통과한 historical Rule Input만 `HistoricalVerifiedRuleInputEnvelope`로 봉인한다.
+
+```text
+Orchestrator verified historical input
++ actual canonical Site PNU
+→ verified envelope
+→ service envelope check
+→ builder envelope + current site_input PNU recheck
+→ historical registry adapter
+→ spatial/historical collision policy
+→ merged-registry live-consumption authorization
+→ existing Rule Engine
+```
+
+Service와 Builder의 raw historical dict 직접 주입은 fail-closed다. Builder는 envelope canonical PNU와 현재 `site_input` PNU가 정확히 같아야 historical consumption을 진행한다.
+
+Envelope는 새로운 truth decision이나 새로운 Rule Engine이 아니다. 이미 검증된 input과 canonical PNU를 함께 운반하는 production boundary다.
+
+## 10. Single production consumption lane
+
+Historical path는 새 병렬 Rule Engine을 만들지 않는다. 최종 소비는 기존 builder의 단일 경로다.
+
+```text
+spatial SITE registry
 +
-typed trusted historical handoff AUTHORIZED
-↓
-actual Site object PNU rebinding
-↓
-candidate↔repair state consistency authorization
-↓
-candidate↔condition identity binding authorization
-↓
-admitted historical Rule Input adapter READY
-↓
-existing service
-↓
-existing builder
-↓
-historical registry / collision policy / live consumption authorization
-↓
-existing Rule Engine
+verified historical registry
+→ collision policy
+→ live-consumption authorization
+→ existing evaluate_site_rules / Rule Engine
 ```
 
-### Actual SITE PNU rebinding
-Applicability에서 검증한 canonical PNU와 이번 요청으로 실제 생성된 Site의 PNU가 정확히 같아야 한다. 다른 필지에서 만들어진 admission 재사용을 막는다.
-
-### Candidate↔repair consistency
-현재 STEP114 historical eligibility는 verified `FALSE` candidate만 eligible하다. Trusted repairs의 상태가 이 candidate와 모순되면 production forwarding을 차단한다. 이 경계는 상태 일치 검증이며 condition identity를 새로 정의하지 않는다.
-
-### Candidate↔condition binding
-Trusted repairs의 `condition` 이름을 검증하여 하나의 명확한 historical condition identity만 존재하도록 한다. 같은 condition이 여러 Rule 위치에서 반복되어 여러 repair가 존재하는 것은 허용하지만, 서로 다른 condition 이름이 섞이면 fail-closed다.
-
-Condition identity는 새로 발명하지 않는다. 기존 upstream historical mutation/preview/execution chain과 trusted repair가 가진 condition identity를 보존한다.
-
-### Adapter
-위 gate들이 통과한 뒤에만 기존 historical Rule Engine input shape를 만든다. Candidate decision을 새 repair로 합성하지 않는다. 실제 repair의 source는 기존 trusted handoff다.
-
-## 10. SITE truth와 production consumption의 분리
-
-현재 historical path가 Rule Engine에서 trusted repair를 소비할 수 있다는 사실은 별도의 일반 SITE truth promotion 권한을 의미하지 않는다.
-
-```text
-verified candidate
-≠ SITE truth
-
-SITE applicability admitted
-≠ SITE truth promotion
-
-production forwarding authorized
-≠ generic SITE truth mutation authority
-```
-
-따라서 향후 SITE truth/promotion authorization을 설계하더라도 기존 SITE registry/runtime architecture를 우회하는 두 번째 truth store/path를 만들지 않는다.
+Repository-wide local grep at behavioral PASS HEAD `21de2d3eb5af39bb1cc5b78e243e116a04d14538`에서 production raw-historical bypass caller는 발견되지 않았다. 남은 raw 직접 호출은 fail-closed 회귀 테스트 또는 isolated adapter/bridge 테스트다.
 
 ## 11. Public API / runtime exposure
 
-현재 public FastAPI request에는 다음 historical 내부 입력을 노출하지 않는다:
-- `historical_rule_input`
-- `historical_handoff_authorization`
-- `historical_site_applicability_admission`
-
-Historical provenance는 spatial runtime condition channel에 등록되지 않는다. 현재 reconciliation은 public historical injection, historical spatial runtime registration, generic SITE truth promotion 권한을 부여하지 않는다.
+현재 public FastAPI request에는 historical 내부 입력을 노출하지 않는다. Historical provenance는 spatial runtime condition channel에 등록하지 않는다. Promotion/envelope reconciliation도 public historical injection 권한이나 historical spatial runtime registration 권한을 부여하지 않는다.
 
 ## 12. Authority / historical evidence
 
@@ -211,7 +170,7 @@ OFFICIAL HOST
 
 Historical discovery에서도 endpoint 발견, query 결과, search title, source 미발견만으로 target document verification 또는 FALSE를 만들지 않는다. Designation/change/release/cancellation/supersession timeline과 provenance를 보존한다.
 
-## 13. Hybrid spatial/notice
+## 13. Hybrid spatial/notice / UQQ700
 
 HYBRID TRUE의 최소 원칙:
 
@@ -224,8 +183,6 @@ SITE_SPATIAL_INCLUSION_VERIFIED
 → TRUE candidate
 ```
 
-단순 검색 실패는 FALSE가 아니다.
-
 ### UQQ700 개발밀도관리구역
 - family: `HYBRID_SPATIAL_NOTICE`
 - standard code: `UQQ700`
@@ -237,18 +194,11 @@ SITE_SPATIAL_INCLUSION_VERIFIED
 
 ## 14. Legal knowledge / deterministic Rule Engine
 
-법률→시행령→시행규칙→조례→고시→별표→지침의 delegation/version chain을 보존한다. 개정 전 원문과 effective/promulgation date를 유지하고 as-of analysis로 발전한다.
-
-Condition family:
-```text
-SITE / PROJECT / PROCEDURE / AUTHORITY / TEMPORAL / SPATIAL
-```
-
-계산 가능한 결과는 Rule Engine이 결정한다. 조건이 확정되지 않으면 숫자를 임의 확정하지 않는다.
+법률→시행령→시행규칙→조례→고시→별표→지침의 delegation/version chain을 보존한다. Condition family는 SITE / PROJECT / PROCEDURE / AUTHORITY / TEMPORAL / SPATIAL로 분리한다. 계산 가능한 결과는 Rule Engine이 결정하고 조건이 확정되지 않으면 숫자를 임의 확정하지 않는다.
 
 ## 15. Provenance / verification
 
-모든 중요한 결과는 역추적 가능해야 한다.
+모든 중요한 결과는 다음처럼 역추적 가능해야 한다.
 
 ```text
 Final result
@@ -260,31 +210,18 @@ Final result
 
 AI는 설명과 쟁점 발견을 담당하되 규제 TRUE/FALSE, PNU, 법적 source 또는 수치 상한을 임의 생성하지 않는다.
 
-## 16. Test / error policy
+## 16. Test / fail-safe policy
 
-Test categories:
-```text
-UNIT
-BEHAVIORAL REGRESSION
-INTEGRATION
-END-TO-END
-POLICY ASSERTION
-```
+Test categories: UNIT / BEHAVIORAL REGRESSION / INTEGRATION / END-TO-END / POLICY ASSERTION.
 
-오류/불확실성 상태를 분리한다:
-```text
-NOT_APPLICABLE
-UNKNOWN
-SOURCE_UNAVAILABLE
-SOURCE_ERROR
-UNVERIFIED
-```
+불확실성은 NOT_APPLICABLE / UNKNOWN / SOURCE_UNAVAILABLE / SOURCE_ERROR / UNVERIFIED로 구분한다.
 
-Fail-safe:
 ```text
 잘못된 TRUE보다 UNKNOWN이 낫다.
 잘못된 FALSE보다 UNKNOWN이 낫다.
 ```
+
+최신 user-local validation에는 promotion bridge contract, promotion E2E, orchestrator promotion wiring, verified-envelope builder handoff, verified-envelope service exposure 계약이 모두 PASS로 포함된다.
 
 ## 17. Security / repository policy
 
@@ -296,31 +233,28 @@ Fail-safe:
 
 ## 18. Numbering policy
 
-Architecture STEP98…STEP114와 legal-source investigation S206…S216/future S217은 별개다. 서로 번호를 연결하거나 S217을 STEP115로 부르지 않는다.
-
-새 architecture STEP은 repository design/documentation에서 명시적으로 확립할 때만 부여한다.
+Architecture STEP98…STEP114와 legal-source investigation S206…S216/future S217은 별개다. 서로 번호를 연결하거나 S217을 STEP115로 부르지 않는다. 새 architecture STEP은 repository design/documentation에서 명시적으로 확립할 때만 부여한다.
 
 ## 19. Current validated architecture position
 
-User-local behavioral validation through HEAD `29967e6fbde26bb6d3839bc2202ad363fb41bdf5` establishes:
+Behavioral PASS HEAD `21de2d3eb5af39bb1cc5b78e243e116a04d14538` establishes:
 
 ```text
-verified historical FALSE candidate
+verified historical candidate
 → verified parcel/PNU applicability
 → actual-SITE PNU rebinding
 → candidate/repair state consistency
 → candidate/condition identity binding
-→ admitted existing historical Rule Input
-→ existing builder / Rule Engine consumption
+→ promotion binding/authorization/execution/bridge where explicitly authorized
+→ production Orchestrator PNU recheck
+→ verified envelope
+→ Service / Builder PNU recheck
+→ existing collision/live-consumption authorization
+→ existing Rule Engine
 ```
 
-STEP74 E2E confirms the reconciled historical path while preserving:
-- normal no-historical analysis
-- no public API historical exposure
-- no historical spatial runtime registration
-- no real-condition activation implied by the test
-- caller input immutability
+This preserves normal no-historical analysis, caller input immutability, no public historical API exposure, no historical spatial-runtime registration, and no second Rule Engine/SITE truth path.
 
 ## 20. Next design question
 
-The next work is a READ-ONLY audit, not an assumed new STEP. Determine what evidence/authority would be required before any generic SITE truth/promotion authorization can be designed, while preserving the existing SITE registry/runtime architecture and avoiding a second truth path.
+Historical promotion→production Rule Engine internal bypass hardening is complete at the current user-local validation point. The next work begins with a READ-ONLY architecture gap audit. Do not assume a new STEP. Preserve canonical PNU binding, verified-envelope fail-closed behavior, one production consumption lane, public API historical non-exposure, spatial/historical separation, and UQQ700 UNKNOWN/BLOCKED policy.
