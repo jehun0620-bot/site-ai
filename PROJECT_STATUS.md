@@ -2,14 +2,14 @@
 
 최종 업데이트: 2026-09-16
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `29967e6fbde26bb6d3839bc2202ad363fb41bdf5`
+기준 behavioral PASS HEAD: `21de2d3eb5af39bb1cc5b78e243e116a04d14538`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP114 behavioral validation 이후 provenance-bound SITE applicability와 historical production wiring을 fail-closed로 연결했고, 이후 실제 SITE PNU 재결합, candidate↔repair 상태 일치, candidate↔condition identity 결합까지 구현·검증했다.
+STEP114 이후 historical SITE applicability, production forwarding, SITE-truth promotion 전 검증, isolated promotion execution, promotion Rule Input bridge, production orchestrator wiring, verified historical Rule Input envelope까지 구현·사용자 로컬 검증했다.
 
 STEP114 이후 기능 경계에는 아직 새 architecture STEP 번호를 부여하지 않는다.
 
@@ -31,22 +31,27 @@ STEP98 Evidence→Seed admission
 → candidate↔repair consistency authorization
 → candidate↔condition binding authorization
 → admitted historical rule-input adapter
-→ existing service / builder / Rule Engine consumption path
+→ pre-promotion same-fact binding authorization
+→ PNU-scoped pre-promotion authorization
+→ final non-executing promotion authorization
+→ isolated promotion executor
+→ promotion Rule Input bridge
+→ production orchestrator PNU rebinding
+→ verified historical Rule Input envelope
+→ service
+→ builder envelope/PNU recheck
+→ historical registry / collision / live-consumption authorization
+→ existing Rule Engine
 ```
 
-핵심 user-local behavioral validation:
-- `STEP114_PROVENANCE_BOUND_SITE_DECISION_ELIGIBILITY_CONTRACT_PASS`
-- `PROVENANCE_BOUND_SITE_APPLICABILITY_ADMISSION_CONTRACT_PASS`
-- `HISTORICAL_SITE_EVENT_PARCEL_APPLICABILITY_EVIDENCE_CONTRACT_PASS`
-- `HISTORICAL_SITE_EVENT_SITE_APPLICABILITY_ADMISSION_CONTRACT_PASS`
-- `HISTORICAL_SITE_EVENT_ADMITTED_RULE_INPUT_ADAPTER_CONTRACT_PASS`
-- `SITE_ANALYSIS_ORCHESTRATOR_SITE_APPLICABILITY_WIRING_CONTRACT_PASS`
-- `SITE_ANALYSIS_ORCHESTRATOR_CANONICAL_PNU_REBINDING_CONTRACT_PASS`
-- `HISTORICAL_SITE_EVENT_CANDIDATE_REPAIR_CONSISTENCY_AUTHORIZATION_CONTRACT_PASS`
-- `SITE_ANALYSIS_ORCHESTRATOR_CANDIDATE_REPAIR_CONSISTENCY_WIRING_CONTRACT_PASS`
-- `HISTORICAL_SITE_EVENT_CANDIDATE_CONDITION_BINDING_AUTHORIZATION_CONTRACT_PASS`
-- `SITE_ANALYSIS_ORCHESTRATOR_CANDIDATE_CONDITION_BINDING_WIRING_CONTRACT_PASS`
-- STEP74 historical trusted internal source handoff E2E reconciliation PASS at `29967e6...`
+핵심 최신 user-local PASS:
+- `HISTORICAL_SITE_EVENT_SITE_TRUTH_PROMOTION_RULE_INPUT_BRIDGE_CONTRACT_PASS`
+- `HISTORICAL_SITE_TRUTH_PROMOTION_END_TO_END_REGRESSION_PASS`
+- `SITE_ANALYSIS_ORCHESTRATOR_PROMOTION_RULE_INPUT_WIRING_CONTRACT_PASS`
+- `HISTORICAL_RULE_ENGINE_VERIFIED_ENVELOPE_HANDOFF_PASS`
+- `HISTORICAL_PRODUCTION_VERIFIED_ENVELOPE_EXPOSURE_PASS`
+
+이전 applicability/state/condition binding 계약과 STEP74 reconciliation도 이미 user-local PASS 상태다.
 
 ## 2. Current safety boundary
 
@@ -54,41 +59,46 @@ STEP98 Evidence→Seed admission
 resolver result ≠ parcel applicability
 SITE-decision eligibility ≠ SITE truth
 SITE applicability admission ≠ production/runtime registration authority
+promotion authorization ≠ second SITE truth store
+verified envelope ≠ new Rule Engine
 ```
 
-Historical production 경로:
-
-```text
-trusted historical handoff
-+
-PNU-bound SITE applicability ADMITTED
-↓
-actual Site object PNU == admitted canonical PNU
-↓
-candidate state == trusted repair state
-↓
-all trusted repairs identify one unambiguous condition
-↓
-admitted historical rule-input adapter READY
-↓
-existing service → builder → historical registry / Rule Engine path
-```
+현재 historical production 경로는 Orchestrator에서 실제 Site PNU를 검증한 뒤에만 historical Rule Input을 PNU-bound verified envelope로 봉인한다. Service와 Builder는 raw historical dict를 production historical input으로 허용하지 않는다. Builder는 envelope canonical PNU와 현재 `site_input` PNU를 다시 비교한 뒤에만 기존 historical registry adapter → collision policy → live-consumption authorization → 기존 Rule Engine 경로를 사용한다.
 
 Fail-closed 차단:
 - raw `historical_rule_input` orchestrator 직접 주입
+- raw historical dict의 service 직접 주입
+- raw historical dict의 builder 직접 주입
+- malformed/not-ready verified envelope
+- envelope PNU와 실제 Site/builder PNU 불일치
 - handoff/applicability 한쪽만 존재
-- cross-PNU 또는 실제 Site PNU 재결합 실패
 - UNKNOWN/unverified parcel applicability
 - candidate와 repair state 불일치
-- 서로 다른 historical condition identity가 repair에 혼재
+- 서로 다른 historical condition identity 혼재
 - unauthorized/forged handoff
+- spatial/historical registry conflict
 - public API historical input
 - historical spatial runtime registration
-- admission/binding 결과만으로 SITE truth mutation/promotion
 
-중요: candidate↔condition binding은 condition 이름을 새로 만들지 않는다. 기존 trusted repair의 condition identity가 하나로 명확한지만 검증한다.
+## 3. Promotion reconciliation
 
-## 3. Historical safety / real condition locks
+Promotion 계층은 별도 Rule Engine 또는 별도 SITE truth store를 만들지 않는다.
+
+```text
+verified historical candidate
+→ same-fact binding
+→ current canonical PNU binding
+→ final promotion authorization
+→ isolated executor
+→ promotion Rule Input bridge
+→ Orchestrator actual-SITE PNU recheck
+→ verified envelope
+→ existing production consumption architecture
+```
+
+Promotion bridge는 executor가 이미 만든 promoted SITE condition의 type/state/confidence/source/PNU 정합성을 fail-closed로 검증한다. Bridge 자체는 global registry를 쓰거나 Rule Engine을 호출하거나 public API를 노출하지 않는다.
+
+## 4. Historical safety / real condition locks
 
 Public API historical exposure remains NOT AUTHORIZED.
 Historical data remains excluded from the spatial runtime condition channel.
@@ -111,47 +121,22 @@ Historical data remains excluded from the spatial runtime condition channel.
 
 Legal-source investigation numbering (`S206`…`S216`/future S217) is separate from architecture STEP numbering.
 
-## 4. Architecture state
+## 5. Production wiring state
 
-Architecture Baseline remains v1.2. No new architecture STEP number is assigned.
+`site_data/site_analysis_orchestrator.py` owns the production sealing point. Legacy typed historical applicability/handoff and the newer promotion bridge remain mutually exclusive entry modes; both must pass their own gates and actual-SITE PNU rebinding before a verified envelope is sent downstream.
 
-The current historical-family reconciliation is:
+`site_data/site_analysis_service.py` and `law_data/site_analysis_builder.py` now require `HistoricalVerifiedRuleInputEnvelope` for historical production consumption. The builder independently checks envelope PNU against current site input PNU.
+
+Downstream remains the existing single consumption lane:
 
 ```text
-STEP114 verified FALSE candidate
-+
-canonical SITE/PNU + verified parcel evidence
-→ SITE applicability admission
-→ actual-SITE PNU rebinding
-→ candidate/repair consistency
-→ candidate/condition identity binding
-→ admitted historical Rule Input adapter
-→ existing production consumption architecture
+historical registry adapter
+→ spatial/historical collision policy
+→ merged-registry live-consumption authorization
+→ existing Rule Engine
 ```
 
-This does not create a second SITE truth path. Existing trusted repairs remain the Rule Engine input source. The newer boundaries only determine whether those repairs are safe to forward for the current SITE and candidate.
-
-## 5. Production wiring reconciliation
-
-`site_data/site_analysis_orchestrator.py` requires both typed historical inputs when historical processing is requested:
-- `historical_handoff_authorization`
-- `historical_site_applicability_admission`
-
-The orchestrator now checks, in order:
-1. actual Site PNU rebinding
-2. candidate↔repair state consistency
-3. candidate↔condition identity binding
-4. admitted historical rule-input adapter readiness
-
-Only then is the existing `historical_rule_input` shape forwarded to `site_analysis_service` / builder.
-
-Unchanged production components:
-- `site_data/site_analysis_service.py`
-- `law_data/site_analysis_builder.py`
-- downstream historical registry / Rule Engine integration
-- public API request schema
-
-STEP74 E2E was reconciled to the current FALSE-only STEP114 eligibility contract and passed locally at HEAD `29967e6fbde26bb6d3839bc2202ad363fb41bdf5`.
+Repository-wide local grep at behavioral PASS HEAD found no production raw-historical bypass caller. Remaining direct raw calls are fail-closed tests or isolated adapter/bridge tests.
 
 ## 6. Repository cleanup checkpoint
 
@@ -160,9 +145,9 @@ Cleanup started from STEP114 checkpoint: `ad06db07cf22138e5324eb263ae666814520eb
 
 Validated cleanup remains unchanged. Do not mechanically move/delete `law_data/*` or `site_data/*` for cosmetic cleanup without dependency/path audit and separate approval.
 
-## 7. Documentation state
+## 7. Documentation / architecture state
 
-This update reconciles the status document through actual-SITE PNU rebinding, candidate/repair consistency, candidate/condition binding, and the current STEP74 E2E PASS. Architecture Baseline remains v1.2 and no new STEP number is invented.
+Architecture Baseline remains v1.2. No new architecture STEP number is assigned. Current documentation records the post-STEP114 functional boundaries through promotion wiring and verified-envelope production hardening.
 
 ## 8. Git / local rules
 
@@ -203,16 +188,15 @@ READ-ONLY audit
 
 ## 10. Next action
 
-READ-ONLY design audit of the next real gap after PNU/state/condition binding. Priorities:
-1. distinguish SITE truth/promotion authorization from admission and Rule Engine consumption
-2. determine whether any additional identity/provenance binding is required before promotion can even be designed
-3. preserve public API and spatial-runtime historical boundaries
-4. preserve UQQ700 UNKNOWN/BLOCKED policy
-5. avoid a second SITE truth path
-6. do not assign a new STEP number without explicit repository design
+Historical promotion→production Rule Engine internal bypass hardening is locally validated. The next work should start with a READ-ONLY gap audit from the current architecture rather than assuming a new STEP. Preserve:
+- one SITE truth / Rule Engine consumption architecture
+- canonical PNU binding
+- verified-envelope fail-closed boundary
+- public API historical non-exposure
+- spatial-runtime historical separation
+- UQQ700 UNKNOWN/BLOCKED policy
+- no invented architecture STEP number
 
 ## 11. Handoff policy
 
 In a new chat, reconstruct actual branch HEAD and current files from GitHub READ-ONLY first. Current GitHub code plus user-local execution results override stale summaries/documents.
-
-Preserve cleanup branch, STEP114 checkpoint, Architecture Baseline v1.2, post-STEP114 safety gates, no invented STEP number, protected local output modification, fail-closed invariants, and explicit WRITE approval.
