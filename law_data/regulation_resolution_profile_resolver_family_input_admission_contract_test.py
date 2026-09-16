@@ -44,7 +44,7 @@ def _verified_seed(name: str) -> LegalConditionCatalogueSeed:
     )
 
 
-def _dispatch_plan(*, name: str, condition_type: str, resolution_type: str):
+def _dispatch_admission(*, name: str, condition_type: str, resolution_type: str):
     seed = _verified_seed(name)
     evidence = LegalConditionClassificationEvidence(
         condition_name=seed.condition_name,
@@ -61,51 +61,68 @@ def _dispatch_plan(*, name: str, condition_type: str, resolution_type: str):
     verification = verify_classification_evidence(seed, evidence)
     assert verification.verified
     profile = admit_verified_classification_to_profile(seed, evidence, verification)
-    plan = build_resolver_family_dispatch_plan(profile)
+    plan = build_resolver_family_dispatch_plan(
+        profile,
+        seed=seed,
+        evidence=evidence,
+        verification=verification,
+    )
     assert plan.status == PLANNED
     assert plan.planned
-    return plan
+    return seed, evidence, verification, profile, plan
+
+
+def _admit(admission, resolver_input):
+    seed, evidence, verification, profile, plan = admission
+    return admit_resolver_family_input(
+        plan,
+        resolver_input,
+        admitted_profile=profile,
+        seed=seed,
+        evidence=evidence,
+        verification=verification,
+    )
 
 
 def main() -> None:
-    historical_plan = _dispatch_plan(
+    historical_admission = _dispatch_admission(
         name="도시지역편입해제구역",
         condition_type="SITE_HISTORY",
         resolution_type="HISTORICAL_SITE_EVENT",
     )
-    hybrid_plan = _dispatch_plan(
+    hybrid_admission = _dispatch_admission(
         name="개발밀도관리구역",
         condition_type="SITE",
         resolution_type="HYBRID_SPATIAL_NOTICE",
     )
+    historical_plan = historical_admission[4]
+    hybrid_plan = hybrid_admission[4]
 
     historical_input = HistoricalSiteEventEvidenceState()
     hybrid_input = HybridSpatialNoticeStageResults()
 
-    historical = admit_resolver_family_input(historical_plan, historical_input)
+    historical = _admit(historical_admission, historical_input)
     assert historical.status == ADMITTED
     assert historical.admitted is True
     assert historical.resolver_family == "HISTORICAL_SITE_EVENT"
     assert historical.input_type == "HistoricalSiteEventEvidenceState"
 
-    hybrid = admit_resolver_family_input(hybrid_plan, hybrid_input)
+    hybrid = _admit(hybrid_admission, hybrid_input)
     assert hybrid.status == ADMITTED
     assert hybrid.admitted is True
     assert hybrid.resolver_family == "HYBRID_SPATIAL_NOTICE"
     assert hybrid.input_type == "HybridSpatialNoticeStageResults"
 
-    # Cross-family inputs must fail closed.
-    cross_historical = admit_resolver_family_input(historical_plan, hybrid_input)
+    cross_historical = _admit(historical_admission, hybrid_input)
     assert cross_historical.status == REJECTED
     assert cross_historical.admitted is False
     assert cross_historical.family_input_matches is False
 
-    cross_hybrid = admit_resolver_family_input(hybrid_plan, historical_input)
+    cross_hybrid = _admit(hybrid_admission, historical_input)
     assert cross_hybrid.status == REJECTED
     assert cross_hybrid.admitted is False
     assert cross_hybrid.family_input_matches is False
 
-    # Admission is still non-executable and grants no SITE/production/runtime authority.
     for result in (historical, hybrid):
         assert result.standard_code_used is False
         assert result.resolver_callable_selected is False
@@ -115,13 +132,38 @@ def main() -> None:
         assert result.production_registration_allowed is False
         assert result.runtime_registration_allowed is False
 
-    # A plan whose fail-closed permissions were escalated is no longer planned.
+    # Genuine plan alone is insufficient without the provenance-bearing profile chain.
+    plan_only = admit_resolver_family_input(hybrid_plan, hybrid_input)
+    assert plan_only.status == REJECTED
+    assert plan_only.admitted is False
+    assert plan_only.dispatch_plan_verified is False
+
     escalated_plan = replace(hybrid_plan, resolver_execution_allowed=True)
-    escalated = admit_resolver_family_input(escalated_plan, hybrid_input)
+    escalated = admit_resolver_family_input(
+        escalated_plan,
+        hybrid_input,
+        admitted_profile=hybrid_admission[3],
+        seed=hybrid_admission[0],
+        evidence=hybrid_admission[1],
+        verification=hybrid_admission[2],
+    )
     assert escalated.status == REJECTED
     assert escalated.admitted is False
 
-    # A manually forged plan with an unsupported family cannot admit any input.
+    # Supported-family forged PLANNED plan must not authenticate itself.
+    forged_supported = RegulationResolutionProfileResolverFamilyDispatchPlan(
+        status=PLANNED,
+        resolver_family="HYBRID_SPATIAL_NOTICE",
+        classification_compatible=True,
+    )
+    forged_supported_result = admit_resolver_family_input(
+        forged_supported,
+        hybrid_input,
+    )
+    assert forged_supported_result.status == REJECTED
+    assert forged_supported_result.admitted is False
+    assert forged_supported_result.dispatch_plan_verified is False
+
     unsupported_plan = RegulationResolutionProfileResolverFamilyDispatchPlan(
         status=PLANNED,
         resolver_family="UNSUPPORTED_FAMILY",
@@ -131,8 +173,20 @@ def main() -> None:
     assert unsupported.status == REJECTED
     assert unsupported.admitted is False
 
-    # Arbitrary objects and invalid plans cannot cross the boundary.
-    arbitrary_input = admit_resolver_family_input(hybrid_plan, {"family": "HYBRID"})
+    # Cross-admission provenance cannot authenticate another genuine plan.
+    cross_provenance = admit_resolver_family_input(
+        hybrid_plan,
+        hybrid_input,
+        admitted_profile=hybrid_admission[3],
+        seed=historical_admission[0],
+        evidence=historical_admission[1],
+        verification=historical_admission[2],
+    )
+    assert cross_provenance.status == REJECTED
+    assert cross_provenance.admitted is False
+    assert cross_provenance.dispatch_plan_verified is False
+
+    arbitrary_input = _admit(hybrid_admission, {"family": "HYBRID"})
     assert arbitrary_input.status == REJECTED
     assert arbitrary_input.admitted is False
 
