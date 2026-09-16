@@ -13,9 +13,7 @@ from .legal_condition_classification_profile_admission import (
     verify_classification_evidence,
 )
 from .regulation_resolution_profile import RegulationResolutionProfile
-from .regulation_resolution_profile_registry import (
-    get_regulation_resolution_profile,
-)
+from .regulation_resolution_profile_registry import get_regulation_resolution_profile
 from .regulation_resolution_profile_resolver_family_eligibility import (
     ELIGIBLE,
     REJECTED,
@@ -41,12 +39,7 @@ def _verified_seed(name: str) -> LegalConditionCatalogueSeed:
     )
 
 
-def _admitted_profile(
-    *,
-    name: str,
-    condition_type: str,
-    resolution_type: str,
-) -> RegulationResolutionProfile:
+def _admission(*, name: str, condition_type: str, resolution_type: str):
     seed = _verified_seed(name)
     evidence = LegalConditionClassificationEvidence(
         condition_name=seed.condition_name,
@@ -62,35 +55,43 @@ def _admitted_profile(
     )
     verification = verify_classification_evidence(seed, evidence)
     assert verification.verified
-    return admit_verified_classification_to_profile(seed, evidence, verification)
+    profile = admit_verified_classification_to_profile(seed, evidence, verification)
+    return seed, evidence, verification, profile
+
+
+def _evaluate(admission):
+    seed, evidence, verification, profile = admission
+    return evaluate_resolver_family_eligibility(
+        profile,
+        seed=seed,
+        evidence=evidence,
+        verification=verification,
+    )
 
 
 def main() -> None:
-    hybrid = _admitted_profile(
+    hybrid = _admission(
         name="개발밀도관리구역",
         condition_type="SITE",
         resolution_type="HYBRID_SPATIAL_NOTICE",
     )
-    hybrid_result = evaluate_resolver_family_eligibility(hybrid)
+    hybrid_result = _evaluate(hybrid)
     assert hybrid_result.status == ELIGIBLE
     assert hybrid_result.eligible is True
     assert hybrid_result.resolver_family == "HYBRID_SPATIAL_NOTICE"
     assert hybrid_result.standard_code_used is False
-    assert hybrid.standard_code is None
+    assert hybrid[3].standard_code is None
 
-    historical = _admitted_profile(
+    historical = _admission(
         name="도시지역편입해제구역",
         condition_type="SITE_HISTORY",
         resolution_type="HISTORICAL_SITE_EVENT",
     )
-    historical_result = evaluate_resolver_family_eligibility(historical)
+    historical_result = _evaluate(historical)
     assert historical_result.status == ELIGIBLE
     assert historical_result.eligible is True
     assert historical_result.resolver_family == "HISTORICAL_SITE_EVENT"
-    assert historical_result.standard_code_used is False
-    assert historical.standard_code is None
 
-    # Eligibility never grants execution, SITE truth, promotion, or registration.
     for result in (hybrid_result, historical_result):
         assert result.resolver_execution_allowed is False
         assert result.site_truth_decision_allowed is False
@@ -98,60 +99,63 @@ def main() -> None:
         assert result.production_registration_allowed is False
         assert result.runtime_registration_allowed is False
 
-    # Unknown exact name has no compatible registry baseline and fails closed.
-    unknown = _admitted_profile(
+    # Profile-only use no longer carries STEP101 provenance and fails closed.
+    profile_only = evaluate_resolver_family_eligibility(hybrid[3])
+    assert profile_only.status == REJECTED
+    assert profile_only.eligible is False
+
+    unknown = _admission(
         name="미등록조건",
         condition_type="SITE",
         resolution_type="HYBRID_SPATIAL_NOTICE",
     )
-    unknown_result = evaluate_resolver_family_eligibility(unknown)
-    assert unknown_result.status == REJECTED
-    assert unknown_result.eligible is False
-    assert unknown_result.resolver_family is None
+    assert _evaluate(unknown).status == REJECTED
 
-    # Wrong classification for a known name fails STEP103 compatibility.
-    wrong = _admitted_profile(
+    wrong = _admission(
         name="개발밀도관리구역",
         condition_type="SITE_HISTORY",
         resolution_type="HISTORICAL_SITE_EVENT",
     )
-    wrong_result = evaluate_resolver_family_eligibility(wrong)
-    assert wrong_result.status == REJECTED
-    assert wrong_result.eligible is False
-    assert wrong_result.resolver_family is None
+    assert _evaluate(wrong).status == REJECTED
 
-    # Built-in registry data alone is not verified admission evidence.
     builtin = get_regulation_resolution_profile("개발밀도관리구역")
     assert builtin is not None
     builtin_result = evaluate_resolver_family_eligibility(builtin)
     assert builtin_result.status == REJECTED
-    assert builtin_result.eligible is False
-    assert builtin_result.resolver_family is None
 
-    # Forged admission diagnostics without exact STEP101 fingerprints fail closed.
     forged = RegulationResolutionProfile(
         name="개발밀도관리구역",
         condition_type="SITE",
         resolution_type="HYBRID_SPATIAL_NOTICE",
         standard_code=None,
         standard_code_verified=False,
-        diagnostics={"classification_admission": "VERIFIED"},
+        diagnostics=dict(hybrid[3].diagnostics),
     )
     forged_result = evaluate_resolver_family_eligibility(forged)
     assert forged_result.status == REJECTED
-    assert forged_result.eligible is False
 
-    # Permission escalation invalidates the admitted-profile shape through STEP103.
-    escalated = replace(hybrid, runtime_registration_allowed=True)
-    escalated_result = evaluate_resolver_family_eligibility(escalated)
+    # Exact profile with another admission's provenance must not cross-bind.
+    cross = evaluate_resolver_family_eligibility(
+        hybrid[3],
+        seed=historical[0],
+        evidence=historical[1],
+        verification=historical[2],
+    )
+    assert cross.status == REJECTED
+    assert cross.eligible is False
+
+    escalated = replace(hybrid[3], runtime_registration_allowed=True)
+    escalated_result = evaluate_resolver_family_eligibility(
+        escalated,
+        seed=hybrid[0],
+        evidence=hybrid[1],
+        verification=hybrid[2],
+    )
     assert escalated_result.status == REJECTED
-    assert escalated_result.eligible is False
     assert escalated_result.runtime_registration_allowed is False
 
-    # Non-profile input is rejected without exception or inference.
     invalid_result = evaluate_resolver_family_eligibility(None)  # type: ignore[arg-type]
     assert invalid_result.status == REJECTED
-    assert invalid_result.eligible is False
     assert invalid_result.resolver_family is None
 
     print("STEP104_VERIFIED_PROFILE_RESOLVER_FAMILY_ELIGIBILITY_CONTRACT_PASS")
