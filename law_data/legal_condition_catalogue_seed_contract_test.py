@@ -6,6 +6,7 @@ from law_data.legal_condition_catalogue_seed import (
     DECREE_APPENDIX,
     OFFICIAL_GAZETTE,
     STATUTE_APPENDIX,
+    STATUTE_ARTICLE,
     LegalConditionCatalogueSeed,
     LegalEnumerationProvenance,
 )
@@ -64,6 +65,35 @@ def test_verified_statute_seed_is_immutable_and_minimal() -> None:
     )
 
 
+def test_verified_statute_article_seed_is_supported_and_minimal() -> None:
+    provenance = LegalEnumerationProvenance(
+        source_family=STATUTE_ARTICLE,
+        source_uri="https://example.invalid/statute/article",
+        law_id="LAW-ID",
+        law_version_id="MST-3",
+        effective_date="2026-04-01",
+        article_id="ARTICLE-50",
+        source_identity_verified=True,
+        row_binding_verified=True,
+    )
+    seed = LegalConditionCatalogueSeed(
+        condition_name="지구단위계획",
+        legal_basis="국토의 계획 및 이용에 관한 법률 제50조",
+        provenance=provenance,
+    )
+
+    assert provenance.provenance_verified is True
+    assert seed.seed_verified is True
+    assert provenance.article_id == "ARTICLE-50"
+    assert provenance.appendix_id is None
+    assert provenance.row_id is None
+    assert {field.name for field in fields(LegalConditionCatalogueSeed)} == {
+        "condition_name",
+        "legal_basis",
+        "provenance",
+    }
+
+
 def test_descriptive_identity_does_not_manufacture_verification() -> None:
     provenance = LegalEnumerationProvenance(
         source_family=DECREE_APPENDIX,
@@ -95,6 +125,58 @@ def test_verified_appendix_identity_requires_complete_identity() -> None:
             effective_date="2026-01-01",
             appendix_id="APPENDIX-1",
             source_identity_verified=True,
+        ),
+    )
+
+
+def test_verified_article_identity_requires_complete_identity() -> None:
+    _expect_raises(
+        ValueError,
+        lambda: LegalEnumerationProvenance(
+            source_family=STATUTE_ARTICLE,
+            law_id="LAW-ID",
+            law_version_id="MST-3",
+            effective_date="2026-04-01",
+            source_identity_verified=True,
+        ),
+    )
+
+
+def test_article_identity_rejects_appendix_or_gazette_synthesis() -> None:
+    _expect_raises(
+        ValueError,
+        lambda: LegalEnumerationProvenance(
+            source_family=STATUTE_ARTICLE,
+            law_id="LAW-ID",
+            law_version_id="MST-3",
+            effective_date="2026-04-01",
+            article_id="ARTICLE-50",
+            appendix_id="APPENDIX-1",
+        ),
+    )
+    _expect_raises(
+        ValueError,
+        lambda: LegalEnumerationProvenance(
+            source_family=STATUTE_ARTICLE,
+            law_id="LAW-ID",
+            law_version_id="MST-3",
+            effective_date="2026-04-01",
+            article_id="ARTICLE-50",
+            gazette_issue_id="ISSUE-1",
+        ),
+    )
+
+
+def test_article_item_requires_paragraph_identity() -> None:
+    _expect_raises(
+        ValueError,
+        lambda: LegalEnumerationProvenance(
+            source_family=STATUTE_ARTICLE,
+            law_id="LAW-ID",
+            law_version_id="MST-3",
+            effective_date="2026-04-01",
+            article_id="ARTICLE-50",
+            item_id="ITEM-1",
         ),
     )
 
@@ -171,8 +253,12 @@ def test_seed_requires_explicit_identity_basis_and_typed_provenance() -> None:
 
 def run_contract_tests() -> None:
     test_verified_statute_seed_is_immutable_and_minimal()
+    test_verified_statute_article_seed_is_supported_and_minimal()
     test_descriptive_identity_does_not_manufacture_verification()
     test_verified_appendix_identity_requires_complete_identity()
+    test_verified_article_identity_requires_complete_identity()
+    test_article_identity_rejects_appendix_or_gazette_synthesis()
+    test_article_item_requires_paragraph_identity()
     test_verified_gazette_identity_requires_complete_identity()
     test_cross_source_identity_synthesis_is_rejected()
     test_row_binding_cannot_be_verified_without_source_identity()
