@@ -1,7 +1,8 @@
-"""Fail-closed input admission for a verified resolver-family dispatch plan.
+"""Fail-closed input admission for a provenance-verified resolver-family plan.
 
-This boundary checks only that a STEP106 dispatch plan and a family-specific input
-object belong together. It never executes a resolver, selects a callable, derives
+This boundary checks that the supplied STEP106 dispatch plan is reproducible from
+its exact STEP101 provenance artifacts and that the family-specific input object
+belongs to that plan. It never executes a resolver, selects a callable, derives
 standard code, decides SITE truth, or grants production/runtime authority.
 """
 
@@ -12,8 +13,15 @@ from typing import Any
 
 from .historical_site_event_resolver import HistoricalSiteEventEvidenceState
 from .hybrid_spatial_notice_orchestrator import HybridSpatialNoticeStageResults
+from .legal_condition_catalogue_seed import LegalConditionCatalogueSeed
+from .legal_condition_classification_profile_admission import (
+    LegalConditionClassificationEvidence,
+    LegalConditionClassificationVerificationResult,
+)
+from .regulation_resolution_profile import RegulationResolutionProfile
 from .regulation_resolution_profile_resolver_family_dispatch_plan import (
     RegulationResolutionProfileResolverFamilyDispatchPlan,
+    build_resolver_family_dispatch_plan,
 )
 
 ADMITTED = "ADMITTED"
@@ -72,19 +80,33 @@ def _reject() -> RegulationResolutionProfileResolverFamilyInputAdmissionResult:
 def admit_resolver_family_input(
     dispatch_plan: RegulationResolutionProfileResolverFamilyDispatchPlan,
     resolver_input: Any,
+    *,
+    admitted_profile: RegulationResolutionProfile | None = None,
+    seed: LegalConditionCatalogueSeed | None = None,
+    evidence: LegalConditionClassificationEvidence | None = None,
+    verification: LegalConditionClassificationVerificationResult | None = None,
 ) -> RegulationResolutionProfileResolverFamilyInputAdmissionResult:
-    """Admit only the exact input class required by the verified family plan."""
-    if not isinstance(
-        dispatch_plan,
-        RegulationResolutionProfileResolverFamilyDispatchPlan,
-    ):
+    """Admit exact family input only after reproducing the STEP106 plan.
+
+    A caller-constructed plan, even one whose fields make ``planned`` true, is
+    insufficient. The plan must equal the plan rebuilt from the exact admitted
+    profile and STEP101 seed/evidence/verification chain.
+    """
+    if not isinstance(dispatch_plan, RegulationResolutionProfileResolverFamilyDispatchPlan):
+        return _reject()
+    if not isinstance(admitted_profile, RegulationResolutionProfile):
         return _reject()
 
-    if not dispatch_plan.planned:
+    expected_plan = build_resolver_family_dispatch_plan(
+        admitted_profile,
+        seed=seed,
+        evidence=evidence,
+        verification=verification,
+    )
+    if not expected_plan.planned or dispatch_plan != expected_plan:
         return _reject()
 
     family = dispatch_plan.resolver_family
-
     if family == HISTORICAL_SITE_EVENT:
         matches = type(resolver_input) is HistoricalSiteEventEvidenceState
     elif family == HYBRID_SPATIAL_NOTICE:
