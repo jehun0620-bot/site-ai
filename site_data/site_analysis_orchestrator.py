@@ -5,8 +5,9 @@
 Historical Rule Engine input is fail-closed: the existing trusted handoff and
 PNU-bound SITE applicability admission must both pass before historical input
 is forwarded to the existing service/builder path. The admitted PNU is also
-rebound to the actual Site object created for this analysis request, and the
-admitted candidate must be consistent with the trusted handoff repairs.
+rebound to the actual Site object created for this analysis request, the
+admitted candidate must be consistent with the trusted handoff repairs, and
+all repairs must identify one unambiguous historical condition.
 """
 
 from __future__ import annotations
@@ -25,6 +26,9 @@ from site_data.site_analysis_response import build_site_analysis_response
 
 from law_data.historical_site_event_admitted_rule_input_adapter import (
     adapt_admitted_historical_site_event_rule_input,
+)
+from law_data.historical_site_event_candidate_condition_binding_authorization import (
+    authorize_historical_site_event_candidate_condition_binding,
 )
 from law_data.historical_site_event_candidate_repair_consistency_authorization import (
     authorize_historical_site_event_candidate_repair_consistency,
@@ -218,6 +222,19 @@ def analyze_site_by_parcel(
                 "Historical SITE candidate/repair consistency failed: "
                 f"{consistency_result.status} / "
                 f"{','.join(consistency_result.missing_gates)}"
+            )
+
+        condition_binding_result = (
+            authorize_historical_site_event_candidate_condition_binding(
+                historical_site_applicability_admission,
+                historical_handoff_authorization,
+            )
+        )
+        if not condition_binding_result.authorized:
+            raise SiteAnalysisError(
+                "Historical SITE candidate/condition binding failed: "
+                f"{condition_binding_result.status} / "
+                f"{','.join(condition_binding_result.missing_gates)}"
             )
 
         adapter_result = adapt_admitted_historical_site_event_rule_input(
