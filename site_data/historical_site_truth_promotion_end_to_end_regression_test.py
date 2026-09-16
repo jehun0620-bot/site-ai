@@ -93,12 +93,15 @@ def main():
 
     assert response["service"]["building_api_status"] == "00"
 
+    # include_debug=True exposes internal input/engine data under response["debug"].
+    debug = response.get("debug", {})
+
     # Debug response must retain the one historical input that entered builder.
-    historical_input = response.get("input", {}).get("historical")
+    historical_input = debug.get("input", {}).get("historical")
     assert historical_input == RULE_INPUT
 
     # Most importantly, the existing Rule Engine SITE registry must consume it.
-    registry = response.get("rule_engine", {}).get("site_registry", {})
+    registry = debug.get("rule_engine", {}).get("site_registry", {})
     assert CONDITION in registry
     assert registry[CONDITION]["state"] == "FALSE"
     assert registry[CONDITION]["confidence"] == "HIGH"
