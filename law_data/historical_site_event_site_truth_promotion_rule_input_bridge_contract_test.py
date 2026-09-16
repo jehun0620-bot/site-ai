@@ -97,6 +97,21 @@ def main():
     assert not wrong_state.ready
     assert "state_valid" in wrong_state.missing_gates
 
+    wrong_type = bridge_historical_site_event_site_truth_promotion_rule_input(
+        replace(executed, promoted_condition={**executed.promoted_condition, "type": "PROJECT"})
+    )
+    assert wrong_type.status == REJECTED
+    assert not wrong_type.ready
+    assert "promoted_type_valid" in wrong_type.missing_gates
+
+    missing_confidence = bridge_historical_site_event_site_truth_promotion_rule_input(
+        replace(executed, promoted_condition={**executed.promoted_condition, "confidence": ""})
+    )
+    assert missing_confidence.status == REJECTED
+    assert not missing_confidence.ready
+    assert "promoted_confidence_present" in missing_confidence.missing_gates
+    assert not missing_confidence.historical_rule_input
+
     wrong_promoted_pnu = bridge_historical_site_event_site_truth_promotion_rule_input(
         replace(executed, promoted_condition={**executed.promoted_condition, "pnu": "1168010300100130000"})
     )
