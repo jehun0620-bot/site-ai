@@ -90,6 +90,36 @@ def main() -> None:
     assert result.admitted_profile_verified is True
     assert result.standard_code_compared is False
 
+    district_unit_plan = _admission(name="지구단위계획")
+    district_seed, district_evidence, district_verification, district_admitted = district_unit_plan
+    district_expected = get_regulation_resolution_profile(district_admitted.name)
+    assert district_expected is not None
+    assert district_expected.condition_type == "SITE"
+    assert district_expected.resolution_type == "HYBRID_SPATIAL_NOTICE"
+    assert district_expected.standard_code is None
+    assert district_expected.standard_code_verified is False
+    assert district_expected.authority_identity_verified is False
+    assert district_expected.source_policy_verified is False
+    assert district_expected.negative_evidence_allowed is False
+    assert district_expected.legal_absence_inference_allowed is False
+    assert district_expected.site_promotion_allowed is False
+    assert district_expected.production_registration_allowed is False
+    assert district_expected.runtime_registration_allowed is False
+
+    district_result = check_registry_classification_compatibility(
+        district_admitted,
+        seed=district_seed,
+        evidence=district_evidence,
+        verification=district_verification,
+    )
+    assert district_result.status == COMPATIBLE
+    assert district_result.compatible is True
+    assert district_result.admitted_profile_verified is True
+    assert district_result.standard_code_compared is False
+    assert district_result.site_promotion_allowed is False
+    assert district_result.production_registration_allowed is False
+    assert district_result.runtime_registration_allowed is False
+
     unknown = _admission(name="미등록조건")
     unknown_result = _check(unknown)
     assert unknown_result.status == REJECTED
