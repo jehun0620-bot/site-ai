@@ -2,12 +2,10 @@
 
 """SITE Analysis Service Orchestrator.
 
-Historical Rule Engine input is fail-closed: the existing trusted handoff and
-PNU-bound SITE applicability admission must both pass before historical input
-is forwarded to the existing service/builder path. The admitted PNU is also
-rebound to the actual Site object created for this analysis request, the
-admitted candidate must be consistent with the trusted handoff repairs, and
-all repairs must identify one unambiguous historical condition.
+Historical Rule Engine input remains single-lane and fail-closed. A request may
+use either the legacy typed handoff/applicability path or the newer promotion
+bridge path, never both. Both end at the same existing historical_rule_input ->
+service/builder -> Rule Engine lane.
 """
 
 from __future__ import annotations
@@ -35,6 +33,9 @@ from law_data.historical_site_event_candidate_repair_consistency_authorization i
 )
 from law_data.historical_site_event_site_applicability_admission import (
     HistoricalSiteEventSiteApplicabilityAdmissionResult,
+)
+from law_data.historical_site_event_site_truth_promotion_rule_input_bridge import (
+    HistoricalSiteEventSiteTruthPromotionRuleInputBridge,
 )
 from law_data.historical_trusted_internal_source_handoff_authorization import (
     HistoricalTrustedInternalSourceHandoffAuthorization,
@@ -177,6 +178,9 @@ def analyze_site_by_parcel(
     historical_site_applicability_admission: Optional[
         HistoricalSiteEventSiteApplicabilityAdmissionResult
     ] = None,
+    historical_promotion_rule_input_bridge: Optional[
+        HistoricalSiteEventSiteTruthPromotionRuleInputBridge
+    ] = None,
     include_debug: bool = False,
     service_key: Optional[str] = None,
 ) -> Dict[str, Any]:
@@ -196,12 +200,37 @@ def analyze_site_by_parcel(
         raise SiteBuildError("Site 객체 생성 실패")
 
     historical_rule_input = None
-    historical_requested = bool(
+    legacy_historical_requested = bool(
         historical_handoff_authorization is not None
         or historical_site_applicability_admission is not None
     )
+    promotion_requested = historical_promotion_rule_input_bridge is not None
 
-    if historical_requested:
+    if legacy_historical_requested and promotion_requested:
+        raise SiteAnalysisError(
+            "Historical SITE input is ambiguous: legacy and promotion paths cannot be used together"
+        )
+
+    if promotion_requested:
+        bridge = historical_promotion_rule_input_bridge
+        if not isinstance(bridge, HistoricalSiteEventSiteTruthPromotionRuleInputBridge) or not bridge.ready:
+            raise SiteAnalysisError("Historical SITE promotion rule-input bridge is not ready")
+        actual_site_pnu = _actual_site_pnu(site)
+        repairs = bridge.historical_rule_input.get("repairs")
+        repair_pnus = {
+            str(repair.get("pnu") or "").strip()
+            for repair in repairs or []
+            if isinstance(repair, dict)
+        }
+        if (
+            not actual_site_pnu
+            or len(repair_pnus) != 1
+            or actual_site_pnu not in repair_pnus
+        ):
+            raise SiteAnalysisError("Historical SITE promotion PNU rebinding failed")
+        historical_rule_input = copy.deepcopy(dict(bridge.historical_rule_input))
+
+    elif legacy_historical_requested:
         actual_site_pnu = _actual_site_pnu(site)
         admitted_pnu = _admitted_canonical_pnu(
             historical_site_applicability_admission
