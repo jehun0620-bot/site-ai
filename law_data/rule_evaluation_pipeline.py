@@ -3353,7 +3353,7 @@ def evaluate_site_rules(
         },
 
         "site_registry": (
-            site_registry
+            site_registry_for_consumption
         ),
 
         "site_repairs": (
