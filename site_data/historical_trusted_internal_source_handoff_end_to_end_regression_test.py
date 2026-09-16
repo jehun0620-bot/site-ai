@@ -1,6 +1,7 @@
 """STEP74 trusted historical handoff end-to-end regression.
 
-Reconciled with provenance-bound SITE applicability admission.
+Reconciled with provenance-bound SITE applicability admission and the current
+FALSE-only historical SITE decision eligibility contract.
 """
 from __future__ import annotations
 
@@ -57,7 +58,7 @@ def valid_handoff():
         historical_repairs=({
             "condition": CONDITION,
             "before": "UNKNOWN",
-            "after": "TRUE",
+            "after": "FALSE",
             "new_confidence": "HIGH",
             "new_source": PROVENANCE,
         },),
@@ -164,6 +165,7 @@ def main():
         "Historical repairs reach builder intact",
         isinstance(repairs, list) and len(repairs) == 1
         and repairs[0].get("condition") == CONDITION
+        and repairs[0].get("after") == "FALSE"
         and repairs[0].get("new_source") == PROVENANCE,
     )
 
@@ -172,7 +174,7 @@ def main():
     check("Historical path performs two Rule Engine consumptions", len(consumed) == 2)
     historical_registry = consumed[-1].get(CONDITION) if consumed else None
     check("Historical condition consumed by Rule Engine", isinstance(historical_registry, dict))
-    check("Historical condition state applied", historical_registry.get("state") == "TRUE")
+    check("Historical condition state applied", historical_registry.get("state") == "FALSE")
     check("Historical provenance preserved", historical_registry.get("source") == PROVENANCE)
     check("Historical condition excluded from returned spatial registry", CONDITION not in registry)
     runtime_conditions = raw_analysis.get("site", {}).get("runtime_conditions", {})
