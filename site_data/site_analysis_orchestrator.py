@@ -5,7 +5,8 @@
 Historical Rule Engine input is fail-closed: the existing trusted handoff and
 PNU-bound SITE applicability admission must both pass before historical input
 is forwarded to the existing service/builder path. The admitted PNU is also
-rebound to the actual Site object created for this analysis request.
+rebound to the actual Site object created for this analysis request, and the
+admitted candidate must be consistent with the trusted handoff repairs.
 """
 
 from __future__ import annotations
@@ -24,6 +25,9 @@ from site_data.site_analysis_response import build_site_analysis_response
 
 from law_data.historical_site_event_admitted_rule_input_adapter import (
     adapt_admitted_historical_site_event_rule_input,
+)
+from law_data.historical_site_event_candidate_repair_consistency_authorization import (
+    authorize_historical_site_event_candidate_repair_consistency,
 )
 from law_data.historical_site_event_site_applicability_admission import (
     HistoricalSiteEventSiteApplicabilityAdmissionResult,
@@ -201,6 +205,19 @@ def analyze_site_by_parcel(
         if not actual_site_pnu or not admitted_pnu or actual_site_pnu != admitted_pnu:
             raise SiteAnalysisError(
                 "Historical SITE applicability PNU rebinding failed"
+            )
+
+        consistency_result = (
+            authorize_historical_site_event_candidate_repair_consistency(
+                historical_site_applicability_admission,
+                historical_handoff_authorization,
+            )
+        )
+        if not consistency_result.authorized:
+            raise SiteAnalysisError(
+                "Historical SITE candidate/repair consistency failed: "
+                f"{consistency_result.status} / "
+                f"{','.join(consistency_result.missing_gates)}"
             )
 
         adapter_result = adapt_admitted_historical_site_event_rule_input(
