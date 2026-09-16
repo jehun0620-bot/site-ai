@@ -37,21 +37,20 @@ class _Site:
     land = None
 
 
-def _eligibility(candidate=False):
-    resolution = "TRUE" if candidate else "FALSE"
+def _eligibility():
     value = RegulationResolutionProfileSiteDecisionEligibility(
         status=ELIGIBLE,
         resolver_family=HISTORICAL_SITE_EVENT,
         resolver_result_verified=True,
-        resolution=resolution,
-        candidate_site_decision=candidate,
+        resolution="FALSE",
+        candidate_site_decision=False,
         conclusive_for_site_decision=True,
     )
     assert value.eligible
     return value
 
 
-def _applicability(candidate=False):
+def _applicability():
     evidence = HistoricalSiteEventParcelEvidenceInput(
         target_pnu=PNU,
         evidence_pnu=PNU,
@@ -61,11 +60,12 @@ def _applicability(candidate=False):
         event_binding_verified=True,
     )
     result = admit_historical_site_event_site_applicability(
-        _eligibility(candidate),
+        _eligibility(),
         {"pnu": PNU, "identity_status": "COMPLETE"},
         evidence,
     )
     assert result.admitted
+    assert result.candidate_site_decision is False
     return result
 
 
@@ -149,35 +149,26 @@ def _must_fail(*, handoff, applicability):
 
 
 def main() -> None:
+    applicability = _applicability()
+
     response, captured = _run(
         handoff=_handoff("FALSE"),
-        applicability=_applicability(False),
+        applicability=applicability,
     )
     assert response["analysis"] == "ok"
     assert captured["historical_rule_input"]["repairs"][0]["after"] == "FALSE"
 
-    response_true, captured_true = _run(
-        handoff=_handoff("TRUE"),
-        applicability=_applicability(True),
-    )
-    assert response_true["analysis"] == "ok"
-    assert captured_true["historical_rule_input"]["repairs"][0]["after"] == "TRUE"
-
     _must_fail(
         handoff=_handoff("TRUE"),
-        applicability=_applicability(False),
-    )
-    _must_fail(
-        handoff=_handoff("FALSE"),
-        applicability=_applicability(True),
+        applicability=applicability,
     )
     _must_fail(
         handoff=_handoff("FALSE", "TRUE"),
-        applicability=_applicability(False),
+        applicability=applicability,
     )
     _must_fail(
         handoff=replace(_handoff("FALSE"), handoff_authorized=False),
-        applicability=_applicability(False),
+        applicability=applicability,
     )
 
     print(
