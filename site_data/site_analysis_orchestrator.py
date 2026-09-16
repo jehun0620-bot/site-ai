@@ -4,7 +4,8 @@
 
 Historical Rule Engine input is fail-closed: the existing trusted handoff and
 PNU-bound SITE applicability admission must both pass before historical input
-is forwarded to the existing service/builder path.
+is forwarded to the existing service/builder path. The admitted PNU is also
+rebound to the actual Site object created for this analysis request.
 """
 
 from __future__ import annotations
@@ -18,7 +19,7 @@ import requests
 from dotenv import load_dotenv
 
 from site_data.site_builder import create_site
-from site_data.site_analysis_service import analyze_site_object
+from site_data.site_analysis_service import analyze_site_object, site_to_analysis_input
 from site_data.site_analysis_response import build_site_analysis_response
 
 from law_data.historical_site_event_admitted_rule_input_adapter import (
@@ -129,6 +130,30 @@ def fetch_building_items(
     }
 
 
+def _actual_site_pnu(site: Any) -> str:
+    """Reuse the existing service identity adapter to derive the actual Site PNU."""
+
+    try:
+        site_input = site_to_analysis_input(site)
+    except (TypeError, ValueError, AttributeError):
+        return ""
+
+    pnu = str(site_input.get("pnu") or "").strip()
+    if len(pnu) != 19 or not pnu.isdigit():
+        return ""
+    return pnu
+
+
+def _admitted_canonical_pnu(
+    applicability: HistoricalSiteEventSiteApplicabilityAdmissionResult | None,
+) -> str:
+    if not isinstance(applicability, HistoricalSiteEventSiteApplicabilityAdmissionResult):
+        return ""
+    if not applicability.admitted or applicability.site_admission is None:
+        return ""
+    return str(applicability.site_admission.canonical_pnu or "").strip()
+
+
 def analyze_site_by_parcel(
     *,
     sigungu_cd: str,
@@ -169,6 +194,15 @@ def analyze_site_by_parcel(
     )
 
     if historical_requested:
+        actual_site_pnu = _actual_site_pnu(site)
+        admitted_pnu = _admitted_canonical_pnu(
+            historical_site_applicability_admission
+        )
+        if not actual_site_pnu or not admitted_pnu or actual_site_pnu != admitted_pnu:
+            raise SiteAnalysisError(
+                "Historical SITE applicability PNU rebinding failed"
+            )
+
         adapter_result = adapt_admitted_historical_site_event_rule_input(
             historical_site_applicability_admission,
             historical_handoff_authorization,
