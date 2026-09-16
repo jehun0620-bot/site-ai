@@ -40,12 +40,7 @@ def _verified_seed(name: str) -> LegalConditionCatalogueSeed:
     )
 
 
-def _admitted_profile(
-    *,
-    name: str,
-    condition_type: str,
-    resolution_type: str,
-) -> RegulationResolutionProfile:
+def _admission(*, name: str, condition_type: str, resolution_type: str):
     seed = _verified_seed(name)
     evidence = LegalConditionClassificationEvidence(
         condition_name=seed.condition_name,
@@ -61,26 +56,37 @@ def _admitted_profile(
     )
     verification = verify_classification_evidence(seed, evidence)
     assert verification.verified
-    return admit_verified_classification_to_profile(seed, evidence, verification)
+    profile = admit_verified_classification_to_profile(seed, evidence, verification)
+    return seed, evidence, verification, profile
+
+
+def _plan(admission):
+    seed, evidence, verification, profile = admission
+    return build_resolver_family_dispatch_plan(
+        profile,
+        seed=seed,
+        evidence=evidence,
+        verification=verification,
+    )
 
 
 def main() -> None:
-    hybrid = _admitted_profile(
+    hybrid = _admission(
         name="개발밀도관리구역",
         condition_type="SITE",
         resolution_type="HYBRID_SPATIAL_NOTICE",
     )
-    hybrid_plan = build_resolver_family_dispatch_plan(hybrid)
+    hybrid_plan = _plan(hybrid)
     assert hybrid_plan.status == PLANNED
     assert hybrid_plan.planned is True
     assert hybrid_plan.resolver_family == "HYBRID_SPATIAL_NOTICE"
 
-    historical = _admitted_profile(
+    historical = _admission(
         name="도시지역편입해제구역",
         condition_type="SITE_HISTORY",
         resolution_type="HISTORICAL_SITE_EVENT",
     )
-    historical_plan = build_resolver_family_dispatch_plan(historical)
+    historical_plan = _plan(historical)
     assert historical_plan.status == PLANNED
     assert historical_plan.planned is True
     assert historical_plan.resolver_family == "HISTORICAL_SITE_EVENT"
@@ -90,7 +96,6 @@ def main() -> None:
         "HISTORICAL_SITE_EVENT",
     }
 
-    # A plan is only a label. It cannot execute a resolver or authorize SITE/runtime.
     for plan in (hybrid_plan, historical_plan):
         assert plan.standard_code_used is False
         assert plan.resolver_callable_selected is False
@@ -101,51 +106,65 @@ def main() -> None:
         assert plan.production_registration_allowed is False
         assert plan.runtime_registration_allowed is False
 
-    # Built-in registry data alone is not verified admission evidence.
+    # A genuine profile without its exact provenance artifacts is insufficient.
+    hybrid_profile_only = build_resolver_family_dispatch_plan(hybrid[3])
+    assert hybrid_profile_only.status == REJECTED
+    assert hybrid_profile_only.planned is False
+
     builtin = get_regulation_resolution_profile("개발밀도관리구역")
     assert builtin is not None
     builtin_plan = build_resolver_family_dispatch_plan(builtin)
     assert builtin_plan.status == REJECTED
     assert builtin_plan.planned is False
-    assert builtin_plan.resolver_family is None
 
-    # A known name with the wrong classification remains rejected by STEP103/104.
-    wrong = _admitted_profile(
+    wrong = _admission(
         name="개발밀도관리구역",
         condition_type="SITE_HISTORY",
         resolution_type="HISTORICAL_SITE_EVENT",
     )
-    wrong_plan = build_resolver_family_dispatch_plan(wrong)
+    wrong_plan = _plan(wrong)
     assert wrong_plan.status == REJECTED
     assert wrong_plan.planned is False
 
-    # Unknown exact name has no registry compatibility and cannot get a plan.
-    unknown = _admitted_profile(
+    unknown = _admission(
         name="미등록조건",
         condition_type="SITE",
         resolution_type="HYBRID_SPATIAL_NOTICE",
     )
-    unknown_plan = build_resolver_family_dispatch_plan(unknown)
+    unknown_plan = _plan(unknown)
     assert unknown_plan.status == REJECTED
     assert unknown_plan.planned is False
 
-    # Permission escalation invalidates the admitted profile before planning.
-    escalated = replace(hybrid, runtime_registration_allowed=True)
-    escalated_plan = build_resolver_family_dispatch_plan(escalated)
+    # Cross-admission provenance cannot be reused with another genuine profile.
+    cross_plan = build_resolver_family_dispatch_plan(
+        hybrid[3],
+        seed=historical[0],
+        evidence=historical[1],
+        verification=historical[2],
+    )
+    assert cross_plan.status == REJECTED
+    assert cross_plan.planned is False
+
+    escalated = replace(hybrid[3], runtime_registration_allowed=True)
+    escalated_plan = build_resolver_family_dispatch_plan(
+        escalated,
+        seed=hybrid[0],
+        evidence=hybrid[1],
+        verification=hybrid[2],
+    )
     assert escalated_plan.status == REJECTED
     assert escalated_plan.planned is False
     assert escalated_plan.runtime_registration_allowed is False
 
-    # A forged profile cannot use diagnostics alone to bypass STEP103/104.
     forged = RegulationResolutionProfile(
         name="개발밀도관리구역",
         condition_type="SITE",
         resolution_type="HYBRID_SPATIAL_NOTICE",
-        diagnostics={"classification_admission": "VERIFIED"},
+        diagnostics=dict(hybrid[3].diagnostics),
     )
-    forged_plan = build_resolver_family_dispatch_plan(forged)
-    assert forged_plan.status == REJECTED
-    assert forged_plan.planned is False
+    forged_without_artifacts = build_resolver_family_dispatch_plan(forged)
+    assert forged_without_artifacts.status == REJECTED
+    assert forged_without_artifacts.planned is False
 
     invalid_plan = build_resolver_family_dispatch_plan(None)  # type: ignore[arg-type]
     assert invalid_plan.status == REJECTED
