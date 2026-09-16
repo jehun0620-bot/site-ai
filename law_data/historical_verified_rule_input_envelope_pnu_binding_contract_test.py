@@ -1,6 +1,7 @@
 """Contract test for historical verified-envelope repair/PNU binding."""
 from __future__ import annotations
 
+from law_data.historical_site_event_builder_injection_payload import CHANNEL, PROVENANCE
 from law_data.historical_verified_rule_input_envelope import (
     BOUNDARY_NAME,
     HistoricalVerifiedRuleInputEnvelope,
@@ -16,7 +17,7 @@ def _repair(*, pnu=None):
         "condition": "도시지역편입해제구역",
         "after": "TRUE",
         "new_confidence": "VERIFIED",
-        "new_source": "HISTORICAL_SITE_EVENT",
+        "new_source": PROVENANCE,
     }
     if pnu is not None:
         value["pnu"] = pnu
@@ -25,8 +26,8 @@ def _repair(*, pnu=None):
 
 def _input(repairs):
     return {
-        "channel": "HISTORICAL_SITE_EVENT",
-        "provenance": "HISTORICAL_SITE_EVENT",
+        "channel": CHANNEL,
+        "provenance": PROVENANCE,
         "repairs": repairs,
     }
 
