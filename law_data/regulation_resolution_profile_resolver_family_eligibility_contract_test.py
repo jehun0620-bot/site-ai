@@ -82,6 +82,18 @@ def main() -> None:
     assert hybrid_result.standard_code_used is False
     assert hybrid[3].standard_code is None
 
+    district_unit_plan = _admission(
+        name="지구단위계획",
+        condition_type="SITE",
+        resolution_type="HYBRID_SPATIAL_NOTICE",
+    )
+    district_unit_plan_result = _evaluate(district_unit_plan)
+    assert district_unit_plan_result.status == ELIGIBLE
+    assert district_unit_plan_result.eligible is True
+    assert district_unit_plan_result.resolver_family == "HYBRID_SPATIAL_NOTICE"
+    assert district_unit_plan_result.standard_code_used is False
+    assert district_unit_plan[3].standard_code is None
+
     historical = _admission(
         name="도시지역편입해제구역",
         condition_type="SITE_HISTORY",
@@ -92,7 +104,7 @@ def main() -> None:
     assert historical_result.eligible is True
     assert historical_result.resolver_family == "HISTORICAL_SITE_EVENT"
 
-    for result in (hybrid_result, historical_result):
+    for result in (hybrid_result, district_unit_plan_result, historical_result):
         assert result.resolver_execution_allowed is False
         assert result.site_truth_decision_allowed is False
         assert result.site_promotion_allowed is False
