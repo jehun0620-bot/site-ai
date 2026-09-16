@@ -1,118 +1,56 @@
 # -*- coding: utf-8 -*-
 
-"""
-STEP 17-21-C-12-4
-SITE Analysis Service Orchestrator
+"""SITE Analysis Service Orchestrator.
 
-목표
-======================================================================
-실제 외부 입력부터 최종 API Response까지의 전체 흐름을
-하나의 재사용 가능한 서비스 함수로 묶는다.
-
-흐름
-======================================================================
-parcel identifiers
-    ↓
-건축HUB API
-    ↓
-create_site()
-    ↓
-Site
-    ↓
-analyze_site_object()
-    ↓
-Final SITE Analysis
-    ↓
-build_site_analysis_response()
-    ↓
-SITE_ANALYSIS_API_V1
-
-중요
-======================================================================
-HTTP/FastAPI/Flask와 독립적이다.
-
-즉 향후 웹 API 계층에서는 이 모듈의 함수만 호출하면 된다.
+Historical Rule Engine input is fail-closed: the existing trusted handoff and
+PNU-bound SITE applicability admission must both pass before historical input
+is forwarded to the existing service/builder path.
 """
 
 from __future__ import annotations
 
 import copy
 import os
-
 from pathlib import Path
 from typing import Any, Dict, Optional
 
 import requests
 from dotenv import load_dotenv
 
+from site_data.site_builder import create_site
+from site_data.site_analysis_service import analyze_site_object
+from site_data.site_analysis_response import build_site_analysis_response
 
-from site_data.site_builder import (
-    create_site,
+from law_data.historical_site_event_admitted_rule_input_adapter import (
+    adapt_admitted_historical_site_event_rule_input,
 )
-
-from site_data.site_analysis_service import (
-    analyze_site_object,
+from law_data.historical_site_event_site_applicability_admission import (
+    HistoricalSiteEventSiteApplicabilityAdmissionResult,
 )
-
-from site_data.site_analysis_response import (
-    build_site_analysis_response,
-)
-
 from law_data.historical_trusted_internal_source_handoff_authorization import (
-    BOUNDARY_NAME as HISTORICAL_HANDOFF_BOUNDARY_NAME,
     HistoricalTrustedInternalSourceHandoffAuthorization,
 )
 
 
-# ============================================================
-# PATH / ENV
-# ============================================================
-
-BASE_DIR = (
-    Path(__file__)
-    .resolve()
-    .parent
-    .parent
-)
-
-load_dotenv(
-    BASE_DIR
-    / ".env"
-)
-
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
 
 BUILDING_API_URL = (
-    "http://apis.data.go.kr/"
-    "1613000/BldRgstHubService/"
-    "getBrTitleInfo"
+    "http://apis.data.go.kr/1613000/BldRgstHubService/getBrTitleInfo"
 )
 
 
-# ============================================================
-# errors
-# ============================================================
-
-class SiteAnalysisError(
-    RuntimeError
-):
+class SiteAnalysisError(RuntimeError):
     pass
 
 
-class BuildingAPIError(
-    SiteAnalysisError
-):
+class BuildingAPIError(SiteAnalysisError):
     pass
 
 
-class SiteBuildError(
-    SiteAnalysisError
-):
+class SiteBuildError(SiteAnalysisError):
     pass
 
-
-# ============================================================
-# Building HUB
-# ============================================================
 
 def fetch_building_items(
     *,
@@ -123,120 +61,39 @@ def fetch_building_items(
     service_key: Optional[str] = None,
     timeout: int = 30,
 ) -> Dict[str, Any]:
-
-    key = (
-        service_key
-        or os.getenv(
-            "DATA_API_KEY"
-        )
-    )
-
+    key = service_key or os.getenv("DATA_API_KEY")
     if not key:
-
-        raise BuildingAPIError(
-            "DATA_API_KEY를 찾을 수 없습니다."
-        )
+        raise BuildingAPIError("DATA_API_KEY를 찾을 수 없습니다.")
 
     params = {
-        "sigunguCd": (
-            str(
-                sigungu_cd
-            )
-        ),
-
-        "bjdongCd": (
-            str(
-                bjdong_cd
-            )
-        ),
-
-        "bun": (
-            str(
-                bun
-            )
-        ),
-
-        "ji": (
-            str(
-                ji
-            )
-        ),
-
-        "serviceKey": (
-            key
-        ),
-
-        "numOfRows": (
-            "100"
-        ),
-
-        "pageNo": (
-            "1"
-        ),
-
-        "_type": (
-            "json"
-        ),
+        "sigunguCd": str(sigungu_cd),
+        "bjdongCd": str(bjdong_cd),
+        "bun": str(bun),
+        "ji": str(ji),
+        "serviceKey": key,
+        "numOfRows": "100",
+        "pageNo": "1",
+        "_type": "json",
     }
 
     try:
-
         response = requests.get(
             BUILDING_API_URL,
             params=params,
             timeout=timeout,
         )
-
     except requests.RequestException as exc:
+        raise BuildingAPIError(f"건축HUB 요청 실패: {exc}") from exc
 
-        raise BuildingAPIError(
-            f"건축HUB 요청 실패: {exc}"
-        ) from exc
-
-    if (
-        response.status_code
-        != 200
-    ):
-
-        raise BuildingAPIError(
-            "건축HUB HTTP 오류: "
-            f"{response.status_code}"
-        )
+    if response.status_code != 200:
+        raise BuildingAPIError(f"건축HUB HTTP 오류: {response.status_code}")
 
     try:
-
-        data = (
-            response.json()
-        )
-
+        data = response.json()
     except ValueError as exc:
-
-        content_type = (
-            response.headers.get(
-                "Content-Type",
-                "",
-            )
-        )
-
-        response_text = (
-            response.text
-            or ""
-        )
-
-        response_preview = (
-            response_text[
-                :500
-            ]
-            .replace(
-                "\r",
-                " ",
-            )
-            .replace(
-                "\n",
-                " ",
-            )
-        )
-
+        content_type = response.headers.get("Content-Type", "")
+        response_text = response.text or ""
+        response_preview = response_text[:500].replace("\r", " ").replace("\n", " ")
         raise BuildingAPIError(
             "건축HUB 응답 JSON 파싱 실패"
             f" | HTTP={response.status_code}"
@@ -245,107 +102,32 @@ def fetch_building_items(
             f" | Preview={response_preview!r}"
         ) from exc
 
-    api_response = (
-        data.get(
-            "response"
-        )
-    )
+    api_response = data.get("response")
+    if not isinstance(api_response, dict):
+        raise BuildingAPIError("건축HUB response 없음")
 
-    if not isinstance(
-        api_response,
-        dict,
-    ):
-
-        raise BuildingAPIError(
-            "건축HUB response 없음"
-        )
-
-    header = (
-        api_response.get(
-            "header",
-            {},
-        )
-    )
-
-    if (
-        header.get(
-            "resultCode"
-        )
-        != "00"
-    ):
-
+    header = api_response.get("header", {})
+    if header.get("resultCode") != "00":
         raise BuildingAPIError(
             "건축HUB API 오류: "
-            f"{header.get('resultCode')} / "
-            f"{header.get('resultMsg')}"
+            f"{header.get('resultCode')} / {header.get('resultMsg')}"
         )
 
-    body = (
-        api_response.get(
-            "body",
-            {},
-        )
-    )
-
-    items_container = (
-        body.get(
-            "items"
-        )
-        or {}
-    )
-
-    items = (
-        items_container.get(
-            "item",
-            [],
-        )
-    )
-
-    if isinstance(
-        items,
-        dict,
-    ):
-
-        items = [
-            items
-        ]
-
-    if not isinstance(
-        items,
-        list,
-    ):
-
+    body = api_response.get("body", {})
+    items_container = body.get("items") or {}
+    items = items_container.get("item", [])
+    if isinstance(items, dict):
+        items = [items]
+    if not isinstance(items, list):
         items = []
 
     return {
-        "items": (
-            items
-        ),
-
-        "total_count": (
-            body.get(
-                "totalCount",
-                0,
-            )
-        ),
-
-        "result_code": (
-            header.get(
-                "resultCode"
-            )
-        ),
-
-        "result_message": (
-            header.get(
-                "resultMsg"
-            )
-        ),
+        "items": items,
+        "total_count": body.get("totalCount", 0),
+        "result_code": header.get("resultCode"),
+        "result_message": header.get("resultMsg"),
     }
 
-
-# ============================================================
-# orchestrator
-# ============================================================
 
 def analyze_site_by_parcel(
     *,
@@ -353,191 +135,69 @@ def analyze_site_by_parcel(
     bjdong_cd: str,
     bun: str,
     ji: str,
-    project_profile: Optional[
-        Dict[str, str]
-    ] = None,
-    procedure_profile: Optional[
-        Dict[str, str]
-    ] = None,
-    production_condition_shadow_sources: Optional[
-        Any
-    ] = None,
+    project_profile: Optional[Dict[str, str]] = None,
+    procedure_profile: Optional[Dict[str, str]] = None,
+    production_condition_shadow_sources: Optional[Any] = None,
     historical_handoff_authorization: Optional[
         HistoricalTrustedInternalSourceHandoffAuthorization
+    ] = None,
+    historical_site_applicability_admission: Optional[
+        HistoricalSiteEventSiteApplicabilityAdmissionResult
     ] = None,
     include_debug: bool = False,
     service_key: Optional[str] = None,
 ) -> Dict[str, Any]:
-
-    # ========================================================
-    # 1. Building HUB
-    # ========================================================
-
-    building_result = (
-        fetch_building_items(
-            sigungu_cd=(
-                sigungu_cd
-            ),
-
-            bjdong_cd=(
-                bjdong_cd
-            ),
-
-            bun=(
-                bun
-            ),
-
-            ji=(
-                ji
-            ),
-
-            service_key=(
-                service_key
-            ),
-        )
+    building_result = fetch_building_items(
+        sigungu_cd=sigungu_cd,
+        bjdong_cd=bjdong_cd,
+        bun=bun,
+        ji=ji,
+        service_key=service_key,
     )
-
-    items = (
-        building_result[
-            "items"
-        ]
-    )
-
+    items = building_result["items"]
     if not items:
+        raise SiteBuildError("건축HUB에서 건축물 데이터를 찾지 못했습니다.")
 
-        raise SiteBuildError(
-            "건축HUB에서 건축물 데이터를 찾지 못했습니다."
-        )
-
-    # ========================================================
-    # 2. Site Builder
-    # ========================================================
-
-    site = (
-        create_site(
-            items
-        )
-    )
-
+    site = create_site(items)
     if site is None:
-
-        raise SiteBuildError(
-            "Site 객체 생성 실패"
-        )
-
-    # ========================================================
-    # 3. Historical trusted handoff gate
-    # ========================================================
+        raise SiteBuildError("Site 객체 생성 실패")
 
     historical_rule_input = None
+    historical_requested = bool(
+        historical_handoff_authorization is not None
+        or historical_site_applicability_admission is not None
+    )
 
-    if historical_handoff_authorization is not None:
-
-        if not isinstance(
+    if historical_requested:
+        adapter_result = adapt_admitted_historical_site_event_rule_input(
+            historical_site_applicability_admission,
             historical_handoff_authorization,
-            HistoricalTrustedInternalSourceHandoffAuthorization,
-        ):
+        )
+        if not adapter_result.ready:
             raise SiteAnalysisError(
-                "Invalid historical handoff authorization type"
+                "Historical SITE applicability/handoff admission failed: "
+                f"{adapter_result.status} / "
+                f"{','.join(adapter_result.missing_gates)}"
             )
-
-        if (
-            historical_handoff_authorization.boundary
-            != HISTORICAL_HANDOFF_BOUNDARY_NAME
-        ):
-            raise SiteAnalysisError(
-                "Invalid historical handoff authorization boundary"
-            )
-
-        if (
-            historical_handoff_authorization.handoff_authorized
-            is not True
-        ):
-            raise SiteAnalysisError(
-                "Historical handoff is not authorized"
-            )
-
         historical_rule_input = copy.deepcopy(
-            {
-                "channel": (
-                    historical_handoff_authorization.channel
-                ),
-                "provenance": (
-                    historical_handoff_authorization.provenance
-                ),
-                "repairs": list(
-                    historical_handoff_authorization.handoff_repairs
-                ),
-            }
+            dict(adapter_result.historical_rule_input)
         )
 
-    # ========================================================
-    # 4. Rule / Spatial Analysis
-    # ========================================================
-
-    analysis = (
-        analyze_site_object(
-            site=(
-                site
-            ),
-
-            project_profile=(
-                project_profile
-                or {}
-            ),
-
-            procedure_profile=(
-                procedure_profile
-                or {}
-            ),
-
-            production_condition_shadow_sources=(
-                production_condition_shadow_sources
-            ),
-
-            historical_rule_input=(
-                historical_rule_input
-            ),
-        )
+    analysis = analyze_site_object(
+        site=site,
+        project_profile=project_profile or {},
+        procedure_profile=procedure_profile or {},
+        production_condition_shadow_sources=production_condition_shadow_sources,
+        historical_rule_input=historical_rule_input,
     )
 
-    # ========================================================
-    # 5. Public response
-    # ========================================================
-
-    response = (
-        build_site_analysis_response(
-            analysis,
-            include_debug=(
-                include_debug
-            ),
-        )
+    response = build_site_analysis_response(
+        analysis,
+        include_debug=include_debug,
     )
-
-    # ========================================================
-    # 6. service metadata
-    # ========================================================
-
-    response[
-        "service"
-    ] = {
-        "building_count": (
-            len(
-                items
-            )
-        ),
-
-        "building_total_count": (
-            building_result.get(
-                "total_count"
-            )
-        ),
-
-        "building_api_status": (
-            building_result.get(
-                "result_code"
-            )
-        ),
+    response["service"] = {
+        "building_count": len(items),
+        "building_total_count": building_result.get("total_count"),
+        "building_api_status": building_result.get("result_code"),
     }
-
     return response
