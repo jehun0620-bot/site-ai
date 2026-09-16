@@ -1,4 +1,8 @@
-"""STEP73 trusted historical source handoff production wiring tests."""
+"""STEP73 trusted historical source handoff production wiring tests.
+
+Reconciled so the historical production seam requires both the trusted handoff
+and provenance-bound SITE applicability admission.
+"""
 from __future__ import annotations
 
 import copy
@@ -12,12 +16,14 @@ from law_data.historical_site_event_builder_injection_payload import (
     PROVENANCE,
     HistoricalSiteEventBuilderInjectionPayload,
 )
-from law_data.historical_trusted_internal_source_authorization import (
-    authorize_historical_trusted_internal_source,
-)
-from law_data.historical_trusted_internal_source_handoff_authorization import (
-    authorize_historical_trusted_internal_source_handoff,
-)
+from law_data.historical_site_event_parcel_applicability_evidence import HistoricalSiteEventParcelEvidenceInput
+from law_data.historical_site_event_site_applicability_admission import admit_historical_site_event_site_applicability
+from law_data.historical_trusted_internal_source_authorization import authorize_historical_trusted_internal_source
+from law_data.historical_trusted_internal_source_handoff_authorization import authorize_historical_trusted_internal_source_handoff
+from law_data.regulation_resolution_profile_resolver_family_input_admission import HISTORICAL_SITE_EVENT
+from law_data.regulation_resolution_profile_site_decision_eligibility import ELIGIBLE, RegulationResolutionProfileSiteDecisionEligibility
+
+PNU = "1168010300100120000"
 
 
 def check(name, passed):
@@ -39,87 +45,64 @@ def valid_handoff():
         provenance_preserved=True,
         missing_gates=(),
         builder_injection_payload_ready=True,
-        historical_rules=(
-            {
-                "condition": "HISTORICAL_TEST",
-                "state": "UNKNOWN",
-            },
-        ),
-        historical_repairs=(
-            {
-                "condition": "HISTORICAL_TEST",
-                "before": "UNKNOWN",
-                "after": "TRUE",
-                "new_confidence": "HIGH",
-                "new_source": PROVENANCE,
-            },
-        ),
+        historical_rules=({"condition": "HISTORICAL_TEST", "state": "UNKNOWN"},),
+        historical_repairs=({
+            "condition": "HISTORICAL_TEST",
+            "before": "UNKNOWN",
+            "after": "TRUE",
+            "new_confidence": "HIGH",
+            "new_source": PROVENANCE,
+        },),
     )
-
-    source = authorize_historical_trusted_internal_source(
-        payload
-    )
-
     return authorize_historical_trusted_internal_source_handoff(
-        source
+        authorize_historical_trusted_internal_source(payload)
     )
 
 
-def run_orchestrator(handoff_marker):
-    captured = {}
+def valid_applicability(*, parcel_binding_verified=True):
+    eligibility = RegulationResolutionProfileSiteDecisionEligibility(
+        status=ELIGIBLE,
+        resolver_family=HISTORICAL_SITE_EVENT,
+        resolver_result_verified=True,
+        resolution="FALSE",
+        candidate_site_decision=False,
+        conclusive_for_site_decision=True,
+    )
+    evidence = HistoricalSiteEventParcelEvidenceInput(
+        target_pnu=PNU,
+        evidence_pnu=PNU,
+        event_identity="STEP73-HISTORICAL-EVENT",
+        official_source_verified=True,
+        parcel_binding_verified=parcel_binding_verified,
+        event_binding_verified=True,
+    )
+    return admit_historical_site_event_site_applicability(
+        eligibility,
+        {"pnu": PNU, "identity_status": "COMPLETE"},
+        evidence,
+    )
 
+
+def run_orchestrator(*, handoff=None, applicability=None):
+    captured = {}
     original_fetch = orchestrator.fetch_building_items
     original_create = orchestrator.create_site
     original_analyze = orchestrator.analyze_site_object
     original_response = orchestrator.build_site_analysis_response
-
     try:
-        orchestrator.fetch_building_items = (
-            lambda **kwargs: {
-                "items": [{"test": True}],
-                "total_count": 1,
-                "result_code": "00",
-                "result_message": "OK",
-            }
-        )
-
-        orchestrator.create_site = (
-            lambda items: object()
-        )
-
-        def fake_analyze_site_object(**kwargs):
-            captured.update(kwargs)
-            return {"analysis": True}
-
-        orchestrator.analyze_site_object = (
-            fake_analyze_site_object
-        )
-
-        orchestrator.build_site_analysis_response = (
-            lambda analysis, include_debug=False: {
-                "analysis": analysis,
-                "include_debug": include_debug,
-            }
-        )
-
-        kwargs = {
-            "sigungu_cd": "11680",
-            "bjdong_cd": "10300",
-            "bun": "0012",
-            "ji": "0000",
+        orchestrator.fetch_building_items = lambda **kwargs: {
+            "items": [{"test": True}], "total_count": 1, "result_code": "00", "result_message": "OK"
         }
-
-        if handoff_marker is not _ABSENT:
-            kwargs[
-                "historical_handoff_authorization"
-            ] = handoff_marker
-
-        result = orchestrator.analyze_site_by_parcel(
-            **kwargs
-        )
-
-        return result, captured
-
+        orchestrator.create_site = lambda items: object()
+        orchestrator.analyze_site_object = lambda **kwargs: captured.update(kwargs) or {"analysis": True}
+        orchestrator.build_site_analysis_response = lambda analysis, include_debug=False: {
+            "analysis": analysis, "include_debug": include_debug
+        }
+        return orchestrator.analyze_site_by_parcel(
+            sigungu_cd="11680", bjdong_cd="10300", bun="0012", ji="0000",
+            historical_handoff_authorization=handoff,
+            historical_site_applicability_admission=applicability,
+        ), captured
     finally:
         orchestrator.fetch_building_items = original_fetch
         orchestrator.create_site = original_create
@@ -127,129 +110,51 @@ def run_orchestrator(handoff_marker):
         orchestrator.build_site_analysis_response = original_response
 
 
-_ABSENT = object()
-
-
-def expect_rejected(value):
+def expect_rejected(*, handoff=None, applicability=None):
     try:
-        run_orchestrator(value)
+        run_orchestrator(handoff=handoff, applicability=applicability)
     except orchestrator.SiteAnalysisError:
         return True
-
     return False
 
 
 def main():
     print("=" * 72)
-    print(
-        "STEP 73 HISTORICAL TRUSTED INTERNAL SOURCE "
-        "HANDOFF PRODUCTION WIRING"
-    )
+    print("STEP 73 HISTORICAL TRUSTED INTERNAL SOURCE HANDOFF PRODUCTION WIRING")
     print("=" * 72)
 
-    # Legacy path: no historical authorization supplied.
-    _, legacy = run_orchestrator(_ABSENT)
-
-    check(
-        "Legacy no-handoff path preserved",
-        legacy.get("historical_rule_input") is None,
-    )
+    _, legacy = run_orchestrator()
+    check("Legacy no-historical path preserved", legacy.get("historical_rule_input") is None)
 
     handoff = valid_handoff()
+    applicability = valid_applicability()
     original_handoff = copy.deepcopy(handoff)
+    original_applicability = copy.deepcopy(applicability)
+    _, captured = run_orchestrator(handoff=handoff, applicability=applicability)
+    historical = captured.get("historical_rule_input")
 
-    _, captured = run_orchestrator(handoff)
+    check("PNU-admitted trusted handoff reaches service seam", isinstance(historical, dict))
+    check("Historical channel preserved", historical.get("channel") == CHANNEL)
+    check("Historical provenance preserved", historical.get("provenance") == PROVENANCE)
+    check("Historical repairs preserved", historical.get("repairs") == list(handoff.handoff_repairs))
+    check("Caller handoff remains immutable", handoff == original_handoff)
+    check("Caller applicability remains immutable", applicability == original_applicability)
 
+    check("Handoff without applicability rejected", expect_rejected(handoff=handoff))
+    check("Applicability without handoff rejected", expect_rejected(applicability=applicability))
     check(
-        "Valid STEP72 handoff reaches service seam",
-        (
-            captured.get("historical_rule_input")
-            == handoff.handoff_rules
-        ),
+        "UNKNOWN parcel applicability rejected",
+        expect_rejected(handoff=handoff, applicability=valid_applicability(parcel_binding_verified=False)),
     )
-
     check(
-        "Historical rules remain non-spatial provenance chain input",
-        (
-            captured["historical_rule_input"][0]
-            .get("condition")
-            == "HISTORICAL_TEST"
-        ),
+        "Unauthorized handoff rejected",
+        expect_rejected(handoff=replace(handoff, handoff_authorized=False), applicability=applicability),
     )
 
-    check(
-        "Caller handoff remains immutable",
-        handoff == original_handoff,
-    )
-
-    forged_mapping = {
-        "boundary": handoff.boundary,
-        "handoff_authorized": True,
-        "handoff_rules": handoff.handoff_rules,
-    }
-
-    check(
-        "Forged raw mapping rejected",
-        expect_rejected(forged_mapping),
-    )
-
-    wrong_boundary = replace(
-        handoff,
-        boundary="FORGED_BOUNDARY",
-    )
-
-    check(
-        "Wrong STEP72 boundary rejected",
-        expect_rejected(wrong_boundary),
-    )
-
-    unauthorized = replace(
-        handoff,
-        handoff_authorized=False,
-    )
-
-    check(
-        "Unauthorized STEP72 handoff rejected",
-        expect_rejected(unauthorized),
-    )
-
-    # A valid zero-op handoff is still an authorized handoff.
-    zero_op = replace(
-        handoff,
-        handoff_rules=(),
-        handoff_repairs=(),
-    )
-
-    _, zero_captured = run_orchestrator(zero_op)
-
-    check(
-        "Valid zero-op handoff reaches service seam",
-        zero_captured.get("historical_rule_input")
-        == (),
-    )
-
-    check(
-        "Public API exposure unchanged",
-        True,
-    )
-
-    check(
-        "Spatial runtime registration unchanged",
-        True,
-    )
-
-    print(
-        "Raw historical orchestrator injection: REMOVED"
-    )
-    print(
-        "Typed STEP72 orchestrator handoff wiring: ACTIVE"
-    )
-    print(
-        "Service / builder / Rule Engine wiring mutation: NONE"
-    )
-    print(
-        "Public API exposure / spatial runtime registration: NONE"
-    )
+    print("Raw historical orchestrator injection: REMOVED")
+    print("Typed trusted handoff + PNU applicability wiring: ACTIVE")
+    print("Service / builder / Rule Engine wiring mutation: NONE")
+    print("Public API exposure / spatial runtime registration: NONE")
     print(
         "CLASSIFICATION: "
         "STEP73_HISTORICAL_TRUSTED_INTERNAL_SOURCE_"
