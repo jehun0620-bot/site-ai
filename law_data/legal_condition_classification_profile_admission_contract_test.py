@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import replace
 
 from .legal_condition_catalogue_seed import (
+    STATUTE_ARTICLE,
     LegalConditionCatalogueSeed,
     LegalEnumerationProvenance,
 )
@@ -29,6 +30,30 @@ def _verified_seed() -> LegalConditionCatalogueSeed:
             effective_date="2026-01-01",
             appendix_id="APPENDIX-1",
             row_id="ROW-1",
+            source_identity_verified=True,
+            row_binding_verified=True,
+        ),
+    )
+
+
+def _verified_article_seed(
+    *,
+    article_id: str = "ARTICLE-50",
+    paragraph_id: str | None = "PARAGRAPH-1",
+    item_id: str | None = "ITEM-1",
+) -> LegalConditionCatalogueSeed:
+    return LegalConditionCatalogueSeed(
+        condition_name="지구단위계획",
+        legal_basis="국토의 계획 및 이용에 관한 법률",
+        provenance=LegalEnumerationProvenance(
+            source_family=STATUTE_ARTICLE,
+            source_uri="https://example.invalid/statute/article",
+            law_id="TEST-LAW",
+            law_version_id="TEST-VERSION",
+            effective_date="2026-01-01",
+            article_id=article_id,
+            paragraph_id=paragraph_id,
+            item_id=item_id,
             source_identity_verified=True,
             row_binding_verified=True,
         ),
@@ -97,6 +122,35 @@ def main() -> None:
         pass
     else:
         raise AssertionError("unverified classification must fail closed")
+
+    article_seed = _verified_article_seed()
+    article_evidence = _evidence(article_seed)
+    article_verification = verify_classification_evidence(article_seed, article_evidence)
+    assert article_verification.verified
+
+    article_51_seed = _verified_article_seed(article_id="ARTICLE-51")
+    assert seed_identity_fingerprint(article_seed) != seed_identity_fingerprint(article_51_seed)
+
+    paragraph_2_seed = _verified_article_seed(paragraph_id="PARAGRAPH-2", item_id=None)
+    assert seed_identity_fingerprint(article_seed) != seed_identity_fingerprint(paragraph_2_seed)
+
+    item_2_seed = _verified_article_seed(item_id="ITEM-2")
+    assert seed_identity_fingerprint(article_seed) != seed_identity_fingerprint(item_2_seed)
+
+    mismatched_verification = verify_classification_evidence(article_51_seed, article_evidence)
+    assert mismatched_verification.verified is False
+    assert mismatched_verification.seed_identity_verified is False
+
+    try:
+        admit_verified_classification_to_profile(
+            article_51_seed,
+            article_evidence,
+            article_verification,
+        )
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("classification evidence from another article must fail closed")
 
     print("STEP101_VERIFIED_CLASSIFICATION_TO_PROFILE_ADMISSION_CONTRACT_PASS")
 
