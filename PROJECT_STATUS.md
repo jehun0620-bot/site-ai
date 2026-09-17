@@ -2,14 +2,14 @@
 
 최종 업데이트: 2026-09-17
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `b9d204cc6c6d128a46ed33ee38071a3c4f545065`
+기준 behavioral PASS HEAD: `f54cd84b6c91cd2f8c0e47612223133daac97a4d`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP114 이후 historical SITE applicability/production/promotion, district-unit common production lane, parcel-register identity, parcel-only production, public ordinary/mountain HTTP E2E, address-based verified parcel identity, 그리고 verified address → existing parcel-analysis internal wiring까지 구현·사용자 로컬 검증했다.
+STEP114 이후 historical SITE applicability/production/promotion, district-unit common production lane, parcel-register identity, parcel-only production, address-based verified parcel identity, address→existing full-analysis internal wiring, 그리고 public address HTTP endpoint까지 구현·사용자 로컬 검증했다.
 
 STEP114 이후 기능 경계에는 새 architecture STEP 번호를 부여하지 않는다.
 
@@ -28,78 +28,67 @@ STEP114 이후 기능 경계에는 새 architecture STEP 번호를 부여하지 
 - `DISTRICT_UNIT_PLAN_SITE_TRUTH_PROMOTION_END_TO_END_REGRESSION_PASS`
 - `ADDRESS_PARCEL_IDENTITY_RESOLVER_CONTRACT_PASS`
 - `ADDRESS_SITE_ANALYSIS_ORCHESTRATOR_WIRING_CONTRACT_PASS`
+- `PUBLIC_API_ADDRESS_SITE_ANALYSIS_CONTRACT_PASS`
 
-### Address → existing full analysis E2E
+### Public address HTTP E2E — VALIDATED
 
-Behavioral PASS HEAD `b9d204cc6c6d128a46ed33ee38071a3c4f545065` validates the internal address-analysis wiring. `analyze_site_by_address()` accepts an address, requires a VERIFIED address parcel identity, then forwards only canonical parcel components into the existing `analyze_site_by_parcel()` pipeline. No second analysis path or Rule Engine was created.
+Behavioral PASS HEAD `f54cd84b6c91cd2f8c0e47612223133daac97a4d` contains the thin public address endpoint and contract. User-local real HTTP execution with `python -m uvicorn api_app:app --host 127.0.0.1 --port 8000` confirmed both ordinary and mountain address paths.
 
-User-local real-data E2E confirmed:
+```text
+POST /v1/site-analysis/address
+→ address request validation
+→ analyze_site_by_address()
+→ VERIFIED address parcel identity
+→ canonical parcel components
+→ existing analyze_site_by_parcel()
+→ existing full SITE analysis
+→ SITE_ANALYSIS_API_V1 / READY
+```
 
+Ordinary real HTTP:
 ```text
 서울특별시 강남구 개포동 12번지
-→ verified PNU 1168010300100120000
-→ plat_gb_cd=0
-→ existing parcel analysis
+→ PNU 1168010300100120000
 → site_id 11680-10300-0012-0000
-→ zone 제3종일반주거지역
-→ building_count 34
 → identity_status COMPLETE
+→ building_count 34
+→ status READY
 ```
 
+Mountain real HTTP:
 ```text
 서울특별시 동작구 동작동 산 29-3
-→ verified PNU 1159010600200290003
-→ plat_gb_cd=1
-→ existing parcel analysis
-→ parcel-only Building HUB 0 path
+→ PNU 1159010600200290003
 → site_id 11590-10600-0029-0003
-→ zone 자연녹지지역
-→ building_count 0
 → identity_status COMPLETE
+→ building_count 0
+→ parcel-only path
+→ status READY
 ```
 
-This establishes real-data ordinary + mountain address-to-full-analysis internal E2E. Public HTTP address exposure is not yet implemented/validated.
+PowerShell displayed Korean mojibake in the formatted object output, while PNU/site_id/status/counts remained correct and prior direct Python execution displayed Korean correctly. This is treated as a terminal display-encoding issue, not a parcel-identity or analysis failure.
 
-### Address parcel identity validation
-
-Validated identity boundary remains:
+### Address identity safety boundary
 
 ```text
 USER PARCEL ADDRESS
-→ safe parcel-address normalization
-→ VWorld parcel address search
+→ normalization
+→ VWorld parcel search
 → exact address.parcel match
-→ address-search item.id PNU
-→ item coordinate
-→ live LP_PA_CBND_BUBUN polygon query
-→ polygon PNU
-→ address PNU == polygon PNU
-→ PNU component decomposition
-→ create_pnu() exact regeneration
+→ address item PNU + coordinate
+→ live LP_PA_CBND_BUBUN
+→ polygon PNU exact match
+→ PNU decomposition + create_pnu regeneration
 → VERIFIED canonical parcel identity
 ```
 
-Fail-closed behavior remains mandatory for empty search, no exact parcel match, address/polygon PNU mismatch, multiple distinct verified PNUs, invalid PNU, missing key, or unresolved parcel polygon.
-
-### Parcel register identity / parcel-only production
-
-Code-system mapping remains explicit:
-
-```text
-Public API / Building HUB plat_gb_cd=0 (ordinary) → PNU land-register digit 1
-Public API / Building HUB plat_gb_cd=1 (mountain) → PNU land-register digit 2
-```
-
-Building HUB status `00` with zero items can produce a parcel-only Site from canonical parcel identity. Same-PNU VWorld Land Characteristics may enrich land category, zoning, official land area, and parcel address. Cross-PNU persisted identity fallback remains blocked.
-
-Previously user-local validated public parcel-component HTTP E2E:
-- ordinary `11680/10300/0/0012/0000` → PNU `1168010300100120000`, Building HUB 34 items, official land area `121040.4 square_meter`, identity COMPLETE
-- mountain `11590/10600/1/0029/0003` → PNU `1159010600200290003`, parcel-only enrichment, official land area `16704.0 square_meter`, identity COMPLETE
+Search result, candidate item, coordinate, or user selection alone is never canonical parcel truth.
 
 ## 2. Current safety boundary
 
 ```text
 address search result ≠ canonical parcel truth
+candidate parcel ≠ canonical parcel truth
 user parcel selection ≠ canonical parcel truth
 verified address identity → existing parcel pipeline only
 resolver result ≠ parcel applicability
@@ -109,15 +98,22 @@ promotion authorization ≠ second SITE truth store
 verified envelope ≠ new Rule Engine
 ```
 
-No identity/address/zone/coordinate/geometry/evidence may be reused across a different PNU. Address-derived identity must be rebound to live same-PNU parcel geometry before VERIFIED status.
+No identity/address/zone/coordinate/geometry/evidence may be reused across a different PNU. Historical production remains PNU-bound/fail-closed. Public historical input remains unauthorized. UQQ700 remains UNKNOWN/BLOCKED.
 
-Historical production remains PNU-bound and fail-closed. Public historical input remains unauthorized. UQQ700 remains UNKNOWN/BLOCKED.
+## 3. Product-facing position
 
-## 3. Production reconciliation
+The exact-address public analysis boundary is now validated. The next product-facing gap is candidate discovery for incomplete/prefix-like address input.
 
-Historical and district-unit family-specific verification paths converge only at the common verified SITE registry / existing Rule Engine lane. Simultaneous historical + district-unit production input remains fail-closed because no cross-family merge policy is authorized.
+Current VWorld parcel search already returns candidate items containing useful product data such as:
+- `id`: candidate PNU
+- `address.parcel`: parcel address
+- `address.road`: road address when available
+- `address.bldnm`: building name when available
+- `point.x / point.y`: map centering coordinate
 
-Address input is not a new production lane. It is an identity front door that converges into the existing parcel analysis function.
+However, the existing resolver intentionally hides these candidates and only admits an exact parcel-address match into verification. Candidate discovery therefore needs a separate read-only/search boundary rather than weakening the verified resolver.
+
+Candidate search must not itself start analysis or mark candidates VERIFIED.
 
 ## 4. Documentation / product design
 
@@ -126,8 +122,6 @@ Architecture Baseline remains v1.2.
 - `PROJECT_ARCHITECTURE.md`: validated architecture/invariants
 - `PROJECT_STATUS.md`: current implementation and behavioral validation checkpoint
 - `PROJECT_PRODUCT_UX.md`: product-facing ideas and UX backlog
-
-Candidate-list + map-assisted parcel selection remains future product UX. User selection will still require backend PNU/geometry verification.
 
 ## 5. Repository / local rules
 
@@ -165,22 +159,25 @@ READ-ONLY audit
 
 ## 7. Next action
 
-Current READ-ONLY public HTTP audit confirms `api_app.py` is a thin FastAPI layer whose existing `/v1/site-analysis` route calls `analyze_site_by_parcel()` directly.
+Design a candidate-search boundary without changing the existing verified resolver semantics.
 
-Next minimal public boundary should add an address request model and an address route that calls the already validated `analyze_site_by_address()` function. It must not duplicate address resolution or parcel analysis logic in the HTTP layer.
-
-Target flow:
+Preferred separation:
 
 ```text
-POST address request
-→ thin FastAPI validation
-→ analyze_site_by_address()
-→ VERIFIED address identity
-→ existing analyze_site_by_parcel()
-→ existing analysis response
+DISCOVERY
+user query
+→ candidate search
+→ candidate PNU/address/point metadata
+→ UI list/map
+
+SELECTION + VERIFICATION
+user selects candidate
+→ backend re-verifies selected PNU against live parcel geometry
+→ VERIFIED canonical parcel identity
+→ existing analysis pipeline
 ```
 
-Public historical inputs remain excluded. Candidate-list/map UX remains separate and should not be mixed into this first address-analysis HTTP endpoint.
+The first candidate-search implementation should remain read-only and must not perform SITE truth, regulation truth, or analysis admission.
 
 ## 8. Handoff policy
 
