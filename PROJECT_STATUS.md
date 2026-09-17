@@ -2,14 +2,14 @@
 
 최종 업데이트: 2026-09-17
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `164c669089b67272bb6cf01abbdf7a67593e5b43`
+기준 behavioral PASS HEAD: `07b1c8c28871a6d07ffc94df112178baa7beb361`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP114 이후 historical/district-unit production, parcel identity/parcel-only production, verified address identity, public exact-address analysis, candidate discovery/public HTTP, selected-candidate same-PNU polygon re-verification까지 사용자 로컬 검증했다. STEP114 이후 기능 경계에는 새 architecture STEP 번호를 부여하지 않는다.
+STEP114 이후 historical/district-unit production, parcel identity/parcel-only production, verified address identity, public exact-address analysis, candidate discovery/public HTTP, selected-candidate same-PNU polygon verification, 그리고 selected-candidate → existing analysis wiring/full live E2E까지 사용자 로컬 검증했다. STEP114 이후 기능 경계에는 새 architecture STEP 번호를 부여하지 않는다.
 
 최신 관련 PASS:
 - `ADDRESS_PARCEL_IDENTITY_RESOLVER_CONTRACT_PASS`
@@ -18,12 +18,11 @@ STEP114 이후 historical/district-unit production, parcel identity/parcel-only 
 - `ADDRESS_PARCEL_CANDIDATE_SEARCH_CONTRACT_PASS`
 - `PUBLIC_API_ADDRESS_PARCEL_CANDIDATE_SEARCH_CONTRACT_PASS`
 - `SELECTED_PARCEL_CANDIDATE_VERIFIER_CONTRACT_PASS`
+- `SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_WIRING_CONTRACT_PASS`
 
 ## 2. Candidate discovery/public HTTP — VALIDATED
 
-`POST /v1/parcel-candidates/address` actual user-local HTTP PASS at code lineage through `1f21cd0c8837fbae31e81b757482a311d9d7b6e5`.
-
-`서울특별시 강남구 개포동 12`, size 10 → `PARCEL_CANDIDATE_SEARCH_V1`, READY, count 10. Returned real candidate PNU/address/point metadata.
+`POST /v1/parcel-candidates/address` actual user-local HTTP PASS. `서울특별시 강남구 개포동 12`, size 10 → `PARCEL_CANDIDATE_SEARCH_V1`, READY, count 10.
 
 Candidate discovery remains non-authoritative:
 
@@ -35,61 +34,77 @@ user selection ≠ canonical parcel truth
 
 ## 3. Selected candidate same-PNU verification — VALIDATED
 
-Behavioral PASS HEAD `164c669089b67272bb6cf01abbdf7a67593e5b43`.
+Actual live candidate:
+- `개포동 12-2 / 개포자이`
+- candidate_pnu `1168010300100120002`
+- x `127.07662495509604`
+- y `37.49629354642009`
+
+Live `LP_PA_CBND_BUBUN` polygon re-query found the same PNU, and `parcel_identity_from_pnu` regeneration produced VERIFIED / `SELECTED_PARCEL_CANDIDATE_VERIFIED`.
+
+Verified identity: sigungu `11680`, bjdong `10300`, plat_gb `0`, bun `0012`, ji `0002`, CRS EPSG:4326.
+
+## 4. Selected candidate → existing full analysis — VALIDATED
+
+Behavioral PASS HEAD `07b1c8c28871a6d07ffc94df112178baa7beb361`.
 
 Focused contract:
-`SELECTED_PARCEL_CANDIDATE_VERIFIER_CONTRACT_PASS`
-
-Actual VWorld live verification:
-
-```text
-candidate: 개포동 12-2 / 개포자이
-candidate_pnu: 1168010300100120002
-x: 127.07662495509604
-y: 37.49629354642009
-→ live LP_PA_CBND_BUBUN query
-→ selected PNU found in polygon feature PNUs
-→ parcel_identity_from_pnu regeneration
-→ VERIFIED / SELECTED_PARCEL_CANDIDATE_VERIFIED
-```
-
-Verified identity:
-- sigungu_cd `11680`
-- bjdong_cd `10300`
-- plat_gb_cd `0`
-- bun `0012`
-- ji `0002`
-- CRS `EPSG:4326`
-
-This is canonical parcel identity verification only. It is not SITE truth or regulation applicability.
-
-## 4. Selected candidate → existing analysis wiring — IMPLEMENTED, LOCAL VALIDATION PENDING
-
-Current GitHub implementation adds `analyze_site_by_selected_candidate()` to the existing Orchestrator. It:
-
-```text
-candidate_pnu + x + y
-→ verify_selected_parcel_candidate()
-→ require VERIFIED
-→ use only verified sigungu/bjdong/plat_gb/bun/ji
-→ existing analyze_site_by_parcel()
-```
-
-Rejected verification raises `SiteBuildError` before parcel analysis. No second analysis lane is created.
-
-Focused contract file:
-`site_data/selected_parcel_candidate_site_analysis_wiring_contract_test.py`
-
-Required next validation:
 `SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_WIRING_CONTRACT_PASS`
 
-After that, run real selected-candidate → full existing analysis E2E. Public selected-candidate HTTP endpoint remains a later separate boundary.
+Actual user-local live E2E:
 
-## 5. Safety boundary
+```text
+selected candidate
+→ live same-PNU polygon verification
+→ VERIFIED canonical components
+→ existing analyze_site_by_parcel()
+→ Building HUB + land/site analysis
+→ SITE_ANALYSIS_API_V1 / READY
+```
+
+Observed result:
+- site_id `11680-10300-0012-0002`
+- pnu `1168010300100120002`
+- address `서울특별시 강남구 개포동 12-2번지`
+- road_address `서울특별시 강남구 개포로109길 69 (개포동)`
+- identity_status `COMPLETE`
+- zone `제3종일반주거지역`
+- building_count `9`
+- Building HUB status `00`
+
+No second SITE analysis lane was created.
+
+## 5. Public selected-candidate HTTP — IMPLEMENTED, LOCAL VALIDATION PENDING
+
+Current GitHub implementation exposes:
+
+```text
+POST /v1/site-analysis/selected-candidate
+```
+
+Request boundary:
+- candidate_pnu: exactly 19 digits
+- x: -180..180
+- y: -90..90
+- project_profile
+- procedure_profile
+- include_debug
+
+The HTTP layer does not parse PNU or create VERIFIED state. It delegates to `analyze_site_by_selected_candidate()`, which performs the existing live polygon re-verification before parcel analysis.
+
+Focused contract:
+`site_data/public_api_selected_parcel_candidate_site_analysis_contract_test.py`
+
+Required next validation:
+`PUBLIC_API_SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_CONTRACT_PASS`
+
+After contract PASS, run actual local HTTP E2E for `개포동 12-2`.
+
+## 6. Safety boundary
 
 No identity/address/zone/coordinate/geometry/evidence may be reused across a different PNU. Historical production remains PNU-bound/fail-closed. Public historical input remains unauthorized. UQQ700 remains UNKNOWN/BLOCKED.
 
-## 6. Repository / local rules
+## 7. Repository / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `cleanup/repository-organization-20260916`
