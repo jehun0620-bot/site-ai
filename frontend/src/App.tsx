@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { confirmParcelCandidate, searchParcelCandidates } from './api/parcelCandidates'
+import KakaoMap from './map/KakaoMap'
 import type {
   CandidateSearchState,
   ParcelCandidate,
@@ -173,17 +174,7 @@ export default function App() {
         )}
       </section>
 
-      <section className="map-placeholder" aria-label="지도 영역 준비 중">
-        <div>
-          <span>MAP</span>
-          <h2>{confirmation ? '검증된 필지 경계 준비 완료' : '지도 영역'}</h2>
-          <p>
-            {confirmation
-              ? `${confirmation.geometry.type} 경계를 Backend에서 확인했습니다. 다음 단계에서 이 경계만 지도에 표시합니다.`
-              : '후보를 선택하면 Backend에서 실제 필지 경계를 확인합니다.'}
-          </p>
-        </div>
-      </section>
+      <KakaoMap candidates={candidates} selectedCandidate={selectedCandidate} confirmation={confirmation} />
     </main>
   )
 }
