@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ParcelCandidate, ParcelConfirmationResponse } from '../types/parcel'
-import { candidateToMapMarker, verifiedGeometryToMapGeometry } from './MapAdapter'
+import {
+  candidateReferenceGeometryToMapGeometry,
+  candidateToMapMarker,
+  verifiedGeometryToMapGeometry,
+} from './MapAdapter'
 
 interface KakaoMapProps {
   candidates: ParcelCandidate[]
@@ -16,7 +20,8 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation, 
   const containerRef = useRef<HTMLDivElement | null>(null)
   const mapRef = useRef<KakaoMap | null>(null)
   const markersRef = useRef<KakaoMarker[]>([])
-  const polygonsRef = useRef<KakaoPolygon[]>([])
+  const candidatePolygonsRef = useRef<KakaoPolygon[]>([])
+  const verifiedPolygonsRef = useRef<KakaoPolygon[]>([])
   const [sdkReady, setSdkReady] = useState(false)
   const [mapError, setMapError] = useState('')
 
@@ -87,6 +92,8 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation, 
 
     markersRef.current.forEach((marker) => marker.setMap(null))
     markersRef.current = []
+    candidatePolygonsRef.current.forEach((polygon) => polygon.setMap(null))
+    candidatePolygonsRef.current = []
 
     const bounds = new kakao.maps.LatLngBounds()
     let hasBounds = false
@@ -100,16 +107,50 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation, 
       marker.setOpacity(isSelected ? 1 : 0.72)
       marker.setZIndex(isSelected ? 10 : 1)
       kakao.maps.event.addListener(marker, 'click', () => onCandidateSelect(candidate))
-
       markersRef.current.push(marker)
+
       bounds.extend(position)
       hasBounds = true
+
+      if (!confirmation && candidate.reference_geometry) {
+        const referenceGeometry = candidateReferenceGeometryToMapGeometry(candidate.reference_geometry)
+        referenceGeometry?.polygons.forEach((polygonRings) => {
+          const path = polygonRings.map((ring) =>
+            ring.map((point) => {
+              const polygonPoint = new kakao.maps.LatLng(point.latitude, point.longitude)
+              bounds.extend(polygonPoint)
+              hasBounds = true
+              return polygonPoint
+            }),
+          )
+
+          const polygon = new kakao.maps.Polygon({
+            map,
+            path,
+            strokeWeight: isSelected ? 3 : 1,
+            strokeColor: isSelected ? '#315f45' : '#607568',
+            strokeOpacity: isSelected ? 0.9 : 0.55,
+            strokeStyle: 'solid',
+            fillColor: isSelected ? '#8fb99d' : '#c8d5cc',
+            fillOpacity: isSelected ? 0.2 : 0.08,
+          })
+          kakao.maps.event.addListener(polygon, 'click', () => onCandidateSelect(candidate))
+          candidatePolygonsRef.current.push(polygon)
+        })
+      }
     })
 
     if (confirmation) return
 
     if (selectedCandidate) {
-      map.setCenter(new kakao.maps.LatLng(selectedCandidate.y, selectedCandidate.x))
+      const selectedReferenceGeometry = selectedCandidate.reference_geometry
+        ? candidateReferenceGeometryToMapGeometry(selectedCandidate.reference_geometry)
+        : null
+      if (selectedReferenceGeometry) {
+        fitMapToGeometry(map, selectedReferenceGeometry.polygons)
+      } else {
+        map.setCenter(new kakao.maps.LatLng(selectedCandidate.y, selectedCandidate.x))
+      }
     } else if (hasBounds) {
       map.setBounds(bounds)
     }
@@ -120,8 +161,8 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation, 
     const map = mapRef.current
     if (!sdkReady || !kakao || !map) return
 
-    polygonsRef.current.forEach((polygon) => polygon.setMap(null))
-    polygonsRef.current = []
+    verifiedPolygonsRef.current.forEach((polygon) => polygon.setMap(null))
+    verifiedPolygonsRef.current = []
 
     if (!confirmation) return
 
@@ -154,7 +195,7 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation, 
         fillColor: '#2f855a',
         fillOpacity: 0.22,
       })
-      polygonsRef.current.push(polygon)
+      verifiedPolygonsRef.current.push(polygon)
     })
 
     if (hasBounds) map.setBounds(bounds)
@@ -164,7 +205,7 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation, 
     <section className="map-stage" aria-label="필지 지도">
       <div ref={containerRef} className="kakao-map" />
       {!mapError && sdkReady && candidates.length > 0 && !confirmation && (
-        <div className="map-selection-guide">지도 마커를 선택해 필지를 확인할 수 있습니다.</div>
+        <div className="map-selection-guide">지도 마커 또는 옅은 필지 경계를 선택해 필지를 확인할 수 있습니다.</div>
       )}
       {mapError && (
         <div className="map-message map-message-error" role="alert">
@@ -184,17 +225,13 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation, 
   )
 }
 
-function fitMapToConfirmation(map: KakaoMap, confirmation: ParcelConfirmationResponse): void {
+function fitMapToGeometry(map: KakaoMap, polygons: { latitude: number; longitude: number }[][][]): void {
   const kakao = window.kakao
   if (!kakao) return
 
-  const verifiedGeometry = verifiedGeometryToMapGeometry(confirmation.geometry)
-  if (!verifiedGeometry) return
-
   const bounds = new kakao.maps.LatLngBounds()
   let hasBounds = false
-
-  verifiedGeometry.polygons.forEach((polygonRings) => {
+  polygons.forEach((polygonRings) => {
     polygonRings.forEach((ring) => {
       ring.forEach((point) => {
         bounds.extend(new kakao.maps.LatLng(point.latitude, point.longitude))
@@ -202,8 +239,13 @@ function fitMapToConfirmation(map: KakaoMap, confirmation: ParcelConfirmationRes
       })
     })
   })
-
   if (hasBounds) map.setBounds(bounds)
+}
+
+function fitMapToConfirmation(map: KakaoMap, confirmation: ParcelConfirmationResponse): void {
+  const verifiedGeometry = verifiedGeometryToMapGeometry(confirmation.geometry)
+  if (!verifiedGeometry) return
+  fitMapToGeometry(map, verifiedGeometry.polygons)
 }
 
 function loadKakaoMapsSdk(appKey: string): Promise<void> {
