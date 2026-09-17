@@ -62,6 +62,7 @@ class Site:
 
     sigungu_cd: str = ""
     bjdong_cd: str = ""
+    plat_gb_cd: str = "0"
     bun: str = ""
     ji: str = ""
 
