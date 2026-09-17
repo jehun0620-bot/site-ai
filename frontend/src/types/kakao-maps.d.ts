@@ -17,7 +17,7 @@ interface KakaoMapsNamespace {
 }
 
 interface KakaoMapsEventNamespace {
-  addListener(target: KakaoMarker, type: 'click', handler: () => void): void
+  addListener(target: KakaoMarker | KakaoPolygon, type: 'click', handler: () => void): void
 }
 
 interface KakaoMapOptions {
