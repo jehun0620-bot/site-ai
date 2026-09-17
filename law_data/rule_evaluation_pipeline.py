@@ -2615,6 +2615,7 @@ def evaluate_site_rules(
         Dict[str, Any]
     ] = None,
     historical_registry_authorization: Optional[Any] = None,
+    common_verified_site_registry: Optional[Any] = None,
 ) -> Dict[str, Any]:
 
     project_profile = (
@@ -2976,6 +2977,53 @@ def evaluate_site_rules(
 
         site_registry_for_consumption = copy.deepcopy(
             authorized_registry
+        )
+
+    if common_verified_site_registry is not None:
+        # Lazy import keeps this common consumption boundary isolated
+        # from Rule Engine module-load dependencies.
+        from law_data.common_verified_site_registry_live_consumption import (
+            BOUNDARY_NAME as COMMON_VERIFIED_SITE_REGISTRY_BOUNDARY,
+            CommonVerifiedSiteRegistryLiveConsumption,
+        )
+
+        common_registry = common_verified_site_registry
+
+        common_registry_valid = (
+            isinstance(
+                common_registry,
+                CommonVerifiedSiteRegistryLiveConsumption,
+            )
+            and common_registry.boundary
+            == COMMON_VERIFIED_SITE_REGISTRY_BOUNDARY
+            and common_registry.ready
+            and common_registry.consumption_ready is True
+        )
+
+        if not common_registry_valid:
+            raise ValueError(
+                "common verified site registry live consumption invalid"
+            )
+
+        if historical_registry_authorization is not None:
+            raise ValueError(
+                "historical and common verified site registry inputs "
+                "cannot be consumed together"
+            )
+
+        verified_registry = getattr(
+            common_registry,
+            "verified_site_registry",
+            None,
+        )
+
+        if not isinstance(verified_registry, dict):
+            raise ValueError(
+                "common verified site registry invalid"
+            )
+
+        site_registry_for_consumption = copy.deepcopy(
+            verified_registry
         )
 
     site_repairs = (
