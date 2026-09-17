@@ -25,7 +25,7 @@ local work
 → exact-file commit
 → push
 → clean working tree 확인
-→ other desktop pull --ff-only
+→ other desktop branch-explicit pull --ff-only
 ```
 
 한 PC에 미커밋 프로젝트 코드를 남긴 상태로 다른 PC에서 같은 작업을 시작하지 않는다.
@@ -43,15 +43,23 @@ git branch --show-current
 git rev-parse HEAD
 ```
 
-working tree가 예상대로 안전한 경우에만 다음을 실행한다.
+working tree가 예상대로 안전하고 현재 branch가 `cleanup/repository-organization-20260916`임을 확인한 경우에만 다음을 실행한다.
 
 ```powershell
-git pull --ff-only
+git pull --ff-only origin cleanup/repository-organization-20260916
 git rev-parse HEAD
 git status --short
 ```
 
-`pull --ff-only`를 사용하여 예상하지 못한 merge가 자동으로 만들어지는 것을 방지한다.
+인계 기본 명령에서는 remote와 branch를 명시한다. `--ff-only`를 사용하여 예상하지 못한 merge가 자동으로 만들어지는 것을 방지하고, pull 대상을 working branch 하나로 제한한다.
+
+2026-09-18 Desktop B에서 plain `git pull --ff-only` 실행 시 실제로 `fatal: Cannot fast-forward to multiple branches.`가 발생했다. 같은 clean working tree와 정상 upstream 상태에서 다음 명시적 명령은 정상 fast-forward PASS했다.
+
+```powershell
+git pull --ff-only origin cleanup/repository-organization-20260916
+```
+
+따라서 두-PC 인계의 기본 pull 명령은 위 branch-explicit 형식을 사용한다. 이 사례만으로 Git 설정 원인을 추측하거나 자동 변경하지 않는다.
 
 `UU`, `AA`, `DD` 등 unmerged 상태나 예상하지 못한 modified/untracked 파일이 나타나면 개발을 시작하지 않는다. 먼저 파일의 정체와 Git operation 상태를 READ-ONLY로 확인한다.
 
@@ -262,11 +270,18 @@ npm run build
 
 인계 요청 시 GitHub 상태만 확인하고 끝내지 않는다. 반드시 사용자에게 GitHub에 올라가지 않는 로컬 전용 파일/설정을 별도로 챙겼는지 언급한다. 필요하면 실제 secret 값을 노출하지 않고 파일의 존재 여부와 변경 필요 여부만 확인한다.
 
+다음 PC에서 코드를 동기화할 때는 branch를 먼저 확인하고 기본적으로 다음 명시적 pull을 사용한다.
+
+```powershell
+git pull --ff-only origin cleanup/repository-organization-20260916
+```
+
 사용자가 `오늘 다른 PC로 넘기기 전 작업 마감 점검해줘`처럼 요청하면 목요일/일요일에 맞는 인계 체크를 수행한다.
 
 ## 13. 금지 원칙 요약
 
 - 로컬 상태 확인 전 `git pull` 금지
+- 인계 기본 pull에서 remote/branch를 생략하지 않음
 - 예상하지 못한 conflict를 추측으로 해결하지 않음
 - `git add .`, `git add -A`, `git add --all` 금지
 - untracked 파일을 정체 확인 없이 삭제하지 않음
