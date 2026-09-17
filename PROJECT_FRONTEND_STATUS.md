@@ -23,10 +23,10 @@ Architecture의 목표 상태와 실제 구현 상태를 혼동하지 않는다.
 cleanup/repository-organization-20260916
 ```
 
-Frontend application 구현 시작 전 Backend confirmation behavioral baseline HEAD:
+현재 Frontend application baseline HEAD:
 
 ```text
-44876524289401f82dc4b23d87d84822fb57df58
+1bd5130272aa853ed927dd14a32a56c89cee9931
 ```
 
 Frontend 문서 체계:
@@ -45,10 +45,20 @@ A안 — 지도 중심 UX
 현재 Frontend application 구현 상태:
 
 ```text
-NOT IMPLEMENTED
+IMPLEMENTED — INITIAL SHELL + CANDIDATE SEARCH FOUNDATION
 ```
 
-기술 방향 검토 결과는 React + TypeScript + Vite를 우선안으로 하고, MVP map provider는 Kakao Maps를 우선 검토하되 provider-neutral map adapter 경계를 유지하는 것이다. 실제 Frontend application/dependency는 아직 생성하지 않았다.
+기술 스택:
+
+```text
+React
+TypeScript
+Vite
+```
+
+Frontend source는 Backend Python source와 분리된 독립 `frontend/` application root에서 관리한다.
+
+MVP map provider는 Kakao Maps를 우선 검토하되 provider-neutral map adapter 경계를 유지한다. 실제 지도 SDK는 아직 도입하지 않았다.
 
 ---
 
@@ -84,8 +94,9 @@ regulation detail / evidence
 
 ```text
 DESIGN BASELINE CONFIRMED
-BACKEND CONFIRMATION BOUNDARY IMPLEMENTED + LOCALLY VERIFIED
-FRONTEND IMPLEMENTATION NOT STARTED
+BACKEND CONFIRMATION BOUNDARY IMPLEMENTED + USER LOCAL PASS
+FRONTEND SHELL IMPLEMENTED + USER LOCAL BUILD PASS
+RUNTIME BACKEND API INTEGRATION VALIDATION PENDING
 ```
 
 ---
@@ -174,7 +185,7 @@ Frontend에 hard-code된 truth 또는 mock authority로 사용하지 않는다.
 
 Backend는 서로 다른 PNU의 저장 geometry를 재사용하지 않고 requested PNU 기준 live geometry verification을 수행한다. Frontend도 PNU가 바뀌면 이전 verified geometry/result를 새 parcel에 승계하지 않아야 한다.
 
-### 2026-09-17 User Local Behavioral Validation
+### 2026-09-17 User Local Backend Behavioral Validation
 
 사용자가 local root `D:\site-ai`에서 working branch를 다음 HEAD까지 fast-forward한 뒤 직접 검증했다.
 
@@ -199,17 +210,59 @@ M law_data/output/urban_area_conversion_history_final_resolution.json
 
 ---
 
-## 6. Frontend Implementation Status
+## 6. Frontend Application Structure
+
+현재 실제 repository에는 Backend와 분리된 다음 application root가 존재한다.
+
+```text
+frontend/
+├─ .gitignore
+├─ index.html
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.json
+├─ tsconfig.app.json
+├─ vite.config.ts
+└─ src/
+   ├─ App.tsx
+   ├─ app.css
+   ├─ main.tsx
+   ├─ vite-env.d.ts
+   ├─ api/
+   │  └─ parcelCandidates.ts
+   └─ types/
+      └─ parcel.ts
+```
+
+생성물 관리:
+
+```text
+node_modules/   ignored
+dist/           ignored
+*.tsbuildinfo   ignored
+package-lock.json tracked
+```
+
+Frontend dependency는 `frontend/package.json` / `frontend/package-lock.json`에서 관리하며 Python dependency와 섞지 않는다.
+
+---
+
+## 7. Frontend Implementation Status
 
 | 영역 | 상태 | 설명 |
 |---|---|---|
 | Frontend architecture baseline | DOCUMENTED | A안 지도 중심 구조와 trust boundary 문서화 |
 | Frontend status tracking | DOCUMENTED | 이 문서에서 실제 구현/검증 상태 관리 |
-| Frontend framework | DECISION CANDIDATE | React + TypeScript + Vite 우선안; application 미생성 |
-| Map provider | DECISION CANDIDATE | Kakao Maps MVP 우선 검토; provider-neutral adapter 원칙 |
-| Frontend directory | NOT IMPLEMENTED | Backend와 분리된 `frontend/` root 생성 예정 |
-| Address search UI | NOT IMPLEMENTED | Backend candidate API 존재 |
-| Candidate cards | NOT IMPLEMENTED | Backend candidate data 존재 |
+| Frontend framework | IMPLEMENTED | React + TypeScript + Vite |
+| Frontend directory | IMPLEMENTED | 독립 `frontend/` application root |
+| Frontend dependency lock | IMPLEMENTED | actual local npm resolution `package-lock.json` tracked |
+| Frontend production build | USER LOCAL PASS | `tsc -b && vite build` 성공 |
+| Address search UI | IMPLEMENTED FOUNDATION | 주소 입력/search state UI 존재 |
+| Candidate API client | IMPLEMENTED | `POST /v1/parcel-candidates/address` client 존재 |
+| Candidate response typing | IMPLEMENTED | `PARCEL_CANDIDATE_SEARCH_V1` frontend contract typing |
+| Candidate cards | IMPLEMENTED FOUNDATION | response candidate 목록 표시 코드 존재 |
+| Actual browser-to-Backend candidate search | NOT YET USER VALIDATED | Vite proxy + FastAPI runtime 통합 검증 필요 |
+| Map provider | DECISION CANDIDATE | Kakao Maps 우선 검토; provider-neutral adapter 원칙 |
 | Map UI | NOT IMPLEMENTED | 실제 SDK/dependency 미도입 |
 | Candidate list/map sync | NOT IMPLEMENTED | Architecture contract만 확정 |
 | Parcel confirmation Backend API | IMPLEMENTED + USER LOCAL PASS | `PARCEL_CONFIRMATION_V1` |
@@ -218,14 +271,100 @@ M law_data/output/urban_area_conversion_history_final_resolution.json
 | Full analysis UI | NOT IMPLEMENTED | Backend selected-candidate endpoint 존재 |
 | Result summary | NOT IMPLEMENTED | `SITE_ANALYSIS_API_V1` 기반 가능 |
 | Regulation detail/evidence UI | NOT IMPLEMENTED | presentation 설계 필요 |
-| Error/empty/UNKNOWN UI | NOT IMPLEMENTED | Architecture 의미 규칙 확정 |
-| Responsive UI | NOT IMPLEMENTED | Desktop split baseline 확정 |
+| Error/empty/UNKNOWN UI | PARTIAL FOUNDATION | candidate search empty/error state 존재; full product semantics 미완성 |
+| Responsive UI | PARTIAL FOUNDATION | initial responsive styles 존재; map split 미구현 |
 
 ---
 
-## 7. A안 Backend Readiness
+## 8. Frontend Local Build Validation
 
-이전에 A안 vertical slice의 직접 blocker였던 lightweight parcel confirmation public contract는 구현되고 사용자 로컬 검증까지 완료됐다.
+### Environment
+
+사용자 로컬에서 확인된 runtime:
+
+```text
+Node.js v24.21.0
+npm 11.19.0
+```
+
+Node executable:
+
+```text
+C:\Program Files\nodejs\node.exe
+```
+
+### Dependency Install
+
+사용자 로컬 실행:
+
+```text
+npm install
+```
+
+결과:
+
+```text
+added 24 packages
+found 0 vulnerabilities
+```
+
+실제 npm resolution으로 생성된 `frontend/package-lock.json`은 사용자가 정확한 파일만 stage하여 commit/push했다.
+
+Commit:
+
+```text
+1bd5130272aa853ed927dd14a32a56c89cee9931
+chore: lock frontend dependencies
+```
+
+### Production Build
+
+초기 build에서 Vite client declaration 누락으로 다음 TypeScript 오류가 발생했다.
+
+```text
+TS2882: Cannot find module or type declarations for side-effect import of './app.css'
+```
+
+이에 Frontend 범위에서 다음을 추가했다.
+
+```text
+frontend/src/vite-env.d.ts
+frontend/.gitignore
+```
+
+그 후 사용자가 다시 실행:
+
+```text
+npm run build
+```
+
+실제 결과:
+
+```text
+> site-ai-frontend@0.1.0 build
+> tsc -b && vite build
+
+vite v8.3.0 building client environment for production...
+✓ 17 modules transformed.
+computing gzip size...
+dist/index.html                   0.49 kB │ gzip:  0.33 kB
+dist/assets/index-Cq8pTj30.css    2.50 kB │ gzip:  0.98 kB
+dist/assets/index-Dbhrtih3.js   223.15 kB │ gzip: 70.19 kB
+
+✓ built in 1.22s
+```
+
+검증 후 `git status --short`에는 보호 파일과 아직 commit 전이던 `frontend/package-lock.json`만 남았고, package-lock은 이후 사용자 commit/push로 정상 추적됐다.
+
+따라서 현재 Frontend shell은 **USER LOCAL BUILD PASS** 상태이다.
+
+이 PASS는 production compile/build에 대한 PASS이며, 실제 브라우저에서 FastAPI를 호출하는 runtime integration PASS와는 구분한다.
+
+---
+
+## 9. A안 Backend Readiness
+
+A안 vertical slice의 직접 Backend blocker였던 lightweight parcel confirmation public contract는 구현되고 사용자 로컬 검증까지 완료됐다.
 
 현재 Backend 경계:
 
@@ -252,11 +391,9 @@ BACKEND CONFIRMATION BOUNDARY READY
 USER LOCAL BEHAVIORAL PASS
 ```
 
-따라서 다음 직접 작업은 Backend truth path 추가가 아니라 독립 Frontend application root 생성과 실제 API consumption이다.
-
 ---
 
-## 8. Other Known Product Gaps
+## 10. Other Known Product Gaps
 
 첫 Frontend MVP를 막지는 않지만 이후 보완이 필요한 항목:
 
@@ -273,7 +410,7 @@ SaaS 기능인 authentication, project/history, organization, billing, usage, re
 
 ---
 
-## 9. Validation Policy
+## 11. Validation Policy
 
 Frontend도 Backend와 동일한 evidence-first 원칙을 따른다.
 
@@ -297,15 +434,15 @@ behavioral PASS
 
 GitHub commit 성공만으로 Frontend behavioral PASS를 선언하지 않는다.
 
+Production build PASS를 runtime Backend integration PASS로 확대 해석하지 않는다.
+
 Mock-only UI 성공을 실제 Backend 연동 PASS로 기록하지 않는다.
 
 ---
 
-## 10. Frontend / Backend Repository Separation Rule
+## 12. Frontend / Backend Repository Separation Rule
 
 Frontend source code는 Backend Python source와 혼합하지 않는다.
-
-목표 repository 경계:
 
 ```text
 D:\site-ai
@@ -317,6 +454,7 @@ D:\site-ai
 │
 └─ frontend/
    ├─ package.json
+   ├─ package-lock.json
    ├─ TypeScript / Vite configuration
    └─ src/
       ├─ api/
@@ -326,13 +464,11 @@ D:\site-ai
       └─ types/
 ```
 
-Frontend dependency는 `frontend/package.json`에서 관리하고 Python dependency는 기존 Backend dependency 체계에 유지한다.
-
 Frontend와 Backend의 runtime 연결은 HTTP/JSON public API boundary를 사용한다. Frontend가 Python module을 직접 import하거나 Backend verification logic을 TypeScript로 복제하지 않는다.
 
 ---
 
-## 11. Protected Development Rules
+## 13. Protected Development Rules
 
 Frontend 작업 때문에 Backend architecture를 우회하거나 두 번째 truth path를 만들지 않는다.
 
@@ -365,7 +501,7 @@ Frontend 작업과 무관하며 수정, 복원, reset, checkout, 삭제, staging
 
 ---
 
-## 12. Current Validation Status
+## 14. Current Validation Status
 
 ### Backend Boundary Required by Frontend A안
 
@@ -376,71 +512,88 @@ Verified Polygon/MultiPolygon contract   IMPLEMENTED
 Selected-candidate full analysis         IMPLEMENTED
 ```
 
-Focused local contract validation:
+Focused Backend local contract validation:
 
 ```text
 PUBLIC_API_SELECTED_PARCEL_CANDIDATE_CONFIRMATION_CONTRACT_PASS
 PUBLIC_API_SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_CONTRACT_PASS
 ```
 
-### Frontend Runtime
+### Frontend Shell
 
 ```text
-NOT STARTED
+React + TypeScript + Vite application    IMPLEMENTED
+npm dependency installation              PASS
+TypeScript production compile            PASS
+Vite production build                    PASS
+package-lock tracking                     IMPLEMENTED
 ```
 
-### Frontend Behavioral Validation
+### Frontend Runtime Integration
 
 ```text
-NO FRONTEND PASS YET
+Browser rendering                         NOT YET USER VALIDATED
+Vite -> FastAPI proxy                     NOT YET USER VALIDATED
+Real candidate API search                 NOT YET USER VALIDATED
 ```
-
-Frontend application이 아직 존재하지 않으므로 정상 상태다.
 
 ---
 
-## 13. Next Development Target
+## 15. Next Development Target
 
-다음 목표는 **Backend와 명확히 분리된 `frontend/` application root를 생성하고 첫 실제 vertical slice를 시작하는 것**이다.
+다음 목표는 **첫 실제 browser-to-Backend runtime integration을 검증하는 것**이다.
 
-첫 Frontend implementation scope의 방향:
+검증 대상:
 
 ```text
-frontend/
+FastAPI backend running on 127.0.0.1:8000
+    ↑
+Vite dev proxy
+    ↑
+React candidate search UI
     ↓
-React + TypeScript + Vite shell
+POST /v1/parcel-candidates/address
     ↓
-Frontend-owned API types/client
-    ↓
-POST /v1/parcel-candidates/address 연결
-    ↓
-주소 검색 UI
-    ↓
-실제 candidate result state / cards
+real candidate results rendered in browser
 ```
 
-첫 shell 단계에서는 지도 SDK와 API key 문제를 동시에 섞지 않는다. Candidate search가 실제 FastAPI contract와 연결되는 것을 먼저 검증한 뒤 map adapter/provider integration으로 이동한다.
+이 단계에서는 아직 Kakao Maps SDK를 추가하지 않는다.
 
-Frontend 코드를 root Python 영역, `site_data/`, `law_data/`, `regulations/` 안에 생성하지 않는다.
+먼저 다음을 실제 사용자 로컬 환경에서 확인한다.
+
+```text
+1. FastAPI server 정상 기동
+2. Vite frontend dev server 정상 기동
+3. 브라우저에서 Frontend UI 표시
+4. 실제 지번주소 검색
+5. Backend candidate response 성공
+6. candidate cards 표시
+7. SEARCHING / SEARCH_RESULTS / SEARCH_EMPTY / SEARCH_ERROR 상태가 예상대로 동작
+```
+
+실제 runtime integration PASS 이후 map provider / map adapter 단계로 이동한다.
 
 ---
 
-## 14. Immediate Next Step Status
+## 16. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
-Create isolated frontend/ application root and candidate-search vertical slice foundation
+User local browser-to-Backend candidate search runtime validation
 
 MODE:
-WRITE scope must be explicitly approved before application files are created
+VALIDATION FIRST
 
-BACKEND PRECONDITION:
-READY + USER LOCAL BEHAVIORAL PASS
+CURRENT FRONTEND STATUS:
+USER LOCAL BUILD PASS
+
+NEXT WRITE:
+Runtime validation 결과에 따라 결정
 ```
 
 ---
 
-## 15. Status Update Rule
+## 17. Status Update Rule
 
 이 문서는 다음 이벤트가 실제 발생했을 때 갱신한다.
 
@@ -448,6 +601,8 @@ READY + USER LOCAL BEHAVIORAL PASS
 - `frontend/` application 생성
 - API client contract 구현
 - candidate search vertical slice 구현
+- Frontend production build PASS
+- browser-to-Backend candidate search runtime PASS
 - map provider/component 구현
 - parcel confirmation API Frontend 연동
 - verified polygon rendering
