@@ -28,9 +28,7 @@ from law_data.historical_site_event_site_applicability_admission import Historic
 from law_data.historical_site_event_site_truth_promotion_rule_input_bridge import HistoricalSiteEventSiteTruthPromotionRuleInputBridge
 from law_data.historical_trusted_internal_source_handoff_authorization import HistoricalTrustedInternalSourceHandoffAuthorization
 from law_data.historical_verified_rule_input_envelope import seal_verified_historical_rule_input
-from law_data.district_unit_plan_verified_registry_candidate_envelope import (
-    DistrictUnitPlanVerifiedRegistryCandidateEnvelope,
-)
+from law_data.district_unit_plan_verified_registry_candidate_envelope import DistrictUnitPlanVerifiedRegistryCandidateEnvelope
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
@@ -76,16 +74,8 @@ def _admitted_canonical_pnu(applicability: HistoricalSiteEventSiteApplicabilityA
 
 
 def _parcel_only_site(*, sigungu_cd: str, bjdong_cd: str, plat_gb_cd: str, bun: str, ji: str) -> Site:
-    site = Site(
-        site_id=f"{sigungu_cd}-{bjdong_cd}-{bun}-{ji}",
-        sigungu_cd=str(sigungu_cd).strip(),
-        bjdong_cd=str(bjdong_cd).strip(),
-        plat_gb_cd=str(plat_gb_cd).strip(),
-        bun=str(bun).strip(),
-        ji=str(ji).strip(),
-    )
-    if not _actual_site_pnu(site):
-        raise SiteBuildError("유효한 필지 identity로 Site 객체를 생성할 수 없습니다.")
+    site=Site(site_id=f"{sigungu_cd}-{bjdong_cd}-{bun}-{ji}",sigungu_cd=str(sigungu_cd).strip(),bjdong_cd=str(bjdong_cd).strip(),plat_gb_cd=str(plat_gb_cd).strip(),bun=str(bun).strip(),ji=str(ji).strip())
+    if not _actual_site_pnu(site): raise SiteBuildError("유효한 필지 identity로 Site 객체를 생성할 수 없습니다.")
     return site
 
 
@@ -95,32 +85,24 @@ def analyze_site_by_parcel(*, sigungu_cd: str, bjdong_cd: str, bun: str, ji: str
     if items:
         site=create_site(items)
         if site is None: raise SiteBuildError("Site 객체 생성 실패")
-        if str(site.plat_gb_cd).strip() != str(plat_gb_cd).strip():
-            raise SiteBuildError("건축HUB 대장구분과 요청 필지 identity가 일치하지 않습니다.")
+        if str(site.plat_gb_cd).strip()!=str(plat_gb_cd).strip(): raise SiteBuildError("건축HUB 대장구분과 요청 필지 identity가 일치하지 않습니다.")
     else:
         site=_parcel_only_site(sigungu_cd=sigungu_cd,bjdong_cd=bjdong_cd,plat_gb_cd=plat_gb_cd,bun=bun,ji=ji)
 
-    raw_historical_rule_input=None
-    verified_historical_input=None
-    verified_district_unit_plan_input=None
-    actual_site_pnu=""
+    raw_historical_rule_input=None; verified_historical_input=None; verified_district_unit_plan_input=None; actual_site_pnu=""
     legacy_requested=bool(historical_handoff_authorization is not None or historical_site_applicability_admission is not None)
     promotion_requested=historical_promotion_rule_input_bridge is not None
     historical_requested=legacy_requested or promotion_requested
     district_requested=district_unit_plan_registry_candidate is not None
 
-    if legacy_requested and promotion_requested:
-        raise SiteAnalysisError("Historical SITE input is ambiguous: legacy and promotion paths cannot be used together")
-    if historical_requested and district_requested:
-        raise SiteAnalysisError("Historical and district-unit verified SITE inputs cannot be combined")
+    if legacy_requested and promotion_requested: raise SiteAnalysisError("Historical SITE input is ambiguous: legacy and promotion paths cannot be used together")
+    if historical_requested and district_requested: raise SiteAnalysisError("Historical and district-unit verified SITE inputs cannot be combined")
 
     if district_requested:
         envelope=district_unit_plan_registry_candidate
-        if not isinstance(envelope,DistrictUnitPlanVerifiedRegistryCandidateEnvelope) or not envelope.ready:
-            raise SiteAnalysisError("District-unit verified registry candidate envelope is not ready")
+        if not isinstance(envelope,DistrictUnitPlanVerifiedRegistryCandidateEnvelope) or not envelope.ready: raise SiteAnalysisError("District-unit verified registry candidate envelope is not ready")
         actual_site_pnu=_actual_site_pnu(site)
-        if not actual_site_pnu or actual_site_pnu!=envelope.canonical_pnu:
-            raise SiteAnalysisError("District-unit verified registry candidate PNU rebinding failed")
+        if not actual_site_pnu or actual_site_pnu!=envelope.canonical_pnu: raise SiteAnalysisError("District-unit verified registry candidate PNU rebinding failed")
         verified_district_unit_plan_input=envelope
 
     if promotion_requested:
@@ -136,7 +118,7 @@ def analyze_site_by_parcel(*, sigungu_cd: str, bjdong_cd: str, bun: str, ji: str
         if not actual_site_pnu or not admitted_pnu or actual_site_pnu!=admitted_pnu: raise SiteAnalysisError("Historical SITE applicability PNU rebinding failed")
         consistency=authorize_historical_site_event_candidate_repair_consistency(historical_site_applicability_admission,historical_handoff_authorization)
         if not consistency.authorized: raise SiteAnalysisError(f"Historical SITE candidate/repair consistency failed: {consistency.status} / {','.join(consistency.missing_gates)}")
-        binding=authorize_historical_site_event_candidate_condition_binding_authorization(historical_site_applicability_admission,historical_handoff_authorization)
+        binding=authorize_historical_site_event_candidate_condition_binding(historical_site_applicability_admission,historical_handoff_authorization)
         if not binding.authorized: raise SiteAnalysisError(f"Historical SITE candidate/condition binding failed: {binding.status} / {','.join(binding.missing_gates)}")
         adapter=adapt_admitted_historical_site_event_rule_input(historical_site_applicability_admission,historical_handoff_authorization)
         if not adapter.ready: raise SiteAnalysisError(f"Historical SITE applicability/handoff admission failed: {adapter.status} / {','.join(adapter.missing_gates)}")
