@@ -128,11 +128,11 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation, 
             map,
             path,
             strokeWeight: isSelected ? 4 : 2,
-            strokeColor: isSelected ? '#244b36' : '#40594a',
+            strokeColor: isSelected ? '#c84f4f' : '#d96b6b',
             strokeOpacity: isSelected ? 1 : 0.9,
             strokeStyle: 'solid',
-            fillColor: isSelected ? '#7ea58b' : '#aebfb4',
-            fillOpacity: isSelected ? 0.32 : 0.2,
+            fillColor: isSelected ? '#efa6a6' : '#f5c2c2',
+            fillOpacity: isSelected ? 0.24 : 0.16,
           })
           kakao.maps.event.addListener(polygon, 'click', () => onCandidateSelect(candidate))
           candidatePolygonsRef.current.push(polygon)
