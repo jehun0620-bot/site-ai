@@ -1,3 +1,8 @@
+export interface ParcelReferenceGeometry {
+  type: 'Polygon' | 'MultiPolygon'
+  coordinates: unknown[]
+}
+
 export interface ParcelCandidate {
   candidate_pnu: string
   parcel_address: string
@@ -6,6 +11,7 @@ export interface ParcelCandidate {
   x: number
   y: number
   crs: string
+  reference_geometry?: ParcelReferenceGeometry | null
 }
 
 export interface ParcelCandidateSearchResponse {
