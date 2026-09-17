@@ -33,36 +33,38 @@ SEARCH / MAP
 → existing analysis pipeline
 ```
 
-## 3. 주소 검색 후보 리스트 — BACKEND VALIDATED / PUBLIC API NEXT
+## 3. 주소 검색 후보 리스트 backend/public API — VALIDATED
 
-Candidate discovery backend is implemented and user-local real-data validated at code HEAD `644420035690d8e3281fad4c564789d01d6469b0`.
+Candidate discovery backend and `POST /v1/parcel-candidates/address` are implemented and user-local real-data validated.
 
-Real query:
+Real query `서울특별시 강남구 개포동 12`, size 10 returned `PARCEL_CANDIDATE_SEARCH_V1`, READY, count 10, including `개포동 12-2 / 개포자이`.
+
+Candidate payload contains candidate PNU, parcel address, road address/building name when available, and EPSG:4326 x/y. Discovery deliberately does not return VERIFIED identity and does not start analysis.
+
+## 4. Selected candidate verification/full analysis/public HTTP — VALIDATED
+
+The selected-candidate backend boundary is now implemented and user-local live validated:
+
 ```text
-서울특별시 강남구 개포동 12
+candidate_pnu + x/y
+→ live LP_PA_CBND_BUBUN query
+→ require selected PNU == polygon feature PNU
+→ PNU decomposition/regeneration
+→ VERIFIED canonical parcel identity
+→ existing analyze_site_by_parcel()
 ```
 
-returned multiple real candidates such as:
+Public endpoint:
+
 ```text
-개포동 12    / 대청아파트302동
-개포동 12-1
-개포동 12-10
-개포동 12-2  / 개포자이
-개포동 12-4  / 석탑프라자
+POST /v1/site-analysis/selected-candidate
 ```
 
-Candidate backend payload:
-- candidate PNU
-- parcel address
-- road address when available
-- building name when available
-- EPSG:4326 x/y
+Real `개포동 12-2 / 개포자이` HTTP E2E returned `SITE_ANALYSIS_API_V1 / READY`, canonical PNU `1168010300100120002`, identity COMPLETE, official land area 15487.3㎡, and Building HUB count 9/status 00.
 
-The backend candidate-search function deliberately does not return VERIFIED identity and does not start analysis.
+A stale snapshot for PNU `1168010300100120000` was explicitly not reused as truth; live geometry for selected PNU `1168010300100120002` was re-queried and verified.
 
-Next product/API task: expose this validated discovery function through a thin public HTTP endpoint.
-
-## 4. Candidate list UI — PROPOSED
+## 5. Candidate list UI — NEXT / PROPOSED
 
 Desktop/web concept:
 
@@ -85,61 +87,42 @@ Desktop/web concept:
 
 PNU may remain hidden from ordinary users while being retained as backend candidate identity.
 
-## 5. Map candidate display — PROPOSED
+Before UI implementation, inspect the repository for an existing frontend/web foundation. Reuse existing technology if present. Do not introduce React/Vue/another framework merely for convenience without explicit design/write approval.
 
-Current real candidate x/y coordinates are sufficient to center the map and place candidate markers. They are not sufficient to prove parcel geometry.
+## 6. Map candidate display — PROPOSED
+
+Current real candidate x/y coordinates are sufficient to center the map and place candidate markers. They are not parcel truth.
 
 Initial map behavior:
 1. show candidate markers
 2. list click centers/highlights candidate marker
 3. show parcel/road/building labels
-4. do not start analysis on marker click
+4. do not treat marker click as VERIFIED
+5. selected candidate analysis request goes through the validated public selected-candidate endpoint
 
-Parcel polygon highlight comes only after selected candidate is backend re-verified against live parcel geometry.
-
-## 6. Selection → backend verification — DESIGNED NEXT BOUNDARY
-
-Recommended contract:
-
-```text
-selected candidate
-├─ candidate_pnu
-├─ parcel_address
-├─ x / y
-└─ crs
-       ↓
-backend live LP_PA_CBND_BUBUN lookup
-       ↓
-selected candidate PNU == polygon PNU
-       ↓
-PNU decomposition / regeneration
-       ↓
-VERIFIED canonical parcel identity
-       ↓
-confirmation UI / analysis
-```
-
-Never trust a PNU sent back by a browser merely because it originated from an earlier search response. Backend must re-verify it.
+Verified parcel polygon display should use geometry returned by the validated analysis path or a separately designed safe geometry boundary; never infer a parcel polygon from the marker point.
 
 ## 7. Exact-address fast path — VALIDATED
 
-Exact-address public analysis is already validated for ordinary and mountain parcels:
+Exact-address public analysis remains a separate validated path:
 
 ```text
-exact address
+exact parcel address
 → backend VERIFIED identity
 → existing full analysis
 ```
 
-Candidate selection is an additional UX path, not a replacement for the exact-address path.
+Candidate selection is an additional UX path, not a replacement.
 
 ## 8. Road-name address support — IDEA
 
 Current real-data validation centers on parcel-address search. Road-name address behavior needs separate provider investigation. Any road→parcel conversion must still end in same-PNU verification.
 
-## 9. Analysis confirmation UX — IDEA
+## 9. Analysis confirmation UX — PROPOSED
 
-Before expensive/full analysis, consider a confirmation card showing selected parcel address, road/building label, ordinary/mountain type, verified parcel polygon and basic official land information. Action: `이 필지 분석`.
+Before expensive/full analysis, consider a confirmation card showing selected parcel address, road/building label and candidate location. The action `이 필지 분석` sends candidate PNU + x/y to the validated backend endpoint, where live same-PNU verification occurs before analysis.
+
+The UI must not label the candidate as VERIFIED before the backend succeeds.
 
 ## 10. Result UX — IDEA
 
@@ -150,18 +133,22 @@ UNKNOWN must be explained rather than hidden.
 ## 11. Updated backlog
 
 ```text
-1. exact address → full analysis                     VALIDATED
-2. public exact-address HTTP                         VALIDATED
-3. candidate discovery backend                       VALIDATED
-4. public candidate-search HTTP                      NEXT
-5. candidate list UI                                 PROPOSED
-6. candidate markers / map                           PROPOSED
-7. selected candidate → backend PNU/polygon verify   DESIGNED NEXT BOUNDARY
-8. verified parcel polygon highlight                 PROPOSED
-9. list ↔ map synchronization                        PROPOSED
-10. road-name address strategy                       IDEA
-11. mobile refinement                                IDEA
-12. result/provenance visualization                  IDEA
+1. exact address → full analysis                       VALIDATED
+2. public exact-address HTTP                           VALIDATED
+3. candidate discovery backend                         VALIDATED
+4. public candidate-search HTTP                        VALIDATED
+5. selected candidate same-PNU verification            VALIDATED
+6. selected candidate → existing full analysis         VALIDATED
+7. public selected-candidate analysis HTTP              VALIDATED
+8. repository frontend/web foundation audit             NEXT
+9. candidate list UI                                    PROPOSED
+10. candidate markers / map                             PROPOSED
+11. verified parcel polygon highlight                   PROPOSED
+12. list ↔ map synchronization                          PROPOSED
+13. analysis confirmation UX                            PROPOSED
+14. road-name address strategy                          IDEA
+15. mobile refinement                                   IDEA
+16. result/provenance visualization                     IDEA
 ```
 
 ## 12. 관리 규칙
