@@ -14,6 +14,50 @@ export interface SiteAnalysisSite {
   identity_status: unknown
 }
 
+export interface SiteAnalysisAreaValue {
+  value: number | null
+  unit: string | null
+  source?: string | null
+  role?: string | null
+  crs?: string | null
+  crs_status?: unknown
+}
+
+export interface SiteAnalysisLandArea {
+  official: SiteAnalysisAreaValue
+  spatial: SiteAnalysisAreaValue
+  difference: {
+    value: number | null
+    ratio_percent: number | null
+  }
+  resolution: string | null
+  primary: string | null
+}
+
+export interface SiteAnalysisNumericRegulation {
+  value: number | null
+  unit: string | null
+  status: string | null
+}
+
+export interface SiteAnalysisRegulation {
+  building_coverage_ratio: SiteAnalysisNumericRegulation
+  floor_area_ratio: SiteAnalysisNumericRegulation
+  numeric_resolution: unknown
+  direct_relaxation_count: number
+  numeric_active_before_guard: number
+  numeric_excluded_count: number
+  numeric_retained_count: number
+}
+
+export interface SiteAnalysisRuleEvaluation {
+  total: number
+  applicable: number
+  not_applicable: number
+  conditional: number
+  unknown: number
+}
+
 export interface SiteAnalysisRequirements {
   project: unknown[]
   procedure: unknown[]
@@ -22,16 +66,30 @@ export interface SiteAnalysisRequirements {
   requires_additional_input: boolean
 }
 
+export interface SiteAnalysisExternalDependency {
+  category?: unknown
+  condition?: unknown
+  status?: unknown
+  confidence?: unknown
+  automation_state?: unknown
+  blocking_analysis?: boolean
+}
+
+export interface SiteAnalysisExternalDependencies {
+  count: number
+  items: SiteAnalysisExternalDependency[]
+}
+
 export interface SiteAnalysisResponse {
   schema_version: 'SITE_ANALYSIS_API_V1'
   status: unknown
   site: SiteAnalysisSite
-  land_area: unknown
+  land_area: SiteAnalysisLandArea
   spatial: unknown
-  regulation: unknown
-  rule_evaluation: unknown
+  regulation: SiteAnalysisRegulation
+  rule_evaluation: SiteAnalysisRuleEvaluation
   requirements: SiteAnalysisRequirements
-  external_dependencies: unknown
+  external_dependencies: SiteAnalysisExternalDependencies
   service?: {
     building_count?: number | null
     building_total_count?: number | null

@@ -40,18 +40,30 @@ export async function analyzeSelectedParcelCandidate(
   return body
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === 'object' && !Array.isArray(value)
+}
+
+function isNullableNumber(value: unknown): boolean {
+  return value === null || typeof value === 'number'
+}
+
 function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
-  if (!value || typeof value !== 'object') return false
+  if (!isRecord(value)) return false
 
-  const body = value as Record<string, unknown>
+  const body = value
   if (body.schema_version !== 'SITE_ANALYSIS_API_V1') return false
-  if (!body.site || typeof body.site !== 'object') return false
-  if (!body.requirements || typeof body.requirements !== 'object') return false
-  if (!('land_area' in body) || !('spatial' in body) || !('regulation' in body)) return false
-  if (!('rule_evaluation' in body) || !('external_dependencies' in body)) return false
+  if (!isRecord(body.site) || !isRecord(body.requirements)) return false
+  if (!isRecord(body.land_area) || !isRecord(body.regulation)) return false
+  if (!isRecord(body.rule_evaluation) || !isRecord(body.external_dependencies)) return false
+  if (!('spatial' in body)) return false
 
-  const site = body.site as Record<string, unknown>
-  const requirements = body.requirements as Record<string, unknown>
+  const site = body.site
+  const requirements = body.requirements
+  const landArea = body.land_area
+  const regulation = body.regulation
+  const ruleEvaluation = body.rule_evaluation
+  const externalDependencies = body.external_dependencies
 
   const nullableString = (item: unknown) => item === null || typeof item === 'string'
   const siteValid =
@@ -71,5 +83,35 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
     typeof requirements.procedure_count === 'number' &&
     typeof requirements.requires_additional_input === 'boolean'
 
-  return siteValid && requirementsValid
+  const official = landArea.official
+  const spatial = landArea.spatial
+  const difference = landArea.difference
+  const landAreaValid =
+    isRecord(official) &&
+    isRecord(spatial) &&
+    isRecord(difference) &&
+    isNullableNumber(official.value) &&
+    isNullableNumber(spatial.value) &&
+    isNullableNumber(difference.value) &&
+    isNullableNumber(difference.ratio_percent)
+
+  const bcr = regulation.building_coverage_ratio
+  const far = regulation.floor_area_ratio
+  const regulationValid =
+    isRecord(bcr) &&
+    isRecord(far) &&
+    isNullableNumber(bcr.value) &&
+    isNullableNumber(far.value)
+
+  const ruleEvaluationValid =
+    typeof ruleEvaluation.total === 'number' &&
+    typeof ruleEvaluation.applicable === 'number' &&
+    typeof ruleEvaluation.not_applicable === 'number' &&
+    typeof ruleEvaluation.conditional === 'number' &&
+    typeof ruleEvaluation.unknown === 'number'
+
+  const externalDependenciesValid =
+    typeof externalDependencies.count === 'number' && Array.isArray(externalDependencies.items)
+
+  return siteValid && requirementsValid && landAreaValid && regulationValid && ruleEvaluationValid && externalDependenciesValid
 }
