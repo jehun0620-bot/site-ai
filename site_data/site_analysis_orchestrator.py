@@ -7,6 +7,7 @@ from typing import Any, Dict, Optional
 import requests
 from dotenv import load_dotenv
 from site_data.address_parcel_identity_resolver import resolve_address_parcel_identity
+from site_data.selected_parcel_candidate_verifier import verify_selected_parcel_candidate
 from site_data.site_builder import create_site
 from site_data.site_data_model import Site
 from site_data.site_analysis_service import analyze_site_object, site_to_analysis_input
@@ -120,6 +121,24 @@ def analyze_site_by_address(*,address:str,project_profile:Optional[Dict[str,str]
     identity=resolve_address_parcel_identity(address,api_key=vworld_api_key)
     if not identity.verified:
         raise SiteBuildError(f"주소에서 검증된 필지를 확정할 수 없습니다: {identity.resolution}")
+    return analyze_site_by_parcel(
+        sigungu_cd=identity.sigungu_cd,
+        bjdong_cd=identity.bjdong_cd,
+        plat_gb_cd=identity.plat_gb_cd,
+        bun=identity.bun,
+        ji=identity.ji,
+        project_profile=project_profile,
+        procedure_profile=procedure_profile,
+        include_debug=include_debug,
+        service_key=service_key,
+    )
+
+
+def analyze_site_by_selected_candidate(*,candidate_pnu:str,x:float,y:float,project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,include_debug:bool=False,service_key:Optional[str]=None,vworld_api_key:Optional[str]=None)->Dict[str,Any]:
+    """Re-verify a user-selected discovery candidate, then reuse parcel analysis."""
+    identity=verify_selected_parcel_candidate(candidate_pnu,x,y,api_key=vworld_api_key)
+    if not identity.verified:
+        raise SiteBuildError(f"선택한 필지를 다시 검증할 수 없습니다: {identity.resolution}")
     return analyze_site_by_parcel(
         sigungu_cd=identity.sigungu_cd,
         bjdong_cd=identity.bjdong_cd,
