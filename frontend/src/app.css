@@ -241,39 +241,59 @@ h1 {
   font-weight: 700;
 }
 
-.map-placeholder {
-  display: grid;
-  place-items: center;
+.map-stage {
+  position: relative;
+  min-width: 0;
   min-height: 100vh;
-  padding: 32px;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.76)),
-    repeating-linear-gradient(0deg, transparent 0 47px, #dce2e8 48px),
-    repeating-linear-gradient(90deg, transparent 0 47px, #dce2e8 48px),
-    #eef1f4;
-  text-align: center;
+  overflow: hidden;
+  background: #eef1f4;
 }
 
-.map-placeholder span {
-  display: inline-block;
-  padding: 6px 9px;
+.kakao-map {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.map-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  gap: 6px;
+  width: min(420px, calc(100% - 48px));
+  padding: 18px 20px;
+  border: 1px solid #dce2e8;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 30px rgba(23, 32, 51, 0.1);
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.map-message span {
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.map-message-error {
+  border-color: #e4b4b4;
+}
+
+.map-verification-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  padding: 8px 11px;
   border-radius: 999px;
-  background: #172033;
+  background: rgba(31, 111, 67, 0.94);
   color: #fff;
+  box-shadow: 0 4px 14px rgba(23, 32, 51, 0.16);
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.12em;
-}
-
-.map-placeholder h2 {
-  margin: 12px 0 6px;
-}
-
-.map-placeholder p {
-  max-width: 420px;
-  margin: 0;
-  color: #667085;
-  line-height: 1.6;
+  letter-spacing: 0.08em;
 }
 
 @media (max-width: 800px) {
@@ -290,8 +310,9 @@ h1 {
     margin-bottom: 30px;
   }
 
-  .map-placeholder {
-    min-height: 42vh;
+  .map-stage,
+  .kakao-map {
+    min-height: 52vh;
   }
 }
 
