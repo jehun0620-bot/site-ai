@@ -193,8 +193,8 @@ package-lock.json tracked
 | Map UI | IMPLEMENTED + USER LOCAL PASS | Kakao Maps 실제 지도 렌더링 확인 |
 | Candidate list/map sync | NOT IMPLEMENTED | Architecture contract만 확정 |
 | Verified polygon rendering | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | Backend VERIFIED MultiPolygon 실제 지도 렌더링 확인 |
-| Full analysis UI | NOT IMPLEMENTED | Backend selected-candidate endpoint 존재 |
-| Result summary | NOT IMPLEMENTED | `SITE_ANALYSIS_API_V1` 기반 가능 |
+| Full analysis UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 실제 selected-candidate 분석 요청 및 SITE_ANALYSIS_API_V1 결과 표시 확인 |
+| Result summary | PARTIAL + USER LOCAL PASS | 주소/PNU/용도지역/분석 상태/추가 입력 여부 기본 요약 표시 확인; 상세 결과 UI 미완성 |
 | Error/empty/UNKNOWN UI | PARTIAL FOUNDATION | candidate/confirmation 상태 처리 존재; 전체 product semantics 미완성 |
 
 ---
@@ -336,7 +336,7 @@ map rendering                            PASS
     ↓
 user parcel confirmation
     ↓
-selected-candidate full analysis         Backend ready / Frontend not implemented
+selected-candidate full analysis         USER LOCAL BEHAVIORAL PASS
 ```
 
 Frontend는 PNU를 canonical truth로 자체 승격하지 않는다. 실제 polygon은 Backend confirmation response에서만 가져온다.
@@ -437,40 +437,32 @@ Verified parcel state                       USER LOCAL BEHAVIORAL PASS
 Map adapter/provider                        IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Candidate marker rendering                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Verified polygon rendering                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
-Full analysis Frontend integration          NOT IMPLEMENTED
+Full analysis Frontend integration          IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
 
 ## 16. Next Development Target
 
-다음 목표는 **실제 지도 위에 candidate 위치와 Backend VERIFIED parcel geometry를 표시하는 것**이다.
+다음 목표는 **SITE_ANALYSIS_API_V1의 실제 분석 결과를 사용자가 이해할 수 있는 상세 결과 UI로 표현하는 것**이다.
 
-논리 흐름:
+현재 selected-candidate full analysis와 기본 result summary는 사용자 로컬에서 실제 동작이 확인됐다.
+
+다음 상세화 대상은 실제 Backend response contract를 기준으로 결정한다.
 
 ```text
-Candidate[]
+SITE_ANALYSIS_API_V1
     ↓
-candidate marker presentation
-
-Backend PARCEL_CONFIRMATION_V1
+land_area
     ↓
-verified Polygon / MultiPolygon
+regulation
     ↓
-provider-neutral Map Adapter
+rule_evaluation
     ↓
-map provider
+requirements
     ↓
-actual verified parcel boundary rendering
+user-facing result detail
 ```
-
-구현 전에 현재 Frontend 구조와 공식 map provider 문서를 READ-ONLY로 다시 확인한다.
-
-Map provider는 Kakao Maps를 우선 검토하되 provider-neutral adapter boundary를 유지한다. Provider API의 좌표 객체나 polygon 객체를 Backend/domain type으로 사용하지 않는다.
-
-Backend spatial contract는 계속 GeoJSON/EPSG:4326이다.
-
----
 
 ## 17. Other Known Product Gaps
 
@@ -491,13 +483,13 @@ Authentication, project/history, organization, billing, usage, report management
 
 ```text
 CURRENT TASK:
-Map provider / adapter READ-ONLY investigation
+SITE_ANALYSIS_API_V1 detailed result contract READ-ONLY investigation
 
 CURRENT FRONTEND STATUS:
-PARCEL CONFIRMATION FRONTEND USER LOCAL BEHAVIORAL PASS
+SELECTED-CANDIDATE FULL ANALYSIS USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
-Must inspect actual Frontend files + official map provider docs and define exact minimal approved scope
+Must inspect actual SITE_ANALYSIS_API_V1 response + Backend contracts and define exact minimal result-detail UI scope
 ```
 
 ---
