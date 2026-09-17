@@ -13,8 +13,14 @@ button { cursor: pointer; }
 button:disabled { cursor: wait; opacity: 0.7; }
 
 .app-shell { min-height: 100vh; display: grid; grid-template-columns: minmax(360px, 500px) minmax(0, 1fr); background: #eef2ee; transition: grid-template-columns 180ms ease; }
-.app-shell-result-ready { grid-template-columns: minmax(560px, 720px) minmax(420px, 1fr); }
+.app-shell-result-ready { grid-template-columns: minmax(680px, 2fr) minmax(360px, 1fr); }
 .search-panel { padding: 40px; overflow-y: auto; background: #fbfcfa; border-right: 1px solid #dfe6df; }
+.search-panel-result-ready { padding: 30px 36px 48px; }
+.search-intro { transition: margin 180ms ease; }
+.search-intro-compact { margin-bottom: 20px; }
+.search-intro-compact .brand { margin-bottom: 12px; }
+.search-intro-compact h1 { font-size: clamp(28px, 3vw, 38px); }
+.search-intro-compact .lead { max-width: 720px; margin: 9px 0 0; }
 .brand { margin-bottom: 28px; font-size: 13px; font-weight: 800; letter-spacing: 0.14em; color: #27653f; }
 h1 { margin: 0; font-size: clamp(30px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.04em; }
 .lead { margin: 14px 0 30px; color: #647067; line-height: 1.6; }
@@ -25,6 +31,16 @@ h1 { margin: 0; font-size: clamp(30px, 4vw, 44px); line-height: 1.08; letter-spa
 .search-row button, .analysis-button { flex: 0 0 auto; border: 0; border-radius: 10px; padding: 0 18px; background: #27653f; color: white; font-weight: 700; }
 .status { min-height: 24px; margin: 14px 0 18px; font-size: 13px; color: #647067; }
 .status-search_error { color: #a53a31; }
+
+.pre-analysis-controls-compact { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(320px, 1fr); gap: 12px 16px; align-items: start; padding: 16px; border: 1px solid #e1e7e1; border-radius: 14px; background: #f6f8f5; }
+.pre-analysis-controls-compact .search-form { min-width: 0; }
+.pre-analysis-controls-compact .status { grid-column: 1; min-height: 0; margin: 8px 0 0; }
+.pre-analysis-controls-compact .candidate-list { grid-column: 1; }
+.pre-analysis-controls-compact .candidate-card { padding: 11px 13px; }
+.pre-analysis-controls-compact .verification-panel { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; padding: 14px; }
+.pre-analysis-controls-compact .verification-panel > p { margin: 8px 0; }
+.pre-analysis-controls-compact .verified-details { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; margin: 12px 0 0; }
+.pre-analysis-controls-compact .verified-details div { grid-template-columns: 72px minmax(0, 1fr); gap: 8px; }
 
 .candidate-list { display: grid; gap: 10px; }
 .candidate-card { width: 100%; padding: 15px; text-align: left; border: 1px solid #d8dfd8; border-radius: 12px; background: white; color: inherit; }
@@ -45,6 +61,8 @@ dt { color: #78827a; font-size: 12px; }
 dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 600; }
 .analysis-button { width: 100%; min-height: 44px; }
 
+.analysis-panel-result-ready { margin-top: 18px; padding: 22px; border-color: #cfdacf; box-shadow: 0 12px 34px rgba(31, 49, 38, 0.06); }
+.analysis-panel-result-ready > .analysis-title-row strong { font-size: 18px; }
 .analysis-details { display: grid; gap: 16px; margin-top: 18px; }
 .analysis-detail-section { padding: 18px; border: 1px solid #e1e7e1; border-radius: 12px; background: #fbfcfa; }
 .analysis-detail-section h2 { margin: 0 0 12px; font-size: 16px; }
@@ -80,13 +98,15 @@ dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 600; }
 .map-status-error { color: #a53a31; }
 .map-verified-badge { position: absolute; z-index: 2; top: 20px; right: 20px; padding: 7px 10px; border-radius: 999px; background: #27653f; color: white; font-size: 11px; font-weight: 800; letter-spacing: 0.05em; }
 
-@media (max-width: 1120px) {
-  .app-shell-result-ready { grid-template-columns: minmax(500px, 58%) minmax(360px, 42%); }
+@media (max-width: 1280px) {
+  .app-shell-result-ready { grid-template-columns: minmax(600px, 62%) minmax(360px, 38%); }
+  .pre-analysis-controls-compact { grid-template-columns: 1fr; }
+  .pre-analysis-controls-compact .status, .pre-analysis-controls-compact .candidate-list, .pre-analysis-controls-compact .verification-panel { grid-column: 1; grid-row: auto; }
 }
 
 @media (max-width: 920px) {
   .app-shell, .app-shell-result-ready { grid-template-columns: 1fr; }
-  .search-panel { padding: 28px 20px; border-right: 0; }
+  .search-panel, .search-panel-result-ready { padding: 28px 20px; border-right: 0; }
   .map-panel { position: relative; height: 54vh; min-height: 420px; }
 }
 
