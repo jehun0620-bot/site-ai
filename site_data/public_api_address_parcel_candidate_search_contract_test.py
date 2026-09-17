@@ -16,6 +16,10 @@ def _candidate() -> AddressParcelCandidate:
         building_name="대청아파트302동",
         x=127.07539280356858,
         y=37.494197498186885,
+        reference_geometry={
+            "type": "Polygon",
+            "coordinates": [[[127.07, 37.49], [127.08, 37.49], [127.07, 37.49]]],
+        },
     )
 
 
@@ -35,7 +39,9 @@ def main() -> None:
         assert body["count"] == 1
         assert body["candidates"][0]["candidate_pnu"] == "1168010300100120000"
         assert body["candidates"][0]["parcel_address"] == "서울특별시 강남구 개포동 12"
+        assert body["candidates"][0]["reference_geometry"]["type"] == "Polygon"
         assert "verified" not in body["candidates"][0]
+        assert "verification" not in body["candidates"][0]
         search.assert_called_once_with("서울특별시 강남구 개포동 12", size=10)
 
     with patch.object(api_app, "search_address_parcel_candidates") as search:
