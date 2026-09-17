@@ -6,18 +6,46 @@ from .district_unit_plan_hybrid_positive_candidate import (
     POSITIVE_CANDIDATE,
     evaluate_district_unit_plan_hybrid_positive_candidate,
 )
-from .district_unit_plan_hybrid_resolver_result_verification_contract_test import (
-    PNU,
-    _verified_execution,
-)
 from .district_unit_plan_hybrid_resolver_result_verification import (
     verify_district_unit_plan_hybrid_resolver_result,
 )
 
-OTHER_PNU = "1168010300100130000"
+PNU = "1168010600100010000"
+OTHER_PNU = "1168010600100020000"
 
 
-def _verified_result():
+def _verified_execution() -> dict:
+    return {
+        "resolver_execution_verified": True,
+        "condition_name": "지구단위계획",
+        "resolution_type": "HYBRID_SPATIAL_NOTICE",
+        "resolution": "UNKNOWN",
+        "canonical_pnu": PNU,
+        "resolver_admission": {
+            "resolver_input_admitted": True,
+            "condition_name": "지구단위계획",
+            "resolution_type": "HYBRID_SPATIAL_NOTICE",
+            "canonical_pnu": PNU,
+            "hybrid_binding": {
+                "hybrid_gate_binding_verified": True,
+                "condition_name": "지구단위계획",
+                "canonical_pnu": PNU,
+                "binding_scope": {
+                    "designation_to_current_validity": True,
+                    "spatial_to_canonical_pnu": True,
+                    "designation_to_spatial_notice_identity": True,
+                },
+            },
+        },
+        "parcel_applicability_verified": False,
+        "site_truth_decision_allowed": False,
+        "site_promotion_allowed": False,
+        "production_registration_allowed": False,
+        "runtime_registration_allowed": False,
+    }
+
+
+def _verified_result() -> dict:
     return verify_district_unit_plan_hybrid_resolver_result(
         _verified_execution(),
         canonical_pnu=PNU,
