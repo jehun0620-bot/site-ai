@@ -81,9 +81,8 @@ h1 {
   background: #fff;
 }
 
-.search-row button {
-  flex: 0 0 auto;
-  padding: 13px 18px;
+.search-row button,
+.analysis-button {
   border: 0;
   border-radius: 10px;
   background: #172033;
@@ -92,7 +91,13 @@ h1 {
   cursor: pointer;
 }
 
-.search-row button:disabled {
+.search-row button {
+  flex: 0 0 auto;
+  padding: 13px 18px;
+}
+
+.search-row button:disabled,
+.analysis-button:disabled {
   cursor: wait;
   opacity: 0.6;
 }
@@ -172,7 +177,8 @@ h1 {
   font-size: 12px;
 }
 
-.verification-panel {
+.verification-panel,
+.analysis-panel {
   margin-top: 18px;
   padding: 16px;
   border: 1px solid #dce2e8;
@@ -180,31 +186,36 @@ h1 {
   background: #f8fafb;
 }
 
-.verification-title-row {
+.verification-title-row,
+.analysis-title-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
 
-.verification-panel p {
+.verification-panel p,
+.analysis-panel p {
   margin: 8px 0 0;
   color: #667085;
   font-size: 13px;
   line-height: 1.55;
 }
 
-.verification-parcel_verified {
+.verification-parcel_verified,
+.analysis-analysis_ready {
   border-color: #a9d4bb;
   background: #f3faf6;
 }
 
-.verification-parcel_verification_failed {
+.verification-parcel_verification_failed,
+.analysis-analysis_failed {
   border-color: #e4b4b4;
   background: #fff7f7;
 }
 
-.verified-badge {
+.verified-badge,
+.analysis-ready-badge {
   padding: 4px 7px;
   border-radius: 999px;
   background: #1f6f43;
@@ -214,7 +225,8 @@ h1 {
   letter-spacing: 0.08em;
 }
 
-.verified-details {
+.verified-details,
+.analysis-summary {
   display: grid;
   gap: 10px;
   margin: 16px 0 0;
@@ -222,23 +234,32 @@ h1 {
   border-top: 1px solid rgba(23, 32, 51, 0.1);
 }
 
-.verified-details div {
+.verified-details div,
+.analysis-summary div {
   display: grid;
   grid-template-columns: 72px 1fr;
   gap: 10px;
 }
 
-.verified-details dt {
+.verified-details dt,
+.analysis-summary dt {
   color: #667085;
   font-size: 12px;
 }
 
-.verified-details dd {
+.verified-details dd,
+.analysis-summary dd {
   min-width: 0;
   margin: 0;
   overflow-wrap: anywhere;
   font-size: 12px;
   font-weight: 700;
+}
+
+.analysis-button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 13px 16px;
 }
 
 .map-stage {
