@@ -37,27 +37,26 @@ def bind_district_unit_plan_hybrid_gates(
     designation_identity: Mapping[str, Any] | None,
     current_validity: Mapping[str, Any] | None,
     site_spatial_inclusion: Mapping[str, Any] | None,
+    spatial_notice_identity: Mapping[str, Any] | None,
     *,
     canonical_pnu: str,
 ) -> dict[str, Any]:
-    """Fail-closed admission boundary for the three district-unit-plan HYBRID gates.
+    """Fail-closed admission boundary for district-unit-plan HYBRID evidence.
 
-    The current contracts can bind designation identity to current-validity identity,
-    and spatial inclusion to the requested canonical PNU. The spatial bridge does not
-    yet carry announcement identity, so this function deliberately does not claim a
-    notice-to-geometry identity binding that upstream evidence cannot prove.
-
-    Successful admission is not SITE truth, promotion, or production/runtime
-    registration authority.
+    Admission requires the three upstream HYBRID gates plus the separately verified
+    official-designation ↔ spatial-notice identity binding. Successful admission is
+    still not SITE truth, promotion, or production/runtime registration authority.
     """
 
     designation = dict(designation_identity or {})
     validity = dict(current_validity or {})
     spatial = dict(site_spatial_inclusion or {})
+    notice_identity = dict(spatial_notice_identity or {})
     expected_pnu = _text(canonical_pnu)
 
     designation_announcement = _identity(designation)
     validity_announcement = _identity(validity)
+    notice_announcement = _identity(notice_identity)
 
     checks = {
         "canonical_pnu_present": bool(expected_pnu),
@@ -67,18 +66,30 @@ def bind_district_unit_plan_hybrid_gates(
         is True,
         "validity_gate_verified": validity.get("current_validity_verified") is True,
         "spatial_gate_verified": spatial.get("site_spatial_inclusion_verified") is True,
+        "spatial_notice_identity_verified": notice_identity.get(
+            "designation_to_spatial_notice_identity_verified"
+        )
+        is True,
         "designation_condition_matches": designation.get("condition_name")
         == CONDITION_NAME,
         "validity_condition_matches": validity.get("condition_name") == CONDITION_NAME,
         "spatial_condition_matches": spatial.get("condition_name") == CONDITION_NAME,
+        "notice_identity_condition_matches": notice_identity.get("condition_name")
+        == CONDITION_NAME,
         "designation_validity_identity_matches": _identity_matches(
             designation_announcement,
             validity_announcement,
+        ),
+        "designation_spatial_notice_identity_matches": _identity_matches(
+            designation_announcement,
+            notice_announcement,
         ),
         "spatial_canonical_pnu_matches": bool(expected_pnu)
         and _text(spatial.get("canonical_pnu")) == expected_pnu,
         "spatial_source_pnu_matches": bool(expected_pnu)
         and _text(spatial.get("source_pnu")) == expected_pnu,
+        "notice_identity_canonical_pnu_matches": bool(expected_pnu)
+        and _text(notice_identity.get("canonical_pnu")) == expected_pnu,
     }
 
     admitted = all(checks.values())
@@ -94,13 +105,14 @@ def bind_district_unit_plan_hybrid_gates(
         "binding_scope": {
             "designation_to_current_validity": admitted,
             "spatial_to_canonical_pnu": admitted,
-            "designation_to_spatial_notice_identity": False,
+            "designation_to_spatial_notice_identity": admitted,
         },
         "stage_results": (
             {
                 "designation_identity": deepcopy(designation),
                 "current_validity": deepcopy(validity),
                 "site_spatial_inclusion": deepcopy(spatial),
+                "spatial_notice_identity": deepcopy(notice_identity),
             }
             if admitted
             else {}
