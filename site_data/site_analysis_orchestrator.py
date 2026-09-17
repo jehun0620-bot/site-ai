@@ -27,6 +27,9 @@ from law_data.historical_site_event_site_applicability_admission import Historic
 from law_data.historical_site_event_site_truth_promotion_rule_input_bridge import HistoricalSiteEventSiteTruthPromotionRuleInputBridge
 from law_data.historical_trusted_internal_source_handoff_authorization import HistoricalTrustedInternalSourceHandoffAuthorization
 from law_data.historical_verified_rule_input_envelope import seal_verified_historical_rule_input
+from law_data.district_unit_plan_verified_registry_candidate_envelope import (
+    DistrictUnitPlanVerifiedRegistryCandidateEnvelope,
+)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
@@ -71,7 +74,7 @@ def _admitted_canonical_pnu(applicability: HistoricalSiteEventSiteApplicabilityA
     return str(applicability.site_admission.canonical_pnu or "").strip()
 
 
-def analyze_site_by_parcel(*, sigungu_cd: str, bjdong_cd: str, bun: str, ji: str, project_profile: Optional[Dict[str,str]]=None, procedure_profile: Optional[Dict[str,str]]=None, production_condition_shadow_sources: Optional[Any]=None, historical_handoff_authorization: Optional[HistoricalTrustedInternalSourceHandoffAuthorization]=None, historical_site_applicability_admission: Optional[HistoricalSiteEventSiteApplicabilityAdmissionResult]=None, historical_promotion_rule_input_bridge: Optional[HistoricalSiteEventSiteTruthPromotionRuleInputBridge]=None, include_debug: bool=False, service_key: Optional[str]=None) -> Dict[str,Any]:
+def analyze_site_by_parcel(*, sigungu_cd: str, bjdong_cd: str, bun: str, ji: str, project_profile: Optional[Dict[str,str]]=None, procedure_profile: Optional[Dict[str,str]]=None, production_condition_shadow_sources: Optional[Any]=None, historical_handoff_authorization: Optional[HistoricalTrustedInternalSourceHandoffAuthorization]=None, historical_site_applicability_admission: Optional[HistoricalSiteEventSiteApplicabilityAdmissionResult]=None, historical_promotion_rule_input_bridge: Optional[HistoricalSiteEventSiteTruthPromotionRuleInputBridge]=None, district_unit_plan_registry_candidate: Optional[Any]=None, include_debug: bool=False, service_key: Optional[str]=None) -> Dict[str,Any]:
     building_result=fetch_building_items(sigungu_cd=sigungu_cd,bjdong_cd=bjdong_cd,bun=bun,ji=ji,service_key=service_key)
     items=building_result["items"]
     if not items: raise SiteBuildError("건축HUB에서 건축물 데이터를 찾지 못했습니다.")
@@ -80,10 +83,36 @@ def analyze_site_by_parcel(*, sigungu_cd: str, bjdong_cd: str, bun: str, ji: str
 
     raw_historical_rule_input=None
     verified_historical_input=None
+    verified_district_unit_plan_input=None
     actual_site_pnu=""
     legacy_requested=bool(historical_handoff_authorization is not None or historical_site_applicability_admission is not None)
     promotion_requested=historical_promotion_rule_input_bridge is not None
-    if legacy_requested and promotion_requested: raise SiteAnalysisError("Historical SITE input is ambiguous: legacy and promotion paths cannot be used together")
+    historical_requested=legacy_requested or promotion_requested
+    district_requested=district_unit_plan_registry_candidate is not None
+
+    if legacy_requested and promotion_requested:
+        raise SiteAnalysisError("Historical SITE input is ambiguous: legacy and promotion paths cannot be used together")
+
+    if historical_requested and district_requested:
+        raise SiteAnalysisError(
+            "Historical and district-unit verified SITE inputs cannot be combined"
+        )
+
+    if district_requested:
+        envelope=district_unit_plan_registry_candidate
+        if not isinstance(
+            envelope,
+            DistrictUnitPlanVerifiedRegistryCandidateEnvelope,
+        ) or not envelope.ready:
+            raise SiteAnalysisError(
+                "District-unit verified registry candidate envelope is not ready"
+            )
+        actual_site_pnu=_actual_site_pnu(site)
+        if not actual_site_pnu or actual_site_pnu!=envelope.canonical_pnu:
+            raise SiteAnalysisError(
+                "District-unit verified registry candidate PNU rebinding failed"
+            )
+        verified_district_unit_plan_input=envelope
 
     if promotion_requested:
         bridge=historical_promotion_rule_input_bridge
@@ -109,7 +138,7 @@ def analyze_site_by_parcel(*, sigungu_cd: str, bjdong_cd: str, bun: str, ji: str
         verified_historical_input=seal_verified_historical_rule_input(canonical_pnu=actual_site_pnu,historical_rule_input=raw_historical_rule_input)
         if not verified_historical_input.ready: raise SiteAnalysisError("Historical verified rule-input envelope is not ready")
 
-    analysis=analyze_site_object(site=site,project_profile=project_profile or {},procedure_profile=procedure_profile or {},production_condition_shadow_sources=production_condition_shadow_sources,historical_rule_input=verified_historical_input)
+    analysis=analyze_site_object(site=site,project_profile=project_profile or {},procedure_profile=procedure_profile or {},production_condition_shadow_sources=production_condition_shadow_sources,historical_rule_input=verified_historical_input,district_unit_plan_registry_candidate=verified_district_unit_plan_input)
     response=build_site_analysis_response(analysis,include_debug=include_debug)
     response["service"]={"building_count":len(items),"building_total_count":building_result.get("total_count"),"building_api_status":building_result.get("result_code")}
     return response
