@@ -24,7 +24,7 @@ cleanup/repository-organization-20260916
 제품 UX baseline:
 
 ```text
-A안 — 지도 중심 UX
+A안 — 지도 중심 탐색 + 분석 후 결과 중심 전환
 ```
 
 기술 스택:
@@ -46,6 +46,8 @@ VERIFIED PARCEL STATE                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 MAP / VERIFIED POLYGON RENDERING       IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 DETAILED SITE ANALYSIS RESULT UI       IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 RESULT UX / PRESENTATION               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+RESULT-CENTERED LAYOUT                 IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+VERIFIED MAP RESIZE / REFIT            IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -57,7 +59,7 @@ RESULT UX / PRESENTATION               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
     ↓
 parcel candidate 검색
     ↓
-candidate list <-> map marker
+candidate list / map marker
     ↓
 candidate 선택
     ↓
@@ -67,11 +69,11 @@ verified parcel polygon
     ↓
 사용자 필지 확인
     ↓
-"이 필지 분석"
-    ↓
 selected-candidate full analysis
     ↓
-detailed result presentation
+분석 후 결과 중심 layout 전환
+    ↓
+detailed result presentation + verified parcel map
 ```
 
 현재 사용자 로컬에서 다음 구간까지 실제 runtime/behavioral 검증이 완료됐다.
@@ -87,7 +89,8 @@ detailed result presentation
 → selected-candidate full analysis
 → SITE_ANALYSIS_API_V1
 → detailed result UI
-→ user-friendly result presentation
+→ result-centered layout
+→ verified parcel map resize/refit
 ```
 
 ---
@@ -186,9 +189,9 @@ package-lock.json tracked
 
 | 영역 | 상태 | 설명 |
 |---|---|---|
-| Frontend architecture baseline | DOCUMENTED | A안 지도 중심 구조와 trust boundary 문서화 |
+| Frontend architecture baseline | DOCUMENTED | 지도 중심 탐색과 trust boundary 문서화 |
 | Frontend framework | IMPLEMENTED | React + TypeScript + Vite |
-| Frontend production build | USER LOCAL PASS | UX/presentation 개선 포함 `tsc -b && vite build` 성공 |
+| Frontend production build | USER LOCAL PASS | `tsc -b && vite build` 성공 |
 | Address search UI | IMPLEMENTED + USER LOCAL PASS | 실제 브라우저 렌더링 확인 |
 | Candidate API client | IMPLEMENTED + USER LOCAL PASS | 실제 FastAPI 호출 확인 |
 | Candidate cards | IMPLEMENTED + USER LOCAL PASS | 실제 candidate 렌더링 확인 |
@@ -200,12 +203,14 @@ package-lock.json tracked
 | Previous parcel state invalidation | IMPLEMENTED | 새 검색 시작 시 이전 selection/confirmation 제거 |
 | Map provider | IMPLEMENTED + USER LOCAL PASS | Kakao Maps SDK 실제 브라우저 로딩 확인; provider-neutral adapter 유지 |
 | Map UI | IMPLEMENTED + USER LOCAL PASS | Kakao Maps 실제 지도 렌더링 확인 |
-| Candidate list/map sync | NOT IMPLEMENTED | Architecture contract만 확정 |
+| Candidate list/map sync | NOT IMPLEMENTED | Architecture contract만 확정; 완료로 승격하지 않음 |
 | Verified polygon rendering | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | Backend VERIFIED MultiPolygon 실제 지도 렌더링 확인 |
-| Full analysis UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 실제 selected-candidate 분석 요청 및 SITE_ANALYSIS_API_V1 결과 표시 확인 |
-| Detailed result UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 대지면적/건폐율/용적률/법규 집계/추가 입력/외부 확인정보 실제 표시 확인 |
-| Result UX / presentation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 사용자 친화적 상태 표현, UNKNOWN 설명, requirements 요약/펼치기, 정보 없음 설명 확인 |
-| Error/empty/UNKNOWN UI | PARTIAL | UNKNOWN 의미 보존 및 설명은 PASS; 전체 product error/empty semantics는 추가 개선 필요 |
+| Full analysis UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | selected-candidate 분석 요청 및 SITE_ANALYSIS_API_V1 표시 확인 |
+| Detailed result UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 대지면적/건폐율/용적률/법규 집계/추가 입력/외부 확인정보 표시 확인 |
+| Result UX / presentation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 사용자 친화적 상태, UNKNOWN 설명, requirements 요약, 정보 없음 설명 확인 |
+| Result-centered layout | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 분석 후 좌측 compact parcel flow + 우상단 지도 + 하단 전체폭 SITE 결과 확인 |
+| Verified map resize/refit | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 작은 지도에서도 VERIFIED parcel polygon 전체가 다시 viewport에 맞춰지는 것 확인 |
+| Error/empty/UNKNOWN UI | PARTIAL | UNKNOWN 의미 보존은 PASS; 전체 product error/empty semantics는 추가 개선 필요 |
 
 ---
 
@@ -219,7 +224,7 @@ npm 11.19.0
 Vite v8.3.0
 ```
 
-UX/presentation 개선 후 2026-09-17 사용자 로컬 production build:
+확인된 production build 예시:
 
 ```text
 > site-ai-frontend@0.1.0 build
@@ -227,36 +232,14 @@ UX/presentation 개선 후 2026-09-17 사용자 로컬 production build:
 
 vite v8.3.0 building client environment for production...
 ✓ 20 modules transformed.
-dist/index.html                   0.49 kB │ gzip: 0.33 kB
-dist/assets/index-BQQYnzfe.css   6.52 kB │ gzip: 1.93 kB
-dist/assets/index-JR7ch5yC.js  239.70 kB │ gzip: 74.36 kB
-✓ built in 89ms
+✓ built in 87ms
 ```
 
-검증 HEAD:
-
-```text
-9d7b6044519621bc680bf9ca7f29274ed0c33a15
-```
-
-따라서 UX/presentation 개선이 포함된 Frontend production build는 **USER LOCAL BUILD PASS**이다.
+레이아웃 작업 과정에서도 production build가 사용자 로컬에서 PASS했다. 최종 map resize/refit의 behavioral PASS는 실제 브라우저 화면 검증을 기준으로 기록한다.
 
 ---
 
-## 9. Candidate Search Runtime Validation
-
-2026-09-17 사용자 로컬에서 다음 실제 경계가 검증됐다.
-
-```text
-Browser
-→ React
-→ Vite dev server
-→ Vite proxy
-→ FastAPI
-→ POST /v1/parcel-candidates/address
-→ real candidate response
-→ candidate card rendering
-```
+## 9. Candidate Search / Parcel Confirmation Runtime Validation
 
 실제 검색:
 
@@ -264,69 +247,131 @@ Browser
 서울특별시 강남구 개포동 12-2
 ```
 
-Backend log:
-
-```text
-POST /v1/parcel-candidates/address HTTP/1.1 200 OK
-```
-
-상태:
-
-```text
-USER LOCAL RUNTIME PASS
-```
-
----
-
-## 10. Parcel Confirmation Frontend Runtime Validation
-
-### 2026-09-17 User Local Behavioral Validation
-
-검증 HEAD:
-
-```text
-862812cbd5eb0e7a024191f954fcb278c18c5a83
-```
-
-사용자는 실제 candidate card를 선택했다.
-
-Frontend 화면에서 확인된 결과:
+확인된 parcel:
 
 ```text
 필지 확인 완료
 VERIFIED
-
 지번주소  서울특별시 강남구 개포동 12-2
 PNU       1168010300100120002
 경계 형식  MultiPolygon
 좌표계     EPSG:4326
 ```
 
-Backend 실제 request log:
+Backend 실제 request 경계:
 
 ```text
 POST /v1/parcel-candidates/address HTTP/1.1 200 OK
 POST /v1/parcel-candidates/confirm HTTP/1.1 200 OK
+POST /v1/site-analysis/selected-candidate HTTP/1.1 200 OK
 ```
 
-따라서 다음 경계는 **USER LOCAL BEHAVIORAL PASS**로 기록한다.
-
-```text
-real candidate
-→ user selection
-→ POST /v1/parcel-candidates/confirm
-→ Backend live parcel verification
-→ PARCEL_CONFIRMATION_V1
-→ VERIFIED parcel identity
-→ MultiPolygon geometry
-→ Frontend verified parcel state
-```
-
-이 PASS는 Frontend가 parcel truth를 생성했다는 의미가 아니다. Parcel truth authority는 계속 Backend verification boundary에 있다.
+Parcel truth authority는 계속 Backend verification boundary에 있다.
 
 ---
 
-## 11. A안 Backend / Frontend Boundary
+## 10. Detailed Result Behavioral Baseline
+
+실제 Frontend 표시값:
+
+```text
+PNU                 1168010300100120002
+공식 대지면적        15,487.3㎡
+건폐율               50%
+용적률               250%
+법규 전체            314
+적용                  57
+비적용                214
+조건부                41
+확인 필요             2
+사업 추가입력         16
+절차 추가입력         2
+외부 확인정보         SITE_HISTORY
+```
+
+`UNKNOWN` 2건은 Frontend에서 `FALSE` 또는 오류로 변환되지 않고 `확인 필요` 2건으로 유지됐다. 공간 면적/면적 차이가 응답에서 제공되지 않은 경우에도 Frontend는 임의 계산하지 않고 `정보 없음`으로 표시했다.
+
+Presentation 개선도 실제 화면에서 확인됐다.
+
+```text
+READY        → 분석 완료
+CONFIRMED    → 확인된 기준
+SITE_HISTORY → 과거 이력 확인 + 원본 분류 보존
+UNKNOWN 2    → 확인 필요 2 + 오류/비적용이 아니라는 설명
+사업/절차 requirements → 16개/2개 요약 + 목록 보기
+공간 면적 미제공 → 정보 없음 + Backend 응답에 값이 없어 계산하지 않음
+```
+
+따라서 **VERIFIED parcel → Backend re-verification → SITE_ANALYSIS_API_V1 → detailed result UI → presentation** 경계는 USER LOCAL BEHAVIORAL PASS이다.
+
+---
+
+## 11. Result-Centered Layout + Verified Map Resize/Refit Validation
+
+### 2026-09-17 User Local Behavioral Validation
+
+최종 구현 HEAD:
+
+```text
+913cc5cafe85f7036323e2a85569b23c850ae30e
+```
+
+관련 최종 commit:
+
+```text
+fix: refit verified parcel after map resize
+```
+
+사용자 로컬 화면에서 다음 레이아웃이 실제 확인됐다.
+
+```text
+상단 좌측
+  주소 검색
+  → 필지 후보
+  → 필지 확인 완료
+
+상단 우측
+  Kakao 지도 카드
+  → VERIFIED PARCEL badge
+  → Backend VERIFIED parcel polygon
+
+하단 전체 폭
+  SITE 분석 결과
+  → 필지 기본정보
+  → 대지면적
+  → 건축 규모 기준
+  → 법규 평가 집계
+  → 추가 입력 필요사항
+  → 외부 확인 정보
+```
+
+초기 결과 중심 레이아웃에서 지도 컨테이너가 큰 화면 기준 viewport를 유지해 작은 카드 안에서 대상 필지가 잘리는 현상이 확인됐다. 최종 수정에서는 지도 컨테이너 resize 이후 Kakao map을 relayout하고, 기존 Backend confirmation의 VERIFIED geometry bounds를 다시 적용하도록 했다.
+
+```text
+지도 container resize
+→ Kakao map.relayout()
+→ Backend VERIFIED geometry 재사용
+→ verified geometry bounds 재계산
+→ map.setBounds()
+→ 현재 지도 카드 크기에 맞춰 대상 필지 전체 표시
+```
+
+사용자 최종 화면에서 검증된 MultiPolygon 대상 필지가 우상단 작은 지도 안에 전체적으로 표시되고 주변 지도 맥락도 유지되는 것이 확인됐다.
+
+이 동작은 Frontend가 parcel geometry를 새로 추정하거나 수정하는 것이 아니다. Backend confirmation response의 VERIFIED geometry를 viewport 계산에 다시 사용하는 presentation 동작이다.
+
+따라서 다음은 **USER LOCAL BEHAVIORAL PASS**이다.
+
+```text
+RESULT-CENTERED LAYOUT
+VERIFIED PARCEL MAP CARD
+MAP RESIZE / RELAYOUT
+VERIFIED GEOMETRY REFIT
+```
+
+---
+
+## 12. A안 Backend / Frontend Boundary
 
 현재 실제 연결 상태:
 
@@ -341,20 +386,22 @@ verified parcel identity + geometry      PASS
     ↓
 map rendering                            PASS
     ↓
-user parcel confirmation
-    ↓
 selected-candidate full analysis         USER LOCAL BEHAVIORAL PASS
     ↓
 detailed result presentation             USER LOCAL BEHAVIORAL PASS
     ↓
 result UX / presentation refinement      USER LOCAL BEHAVIORAL PASS
+    ↓
+result-centered layout transition        USER LOCAL BEHAVIORAL PASS
+    ↓
+verified map resize/refit                 USER LOCAL BEHAVIORAL PASS
 ```
 
 Frontend는 PNU를 canonical truth로 자체 승격하지 않는다. 실제 polygon은 Backend confirmation response에서만 가져온다. 법규 적용 여부도 Frontend에서 재판정하지 않는다.
 
 ---
 
-## 12. Validation Policy
+## 13. Validation Policy
 
 ```text
 actual GitHub HEAD
@@ -375,25 +422,6 @@ behavioral PASS
 ```
 
 GitHub commit 성공만으로 behavioral PASS를 선언하지 않는다. Build PASS와 runtime integration PASS를 구분한다. Mock-only UI 성공을 실제 Backend 연동 PASS로 기록하지 않는다.
-
----
-
-## 13. Frontend / Backend Repository Separation Rule
-
-Frontend source code는 Backend Python source와 혼합하지 않는다.
-
-```text
-D:\site-ai
-├─ api_app.py
-├─ site_data/
-├─ law_data/
-├─ regulations/
-├─ requirements.txt
-│
-└─ frontend/
-```
-
-Frontend dependency는 `frontend/package.json` / `frontend/package-lock.json`에서 관리한다. Frontend가 Python module을 직접 import하거나 Backend verification logic을 TypeScript로 복제하지 않는다.
 
 ---
 
@@ -451,109 +479,33 @@ Verified polygon rendering                  IMPLEMENTED + USER LOCAL BEHAVIORAL 
 Full analysis Frontend integration          IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Detailed result Frontend presentation       IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Result UX / presentation refinement         IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+Result-centered layout transition           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+Verified parcel map resize/refit             IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+
+Candidate list/map sync                     NOT IMPLEMENTED
+Error/empty product semantics               PARTIAL
 ```
-
-### 2026-09-17 Detailed Result User Local Behavioral Validation
-
-검증 HEAD:
-
-```text
-7947b88e8ac6b52ab2e64a451137e768770ef16a
-```
-
-Backend 실제 request log:
-
-```text
-POST /v1/parcel-candidates/address HTTP/1.1 200 OK
-POST /v1/parcel-candidates/confirm HTTP/1.1 200 OK
-POST /v1/site-analysis/selected-candidate HTTP/1.1 200 OK
-```
-
-실제 Frontend 표시값:
-
-```text
-PNU                 1168010300100120002
-공식 대지면적        15,487.3㎡
-건폐율               50% / CONFIRMED
-용적률               250% / CONFIRMED
-법규 전체            314
-적용                  57
-비적용                214
-조건부                41
-확인 필요             2
-사업 추가입력         16
-절차 추가입력         2
-외부 확인정보         SITE_HISTORY
-```
-
-`UNKNOWN` 2건은 Frontend에서 `FALSE` 또는 오류로 변환되지 않고 `확인 필요` 2건으로 유지됐다. 공간 면적/면적 차이가 응답에서 제공되지 않은 경우에도 Frontend는 임의 계산하지 않고 `정보 없음`으로 표시했다.
-
-따라서 **VERIFIED parcel → Backend re-verification → SITE_ANALYSIS_API_V1 → detailed result UI** 경계는 **USER LOCAL BEHAVIORAL PASS**이다.
-
-### 2026-09-17 Result UX / Presentation User Local Behavioral Validation
-
-검증 HEAD:
-
-```text
-9d7b6044519621bc680bf9ca7f29274ed0c33a15
-```
-
-Backend 실제 request log:
-
-```text
-POST /v1/parcel-candidates/address HTTP/1.1 200 OK
-POST /v1/parcel-candidates/confirm HTTP/1.1 200 OK
-POST /v1/site-analysis/selected-candidate HTTP/1.1 200 OK
-```
-
-기존 Backend 결과값은 그대로 유지됐다.
-
-```text
-공식 대지면적        15,487.3㎡
-건폐율               50%
-용적률               250%
-법규 전체            314
-적용                  57
-비적용                214
-조건부                41
-확인 필요             2
-사업 추가입력         16
-절차 추가입력         2
-```
-
-사용자 로컬 화면에서 다음 presentation 개선이 실제 확인됐다.
-
-```text
-READY       → 분석 완료
-CONFIRMED   → 확인된 기준
-SITE_HISTORY → 과거 이력 확인 + 원본 분류 보존
-UNKNOWN 2   → 확인 필요 2 + 오류/비적용이 아니라는 설명
-사업/절차 requirements → 16개/2개 요약 + 목록 보기
-공간 면적 미제공 → 정보 없음 + Backend 응답에 값이 없어 계산하지 않음
-```
-
-따라서 **상세 분석값을 변경하지 않고 사용자 친화적으로 표현하는 Frontend presentation 계층**은 **USER LOCAL BEHAVIORAL PASS**이다.
 
 ---
 
 ## 16. Next Development Target
 
-다음 목표는 **분석 전 지도 중심 화면과 분석 후 결과 중심 화면을 어떻게 구조적으로 분리할지 READ-ONLY로 설계하는 것**이다.
+분석 전/후 레이아웃 전환과 verified map resize/refit은 구현 및 사용자 로컬 behavioral validation까지 완료됐다.
 
-현재 상세 데이터 연결과 1차 presentation 개선은 완료됐다. 실제 화면에서는 결과가 길어질수록 왼쪽 결과 문서와 오른쪽 지도 사이의 정보 밀도 차이가 커진다.
+다음 Frontend 작업은 기존 화면을 기준으로 **추가 UX 개선 항목을 READ-ONLY로 점검하고 우선순위를 정하는 것**이다.
 
-다음 조사 후보:
+우선 조사 후보:
 
 ```text
-분석 전: 지도 중심 탐색/필지 확인
-분석 후: 결과 중심 레이아웃 전환 가능성
-지도 유지 방식: 고정 / 축소 / 보조 패널
-검색·후보·검증 정보의 분석 후 축약 방식
-긴 결과의 섹션 탐색/가독성 구조
-모바일에서의 결과/지도 순서
+candidate list <-> map sync
+선택 candidate의 지도상 시각적 구분 / focus
+긴 SITE 결과의 섹션 탐색 구조
+추가 입력 필요사항의 실제 입력 UX
+전체 product error / empty semantics
+모바일 결과/지도 순서와 반응형 가독성
 ```
 
-아직 구현 방식은 확정하지 않는다. 실제 `App.tsx`, `app.css`, `KakaoMap.tsx`, `PROJECT_FRONTEND_ARCHITECTURE.md`를 READ-ONLY로 확인한 뒤 최소 변경 범위를 정한다.
+아직 구현 방식이나 우선순위는 확정하지 않는다. 실제 repository 파일과 현재 화면을 기준으로 READ-ONLY 확인 후 최소 변경 범위를 정한다.
 
 Frontend는 계속 Backend 결과를 재판정하거나 임의 보정하지 않는다.
 
@@ -578,13 +530,14 @@ Authentication, project/history, organization, billing, usage, report management
 
 ```text
 CURRENT TASK:
-Analysis-result layout transition READ-ONLY investigation
+Frontend UX improvement READ-ONLY investigation
 
 CURRENT FRONTEND STATUS:
-RESULT UX / PRESENTATION USER LOCAL BEHAVIORAL PASS
+RESULT-CENTERED LAYOUT                 USER LOCAL BEHAVIORAL PASS
+VERIFIED PARCEL MAP RESIZE / REFIT     USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
-Must inspect actual result/search/map structure and define exact minimal layout-transition scope
+None until actual UX gaps are inspected and exact minimal scope is approved
 ```
 
 ---
