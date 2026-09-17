@@ -1,13 +1,22 @@
 from unittest.mock import patch
 
 from site_data.address_parcel_identity_resolver import (
+    _parcel_pnus_at_point,
     parcel_identity_from_pnu,
     resolve_address_parcel_identity,
 )
 
 
-def _item(x: float, y: float):
-    return {"point": {"x": str(x), "y": str(y)}}
+def _item(pnu: str, x: float, y: float):
+    return {"id": pnu, "point": {"x": str(x), "y": str(y)}}
+
+
+def _feature(pnu: str):
+    return {
+        "type": "Feature",
+        "geometry": {"type": "MultiPolygon", "coordinates": []},
+        "properties": {"pnu": pnu},
+    }
 
 
 def run_contract() -> None:
@@ -29,7 +38,16 @@ def run_contract() -> None:
         "ji": "0003",
     }
 
-    with patch("site_data.address_parcel_identity_resolver._search_address_items", return_value=[_item(1, 2)]), patch(
+    with patch(
+        "site_data.address_parcel_identity_resolver.query_dataset_by_point",
+        return_value={"features": [_feature("1159010600200290003")]},
+    ):
+        assert _parcel_pnus_at_point("test", 1, 2) == ["1159010600200290003"]
+
+    with patch(
+        "site_data.address_parcel_identity_resolver._search_address_items",
+        return_value=[_item("1159010600200290003", 1, 2)],
+    ), patch(
         "site_data.address_parcel_identity_resolver._parcel_pnus_at_point",
         return_value=["1159010600200290003"],
     ):
@@ -40,7 +58,24 @@ def run_contract() -> None:
     assert resolved.bun == "0029"
     assert resolved.ji == "0003"
 
-    with patch("site_data.address_parcel_identity_resolver._search_address_items", return_value=[_item(1, 2), _item(3, 4)]), patch(
+    with patch(
+        "site_data.address_parcel_identity_resolver._search_address_items",
+        return_value=[_item("1159010600200290003", 1, 2)],
+    ), patch(
+        "site_data.address_parcel_identity_resolver._parcel_pnus_at_point",
+        return_value=["1168010300100120000"],
+    ):
+        mismatch = resolve_address_parcel_identity("mismatch", api_key="test")
+    assert mismatch.verified is False
+    assert mismatch.resolution == "ADDRESS_POLYGON_PNU_MISMATCH"
+
+    with patch(
+        "site_data.address_parcel_identity_resolver._search_address_items",
+        return_value=[
+            _item("1168010300100120000", 1, 2),
+            _item("1159010600200290003", 3, 4),
+        ],
+    ), patch(
         "site_data.address_parcel_identity_resolver._parcel_pnus_at_point",
         side_effect=[["1168010300100120000"], ["1159010600200290003"]],
     ):
@@ -48,7 +83,13 @@ def run_contract() -> None:
     assert ambiguous.verified is False
     assert ambiguous.resolution == "ADDRESS_PARCEL_AMBIGUOUS"
 
-    with patch("site_data.address_parcel_identity_resolver._search_address_items", return_value=[_item(1, 2), _item(3, 4)]), patch(
+    with patch(
+        "site_data.address_parcel_identity_resolver._search_address_items",
+        return_value=[
+            _item("1168010300100120000", 1, 2),
+            _item("1168010300100120000", 3, 4),
+        ],
+    ), patch(
         "site_data.address_parcel_identity_resolver._parcel_pnus_at_point",
         side_effect=[["1168010300100120000"], ["1168010300100120000"]],
     ):
