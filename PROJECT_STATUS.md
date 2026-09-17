@@ -2,14 +2,14 @@
 
 최종 업데이트: 2026-09-17
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `07b1c8c28871a6d07ffc94df112178baa7beb361`
+기준 behavioral PASS HEAD: `5538b95ab74eb674883420ea9267fd1d38ebf2ec`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP114 이후 historical/district-unit production, parcel identity/parcel-only production, verified address identity, public exact-address analysis, candidate discovery/public HTTP, selected-candidate same-PNU polygon verification, 그리고 selected-candidate → existing analysis wiring/full live E2E까지 사용자 로컬 검증했다. STEP114 이후 기능 경계에는 새 architecture STEP 번호를 부여하지 않는다.
+STEP114 이후 historical/district-unit production, parcel identity/parcel-only production, verified address identity, public exact-address analysis, candidate discovery/public HTTP, selected-candidate same-PNU polygon verification, selected-candidate full analysis, public selected-candidate HTTP까지 사용자 로컬 검증했다. STEP114 이후 기능 경계에는 새 architecture STEP 번호를 부여하지 않는다.
 
 최신 관련 PASS:
 - `ADDRESS_PARCEL_IDENTITY_RESOLVER_CONTRACT_PASS`
@@ -19,6 +19,7 @@ STEP114 이후 historical/district-unit production, parcel identity/parcel-only 
 - `PUBLIC_API_ADDRESS_PARCEL_CANDIDATE_SEARCH_CONTRACT_PASS`
 - `SELECTED_PARCEL_CANDIDATE_VERIFIER_CONTRACT_PASS`
 - `SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_WIRING_CONTRACT_PASS`
+- `PUBLIC_API_SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_CONTRACT_PASS`
 
 ## 2. Candidate discovery/public HTTP — VALIDATED
 
@@ -46,8 +47,6 @@ Verified identity: sigungu `11680`, bjdong `10300`, plat_gb `0`, bun `0012`, ji 
 
 ## 4. Selected candidate → existing full analysis — VALIDATED
 
-Behavioral PASS HEAD `07b1c8c28871a6d07ffc94df112178baa7beb361`.
-
 Focused contract:
 `SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_WIRING_CONTRACT_PASS`
 
@@ -74,37 +73,65 @@ Observed result:
 
 No second SITE analysis lane was created.
 
-## 5. Public selected-candidate HTTP — IMPLEMENTED, LOCAL VALIDATION PENDING
+## 5. Public selected-candidate HTTP — VALIDATED
 
-Current GitHub implementation exposes:
+Behavioral PASS HEAD `5538b95ab74eb674883420ea9267fd1d38ebf2ec`.
+
+Endpoint:
 
 ```text
 POST /v1/site-analysis/selected-candidate
 ```
 
-Request boundary:
-- candidate_pnu: exactly 19 digits
-- x: -180..180
-- y: -90..90
-- project_profile
-- procedure_profile
-- include_debug
-
-The HTTP layer does not parse PNU or create VERIFIED state. It delegates to `analyze_site_by_selected_candidate()`, which performs the existing live polygon re-verification before parcel analysis.
-
 Focused contract:
-`site_data/public_api_selected_parcel_candidate_site_analysis_contract_test.py`
-
-Required next validation:
 `PUBLIC_API_SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_CONTRACT_PASS`
 
-After contract PASS, run actual local HTTP E2E for `개포동 12-2`.
+Actual user-local HTTP E2E for `개포동 12-2 / 개포자이` returned:
+- schema_version `SITE_ANALYSIS_API_V1`
+- status `READY`
+- site_id `11680-10300-0012-0002`
+- pnu `1168010300100120002`
+- identity_status `COMPLETE`
+- official land area `15487.3 square_meter`
+- building_count `9`
+- Building HUB status `00`
+- building coverage ratio `50.0%`
+- floor area ratio `250.0%`
 
-## 6. Safety boundary
+The spatial response proves the safety boundary remained active:
+
+```text
+requested_pnu  = 1168010300100120002
+snapshot_pnu   = 1168010300100120000
+snapshot match = false
+live feature_pnu = 1168010300100120002
+live resolution  = PNU_POLYGON_VERIFIED
+verified          = true
+```
+
+The stale different-PNU snapshot was not treated as parcel truth; live same-PNU geometry was re-queried and verified before analysis.
+
+Public backend flow is now validated end-to-end:
+
+```text
+address search
+→ candidate list HTTP
+→ user candidate selection
+→ live same-PNU polygon re-verification
+→ VERIFIED canonical parcel identity
+→ existing full analysis
+→ public HTTP READY
+```
+
+## 6. Next product boundary
+
+Backend candidate-selection safety and public analysis are validated. The next product work is candidate list/map UI integration. Before implementation, inspect the repository for any existing frontend/web foundation and reuse it if present; do not introduce a new frontend framework without explicit design/write approval.
+
+## 7. Safety boundary
 
 No identity/address/zone/coordinate/geometry/evidence may be reused across a different PNU. Historical production remains PNU-bound/fail-closed. Public historical input remains unauthorized. UQQ700 remains UNKNOWN/BLOCKED.
 
-## 7. Repository / local rules
+## 8. Repository / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Branch: `cleanup/repository-organization-20260916`
