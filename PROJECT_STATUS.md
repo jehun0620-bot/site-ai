@@ -2,47 +2,16 @@
 
 최종 업데이트: 2026-09-17
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `e29d676b84f99cc220c52a18196af575631d60b3`
+기준 behavioral PASS HEAD: `52f7b65e268fe4384553f84293d56ff5d129eb3e`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
 
 ## 1. 현재 단계
 
-STEP114 이후 historical SITE applicability, production forwarding, SITE-truth promotion 전 검증, isolated promotion execution, promotion Rule Input bridge, production orchestrator wiring, verified historical Rule Input envelope까지 구현·사용자 로컬 검증했다.
+STEP114 이후 historical SITE applicability, production forwarding, SITE-truth promotion 검증/실행/bridge, verified historical Rule Input envelope, district-unit common production lane, parcel-register identity, parcel-only production, public ordinary/mountain HTTP E2E, 그리고 주소 기반 verified parcel identity resolver까지 구현·사용자 로컬 검증했다.
 
-STEP114 이후 기능 경계에는 아직 새 architecture STEP 번호를 부여하지 않는다.
-
-현재 locally validated 흐름:
-
-```text
-STEP98 Evidence→Seed admission
-→ STEP101 verified classification→profile admission
-→ STEP103 registry classification compatibility
-→ STEP104 resolver-family eligibility
-→ STEP106 dispatch plan
-→ STEP108 input admission
-→ STEP110 resolver execution
-→ STEP112 resolver result verification
-→ STEP114 SITE-decision eligibility
-→ historical parcel applicability evidence
-→ PNU-bound SITE applicability admission
-→ actual SITE PNU rebinding
-→ candidate↔repair consistency authorization
-→ candidate↔condition binding authorization
-→ admitted historical rule-input adapter
-→ pre-promotion same-fact binding authorization
-→ PNU-scoped pre-promotion authorization
-→ final non-executing promotion authorization
-→ isolated promotion executor
-→ promotion Rule Input bridge
-→ production orchestrator PNU rebinding
-→ verified historical Rule Input envelope
-→ service
-→ builder envelope/PNU recheck
-→ historical registry / collision / live-consumption authorization
-→ existing Rule Engine
-```
+STEP114 이후 기능 경계에는 새 architecture STEP 번호를 부여하지 않는다.
 
 핵심 최신 user-local PASS:
 - `HISTORICAL_SITE_EVENT_SITE_TRUTH_PROMOTION_RULE_INPUT_BRIDGE_CONTRACT_PASS`
@@ -57,44 +26,61 @@ STEP98 Evidence→Seed admission
 - `PUBLIC_API_PARCEL_REGISTER_IDENTITY_CONTRACT_PASS`
 - `PARCEL_ONLY_ADDRESS_ENRICHMENT_CONTRACT_PASS`
 - `DISTRICT_UNIT_PLAN_SITE_TRUTH_PROMOTION_END_TO_END_REGRESSION_PASS`
+- `ADDRESS_PARCEL_IDENTITY_RESOLVER_CONTRACT_PASS`
 
-이전 applicability/state/condition binding 계약과 STEP74 reconciliation도 이미 user-local PASS 상태다.
+### Address → verified parcel identity validation
+
+Behavioral PASS HEAD `52f7b65e268fe4384553f84293d56ff5d129eb3e` additionally validates the address parcel identity resolver without creating a new architecture STEP.
+
+Validated resolver boundary:
+
+```text
+USER PARCEL ADDRESS
+→ safe parcel-address normalization
+→ VWorld parcel address search
+→ exact address.parcel match
+→ address-search item.id PNU
+→ item coordinate
+→ live LP_PA_CBND_BUBUN polygon query
+→ polygon PNU
+→ address PNU == polygon PNU
+→ PNU component decomposition
+→ create_pnu() exact regeneration
+→ VERIFIED canonical parcel identity
+```
+
+Fail-closed behavior remains mandatory for empty search, no exact parcel match, address/polygon PNU mismatch, multiple distinct verified PNUs, invalid PNU, missing key, or unresolved parcel polygon.
+
+User-local real-data validation confirmed both code-system branches:
+- ordinary `서울특별시 강남구 개포동 12번지` → normalized search `서울특별시 강남구 개포동 12` → PNU `1168010300100120000` → `plat_gb_cd=0` → VERIFIED
+- mountain `서울특별시 동작구 동작동 산 29-3` → PNU `1159010600200290003` → `plat_gb_cd=1` → VERIFIED
+
+The ordinary search may return nearby lexical candidates such as `12-1` or `12-10`; these are not accepted for input `12`. Exact parcel-address matching occurs before live polygon verification.
+
+The current resolver is an internal verified identity boundary. It is not yet wired as a public address-analysis endpoint and does not yet implement user-selectable candidate UX.
 
 ### Parcel register identity / parcel-only production validation
 
-Behavioral PASS HEAD `e29d676b84f99cc220c52a18196af575631d60b3` additionally validates ordinary/mountain parcel identity and vacant/unbuilt parcel analysis without creating a new architecture STEP.
-
-Code-system mapping is explicit:
+Code-system mapping remains explicit:
 
 ```text
 Public API / Building HUB plat_gb_cd=0 (ordinary) → PNU land-register digit 1
 Public API / Building HUB plat_gb_cd=1 (mountain) → PNU land-register digit 2
 ```
 
-When Building HUB returns status `00` with zero items, the Orchestrator can create a parcel-only Site from canonical parcel identity. Same-PNU VWorld Land Characteristics may enrich land category, zoning, official land area, and parcel address. Cross-PNU persisted identity fallback remains blocked.
+Building HUB status `00` with zero items can produce a parcel-only Site from canonical parcel identity. Same-PNU VWorld Land Characteristics may enrich land category, zoning, official land area, and parcel address. Cross-PNU persisted identity fallback remains blocked.
 
-Real-data mountain validation for `서울특별시 동작구 동작동 산 29-3` confirmed:
-- canonical PNU `1159010600200290003`
-- Building HUB zero-item response handled without failure
-- same-PNU address `서울특별시 동작구 동작동 산 29-3`
-- zoning `자연녹지지역`
-- official land area `16704.0 square_meter` from `VWORLD_LAND_CHARACTERISTICS`
-- address-search coordinate confirmed in `EPSG:4326`
-- VWorld `LP_PA_CBND_BUBUN` MultiPolygon loaded
-- live feature PNU exactly matched requested PNU
-- `PNU_POLYGON_VERIFIED`
-- `identity_status=COMPLETE`
-- mismatched stored snapshot PNU was not reused
-
-Public FastAPI HTTP E2E also validated both branches:
+Previously user-local validated public HTTP E2E:
 - ordinary `11680/10300/0/0012/0000` → PNU `1168010300100120000`, Building HUB 34 items, official land area `121040.4 square_meter`, identity COMPLETE
 - mountain `11590/10600/1/0029/0003` → PNU `1159010600200290003`, parcel-only enrichment, official land area `16704.0 square_meter`, identity COMPLETE
 
-Live EPSG:4326 parcel geometry area remains intentionally uncalculated. Official VWorld Land Characteristics area is preserved separately as the primary land-area value; geometry is retained for spatial use and exact-PNU verification.
+Live EPSG:4326 parcel geometry area remains intentionally uncalculated. Official VWorld Land Characteristics area remains the primary land-area value; geometry is retained for spatial use and exact-PNU verification.
 
 ## 2. Current safety boundary
 
 ```text
+address search result ≠ canonical parcel truth
+user parcel selection ≠ canonical parcel truth
 resolver result ≠ parcel applicability
 SITE-decision eligibility ≠ SITE truth
 SITE applicability admission ≠ production/runtime registration authority
@@ -102,105 +88,62 @@ promotion authorization ≠ second SITE truth store
 verified envelope ≠ new Rule Engine
 ```
 
-Current parcel identity safety additionally requires no identity/address/zone/coordinate evidence reuse across a different PNU. Parcel-only enrichment must remain bound to the current canonical PNU and fail closed when required identity evidence is missing or mismatched.
+No identity/address/zone/coordinate/geometry/evidence may be reused across a different PNU. Address-derived identity must be rebound to live same-PNU parcel geometry before VERIFIED status.
 
-현재 historical production 경로는 Orchestrator에서 실제 Site PNU를 검증한 뒤에만 historical Rule Input을 PNU-bound verified envelope로 봉인한다. Service와 Builder는 raw historical dict를 production historical input으로 허용하지 않는다. Builder는 envelope canonical PNU와 현재 `site_input` PNU를 다시 비교한 뒤에만 기존 historical registry adapter → collision policy → live-consumption authorization → 기존 Rule Engine 경로를 사용한다.
+Historical production remains PNU-bound and fail-closed. Raw historical production injection, malformed envelopes, cross-PNU handoff, UNKNOWN applicability, unauthorized promotion, spatial/historical conflicts, public historical input, historical spatial runtime registration, and cross-PNU identity fallback remain blocked.
 
-Fail-closed 차단:
-- raw `historical_rule_input` orchestrator 직접 주입
-- raw historical dict의 service 직접 주입
-- raw historical dict의 builder 직접 주입
-- malformed/not-ready verified envelope
-- envelope PNU와 실제 Site/builder PNU 불일치
-- handoff/applicability 한쪽만 존재
-- UNKNOWN/unverified parcel applicability
-- candidate와 repair state 불일치
-- 서로 다른 historical condition identity 혼재
-- unauthorized/forged handoff
-- spatial/historical registry conflict
-- public API historical input
-- historical spatial runtime registration
-- cross-PNU identity/address/zone/coordinate fallback
+## 3. Promotion / production reconciliation
 
-## 3. Promotion reconciliation
-
-Promotion 계층은 별도 Rule Engine 또는 별도 SITE truth store를 만들지 않는다.
+Promotion does not create a second Rule Engine or SITE truth store.
 
 ```text
 verified historical candidate
 → same-fact binding
-→ current canonical PNU binding
+→ canonical PNU binding
 → final promotion authorization
 → isolated executor
 → promotion Rule Input bridge
 → Orchestrator actual-SITE PNU recheck
 → verified envelope
+→ Service / Builder PNU recheck
 → existing production consumption architecture
 ```
 
-Promotion bridge는 executor가 이미 만든 promoted SITE condition의 type/state/confidence/source/PNU 정합성을 fail-closed로 검증한다. Bridge 자체는 global registry를 쓰거나 Rule Engine을 호출하거나 public API를 노출하지 않는다.
+Historical and district-unit paths keep family-specific verification boundaries but converge at the common verified SITE registry / existing Rule Engine lane. Simultaneous historical + district-unit production input remains fail-closed because no cross-family merge policy is authorized.
 
-## 4. Historical safety / real condition locks
+## 4. Historical / hybrid locks
 
-Public API historical exposure remains NOT AUTHORIZED.
-Historical data remains excluded from the spatial runtime condition channel.
+Public API historical exposure remains NOT AUTHORIZED. Historical data remains excluded from the spatial runtime condition channel.
 
 ### 도시지역편입해제구역
-- resolution family: `HISTORICAL_SITE_EVENT`
+- family: `HISTORICAL_SITE_EVENT`
 - standard code: None / UNVERIFIED / DO NOT GUESS
 - unresolved real-condition evidence remains fail-closed
-- production/runtime registration remains BLOCKED unless later evidence and authorization explicitly support it
 
 ### 개발밀도관리구역 / UQQ700
-- resolution family: `HYBRID_SPATIAL_NOTICE`
+- family: `HYBRID_SPATIAL_NOTICE`
 - standard code: `UQQ700`
-- current legal-source resolution remains UNKNOWN
-- negative evidence / legal absence inference disabled
-- SITE TRUE/FALSE promotion remains blocked without required verified evidence
-- production/runtime registration remains blocked
-- minimum gate: official designation identity + current validity + SITE spatial inclusion verification
-- historical production reconciliation does not activate UQQ700 or move it to `HISTORICAL_SITE_EVENT`
+- legal-source resolution: UNKNOWN
+- negative-evidence / legal-absence inference disabled
+- SITE TRUE/FALSE promotion blocked
+- production/runtime registration blocked
 
-Legal-source investigation numbering (`S206`…`S216`/future S217) is separate from architecture STEP numbering.
+Legal-source S-numbering remains separate from architecture STEP numbering.
 
-## 5. Production wiring state
+## 5. Documentation / product design state
 
-`site_data/site_analysis_orchestrator.py` owns the production sealing point. Legacy typed historical applicability/handoff and the newer promotion bridge remain mutually exclusive entry modes; both must pass their own gates and actual-SITE PNU rebinding before a verified envelope is sent downstream.
+Architecture Baseline remains v1.2. Address parcel identity verification is now part of the validated architecture, but public address-to-analysis wiring is not yet validated.
 
-`site_data/site_analysis_service.py` and `law_data/site_analysis_builder.py` now require `HistoricalVerifiedRuleInputEnvelope` for historical production consumption. The builder independently checks envelope PNU against current site input PNU.
+Product/UI ideas are tracked separately in `PROJECT_PRODUCT_UX.md`. Product ideas do not become architecture truth or implementation status merely by being documented there.
 
-Downstream remains the existing single consumption lane:
-
-```text
-historical registry adapter
-→ spatial/historical collision policy
-→ merged-registry live-consumption authorization
-→ existing Rule Engine
-```
-
-Repository-wide local grep at behavioral PASS HEAD found no production raw-historical bypass caller. Remaining direct raw calls are fail-closed tests or isolated adapter/bridge tests.
-
-## 6. Repository cleanup checkpoint
-
-Cleanup branch: `cleanup/repository-organization-20260916`
-Cleanup started from STEP114 checkpoint: `ad06db07cf22138e5324eb263ae666814520eb53`
-
-Validated cleanup remains unchanged. Do not mechanically move/delete `law_data/*` or `site_data/*` for cosmetic cleanup without dependency/path audit and separate approval.
-
-## 7. Documentation / architecture state
-
-Architecture Baseline remains v1.2. No new architecture STEP number is assigned. Current documentation records the post-STEP114 functional boundaries through promotion wiring, verified-envelope production hardening, and parcel-register identity / parcel-only production validation.
-
-## 8. Git / local rules
+## 6. Repository / local rules
 
 Repository: `jehun0620-bot/site-ai`
 Current branch: `cleanup/repository-organization-20260916`
 Preserved checkpoint: `checkpoint/c12-fastapi-20260821`
 Local root: `D:\site-ai`
 
-GitHub/local write requires explicit scope/purpose/non-target approval.
-Never modify/commit `.env`, `law_data/output/*`, or unrelated files.
-Never use `git add .`, `git add -A`, or `git add --all`.
+Never modify/commit `.env`, `law_data/output/*`, or unrelated files without explicit approved scope. Never use broad staging commands.
 
 Protected local-only modified file:
 `law_data/output/urban_area_conversion_history_final_resolution.json`
@@ -210,10 +153,9 @@ Expected state:
  M law_data/output/urban_area_conversion_history_final_resolution.json
 ```
 
-Never modify, restore, checkout, reset, delete, stage, commit, or clean this protected file.
-User local execution PASS remains final behavioral validation.
+Never modify, restore, checkout, reset, delete, stage, commit, or clean this protected file. User-local execution PASS remains final behavioral validation.
 
-## 9. Standard development process
+## 7. Standard development process
 
 ```text
 READ-ONLY audit
@@ -228,44 +170,20 @@ READ-ONLY audit
 → next READ-ONLY audit
 ```
 
-## 9A. District-unit / common production reconciliation
+## 8. Next action
 
-District-unit verified production transport remains user-local validated.
-
-District-unit verified input follows:
+Next architecture/product work should begin with READ-ONLY inspection for safe wiring of:
 
 ```text
-verified district-unit envelope
-→ Orchestrator actual-SITE PNU recheck
-→ Service typed-envelope / PNU recheck
-→ Builder typed-envelope / PNU recheck
-→ district spatial collision / live authorization
-→ common verified SITE registry
-→ existing Rule Engine
+VERIFIED ADDRESS PARCEL IDENTITY
+→ canonical component input
+→ existing analyze_site_by_parcel pipeline
 ```
 
-Historical and district-unit paths keep their family-specific verification and authorization boundaries, but converge at the common verified SITE registry / existing Rule Engine lane.
+Do not wire raw/unverified address-search results directly into analysis. Preserve canonical PNU binding, same-PNU evidence, ordinary/mountain distinction, one SITE truth / Rule Engine lane, verified-envelope fail-closed behavior, public historical non-exposure, spatial/historical separation, UQQ700 UNKNOWN/BLOCKED, and no invented architecture STEP number.
 
-Historical + district-unit simultaneous production input remains fail-closed because no cross-family merge policy is authorized.
+Candidate-list + map-assisted parcel selection is a future product UX boundary and is tracked separately in `PROJECT_PRODUCT_UX.md`.
 
-User-local PASS includes the district-unit Orchestrator E2E, Service handoff, Builder handoff, collision/live authorization, common registry, common Rule Engine, and historical regressions.
-
-This does not authorize UQQ700, public historical injection, a second SITE truth store, or a second Rule Engine. UQQ700 remains UNKNOWN/BLOCKED.
-
-## 10. Next action
-
-Ordinary and mountain parcel identity, parcel-only enrichment, cross-PNU identity protection, real VWorld spatial recovery, and Public FastAPI HTTP E2E are validated at behavioral PASS HEAD `e29d676b84f99cc220c52a18196af575631d60b3`.
-
-The next work should start with a READ-ONLY architecture/product gap audit rather than assuming a new STEP. Preserve:
-- one SITE truth / Rule Engine consumption architecture
-- canonical PNU binding
-- same-PNU identity/spatial evidence boundary
-- verified-envelope fail-closed boundary
-- public API historical non-exposure
-- spatial-runtime historical separation
-- UQQ700 UNKNOWN/BLOCKED policy
-- no invented architecture STEP number
-
-## 11. Handoff policy
+## 9. Handoff policy
 
 In a new chat, reconstruct actual branch HEAD and current files from GitHub READ-ONLY first. Current GitHub code plus user-local execution results override stale summaries/documents.
