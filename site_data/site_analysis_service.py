@@ -9,6 +9,9 @@ from typing import Any, Dict, Optional
 from law_data.historical_verified_rule_input_envelope import (
     HistoricalVerifiedRuleInputEnvelope,
 )
+from law_data.district_unit_plan_verified_registry_candidate_envelope import (
+    DistrictUnitPlanVerifiedRegistryCandidateEnvelope,
+)
 from law_data.site_analysis_builder import build_site_analysis
 
 
@@ -86,13 +89,36 @@ def analyze_site_object(
     procedure_profile: Optional[Dict[str, str]] = None,
     production_condition_shadow_sources: Optional[Any] = None,
     historical_rule_input: Optional[Any] = None,
+    district_unit_plan_registry_candidate: Optional[Any] = None,
 ) -> Dict[str, Any]:
     """Convert a Site object into the final SITE Analysis Object.
 
-    Historical production input must be the typed envelope produced after the
-    orchestrator's PNU/authority gates. Raw mappings fail closed here.
+    Historical and district-unit production inputs must use their typed,
+    verified transport envelopes. Raw mappings fail closed here, and each
+    envelope is rebound to the PNU derived from the current Site object.
     """
     site_input = site_to_analysis_input(site)
+
+    if historical_rule_input is not None and district_unit_plan_registry_candidate is not None:
+        raise ValueError(
+            "historical and district-unit verified SITE inputs cannot be combined"
+        )
+
+    if district_unit_plan_registry_candidate is not None:
+        if not isinstance(
+            district_unit_plan_registry_candidate,
+            DistrictUnitPlanVerifiedRegistryCandidateEnvelope,
+        ) or not district_unit_plan_registry_candidate.ready:
+            raise ValueError(
+                "verified district-unit registry candidate envelope required"
+            )
+        if (
+            district_unit_plan_registry_candidate.canonical_pnu
+            != site_input.get("pnu")
+        ):
+            raise ValueError(
+                "district-unit registry candidate envelope PNU mismatch"
+            )
 
     if historical_rule_input is not None:
         if not isinstance(
@@ -109,4 +135,5 @@ def analyze_site_object(
         procedure_profile=procedure_profile or {},
         production_condition_shadow_sources=production_condition_shadow_sources,
         historical_rule_input=historical_rule_input,
+        district_unit_plan_registry_candidate=district_unit_plan_registry_candidate,
     )
