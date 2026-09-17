@@ -1,5 +1,5 @@
 import type { ParcelCandidate } from '../types/parcel'
-import type { SiteAnalysisResponse } from '../types/siteAnalysis'
+import type { SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisResponse } from '../types/siteAnalysis'
 
 export class SiteAnalysisApiError extends Error {
   constructor(message: string) {
@@ -8,8 +8,14 @@ export class SiteAnalysisApiError extends Error {
   }
 }
 
+export interface SiteAnalysisInputProfiles {
+  project_profile?: SiteAnalysisInputProfile
+  procedure_profile?: SiteAnalysisInputProfile
+}
+
 export async function analyzeSelectedParcelCandidate(
   candidate: ParcelCandidate,
+  profiles: SiteAnalysisInputProfiles = {},
   signal?: AbortSignal,
 ): Promise<SiteAnalysisResponse> {
   const response = await fetch('/v1/site-analysis/selected-candidate', {
@@ -19,8 +25,8 @@ export async function analyzeSelectedParcelCandidate(
       candidate_pnu: candidate.candidate_pnu,
       x: candidate.x,
       y: candidate.y,
-      project_profile: {},
-      procedure_profile: {},
+      project_profile: profiles.project_profile ?? {},
+      procedure_profile: profiles.procedure_profile ?? {},
       include_debug: false,
     }),
     signal,
@@ -39,6 +45,14 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function isNullableNumber(value: unknown): boolean {
   return value === null || typeof value === 'number'
+}
+
+function isSiteAnalysisInputState(value: unknown): value is SiteAnalysisInputState {
+  return value === 'TRUE' || value === 'FALSE' || value === 'UNKNOWN' || value === 'UNSET'
+}
+
+function isSiteAnalysisRequirement(value: unknown): boolean {
+  return isRecord(value) && typeof value.name === 'string' && typeof value.affected_clause_count === 'number' && isSiteAnalysisInputState(value.state)
 }
 
 function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
@@ -63,7 +77,7 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
   const externalDependencyItems = externalDependencies.items
 
   const siteValid = nullableString(site.site_id) && nullableString(site.address) && nullableString(site.road_address) && nullableString(site.pnu) && nullableString(site.sigungu_code) && nullableString(site.bjdong_code) && nullableString(site.main_no) && nullableString(site.sub_no)
-  const requirementsValid = Array.isArray(projectRequirements) && Array.isArray(procedureRequirements) && typeof requirements.project_count === 'number' && typeof requirements.procedure_count === 'number' && typeof requirements.requires_additional_input === 'boolean'
+  const requirementsValid = Array.isArray(projectRequirements) && projectRequirements.every(isSiteAnalysisRequirement) && Array.isArray(procedureRequirements) && procedureRequirements.every(isSiteAnalysisRequirement) && typeof requirements.project_count === 'number' && typeof requirements.procedure_count === 'number' && typeof requirements.requires_additional_input === 'boolean'
 
   const official = landArea.official
   const spatial = landArea.spatial
@@ -81,9 +95,9 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
 
   const expectedRuleTotal = Number(ruleEvaluation.applicable) + Number(ruleEvaluation.not_applicable) + Number(ruleEvaluation.conditional) + Number(ruleEvaluation.unknown)
   if (Number(ruleEvaluation.total) !== expectedRuleTotal) return false
-  if (!Array.isArray(projectRequirements) || Number(requirements.project_count) !== projectRequirements.length) return false
-  if (!Array.isArray(procedureRequirements) || Number(requirements.procedure_count) !== procedureRequirements.length) return false
-  if (!Array.isArray(externalDependencyItems) || Number(externalDependencies.count) !== externalDependencyItems.length) return false
+  if (Number(requirements.project_count) !== projectRequirements.length) return false
+  if (Number(requirements.procedure_count) !== procedureRequirements.length) return false
+  if (Number(externalDependencies.count) !== externalDependencyItems.length) return false
 
   return true
 }
