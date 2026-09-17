@@ -1,6 +1,11 @@
 import { FormEvent, useState } from 'react'
-import { searchParcelCandidates } from './api/parcelCandidates'
-import type { CandidateSearchState, ParcelCandidate } from './types/parcel'
+import { confirmParcelCandidate, searchParcelCandidates } from './api/parcelCandidates'
+import type {
+  CandidateSearchState,
+  ParcelCandidate,
+  ParcelConfirmationResponse,
+  ParcelVerificationState,
+} from './types/parcel'
 
 const INITIAL_GUIDE = '현재 검증된 범위에서는 지번주소로 검색하는 것을 권장합니다.'
 
@@ -9,10 +14,23 @@ export default function App() {
   const [state, setState] = useState<CandidateSearchState>('IDLE')
   const [candidates, setCandidates] = useState<ParcelCandidate[]>([])
   const [message, setMessage] = useState(INITIAL_GUIDE)
+  const [selectedCandidate, setSelectedCandidate] = useState<ParcelCandidate | null>(null)
+  const [verificationState, setVerificationState] = useState<ParcelVerificationState>('IDLE')
+  const [confirmation, setConfirmation] = useState<ParcelConfirmationResponse | null>(null)
+  const [verificationMessage, setVerificationMessage] = useState('')
+
+  function clearParcelVerification() {
+    setSelectedCandidate(null)
+    setVerificationState('IDLE')
+    setConfirmation(null)
+    setVerificationMessage('')
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const normalizedQuery = query.trim()
+    clearParcelVerification()
+
     if (!normalizedQuery) {
       setCandidates([])
       setState('SEARCH_ERROR')
@@ -38,6 +56,28 @@ export default function App() {
     } catch (error) {
       setState('SEARCH_ERROR')
       setMessage(error instanceof Error ? error.message : '필지 후보 검색 중 오류가 발생했습니다.')
+    }
+  }
+
+  async function handleCandidateSelection(candidate: ParcelCandidate) {
+    setSelectedCandidate(candidate)
+    setConfirmation(null)
+    setVerificationState('VERIFYING_PARCEL')
+    setVerificationMessage('선택한 필지의 실제 경계를 Backend에서 확인하고 있습니다.')
+
+    try {
+      const result = await confirmParcelCandidate(candidate)
+      if (result.parcel.pnu !== candidate.candidate_pnu) {
+        throw new Error('검증된 필지와 선택한 필지의 PNU가 일치하지 않습니다.')
+      }
+
+      setConfirmation(result)
+      setVerificationState('PARCEL_VERIFIED')
+      setVerificationMessage('Backend가 선택한 필지와 실제 필지 경계의 일치를 확인했습니다.')
+    } catch (error) {
+      setConfirmation(null)
+      setVerificationState('PARCEL_VERIFICATION_FAILED')
+      setVerificationMessage(error instanceof Error ? error.message : '선택한 필지를 확인하지 못했습니다.')
     }
   }
 
@@ -70,25 +110,78 @@ export default function App() {
 
         {state === 'SEARCH_RESULTS' && (
           <div className="candidate-list" aria-label="필지 후보 목록">
-            {candidates.map((candidate) => (
-              <article className="candidate-card" key={`${candidate.candidate_pnu}-${candidate.x}-${candidate.y}`}>
-                <div className="candidate-heading">
-                  <strong>{candidate.parcel_address || '지번주소 정보 없음'}</strong>
-                  {candidate.building_name && <span>{candidate.building_name}</span>}
-                </div>
-                {candidate.road_address && <p>{candidate.road_address}</p>}
-                <small>후보 위치 · {candidate.crs}</small>
-              </article>
-            ))}
+            {candidates.map((candidate) => {
+              const isSelected = selectedCandidate?.candidate_pnu === candidate.candidate_pnu
+              const isVerifying = isSelected && verificationState === 'VERIFYING_PARCEL'
+
+              return (
+                <button
+                  className={`candidate-card${isSelected ? ' candidate-card-selected' : ''}`}
+                  key={`${candidate.candidate_pnu}-${candidate.x}-${candidate.y}`}
+                  type="button"
+                  onClick={() => handleCandidateSelection(candidate)}
+                  disabled={verificationState === 'VERIFYING_PARCEL'}
+                  aria-pressed={isSelected}
+                >
+                  <span className="candidate-heading">
+                    <strong>{candidate.parcel_address || '지번주소 정보 없음'}</strong>
+                    {candidate.building_name && <span>{candidate.building_name}</span>}
+                  </span>
+                  {candidate.road_address && <span className="candidate-road-address">{candidate.road_address}</span>}
+                  <small>{isVerifying ? '필지 확인 중…' : `후보 위치 · ${candidate.crs}`}</small>
+                </button>
+              )
+            })}
           </div>
+        )}
+
+        {selectedCandidate && verificationState !== 'IDLE' && (
+          <section className={`verification-panel verification-${verificationState.toLowerCase()}`} aria-live="polite">
+            <div className="verification-title-row">
+              <strong>
+                {verificationState === 'PARCEL_VERIFIED'
+                  ? '필지 확인 완료'
+                  : verificationState === 'PARCEL_VERIFICATION_FAILED'
+                    ? '필지 확인 실패'
+                    : '필지 확인 중'}
+              </strong>
+              {verificationState === 'PARCEL_VERIFIED' && <span className="verified-badge">VERIFIED</span>}
+            </div>
+            <p>{verificationMessage}</p>
+
+            {confirmation && (
+              <dl className="verified-details">
+                <div>
+                  <dt>지번주소</dt>
+                  <dd>{selectedCandidate.parcel_address || '정보 없음'}</dd>
+                </div>
+                <div>
+                  <dt>PNU</dt>
+                  <dd>{confirmation.parcel.pnu}</dd>
+                </div>
+                <div>
+                  <dt>경계 형식</dt>
+                  <dd>{confirmation.geometry.type}</dd>
+                </div>
+                <div>
+                  <dt>좌표계</dt>
+                  <dd>{confirmation.parcel.crs}</dd>
+                </div>
+              </dl>
+            )}
+          </section>
         )}
       </section>
 
       <section className="map-placeholder" aria-label="지도 영역 준비 중">
         <div>
           <span>MAP</span>
-          <h2>지도 영역</h2>
-          <p>다음 단계에서 후보 marker와 검증된 필지 경계를 연결합니다.</p>
+          <h2>{confirmation ? '검증된 필지 경계 준비 완료' : '지도 영역'}</h2>
+          <p>
+            {confirmation
+              ? `${confirmation.geometry.type} 경계를 Backend에서 확인했습니다. 다음 단계에서 이 경계만 지도에 표시합니다.`
+              : '후보를 선택하면 Backend에서 실제 필지 경계를 확인합니다.'}
+          </p>
         </div>
       </section>
     </main>
