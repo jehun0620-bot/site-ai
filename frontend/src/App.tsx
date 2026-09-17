@@ -68,6 +68,7 @@ export default function App() {
   }
 
   async function handleCandidateSelection(candidate: ParcelCandidate) {
+    if (verificationState === 'VERIFYING_PARCEL' || analysisState === 'ANALYZING') return
     clearAnalysis(); setSelectedCandidate(candidate); setConfirmation(null); setVerificationState('VERIFYING_PARCEL'); setVerificationMessage('선택한 필지의 실제 경계를 Backend에서 확인하고 있습니다.')
     try {
       const result = await confirmParcelCandidate(candidate)
@@ -109,7 +110,7 @@ export default function App() {
           <section className="analysis-detail-section"><h2>외부 확인 정보</h2>{analysis.external_dependencies.count === 0 ? <p className="analysis-empty">현재 응답 기준 별도 외부 확인 항목이 없습니다.</p> : <ul className="dependency-list">{analysis.external_dependencies.items.map((item, index) => <li key={`dependency-${index}`}><strong>{displayExternalCategory(item.category)}</strong><span>{displayValue(item.condition)}</span><small>상태 {displayValue(item.status)} · 분석 차단 {item.blocking_analysis ? '예' : '아니오'}{item.category === 'SITE_HISTORY' ? ' · 원본 분류 SITE_HISTORY' : ''}</small></li>)}</ul>}</section>
         </div>}</section>}
       </section>
-      <KakaoMap candidates={candidates} selectedCandidate={selectedCandidate} confirmation={confirmation} />
+      <KakaoMap candidates={candidates} selectedCandidate={selectedCandidate} confirmation={confirmation} onCandidateSelect={handleCandidateSelection} />
     </main>
   )
 }
