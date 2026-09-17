@@ -45,6 +45,7 @@ PARCEL CONFIRMATION FRONTEND           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 VERIFIED PARCEL STATE                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 MAP / VERIFIED POLYGON RENDERING       IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 DETAILED SITE ANALYSIS RESULT UI       IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+RESULT UX / PRESENTATION               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -86,6 +87,7 @@ detailed result presentation
 → selected-candidate full analysis
 → SITE_ANALYSIS_API_V1
 → detailed result UI
+→ user-friendly result presentation
 ```
 
 ---
@@ -186,7 +188,7 @@ package-lock.json tracked
 |---|---|---|
 | Frontend architecture baseline | DOCUMENTED | A안 지도 중심 구조와 trust boundary 문서화 |
 | Frontend framework | IMPLEMENTED | React + TypeScript + Vite |
-| Frontend production build | USER LOCAL PASS | 상세 결과 UI 포함 `tsc -b && vite build` 성공 |
+| Frontend production build | USER LOCAL PASS | UX/presentation 개선 포함 `tsc -b && vite build` 성공 |
 | Address search UI | IMPLEMENTED + USER LOCAL PASS | 실제 브라우저 렌더링 확인 |
 | Candidate API client | IMPLEMENTED + USER LOCAL PASS | 실제 FastAPI 호출 확인 |
 | Candidate cards | IMPLEMENTED + USER LOCAL PASS | 실제 candidate 렌더링 확인 |
@@ -202,8 +204,8 @@ package-lock.json tracked
 | Verified polygon rendering | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | Backend VERIFIED MultiPolygon 실제 지도 렌더링 확인 |
 | Full analysis UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 실제 selected-candidate 분석 요청 및 SITE_ANALYSIS_API_V1 결과 표시 확인 |
 | Detailed result UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 대지면적/건폐율/용적률/법규 집계/추가 입력/외부 확인정보 실제 표시 확인 |
-| Result summary | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 실제 Backend 상세 결과를 사용자 화면에 표시 확인 |
-| Error/empty/UNKNOWN UI | PARTIAL FOUNDATION | UNKNOWN은 `확인 필요`로 유지; 전체 product semantics/UX는 추가 개선 필요 |
+| Result UX / presentation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 사용자 친화적 상태 표현, UNKNOWN 설명, requirements 요약/펼치기, 정보 없음 설명 확인 |
+| Error/empty/UNKNOWN UI | PARTIAL | UNKNOWN 의미 보존 및 설명은 PASS; 전체 product error/empty semantics는 추가 개선 필요 |
 
 ---
 
@@ -217,7 +219,7 @@ npm 11.19.0
 Vite v8.3.0
 ```
 
-상세 결과 UI 구현 후 2026-09-17 사용자 로컬 production build:
+UX/presentation 개선 후 2026-09-17 사용자 로컬 production build:
 
 ```text
 > site-ai-frontend@0.1.0 build
@@ -226,18 +228,18 @@ Vite v8.3.0
 vite v8.3.0 building client environment for production...
 ✓ 20 modules transformed.
 dist/index.html                   0.49 kB │ gzip: 0.33 kB
-dist/assets/index-D77GtQKV.css   5.42 kB │ gzip: 1.68 kB
-dist/assets/index-BLUNFI47.js  238.65 kB │ gzip: 74.05 kB
+dist/assets/index-BQQYnzfe.css   6.52 kB │ gzip: 1.93 kB
+dist/assets/index-JR7ch5yC.js  239.70 kB │ gzip: 74.36 kB
 ✓ built in 89ms
 ```
 
 검증 HEAD:
 
 ```text
-7947b88e8ac6b52ab2e64a451137e768770ef16a
+9d7b6044519621bc680bf9ca7f29274ed0c33a15
 ```
 
-따라서 상세 결과 UI가 포함된 Frontend production build는 **USER LOCAL BUILD PASS**이다.
+따라서 UX/presentation 개선이 포함된 Frontend production build는 **USER LOCAL BUILD PASS**이다.
 
 ---
 
@@ -344,6 +346,8 @@ user parcel confirmation
 selected-candidate full analysis         USER LOCAL BEHAVIORAL PASS
     ↓
 detailed result presentation             USER LOCAL BEHAVIORAL PASS
+    ↓
+result UX / presentation refinement      USER LOCAL BEHAVIORAL PASS
 ```
 
 Frontend는 PNU를 canonical truth로 자체 승격하지 않는다. 실제 polygon은 Backend confirmation response에서만 가져온다. 법규 적용 여부도 Frontend에서 재판정하지 않는다.
@@ -446,6 +450,7 @@ Candidate marker rendering                  IMPLEMENTED + USER LOCAL BEHAVIORAL 
 Verified polygon rendering                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Full analysis Frontend integration          IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Detailed result Frontend presentation       IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+Result UX / presentation refinement         IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ### 2026-09-17 Detailed Result User Local Behavioral Validation
@@ -485,25 +490,72 @@ PNU                 1168010300100120002
 
 따라서 **VERIFIED parcel → Backend re-verification → SITE_ANALYSIS_API_V1 → detailed result UI** 경계는 **USER LOCAL BEHAVIORAL PASS**이다.
 
+### 2026-09-17 Result UX / Presentation User Local Behavioral Validation
+
+검증 HEAD:
+
+```text
+9d7b6044519621bc680bf9ca7f29274ed0c33a15
+```
+
+Backend 실제 request log:
+
+```text
+POST /v1/parcel-candidates/address HTTP/1.1 200 OK
+POST /v1/parcel-candidates/confirm HTTP/1.1 200 OK
+POST /v1/site-analysis/selected-candidate HTTP/1.1 200 OK
+```
+
+기존 Backend 결과값은 그대로 유지됐다.
+
+```text
+공식 대지면적        15,487.3㎡
+건폐율               50%
+용적률               250%
+법규 전체            314
+적용                  57
+비적용                214
+조건부                41
+확인 필요             2
+사업 추가입력         16
+절차 추가입력         2
+```
+
+사용자 로컬 화면에서 다음 presentation 개선이 실제 확인됐다.
+
+```text
+READY       → 분석 완료
+CONFIRMED   → 확인된 기준
+SITE_HISTORY → 과거 이력 확인 + 원본 분류 보존
+UNKNOWN 2   → 확인 필요 2 + 오류/비적용이 아니라는 설명
+사업/절차 requirements → 16개/2개 요약 + 목록 보기
+공간 면적 미제공 → 정보 없음 + Backend 응답에 값이 없어 계산하지 않음
+```
+
+따라서 **상세 분석값을 변경하지 않고 사용자 친화적으로 표현하는 Frontend presentation 계층**은 **USER LOCAL BEHAVIORAL PASS**이다.
+
 ---
 
 ## 16. Next Development Target
 
-다음 목표는 **검증된 상세 분석 결과를 일반 사용자가 더 쉽게 이해하도록 결과 화면 UX/presentation을 개선하는 것**이다.
+다음 목표는 **분석 전 지도 중심 화면과 분석 후 결과 중심 화면을 어떻게 구조적으로 분리할지 READ-ONLY로 설계하는 것**이다.
 
-현재 상세 데이터 연결 자체는 완료됐으며, 다음 작업은 Backend 판단을 바꾸는 것이 아니라 presentation 계층을 다듬는 것이다.
+현재 상세 데이터 연결과 1차 presentation 개선은 완료됐다. 실제 화면에서는 결과가 길어질수록 왼쪽 결과 문서와 오른쪽 지도 사이의 정보 밀도 차이가 커진다.
 
-현재 실제 화면에서 확인된 UX 개선 후보:
+다음 조사 후보:
 
 ```text
-긴 추가 입력 목록의 정보 구조 개선
-Backend 상태 용어의 사용자 친화적 presentation
-결과 영역과 지도 영역의 화면 비율/가독성 개선
-UNKNOWN = 확인 필요 의미의 명확한 설명
-정보 없음과 분석 실패의 시각적 구분
+분석 전: 지도 중심 탐색/필지 확인
+분석 후: 결과 중심 레이아웃 전환 가능성
+지도 유지 방식: 고정 / 축소 / 보조 패널
+검색·후보·검증 정보의 분석 후 축약 방식
+긴 결과의 섹션 탐색/가독성 구조
+모바일에서의 결과/지도 순서
 ```
 
-구현 전에 현재 Frontend 결과 컴포넌트 구조와 `SITE_ANALYSIS_API_V1` presentation 의미를 READ-ONLY로 다시 확인한다. Frontend는 법규 적용 여부를 재판정하거나 Backend 결과를 임의 보정하지 않는다.
+아직 구현 방식은 확정하지 않는다. 실제 `App.tsx`, `app.css`, `KakaoMap.tsx`, `PROJECT_FRONTEND_ARCHITECTURE.md`를 READ-ONLY로 확인한 뒤 최소 변경 범위를 정한다.
+
+Frontend는 계속 Backend 결과를 재판정하거나 임의 보정하지 않는다.
 
 ---
 
@@ -526,13 +578,13 @@ Authentication, project/history, organization, billing, usage, report management
 
 ```text
 CURRENT TASK:
-Detailed result UX / presentation READ-ONLY investigation
+Analysis-result layout transition READ-ONLY investigation
 
 CURRENT FRONTEND STATUS:
-DETAILED SITE ANALYSIS RESULT UI USER LOCAL BEHAVIORAL PASS
+RESULT UX / PRESENTATION USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
-Must inspect actual Frontend result UI + response presentation semantics and define exact minimal UX improvement scope
+Must inspect actual result/search/map structure and define exact minimal layout-transition scope
 ```
 
 ---
