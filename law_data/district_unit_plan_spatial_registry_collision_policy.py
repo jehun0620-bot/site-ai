@@ -32,6 +32,7 @@ class DistrictUnitPlanSpatialRegistryCollisionPolicy:
     conflicting_collision: bool
     unresolved_collision: bool
     merge_candidate_ready: bool
+    canonical_pnu: str
     merged_registry_candidate: Mapping[str, Mapping[str, Any]]
     implicit_precedence_used: bool = False
     site_registry_mutated: bool = False
@@ -48,6 +49,8 @@ class DistrictUnitPlanSpatialRegistryCollisionPolicy:
             and self.district_registry_valid
             and self.district_condition_present
             and self.merge_candidate_ready
+            and len(self.canonical_pnu) == 19
+            and self.canonical_pnu.isdigit()
             and not self.conflicting_collision
             and not self.unresolved_collision
             and bool(self.merged_registry_candidate)
@@ -108,6 +111,11 @@ def evaluate_district_unit_plan_spatial_registry_collision_policy(
     spatial = copy.deepcopy(dict(spatial_registry)) if spatial_valid else {}
     district = copy.deepcopy(dict(district_registry)) if district_valid else {}
     district_present = district_valid and CONDITION_NAME in district
+    canonical_pnu = (
+        str(district[CONDITION_NAME].get("pnu") or "").strip()
+        if district_present
+        else ""
+    )
     collision = bool(spatial_valid and district_present and CONDITION_NAME in spatial)
 
     spatial_state = None
@@ -158,5 +166,6 @@ def evaluate_district_unit_plan_spatial_registry_collision_policy(
         conflicting_collision=conflicting,
         unresolved_collision=unresolved,
         merge_candidate_ready=ready,
+        canonical_pnu=canonical_pnu if ready else "",
         merged_registry_candidate=merged,
     )

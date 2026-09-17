@@ -53,6 +53,7 @@ def main():
     )
     assert no_collision.ready
     assert not no_collision.collision_present
+    assert no_collision.canonical_pnu == PNU
     assert no_collision.merged_registry_candidate["지구단위계획"]["state"] == "TRUE"
     assert no_collision.merged_registry_candidate["지구단위계획"]["source"] == REGISTRY_SOURCE
     _assert_isolated(no_collision)
@@ -63,6 +64,7 @@ def main():
     assert compatible.ready
     assert compatible.collision_present
     assert compatible.compatible_collision
+    assert compatible.canonical_pnu == PNU
     assert compatible.merged_registry_candidate["지구단위계획"]["source"] == "RUNTIME_SPATIAL_CONDITION"
     _assert_isolated(compatible)
 
@@ -88,6 +90,15 @@ def main():
     assert not unset.ready
     assert unset.unresolved_collision
     _assert_isolated(unset)
+
+    bad_pnu = _district_registry()
+    next(iter(bad_pnu.values()))["pnu"] = "FORGED"
+    bad_pnu_result = evaluate_district_unit_plan_spatial_registry_collision_policy(
+        _spatial(), bad_pnu
+    )
+    assert not bad_pnu_result.ready
+    assert bad_pnu_result.canonical_pnu == ""
+    _assert_isolated(bad_pnu_result)
 
     bad_district = _district_registry()
     bad_district["지구단위계획"]["source"] = "FORGED"

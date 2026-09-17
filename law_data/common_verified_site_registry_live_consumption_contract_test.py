@@ -27,6 +27,7 @@ def _district():
         policy_present=True, policy_boundary_matched=True, merge_candidate_ready=True,
         no_conflicting_collision=True, no_unresolved_collision=True,
         candidate_registry_valid=True, district_provenance_preserved=True,
+        canonical_pnu_valid=True, canonical_pnu=PNU,
         missing_gates=(), live_consumption_authorized=True,
         authorized_merged_registry=registry,
     )

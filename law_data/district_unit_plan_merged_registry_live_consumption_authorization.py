@@ -31,6 +31,8 @@ class DistrictUnitPlanMergedRegistryLiveConsumptionAuthorization:
     no_unresolved_collision: bool
     candidate_registry_valid: bool
     district_provenance_preserved: bool
+    canonical_pnu_valid: bool
+    canonical_pnu: str
     missing_gates: tuple[str, ...]
     live_consumption_authorized: bool
     authorized_merged_registry: Mapping[str, Mapping[str, Any]]
@@ -53,6 +55,9 @@ class DistrictUnitPlanMergedRegistryLiveConsumptionAuthorization:
             and self.no_unresolved_collision
             and self.candidate_registry_valid
             and self.district_provenance_preserved
+            and self.canonical_pnu_valid
+            and len(self.canonical_pnu) == 19
+            and self.canonical_pnu.isdigit()
             and not self.missing_gates
             and self.live_consumption_authorized
             and bool(self.authorized_merged_registry)
@@ -128,6 +133,8 @@ def authorize_district_unit_plan_merged_registry_live_consumption(
     provenance_preserved = bool(
         candidate_valid and _district_provenance_preserved(candidate)
     )
+    canonical_pnu = str(policy.canonical_pnu or "").strip() if present else ""
+    canonical_pnu_valid = len(canonical_pnu) == 19 and canonical_pnu.isdigit()
 
     gates = (
         ("policy_present", present),
@@ -137,6 +144,7 @@ def authorize_district_unit_plan_merged_registry_live_consumption(
         ("no_unresolved_collision", no_unresolved),
         ("candidate_registry_valid", candidate_valid),
         ("district_provenance_preserved", provenance_preserved),
+        ("canonical_pnu_valid", canonical_pnu_valid),
     )
     missing = tuple(name for name, passed in gates if not passed)
     authorized = not missing
@@ -150,6 +158,8 @@ def authorize_district_unit_plan_merged_registry_live_consumption(
         no_unresolved_collision=no_unresolved,
         candidate_registry_valid=candidate_valid,
         district_provenance_preserved=provenance_preserved,
+        canonical_pnu_valid=canonical_pnu_valid,
+        canonical_pnu=canonical_pnu if authorized else "",
         missing_gates=missing,
         live_consumption_authorized=authorized,
         authorized_merged_registry=candidate if authorized else {},

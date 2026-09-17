@@ -46,6 +46,7 @@ def _policy(entry=None):
         conflicting_collision=False,
         unresolved_collision=False,
         merge_candidate_ready=True,
+        canonical_pnu=PNU,
         merged_registry_candidate=registry,
     )
 
@@ -64,6 +65,8 @@ def main():
     result = authorize_district_unit_plan_merged_registry_live_consumption(_policy())
     assert result.authorized
     assert result.boundary == BOUNDARY_NAME
+    assert result.canonical_pnu_valid
+    assert result.canonical_pnu == PNU
     assert result.authorized_merged_registry["지구단위계획"]["state"] == "TRUE"
     assert result.authorized_merged_registry["지구단위계획"]["source"] == REGISTRY_SOURCE
     _assert_non_executing(result)
@@ -84,8 +87,25 @@ def main():
         compatible
     )
     assert compatible_result.authorized
+    assert compatible_result.canonical_pnu_valid
+    assert compatible_result.canonical_pnu == PNU
     assert compatible_result.authorized_merged_registry["지구단위계획"]["source"] == "RUNTIME_SPATIAL_CONDITION"
     _assert_non_executing(compatible_result)
+
+    missing_pnu = replace(_policy(), canonical_pnu="")
+    missing_pnu_result = authorize_district_unit_plan_merged_registry_live_consumption(
+        missing_pnu
+    )
+    assert not missing_pnu_result.authorized
+    assert not missing_pnu_result.canonical_pnu_valid
+    assert missing_pnu_result.canonical_pnu == ""
+
+    forged_pnu = replace(_policy(), canonical_pnu="FORGED")
+    forged_pnu_result = authorize_district_unit_plan_merged_registry_live_consumption(
+        forged_pnu
+    )
+    assert not forged_pnu_result.authorized
+    assert not forged_pnu_result.canonical_pnu_valid
 
     wrong_boundary = replace(_policy(), boundary="FORGED")
     assert not authorize_district_unit_plan_merged_registry_live_consumption(
