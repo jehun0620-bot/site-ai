@@ -5,7 +5,6 @@ from typing import Any, Dict, List, Optional
 
 from law_data.parcel_geometry_provider import (
     PARCEL_DATASET,
-    collect_features,
     find_feature_pnu,
     is_polygon_geometry,
     load_vworld_key,
@@ -98,12 +97,19 @@ def _point(item: Dict[str, Any]) -> Optional[tuple[float, float]]:
         return None
 
 
+def _address_item_pnu(item: Dict[str, Any]) -> str:
+    value = str(item.get("id") or "").strip() if isinstance(item, dict) else ""
+    return value if len(value) == 19 and value.isdigit() else ""
+
+
 def _parcel_pnus_at_point(api_key: str, x: float, y: float) -> List[str]:
     result = query_dataset_by_point(api_key, PARCEL_DATASET, x, y)
-    data = result.get("data", {}) if isinstance(result, dict) else {}
+    features = result.get("features", []) if isinstance(result, dict) else []
     pnus: List[str] = []
-    for feature in collect_features(data):
-        if not is_polygon_geometry(feature):
+    if not isinstance(features, list):
+        return pnus
+    for feature in features:
+        if not isinstance(feature, dict) or not is_polygon_geometry(feature):
             continue
         _, pnu = find_feature_pnu(feature)
         if pnu and pnu not in pnus:
@@ -125,16 +131,22 @@ def resolve_address_parcel_identity(address: str, api_key: Optional[str] = None)
         return AddressParcelIdentityResolution("REJECTED", "ADDRESS_RESULT_EMPTY", normalized)
 
     candidates: Dict[str, tuple[float, float]] = {}
+    mismatch_seen = False
     for item in items:
+        address_pnu = _address_item_pnu(item)
         point = _point(item)
-        if point is None:
+        if not address_pnu or point is None:
             continue
         x, y = point
-        for pnu in _parcel_pnus_at_point(key, x, y):
-            candidates.setdefault(pnu, (x, y))
+        polygon_pnus = _parcel_pnus_at_point(key, x, y)
+        if address_pnu not in polygon_pnus:
+            mismatch_seen = True
+            continue
+        candidates.setdefault(address_pnu, (x, y))
 
     if not candidates:
-        return AddressParcelIdentityResolution("REJECTED", "PARCEL_PNU_UNRESOLVED", normalized)
+        resolution = "ADDRESS_POLYGON_PNU_MISMATCH" if mismatch_seen else "PARCEL_PNU_UNRESOLVED"
+        return AddressParcelIdentityResolution("REJECTED", resolution, normalized)
     if len(candidates) != 1:
         return AddressParcelIdentityResolution("REJECTED", "ADDRESS_PARCEL_AMBIGUOUS", normalized)
 
