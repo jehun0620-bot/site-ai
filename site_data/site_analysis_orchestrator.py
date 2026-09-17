@@ -53,16 +53,25 @@ def _admitted_canonical_pnu(applicability):
     if not isinstance(applicability,HistoricalSiteEventSiteApplicabilityAdmissionResult) or not applicability.admitted or applicability.site_admission is None:return ""
     return str(applicability.site_admission.canonical_pnu or "").strip()
 
+def _parcel_address_from_land_record(record:Any,pnu:str)->str:
+    if not isinstance(record,dict) or str(record.get("pnu") or "").strip()!=pnu: return ""
+    locality=str(record.get("ldCodeNm") or "").strip(); lot=str(record.get("mnnmSlno") or "").strip()
+    if not locality or not lot: return ""
+    register_code=str(record.get("regstrSeCode") or "").strip()
+    if register_code=="2": return f"{locality} 산 {lot}"
+    if register_code=="1": return f"{locality} {lot}"
+    return ""
+
 def _parcel_only_site(*,sigungu_cd:str,bjdong_cd:str,plat_gb_cd:str,bun:str,ji:str)->Site:
     site=Site(site_id=f"{sigungu_cd}-{bjdong_cd}-{bun}-{ji}",sigungu_cd=str(sigungu_cd).strip(),bjdong_cd=str(bjdong_cd).strip(),plat_gb_cd=str(plat_gb_cd).strip(),bun=str(bun).strip(),ji=str(ji).strip())
     pnu=_actual_site_pnu(site)
     if not pnu: raise SiteBuildError("유효한 필지 identity로 Site 객체를 생성할 수 없습니다.")
     try:
-        records=get_land_characteristics(pnu)
-        record=select_latest_land_record(records)
-        if record is not None: site.land=convert_land_record(record)
-    except (RuntimeError,ValueError,TypeError):
-        pass
+        records=get_land_characteristics(pnu); record=select_latest_land_record(records)
+        if record is not None:
+            site.land=convert_land_record(record)
+            site.address=_parcel_address_from_land_record(record,pnu)
+    except (RuntimeError,ValueError,TypeError): pass
     return site
 
 def analyze_site_by_parcel(*,sigungu_cd:str,bjdong_cd:str,bun:str,ji:str,plat_gb_cd:str="0",project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,production_condition_shadow_sources:Optional[Any]=None,historical_handoff_authorization:Optional[HistoricalTrustedInternalSourceHandoffAuthorization]=None,historical_site_applicability_admission:Optional[HistoricalSiteEventSiteApplicabilityAdmissionResult]=None,historical_promotion_rule_input_bridge:Optional[HistoricalSiteEventSiteTruthPromotionRuleInputBridge]=None,district_unit_plan_registry_candidate:Optional[Any]=None,include_debug:bool=False,service_key:Optional[str]=None)->Dict[str,Any]:
