@@ -2,7 +2,7 @@
 
 최종 업데이트: 2026-09-16
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `21de2d3eb5af39bb1cc5b78e243e116a04d14538`
+기준 behavioral PASS HEAD: `a51edf2c71a3147a529de2a35d1d66a289b9209f`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
@@ -186,9 +186,33 @@ READ-ONLY audit
 → next READ-ONLY audit
 ```
 
+## 9A. District-unit / common production reconciliation
+
+Behavioral PASS HEAD `a51edf2c71a3147a529de2a35d1d66a289b9209f` additionally validates the district-unit verified production transport.
+
+District-unit verified input now follows:
+
+```text
+verified district-unit envelope
+→ Orchestrator actual-SITE PNU recheck
+→ Service typed-envelope / PNU recheck
+→ Builder typed-envelope / PNU recheck
+→ district spatial collision / live authorization
+→ common verified SITE registry
+→ existing Rule Engine
+```
+
+Historical and district-unit paths keep their family-specific verification and authorization boundaries, but converge at the common verified SITE registry / existing Rule Engine lane.
+
+Historical + district-unit simultaneous production input remains fail-closed because no cross-family merge policy is authorized.
+
+User-local PASS includes the district-unit Orchestrator E2E, Service handoff, Builder handoff, collision/live authorization, common registry, common Rule Engine, and historical regressions.
+
+This does not authorize UQQ700, public historical injection, a second SITE truth store, or a second Rule Engine. UQQ700 remains UNKNOWN/BLOCKED.
+
 ## 10. Next action
 
-Historical promotion→production Rule Engine internal bypass hardening is locally validated. The next work should start with a READ-ONLY gap audit from the current architecture rather than assuming a new STEP. Preserve:
+Historical and district-unit verified production transport into the existing Rule Engine is locally validated. The next work should start with a READ-ONLY architecture/product gap audit rather than assuming a new STEP. Preserve:
 - one SITE truth / Rule Engine consumption architecture
 - canonical PNU binding
 - verified-envelope fail-closed boundary

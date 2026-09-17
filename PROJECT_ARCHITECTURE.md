@@ -150,7 +150,7 @@ verified historical registry
 → existing evaluate_site_rules / Rule Engine
 ```
 
-Repository-wide local grep at behavioral PASS HEAD `21de2d3eb5af39bb1cc5b78e243e116a04d14538`에서 production raw-historical bypass caller는 발견되지 않았다. 남은 raw 직접 호출은 fail-closed 회귀 테스트 또는 isolated adapter/bridge 테스트다.
+Repository-wide local grep at behavioral PASS HEAD `a51edf2c71a3147a529de2a35d1d66a289b9209f`에서 production raw-historical bypass caller는 발견되지 않았다. 남은 raw 직접 호출은 fail-closed 회귀 테스트 또는 isolated adapter/bridge 테스트다.
 
 ## 11. Public API / runtime exposure
 
@@ -237,7 +237,7 @@ Architecture STEP98…STEP114와 legal-source investigation S206…S216/future S
 
 ## 19. Current validated architecture position
 
-Behavioral PASS HEAD `21de2d3eb5af39bb1cc5b78e243e116a04d14538` establishes:
+Behavioral PASS HEAD `a51edf2c71a3147a529de2a35d1d66a289b9209f` establishes:
 
 ```text
 verified historical candidate
@@ -255,6 +255,30 @@ verified historical candidate
 
 This preserves normal no-historical analysis, caller input immutability, no public historical API exposure, no historical spatial-runtime registration, and no second Rule Engine/SITE truth path.
 
+## 19A. District-unit / common verified production lane
+
+Behavioral PASS HEAD `a51edf2c71a3147a529de2a35d1d66a289b9209f` validates district-unit production transport through the existing Rule Engine architecture.
+
+```text
+verified historical transport
+→ historical collision / live authorization
+→ common verified SITE registry
+→ existing Rule Engine
+
+verified district-unit transport
+→ district spatial collision / live authorization
+→ common verified SITE registry
+→ existing Rule Engine
+```
+
+District-unit canonical PNU remains first-class through the verified transport boundaries and is not inferred from the final merged registry.
+
+District spatial collision is evaluated in Builder because Builder owns the current spatial SITE registry.
+
+Historical and district-unit production inputs are not implicitly merged. Without an explicit cross-family merge policy, simultaneous input fails closed.
+
+This reconciliation creates no new architecture STEP number, does not change generic STEP112/STEP114 semantics, and does not authorize UQQ700.
+
 ## 20. Next design question
 
-Historical promotion→production Rule Engine internal bypass hardening is complete at the current user-local validation point. The next work begins with a READ-ONLY architecture gap audit. Do not assume a new STEP. Preserve canonical PNU binding, verified-envelope fail-closed behavior, one production consumption lane, public API historical non-exposure, spatial/historical separation, and UQQ700 UNKNOWN/BLOCKED policy.
+Historical and district-unit verified production transport hardening is complete at the current user-local validation point. The next work begins with a READ-ONLY architecture/product gap audit. Do not assume a new STEP. Preserve canonical PNU binding, verified-envelope fail-closed behavior, one production consumption lane, public API historical non-exposure, spatial/historical separation, and UQQ700 UNKNOWN/BLOCKED policy.
