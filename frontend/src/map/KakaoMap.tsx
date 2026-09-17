@@ -6,12 +6,13 @@ interface KakaoMapProps {
   candidates: ParcelCandidate[]
   selectedCandidate: ParcelCandidate | null
   confirmation: ParcelConfirmationResponse | null
+  onCandidateSelect: (candidate: ParcelCandidate) => void
 }
 
 const DEFAULT_CENTER = { latitude: 37.5665, longitude: 126.978 }
 const KAKAO_SDK_ID = 'kakao-maps-sdk'
 
-export default function KakaoMap({ candidates, selectedCandidate, confirmation }: KakaoMapProps) {
+export default function KakaoMap({ candidates, selectedCandidate, confirmation, onCandidateSelect }: KakaoMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const mapRef = useRef<KakaoMap | null>(null)
   const markersRef = useRef<KakaoMarker[]>([])
@@ -94,17 +95,25 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation }
       const markerInput = candidateToMapMarker(candidate)
       const position = new kakao.maps.LatLng(markerInput.position.latitude, markerInput.position.longitude)
       const marker = new kakao.maps.Marker({ map, position })
+      const isSelected = selectedCandidate?.candidate_pnu === candidate.candidate_pnu
+
+      marker.setOpacity(isSelected ? 1 : 0.72)
+      marker.setZIndex(isSelected ? 10 : 1)
+      kakao.maps.event.addListener(marker, 'click', () => onCandidateSelect(candidate))
+
       markersRef.current.push(marker)
       bounds.extend(position)
       hasBounds = true
     })
 
-    if (hasBounds && !confirmation) {
-      map.setBounds(bounds)
-    } else if (selectedCandidate && !confirmation) {
+    if (confirmation) return
+
+    if (selectedCandidate) {
       map.setCenter(new kakao.maps.LatLng(selectedCandidate.y, selectedCandidate.x))
+    } else if (hasBounds) {
+      map.setBounds(bounds)
     }
-  }, [candidates, selectedCandidate, confirmation, sdkReady])
+  }, [candidates, selectedCandidate, confirmation, onCandidateSelect, sdkReady])
 
   useEffect(() => {
     const kakao = window.kakao
@@ -154,6 +163,9 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation }
   return (
     <section className="map-stage" aria-label="필지 지도">
       <div ref={containerRef} className="kakao-map" />
+      {!mapError && sdkReady && candidates.length > 0 && !confirmation && (
+        <div className="map-selection-guide">지도 마커를 선택해 필지를 확인할 수 있습니다.</div>
+      )}
       {mapError && (
         <div className="map-message map-message-error" role="alert">
           <strong>지도를 표시하지 못했습니다.</strong>
