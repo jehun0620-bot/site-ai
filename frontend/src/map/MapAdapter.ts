@@ -1,4 +1,8 @@
-import type { ParcelCandidate, ParcelConfirmationGeometry } from '../types/parcel'
+import type {
+  ParcelCandidate,
+  ParcelConfirmationGeometry,
+  ParcelReferenceGeometry,
+} from '../types/parcel'
 
 export interface MapPoint {
   latitude: number
@@ -10,10 +14,13 @@ export interface CandidateMapMarker {
   position: MapPoint
 }
 
-export interface VerifiedParcelMapGeometry {
+export interface ParcelMapGeometry {
   type: 'Polygon' | 'MultiPolygon'
   polygons: MapPoint[][][]
 }
+
+export type CandidateReferenceMapGeometry = ParcelMapGeometry
+export type VerifiedParcelMapGeometry = ParcelMapGeometry
 
 export function candidateToMapMarker(candidate: ParcelCandidate): CandidateMapMarker {
   return {
@@ -25,9 +32,21 @@ export function candidateToMapMarker(candidate: ParcelCandidate): CandidateMapMa
   }
 }
 
+export function candidateReferenceGeometryToMapGeometry(
+  geometry: ParcelReferenceGeometry,
+): CandidateReferenceMapGeometry | null {
+  return parcelGeometryToMapGeometry(geometry)
+}
+
 export function verifiedGeometryToMapGeometry(
   geometry: ParcelConfirmationGeometry,
 ): VerifiedParcelMapGeometry | null {
+  return parcelGeometryToMapGeometry(geometry)
+}
+
+function parcelGeometryToMapGeometry(
+  geometry: ParcelReferenceGeometry | ParcelConfirmationGeometry,
+): ParcelMapGeometry | null {
   if (geometry.type === 'Polygon') {
     const polygon = parsePolygonCoordinates(geometry.coordinates)
     return polygon ? { type: 'Polygon', polygons: [polygon] } : null
