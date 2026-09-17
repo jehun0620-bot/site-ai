@@ -5,36 +5,10 @@ from typing import Any, Dict, List
 import requests
 from dotenv import load_dotenv
 
-
-# ============================================================
-# 1. 프로젝트 기본 경로
-# ============================================================
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# ============================================================
-# 2. .env 파일 불러오기
-# ============================================================
-
 load_dotenv(BASE_DIR / ".env")
-
-
-# ============================================================
-# 3. VWorld API 인증키
-# ============================================================
-
 VWORLD_API_KEY = os.getenv("VWORLD_API_KEY")
-
-
-# ============================================================
-# 4. VWorld 토지특성정보 API
-# ============================================================
-
-API_URL = (
-    "https://api.vworld.kr/ned/data/"
-    "getLandCharacteristics"
-)
+API_URL = "https://api.vworld.kr/ned/data/getLandCharacteristics"
 
 
 def create_pnu(
@@ -42,45 +16,37 @@ def create_pnu(
     bjdong_cd: str,
     bun: str,
     ji: str,
+    plat_gb_cd: str = "0",
 ) -> str:
-    """
-    시군구코드, 법정동코드, 본번, 부번을 이용하여
-    19자리 PNU를 생성한다.
+    """Create a 19-digit PNU from canonical parcel identity.
 
-    일반 토지 기준:
-    법정동코드(10자리)
-    + 대장구분(1자리)
-    + 본번(4자리)
-    + 부번(4자리)
+    Building HUB platGbCd uses 0 for ordinary parcels and 1 for mountain
+    parcels. PNU land-register digits are 1 and 2 respectively.
     """
-
     sigungu_cd = str(sigungu_cd or "").strip()
     bjdong_cd = str(bjdong_cd or "").strip()
     bun = str(bun or "").strip()
     ji = str(ji or "").strip()
+    plat_gb_cd = str(plat_gb_cd or "").strip()
 
-    bun = bun.zfill(4)
-    ji = ji.zfill(4)
+    if len(sigungu_cd) != 5 or not sigungu_cd.isdigit():
+        raise ValueError(f"sigungu_cd는 5자리 숫자여야 합니다: {sigungu_cd}")
+    if len(bjdong_cd) != 5 or not bjdong_cd.isdigit():
+        raise ValueError(f"bjdong_cd는 5자리 숫자여야 합니다: {bjdong_cd}")
+    if not bun.isdigit() or len(bun) > 4:
+        raise ValueError(f"bun은 4자리 이하 숫자여야 합니다: {bun}")
+    if not ji.isdigit() or len(ji) > 4:
+        raise ValueError(f"ji는 4자리 이하 숫자여야 합니다: {ji}")
 
-    if len(sigungu_cd) != 5:
+    land_gbn_by_plat_gb_cd = {"0": "1", "1": "2"}
+    try:
+        land_gbn = land_gbn_by_plat_gb_cd[plat_gb_cd]
+    except KeyError as e:
         raise ValueError(
-            f"sigungu_cd는 5자리여야 합니다: {sigungu_cd}"
-        )
+            f"plat_gb_cd는 '0'(일반) 또는 '1'(산)이어야 합니다: {plat_gb_cd}"
+        ) from e
 
-    if len(bjdong_cd) != 5:
-        raise ValueError(
-            f"bjdong_cd는 5자리여야 합니다: {bjdong_cd}"
-        )
-
-    pnu = (
-        sigungu_cd
-        + bjdong_cd
-        + "1"
-        + bun
-        + ji
-    )
-
-    return pnu
+    return sigungu_cd + bjdong_cd + land_gbn + bun.zfill(4) + ji.zfill(4)
 
 
 def get_land_characteristics(
@@ -89,17 +55,9 @@ def get_land_characteristics(
     num_of_rows: int = 10,
     page_no: int = 1,
 ) -> List[Dict[str, Any]]:
-    """
-    PNU를 이용하여 VWorld 토지특성정보 API를 호출한다.
-
-    반환값:
-        토지특성정보 field 목록
-    """
-
+    """PNU를 이용하여 VWorld 토지특성정보 API를 호출한다."""
     if not VWORLD_API_KEY:
-        raise RuntimeError(
-            "VWORLD_API_KEY를 찾을 수 없습니다."
-        )
+        raise RuntimeError("VWORLD_API_KEY를 찾을 수 없습니다.")
 
     params = {
         "key": VWORLD_API_KEY,
@@ -109,48 +67,22 @@ def get_land_characteristics(
         "numOfRows": str(num_of_rows),
         "pageNo": str(page_no),
     }
-
     try:
-        response = requests.get(
-            API_URL,
-            params=params,
-            timeout=30,
-        )
-
+        response = requests.get(API_URL, params=params, timeout=30)
     except requests.RequestException as e:
-        raise RuntimeError(
-            f"VWorld API 요청 중 오류가 발생했습니다: {e}"
-        ) from e
-
+        raise RuntimeError(f"VWorld API 요청 중 오류가 발생했습니다: {e}") from e
     if response.status_code != 200:
-        raise RuntimeError(
-            f"VWorld API HTTP 오류: "
-            f"{response.status_code}"
-        )
-
+        raise RuntimeError(f"VWorld API HTTP 오류: {response.status_code}")
     try:
         data = response.json()
-
     except ValueError as e:
-        raise RuntimeError(
-            "VWorld API 응답을 JSON으로 변환할 수 없습니다."
-        ) from e
-
+        raise RuntimeError("VWorld API 응답을 JSON으로 변환할 수 없습니다.") from e
     try:
-        records = data[
-            "landCharacteristicss"
-        ]["field"]
-
+        records = data["landCharacteristicss"]["field"]
     except (KeyError, TypeError) as e:
         raise RuntimeError(
-            "VWorld API 응답에서 "
-            "landCharacteristicss.field를 찾을 수 없습니다."
+            "VWorld API 응답에서 landCharacteristicss.field를 찾을 수 없습니다."
         ) from e
-
     if not isinstance(records, list):
-        raise RuntimeError(
-            "VWorld API의 field 데이터가 "
-            "목록 형식이 아닙니다."
-        )
-
+        raise RuntimeError("VWorld API의 field 데이터가 목록 형식이 아닙니다.")
     return records
