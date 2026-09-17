@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 from typing import Any, Dict, List, Optional
 
 from law_data.parcel_geometry_provider import (
@@ -59,6 +60,12 @@ def parcel_identity_from_pnu(pnu: str) -> Dict[str, str]:
     return identity
 
 
+def _normalize_parcel_address(address: str) -> str:
+    value = " ".join(str(address or "").strip().split())
+    value = re.sub(r"(?<=\d)번지$", "", value).strip()
+    return value
+
+
 def _search_address_items(address: str, api_key: str) -> List[Dict[str, Any]]:
     normalized = str(address or "").strip()
     if not normalized:
@@ -87,6 +94,12 @@ def _search_address_items(address: str, api_key: str) -> List[Dict[str, Any]]:
     result = response_data.get("result", {})
     items = result.get("items", []) if isinstance(result, dict) else []
     return [item for item in items if isinstance(item, dict)] if isinstance(items, list) else []
+
+
+def _item_parcel_address(item: Dict[str, Any]) -> str:
+    address = item.get("address", {}) if isinstance(item, dict) else {}
+    parcel = address.get("parcel") if isinstance(address, dict) else ""
+    return _normalize_parcel_address(str(parcel or ""))
 
 
 def _point(item: Dict[str, Any]) -> Optional[tuple[float, float]]:
@@ -118,21 +131,26 @@ def _parcel_pnus_at_point(api_key: str, x: float, y: float) -> List[str]:
 
 
 def resolve_address_parcel_identity(address: str, api_key: Optional[str] = None) -> AddressParcelIdentityResolution:
-    normalized = str(address or "").strip()
+    original = str(address or "").strip()
+    normalized = _normalize_parcel_address(original)
     if not normalized:
-        return AddressParcelIdentityResolution("REJECTED", "ADDRESS_MISSING", normalized)
+        return AddressParcelIdentityResolution("REJECTED", "ADDRESS_MISSING", original)
 
     key = str(api_key or load_vworld_key() or "").strip()
     if not key:
-        return AddressParcelIdentityResolution("REJECTED", "VWORLD_KEY_MISSING", normalized)
+        return AddressParcelIdentityResolution("REJECTED", "VWORLD_KEY_MISSING", original)
 
     items = _search_address_items(normalized, key)
     if not items:
-        return AddressParcelIdentityResolution("REJECTED", "ADDRESS_RESULT_EMPTY", normalized)
+        return AddressParcelIdentityResolution("REJECTED", "ADDRESS_RESULT_EMPTY", original)
+
+    exact_items = [item for item in items if _item_parcel_address(item) == normalized]
+    if not exact_items:
+        return AddressParcelIdentityResolution("REJECTED", "EXACT_PARCEL_ADDRESS_UNRESOLVED", original)
 
     candidates: Dict[str, tuple[float, float]] = {}
     mismatch_seen = False
-    for item in items:
+    for item in exact_items:
         address_pnu = _address_item_pnu(item)
         point = _point(item)
         if not address_pnu or point is None:
@@ -146,20 +164,20 @@ def resolve_address_parcel_identity(address: str, api_key: Optional[str] = None)
 
     if not candidates:
         resolution = "ADDRESS_POLYGON_PNU_MISMATCH" if mismatch_seen else "PARCEL_PNU_UNRESOLVED"
-        return AddressParcelIdentityResolution("REJECTED", resolution, normalized)
+        return AddressParcelIdentityResolution("REJECTED", resolution, original)
     if len(candidates) != 1:
-        return AddressParcelIdentityResolution("REJECTED", "ADDRESS_PARCEL_AMBIGUOUS", normalized)
+        return AddressParcelIdentityResolution("REJECTED", "ADDRESS_PARCEL_AMBIGUOUS", original)
 
     pnu, (x, y) = next(iter(candidates.items()))
     try:
         identity = parcel_identity_from_pnu(pnu)
     except ValueError:
-        return AddressParcelIdentityResolution("REJECTED", "PARCEL_PNU_INVALID", normalized)
+        return AddressParcelIdentityResolution("REJECTED", "PARCEL_PNU_INVALID", original)
 
     return AddressParcelIdentityResolution(
         status="VERIFIED",
         resolution="ADDRESS_PARCEL_IDENTITY_VERIFIED",
-        address=normalized,
+        address=original,
         pnu=pnu,
         x=x,
         y=y,
