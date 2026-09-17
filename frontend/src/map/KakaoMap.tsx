@@ -57,6 +57,29 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation }
   }, [sdkReady])
 
   useEffect(() => {
+    const container = containerRef.current
+    const map = mapRef.current
+    if (!sdkReady || !container || !map || typeof ResizeObserver === 'undefined') return
+
+    let frameId: number | null = null
+    const observer = new ResizeObserver(() => {
+      if (frameId !== null) window.cancelAnimationFrame(frameId)
+      frameId = window.requestAnimationFrame(() => {
+        map.relayout()
+        if (confirmation) fitMapToConfirmation(map, confirmation)
+        frameId = null
+      })
+    })
+
+    observer.observe(container)
+
+    return () => {
+      observer.disconnect()
+      if (frameId !== null) window.cancelAnimationFrame(frameId)
+    }
+  }, [confirmation, sdkReady])
+
+  useEffect(() => {
     const kakao = window.kakao
     const map = mapRef.current
     if (!sdkReady || !kakao || !map) return
@@ -147,6 +170,28 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation }
       )}
     </section>
   )
+}
+
+function fitMapToConfirmation(map: KakaoMap, confirmation: ParcelConfirmationResponse): void {
+  const kakao = window.kakao
+  if (!kakao) return
+
+  const verifiedGeometry = verifiedGeometryToMapGeometry(confirmation.geometry)
+  if (!verifiedGeometry) return
+
+  const bounds = new kakao.maps.LatLngBounds()
+  let hasBounds = false
+
+  verifiedGeometry.polygons.forEach((polygonRings) => {
+    polygonRings.forEach((ring) => {
+      ring.forEach((point) => {
+        bounds.extend(new kakao.maps.LatLng(point.latitude, point.longitude))
+        hasBounds = true
+      })
+    })
+  })
+
+  if (hasBounds) map.setBounds(bounds)
 }
 
 function loadKakaoMapsSdk(appKey: string): Promise<void> {
