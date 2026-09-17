@@ -1,0 +1,184 @@
+import { useEffect, useRef, useState } from 'react'
+import type { ParcelCandidate, ParcelConfirmationResponse } from '../types/parcel'
+import { candidateToMapMarker, verifiedGeometryToMapGeometry } from './MapAdapter'
+
+interface KakaoMapProps {
+  candidates: ParcelCandidate[]
+  selectedCandidate: ParcelCandidate | null
+  confirmation: ParcelConfirmationResponse | null
+}
+
+const DEFAULT_CENTER = { latitude: 37.5665, longitude: 126.978 }
+const KAKAO_SDK_ID = 'kakao-maps-sdk'
+
+export default function KakaoMap({ candidates, selectedCandidate, confirmation }: KakaoMapProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const mapRef = useRef<KakaoMap | null>(null)
+  const markersRef = useRef<KakaoMarker[]>([])
+  const polygonsRef = useRef<KakaoPolygon[]>([])
+  const [sdkReady, setSdkReady] = useState(false)
+  const [mapError, setMapError] = useState('')
+
+  useEffect(() => {
+    const appKey = import.meta.env.VITE_KAKAO_MAP_JAVASCRIPT_KEY
+    if (!appKey) {
+      setMapError('Kakao Maps JavaScript Key가 설정되지 않았습니다.')
+      return
+    }
+
+    let cancelled = false
+
+    loadKakaoMapsSdk(appKey)
+      .then(() => {
+        if (!cancelled) setSdkReady(true)
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          setMapError(error instanceof Error ? error.message : 'Kakao Maps SDK를 불러오지 못했습니다.')
+        }
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!sdkReady || !containerRef.current || !window.kakao) return
+
+    if (!mapRef.current) {
+      mapRef.current = new window.kakao.maps.Map(containerRef.current, {
+        center: new window.kakao.maps.LatLng(DEFAULT_CENTER.latitude, DEFAULT_CENTER.longitude),
+        level: 4,
+      })
+    }
+
+    mapRef.current.relayout()
+  }, [sdkReady])
+
+  useEffect(() => {
+    const kakao = window.kakao
+    const map = mapRef.current
+    if (!sdkReady || !kakao || !map) return
+
+    markersRef.current.forEach((marker) => marker.setMap(null))
+    markersRef.current = []
+
+    const bounds = new kakao.maps.LatLngBounds()
+    let hasBounds = false
+
+    candidates.forEach((candidate) => {
+      const markerInput = candidateToMapMarker(candidate)
+      const position = new kakao.maps.LatLng(markerInput.position.latitude, markerInput.position.longitude)
+      const marker = new kakao.maps.Marker({ map, position })
+      markersRef.current.push(marker)
+      bounds.extend(position)
+      hasBounds = true
+    })
+
+    if (hasBounds && !confirmation) {
+      map.setBounds(bounds)
+    } else if (selectedCandidate && !confirmation) {
+      map.setCenter(new kakao.maps.LatLng(selectedCandidate.y, selectedCandidate.x))
+    }
+  }, [candidates, selectedCandidate, confirmation, sdkReady])
+
+  useEffect(() => {
+    const kakao = window.kakao
+    const map = mapRef.current
+    if (!sdkReady || !kakao || !map) return
+
+    polygonsRef.current.forEach((polygon) => polygon.setMap(null))
+    polygonsRef.current = []
+
+    if (!confirmation) return
+
+    const verifiedGeometry = verifiedGeometryToMapGeometry(confirmation.geometry)
+    if (!verifiedGeometry) {
+      setMapError('Backend가 반환한 검증 필지 경계를 지도 형식으로 변환하지 못했습니다.')
+      return
+    }
+
+    const bounds = new kakao.maps.LatLngBounds()
+    let hasBounds = false
+
+    verifiedGeometry.polygons.forEach((polygonRings) => {
+      const path = polygonRings.map((ring) =>
+        ring.map((point) => {
+          const position = new kakao.maps.LatLng(point.latitude, point.longitude)
+          bounds.extend(position)
+          hasBounds = true
+          return position
+        }),
+      )
+
+      const polygon = new kakao.maps.Polygon({
+        map,
+        path,
+        strokeWeight: 3,
+        strokeColor: '#172033',
+        strokeOpacity: 0.9,
+        strokeStyle: 'solid',
+        fillColor: '#2f855a',
+        fillOpacity: 0.22,
+      })
+      polygonsRef.current.push(polygon)
+    })
+
+    if (hasBounds) map.setBounds(bounds)
+  }, [confirmation, sdkReady])
+
+  return (
+    <section className="map-stage" aria-label="필지 지도">
+      <div ref={containerRef} className="kakao-map" />
+      {mapError && (
+        <div className="map-message map-message-error" role="alert">
+          <strong>지도를 표시하지 못했습니다.</strong>
+          <span>{mapError}</span>
+        </div>
+      )}
+      {!mapError && !sdkReady && (
+        <div className="map-message" role="status">
+          <strong>지도를 불러오고 있습니다.</strong>
+        </div>
+      )}
+      {!mapError && sdkReady && confirmation && (
+        <div className="map-verification-badge">VERIFIED PARCEL</div>
+      )}
+    </section>
+  )
+}
+
+function loadKakaoMapsSdk(appKey: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const finishLoading = () => {
+      if (!window.kakao?.maps) {
+        reject(new Error('Kakao Maps SDK 초기화에 실패했습니다.'))
+        return
+      }
+      window.kakao.maps.load(resolve)
+    }
+
+    if (window.kakao?.maps) {
+      finishLoading()
+      return
+    }
+
+    const existingScript = document.getElementById(KAKAO_SDK_ID) as HTMLScriptElement | null
+    if (existingScript) {
+      existingScript.addEventListener('load', finishLoading, { once: true })
+      existingScript.addEventListener('error', () => reject(new Error('Kakao Maps SDK 요청에 실패했습니다.')), {
+        once: true,
+      })
+      return
+    }
+
+    const script = document.createElement('script')
+    script.id = KAKAO_SDK_ID
+    script.async = true
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${encodeURIComponent(appKey)}&autoload=false`
+    script.addEventListener('load', finishLoading, { once: true })
+    script.addEventListener('error', () => reject(new Error('Kakao Maps SDK 요청에 실패했습니다.')), { once: true })
+    document.head.appendChild(script)
+  })
+}
