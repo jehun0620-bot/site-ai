@@ -3,9 +3,14 @@ import { confirmParcelCandidate, searchParcelCandidates } from './api/parcelCand
 import { analyzeSelectedParcelCandidate } from './api/siteAnalysis'
 import KakaoMap from './map/KakaoMap'
 import type { CandidateSearchState, ParcelCandidate, ParcelConfirmationResponse, ParcelVerificationState } from './types/parcel'
-import type { SiteAnalysisResponse, SiteAnalysisState } from './types/siteAnalysis'
+import type { SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisRequirement, SiteAnalysisResponse, SiteAnalysisState } from './types/siteAnalysis'
 
 const INITIAL_GUIDE = '현재 검증된 범위에서는 지번주소로 검색하는 것을 권장합니다.'
+const INPUT_OPTIONS: Array<{ state: Exclude<SiteAnalysisInputState, 'UNSET'>; label: string }> = [
+  { state: 'TRUE', label: '해당함' },
+  { state: 'FALSE', label: '해당하지 않음' },
+  { state: 'UNKNOWN', label: '잘 모르겠음' },
+]
 
 function displayValue(value: unknown): string {
   if (value === null || value === undefined || value === '') return '정보 없음'
@@ -15,17 +20,6 @@ function displayValue(value: unknown): string {
 function displayNumber(value: number | null, suffix = ''): string {
   if (value === null) return '정보 없음'
   return `${value.toLocaleString('ko-KR')}${suffix}`
-}
-function displayRequirement(value: unknown): string {
-  if (typeof value === 'string' || typeof value === 'number') return String(value)
-  if (value && typeof value === 'object') {
-    const item = value as Record<string, unknown>
-    for (const key of ['label', 'name', 'field', 'key', 'condition']) {
-      const candidate = item[key]
-      if (typeof candidate === 'string' && candidate.trim()) return candidate
-    }
-  }
-  return '추가 입력 항목'
 }
 function displayAnalysisStatus(value: unknown): string {
   return value === 'READY' ? '분석 완료' : displayValue(value)
@@ -52,6 +46,8 @@ export default function App() {
   const [analysisState, setAnalysisState] = useState<SiteAnalysisState>('IDLE')
   const [analysis, setAnalysis] = useState<SiteAnalysisResponse | null>(null)
   const [analysisMessage, setAnalysisMessage] = useState('')
+  const [projectProfile, setProjectProfile] = useState<SiteAnalysisInputProfile>({})
+  const [procedureProfile, setProcedureProfile] = useState<SiteAnalysisInputProfile>({})
   const candidateListRef = useRef<HTMLDivElement | null>(null)
   const selectedCandidateCardRef = useRef<HTMLButtonElement | null>(null)
 
@@ -59,21 +55,17 @@ export default function App() {
     const list = candidateListRef.current
     const selectedCard = selectedCandidateCardRef.current
     if (!list || !selectedCard || !selectedCandidate) return
-
     const cardTop = selectedCard.offsetTop
     const cardBottom = cardTop + selectedCard.offsetHeight
     const visibleTop = list.scrollTop
     const visibleBottom = visibleTop + list.clientHeight
-
-    if (cardTop < visibleTop) {
-      list.scrollTo({ top: cardTop, behavior: 'smooth' })
-    } else if (cardBottom > visibleBottom) {
-      list.scrollTo({ top: cardBottom - list.clientHeight, behavior: 'smooth' })
-    }
+    if (cardTop < visibleTop) list.scrollTo({ top: cardTop, behavior: 'smooth' })
+    else if (cardBottom > visibleBottom) list.scrollTo({ top: cardBottom - list.clientHeight, behavior: 'smooth' })
   }, [selectedCandidate, candidates])
 
+  function clearInputProfiles() { setProjectProfile({}); setProcedureProfile({}) }
   function clearAnalysis() { setAnalysisState('IDLE'); setAnalysis(null); setAnalysisMessage('') }
-  function clearParcelVerification() { setSelectedCandidate(null); setVerificationState('IDLE'); setConfirmation(null); setVerificationMessage(''); clearAnalysis() }
+  function clearParcelVerification() { setSelectedCandidate(null); setVerificationState('IDLE'); setConfirmation(null); setVerificationMessage(''); clearInputProfiles(); clearAnalysis() }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); const normalizedQuery = query.trim(); clearParcelVerification()
@@ -88,7 +80,7 @@ export default function App() {
 
   async function handleCandidateSelection(candidate: ParcelCandidate) {
     if (verificationState === 'VERIFYING_PARCEL' || analysisState === 'ANALYZING') return
-    clearAnalysis(); setSelectedCandidate(candidate); setConfirmation(null); setVerificationState('VERIFYING_PARCEL'); setVerificationMessage('선택한 필지의 실제 경계를 Backend에서 확인하고 있습니다.')
+    clearInputProfiles(); clearAnalysis(); setSelectedCandidate(candidate); setConfirmation(null); setVerificationState('VERIFYING_PARCEL'); setVerificationMessage('선택한 필지의 실제 경계를 Backend에서 확인하고 있습니다.')
     try {
       const result = await confirmParcelCandidate(candidate)
       if (result.parcel.pnu !== candidate.candidate_pnu) throw new Error('검증된 필지와 선택한 필지의 PNU가 일치하지 않습니다.')
@@ -96,24 +88,42 @@ export default function App() {
     } catch (error) { setConfirmation(null); setVerificationState('PARCEL_VERIFICATION_FAILED'); setVerificationMessage(error instanceof Error ? error.message : '선택한 필지를 확인하지 못했습니다.') }
   }
 
-  async function handleAnalysis() {
+  async function runAnalysis(project: SiteAnalysisInputProfile = {}, procedure: SiteAnalysisInputProfile = {}, preserveCurrent = false) {
     if (!selectedCandidate || !confirmation || verificationState !== 'PARCEL_VERIFIED') return
-    clearAnalysis(); setAnalysisState('ANALYZING'); setAnalysisMessage('Backend가 필지를 다시 검증한 뒤 SITE 분석을 실행하고 있습니다.')
+    if (!preserveCurrent) clearAnalysis()
+    setAnalysisState('ANALYZING'); setAnalysisMessage(preserveCurrent ? '입력한 정보를 반영해 SITE 분석을 다시 실행하고 있습니다.' : 'Backend가 필지를 다시 검증한 뒤 SITE 분석을 실행하고 있습니다.')
     try {
-      const result = await analyzeSelectedParcelCandidate(selectedCandidate)
+      const result = await analyzeSelectedParcelCandidate(selectedCandidate, { project_profile: project, procedure_profile: procedure })
       if (result.site.pnu !== confirmation.parcel.pnu) throw new Error('분석 결과의 PNU가 확인된 필지와 일치하지 않습니다.')
-      setAnalysis(result); setAnalysisState('ANALYSIS_READY'); setAnalysisMessage('실제 SITE 분석 결과를 받았습니다.')
-    } catch (error) { setAnalysis(null); setAnalysisState('ANALYSIS_FAILED'); setAnalysisMessage(error instanceof Error ? error.message : 'SITE 분석을 완료하지 못했습니다.') }
+      setAnalysis(result); setAnalysisState('ANALYSIS_READY'); setAnalysisMessage(preserveCurrent ? '입력한 정보를 반영한 SITE 분석 결과를 받았습니다.' : '실제 SITE 분석 결과를 받았습니다.')
+    } catch (error) {
+      if (!preserveCurrent) setAnalysis(null)
+      setAnalysisState(preserveCurrent && analysis ? 'ANALYSIS_READY' : 'ANALYSIS_FAILED')
+      setAnalysisMessage(error instanceof Error ? error.message : 'SITE 분석을 완료하지 못했습니다.')
+    }
+  }
+
+  async function handleAnalysis() { await runAnalysis() }
+  async function handleReanalysis() { await runAnalysis(projectProfile, procedureProfile, true) }
+
+  function updateRequirement(profileType: 'project' | 'procedure', name: string, nextState: Exclude<SiteAnalysisInputState, 'UNSET'>) {
+    const setter = profileType === 'project' ? setProjectProfile : setProcedureProfile
+    setter((current) => ({ ...current, [name]: nextState }))
+  }
+
+  function renderRequirementItem(item: SiteAnalysisRequirement, profileType: 'project' | 'procedure') {
+    const profile = profileType === 'project' ? projectProfile : procedureProfile
+    const selected = profile[item.name]
+    return <li className="requirement-item" key={`${profileType}-${item.name}`}><div className="requirement-item-copy"><strong>{item.name}</strong><small>관련 법규 {item.affected_clause_count}개 조항의 판단에 필요한 정보</small></div><div className="requirement-options" role="group" aria-label={`${item.name} 선택`}>{INPUT_OPTIONS.map((option) => <button key={option.state} type="button" className={selected === option.state ? 'requirement-option requirement-option-selected' : 'requirement-option'} aria-pressed={selected === option.state} onClick={() => updateRequirement(profileType, item.name, option.state)} disabled={analysisState === 'ANALYZING'}>{option.label}</button>)}</div></li>
   }
 
   const resultReady = analysisState === 'ANALYSIS_READY' && analysis !== null
+  const selectedInputCount = Object.keys(projectProfile).length + Object.keys(procedureProfile).length
 
   return (
     <main className={`app-shell${resultReady ? ' app-shell-result-ready' : ''}`}>
       <section className={`search-panel${resultReady ? ' search-panel-result-ready' : ''}`} aria-labelledby="page-title">
-        <header className={`search-intro${resultReady ? ' search-intro-compact' : ''}`}>
-          <div className="brand">SITE AI</div><h1 id="page-title">{resultReady ? '대지 분석 결과' : '분석할 대지를 찾아보세요'}</h1><p className="lead">{resultReady ? '확인된 필지의 분석 결과입니다. 지도에서 검증된 필지 경계를 함께 확인할 수 있습니다.' : '주소를 입력하면 분석 가능한 필지 후보를 찾습니다.'}</p>
-        </header>
+        <header className={`search-intro${resultReady ? ' search-intro-compact' : ''}`}><div className="brand">SITE AI</div><h1 id="page-title">{resultReady ? '대지 분석 결과' : '분석할 대지를 찾아보세요'}</h1><p className="lead">{resultReady ? '확인된 필지의 분석 결과입니다. 지도에서 검증된 필지 경계를 함께 확인할 수 있습니다.' : '주소를 입력하면 분석 가능한 필지 후보를 찾습니다.'}</p></header>
         <div className={`pre-analysis-controls${resultReady ? ' pre-analysis-controls-compact' : ''}`}>
           <form className="search-form" onSubmit={handleSubmit}><label htmlFor="parcel-address">지번주소</label><div className="search-row"><input id="parcel-address" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="예: 서울특별시 강남구 개포동 12" autoComplete="street-address" /><button type="submit" disabled={state === 'SEARCHING'}>{state === 'SEARCHING' ? '검색 중' : resultReady ? '다른 필지 찾기' : '필지 찾기'}</button></div></form>
           <p className={`status status-${state.toLowerCase()}`} role="status">{message}</p>
@@ -125,7 +135,7 @@ export default function App() {
           <section className="analysis-detail-section"><h2>대지면적</h2><div className="analysis-metric-grid"><article className="analysis-metric"><span>공식 대지면적</span><strong>{displayNumber(analysis.land_area.official.value, '㎡')}</strong><small>공식/속성 면적 · 주 기준</small></article><article className="analysis-metric"><span>공간 면적</span><strong>{displayNumber(analysis.land_area.spatial.value)}</strong><small>{analysis.land_area.spatial.value === null ? 'Backend 응답에 값이 없어 계산하지 않음' : displayValue(analysis.land_area.spatial.unit)}</small></article><article className="analysis-metric"><span>면적 차이</span><strong>{displayNumber(analysis.land_area.difference.value, '㎡')}</strong><small>{analysis.land_area.difference.value === null ? '비교할 공간 면적이 없어 계산하지 않음' : `차이율 ${displayNumber(analysis.land_area.difference.ratio_percent, '%')}`}</small></article></div></section>
           <section className="analysis-detail-section"><h2>건축 규모 기준</h2><div className="analysis-metric-grid analysis-metric-grid-two"><article className="analysis-metric"><span>건폐율</span><strong>{displayNumber(analysis.regulation.building_coverage_ratio.value, '%')}</strong><small>{displayRegulationStatus(analysis.regulation.building_coverage_ratio.status)}</small></article><article className="analysis-metric"><span>용적률</span><strong>{displayNumber(analysis.regulation.floor_area_ratio.value, '%')}</strong><small>{displayRegulationStatus(analysis.regulation.floor_area_ratio.status)}</small></article></div></section>
           <section className="analysis-detail-section"><h2>법규 평가 집계</h2><p className="analysis-note">Backend Rule Engine의 집계 결과이며 Frontend에서 적용 여부를 다시 판단하지 않습니다.</p><div className="rule-summary-grid"><article><span>전체</span><strong>{analysis.rule_evaluation.total}</strong></article><article><span>적용</span><strong>{analysis.rule_evaluation.applicable}</strong></article><article><span>비적용</span><strong>{analysis.rule_evaluation.not_applicable}</strong></article><article><span>조건부</span><strong>{analysis.rule_evaluation.conditional}</strong></article><article className="rule-unknown"><span>확인 필요</span><strong>{analysis.rule_evaluation.unknown}</strong></article></div><p className="unknown-explanation">확인 필요는 오류나 비적용이 아닙니다. 현재 정보만으로 적용 여부를 확정할 수 없는 규칙입니다.</p></section>
-          <section className="analysis-detail-section"><h2>추가 입력 필요사항</h2>{!analysis.requirements.requires_additional_input ? <p className="analysis-empty">현재 응답 기준 추가 입력 항목이 없습니다.</p> : <div className="requirement-columns"><details className="requirement-group"><summary><span>사업 정보</span><strong>{analysis.requirements.project_count}개</strong><small>목록 보기</small></summary><ul>{analysis.requirements.project.map((item, index) => <li key={`project-${index}`}>{displayRequirement(item)}</li>)}</ul></details><details className="requirement-group"><summary><span>절차 정보</span><strong>{analysis.requirements.procedure_count}개</strong><small>목록 보기</small></summary><ul>{analysis.requirements.procedure.map((item, index) => <li key={`procedure-${index}`}>{displayRequirement(item)}</li>)}</ul></details></div>}</section>
+          <section className="analysis-detail-section"><h2>추가 입력 필요사항</h2>{!analysis.requirements.requires_additional_input ? <p className="analysis-empty">현재 응답 기준 추가 입력 항목이 없습니다.</p> : <><div className="requirement-columns"><details className="requirement-group" open><summary><span>사업 정보</span><strong>{analysis.requirements.project_count}개</strong><small>각 항목의 현재 상황을 선택해 주세요.</small></summary><ul>{analysis.requirements.project.map((item) => renderRequirementItem(item, 'project'))}</ul></details><details className="requirement-group" open><summary><span>절차 정보</span><strong>{analysis.requirements.procedure_count}개</strong><small>각 항목의 현재 상황을 선택해 주세요.</small></summary><ul>{analysis.requirements.procedure.map((item) => renderRequirementItem(item, 'procedure'))}</ul></details></div><div className="requirement-reanalysis"><span>{selectedInputCount === 0 ? '선택한 추가 정보가 없습니다.' : `${selectedInputCount}개 항목을 선택했습니다.`}</span><button type="button" onClick={handleReanalysis} disabled={selectedInputCount === 0 || analysisState === 'ANALYZING'}>{analysisState === 'ANALYZING' ? '다시 분석 중…' : '입력 내용으로 다시 분석'}</button></div></>}</section>
           <section className="analysis-detail-section"><h2>외부 확인 정보</h2>{analysis.external_dependencies.count === 0 ? <p className="analysis-empty">현재 응답 기준 별도 외부 확인 항목이 없습니다.</p> : <ul className="dependency-list">{analysis.external_dependencies.items.map((item, index) => <li key={`dependency-${index}`}><strong>{displayExternalCategory(item.category)}</strong><span>{displayValue(item.condition)}</span><small>상태 {displayValue(item.status)} · 분석 차단 {item.blocking_analysis ? '예' : '아니오'}{item.category === 'SITE_HISTORY' ? ' · 원본 분류 SITE_HISTORY' : ''}</small></li>)}</ul>}</section>
         </div>}</section>}
       </section>
