@@ -13,6 +13,11 @@ interface KakaoMapsNamespace {
   LatLngBounds: new () => KakaoLatLngBounds
   Marker: new (options: KakaoMarkerOptions) => KakaoMarker
   Polygon: new (options: KakaoPolygonOptions) => KakaoPolygon
+  event: KakaoMapsEventNamespace
+}
+
+interface KakaoMapsEventNamespace {
+  addListener(target: KakaoMarker, type: 'click', handler: () => void): void
 }
 
 interface KakaoMapOptions {
@@ -39,6 +44,8 @@ interface KakaoMarkerOptions {
 
 interface KakaoMarker {
   setMap(map: KakaoMap | null): void
+  setOpacity(opacity: number): void
+  setZIndex(zIndex: number): void
 }
 
 interface KakaoPolygonOptions {
