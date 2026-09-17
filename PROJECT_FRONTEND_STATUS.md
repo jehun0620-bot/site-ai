@@ -11,7 +11,7 @@
 
 Architecture의 목표 상태와 실제 구현 상태를 혼동하지 않는다.
 
-이 문서에서 `IMPLEMENTED`, `VERIFIED`, `PASS`는 실제 repository 구현 또는 실제 검증 근거가 확인된 경우에만 사용한다. 계획 또는 합의된 UX는 구현 완료로 기록하지 않는다.
+`IMPLEMENTED`, `VERIFIED`, `PASS`는 실제 repository 구현 또는 실제 검증 근거가 확인된 경우에만 사용한다. 계획 또는 합의된 UX는 구현 완료로 기록하지 않는다.
 
 ---
 
@@ -23,10 +23,10 @@ Architecture의 목표 상태와 실제 구현 상태를 혼동하지 않는다.
 cleanup/repository-organization-20260916
 ```
 
-Frontend Architecture 문서 분리 직전 확인 HEAD:
+Frontend application 구현 시작 전 Backend confirmation behavioral baseline HEAD:
 
 ```text
-a432c082fb7ea9bbd7635a2849e4136455a0d5c5
+44876524289401f82dc4b23d87d84822fb57df58
 ```
 
 Frontend 문서 체계:
@@ -48,7 +48,7 @@ A안 — 지도 중심 UX
 NOT IMPLEMENTED
 ```
 
-현재 repository 조사에서 재사용 가능한 기존 JavaScript Frontend framework 기반은 확인되지 않았다. 구체적인 framework/build tool/map provider는 아직 확정하지 않았다.
+기술 방향 검토 결과는 React + TypeScript + Vite를 우선안으로 하고, MVP map provider는 Kakao Maps를 우선 검토하되 provider-neutral map adapter 경계를 유지하는 것이다. 실제 Frontend application/dependency는 아직 생성하지 않았다.
 
 ---
 
@@ -65,7 +65,7 @@ candidate list <-> map marker
     ↓
 candidate 선택
     ↓
-Backend parcel verification
+Backend parcel confirmation
     ↓
 verified parcel polygon
     ↓
@@ -84,30 +84,30 @@ regulation detail / evidence
 
 ```text
 DESIGN BASELINE CONFIRMED
-IMPLEMENTATION NOT STARTED
+BACKEND CONFIRMATION BOUNDARY IMPLEMENTED + LOCALLY VERIFIED
+FRONTEND IMPLEMENTATION NOT STARTED
 ```
 
 ---
 
 ## 4. Confirmed Backend Dependencies
 
-Frontend 개발에서 실제 존재가 확인된 Backend 기반은 다음과 같다.
-
-### Public API
+Frontend 개발에서 실제 존재가 확인된 public API:
 
 ```text
 GET  /health
 POST /v1/site-analysis
 POST /v1/site-analysis/address
 POST /v1/parcel-candidates/address
+POST /v1/parcel-candidates/confirm
 POST /v1/site-analysis/selected-candidate
 ```
 
 ### Candidate Discovery
 
-`POST /v1/parcel-candidates/address`를 통해 주소 기반 candidate discovery가 가능하다.
+`POST /v1/parcel-candidates/address`는 주소 기반 candidate discovery를 제공한다.
 
-Frontend candidate 표현에 필요한 주요 개념:
+Frontend candidate 표현의 주요 개념:
 
 ```text
 candidate_pnu
@@ -120,17 +120,30 @@ y
 
 Candidate는 discovery 결과이며 verified canonical parcel identity가 아니다.
 
-### Selected Candidate Verification / Full Analysis
+### Lightweight Parcel Confirmation
 
-Backend에는 selected candidate의 PNU와 point를 live parcel polygon과 대조하여 검증하고, 검증 성공 후 기존 parcel analysis 경로로 연결하는 로직이 존재한다.
+`POST /v1/parcel-candidates/confirm`은 선택 candidate의 PNU와 EPSG:4326 point를 Backend verifier로 검증한다.
 
-Full analysis public endpoint:
+검증 성공 response contract:
 
 ```text
-POST /v1/site-analysis/selected-candidate
+schema_version = PARCEL_CONFIRMATION_V1
+status = READY
+parcel = verified parcel identity + selected point + CRS
+verification.status = VERIFIED
+verification.resolution = SELECTED_PARCEL_CANDIDATE_VERIFIED
+geometry = verification에 실제 사용된 Polygon 또는 MultiPolygon
 ```
 
-Frontend는 이 verification을 대체하거나 우회하지 않는다.
+이 endpoint는 full SITE analysis를 실행하지 않는다. candidate 선택 후 사용자가 실제 필지 경계를 확인하기 위한 lightweight product boundary이다.
+
+Frontend는 반환된 verified geometry만 실제 parcel polygon으로 표현하며 candidate marker 자체를 parcel truth로 승격하지 않는다.
+
+### Selected Candidate Full Analysis
+
+`POST /v1/site-analysis/selected-candidate`는 선택 candidate를 다시 검증한 뒤 기존 SITE analysis 경로로 연결한다.
+
+Pre-analysis confirmation 성공은 full analysis verification을 대체하지 않는다.
 
 ### Analysis Response
 
@@ -146,7 +159,7 @@ MVP result UI를 시작할 수 있는 site, land area, spatial, regulation, rule
 
 ## 5. Confirmed Backend Behavioral Baseline Relevant to Frontend
 
-실제 Backend 검증에서 확인된 selected-candidate 예시는 다음과 같다.
+실제 selected-candidate 검증 예시:
 
 ```text
 서울특별시 강남구 개포동 12-2
@@ -155,11 +168,34 @@ x: 127.07662495509604
 y: 37.49629354642009
 ```
 
-해당 candidate는 live polygon PNU와 일치하는 경로로 검증되었고 기존 SITE analysis로 연결된 이력이 있다.
+해당 candidate는 live polygon PNU와 일치하는 경로로 검증되고 기존 SITE analysis로 연결된 이력이 있다.
 
-Frontend 개발 시 이 값은 실제 연동 회귀 확인에 사용할 수 있는 알려진 예시일 뿐, Frontend에 hard-code된 truth 또는 mock authority로 사용하지 않는다.
+Frontend에 hard-code된 truth 또는 mock authority로 사용하지 않는다.
 
-또한 Backend는 서로 다른 PNU의 저장 geometry를 재사용하지 않고 requested PNU 기준 live geometry verification을 수행한 검증 이력이 있다. Frontend도 동일하게 PNU가 바뀔 때 이전 verified geometry/result를 새 parcel에 승계하지 않아야 한다.
+Backend는 서로 다른 PNU의 저장 geometry를 재사용하지 않고 requested PNU 기준 live geometry verification을 수행한다. Frontend도 PNU가 바뀌면 이전 verified geometry/result를 새 parcel에 승계하지 않아야 한다.
+
+### 2026-09-17 User Local Behavioral Validation
+
+사용자가 local root `D:\site-ai`에서 working branch를 다음 HEAD까지 fast-forward한 뒤 직접 검증했다.
+
+```text
+44876524289401f82dc4b23d87d84822fb57df58
+```
+
+실행 결과:
+
+```text
+PUBLIC_API_SELECTED_PARCEL_CANDIDATE_CONFIRMATION_CONTRACT_PASS
+PUBLIC_API_SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_CONTRACT_PASS
+```
+
+검증 후 `git status --short`에는 의도적으로 보호 중인 다음 파일만 modified 상태로 남아 있었다.
+
+```text
+M law_data/output/urban_area_conversion_history_final_resolution.json
+```
+
+따라서 lightweight parcel confirmation public contract와 기존 selected-candidate full analysis public contract의 공존은 **USER LOCAL BEHAVIORAL PASS**로 기록한다.
 
 ---
 
@@ -169,51 +205,54 @@ Frontend 개발 시 이 값은 실제 연동 회귀 확인에 사용할 수 있�
 |---|---|---|
 | Frontend architecture baseline | DOCUMENTED | A안 지도 중심 구조와 trust boundary 문서화 |
 | Frontend status tracking | DOCUMENTED | 이 문서에서 실제 구현/검증 상태 관리 |
-| Frontend framework | NOT DECIDED | 실제 요구사항 비교 후 결정 |
-| Build tool | NOT DECIDED | framework 결정과 함께 확정 |
-| Frontend directory | NOT IMPLEMENTED | 기존 reusable frontend base 확인되지 않음 |
-| Address search UI | NOT IMPLEMENTED | Backend candidate API는 존재 |
-| Candidate cards | NOT IMPLEMENTED | Backend candidate data는 존재 |
-| Map UI | NOT IMPLEMENTED | provider 미확정 |
+| Frontend framework | DECISION CANDIDATE | React + TypeScript + Vite 우선안; application 미생성 |
+| Map provider | DECISION CANDIDATE | Kakao Maps MVP 우선 검토; provider-neutral adapter 원칙 |
+| Frontend directory | NOT IMPLEMENTED | Backend와 분리된 `frontend/` root 생성 예정 |
+| Address search UI | NOT IMPLEMENTED | Backend candidate API 존재 |
+| Candidate cards | NOT IMPLEMENTED | Backend candidate data 존재 |
+| Map UI | NOT IMPLEMENTED | 실제 SDK/dependency 미도입 |
 | Candidate list/map sync | NOT IMPLEMENTED | Architecture contract만 확정 |
-| Parcel verification UI | NOT IMPLEMENTED | pre-analysis lightweight API 필요 |
-| Verified polygon UI | NOT IMPLEMENTED | pre-analysis contract 미구현 |
+| Parcel confirmation Backend API | IMPLEMENTED + USER LOCAL PASS | `PARCEL_CONFIRMATION_V1` |
+| Parcel verification UI | NOT IMPLEMENTED | Backend confirmation API 연결 가능 상태 |
+| Verified polygon UI | NOT IMPLEMENTED | verified Polygon/MultiPolygon contract 확보 |
 | Full analysis UI | NOT IMPLEMENTED | Backend selected-candidate endpoint 존재 |
-| Result summary | NOT IMPLEMENTED | SITE_ANALYSIS_API_V1 기반 가능 |
+| Result summary | NOT IMPLEMENTED | `SITE_ANALYSIS_API_V1` 기반 가능 |
 | Regulation detail/evidence UI | NOT IMPLEMENTED | presentation 설계 필요 |
 | Error/empty/UNKNOWN UI | NOT IMPLEMENTED | Architecture 의미 규칙 확정 |
-| Responsive UI | NOT IMPLEMENTED | Desktop split baseline만 확정 |
+| Responsive UI | NOT IMPLEMENTED | Desktop split baseline 확정 |
 
 ---
 
-## 7. Current Backend Gap Blocking Full A안 Flow
+## 7. A안 Backend Readiness
 
-A안의 핵심 흐름은 full analysis 전에 실제 parcel polygon을 보여주고 사용자가 분석 대상을 확인하는 것이다.
+이전에 A안 vertical slice의 직접 blocker였던 lightweight parcel confirmation public contract는 구현되고 사용자 로컬 검증까지 완료됐다.
 
-현재 확인된 Backend 공개 흐름은 candidate search와 selected-candidate full analysis를 제공하지만, 다음 중간 product boundary를 위한 lightweight public contract는 아직 구현된 것으로 확인되지 않았다.
+현재 Backend 경계:
 
 ```text
-candidate selection
+candidate search
     ↓
-lightweight live parcel verification
+selected candidate
     ↓
-verified parcel polygon/basic identity
+POST /v1/parcel-candidates/confirm
     ↓
-user confirmation
+verified parcel identity + Polygon/MultiPolygon
     ↓
-full analysis
+Frontend user confirmation
+    ↓
+POST /v1/site-analysis/selected-candidate
+    ↓
+full SITE analysis
 ```
-
-따라서 **lightweight parcel confirmation API**가 현재 A안 vertical slice의 가장 직접적인 Backend 보완 후보이다.
-
-이 API는 새로운 SITE truth 또는 geometry truth 경로를 만들지 않고 기존 selected candidate verifier와 canonical parcel/geometry verification을 재사용해야 한다.
 
 상태:
 
 ```text
-REQUIRED FOR TARGET A안 FLOW
-NOT YET IMPLEMENTED
+BACKEND CONFIRMATION BOUNDARY READY
+USER LOCAL BEHAVIORAL PASS
 ```
+
+따라서 다음 직접 작업은 Backend truth path 추가가 아니라 독립 Frontend application root 생성과 실제 API consumption이다.
 
 ---
 
@@ -260,15 +299,42 @@ GitHub commit 성공만으로 Frontend behavioral PASS를 선언하지 않는다
 
 Mock-only UI 성공을 실제 Backend 연동 PASS로 기록하지 않는다.
 
-실제 API와 연결되는 vertical slice는 사용자 로컬 환경에서 실행 결과를 확인한 뒤 PASS로 기록한다.
+---
+
+## 10. Frontend / Backend Repository Separation Rule
+
+Frontend source code는 Backend Python source와 혼합하지 않는다.
+
+목표 repository 경계:
+
+```text
+D:\site-ai
+├─ api_app.py
+├─ site_data/
+├─ law_data/
+├─ regulations/
+├─ requirements.txt
+│
+└─ frontend/
+   ├─ package.json
+   ├─ TypeScript / Vite configuration
+   └─ src/
+      ├─ api/
+      ├─ components/
+      ├─ features/
+      ├─ map/
+      └─ types/
+```
+
+Frontend dependency는 `frontend/package.json`에서 관리하고 Python dependency는 기존 Backend dependency 체계에 유지한다.
+
+Frontend와 Backend의 runtime 연결은 HTTP/JSON public API boundary를 사용한다. Frontend가 Python module을 직접 import하거나 Backend verification logic을 TypeScript로 복제하지 않는다.
 
 ---
 
-## 10. Protected Development Rules
+## 11. Protected Development Rules
 
 Frontend 작업 때문에 Backend architecture를 우회하거나 두 번째 truth path를 만들지 않는다.
-
-특히 다음을 유지한다.
 
 ```text
 candidate marker != parcel truth
@@ -299,18 +365,22 @@ Frontend 작업과 무관하며 수정, 복원, reset, checkout, 삭제, staging
 
 ---
 
-## 11. Current Validation Status
+## 12. Current Validation Status
 
-### Documentation
+### Backend Boundary Required by Frontend A안
 
 ```text
-PROJECT_FRONTEND_ARCHITECTURE.md
-- created
-- A안 map-centered baseline documented
-- Backend trust boundary documented
+Candidate search                         IMPLEMENTED
+Lightweight parcel confirmation          IMPLEMENTED
+Verified Polygon/MultiPolygon contract   IMPLEMENTED
+Selected-candidate full analysis         IMPLEMENTED
+```
 
-PROJECT_FRONTEND_STATUS.md
-- created as separate implementation/status ledger
+Focused local contract validation:
+
+```text
+PUBLIC_API_SELECTED_PARCEL_CANDIDATE_CONFIRMATION_CONTRACT_PASS
+PUBLIC_API_SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_CONTRACT_PASS
 ```
 
 ### Frontend Runtime
@@ -322,63 +392,65 @@ NOT STARTED
 ### Frontend Behavioral Validation
 
 ```text
-NO PASS YET
+NO FRONTEND PASS YET
 ```
 
-이 상태는 정상이다. 아직 Frontend application을 구현하지 않았기 때문이다.
+Frontend application이 아직 존재하지 않으므로 정상 상태다.
 
 ---
 
-## 12. Next Development Target
+## 13. Next Development Target
 
-다음 단계는 코드를 바로 생성하기 전에 **Frontend 기술 스택과 지도 provider를 READ-ONLY로 결정**하는 것이다.
+다음 목표는 **Backend와 명확히 분리된 `frontend/` application root를 생성하고 첫 실제 vertical slice를 시작하는 것**이다.
 
-검토 순서:
+첫 Frontend implementation scope의 방향:
 
 ```text
-1. 현재 Backend/FastAPI 연동 요구사항
-2. A안 split-map UX 요구사항
-3. GeoJSON Polygon/MultiPolygon 지원
-4. candidate marker/list synchronization
-5. responsive 요구사항
-6. 개발·테스트 복잡도
-7. repository와 배포 구조
-8. framework/build tool 선택
-9. map provider 선택
-10. 최소 Frontend directory/write scope 제안
+frontend/
+    ↓
+React + TypeScript + Vite shell
+    ↓
+Frontend-owned API types/client
+    ↓
+POST /v1/parcel-candidates/address 연결
+    ↓
+주소 검색 UI
+    ↓
+실제 candidate result state / cards
 ```
 
-그 다음 Backend의 lightweight parcel confirmation API를 실제 코드 기준으로 조사하여 정확한 최소 WRITE scope를 제안한다.
+첫 shell 단계에서는 지도 SDK와 API key 문제를 동시에 섞지 않는다. Candidate search가 실제 FastAPI contract와 연결되는 것을 먼저 검증한 뒤 map adapter/provider integration으로 이동한다.
+
+Frontend 코드를 root Python 영역, `site_data/`, `law_data/`, `regulations/` 안에 생성하지 않는다.
 
 ---
 
-## 13. Immediate Next Step Status
+## 14. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
-Frontend technology stack + map provider decision
+Create isolated frontend/ application root and candidate-search vertical slice foundation
 
 MODE:
-READ-ONLY investigation / design
+WRITE scope must be explicitly approved before application files are created
 
-WRITE APPROVAL:
-Not yet requested for application code
+BACKEND PRECONDITION:
+READY + USER LOCAL BEHAVIORAL PASS
 ```
-
-기술 선택 이후에도 실제 Frontend 파일 생성 전에는 생성/수정할 파일, 목적, 보호 영역을 명시하고 승인된 최소 범위만 WRITE한다.
 
 ---
 
-## 14. Status Update Rule
+## 15. Status Update Rule
 
 이 문서는 다음 이벤트가 실제 발생했을 때 갱신한다.
 
-- Frontend 기술 스택 확정
-- Frontend directory/application 생성
+- Frontend technology stack 확정 및 dependency 생성
+- `frontend/` application 생성
 - API client contract 구현
-- map provider/component 구현
 - candidate search vertical slice 구현
-- parcel confirmation API 구현/연동
+- map provider/component 구현
+- parcel confirmation API Frontend 연동
+- verified polygon rendering
 - full analysis 연동
 - result presentation 구현
 - focused test/contract PASS
