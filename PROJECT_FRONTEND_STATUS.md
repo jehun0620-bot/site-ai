@@ -41,6 +41,9 @@ Frontend source는 Backend Python source와 분리된 독립 `frontend/` applica
 FRONTEND SHELL                         IMPLEMENTED + USER LOCAL BUILD PASS
 CANDIDATE SEARCH                       IMPLEMENTED + USER LOCAL RUNTIME PASS
 CANDIDATE SELECTION                    IMPLEMENTED + USER LOCAL RUNTIME PASS
+CANDIDATE LIST / MAP SYNC              IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+CANDIDATE REFERENCE GEOMETRY           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+CANDIDATE PARCEL BOUNDARY RENDERING    IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PARCEL CONFIRMATION FRONTEND           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 VERIFIED PARCEL STATE                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 MAP / VERIFIED POLYGON RENDERING       IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
@@ -59,9 +62,9 @@ VERIFIED MAP RESIZE / REFIT            IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
     ↓
 parcel candidate 검색
     ↓
-candidate list / map marker
+candidate list / map marker / discovery reference boundary
     ↓
-candidate 선택
+candidate 선택 (list / marker / boundary)
     ↓
 Backend parcel confirmation
     ↓
@@ -81,8 +84,8 @@ detailed result presentation + verified parcel map
 ```text
 주소 입력
 → candidate 검색
-→ candidate card 렌더링
-→ candidate 선택
+→ candidate card + marker + reference boundary 렌더링
+→ list / marker / boundary candidate 선택 동기화
 → Backend parcel confirmation
 → VERIFIED parcel identity + geometry 수신
 → Frontend VERIFIED 상태 표시
@@ -108,7 +111,7 @@ POST /v1/parcel-candidates/confirm
 POST /v1/site-analysis/selected-candidate
 ```
 
-Candidate는 discovery 결과이며 verified canonical parcel identity가 아니다.
+Candidate는 discovery 결과이며 verified canonical parcel identity가 아니다. Candidate의 optional `reference_geometry`도 검색/탐색 UX를 위한 discovery-only geometry이며 VERIFIED parcel truth가 아니다.
 
 `POST /v1/parcel-candidates/confirm` 성공 contract:
 
@@ -121,7 +124,7 @@ verification.resolution = SELECTED_PARCEL_CANDIDATE_VERIFIED
 geometry = verification에 실제 사용된 Polygon 또는 MultiPolygon
 ```
 
-Frontend는 Backend confirmation response의 verified geometry만 실제 parcel polygon으로 취급한다. Pre-analysis confirmation은 full selected-candidate analysis의 재검증을 대체하지 않는다.
+Frontend는 Backend confirmation response의 verified geometry만 VERIFIED parcel polygon으로 취급한다. Pre-analysis confirmation은 full selected-candidate analysis의 재검증을 대체하지 않는다.
 
 ---
 
@@ -130,8 +133,20 @@ Frontend는 Backend confirmation response의 verified geometry만 실제 parcel 
 Backend focused contract validation:
 
 ```text
+PUBLIC_API_ADDRESS_PARCEL_CANDIDATE_SEARCH_CONTRACT_PASS
+ADDRESS_PARCEL_CANDIDATE_GEOMETRY_CONTRACT_PASS
 PUBLIC_API_SELECTED_PARCEL_CANDIDATE_CONFIRMATION_CONTRACT_PASS
 PUBLIC_API_SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_CONTRACT_PASS
+```
+
+Candidate reference geometry live validation:
+
+```text
+query            서울특별시 강남구 개포동 12
+candidate_count  10
+geometry_count   10
+geometry_type    MultiPolygon (10/10)
+elapsed_sec      0.901
 ```
 
 실제 검증 예시:
@@ -197,13 +212,16 @@ package-lock.json tracked
 | Candidate cards | IMPLEMENTED + USER LOCAL PASS | 실제 candidate 렌더링 확인 |
 | Browser-to-Backend candidate search | USER LOCAL RUNTIME PASS | Vite proxy → FastAPI `200 OK` |
 | Candidate selection UI | IMPLEMENTED + USER LOCAL PASS | 실제 candidate card 클릭 확인 |
+| Candidate list/map sync | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | candidate card와 map marker 선택이 동일 selection 경로로 동기화됨 |
+| Candidate reference geometry | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | Backend discovery-only reference geometry 10/10 MultiPolygon 실데이터 확인 |
+| Candidate parcel boundary rendering | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 검색 후보 경계를 지도에 표시하고 boundary click으로 동일 candidate 선택 확인 |
+| Candidate boundary presentation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 붉은 계열 경계 + 옅은 파스텔 red/pink 반투명 fill 실제 화면 확인 |
 | Parcel confirmation API client | IMPLEMENTED + USER LOCAL PASS | `/v1/parcel-candidates/confirm` 실제 `200 OK` |
 | Parcel confirmation response typing | IMPLEMENTED | `PARCEL_CONFIRMATION_V1`, VERIFIED, Polygon/MultiPolygon contract |
 | Verified parcel state | IMPLEMENTED + USER LOCAL PASS | PNU/geometry type/CRS 표시 확인 |
 | Previous parcel state invalidation | IMPLEMENTED | 새 검색 시작 시 이전 selection/confirmation 제거 |
 | Map provider | IMPLEMENTED + USER LOCAL PASS | Kakao Maps SDK 실제 브라우저 로딩 확인; provider-neutral adapter 유지 |
 | Map UI | IMPLEMENTED + USER LOCAL PASS | Kakao Maps 실제 지도 렌더링 확인 |
-| Candidate list/map sync | NOT IMPLEMENTED | Architecture contract만 확정; 완료로 승격하지 않음 |
 | Verified polygon rendering | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | Backend VERIFIED MultiPolygon 실제 지도 렌더링 확인 |
 | Full analysis UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | selected-candidate 분석 요청 및 SITE_ANALYSIS_API_V1 표시 확인 |
 | Detailed result UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 대지면적/건폐율/용적률/법규 집계/추가 입력/외부 확인정보 표시 확인 |
@@ -232,10 +250,10 @@ Vite v8.3.0
 
 vite v8.3.0 building client environment for production...
 ✓ 20 modules transformed.
-✓ built in 87ms
+✓ built in 90ms
 ```
 
-레이아웃 작업 과정에서도 production build가 사용자 로컬에서 PASS했다. 최종 map resize/refit의 behavioral PASS는 실제 브라우저 화면 검증을 기준으로 기록한다.
+후보 reference geometry / map boundary 구현에서도 production build가 사용자 로컬에서 PASS했다. 최종 behavioral PASS는 실제 브라우저 화면 검증을 기준으로 기록한다.
 
 ---
 
@@ -244,10 +262,12 @@ vite v8.3.0 building client environment for production...
 실제 검색:
 
 ```text
-서울특별시 강남구 개포동 12-2
+서울특별시 강남구 개포동 12
 ```
 
-확인된 parcel:
+검색 단계에서 10개 candidate 모두 discovery-only `reference_geometry`가 MultiPolygon으로 확인됐고, 지도에서 marker와 candidate parcel boundary가 함께 표시되는 것을 사용자 로컬 화면으로 확인했다.
+
+선택/확인 예시:
 
 ```text
 필지 확인 완료
@@ -266,7 +286,7 @@ POST /v1/parcel-candidates/confirm HTTP/1.1 200 OK
 POST /v1/site-analysis/selected-candidate HTTP/1.1 200 OK
 ```
 
-Parcel truth authority는 계속 Backend verification boundary에 있다.
+Candidate reference geometry는 discovery UX 전용이다. Parcel truth authority는 계속 Backend verification boundary에 있다.
 
 ---
 
@@ -371,14 +391,58 @@ VERIFIED GEOMETRY REFIT
 
 ---
 
-## 12. A안 Backend / Frontend Boundary
+## 12. Candidate Reference Boundary + Map Selection Validation
+
+### 2026-09-17 User Local Behavioral Validation
+
+최종 presentation 구현 HEAD:
+
+```text
+06bbdd9f277bfffac5e7d17ab9c630986380b11c
+```
+
+검증된 흐름:
+
+```text
+candidate search
+→ Backend discovery-only reference geometry
+→ candidate card + marker + parcel boundary rendering
+→ card / marker / boundary selection sync
+→ selected candidate visual focus
+→ Backend /confirm
+→ VERIFIED parcel geometry
+```
+
+실제 `서울특별시 강남구 개포동 12` 검색에서 candidate 10개와 reference geometry 10개가 확인됐으며 geometry type은 모두 MultiPolygon이었다. Backend live enrichment 실측은 0.901초였다.
+
+Frontend 실제 화면에서는 candidate parcel boundary가 Kakao 지도 위에 표시됐고, 최종 presentation은 붉은 계열 경계와 옅은 파스텔 red/pink 반투명 내부 채움으로 사용자 확인을 완료했다.
+
+Candidate boundary는 parcel truth가 아니다. `reference_geometry`는 검색/탐색 편의를 위한 discovery-only geometry이며, 선택 후 Backend `/v1/parcel-candidates/confirm` 검증을 통과한 geometry만 VERIFIED parcel로 취급한다.
+
+따라서 다음은 **USER LOCAL BEHAVIORAL PASS**이다.
+
+```text
+CANDIDATE LIST / MAP MARKER SYNC
+CANDIDATE REFERENCE GEOMETRY
+CANDIDATE PARCEL BOUNDARY RENDERING
+CANDIDATE BOUNDARY CLICK SELECTION
+CANDIDATE BOUNDARY PRESENTATION
+```
+
+---
+
+## 13. A안 Backend / Frontend Boundary
 
 현재 실제 연결 상태:
 
 ```text
 candidate search                         PASS
     ↓
-candidate selection                      PASS
+candidate reference geometry             USER LOCAL BEHAVIORAL PASS
+    ↓
+candidate card / marker / boundary       USER LOCAL BEHAVIORAL PASS
+    ↓
+candidate selection sync                 USER LOCAL BEHAVIORAL PASS
     ↓
 Backend parcel confirmation              PASS
     ↓
@@ -397,11 +461,11 @@ result-centered layout transition        USER LOCAL BEHAVIORAL PASS
 verified map resize/refit                 USER LOCAL BEHAVIORAL PASS
 ```
 
-Frontend는 PNU를 canonical truth로 자체 승격하지 않는다. 실제 polygon은 Backend confirmation response에서만 가져온다. 법규 적용 여부도 Frontend에서 재판정하지 않는다.
+Frontend는 PNU를 canonical truth로 자체 승격하지 않는다. Candidate `reference_geometry`도 canonical truth로 승격하지 않는다. VERIFIED polygon은 Backend confirmation response에서만 가져온다. 법규 적용 여부도 Frontend에서 재판정하지 않는다.
 
 ---
 
-## 13. Validation Policy
+## 14. Validation Policy
 
 ```text
 actual GitHub HEAD
@@ -425,10 +489,11 @@ GitHub commit 성공만으로 behavioral PASS를 선언하지 않는다. Build P
 
 ---
 
-## 14. Protected Development Rules
+## 15. Protected Development Rules
 
 ```text
 candidate marker != parcel truth
+candidate reference geometry != parcel truth
 selected candidate != verified parcel
 frontend selection != canonical identity
 verified polygon = Backend confirmation result only
@@ -455,10 +520,11 @@ Frontend 작업과 무관하며 수정, 복원, reset, checkout, 삭제, staging
 
 ---
 
-## 15. Current Validation Status
+## 16. Current Validation Status
 
 ```text
 Backend candidate search                    IMPLEMENTED
+Backend candidate reference geometry        IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Backend lightweight parcel confirmation     IMPLEMENTED + USER LOCAL PASS
 Backend verified Polygon/MultiPolygon       IMPLEMENTED
 Backend selected-candidate full analysis    IMPLEMENTED + USER LOCAL PASS
@@ -470,6 +536,10 @@ Vite -> FastAPI proxy                       USER LOCAL RUNTIME PASS
 Real candidate API search                   USER LOCAL RUNTIME PASS
 Real candidate card rendering               USER LOCAL RUNTIME PASS
 Candidate selection UI                      USER LOCAL RUNTIME PASS
+Candidate list/map sync                     IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+Candidate reference boundary rendering      IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+Candidate boundary click selection          IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+Candidate boundary presentation             IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Parcel confirmation Frontend integration    USER LOCAL BEHAVIORAL PASS
 Verified parcel state                       USER LOCAL BEHAVIORAL PASS
 
@@ -482,27 +552,25 @@ Result UX / presentation refinement         IMPLEMENTED + USER LOCAL BEHAVIORAL 
 Result-centered layout transition           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Verified parcel map resize/refit             IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 
-Candidate list/map sync                     NOT IMPLEMENTED
 Error/empty product semantics               PARTIAL
 ```
 
 ---
 
-## 16. Next Development Target
+## 17. Next Development Target
 
-분석 전/후 레이아웃 전환과 verified map resize/refit은 구현 및 사용자 로컬 behavioral validation까지 완료됐다.
+분석 전 candidate 탐색 UX의 list/marker/boundary sync와 분석 후 result-centered layout 및 verified map resize/refit은 구현 및 사용자 로컬 behavioral validation까지 완료됐다.
 
-다음 Frontend 작업은 기존 화면을 기준으로 **추가 UX 개선 항목을 READ-ONLY로 점검하고 우선순위를 정하는 것**이다.
+다음 Frontend 작업은 기존 화면을 기준으로 **남은 UX 개선 항목을 READ-ONLY로 점검하고 우선순위를 정하는 것**이다.
 
 우선 조사 후보:
 
 ```text
-candidate list <-> map sync
-선택 candidate의 지도상 시각적 구분 / focus
 긴 SITE 결과의 섹션 탐색 구조
 추가 입력 필요사항의 실제 입력 UX
 전체 product error / empty semantics
 모바일 결과/지도 순서와 반응형 가독성
+candidate/verified 상태 설명의 사용자 친화적 표현
 ```
 
 아직 구현 방식이나 우선순위는 확정하지 않는다. 실제 repository 파일과 현재 화면을 기준으로 READ-ONLY 확인 후 최소 변경 범위를 정한다.
@@ -511,7 +579,7 @@ Frontend는 계속 Backend 결과를 재판정하거나 임의 보정하지 않�
 
 ---
 
-## 17. Other Known Product Gaps
+## 18. Other Known Product Gaps
 
 ```text
 road-address support
@@ -526,13 +594,16 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 18. Immediate Next Step Status
+## 19. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
 Frontend UX improvement READ-ONLY investigation
 
 CURRENT FRONTEND STATUS:
+CANDIDATE LIST / MAP SYNC              USER LOCAL BEHAVIORAL PASS
+CANDIDATE REFERENCE GEOMETRY           USER LOCAL BEHAVIORAL PASS
+CANDIDATE PARCEL BOUNDARY RENDERING    USER LOCAL BEHAVIORAL PASS
 RESULT-CENTERED LAYOUT                 USER LOCAL BEHAVIORAL PASS
 VERIFIED PARCEL MAP RESIZE / REFIT     USER LOCAL BEHAVIORAL PASS
 
@@ -542,6 +613,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 19. Status Update Rule
+## 20. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
