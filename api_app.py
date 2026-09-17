@@ -5,6 +5,7 @@ from typing import Dict, Literal
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from site_data.address_parcel_candidate_search import search_address_parcel_candidates
+from site_data.selected_parcel_candidate_verifier import verify_selected_parcel_candidate
 from site_data.site_analysis_orchestrator import BuildingAPIError, SiteAnalysisError, SiteBuildError, analyze_site_by_address, analyze_site_by_parcel, analyze_site_by_selected_candidate
 
 app=FastAPI(title="AI 대지분석 API",version="0.1.0",description="건축HUB / SITE / 공간정보 / 법규평가를 통합한 대지분석 API")
@@ -29,10 +30,12 @@ class AddressParcelCandidateSearchRequest(BaseModel):
     query:str=Field(...,min_length=1,description="필지 후보를 찾을 지번주소 검색어")
     size:int=Field(10,ge=1,le=100,description="반환할 최대 후보 수")
 
-class SelectedParcelCandidateSiteAnalysisRequest(BaseModel):
+class SelectedParcelCandidateRequest(BaseModel):
     candidate_pnu:str=Field(...,min_length=19,max_length=19,pattern=r"^\d{19}$",description="사용자가 선택한 후보 PNU")
     x:float=Field(...,ge=-180.0,le=180.0,description="후보 경도(EPSG:4326)")
     y:float=Field(...,ge=-90.0,le=90.0,description="후보 위도(EPSG:4326)")
+
+class SelectedParcelCandidateSiteAnalysisRequest(SelectedParcelCandidateRequest):
     project_profile:Dict[str,str]=Field(default_factory=dict)
     procedure_profile:Dict[str,str]=Field(default_factory=dict)
     include_debug:bool=False
@@ -80,3 +83,36 @@ def parcel_candidates_by_address(request:AddressParcelCandidateSearchRequest):
         }
     except Exception as exc:
         raise HTTPException(status_code=500,detail="필지 후보 검색 중 예상하지 못한 오류가 발생했습니다.") from exc
+
+@app.post("/v1/parcel-candidates/confirm")
+def confirm_selected_parcel_candidate(request:SelectedParcelCandidateRequest):
+    try:
+        verification=verify_selected_parcel_candidate(candidate_pnu=request.candidate_pnu,x=request.x,y=request.y)
+        if not verification.verified:
+            raise HTTPException(status_code=404,detail=f"선택한 필지를 검증할 수 없습니다: {verification.resolution}")
+        if not isinstance(verification.geometry,dict):
+            raise HTTPException(status_code=404,detail="선택한 필지의 검증된 경계를 확인할 수 없습니다: PARCEL_POLYGON_UNRESOLVED")
+        return {
+            "schema_version":"PARCEL_CONFIRMATION_V1",
+            "status":"READY",
+            "parcel":{
+                "pnu":verification.pnu,
+                "sigungu_cd":verification.sigungu_cd,
+                "bjdong_cd":verification.bjdong_cd,
+                "plat_gb_cd":verification.plat_gb_cd,
+                "bun":verification.bun,
+                "ji":verification.ji,
+                "x":verification.x,
+                "y":verification.y,
+                "crs":verification.crs,
+            },
+            "verification":{
+                "status":verification.status,
+                "resolution":verification.resolution,
+            },
+            "geometry":verification.geometry,
+        }
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=500,detail="선택 필지 확인 중 예상하지 못한 오류가 발생했습니다.") from exc
