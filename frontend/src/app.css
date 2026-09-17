@@ -115,10 +115,30 @@ h1 {
 }
 
 .candidate-card {
+  width: 100%;
   padding: 16px;
   border: 1px solid #e1e6ed;
   border-radius: 12px;
   background: #fff;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+
+.candidate-card:hover:not(:disabled) {
+  border-color: #aeb8c7;
+  box-shadow: 0 5px 16px rgba(23, 32, 51, 0.07);
+  transform: translateY(-1px);
+}
+
+.candidate-card:disabled {
+  cursor: wait;
+}
+
+.candidate-card-selected {
+  border-color: #172033;
+  box-shadow: 0 0 0 2px rgba(23, 32, 51, 0.08);
 }
 
 .candidate-heading {
@@ -131,7 +151,7 @@ h1 {
 }
 
 .candidate-heading span,
-.candidate-card p,
+.candidate-road-address,
 .candidate-card small {
   color: #667085;
 }
@@ -140,14 +160,85 @@ h1 {
   font-size: 13px;
 }
 
-.candidate-card p {
+.candidate-road-address {
+  display: block;
   margin: 8px 0;
   font-size: 13px;
   line-height: 1.5;
 }
 
 .candidate-card small {
+  display: block;
   font-size: 12px;
+}
+
+.verification-panel {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid #dce2e8;
+  border-radius: 12px;
+  background: #f8fafb;
+}
+
+.verification-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.verification-panel p {
+  margin: 8px 0 0;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.verification-parcel_verified {
+  border-color: #a9d4bb;
+  background: #f3faf6;
+}
+
+.verification-parcel_verification_failed {
+  border-color: #e4b4b4;
+  background: #fff7f7;
+}
+
+.verified-badge {
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: #1f6f43;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.verified-details {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(23, 32, 51, 0.1);
+}
+
+.verified-details div {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 10px;
+}
+
+.verified-details dt {
+  color: #667085;
+  font-size: 12px;
+}
+
+.verified-details dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .map-placeholder {
@@ -179,7 +270,7 @@ h1 {
 }
 
 .map-placeholder p {
-  max-width: 360px;
+  max-width: 420px;
   margin: 0;
   color: #667085;
   line-height: 1.6;
