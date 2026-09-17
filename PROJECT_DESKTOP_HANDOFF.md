@@ -87,6 +87,8 @@ git status --short
 
 다음 PC에 넘기기 전에 가능한 한 working tree를 clean 상태로 만든다. 의도적으로 보존해야 하는 로컬 예외가 있으면 해당 예외와 이유를 인계 내용에 명시한다.
 
+GitHub 동기화가 끝났더라도 인계는 끝난 것이 아니다. `.env`, `frontend/.env.local` 등 GitHub에 올라가지 않는 로컬 전용 파일/설정을 별도로 챙겼는지 확인한 뒤 인계를 종료한다.
+
 ## 5. 목요일 인계
 
 목요일에는 Desktop A의 검증된 코드와 문서를 GitHub에 push한 뒤 Desktop B가 금요일에 이어받을 수 있는 상태인지 확인한다.
@@ -100,6 +102,7 @@ git status --short
 - 미완료 작업과 다음 첫 작업
 - status 문서 갱신 여부
 - 로컬 전용 환경설정 변경 여부
+- GitHub 비동기화 파일을 별도로 챙겼는지 여부
 - historical JSON 예외 접촉 여부
 
 ## 6. 일요일 인계
@@ -108,7 +111,7 @@ git status --short
 
 확인 항목과 종료 명령은 목요일 인계와 동일하다.
 
-## 7. `.env` 및 Frontend 로컬 설정
+## 7. GitHub 비동기화 로컬 파일 / secret 인계
 
 다음 파일과 secret은 GitHub를 통한 PC 간 코드 동기화 대상으로 취급하지 않는다.
 
@@ -118,9 +121,29 @@ frontend/.env.local
 API keys / secrets
 ```
 
-각 PC에 별도로 구성한다. 설정값 변경이 필요하면 secret 자체를 commit하지 않고 두 PC의 로컬 설정을 각각 안전하게 맞춘다.
+각 PC에 별도로 구성한다. Frontend Kakao Maps JavaScript key도 `frontend/.env.local`의 로컬 설정으로 유지한다.
 
-Frontend Kakao Maps JavaScript key도 `frontend/.env.local`의 로컬 설정으로 유지한다.
+중요: 이 문서에는 실제 API Key, token, password 또는 secret 값을 기록하지 않는다. GitHub commit, status 문서, 인계 문서에도 secret 값을 복사하지 않는다.
+
+### 인계 전 로컬 전용 파일 체크
+
+목요일/일요일 인계 때 다음을 별도로 확인한다.
+
+```text
+[ ] D:\site-ai\.env가 현재 작업 PC에 존재하는가
+[ ] D:\site-ai\frontend\.env.local이 현재 작업 PC에 존재하는가
+[ ] 이번 작업 기간에 API Key / endpoint / 로컬 환경변수 구성이 변경되었는가
+[ ] 변경되었다면 다음 PC에도 동일한 로컬 설정 변경이 필요한가
+[ ] GitHub에 올라가지 않는 새 로컬 설정 파일이 추가되었는가
+[ ] 필요한 로컬 전용 파일을 사용자가 별도의 안전한 방법으로 챙겼는가
+[ ] 실제 secret 값이 Git tracked 파일이나 commit에 들어가지 않았는가
+```
+
+이 체크리스트의 목적은 secret을 GitHub에 저장하는 것이 아니라, GitHub만으로는 전달되지 않는 로컬 설정이 있다는 사실을 인계 때 빠뜨리지 않는 것이다.
+
+로컬 파일을 다른 PC로 전달하는 방법은 사용자가 관리하는 안전한 전달 수단을 사용한다. secret 값을 채팅이나 GitHub 문서에 붙여 넣도록 요구하지 않는다.
+
+새로운 로컬 전용 설정 파일이 실제로 생기면 그 파일의 **경로와 용도만** 이 문서에 추가할 수 있다. 실제 secret 값은 추가하지 않는다.
 
 ## 8. Python / Frontend 환경
 
@@ -231,9 +254,13 @@ npm run build
 5. status 문서 동기화
 6. exact-file commit / push 여부
 7. 로컬 환경설정 변경사항
-8. historical JSON 접촉 여부
-9. 다음 PC에서 실행할 첫 명령
+8. GitHub 비동기화 로컬 파일(.env, frontend/.env.local 등)을 별도로 챙겼는지 여부
+9. API Key / secret 구성 변경이 다음 PC에도 필요한지 여부
+10. historical JSON 접촉 여부
+11. 다음 PC에서 실행할 첫 명령
 ```
+
+인계 요청 시 GitHub 상태만 확인하고 끝내지 않는다. 반드시 사용자에게 GitHub에 올라가지 않는 로컬 전용 파일/설정을 별도로 챙겼는지 언급한다. 필요하면 실제 secret 값을 노출하지 않고 파일의 존재 여부와 변경 필요 여부만 확인한다.
 
 사용자가 `오늘 다른 PC로 넘기기 전 작업 마감 점검해줘`처럼 요청하면 목요일/일요일에 맞는 인계 체크를 수행한다.
 
@@ -245,6 +272,7 @@ npm run build
 - untracked 파일을 정체 확인 없이 삭제하지 않음
 - stash를 조사 없이 pop/drop하지 않음
 - secret을 GitHub에 commit하지 않음
+- 실제 API Key/token/password를 인계 문서에 기록하지 않음
 - Desktop A historical JSON 보존본을 자동 동기화하지 않음
 - GitHub commit을 behavioral PASS로 간주하지 않음
 - 한 PC의 미커밋 프로젝트 코드를 다른 PC에서 추측하여 재작성하지 않음
