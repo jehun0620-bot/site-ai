@@ -1,0 +1,215 @@
+:root {
+  font-family: Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  color: #172033;
+  background: #f4f6f8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(23, 32, 51, 0.18);
+  outline-offset: 2px;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(360px, 440px) 1fr;
+  min-height: 100vh;
+}
+
+.search-panel {
+  padding: 48px 36px;
+  background: #ffffff;
+  border-right: 1px solid #e4e8ee;
+  overflow-y: auto;
+}
+
+.brand {
+  margin-bottom: 48px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(30px, 3vw, 42px);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.lead {
+  margin: 14px 0 34px;
+  color: #667085;
+  line-height: 1.6;
+}
+
+.search-form label {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.search-row {
+  display: flex;
+  gap: 8px;
+}
+
+.search-row input {
+  width: 100%;
+  min-width: 0;
+  padding: 13px 14px;
+  border: 1px solid #cfd5de;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.search-row button {
+  flex: 0 0 auto;
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: #172033;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.search-row button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.status {
+  min-height: 24px;
+  margin: 14px 0 24px;
+  color: #667085;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.status-search_error {
+  color: #9b2c2c;
+}
+
+.candidate-list {
+  display: grid;
+  gap: 10px;
+}
+
+.candidate-card {
+  padding: 16px;
+  border: 1px solid #e1e6ed;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.candidate-heading {
+  display: grid;
+  gap: 5px;
+}
+
+.candidate-heading strong {
+  font-size: 15px;
+}
+
+.candidate-heading span,
+.candidate-card p,
+.candidate-card small {
+  color: #667085;
+}
+
+.candidate-heading span {
+  font-size: 13px;
+}
+
+.candidate-card p {
+  margin: 8px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.candidate-card small {
+  font-size: 12px;
+}
+
+.map-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 32px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.76)),
+    repeating-linear-gradient(0deg, transparent 0 47px, #dce2e8 48px),
+    repeating-linear-gradient(90deg, transparent 0 47px, #dce2e8 48px),
+    #eef1f4;
+  text-align: center;
+}
+
+.map-placeholder span {
+  display: inline-block;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #172033;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.map-placeholder h2 {
+  margin: 12px 0 6px;
+}
+
+.map-placeholder p {
+  max-width: 360px;
+  margin: 0;
+  color: #667085;
+  line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .search-panel {
+    padding: 32px 20px;
+    border-right: 0;
+  }
+
+  .brand {
+    margin-bottom: 30px;
+  }
+
+  .map-placeholder {
+    min-height: 42vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-row {
+    flex-direction: column;
+  }
+
+  .search-row button {
+    width: 100%;
+  }
+}
