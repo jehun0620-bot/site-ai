@@ -13,6 +13,9 @@ from law_data.historical_spatial_registry_collision_policy import evaluate_histo
 from law_data.historical_merged_registry_live_consumption_authorization import authorize_historical_merged_registry_live_consumption
 from law_data.common_verified_site_registry_live_consumption import normalize_verified_site_registry_live_consumption
 from law_data.historical_verified_rule_input_envelope import HistoricalVerifiedRuleInputEnvelope
+from law_data.district_unit_plan_verified_registry_candidate_envelope import DistrictUnitPlanVerifiedRegistryCandidateEnvelope
+from law_data.district_unit_plan_spatial_registry_collision_policy import evaluate_district_unit_plan_spatial_registry_collision_policy
+from law_data.district_unit_plan_merged_registry_live_consumption_authorization import authorize_district_unit_plan_merged_registry_live_consumption
 try:
     from .rule_evaluation_pipeline import evaluate_site_rules
     from .site_identity_resolver import resolve_site_identity
@@ -61,9 +64,27 @@ def determine_analysis_status(e,r):
     ready=e.get("pipeline",{}).get("ready") is True; b=r.get("building_coverage_ratio",{}).get("status")=="CONFIRMED"; f=r.get("floor_area_ratio",{}).get("status")=="CONFIRMED"
     return "READY" if ready and b and f else ("PARTIAL" if ready else "NOT_READY")
 
-def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,site_input:Optional[Dict[str,Any]]=None,production_condition_shadow_sources:Optional[Any]=None,historical_rule_input:Optional[Any]=None)->Dict[str,Any]:
+def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,site_input:Optional[Dict[str,Any]]=None,production_condition_shadow_sources:Optional[Any]=None,historical_rule_input:Optional[Any]=None,district_unit_plan_registry_candidate:Optional[Any]=None)->Dict[str,Any]:
     project_profile=project_profile or {}; procedure_profile=procedure_profile or {}; site_input=site_input or {}
     historical_snapshot=None
+    district_unit_plan_snapshot=None
+
+    if historical_rule_input is not None and district_unit_plan_registry_candidate is not None:
+        raise ValueError("historical and district-unit verified SITE inputs cannot be combined")
+
+    if district_unit_plan_registry_candidate is not None:
+        if not isinstance(
+            district_unit_plan_registry_candidate,
+            DistrictUnitPlanVerifiedRegistryCandidateEnvelope,
+        ) or not district_unit_plan_registry_candidate.ready:
+            raise ValueError("verified district-unit registry candidate envelope required")
+        requested_pnu=str(site_input.get("pnu") or "").strip()
+        if not requested_pnu or requested_pnu!=district_unit_plan_registry_candidate.canonical_pnu:
+            raise ValueError("district-unit registry candidate envelope PNU mismatch")
+        district_unit_plan_snapshot=copy.deepcopy(
+            dict(district_unit_plan_registry_candidate.registry_candidate)
+        )
+
     if historical_rule_input is not None:
         if not isinstance(historical_rule_input,HistoricalVerifiedRuleInputEnvelope) or not historical_rule_input.ready: raise ValueError("verified historical rule input envelope required")
         requested_pnu=str(site_input.get("pnu") or "").strip()
@@ -75,6 +96,7 @@ def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_p
     site=resolve_site_identity(base_site=base_site,site_input=site_input)
     resolved_pnu=str(site.get("pnu") or "").strip()
     if historical_rule_input is not None and resolved_pnu!=historical_rule_input.canonical_pnu: raise ValueError("historical rule input resolved SITE PNU mismatch")
+    if district_unit_plan_registry_candidate is not None and resolved_pnu!=district_unit_plan_registry_candidate.canonical_pnu: raise ValueError("district-unit registry candidate resolved SITE PNU mismatch")
     spatial=resolve_site_spatial_payload(site=site); site["spatial"]=spatial; parcel=spatial.get("parcel",{})
     names=get_supported_spatial_conditions(); ctx={n:resolve_site_spatial_condition(condition_name=n,site=site,parcel=parcel) for n in names}; site["runtime_conditions"]=copy.deepcopy(ctx)
     shadow=build_production_condition_contract_shadow(ctx); site["production_condition_contracts"]=collect_production_site_condition_shadows(shadow,copy.deepcopy(production_condition_shadow_sources))
@@ -93,7 +115,28 @@ def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_p
         common_registry=normalize_verified_site_registry_live_consumption(auth)
         if not common_registry.ready:raise ValueError("common verified historical SITE registry unavailable")
         engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,common_verified_site_registry=common_registry)
+
+    if district_unit_plan_snapshot is not None:
+        collision=evaluate_district_unit_plan_spatial_registry_collision_policy(
+            engine.get("site_registry"),
+            district_unit_plan_snapshot,
+        )
+        if not collision.merge_candidate_ready:
+            raise ValueError("district-unit/spatial registry collision policy failed")
+        if collision.canonical_pnu!=district_unit_plan_registry_candidate.canonical_pnu:
+            raise ValueError("district-unit collision policy PNU mismatch")
+        auth=authorize_district_unit_plan_merged_registry_live_consumption(collision)
+        if not auth.live_consumption_authorized:
+            raise ValueError("district-unit merged registry live consumption unauthorized")
+        if auth.canonical_pnu!=district_unit_plan_registry_candidate.canonical_pnu:
+            raise ValueError("district-unit live authorization PNU mismatch")
+        common_registry=normalize_verified_site_registry_live_consumption(auth)
+        if not common_registry.ready:
+            raise ValueError("common verified district-unit SITE registry unavailable")
+        engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,common_verified_site_registry=common_registry)
+
     land=build_land_area_result(site_input,site); regulation=build_regulation_result(engine); summary=build_rule_summary(engine); req=build_input_requirements(engine); ext=build_external_dependencies(engine); status=determine_analysis_status(engine,regulation)
     inp={"site":copy.deepcopy(site_input),"project":copy.deepcopy(project_profile),"procedure":copy.deepcopy(procedure_profile)}
     if historical_snapshot is not None:inp["historical"]=copy.deepcopy(historical_snapshot)
+    if district_unit_plan_snapshot is not None:inp["district_unit_plan"]=copy.deepcopy(district_unit_plan_snapshot)
     return {"analysis":{"status":status,"engine":"RULE_EVALUATION_PIPELINE","engine_version":engine.get("pipeline",{}).get("version")},"site":site,"input":inp,"land_area":land,"regulation":regulation,"rule_evaluation":summary,"input_requirements":req,"external_dependencies":ext,"rule_engine":{"baseline":engine.get("baseline"),"branch_overlay":engine.get("branch_overlay"),"dynamic_injection":engine.get("dynamic_injection"),"site_registry":engine.get("site_registry"),"site_repairs":engine.get("site_repairs"),"numeric":engine.get("numeric")}}
