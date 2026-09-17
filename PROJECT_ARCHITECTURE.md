@@ -22,6 +22,7 @@ OFFICIAL FACT
 불변조건:
 - 검색 결과 ≠ 법적 사실
 - 주소 검색 결과 ≠ canonical parcel truth
+- candidate parcel ≠ canonical parcel truth
 - 사용자 UI 선택 ≠ canonical parcel truth
 - 문서 발견 ≠ 규제 TRUE
 - 고시 발견 ≠ 현재 유효
@@ -54,16 +55,14 @@ SITE CONDITION과 PROJECT CONDITION을 분리한다. PROJECT 조건을 SITE 사�
 
 ## 4. Canonical SITE / PNU
 
-모든 후속 판정은 동일한 실제 필지를 바라봐야 한다. 다른 PNU의 snapshot, geometry, evidence, admission, promotion input을 재사용하지 않는다.
+모든 후속 판정은 동일한 실제 필지를 바라봐야 한다.
 
 ```text
 Public API / Building HUB plat_gb_cd=0 (일반) → PNU land-register digit 1
 Public API / Building HUB plat_gb_cd=1 (산)   → PNU land-register digit 2
 ```
 
-Building HUB status `00` + 건축물 0건도 canonical parcel identity가 유효하면 parcel-only Site를 구성할 수 있다. 건축물 존재 여부를 필지 존재 여부와 동일시하지 않는다.
-
-Parcel-only enrichment는 현재 canonical PNU와 정확히 같은 공식 토지특성 record에만 의존한다.
+Building HUB status `00` + 건축물 0건도 canonical parcel identity가 유효하면 parcel-only Site를 구성할 수 있다.
 
 ### 4A. Address → verified canonical parcel identity
 
@@ -82,44 +81,115 @@ USER PARCEL ADDRESS
 → VERIFIED canonical parcel identity
 ```
 
-일반 지번의 말미 `번지` 표기는 검색 호환을 위해 안전하게 정규화할 수 있다. 검색이 `12`, `12-1`, `12-10` 등을 함께 반환하더라도 exact parcel-address match 전에는 어느 후보도 canonical identity가 아니다.
-
-Empty search, no exact match, address/polygon PNU mismatch, multiple distinct verified PNUs, invalid PNU, missing key, unresolved live parcel은 fail-closed다.
+검색이 `12`, `12-1`, `12-10` 등을 함께 반환하더라도 exact parcel-address match 전에는 어느 후보도 canonical identity가 아니다. Empty/no-exact/mismatch/ambiguous/invalid/unresolved states fail closed.
 
 ### 4B. Verified address → existing parcel analysis
 
-Address identity는 별도 분석 lane을 만들지 않는다. VERIFIED identity만 기존 parcel component pipeline으로 변환한다.
-
 ```text
 VERIFIED ADDRESS PARCEL IDENTITY
-→ sigungu_cd
-→ bjdong_cd
-→ plat_gb_cd
-→ bun
-→ ji
+→ canonical parcel components
 → existing analyze_site_by_parcel()
 → existing SITE / regulation / Rule Engine pipeline
 ```
 
-`analyze_site_by_address()`는 identity front door / adapter 역할만 한다. Address resolver가 VERIFIED가 아니면 기존 분석 pipeline에 진입하지 못한다.
+`analyze_site_by_address()`는 identity front door / adapter이며 별도 분석 engine이 아니다.
 
-User-local behavioral validation at HEAD `b9d204cc6c6d128a46ed33ee38071a3c4f545065` confirmed both full real-data paths:
-- ordinary `서울특별시 강남구 개포동 12번지` → PNU `1168010300100120000` → Building HUB 34 → 제3종일반주거지역 → identity COMPLETE
-- mountain `서울특별시 동작구 동작동 산 29-3` → PNU `1159010600200290003` → Building HUB 0 parcel-only path → 자연녹지지역 → identity COMPLETE
+## 5. Public HTTP address boundary — VALIDATED
 
-Thus address → verified identity → existing full analysis internal E2E is validated for ordinary and mountain parcels.
+Public address endpoint is now validated:
 
-## 5. Runtime spatial SITE fact
+```text
+POST /v1/site-analysis/address
+→ Pydantic address request validation
+→ analyze_site_by_address()
+→ verified identity only
+→ existing analyze_site_by_parcel()
+→ SITE_ANALYSIS_API_V1 response
+```
 
-Runtime spatial condition은 parcel geometry, target PNU, CRS, regulation geometry intersection을 검증한다. Spatial query 실패를 FALSE로 바꾸지 않는다. Historical provenance는 spatial runtime condition channel과 별도로 유지한다.
+User-local real HTTP E2E at code HEAD `f54cd84b6c91cd2f8c0e47612223133daac97a4d` confirmed:
+- ordinary `서울특별시 강남구 개포동 12번지` → PNU `1168010300100120000`, Building HUB 34, identity COMPLETE, READY
+- mountain `서울특별시 동작구 동작동 산 29-3` → PNU `1159010600200290003`, Building HUB 0 parcel-only path, identity COMPLETE, READY
 
-Parcel-only 경로에서는 동일-PNU 공식 지번주소가 확보되면 address search를 통해 좌표를 구하고, VWorld parcel dataset의 live polygon feature PNU가 requested canonical PNU와 정확히 일치할 때만 geometry를 채택한다.
+The HTTP layer does not parse PNU, query VWorld, or duplicate parcel analysis. Existing `/v1/site-analysis` parcel-component endpoint remains separate and unchanged in purpose.
 
-EPSG:4326 live geometry는 공간 판정용으로 유지하며 면적을 임의 계산하지 않는다. 공식 토지면적은 VWorld Land Characteristics 값을 별도 보존한다.
+Public historical inputs remain NOT AUTHORIZED.
 
-## 6. Regulation resolution / numbered chain
+## 6. Candidate discovery boundary — DESIGN DIRECTION
 
-표준 상태는 `TRUE / FALSE / UNKNOWN`이다.
+Candidate search is a product discovery function, not identity verification and not analysis admission.
+
+Current VWorld parcel search response already provides candidate metadata that can support a list/map UX:
+
+```text
+candidate
+├─ item.id              → candidate PNU identifier
+├─ address.parcel       → parcel address
+├─ address.road         → road address when supplied
+├─ address.bldnm        → building name when supplied
+└─ point.x / point.y    → map centering point
+```
+
+The existing exact resolver currently uses the same search provider internally but intentionally filters to exact `address.parcel` matches and then performs live polygon PNU verification. Its fail-closed semantics must not be weakened to expose prefix candidates.
+
+Preferred architecture separation:
+
+```text
+DISCOVERY BOUNDARY
+user query
+→ normalize only for search compatibility
+→ VWorld parcel candidate search
+→ sanitize candidate metadata
+→ return candidate list
+→ NO VERIFIED status
+→ NO analysis admission
+
+SELECTION / VERIFICATION BOUNDARY
+selected candidate PNU + selected parcel context
+→ backend live parcel re-verification
+→ selected PNU == live polygon PNU
+→ canonical component regeneration
+→ VERIFIED identity
+→ existing analysis pipeline
+```
+
+Candidate PNU is an identifier supplied by the search provider, not canonical truth until re-verification.
+
+The candidate response should be intentionally smaller than raw VWorld data. Recommended initial fields:
+- `candidate_pnu`
+- `parcel_address`
+- `road_address`
+- `building_name`
+- `x`
+- `y`
+- `crs=EPSG:4326`
+
+Do not expose provider API keys, raw transport response, SITE truth, regulation result, or VERIFIED status in discovery.
+
+## 7. Map boundary direction
+
+Candidate point coordinates are sufficient for initial map centering/markers but not sufficient to prove parcel inclusion. Parcel polygon visualization should use live parcel geometry associated with the selected/reverified PNU.
+
+Future list/map flow:
+
+```text
+query
+→ candidates
+→ list + map points
+→ user selects candidate
+→ backend re-verification
+→ verified PNU polygon
+→ highlight parcel
+→ user confirms analysis
+```
+
+Map click selection can later become another discovery input but must converge into the same verification boundary.
+
+## 8. Runtime spatial / regulation architecture
+
+Runtime spatial condition continues to require parcel geometry/PNU/CRS verification. Spatial query failure is not FALSE. Historical provenance remains outside the spatial runtime condition channel.
+
+Validated numbered architecture chain remains:
 
 ```text
 STEP98 Evidence→Seed admission
@@ -133,75 +203,25 @@ STEP98 Evidence→Seed admission
 → STEP114 SITE-decision eligibility
 ```
 
-STEP114 이후 구현 경계에는 새 STEP 번호를 부여하지 않는다.
+No new STEP number is created for address/API/product boundaries.
 
-## 7. Historical / district-unit production
+## 9. Historical / district-unit / hybrid locks
 
-Historical and district-unit paths keep family-specific verification but converge at the common verified SITE registry / existing Rule Engine lane. Promotion does not create a second SITE truth store or Rule Engine.
+Historical and district-unit paths keep family-specific verification and converge only at the authorized common production lane. No second SITE truth store or Rule Engine is created. Simultaneous historical + district-unit production remains fail-closed without explicit merge policy.
 
-Raw historical injection, malformed envelope, cross-PNU handoff, UNKNOWN applicability, unauthorized promotion and simultaneous historical + district-unit input remain fail-closed where no explicit policy authorizes them.
-
-Public historical input remains NOT AUTHORIZED.
-
-## 8. Hybrid / UQQ700
-
-### UQQ700 개발밀도관리구역
-- family: `HYBRID_SPATIAL_NOTICE`
-- standard code: `UQQ700`
-- legal-source resolution: UNKNOWN
-- negative-evidence / legal-absence inference disabled
-- SITE TRUE/FALSE promotion blocked
-- production/runtime registration blocked
-
-## 9. Public API / runtime exposure
-
-Current validated public parcel-component endpoint:
-
-```text
-POST /v1/site-analysis
-→ sigungu_cd / bjdong_cd / plat_gb_cd / bun / ji
-→ analyze_site_by_parcel()
-```
-
-Ordinary and mountain parcel-component HTTP E2E are already user-local validated.
-
-The internal address path is now validated, but public address HTTP exposure is not yet implemented/validated. The correct public boundary is deliberately thin:
-
-```text
-POST /v1/site-analysis/address
-→ address request validation
-→ analyze_site_by_address()
-→ VERIFIED address identity
-→ existing analyze_site_by_parcel()
-→ existing response
-```
-
-The HTTP layer must not independently parse PNU, query VWorld, select parcel candidates, or duplicate analysis logic.
-
-Candidate-list/map-assisted selection remains a separate future product API/UX boundary. It must not be mixed into the first exact-address analysis endpoint.
+UQQ700 remains `HYBRID_SPATIAL_NOTICE`, standard code `UQQ700`, legal-source resolution UNKNOWN, SITE TRUE/FALSE promotion blocked, production/runtime registration blocked.
 
 ## 10. Legal / provenance / deterministic evaluation
 
 Legal delegation/version chains and provenance remain preserved. AI may explain but does not invent regulation TRUE/FALSE, PNU, legal source or numeric limit. Calculable results belong to deterministic evaluation; unresolved conditions remain unresolved.
 
-## 11. Test / fail-safe policy
+## 11. Product UX separation
 
-```text
-잘못된 TRUE보다 UNKNOWN이 낫다.
-잘못된 FALSE보다 UNKNOWN이 낫다.
-```
+- `PROJECT_ARCHITECTURE.md`: validated boundaries and safety invariants
+- `PROJECT_STATUS.md`: implementation / behavioral checkpoint
+- `PROJECT_PRODUCT_UX.md`: product ideas, candidate workflows, map interactions and backlog
 
-Test categories include UNIT, BEHAVIORAL REGRESSION, INTEGRATION, END-TO-END and POLICY ASSERTION. User-local execution PASS is final behavioral validation.
-
-## 12. Product UX separation
-
-- `PROJECT_ARCHITECTURE.md`: validated system boundaries and invariants
-- `PROJECT_STATUS.md`: implementation / validation checkpoint
-- `PROJECT_PRODUCT_UX.md`: product-facing ideas, candidate workflows, map interactions and backlog
-
-A UX idea does not become architecture truth merely by documentation. UI convenience never bypasses canonical PNU verification.
-
-## 13. Security / repository policy
+## 12. Security / repository policy
 
 - API keys in `.env`; secrets Git 저장 금지
 - runtime raw/cache와 Git source 분리
@@ -209,45 +229,10 @@ A UX idea does not become architecture truth merely by documentation. UI conveni
 - explicit WRITE approval before repository mutation
 - user-local behavioral PASS is final validation
 
-## 14. Numbering policy
+## 13. Next design question
 
-Architecture STEP98…STEP114와 legal-source investigation S-numbering은 별개다. 새 architecture STEP은 repository design/documentation에서 명시적으로 확립할 때만 부여한다.
+The public exact-address analysis path is validated. Next implementation should add candidate discovery without changing exact-address resolver semantics.
 
-## 15. Current validated architecture position
+A minimal implementation should likely introduce a dedicated candidate-search module plus focused contract test before exposing a public candidate-search route. This keeps provider parsing/discovery logic outside `api_app.py` and prevents discovery results from being confused with VERIFIED identity.
 
-```text
-USER PARCEL COMPONENTS
-→ canonical PNU
-→ existing parcel analysis pipeline
-
-USER PARCEL ADDRESS
-→ normalized/exact parcel search
-→ address PNU + coordinate
-→ live parcel polygon PNU verification
-→ reconstructed canonical parcel identity
-→ VERIFIED
-→ analyze_site_by_address()
-→ canonical parcel components
-→ existing analyze_site_by_parcel()
-→ ordinary Building HUB OR parcel-only path
-→ same-PNU SITE / spatial / regulation pipeline
-```
-
-No second SITE truth store, Rule Engine, or address-specific analysis engine is created.
-
-## 16. Next design question
-
-Internal address-to-full-analysis E2E is validated. The next boundary is public HTTP exposure through the existing thin FastAPI layer.
-
-Preserve:
-- verified identity only
-- no raw address candidate admitted to analysis
-- ordinary/mountain distinction
-- same-PNU evidence
-- existing analyze-by-parcel path
-- one SITE truth / Rule Engine lane
-- public historical non-exposure
-- UQQ700 UNKNOWN/BLOCKED
-- no invented architecture STEP number
-
-After public HTTP address E2E validation, candidate-search/list/map product APIs can be designed separately under `PROJECT_PRODUCT_UX.md`.
+Candidate selection/reverification should be a later, separately tested boundary after candidate discovery itself is validated.
