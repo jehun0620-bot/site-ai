@@ -127,12 +127,12 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation, 
           const polygon = new kakao.maps.Polygon({
             map,
             path,
-            strokeWeight: isSelected ? 3 : 1,
-            strokeColor: isSelected ? '#315f45' : '#607568',
-            strokeOpacity: isSelected ? 0.9 : 0.55,
+            strokeWeight: isSelected ? 4 : 2,
+            strokeColor: isSelected ? '#244b36' : '#40594a',
+            strokeOpacity: isSelected ? 1 : 0.9,
             strokeStyle: 'solid',
-            fillColor: isSelected ? '#8fb99d' : '#c8d5cc',
-            fillOpacity: isSelected ? 0.2 : 0.08,
+            fillColor: isSelected ? '#7ea58b' : '#aebfb4',
+            fillOpacity: isSelected ? 0.32 : 0.2,
           })
           kakao.maps.event.addListener(polygon, 'click', () => onCandidateSelect(candidate))
           candidatePolygonsRef.current.push(polygon)
@@ -205,7 +205,7 @@ export default function KakaoMap({ candidates, selectedCandidate, confirmation, 
     <section className="map-stage" aria-label="필지 지도">
       <div ref={containerRef} className="kakao-map" />
       {!mapError && sdkReady && candidates.length > 0 && !confirmation && (
-        <div className="map-selection-guide">지도 마커 또는 옅은 필지 경계를 선택해 필지를 확인할 수 있습니다.</div>
+        <div className="map-selection-guide">지도 마커 또는 필지 경계를 선택해 필지를 확인할 수 있습니다.</div>
       )}
       {mapError && (
         <div className="map-message map-message-error" role="alert">
