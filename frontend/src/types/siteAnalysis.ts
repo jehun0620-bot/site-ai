@@ -1,4 +1,6 @@
 export type SiteAnalysisState = 'IDLE' | 'ANALYZING' | 'ANALYSIS_READY' | 'ANALYSIS_FAILED'
+export type SiteAnalysisInputState = 'TRUE' | 'FALSE' | 'UNKNOWN' | 'UNSET'
+export type SiteAnalysisInputProfile = Record<string, SiteAnalysisInputState>
 
 export interface SiteAnalysisSite {
   site_id: string | null
@@ -58,9 +60,15 @@ export interface SiteAnalysisRuleEvaluation {
   unknown: number
 }
 
+export interface SiteAnalysisRequirement {
+  name: string
+  affected_clause_count: number
+  state: SiteAnalysisInputState
+}
+
 export interface SiteAnalysisRequirements {
-  project: unknown[]
-  procedure: unknown[]
+  project: SiteAnalysisRequirement[]
+  procedure: SiteAnalysisRequirement[]
   project_count: number
   procedure_count: number
   requires_additional_input: boolean
