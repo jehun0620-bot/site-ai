@@ -11,6 +11,7 @@ from law_data.production_site_condition_shadow_collector import collect_producti
 from law_data.historical_site_event_rule_engine_registry_adapter import adapt_historical_site_event_rule_engine_registry
 from law_data.historical_spatial_registry_collision_policy import evaluate_historical_spatial_registry_collision_policy
 from law_data.historical_merged_registry_live_consumption_authorization import authorize_historical_merged_registry_live_consumption
+from law_data.common_verified_site_registry_live_consumption import normalize_verified_site_registry_live_consumption
 from law_data.historical_verified_rule_input_envelope import HistoricalVerifiedRuleInputEnvelope
 try:
     from .rule_evaluation_pipeline import evaluate_site_rules
@@ -89,7 +90,9 @@ def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_p
         if not collision.merge_candidate_ready:raise ValueError("historical/spatial registry collision policy failed")
         auth=authorize_historical_merged_registry_live_consumption(collision)
         if not auth.live_consumption_authorized:raise ValueError("historical merged registry live consumption unauthorized")
-        engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,historical_registry_authorization=auth)
+        common_registry=normalize_verified_site_registry_live_consumption(auth)
+        if not common_registry.ready:raise ValueError("common verified historical SITE registry unavailable")
+        engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,common_verified_site_registry=common_registry)
     land=build_land_area_result(site_input,site); regulation=build_regulation_result(engine); summary=build_rule_summary(engine); req=build_input_requirements(engine); ext=build_external_dependencies(engine); status=determine_analysis_status(engine,regulation)
     inp={"site":copy.deepcopy(site_input),"project":copy.deepcopy(project_profile),"procedure":copy.deepcopy(procedure_profile)}
     if historical_snapshot is not None:inp["historical"]=copy.deepcopy(historical_snapshot)
