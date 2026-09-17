@@ -49,11 +49,31 @@ def _spatial() -> dict:
     }
 
 
-def _bind(designation=None, validity=None, spatial=None, pnu=PNU) -> dict:
+def _notice_identity() -> dict:
+    return {
+        "designation_to_spatial_notice_identity_verified": True,
+        "condition_name": "지구단위계획",
+        "canonical_pnu": PNU,
+        "dataset": "LT_C_UPISUQ161",
+        "announcement_management_code": "UPIS-TEST-001",
+        "spatial_notice_code": "UPIS-TEST-001",
+        "announcement_identity": deepcopy(IDENTITY),
+        "runtime_registration_allowed": False,
+    }
+
+
+def _bind(
+    designation=None,
+    validity=None,
+    spatial=None,
+    notice_identity=None,
+    pnu=PNU,
+) -> dict:
     return bind_district_unit_plan_hybrid_gates(
         _designation() if designation is None else designation,
         _validity() if validity is None else validity,
         _spatial() if spatial is None else spatial,
+        _notice_identity() if notice_identity is None else notice_identity,
         canonical_pnu=pnu,
     )
 
@@ -64,8 +84,7 @@ def main() -> None:
     assert admitted["announcement_identity"]["ANCMNT_MNG_CD"] == "UPIS-TEST-001"
     assert admitted["binding_scope"]["designation_to_current_validity"] is True
     assert admitted["binding_scope"]["spatial_to_canonical_pnu"] is True
-    # Current spatial evidence has no announcement identity. Never overclaim it.
-    assert admitted["binding_scope"]["designation_to_spatial_notice_identity"] is False
+    assert admitted["binding_scope"]["designation_to_spatial_notice_identity"] is True
 
     for key in (
         "site_truth_decision_allowed",
@@ -79,6 +98,18 @@ def main() -> None:
     wrong_chain["announcement_identity"]["ANCMNT_MNG_CD"] = "OTHER-CHAIN"
     assert _bind(validity=wrong_chain)["hybrid_gate_binding_verified"] is False
 
+    wrong_notice_chain = _notice_identity()
+    wrong_notice_chain["announcement_identity"]["ANCMNT_MNG_CD"] = "OTHER-NOTICE"
+    assert _bind(notice_identity=wrong_notice_chain)["hybrid_gate_binding_verified"] is False
+
+    forged_notice_boolean = _notice_identity()
+    forged_notice_boolean["announcement_identity"] = {}
+    assert _bind(notice_identity=forged_notice_boolean)["hybrid_gate_binding_verified"] is False
+
+    missing_notice_gate = _notice_identity()
+    missing_notice_gate["designation_to_spatial_notice_identity_verified"] = False
+    assert _bind(notice_identity=missing_notice_gate)["hybrid_gate_binding_verified"] is False
+
     wrong_pnu = _spatial()
     wrong_pnu["canonical_pnu"] = "1168010600100020000"
     assert _bind(spatial=wrong_pnu)["hybrid_gate_binding_verified"] is False
@@ -86,6 +117,10 @@ def main() -> None:
     wrong_source_pnu = _spatial()
     wrong_source_pnu["source_pnu"] = "1168010600100020000"
     assert _bind(spatial=wrong_source_pnu)["hybrid_gate_binding_verified"] is False
+
+    wrong_notice_pnu = _notice_identity()
+    wrong_notice_pnu["canonical_pnu"] = "1168010600100020000"
+    assert _bind(notice_identity=wrong_notice_pnu)["hybrid_gate_binding_verified"] is False
 
     missing_designation_gate = _designation()
     missing_designation_gate["official_designation_identity_verified"] = False
@@ -103,11 +138,13 @@ def main() -> None:
     forged_boolean["announcement_identity"] = {}
     assert _bind(validity=forged_boolean)["hybrid_gate_binding_verified"] is False
 
-    malformed = bind_district_unit_plan_hybrid_gates(None, None, None, canonical_pnu="")
+    malformed = bind_district_unit_plan_hybrid_gates(
+        None, None, None, None, canonical_pnu=""
+    )
     assert malformed["hybrid_gate_binding_verified"] is False
     assert malformed["stage_results"] == {}
 
-    escalated_inputs = (_designation(), _validity(), _spatial())
+    escalated_inputs = (_designation(), _validity(), _spatial(), _notice_identity())
     for item in escalated_inputs:
         item["runtime_registration_allowed"] = True
         item["production_registration_allowed"] = True
