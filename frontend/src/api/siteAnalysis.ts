@@ -58,8 +58,12 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
   const externalDependencies = body.external_dependencies
   const nullableString = (item: unknown) => item === null || typeof item === 'string'
 
+  const projectRequirements = requirements.project
+  const procedureRequirements = requirements.procedure
+  const externalDependencyItems = externalDependencies.items
+
   const siteValid = nullableString(site.site_id) && nullableString(site.address) && nullableString(site.road_address) && nullableString(site.pnu) && nullableString(site.sigungu_code) && nullableString(site.bjdong_code) && nullableString(site.main_no) && nullableString(site.sub_no)
-  const requirementsValid = Array.isArray(requirements.project) && Array.isArray(requirements.procedure) && typeof requirements.project_count === 'number' && typeof requirements.procedure_count === 'number' && typeof requirements.requires_additional_input === 'boolean'
+  const requirementsValid = Array.isArray(projectRequirements) && Array.isArray(procedureRequirements) && typeof requirements.project_count === 'number' && typeof requirements.procedure_count === 'number' && typeof requirements.requires_additional_input === 'boolean'
 
   const official = landArea.official
   const spatial = landArea.spatial
@@ -71,15 +75,15 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
   const regulationValid = isRecord(bcr) && isRecord(far) && isNullableNumber(bcr.value) && isNullableNumber(far.value)
 
   const ruleEvaluationValid = typeof ruleEvaluation.total === 'number' && typeof ruleEvaluation.applicable === 'number' && typeof ruleEvaluation.not_applicable === 'number' && typeof ruleEvaluation.conditional === 'number' && typeof ruleEvaluation.unknown === 'number'
-  const externalDependenciesValid = typeof externalDependencies.count === 'number' && Array.isArray(externalDependencies.items)
+  const externalDependenciesValid = typeof externalDependencies.count === 'number' && Array.isArray(externalDependencyItems)
 
   if (!siteValid || !requirementsValid || !landAreaValid || !regulationValid || !ruleEvaluationValid || !externalDependenciesValid) return false
 
   const expectedRuleTotal = Number(ruleEvaluation.applicable) + Number(ruleEvaluation.not_applicable) + Number(ruleEvaluation.conditional) + Number(ruleEvaluation.unknown)
   if (Number(ruleEvaluation.total) !== expectedRuleTotal) return false
-  if (Number(requirements.project_count) !== requirements.project.length) return false
-  if (Number(requirements.procedure_count) !== requirements.procedure.length) return false
-  if (Number(externalDependencies.count) !== externalDependencies.items.length) return false
+  if (!Array.isArray(projectRequirements) || Number(requirements.project_count) !== projectRequirements.length) return false
+  if (!Array.isArray(procedureRequirements) || Number(requirements.procedure_count) !== procedureRequirements.length) return false
+  if (!Array.isArray(externalDependencyItems) || Number(externalDependencies.count) !== externalDependencyItems.length) return false
 
   return true
 }
