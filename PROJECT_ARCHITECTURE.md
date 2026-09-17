@@ -1,6 +1,6 @@
 # AI 대지분석 자동화 시스템 — PROJECT ARCHITECTURE
 
-최종 reconciliation: 2026-09-16
+최종 reconciliation: 2026-09-17
 Architecture Baseline: v1.2
 
 ## 1. 프로젝트 목표
@@ -35,6 +35,7 @@ OFFICIAL FACT
 - verified envelope ≠ new Rule Engine
 - LLM 합의 ≠ source verification
 - 조건 미충족 상태에서 수치 확정 금지
+- 다른 PNU의 identity/address/zone/coordinate/geometry/evidence 재사용 금지
 
 ## 3. 전체 레이어
 
@@ -58,9 +59,24 @@ SITE CONDITION과 PROJECT CONDITION을 분리한다. PROJECT 조건을 SITE 사�
 
 모든 후속 판정은 동일한 실제 필지를 바라봐야 한다. 다른 PNU의 snapshot, geometry, evidence, admission, promotion input을 재사용하지 않는다.
 
+Public API / Building HUB의 대장구분과 PNU의 필지구분은 서로 다른 코드 체계이므로 명시적으로 변환한다.
+
+```text
+Public API / Building HUB plat_gb_cd=0 (일반) → PNU land-register digit 1
+Public API / Building HUB plat_gb_cd=1 (산)   → PNU land-register digit 2
+```
+
+Building HUB가 정상 status `00`이지만 건축물 0건을 반환해도 canonical parcel identity가 유효하면 parcel-only Site를 구성할 수 있다. 이 경로는 건축물 존재 여부를 필지 존재 여부와 동일시하지 않는다.
+
+Parcel-only enrichment는 현재 canonical PNU와 정확히 같은 공식 토지특성 record에만 의존한다. 동일-PNU VWorld Land Characteristics에서 지목, 용도지역, 공식 토지면적, 지번주소를 보강할 수 있지만 다른 PNU의 persisted snapshot/identity fallback은 사용할 수 없다.
+
 ## 5. Runtime spatial SITE fact
 
 Runtime spatial condition은 parcel geometry, target PNU, CRS, regulation geometry intersection을 검증한다. Spatial query 실패를 FALSE로 바꾸지 않는다. Historical provenance는 spatial runtime condition channel과 별도로 유지한다.
+
+Parcel-only 경로에서는 동일-PNU 공식 지번주소가 확보되면 기존 address search를 통해 좌표를 구하고, VWorld parcel dataset의 live polygon feature PNU가 requested canonical PNU와 정확히 일치할 때만 `PNU_POLYGON_VERIFIED` geometry로 채택한다.
+
+EPSG:4326 live geometry는 공간 판정용으로 유지하며 면적을 임의 계산하지 않는다. 공식 토지면적은 VWorld Land Characteristics의 `lndpclAr`을 별도 `square_meter` 값으로 보존하고 현재 land-area 결과에서 primary official value로 사용한다.
 
 ## 6. Regulation resolution / numbered chain
 
@@ -150,11 +166,15 @@ verified historical registry
 → existing evaluate_site_rules / Rule Engine
 ```
 
-Repository-wide local grep at behavioral PASS HEAD `a51edf2c71a3147a529de2a35d1d66a289b9209f`에서 production raw-historical bypass caller는 발견되지 않았다. 남은 raw 직접 호출은 fail-closed 회귀 테스트 또는 isolated adapter/bridge 테스트다.
+Repository-wide local grep at the previously validated production reconciliation point found no production raw-historical bypass caller. 남은 raw 직접 호출은 fail-closed 회귀 테스트 또는 isolated adapter/bridge 테스트다.
 
 ## 11. Public API / runtime exposure
 
 현재 public FastAPI request에는 historical 내부 입력을 노출하지 않는다. Historical provenance는 spatial runtime condition channel에 등록하지 않는다. Promotion/envelope reconciliation도 public historical injection 권한이나 historical spatial runtime registration 권한을 부여하지 않는다.
+
+현재 public parcel request는 `sigungu_cd / bjdong_cd / plat_gb_cd / bun / ji`를 직접 입력받아 canonical parcel identity를 구성한다. Ordinary와 mountain 두 public HTTP 경로가 실제 E2E 검증됐다.
+
+다음 product-facing gap은 사용자가 위 필지 코드를 미리 알지 못해도 **주소 입력 → 검증된 canonical parcel identity/PNU → 기존 분석 pipeline**으로 진입할 수 있는 public input boundary다. 이 gap은 아직 구현되었다고 간주하지 않으며, 주소 해석 결과가 여러 필지이거나 불확실한 경우 임의 PNU를 선택해서는 안 된다.
 
 ## 12. Authority / historical evidence
 
@@ -221,7 +241,9 @@ Test categories: UNIT / BEHAVIORAL REGRESSION / INTEGRATION / END-TO-END / POLIC
 잘못된 FALSE보다 UNKNOWN이 낫다.
 ```
 
-최신 user-local validation에는 promotion bridge contract, promotion E2E, orchestrator promotion wiring, verified-envelope builder handoff, verified-envelope service exposure 계약이 모두 PASS로 포함된다.
+Behavioral PASS HEAD `e29d676b84f99cc220c52a18196af575631d60b3` includes the parcel-register identity contracts, parcel-only Site and Land/address enrichment contracts, cross-PNU identity guard, public API parcel identity contract, district-unit E2E regression, historical E2E regression, plus the previously validated promotion/verified-envelope production contracts.
+
+Real-data validation additionally confirmed the mountain parcel-only path through official land data, address coordinate recovery, live parcel polygon exact-PNU verification, and Public FastAPI HTTP E2E. Ordinary Public FastAPI HTTP E2E was also validated without regressing the existing Building HUB path.
 
 ## 17. Security / repository policy
 
@@ -237,9 +259,18 @@ Architecture STEP98…STEP114와 legal-source investigation S206…S216/future S
 
 ## 19. Current validated architecture position
 
-Behavioral PASS HEAD `a51edf2c71a3147a529de2a35d1d66a289b9209f` establishes:
+Behavioral PASS HEAD `e29d676b84f99cc220c52a18196af575631d60b3` establishes the current code/test validation point; documentation-only commits after that point do not replace it as the behavioral PASS HEAD.
+
+Validated production architecture includes:
 
 ```text
+canonical parcel identity
+→ ordinary Building HUB path OR parcel-only zero-building path
+→ same-PNU official land enrichment
+→ canonical SITE identity
+→ same-PNU spatial recovery / exact-PNU polygon verification where available
+→ regulation resolution / deterministic evaluation
+
 verified historical candidate
 → verified parcel/PNU applicability
 → actual-SITE PNU rebinding
@@ -253,11 +284,11 @@ verified historical candidate
 → existing Rule Engine
 ```
 
-This preserves normal no-historical analysis, caller input immutability, no public historical API exposure, no historical spatial-runtime registration, and no second Rule Engine/SITE truth path.
+This preserves normal no-historical analysis, caller input immutability, no public historical API exposure, no historical spatial-runtime registration, no cross-PNU identity reuse, and no second Rule Engine/SITE truth path.
 
 ## 19A. District-unit / common verified production lane
 
-Behavioral PASS HEAD `a51edf2c71a3147a529de2a35d1d66a289b9209f` validates district-unit production transport through the existing Rule Engine architecture.
+District-unit production transport remains validated through the existing Rule Engine architecture.
 
 ```text
 verified historical transport
@@ -281,4 +312,25 @@ This reconciliation creates no new architecture STEP number, does not change gen
 
 ## 20. Next design question
 
-Historical and district-unit verified production transport hardening is complete at the current user-local validation point. The next work begins with a READ-ONLY architecture/product gap audit. Do not assume a new STEP. Preserve canonical PNU binding, verified-envelope fail-closed behavior, one production consumption lane, public API historical non-exposure, spatial/historical separation, and UQQ700 UNKNOWN/BLOCKED policy.
+Parcel-register identity and parcel-only production support are now reconciled with the existing architecture without a new STEP number.
+
+The next product-facing design question is:
+
+```text
+USER ADDRESS
+→ authoritative/unambiguous parcel identity resolution
+→ canonical PNU
+→ existing analyze_site_by_parcel pipeline
+```
+
+Before implementation, perform a READ-ONLY audit of available address/parcel resolution providers and existing repository helpers. Preserve these boundaries:
+- do not guess a PNU from ambiguous address results
+- do not reuse identity evidence across PNU
+- preserve ordinary/mountain register distinction
+- keep the existing canonical PNU builder as the parcel identity authority after component resolution
+- one SITE truth / Rule Engine consumption architecture
+- verified-envelope fail-closed behavior
+- public API historical non-exposure
+- spatial/historical separation
+- UQQ700 UNKNOWN/BLOCKED policy
+- no invented architecture STEP number
