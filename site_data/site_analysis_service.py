@@ -13,6 +13,7 @@ from law_data.district_unit_plan_verified_registry_candidate_envelope import (
     DistrictUnitPlanVerifiedRegistryCandidateEnvelope,
 )
 from law_data.site_analysis_builder import build_site_analysis
+from site_data.vworld_api import create_pnu
 
 
 def safe_string(value: Any) -> str:
@@ -31,18 +32,16 @@ def site_to_analysis_input(site: Any) -> Dict[str, Any]:
     road_address = safe_string(getattr(site, "road_address", ""))
     sigungu_cd = safe_string(getattr(site, "sigungu_cd", ""))
     bjdong_cd = safe_string(getattr(site, "bjdong_cd", ""))
+    plat_gb_cd = safe_string(getattr(site, "plat_gb_cd", ""))
     bun = safe_string(getattr(site, "bun", ""))
     ji = safe_string(getattr(site, "ji", ""))
 
     pnu = ""
-    if (
-        len(sigungu_cd) == 5
-        and len(bjdong_cd) == 5
-        and len(bun) == 4
-        and len(ji) == 4
-    ):
-        # Current Site model has no mountain-lot flag, so land_gbn remains "1".
-        pnu = sigungu_cd + bjdong_cd + "1" + bun + ji
+    if sigungu_cd and bjdong_cd and bun and ji and plat_gb_cd:
+        try:
+            pnu = create_pnu(sigungu_cd, bjdong_cd, bun, ji, plat_gb_cd)
+        except ValueError:
+            pnu = ""
 
     result = {
         "site_id": site_id,
@@ -50,6 +49,7 @@ def site_to_analysis_input(site: Any) -> Dict[str, Any]:
         "road_address": road_address,
         "sigungu_cd": sigungu_cd,
         "bjdong_cd": bjdong_cd,
+        "plat_gb_cd": plat_gb_cd,
         "bun": bun,
         "ji": ji,
         "sigungu_code": sigungu_cd,
