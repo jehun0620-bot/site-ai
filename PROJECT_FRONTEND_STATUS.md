@@ -43,7 +43,7 @@ CANDIDATE SEARCH                       IMPLEMENTED + USER LOCAL RUNTIME PASS
 CANDIDATE SELECTION                    IMPLEMENTED + USER LOCAL RUNTIME PASS
 PARCEL CONFIRMATION FRONTEND           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 VERIFIED PARCEL STATE                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
-MAP / VERIFIED POLYGON RENDERING       NOT IMPLEMENTED
+MAP / VERIFIED POLYGON RENDERING       IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -189,10 +189,10 @@ package-lock.json tracked
 | Parcel confirmation response typing | IMPLEMENTED | `PARCEL_CONFIRMATION_V1`, VERIFIED, Polygon/MultiPolygon contract |
 | Verified parcel state | IMPLEMENTED + USER LOCAL PASS | PNU/geometry type/CRS 표시 확인 |
 | Previous parcel state invalidation | IMPLEMENTED | 새 검색 시작 시 이전 selection/confirmation 제거 |
-| Map provider | DECISION CANDIDATE | Kakao Maps 우선 검토; provider-neutral adapter 원칙 |
-| Map UI | NOT IMPLEMENTED | 실제 SDK/dependency 미도입 |
+| Map provider | IMPLEMENTED + USER LOCAL PASS | Kakao Maps SDK 실제 브라우저 로딩 확인; provider-neutral adapter 유지 |
+| Map UI | IMPLEMENTED + USER LOCAL PASS | Kakao Maps 실제 지도 렌더링 확인 |
 | Candidate list/map sync | NOT IMPLEMENTED | Architecture contract만 확정 |
-| Verified polygon rendering | NOT IMPLEMENTED | 다음 구현 대상 |
+| Verified polygon rendering | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | Backend VERIFIED MultiPolygon 실제 지도 렌더링 확인 |
 | Full analysis UI | NOT IMPLEMENTED | Backend selected-candidate endpoint 존재 |
 | Result summary | NOT IMPLEMENTED | `SITE_ANALYSIS_API_V1` 기반 가능 |
 | Error/empty/UNKNOWN UI | PARTIAL FOUNDATION | candidate/confirmation 상태 처리 존재; 전체 product semantics 미완성 |
@@ -332,7 +332,7 @@ Backend parcel confirmation              PASS
     ↓
 verified parcel identity + geometry      PASS
     ↓
-map rendering                            NEXT
+map rendering                            PASS
     ↓
 user parcel confirmation
     ↓
@@ -434,9 +434,9 @@ Candidate selection UI                      USER LOCAL RUNTIME PASS
 Parcel confirmation Frontend integration    USER LOCAL BEHAVIORAL PASS
 Verified parcel state                       USER LOCAL BEHAVIORAL PASS
 
-Map adapter/provider                        NOT IMPLEMENTED
-Candidate marker rendering                  NOT IMPLEMENTED
-Verified polygon rendering                  NOT IMPLEMENTED
+Map adapter/provider                        IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+Candidate marker rendering                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+Verified polygon rendering                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Full analysis Frontend integration          NOT IMPLEMENTED
 ```
 
