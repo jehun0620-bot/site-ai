@@ -1,10 +1,17 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 import re
 from typing import Any, Dict, List, Optional
 
-from law_data.parcel_geometry_provider import load_vworld_key, request_json
+from law_data.parcel_geometry_provider import (
+    PARCEL_DATASET,
+    find_feature_pnu,
+    is_polygon_geometry,
+    load_vworld_key,
+    query_dataset_by_point,
+    request_json,
+)
 
 VWORLD_SEARCH_URL = "https://api.vworld.kr/req/search"
 
@@ -18,6 +25,7 @@ class AddressParcelCandidate:
     x: float
     y: float
     crs: str = "EPSG:4326"
+    reference_geometry: Optional[Dict[str, Any]] = None
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -61,6 +69,41 @@ def _candidate_from_item(item: Dict[str, Any]) -> Optional[AddressParcelCandidat
     )
 
 
+def _reference_geometry_for_candidate(
+    candidate: AddressParcelCandidate,
+    api_key: str,
+) -> Optional[Dict[str, Any]]:
+    """Return discovery-only parcel geometry when the feature PNU matches.
+
+    This is not canonical parcel verification. The existing selected-candidate
+    verification boundary must still be executed before VERIFIED state or SITE
+    analysis admission.
+    """
+    result = query_dataset_by_point(
+        api_key,
+        PARCEL_DATASET,
+        candidate.x,
+        candidate.y,
+    )
+    if not isinstance(result, dict):
+        return None
+
+    features = result.get("features", [])
+    if not isinstance(features, list):
+        return None
+
+    for feature in features:
+        if not isinstance(feature, dict) or not is_polygon_geometry(feature):
+            continue
+        _, feature_pnu = find_feature_pnu(feature)
+        if feature_pnu != candidate.candidate_pnu:
+            continue
+        geometry = feature.get("geometry")
+        if isinstance(geometry, dict) and geometry.get("type") in {"Polygon", "MultiPolygon"}:
+            return geometry
+    return None
+
+
 def search_address_parcel_candidates(
     query: str,
     *,
@@ -69,8 +112,10 @@ def search_address_parcel_candidates(
 ) -> List[AddressParcelCandidate]:
     """Return provider parcel candidates for discovery only.
 
-    Results are intentionally NOT VERIFIED canonical parcel identities. Analysis
-    admission requires a separate backend parcel verification boundary.
+    Results are intentionally NOT VERIFIED canonical parcel identities. A
+    matching parcel polygon may be attached as reference_geometry solely to
+    improve candidate discovery on the map. Analysis admission still requires
+    the separate backend parcel verification boundary.
     """
     normalized = _normalize_search_query(query)
     if not normalized:
@@ -115,5 +160,6 @@ def search_address_parcel_candidates(
         if candidate is None or candidate.candidate_pnu in seen_pnus:
             continue
         seen_pnus.add(candidate.candidate_pnu)
-        candidates.append(candidate)
+        reference_geometry = _reference_geometry_for_candidate(candidate, key)
+        candidates.append(replace(candidate, reference_geometry=reference_geometry))
     return candidates
