@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Dict, Literal
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-from site_data.site_analysis_orchestrator import BuildingAPIError, SiteAnalysisError, SiteBuildError, analyze_site_by_parcel
+from site_data.site_analysis_orchestrator import BuildingAPIError, SiteAnalysisError, SiteBuildError, analyze_site_by_address, analyze_site_by_parcel
 
 app=FastAPI(title="AI 대지분석 API",version="0.1.0",description="건축HUB / SITE / 공간정보 / 법규평가를 통합한 대지분석 API")
 
@@ -18,6 +18,12 @@ class SiteAnalysisRequest(BaseModel):
     procedure_profile:Dict[str,str]=Field(default_factory=dict)
     include_debug:bool=False
 
+class AddressSiteAnalysisRequest(BaseModel):
+    address:str=Field(...,min_length=1,description="분석할 지번주소")
+    project_profile:Dict[str,str]=Field(default_factory=dict)
+    procedure_profile:Dict[str,str]=Field(default_factory=dict)
+    include_debug:bool=False
+
 @app.get("/health")
 def health(): return {"status":"ok","service":"site-analysis"}
 
@@ -25,6 +31,15 @@ def health(): return {"status":"ok","service":"site-analysis"}
 def site_analysis(request:SiteAnalysisRequest):
     try:
         return analyze_site_by_parcel(sigungu_cd=request.sigungu_cd,bjdong_cd=request.bjdong_cd,plat_gb_cd=request.plat_gb_cd,bun=request.bun,ji=request.ji,project_profile=request.project_profile,procedure_profile=request.procedure_profile,include_debug=request.include_debug)
+    except BuildingAPIError as exc: raise HTTPException(status_code=502,detail=str(exc)) from exc
+    except SiteBuildError as exc: raise HTTPException(status_code=404,detail=str(exc)) from exc
+    except SiteAnalysisError as exc: raise HTTPException(status_code=500,detail=str(exc)) from exc
+    except Exception as exc: raise HTTPException(status_code=500,detail="SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
+
+@app.post("/v1/site-analysis/address")
+def site_analysis_by_address(request:AddressSiteAnalysisRequest):
+    try:
+        return analyze_site_by_address(address=request.address,project_profile=request.project_profile,procedure_profile=request.procedure_profile,include_debug=request.include_debug)
     except BuildingAPIError as exc: raise HTTPException(status_code=502,detail=str(exc)) from exc
     except SiteBuildError as exc: raise HTTPException(status_code=404,detail=str(exc)) from exc
     except SiteAnalysisError as exc: raise HTTPException(status_code=500,detail=str(exc)) from exc
