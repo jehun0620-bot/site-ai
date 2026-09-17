@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { confirmParcelCandidate, searchParcelCandidates } from './api/parcelCandidates'
+import { analyzeSelectedParcelCandidate } from './api/siteAnalysis'
 import KakaoMap from './map/KakaoMap'
 import type {
   CandidateSearchState,
@@ -7,8 +8,15 @@ import type {
   ParcelConfirmationResponse,
   ParcelVerificationState,
 } from './types/parcel'
+import type { SiteAnalysisResponse, SiteAnalysisState } from './types/siteAnalysis'
 
 const INITIAL_GUIDE = '현재 검증된 범위에서는 지번주소로 검색하는 것을 권장합니다.'
+
+function displayValue(value: unknown): string {
+  if (value === null || value === undefined || value === '') return '정보 없음'
+  if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') return String(value)
+  return '상세 결과에서 확인'
+}
 
 export default function App() {
   const [query, setQuery] = useState('')
@@ -19,12 +27,22 @@ export default function App() {
   const [verificationState, setVerificationState] = useState<ParcelVerificationState>('IDLE')
   const [confirmation, setConfirmation] = useState<ParcelConfirmationResponse | null>(null)
   const [verificationMessage, setVerificationMessage] = useState('')
+  const [analysisState, setAnalysisState] = useState<SiteAnalysisState>('IDLE')
+  const [analysis, setAnalysis] = useState<SiteAnalysisResponse | null>(null)
+  const [analysisMessage, setAnalysisMessage] = useState('')
+
+  function clearAnalysis() {
+    setAnalysisState('IDLE')
+    setAnalysis(null)
+    setAnalysisMessage('')
+  }
 
   function clearParcelVerification() {
     setSelectedCandidate(null)
     setVerificationState('IDLE')
     setConfirmation(null)
     setVerificationMessage('')
+    clearAnalysis()
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -61,6 +79,7 @@ export default function App() {
   }
 
   async function handleCandidateSelection(candidate: ParcelCandidate) {
+    clearAnalysis()
     setSelectedCandidate(candidate)
     setConfirmation(null)
     setVerificationState('VERIFYING_PARCEL')
@@ -79,6 +98,29 @@ export default function App() {
       setConfirmation(null)
       setVerificationState('PARCEL_VERIFICATION_FAILED')
       setVerificationMessage(error instanceof Error ? error.message : '선택한 필지를 확인하지 못했습니다.')
+    }
+  }
+
+  async function handleAnalysis() {
+    if (!selectedCandidate || !confirmation || verificationState !== 'PARCEL_VERIFIED') return
+
+    clearAnalysis()
+    setAnalysisState('ANALYZING')
+    setAnalysisMessage('Backend가 필지를 다시 검증한 뒤 SITE 분석을 실행하고 있습니다.')
+
+    try {
+      const result = await analyzeSelectedParcelCandidate(selectedCandidate)
+      if (result.site.pnu !== confirmation.parcel.pnu) {
+        throw new Error('분석 결과의 PNU가 확인된 필지와 일치하지 않습니다.')
+      }
+
+      setAnalysis(result)
+      setAnalysisState('ANALYSIS_READY')
+      setAnalysisMessage('실제 SITE 분석 결과를 받았습니다.')
+    } catch (error) {
+      setAnalysis(null)
+      setAnalysisState('ANALYSIS_FAILED')
+      setAnalysisMessage(error instanceof Error ? error.message : 'SITE 분석을 완료하지 못했습니다.')
     }
   }
 
@@ -121,7 +163,7 @@ export default function App() {
                   key={`${candidate.candidate_pnu}-${candidate.x}-${candidate.y}`}
                   type="button"
                   onClick={() => handleCandidateSelection(candidate)}
-                  disabled={verificationState === 'VERIFYING_PARCEL'}
+                  disabled={verificationState === 'VERIFYING_PARCEL' || analysisState === 'ANALYZING'}
                   aria-pressed={isSelected}
                 >
                   <span className="candidate-heading">
@@ -151,22 +193,66 @@ export default function App() {
             <p>{verificationMessage}</p>
 
             {confirmation && (
-              <dl className="verified-details">
+              <>
+                <dl className="verified-details">
+                  <div>
+                    <dt>지번주소</dt>
+                    <dd>{selectedCandidate.parcel_address || '정보 없음'}</dd>
+                  </div>
+                  <div>
+                    <dt>PNU</dt>
+                    <dd>{confirmation.parcel.pnu}</dd>
+                  </div>
+                  <div>
+                    <dt>경계 형식</dt>
+                    <dd>{confirmation.geometry.type}</dd>
+                  </div>
+                  <div>
+                    <dt>좌표계</dt>
+                    <dd>{confirmation.parcel.crs}</dd>
+                  </div>
+                </dl>
+                <button className="analysis-button" type="button" onClick={handleAnalysis} disabled={analysisState === 'ANALYZING'}>
+                  {analysisState === 'ANALYZING' ? '분석 중…' : '이 필지 분석'}
+                </button>
+              </>
+            )}
+          </section>
+        )}
+
+        {analysisState !== 'IDLE' && (
+          <section className={`analysis-panel analysis-${analysisState.toLowerCase()}`} aria-live="polite">
+            <div className="analysis-title-row">
+              <strong>{analysisState === 'ANALYSIS_READY' ? 'SITE 분석 결과' : analysisState === 'ANALYSIS_FAILED' ? 'SITE 분석 실패' : 'SITE 분석 중'}</strong>
+              {analysisState === 'ANALYSIS_READY' && <span className="analysis-ready-badge">READY</span>}
+            </div>
+            <p>{analysisMessage}</p>
+
+            {analysis && (
+              <dl className="analysis-summary">
                 <div>
                   <dt>지번주소</dt>
-                  <dd>{selectedCandidate.parcel_address || '정보 없음'}</dd>
+                  <dd>{displayValue(analysis.site.address)}</dd>
+                </div>
+                <div>
+                  <dt>도로명주소</dt>
+                  <dd>{displayValue(analysis.site.road_address)}</dd>
                 </div>
                 <div>
                   <dt>PNU</dt>
-                  <dd>{confirmation.parcel.pnu}</dd>
+                  <dd>{displayValue(analysis.site.pnu)}</dd>
                 </div>
                 <div>
-                  <dt>경계 형식</dt>
-                  <dd>{confirmation.geometry.type}</dd>
+                  <dt>용도지역</dt>
+                  <dd>{displayValue(analysis.site.zone)}</dd>
                 </div>
                 <div>
-                  <dt>좌표계</dt>
-                  <dd>{confirmation.parcel.crs}</dd>
+                  <dt>분석 상태</dt>
+                  <dd>{displayValue(analysis.status)}</dd>
+                </div>
+                <div>
+                  <dt>추가 입력</dt>
+                  <dd>{analysis.requirements.requires_additional_input ? '필요' : '현재 응답 기준 없음'}</dd>
                 </div>
               </dl>
             )}
