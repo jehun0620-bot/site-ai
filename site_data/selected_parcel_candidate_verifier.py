@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
+from typing import Any, Dict, Optional
 
 from law_data.parcel_geometry_provider import (
     PARCEL_DATASET,
@@ -26,6 +26,7 @@ class SelectedParcelCandidateVerification:
     x: Optional[float] = None
     y: Optional[float] = None
     crs: str = ""
+    geometry: Optional[Dict[str, Any]] = None
 
     @property
     def verified(self) -> bool:
@@ -73,21 +74,30 @@ def verify_selected_parcel_candidate(
         features = []
 
     polygon_pnus = []
+    matching_feature: Optional[Dict[str, Any]] = None
     for feature in features:
         if not isinstance(feature, dict) or not is_polygon_geometry(feature):
             continue
         _, feature_pnu = find_feature_pnu(feature)
         if feature_pnu and feature_pnu not in polygon_pnus:
             polygon_pnus.append(feature_pnu)
+        if feature_pnu == pnu and matching_feature is None:
+            matching_feature = feature
 
     if not polygon_pnus:
         return SelectedParcelCandidateVerification(
             "REJECTED", "PARCEL_POLYGON_UNRESOLVED", pnu=pnu, x=point_x, y=point_y, crs="EPSG:4326"
         )
 
-    if pnu not in polygon_pnus:
+    if pnu not in polygon_pnus or matching_feature is None:
         return SelectedParcelCandidateVerification(
             "REJECTED", "SELECTED_PNU_POLYGON_MISMATCH", pnu=pnu, x=point_x, y=point_y, crs="EPSG:4326"
+        )
+
+    geometry = matching_feature.get("geometry")
+    if not isinstance(geometry, dict) or geometry.get("type") not in {"Polygon", "MultiPolygon"}:
+        return SelectedParcelCandidateVerification(
+            "REJECTED", "PARCEL_POLYGON_UNRESOLVED", pnu=pnu, x=point_x, y=point_y, crs="EPSG:4326"
         )
 
     try:
@@ -104,5 +114,6 @@ def verify_selected_parcel_candidate(
         x=point_x,
         y=point_y,
         crs="EPSG:4326",
+        geometry=geometry,
         **identity,
     )
