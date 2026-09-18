@@ -55,6 +55,7 @@ ADDITIONAL INPUT UX / REANALYSIS        IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PLAYWRIGHT MULTI-PARCEL E2E             IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ERROR / EMPTY SEMANTICS                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 RESPONSIVE RESULT NAVIGATION              IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+PC ADDITIONAL INPUT WORKSPACE              IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -238,6 +239,7 @@ package-lock.json tracked
 | Playwright multi-parcel E2E | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 실제 Browser → Frontend → Backend 경로에서 일반지번 + 산지번 + 건축물 없는 필지, VERIFIED, 분석, 추가입력 재분석, PNU 보존, 필지 전환 상태 격리 검증 |
 | Error/empty/UNKNOWN UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 빈 입력/검색 결과 없음/실패 상태를 구분하고 Backend `detail`을 보존; UNKNOWN은 오류/FALSE로 변환하지 않음 |
 | Responsive result navigation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | PC에서는 결과 바로가기를 숨기고, 920px 이하 1열 결과 화면에서 6개 섹션 바로가기를 제공 |
+| PC additional input workspace | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | PC 결과 grid에서 추가 입력 필요사항을 전체 폭으로 확장하고 법규평가/외부확인을 6/6으로 배치; 입력 및 재분석 동작 유지 |
 
 ---
 
@@ -563,6 +565,7 @@ Verified parcel map resize/refit             IMPLEMENTED + USER LOCAL BEHAVIORAL
 
 Error/empty product semantics               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Responsive SITE result navigation           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+PC additional input workspace               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -742,7 +745,35 @@ PC 결과 화면에서는 주요 결과 카드가 한 화면에 함께 보이므
 
 ---
 
-## 21. Other Known Product Gaps
+## 21. PC Additional Input Workspace Validation
+
+### 2026-09-18 User Local Behavioral Validation
+
+PC 결과 화면에서 실제 사용자 조작이 집중되는 추가 입력 필요사항의 작업 공간을 확장했다. Backend requirement contract, TRUE/FALSE/UNKNOWN 의미, 미응답 key 생략, selected-candidate 재분석 로직은 변경하지 않았다.
+
+최종 구현 및 사용자 로컬 검증 HEAD:
+
+```text
+b8954a154120b7f9d03288679cd882129da8affb
+```
+
+검증된 PC result grid:
+
+```text
+1행  기본정보 4 | 대지면적 5 | 건축규모 3
+2행  법규평가 6 | 외부확인 6
+3행  추가 입력 필요사항 12 (전체 폭)
+```
+
+사업/절차 requirement와 각 TRUE/FALSE/UNKNOWN 선택 UI가 넓은 PC 작업영역을 사용하며, 기존 입력 선택 및 `입력 내용으로 다시 분석` 동작이 정상 작동하는 것을 사용자 로컬 환경에서 확인했다.
+
+이번 검증 범위는 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 별도 테스트 환경 준비 전까지 보류한다.
+
+따라서 **PC ADDITIONAL INPUT WORKSPACE = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 22. Other Known Product Gaps
 
 ```text
 road-address support
@@ -757,7 +788,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 22. Immediate Next Step Status
+## 23. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -773,6 +804,7 @@ ADDITIONAL INPUT UX / REANALYSIS       USER LOCAL BEHAVIORAL PASS
 PLAYWRIGHT MULTI-PARCEL E2E            USER LOCAL BEHAVIORAL PASS
 ERROR / EMPTY SEMANTICS                 USER LOCAL BEHAVIORAL PASS
 RESPONSIVE RESULT NAVIGATION             USER LOCAL BEHAVIORAL PASS
+PC ADDITIONAL INPUT WORKSPACE             USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -780,6 +812,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 23. Status Update Rule
+## 24. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
