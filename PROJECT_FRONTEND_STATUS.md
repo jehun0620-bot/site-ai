@@ -53,6 +53,7 @@ RESULT-CENTERED LAYOUT                 IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 VERIFIED MAP RESIZE / REFIT            IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ADDITIONAL INPUT UX / REANALYSIS        IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PLAYWRIGHT MULTI-PARCEL E2E             IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+ERROR / EMPTY SEMANTICS                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -234,7 +235,7 @@ package-lock.json tracked
 | Verified map resize/refit | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 작은 지도에서도 VERIFIED parcel polygon 전체가 다시 viewport에 맞춰지는 것 확인 |
 | Additional input UX / reanalysis | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 사업/절차 requirement에 TRUE/FALSE/UNKNOWN 입력 후 selected-candidate 재분석 확인; 미응답 key는 profile에서 생략 |
 | Playwright multi-parcel E2E | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 실제 Browser → Frontend → Backend 경로에서 일반지번 + 산지번 + 건축물 없는 필지, VERIFIED, 분석, 추가입력 재분석, PNU 보존, 필지 전환 상태 격리 검증 |
-| Error/empty/UNKNOWN UI | PARTIAL | UNKNOWN 의미 보존은 PASS; 전체 product error/empty semantics는 추가 개선 필요 |
+| Error/empty/UNKNOWN UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 빈 입력/검색 결과 없음/실패 상태를 구분하고 Backend `detail`을 보존; UNKNOWN은 오류/FALSE로 변환하지 않음 |
 
 ---
 
@@ -558,7 +559,7 @@ Result UX / presentation refinement         IMPLEMENTED + USER LOCAL BEHAVIORAL 
 Result-centered layout transition           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Verified parcel map resize/refit             IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 
-Error/empty product semantics               PARTIAL
+Error/empty product semantics               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -574,7 +575,7 @@ Error/empty product semantics               PARTIAL
 ```text
 긴 SITE 결과의 섹션 탐색 구조
 Playwright E2E의 검증된 필지 seed 확대
-전체 product error / empty semantics
+전체 product error / empty semantics — 1차 USER LOCAL BEHAVIORAL PASS 완료
 모바일 결과/지도 순서와 반응형 가독성
 candidate/verified 상태 설명의 사용자 친화적 표현
 ```
@@ -670,7 +671,39 @@ Candidate와 reference geometry는 계속 discovery-only이며, Playwright도 Fr
 
 ---
 
-## 19. Other Known Product Gaps
+## 19. Error / Empty Semantics Validation
+
+### 2026-09-18 User Local Behavioral Validation
+
+Frontend API client가 Backend의 기존 FastAPI `detail`을 HTTP status 숫자로 축약하지 않고 보존하도록 개선했다. 별도의 machine-readable product error schema를 새로 추정하거나 Frontend에서 오류 의미를 재판정하지 않는다.
+
+최종 구현 및 사용자 로컬 검증 HEAD:
+
+```text
+986d5b45a9848d9f580f02c9e20e675b903d5dbb
+```
+
+검증 결과:
+
+```text
+production build                         PASS
+Playwright real Backend E2E              1 passed (11.9s)
+empty address input                      USER LOCAL PASS
+zero-candidate / empty-result UX         USER LOCAL PASS
+normal / empty / error state separation  USER LOCAL PASS
+Backend detail preservation              IMPLEMENTED
+UNKNOWN != FALSE                         PRESERVED
+```
+
+빈 검색어는 서버 장애와 같은 `SEARCH_ERROR`로 표시하지 않고 입력/empty 계열 상태로 구분한다. 정상 검색 결과가 0개인 경우도 서버 실패와 구분해 사용자에게 검색은 완료됐지만 후보가 없음을 안내한다.
+
+후보 검색, 필지 확인, SITE 분석의 HTTP 실패에서는 Backend가 실제로 제공한 문자열 `detail`이 있으면 이를 보존한다. 현재 Backend에는 machine-readable product error schema가 없으므로 Frontend는 HTTP 404/500/502만 보고 법적·데이터 의미, 재시도 가능 여부 등을 임의 추론하지 않는다.
+
+기존 정상 분석 경로는 같은 HEAD에서 production build 및 실제 Browser → Frontend → Backend Playwright E2E로 회귀 검증했다.
+
+---
+
+## 20. Other Known Product Gaps
 
 ```text
 road-address support
@@ -685,7 +718,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 20. Immediate Next Step Status
+## 21. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -699,6 +732,7 @@ RESULT-CENTERED LAYOUT                 USER LOCAL BEHAVIORAL PASS
 VERIFIED PARCEL MAP RESIZE / REFIT     USER LOCAL BEHAVIORAL PASS
 ADDITIONAL INPUT UX / REANALYSIS       USER LOCAL BEHAVIORAL PASS
 PLAYWRIGHT MULTI-PARCEL E2E            USER LOCAL BEHAVIORAL PASS
+ERROR / EMPTY SEMANTICS                 USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -706,6 +740,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 21. Status Update Rule
+## 22. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
