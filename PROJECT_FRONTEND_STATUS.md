@@ -999,7 +999,29 @@ PC `대지면적` 결과에서 Backend 면적값이나 계산 계약을 변경�
 
 ---
 
-## 28. Other Known Product Gaps
+## 28. PC Analysis Result Header Compaction Validation
+
+### 2026-09-19 User Local Behavioral Validation
+
+PC 분석 완료 결과에서 이미 `분석 완료` badge로 전달되는 성공 상태와 중복되던 `실제 SITE 분석 결과를 받았습니다.` 문장을 완료 상태에서만 숨겨, 결과 카드가 바로 시작되도록 presentation을 compact하게 정리했다.
+
+`분석 중`과 `분석 실패` 상태 메시지는 그대로 유지한다. Backend 분석 상태, 결과값, Rule Engine, 지도, 추가 입력 및 재분석 의미는 변경하지 않았다.
+
+사용자 로컬 PC 화면에서 `SITE 분석 결과 / 분석 완료` 바로 아래에 `필지 기본정보 / 대지면적 / 건축 규모 기준` 결과가 시작되는 것을 확인했고, 기존 Building HUB 정보, 대지면적 강조, 법규 평가 및 추가 입력 영역도 유지됨을 확인했다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+de3178454db6d599c05a0d9acf777d838f3af722
+```
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC ANALYSIS RESULT HEADER COMPACTION = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 29. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1014,7 +1036,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 29. Immediate Next Step Status
+## 30. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1037,6 +1059,7 @@ PC REQUIREMENT INPUT PROGRESS                USER LOCAL BEHAVIORAL PASS
 PC BUILDING HUB RESULT FACTS                  USER LOCAL BEHAVIORAL PASS
 PC EXTERNAL DEPENDENCY PRESENTATION            USER LOCAL BEHAVIORAL PASS
 PC LAND AREA INFORMATION HIERARCHY              USER LOCAL BEHAVIORAL PASS
+PC ANALYSIS RESULT HEADER COMPACTION             USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1044,6 +1067,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 30. Status Update Rule
+## 31. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
