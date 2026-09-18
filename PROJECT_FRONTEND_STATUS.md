@@ -924,7 +924,45 @@ Backend `site_analysis_orchestrator.py`의 실제 생성 지점을 READ-ONLY 확
 
 ---
 
-## 26. Other Known Product Gaps
+## 26. PC External Dependency Presentation Validation
+
+### 2026-09-18 User Local Behavioral Validation
+
+PC `외부 확인 정보`를 한 줄 요약에서 구조화된 사실 카드로 정리했다. Backend external dependency 생성 로직과 의미는 변경하지 않았다.
+
+표시 구조:
+
+```text
+외부 확인 분류
+확인 조건    → Backend condition
+현재 상태    → Backend status
+분석 차단    → Backend blocking_analysis
+원본 분류    → SITE_HISTORY인 경우 원본 분류 SITE_HISTORY 표시
+```
+
+사용자 로컬 PC 환경에서 `서울특별시 강남구 개포동 12`를 분석해 다음 표시를 실제 화면에서 확인했다.
+
+```text
+과거 이력 확인
+확인 조건    도시지역편입해제구역
+현재 상태    UNKNOWN
+분석 차단    아니오
+원본 분류    SITE_HISTORY
+```
+
+`UNKNOWN`은 오류나 비적용으로 변환하지 않고 Backend 상태 그대로 표시한다. Frontend는 external dependency를 새로 판정하거나 SITE_HISTORY 의미를 확대 해석하지 않는다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+7c6612a4f20d81e8c1058834aee3fc9d8d18fbaa
+```
+
+따라서 **PC EXTERNAL DEPENDENCY PRESENTATION = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 27. Other Known Product Gaps
 
 ```text
 road-address support
@@ -939,7 +977,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 27. Immediate Next Step Status
+## 28. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -960,6 +998,7 @@ PC VERIFIED PARCEL RESULT SUMMARY          USER LOCAL BEHAVIORAL PASS
 PC RULE REANALYSIS DELTA PRESENTATION       USER LOCAL BEHAVIORAL PASS
 PC REQUIREMENT INPUT PROGRESS                USER LOCAL BEHAVIORAL PASS
 PC BUILDING HUB RESULT FACTS                  USER LOCAL BEHAVIORAL PASS
+PC EXTERNAL DEPENDENCY PRESENTATION            USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -967,6 +1006,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 28. Status Update Rule
+## 29. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
