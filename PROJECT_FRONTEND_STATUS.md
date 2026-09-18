@@ -56,6 +56,7 @@ PLAYWRIGHT MULTI-PARCEL E2E             IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ERROR / EMPTY SEMANTICS                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 RESPONSIVE RESULT NAVIGATION              IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC ADDITIONAL INPUT WORKSPACE              IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+PC VERIFIED PARCEL RESULT SUMMARY           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -240,6 +241,7 @@ package-lock.json tracked
 | Error/empty/UNKNOWN UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 빈 입력/검색 결과 없음/실패 상태를 구분하고 Backend `detail`을 보존; UNKNOWN은 오류/FALSE로 변환하지 않음 |
 | Responsive result navigation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | PC에서는 결과 바로가기를 숨기고, 920px 이하 1열 결과 화면에서 6개 섹션 바로가기를 제공 |
 | PC additional input workspace | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | PC 결과 grid에서 추가 입력 필요사항을 전체 폭으로 확장하고 법규평가/외부확인을 6/6으로 배치; 입력 및 재분석 동작 유지 |
+| PC verified parcel result summary | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 분석 전 VERIFIED 상세정보는 유지하고 분석 완료 후 상단 확인 카드는 지번주소 + PNU 중심으로 compact 표시 |
 
 ---
 
@@ -566,6 +568,7 @@ Verified parcel map resize/refit             IMPLEMENTED + USER LOCAL BEHAVIORAL
 Error/empty product semantics               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 Responsive SITE result navigation           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC additional input workspace               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+PC verified parcel result summary            IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -773,7 +776,44 @@ b8954a154120b7f9d03288679cd882129da8affb
 
 ---
 
-## 22. Other Known Product Gaps
+## 22. PC Verified Parcel Result Summary Validation
+
+### 2026-09-18 User Local Behavioral Validation
+
+분석 완료 후 PC 상단에서 SITE 결과와 중복되던 VERIFIED parcel 상세정보를 compact 요약으로 정리했다. Parcel verification 자체의 의미나 Backend trust boundary는 변경하지 않았다.
+
+최종 구현 및 사용자 로컬 검증 HEAD:
+
+```text
+c35f391b833cec18d9292df36e4960a36e53ea6c
+```
+
+검증된 표시 상태:
+
+```text
+분석 전 VERIFIED
+→ Backend 확인 설명
+→ 지번주소
+→ PNU
+→ 경계 형식
+→ 좌표계
+→ 분석 실행
+
+분석 완료
+→ 필지 확인 완료 + VERIFIED
+→ 지번주소
+→ PNU
+```
+
+분석 완료 후 숨겨지는 경계 형식/좌표계는 Backend 데이터에서 삭제하거나 변경한 것이 아니라 상단 presentation에서만 중복 표시를 줄인 것이다. SITE 결과의 필지 기본정보와 VERIFIED parcel map도 그대로 유지된다.
+
+사용자 로컬 PC 화면에서 분석 전 상세 표시와 분석 완료 후 compact 요약이 모두 정상적으로 표시되는 것을 확인했다. 이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC VERIFIED PARCEL RESULT SUMMARY = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 23. Other Known Product Gaps
 
 ```text
 road-address support
@@ -788,7 +828,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 23. Immediate Next Step Status
+## 24. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -805,6 +845,7 @@ PLAYWRIGHT MULTI-PARCEL E2E            USER LOCAL BEHAVIORAL PASS
 ERROR / EMPTY SEMANTICS                 USER LOCAL BEHAVIORAL PASS
 RESPONSIVE RESULT NAVIGATION             USER LOCAL BEHAVIORAL PASS
 PC ADDITIONAL INPUT WORKSPACE             USER LOCAL BEHAVIORAL PASS
+PC VERIFIED PARCEL RESULT SUMMARY          USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -812,6 +853,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 24. Status Update Rule
+## 25. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
