@@ -962,7 +962,44 @@ PC `외부 확인 정보`를 한 줄 요약에서 구조화된 사실 카드로 
 
 ---
 
-## 27. Other Known Product Gaps
+## 27. PC Land Area Information Hierarchy Validation
+
+### 2026-09-19 User Local Behavioral Validation
+
+PC `대지면적` 결과에서 Backend 면적값이나 계산 계약을 변경하지 않고 정보 위계만 보강했다.
+
+표시 원칙:
+
+```text
+공식 대지면적
+→ 주 결과로 강조
+
+공간 면적
+→ 보조 검증정보로 표시
+
+면적 차이
+→ 보조 검증정보로 표시
+```
+
+공간 면적 또는 비교값이 없을 때는 기존 계약대로 `정보 없음`과 Backend 응답에 값이 없어 계산하지 않았다는 설명을 유지하며, Frontend에서 면적을 새로 계산하거나 추정하지 않는다.
+
+구현 후 사용자 로컬 production build에서 기존 Building HUB presentation의 optional `service` 접근에 대한 TypeScript `TS18048` 오류가 발견되었다. 실제 public Frontend type에서 `service?`가 optional임을 READ-ONLY로 확인한 뒤 `frontend/src/App.tsx`의 Building HUB 표시 접근만 optional chaining으로 수정했다. 타입을 필수로 바꾸거나 Backend 계약을 변경하지 않았다.
+
+최종 사용자 로컬 검증 HEAD:
+
+```text
+6170571825d3c09420b94cf8f76b8fa5e35c5d97
+```
+
+해당 HEAD에서 `npm run build`가 `tsc -b && vite build`까지 정상 PASS했다. 사용자 PC 화면에서 `서울특별시 강남구 개포동 12-2번지` 결과를 확인했으며, `공식 대지면적 15,487.3㎡`가 주 결과로 강조되고 `공간 면적 / 면적 차이`는 보조정보로 표시되었다. 같은 화면에서 기존 `건축물 조회 건수 9건 / 건축HUB 상태 정상 (00)` 표시도 유지됨을 확인했다.
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC LAND AREA INFORMATION HIERARCHY = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 28. Other Known Product Gaps
 
 ```text
 road-address support
@@ -977,7 +1014,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 28. Immediate Next Step Status
+## 29. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -999,6 +1036,7 @@ PC RULE REANALYSIS DELTA PRESENTATION       USER LOCAL BEHAVIORAL PASS
 PC REQUIREMENT INPUT PROGRESS                USER LOCAL BEHAVIORAL PASS
 PC BUILDING HUB RESULT FACTS                  USER LOCAL BEHAVIORAL PASS
 PC EXTERNAL DEPENDENCY PRESENTATION            USER LOCAL BEHAVIORAL PASS
+PC LAND AREA INFORMATION HIERARCHY              USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1006,6 +1044,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 29. Status Update Rule
+## 30. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
