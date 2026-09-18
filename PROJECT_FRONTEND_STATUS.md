@@ -57,6 +57,7 @@ ERROR / EMPTY SEMANTICS                  IMPLEMENTED + USER LOCAL BEHAVIORAL PAS
 RESPONSIVE RESULT NAVIGATION              IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC ADDITIONAL INPUT WORKSPACE              IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC VERIFIED PARCEL RESULT SUMMARY           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+PC RULE REANALYSIS DELTA PRESENTATION        IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -242,6 +243,7 @@ package-lock.json tracked
 | Responsive result navigation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | PC에서는 결과 바로가기를 숨기고, 920px 이하 1열 결과 화면에서 6개 섹션 바로가기를 제공 |
 | PC additional input workspace | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | PC 결과 grid에서 추가 입력 필요사항을 전체 폭으로 확장하고 법규평가/외부확인을 6/6으로 배치; 입력 및 재분석 동작 유지 |
 | PC verified parcel result summary | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 분석 전 VERIFIED 상세정보는 유지하고 분석 완료 후 상단 확인 카드는 지번주소 + PNU 중심으로 compact 표시 |
+| PC rule reanalysis delta presentation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 최초 분석에는 변화량을 표시하지 않고, 추가 입력 재분석 후 직전 Backend rule_evaluation 집계 대비 조항 수 차이만 표시; 새 필지에서는 비교 기준 초기화 |
 
 ---
 
@@ -569,6 +571,7 @@ Error/empty product semantics               IMPLEMENTED + USER LOCAL BEHAVIORAL 
 Responsive SITE result navigation           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC additional input workspace               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC verified parcel result summary            IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+PC rule reanalysis delta presentation         IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -813,7 +816,42 @@ c35f391b833cec18d9292df36e4960a36e53ea6c
 
 ---
 
-## 23. Other Known Product Gaps
+## 23. PC Rule Reanalysis Delta Presentation Validation
+
+### 2026-09-18 User Local Behavioral Validation
+
+추가 입력을 반영한 재분석 뒤 사용자가 직전 Backend 분석과 현재 Backend 분석의 법규 평가 집계 차이를 확인할 수 있도록 PC 결과 presentation을 보강했다. Backend, API contract, Rule Engine의 판정 의미는 변경하지 않았다.
+
+최종 구현 및 사용자 로컬 검증 HEAD:
+
+```text
+33e6dcbe8a9029096dc6f2465c96eff17a42b554
+```
+
+검증된 동작:
+
+```text
+최초 분석
+→ 변화량 표시 없음
+
+추가 입력 → 재분석
+→ 전체 / 적용 / 비적용 / 조건부 / 확인 필요
+→ 각 집계에 직전 Backend 응답 대비 조항 수 차이 표시
+→ 변화가 없으면 0, 증가하면 +N, 감소하면 -N
+
+다른 필지 또는 새 분석 흐름
+→ 이전 비교 기준 초기화
+```
+
+변화량은 Frontend가 새로운 법적 판단을 생성한 것이 아니라 직전과 현재 Backend `rule_evaluation` 집계의 단순 산술 차이다. 따라서 유리/불리, 규제 강화/완화 등의 해석을 부여하지 않는다.
+
+사용자 로컬 PC 환경에서 최초 분석, 추가 입력 재분석, 직전 결과 대비 변화량 표시 및 필지 변경 시 비교 기준 초기화가 정상 작동하는 것을 확인했다. 이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC RULE REANALYSIS DELTA PRESENTATION = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 24. Other Known Product Gaps
 
 ```text
 road-address support
@@ -828,7 +866,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 24. Immediate Next Step Status
+## 25. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -846,6 +884,7 @@ ERROR / EMPTY SEMANTICS                 USER LOCAL BEHAVIORAL PASS
 RESPONSIVE RESULT NAVIGATION             USER LOCAL BEHAVIORAL PASS
 PC ADDITIONAL INPUT WORKSPACE             USER LOCAL BEHAVIORAL PASS
 PC VERIFIED PARCEL RESULT SUMMARY          USER LOCAL BEHAVIORAL PASS
+PC RULE REANALYSIS DELTA PRESENTATION       USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -853,6 +892,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 25. Status Update Rule
+## 26. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
