@@ -1043,7 +1043,31 @@ de3178454db6d599c05a0d9acf777d838f3af722
 
 ---
 
-## 30. Other Known Product Gaps
+## 30. PC Result Candidate List Collapse Validation
+
+### 2026-09-19 User Local Behavioral Validation
+
+분석 완료 후 기존 검색 후보 데이터를 삭제하지 않고 candidate list presentation만 기본 접힘 상태로 변경했다. 결과 상태에서는 `같은 검색의 후보 N개 / 후보 다시 보기` control을 표시하며, 사용자가 원할 때 기존 후보 목록을 다시 펼칠 수 있다.
+
+새 주소 검색 시 펼침 상태는 초기화한다. 기존 candidate 선택 handler, Backend parcel verification, PNU 확인, 분석 초기화 및 지도 흐름은 변경하지 않았다.
+
+사용자 로컬 PC 전체화면에서 분석 완료 후 후보 목록이 compact하게 접혀 결과 영역이 더 빠르게 시작되는 것을 확인했다. 이어서 `후보 다시 보기 → 후보 목록 펼치기 → 다른 후보 선택 → 기존 분석결과 초기화 → 새 필지 Backend 검증 흐름`도 정상 동작함을 사용자가 확인했다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+a26deccc999c1682421d5a5d3d688591a36f4759
+```
+
+이번 확인에서는 별도의 최신 `npm run build` 출력이 제공되지 않았으므로 production build PASS를 새로 주장하지 않는다. Behavioral validation과 build validation을 구분한다.
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC RESULT CANDIDATE LIST COLLAPSE = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 31. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1058,7 +1082,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 31. Immediate Next Step Status
+## 32. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1083,6 +1107,7 @@ PC EXTERNAL DEPENDENCY PRESENTATION            USER LOCAL BEHAVIORAL PASS
 PC LAND AREA INFORMATION HIERARCHY              USER LOCAL BEHAVIORAL PASS
 PC ANALYSIS RESULT HEADER COMPACTION             USER LOCAL BEHAVIORAL PASS
 PC VERIFIED RESULT CARD DEDUPLICATION             USER LOCAL BEHAVIORAL PASS
+PC RESULT CANDIDATE LIST COLLAPSE                  USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1090,6 +1115,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 32. Status Update Rule
+## 33. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
