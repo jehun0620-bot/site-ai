@@ -123,8 +123,14 @@ dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 600; }
 .requirement-reanalysis span { color: #6e786f; font-size: 11px; }
 .requirement-reanalysis button { min-height: 40px; padding: 0 16px; border: 0; border-radius: 9px; background: #27653f; color: white; font-weight: 700; }
 .dependency-list { display: grid; gap: 8px; padding: 0; list-style: none; }
-.dependency-list li { display: grid; gap: 4px; padding: 12px; border-radius: 10px; background: white; border: 1px solid #e4e9e4; }
-.dependency-list span, .dependency-list small { color: #6e786f; font-size: 11px; overflow-wrap: anywhere; }
+.dependency-list li { display: grid; gap: 10px; padding: 12px; border-radius: 10px; background: white; border: 1px solid #e4e9e4; }
+.dependency-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.dependency-heading strong { font-size: 12px; }
+.dependency-heading small { color: #879087; font-size: 10px; }
+.dependency-facts { display: grid; gap: 7px; margin: 0; }
+.dependency-facts div { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 10px; align-items: start; }
+.dependency-facts dt { color: #879087; font-size: 10px; }
+.dependency-facts dd { margin: 0; color: #5f6a61; font-size: 11px; line-height: 1.45; overflow-wrap: anywhere; }
 
 .map-stage { position: sticky; top: 0; height: 100vh; min-height: 520px; background: #dfe7df; }
 .app-shell-result-ready > .map-stage { grid-column: 2; grid-row: 1 / span 2; position: relative; top: auto; width: 100%; height: clamp(360px, 44vh, 470px); min-height: 0; align-self: start; overflow: hidden; border: 1px solid #d8dfd8; border-radius: 16px; background: #dfe7df; box-shadow: 0 12px 34px rgba(31, 49, 38, 0.12); }
