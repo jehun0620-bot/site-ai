@@ -54,6 +54,7 @@ VERIFIED MAP RESIZE / REFIT            IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ADDITIONAL INPUT UX / REANALYSIS        IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PLAYWRIGHT MULTI-PARCEL E2E             IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ERROR / EMPTY SEMANTICS                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+RESPONSIVE RESULT NAVIGATION              IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -236,6 +237,7 @@ package-lock.json tracked
 | Additional input UX / reanalysis | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 사업/절차 requirement에 TRUE/FALSE/UNKNOWN 입력 후 selected-candidate 재분석 확인; 미응답 key는 profile에서 생략 |
 | Playwright multi-parcel E2E | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 실제 Browser → Frontend → Backend 경로에서 일반지번 + 산지번 + 건축물 없는 필지, VERIFIED, 분석, 추가입력 재분석, PNU 보존, 필지 전환 상태 격리 검증 |
 | Error/empty/UNKNOWN UI | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 빈 입력/검색 결과 없음/실패 상태를 구분하고 Backend `detail`을 보존; UNKNOWN은 오류/FALSE로 변환하지 않음 |
+| Responsive result navigation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | PC에서는 결과 바로가기를 숨기고, 920px 이하 1열 결과 화면에서 6개 섹션 바로가기를 제공 |
 
 ---
 
@@ -560,6 +562,7 @@ Result-centered layout transition           IMPLEMENTED + USER LOCAL BEHAVIORAL 
 Verified parcel map resize/refit             IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 
 Error/empty product semantics               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+Responsive SITE result navigation           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -573,7 +576,7 @@ Error/empty product semantics               IMPLEMENTED + USER LOCAL BEHAVIORAL 
 우선 조사 후보:
 
 ```text
-긴 SITE 결과의 섹션 탐색 구조
+긴 SITE 결과의 섹션 탐색 구조 — responsive navigation USER LOCAL BEHAVIORAL PASS 완료
 Playwright E2E의 검증된 필지 seed 확대
 전체 product error / empty semantics — 1차 USER LOCAL BEHAVIORAL PASS 완료
 모바일 결과/지도 순서와 반응형 가독성
@@ -703,7 +706,43 @@ UNKNOWN != FALSE                         PRESERVED
 
 ---
 
-## 20. Other Known Product Gaps
+## 20. Responsive SITE Result Navigation Validation
+
+### 2026-09-18 User Local Behavioral Validation
+
+긴 SITE 결과의 탐색성을 개선하되 기존 결과 카드 구조와 Backend trust boundary는 변경하지 않았다. 결과 섹션에는 고정 anchor를 두고, 좁은 화면에서만 6개 바로가기를 표시한다.
+
+최종 구현 및 사용자 로컬 검증 HEAD:
+
+```text
+a7b87b1ea387450115eee9c2c80d84672b9e5266
+```
+
+검증된 navigation:
+
+```text
+기본정보
+대지면적
+건축규모
+법규평가
+추가입력
+외부확인
+```
+
+반응형 기준:
+
+```text
+width > 920px   → 결과 바로가기 숨김
+width <= 920px  → 결과 바로가기 표시 + 세로 1열 결과 탐색
+```
+
+PC 결과 화면에서는 주요 결과 카드가 한 화면에 함께 보이므로 별도 navigation의 실익이 작다는 사용자 실제 화면 검증을 반영했다. 모바일/좁은 화면에서는 결과가 1열로 길어지므로 동일 anchor navigation을 유지한다.
+
+6개 바로가기의 실제 섹션 이동과 PC/좁은 화면 표시 전환을 사용자 로컬 브라우저에서 확인했다. Backend, API contract, Rule Engine, 분석 결과 값, 추가 입력/reanalysis 의미는 변경하지 않았다.
+
+---
+
+## 21. Other Known Product Gaps
 
 ```text
 road-address support
@@ -718,7 +757,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 21. Immediate Next Step Status
+## 22. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -733,6 +772,7 @@ VERIFIED PARCEL MAP RESIZE / REFIT     USER LOCAL BEHAVIORAL PASS
 ADDITIONAL INPUT UX / REANALYSIS       USER LOCAL BEHAVIORAL PASS
 PLAYWRIGHT MULTI-PARCEL E2E            USER LOCAL BEHAVIORAL PASS
 ERROR / EMPTY SEMANTICS                 USER LOCAL BEHAVIORAL PASS
+RESPONSIVE RESULT NAVIGATION             USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -740,6 +780,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 22. Status Update Rule
+## 23. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
