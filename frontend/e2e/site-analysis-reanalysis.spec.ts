@@ -101,6 +101,47 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
       }
     }
 
+
+    await search(page, '서울특별시 강남구 개포동 12-6')
+
+    const buildinglessCard = page
+      .getByLabel('필지 후보 목록')
+      .locator('.candidate-card')
+      .filter({ hasText: '서울특별시 강남구 개포동 12-6' })
+      .first()
+    await expect(buildinglessCard).toBeVisible()
+    await buildinglessCard.click()
+
+    await expect(page.getByText('필지 확인 완료', { exact: true })).toBeVisible()
+    await expect(page.getByText('VERIFIED', { exact: true })).toBeVisible()
+
+    const buildinglessVerifiedPanel = page.locator('.verification-panel')
+    const buildinglessPnu = (await buildinglessVerifiedPanel.locator('dd').nth(1).textContent())?.trim() ?? ''
+    expect(buildinglessPnu).toBe('1168010300100120006')
+
+    await page.getByRole('button', { name: '이 필지 분석' }).click()
+    await expect(page.getByText('SITE 분석 결과', { exact: true })).toBeVisible({ timeout: 120_000 })
+    await expect(page.locator('.analysis-ready-badge')).toHaveText('분석 완료')
+
+    const buildinglessAnalysisPanel = page.locator('.analysis-panel')
+    await expect(
+      buildinglessAnalysisPanel.locator('dt', { hasText: 'PNU' }).locator('..').locator('dd'),
+    ).toHaveText(buildinglessPnu)
+
+    const buildinglessRequirements = page.locator('.requirement-item')
+    const buildinglessRequirementCount = await buildinglessRequirements.count()
+    if (buildinglessRequirementCount > 0) {
+      const optionLabel = INPUT_LABELS[Math.floor(random() * INPUT_LABELS.length)]
+      await buildinglessRequirements.first().getByRole('button', { name: optionLabel, exact: true }).click()
+      await page.getByRole('button', { name: '입력 내용으로 다시 분석' }).click()
+      await expect(
+        page.getByText('입력한 정보를 반영한 SITE 분석 결과를 받았습니다.', { exact: true }),
+      ).toBeVisible({ timeout: 120_000 })
+      await expect(
+        buildinglessAnalysisPanel.locator('dt', { hasText: 'PNU' }).locator('..').locator('dd'),
+      ).toHaveText(buildinglessPnu)
+    }
+
     expect(exercisedParcels).toBeGreaterThan(0)
   })
 })
