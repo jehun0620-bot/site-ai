@@ -1021,7 +1021,29 @@ de3178454db6d599c05a0d9acf777d838f3af722
 
 ---
 
-## 29. Other Known Product Gaps
+## 29. PC Verified Result Card Deduplication Validation
+
+### 2026-09-19 User Local Behavioral Validation
+
+분석 완료 후 상단에서 지도와 결과 본문에 이미 존재하는 VERIFIED parcel 정보와 중복되던 verification card를 숨겼다. 분석 전 `필지 확인 완료 / VERIFIED` 카드와 `이 필지 분석` 흐름은 그대로 유지한다.
+
+분석 완료 후에도 Kakao map의 `VERIFIED PARCEL` badge와 Backend confirmation geometry 기반 검증 polygon은 유지되며, 결과의 `필지 기본정보`에는 지번주소와 PNU가 계속 표시된다. 따라서 parcel verification 의미나 Backend trust boundary를 제거하지 않고 결과 화면의 중복 presentation만 줄였다.
+
+사용자 로컬 PC 전체화면에서 상단 verification card가 제거된 상태, 지도 `VERIFIED PARCEL` badge와 검증 polygon 유지, 결과 기본정보의 지번주소/PNU 유지가 모두 확인되었다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+4a20bf0b0d325e1014d38c159c2c7991e5ad0d43
+```
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC VERIFIED RESULT CARD DEDUPLICATION = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 30. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1036,7 +1058,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 30. Immediate Next Step Status
+## 31. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1060,6 +1082,7 @@ PC BUILDING HUB RESULT FACTS                  USER LOCAL BEHAVIORAL PASS
 PC EXTERNAL DEPENDENCY PRESENTATION            USER LOCAL BEHAVIORAL PASS
 PC LAND AREA INFORMATION HIERARCHY              USER LOCAL BEHAVIORAL PASS
 PC ANALYSIS RESULT HEADER COMPACTION             USER LOCAL BEHAVIORAL PASS
+PC VERIFIED RESULT CARD DEDUPLICATION             USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1067,6 +1090,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 31. Status Update Rule
+## 32. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
