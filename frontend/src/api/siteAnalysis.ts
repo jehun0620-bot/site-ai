@@ -8,6 +8,17 @@ export class SiteAnalysisApiError extends Error {
   }
 }
 
+async function readErrorDetail(response: Response): Promise<string | null> {
+  try {
+    const body: unknown = await response.json()
+    if (!body || typeof body !== 'object') return null
+    const detail = (body as Record<string, unknown>).detail
+    return typeof detail === 'string' && detail.trim() ? detail.trim() : null
+  } catch {
+    return null
+  }
+}
+
 export interface SiteAnalysisInputProfiles {
   project_profile?: SiteAnalysisInputProfile
   procedure_profile?: SiteAnalysisInputProfile
@@ -32,7 +43,10 @@ export async function analyzeSelectedParcelCandidate(
     signal,
   })
 
-  if (!response.ok) throw new SiteAnalysisApiError(`SITE 분석 요청에 실패했습니다. (${response.status})`)
+  if (!response.ok) {
+    const detail = await readErrorDetail(response)
+    throw new SiteAnalysisApiError(detail ? `SITE 분석을 완료하지 못했습니다. ${detail} (${response.status})` : `SITE 분석을 완료하지 못했습니다. (${response.status})`)
+  }
 
   const body: unknown = await response.json()
   if (!isSiteAnalysisResponse(body)) throw new SiteAnalysisApiError('SITE 분석 응답 형식이 올바르지 않습니다.')
