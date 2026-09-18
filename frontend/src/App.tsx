@@ -45,6 +45,7 @@ export default function App() {
   const [verificationMessage, setVerificationMessage] = useState('')
   const [analysisState, setAnalysisState] = useState<SiteAnalysisState>('IDLE')
   const [analysis, setAnalysis] = useState<SiteAnalysisResponse | null>(null)
+  const [previousAnalysis, setPreviousAnalysis] = useState<SiteAnalysisResponse | null>(null)
   const [analysisMessage, setAnalysisMessage] = useState('')
   const [projectProfile, setProjectProfile] = useState<SiteAnalysisInputProfile>({})
   const [procedureProfile, setProcedureProfile] = useState<SiteAnalysisInputProfile>({})
@@ -64,7 +65,7 @@ export default function App() {
   }, [selectedCandidate, candidates])
 
   function clearInputProfiles() { setProjectProfile({}); setProcedureProfile({}) }
-  function clearAnalysis() { setAnalysisState('IDLE'); setAnalysis(null); setAnalysisMessage('') }
+  function clearAnalysis() { setAnalysisState('IDLE'); setAnalysis(null); setPreviousAnalysis(null); setAnalysisMessage('') }
   function clearParcelVerification() { setSelectedCandidate(null); setVerificationState('IDLE'); setConfirmation(null); setVerificationMessage(''); clearInputProfiles(); clearAnalysis() }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -95,7 +96,7 @@ export default function App() {
     try {
       const result = await analyzeSelectedParcelCandidate(selectedCandidate, { project_profile: project, procedure_profile: procedure })
       if (result.site.pnu !== confirmation.parcel.pnu) throw new Error('분석 결과의 PNU가 확인된 필지와 일치하지 않습니다.')
-      setAnalysis(result); setAnalysisState('ANALYSIS_READY'); setAnalysisMessage(preserveCurrent ? '입력한 정보를 반영한 SITE 분석 결과를 받았습니다.' : '실제 SITE 분석 결과를 받았습니다.')
+      setPreviousAnalysis(preserveCurrent ? analysis : null); setAnalysis(result); setAnalysisState('ANALYSIS_READY'); setAnalysisMessage(preserveCurrent ? '입력한 정보를 반영한 SITE 분석 결과를 받았습니다.' : '실제 SITE 분석 결과를 받았습니다.')
     } catch (error) {
       if (!preserveCurrent) setAnalysis(null)
       setAnalysisState(preserveCurrent && analysis ? 'ANALYSIS_READY' : 'ANALYSIS_FAILED')
@@ -119,6 +120,11 @@ export default function App() {
 
   const resultReady = analysisState === 'ANALYSIS_READY' && analysis !== null
   const selectedInputCount = Object.keys(projectProfile).length + Object.keys(procedureProfile).length
+  function renderRuleDelta(current: number, previous: number | undefined) {
+    if (previous === undefined) return null
+    const delta = current - previous
+    return <small className={delta === 0 ? 'rule-delta rule-delta-zero' : 'rule-delta'}>{delta > 0 ? `+${delta}` : String(delta)}</small>
+  }
 
   return (
     <main className={`app-shell${resultReady ? ' app-shell-result-ready' : ''}`}>
@@ -134,7 +140,7 @@ export default function App() {
           <section className="analysis-detail-section" id="analysis-basic"><h2>필지 기본정보</h2><dl className="analysis-summary"><div><dt>지번주소</dt><dd>{displayValue(analysis.site.address)}</dd></div><div><dt>도로명주소</dt><dd>{displayValue(analysis.site.road_address)}</dd></div><div><dt>PNU</dt><dd>{displayValue(analysis.site.pnu)}</dd></div><div><dt>용도지역</dt><dd>{displayValue(analysis.site.zone)}</dd></div><div><dt>분석 상태</dt><dd>{displayAnalysisStatus(analysis.status)}</dd></div><div><dt>추가 입력</dt><dd>{analysis.requirements.requires_additional_input ? '필요' : '현재 응답 기준 없음'}</dd></div></dl></section>
           <section className="analysis-detail-section" id="analysis-area"><h2>대지면적</h2><div className="analysis-metric-grid"><article className="analysis-metric"><span>공식 대지면적</span><strong>{displayNumber(analysis.land_area.official.value, '㎡')}</strong><small>공식/속성 면적 · 주 기준</small></article><article className="analysis-metric"><span>공간 면적</span><strong>{displayNumber(analysis.land_area.spatial.value)}</strong><small>{analysis.land_area.spatial.value === null ? 'Backend 응답에 값이 없어 계산하지 않음' : displayValue(analysis.land_area.spatial.unit)}</small></article><article className="analysis-metric"><span>면적 차이</span><strong>{displayNumber(analysis.land_area.difference.value, '㎡')}</strong><small>{analysis.land_area.difference.value === null ? '비교할 공간 면적이 없어 계산하지 않음' : `차이율 ${displayNumber(analysis.land_area.difference.ratio_percent, '%')}`}</small></article></div></section>
           <section className="analysis-detail-section" id="analysis-scale"><h2>건축 규모 기준</h2><div className="analysis-metric-grid analysis-metric-grid-two"><article className="analysis-metric"><span>건폐율</span><strong>{displayNumber(analysis.regulation.building_coverage_ratio.value, '%')}</strong><small>{displayRegulationStatus(analysis.regulation.building_coverage_ratio.status)}</small></article><article className="analysis-metric"><span>용적률</span><strong>{displayNumber(analysis.regulation.floor_area_ratio.value, '%')}</strong><small>{displayRegulationStatus(analysis.regulation.floor_area_ratio.status)}</small></article></div></section>
-          <section className="analysis-detail-section" id="analysis-rules"><h2>법규 평가 집계</h2><p className="analysis-note">Backend Rule Engine의 집계 결과이며 Frontend에서 적용 여부를 다시 판단하지 않습니다.</p><div className="rule-summary-grid"><article><span>전체</span><strong>{analysis.rule_evaluation.total}</strong></article><article><span>적용</span><strong>{analysis.rule_evaluation.applicable}</strong></article><article><span>비적용</span><strong>{analysis.rule_evaluation.not_applicable}</strong></article><article><span>조건부</span><strong>{analysis.rule_evaluation.conditional}</strong></article><article className="rule-unknown"><span>확인 필요</span><strong>{analysis.rule_evaluation.unknown}</strong></article></div><p className="unknown-explanation">확인 필요는 오류나 비적용이 아닙니다. 현재 정보만으로 적용 여부를 확정할 수 없는 규칙입니다.</p></section>
+          <section className="analysis-detail-section" id="analysis-rules"><h2>법규 평가 집계</h2><p className="analysis-note">Backend Rule Engine의 집계 결과이며 Frontend에서 적용 여부를 다시 판단하지 않습니다.</p><div className="rule-summary-grid"><article><span>전체</span><strong>{analysis.rule_evaluation.total}</strong>{renderRuleDelta(analysis.rule_evaluation.total, previousAnalysis?.rule_evaluation.total)}</article><article><span>적용</span><strong>{analysis.rule_evaluation.applicable}</strong>{renderRuleDelta(analysis.rule_evaluation.applicable, previousAnalysis?.rule_evaluation.applicable)}</article><article><span>비적용</span><strong>{analysis.rule_evaluation.not_applicable}</strong>{renderRuleDelta(analysis.rule_evaluation.not_applicable, previousAnalysis?.rule_evaluation.not_applicable)}</article><article><span>조건부</span><strong>{analysis.rule_evaluation.conditional}</strong>{renderRuleDelta(analysis.rule_evaluation.conditional, previousAnalysis?.rule_evaluation.conditional)}</article><article className="rule-unknown"><span>확인 필요</span><strong>{analysis.rule_evaluation.unknown}</strong>{renderRuleDelta(analysis.rule_evaluation.unknown, previousAnalysis?.rule_evaluation.unknown)}</article></div>{previousAnalysis && <p className="rule-delta-explanation">변화량은 직전 Backend 분석 결과와 비교한 조항 수 차이입니다.</p>}<p className="unknown-explanation">확인 필요는 오류나 비적용이 아닙니다. 현재 정보만으로 적용 여부를 확정할 수 없는 규칙입니다.</p></section>
           <section className="analysis-detail-section" id="analysis-requirements"><h2>추가 입력 필요사항</h2>{!analysis.requirements.requires_additional_input ? <p className="analysis-empty">현재 응답 기준 추가 입력 항목이 없습니다.</p> : <><div className="requirement-columns"><details className="requirement-group" open><summary><span>사업 정보</span><strong>{analysis.requirements.project_count}개</strong><small>각 항목의 현재 상황을 선택해 주세요.</small></summary><ul>{analysis.requirements.project.map((item) => renderRequirementItem(item, 'project'))}</ul></details><details className="requirement-group" open><summary><span>절차 정보</span><strong>{analysis.requirements.procedure_count}개</strong><small>각 항목의 현재 상황을 선택해 주세요.</small></summary><ul>{analysis.requirements.procedure.map((item) => renderRequirementItem(item, 'procedure'))}</ul></details></div><div className="requirement-reanalysis"><span>{selectedInputCount === 0 ? '선택한 추가 정보가 없습니다.' : `${selectedInputCount}개 항목을 선택했습니다.`}</span><button type="button" onClick={handleReanalysis} disabled={selectedInputCount === 0 || analysisState === 'ANALYZING'}>{analysisState === 'ANALYZING' ? '다시 분석 중…' : '입력 내용으로 다시 분석'}</button></div></>}</section>
           <section className="analysis-detail-section" id="analysis-external"><h2>외부 확인 정보</h2>{analysis.external_dependencies.count === 0 ? <p className="analysis-empty">현재 응답 기준 별도 외부 확인 항목이 없습니다.</p> : <ul className="dependency-list">{analysis.external_dependencies.items.map((item, index) => <li key={`dependency-${index}`}><strong>{displayExternalCategory(item.category)}</strong><span>{displayValue(item.condition)}</span><small>상태 {displayValue(item.status)} · 분석 차단 {item.blocking_analysis ? '예' : '아니오'}{item.category === 'SITE_HISTORY' ? ' · 원본 분류 SITE_HISTORY' : ''}</small></li>)}</ul>}</section>
         </div></>}</section>}
