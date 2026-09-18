@@ -90,6 +90,9 @@ dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 600; }
 .analysis-metric strong, .rule-summary-grid strong { display: block; margin-top: 6px; font-size: 20px; overflow-wrap: anywhere; }
 .analysis-metric small { display: block; margin-top: 6px; color: #879087; font-size: 11px; line-height: 1.45; }
 .rule-summary-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.rule-delta { display: inline-block; margin-top: 6px; padding: 2px 6px; border-radius: 999px; background: #eef4ef; color: #3f6f4d; font-size: 10px; font-weight: 700; }
+.rule-delta-zero { color: #7b857d; background: #f1f3f1; }
+.rule-delta-explanation { margin: 10px 0 0; color: #6e786f; font-size: 11px; line-height: 1.45; }
 .rule-unknown { border-color: #d8c58f !important; background: #fffdf6 !important; }
 .analysis-note, .analysis-empty { margin: -3px 0 12px; color: #78827a; font-size: 12px; line-height: 1.5; }
 .unknown-explanation { margin: 10px 0 0; padding: 10px 12px; border-radius: 9px; background: #fff9e9; color: #695d38; font-size: 12px; line-height: 1.5; }
