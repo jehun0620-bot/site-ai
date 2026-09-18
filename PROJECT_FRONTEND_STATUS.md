@@ -233,7 +233,7 @@ package-lock.json tracked
 | Result-centered layout | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 분석 후 좌측 compact parcel flow + 우상단 지도 + 하단 전체폭 SITE 결과 확인 |
 | Verified map resize/refit | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 작은 지도에서도 VERIFIED parcel polygon 전체가 다시 viewport에 맞춰지는 것 확인 |
 | Additional input UX / reanalysis | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 사업/절차 requirement에 TRUE/FALSE/UNKNOWN 입력 후 selected-candidate 재분석 확인; 미응답 key는 profile에서 생략 |
-| Playwright multi-parcel E2E | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 실제 Browser → Frontend → Backend 경로에서 일반지번 + 산지번, VERIFIED, 분석, 추가입력 재분석, PNU 보존, 필지 전환 상태 격리 검증 |
+| Playwright multi-parcel E2E | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 실제 Browser → Frontend → Backend 경로에서 일반지번 + 산지번 + 건축물 없는 필지, VERIFIED, 분석, 추가입력 재분석, PNU 보존, 필지 전환 상태 격리 검증 |
 | Error/empty/UNKNOWN UI | PARTIAL | UNKNOWN 의미 보존은 PASS; 전체 product error/empty semantics는 추가 개선 필요 |
 
 ---
@@ -603,7 +603,7 @@ Frontend는 UNSET을 사용자 선택값으로 전송하지 않으며, Backend�
 Playwright 실제 브라우저 E2E도 사용자 로컬에서 PASS했다. 최종 검증 HEAD:
 
 ```text
-bb062e150c9755b6fa9d42cd8bb9759b6e4c11fe
+b38ffa77baebe639429e13dbb92d86179a0ce47f
 ```
 
 검증된 기본 address seed:
@@ -625,12 +625,29 @@ CRS           EPSG:4326
 SITE analysis 분석 완료
 ```
 
+건축물 없는 필지 fixture도 실제 Backend 응답으로 확인했다.
+
+```text
+address               서울특별시 강남구 개포동 12-6
+PNU                   1168010300100120006
+SITE status           READY
+identity_status       COMPLETE
+geometry              MultiPolygon
+building_count        0
+building_total_count  0
+building_api_status   00
+```
+
+`building_count = 0`은 건물명 공란 등의 추정이 아니라 실제 `SITE_ANALYSIS_API_V1` 응답의 `service.building_count`에서 확인했다. 이 PNU는 E2E에서 명시적으로 선택하여 VERIFIED → SITE 분석 → 추가 입력 재분석 → 분석 PNU 유지까지 검증한다.
+
 최종 multi-parcel Playwright 실행:
 
 ```text
 Running 1 test using 1 worker
-1 passed (9.7s)
+1 passed (12.1s)
 ```
+
+따라서 현재 E2E behavioral baseline은 일반지번 후보군 + 산지번 + 건축물 없는 필지의 세 유형을 포함한다.
 
 E2E는 실제 Backend를 사용하며 각 주소에서 최대 2개 candidate를 선택한다. 추가 입력은 고정 seed 기반 pseudo-random 방식으로 TRUE/FALSE/UNKNOWN을 선택해 실패를 재현 가능하게 유지한다. 환경변수 `SITE_AI_E2E_ADDRESSES`로 검증된 주소 seed를 추가할 수 있다.
 
