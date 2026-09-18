@@ -96,6 +96,11 @@ dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 600; }
 .rule-unknown { border-color: #d8c58f !important; background: #fffdf6 !important; }
 .analysis-note, .analysis-empty { margin: -3px 0 12px; color: #78827a; font-size: 12px; line-height: 1.5; }
 .unknown-explanation { margin: 10px 0 0; padding: 10px 12px; border-radius: 9px; background: #fff9e9; color: #695d38; font-size: 12px; line-height: 1.5; }
+.requirement-progress { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+.requirement-progress div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; padding: 11px 13px; border: 1px solid #e4e9e4; border-radius: 10px; background: white; }
+.requirement-progress span { color: #6e786f; font-size: 11px; }
+.requirement-progress strong { font-size: 12px; }
+.requirement-progress small { grid-column: 1 / -1; color: #879087; font-size: 10px; }
 .requirement-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .requirement-group { border: 1px solid #e4e9e4; border-radius: 10px; background: white; overflow: hidden; }
 .requirement-group summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; padding: 13px; cursor: pointer; list-style-position: inside; }
