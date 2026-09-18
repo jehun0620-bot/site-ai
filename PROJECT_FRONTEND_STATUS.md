@@ -891,7 +891,40 @@ ada645305ad66cebe4413f58eeb804de23b54713
 
 ---
 
-## 25. Other Known Product Gaps
+## 25. PC Building HUB Result Facts Validation
+
+### 2026-09-18 User Local Behavioral Validation
+
+PC `필지 기본정보`에 Backend SITE analysis 응답의 건축HUB 조회 사실을 표시하도록 presentation을 보강했다.
+
+표시 계약:
+
+```text
+건축물 조회 건수
+→ service.building_total_count를 그대로 표시
+→ 값이 없으면 정보 없음
+→ building_count를 임의 대체값으로 사용하지 않음
+
+건축HUB 상태
+→ service.building_api_status = "00"이면 정상 (00)
+→ 그 외 값은 Frontend에서 의미를 추정하지 않고 원본 값을 표시
+```
+
+Backend `site_analysis_orchestrator.py`의 실제 생성 지점을 READ-ONLY 확인한 결과, `building_count`는 현재 응답 item 개수이고 `building_total_count`는 건축HUB `body.totalCount`, `building_api_status`는 `header.resultCode`이다.
+
+검증된 buildingless parcel `서울특별시 강남구 개포동 12-6`에서도 사용자 로컬 화면에서 `건축물 조회 건수 0건 / 건축HUB 상태 정상 (00)` 표시가 정상 작동했다. 이 표시는 `나대지`, `건축물 없음` 같은 새로운 SITE 판정을 만들지 않는다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+4e89a2531353bbb08bb8ead211724585a01f36f0
+```
+
+따라서 **PC BUILDING HUB RESULT FACTS = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 26. Other Known Product Gaps
 
 ```text
 road-address support
@@ -906,7 +939,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 26. Immediate Next Step Status
+## 27. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -926,6 +959,7 @@ PC ADDITIONAL INPUT WORKSPACE             USER LOCAL BEHAVIORAL PASS
 PC VERIFIED PARCEL RESULT SUMMARY          USER LOCAL BEHAVIORAL PASS
 PC RULE REANALYSIS DELTA PRESENTATION       USER LOCAL BEHAVIORAL PASS
 PC REQUIREMENT INPUT PROGRESS                USER LOCAL BEHAVIORAL PASS
+PC BUILDING HUB RESULT FACTS                  USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -933,6 +967,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 27. Status Update Rule
+## 28. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
