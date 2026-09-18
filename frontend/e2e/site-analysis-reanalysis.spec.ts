@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-const DEFAULT_ADDRESS_SEEDS = ['서울특별시 강남구 개포동 12']
+const DEFAULT_ADDRESS_SEEDS = ['서울특별시 강남구 개포동 12', '서울특별시 동작구 동작동 산 29-3']
 const INPUT_LABELS = ['해당함', '해당하지 않음', '잘 모르겠음'] as const
 
 function parseAddressSeeds(): string[] {
