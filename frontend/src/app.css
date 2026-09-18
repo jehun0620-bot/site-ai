@@ -41,6 +41,8 @@ h1 { margin: 0; font-size: clamp(30px, 4vw, 44px); line-height: 1.08; letter-spa
 .pre-analysis-controls-compact .verification-panel > p { margin: 8px 0; }
 .pre-analysis-controls-compact .verified-details { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; margin: 12px 0 0; }
 .pre-analysis-controls-compact .verified-details div { grid-template-columns: 84px minmax(0, 1fr); gap: 8px; }
+.pre-analysis-controls-compact .verified-details-result-ready { margin-top: 10px; }
+.pre-analysis-controls-compact .verified-details-result-ready div { grid-template-columns: 68px minmax(0, 1fr); }
 
 .candidate-list { display: grid; gap: 10px; max-height: clamp(320px, 48vh, 620px); overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; padding-right: 4px; }
 .candidate-card { width: 100%; padding: 15px; text-align: left; border: 1px solid #d8dfd8; border-radius: 12px; background: white; color: inherit; }
