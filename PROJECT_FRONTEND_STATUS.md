@@ -58,6 +58,7 @@ RESPONSIVE RESULT NAVIGATION              IMPLEMENTED + USER LOCAL BEHAVIORAL PA
 PC ADDITIONAL INPUT WORKSPACE              IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC VERIFIED PARCEL RESULT SUMMARY           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC RULE REANALYSIS DELTA PRESENTATION        IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+PC REQUIREMENT INPUT PROGRESS                 IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -244,6 +245,7 @@ package-lock.json tracked
 | PC additional input workspace | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | PC 결과 grid에서 추가 입력 필요사항을 전체 폭으로 확장하고 법규평가/외부확인을 6/6으로 배치; 입력 및 재분석 동작 유지 |
 | PC verified parcel result summary | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 분석 전 VERIFIED 상세정보는 유지하고 분석 완료 후 상단 확인 카드는 지번주소 + PNU 중심으로 compact 표시 |
 | PC rule reanalysis delta presentation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 최초 분석에는 변화량을 표시하지 않고, 추가 입력 재분석 후 직전 Backend rule_evaluation 집계 대비 조항 수 차이만 표시; 새 필지에서는 비교 기준 초기화 |
+| PC requirement input progress | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 사업/절차별 입력·미입력 개수와 전체 진행상태 표시; 일부 입력 재분석 및 미응답 key 생략 의미 유지; Playwright E2E 회귀검증 정상 작동 |
 
 ---
 
@@ -572,6 +574,7 @@ Responsive SITE result navigation           IMPLEMENTED + USER LOCAL BEHAVIORAL 
 PC additional input workspace               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC verified parcel result summary            IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC rule reanalysis delta presentation         IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+PC requirement input progress                  IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -851,7 +854,44 @@ c35f391b833cec18d9292df36e4960a36e53ea6c
 
 ---
 
-## 24. Other Known Product Gaps
+## 24. PC Requirement Input Progress Validation
+
+### 2026-09-18 User Local Behavioral Validation
+
+PC 추가 입력 작업영역에서 사업 정보와 절차 정보 각각의 입력/미입력 개수와 전체 진행상태를 표시하도록 presentation을 보강했다. Backend requirement contract, TRUE/FALSE/UNKNOWN 의미, 미응답 key 생략, selected-candidate 재분석 로직은 변경하지 않았다.
+
+최종 구현 및 E2E 정합성 수정 후 사용자 로컬 검증 HEAD:
+
+```text
+ada645305ad66cebe4413f58eeb804de23b54713
+```
+
+검증된 동작:
+
+```text
+사업 정보
+→ 전체 개수 / 입력 개수 / 미입력 개수 표시
+
+절차 정보
+→ 전체 개수 / 입력 개수 / 미입력 개수 표시
+
+전체 진행상태
+→ 전체 N개 중 입력 N개 · 미입력 N개
+→ 전부 선택하면 입력 완료 표시
+→ 일부 항목만 입력해도 기존처럼 재분석 가능
+```
+
+미입력 항목은 UNKNOWN으로 변환하지 않으며 기존 계약대로 profile key에서 생략된다. 진행상태 표시는 Frontend presentation이며 새로운 Rule Engine 판단이나 validation 규칙을 만들지 않는다.
+
+초기 구현 후 기존 Playwright E2E가 과거 문구 `N개 항목을 선택했습니다.`를 기대하여 실패한 것을 확인했고, 실제 requirement 총개수/선택개수/미입력개수를 검증하도록 E2E assertion을 새 presentation 계약에 맞췄다. 이후 사용자 로컬 환경에서 정상 작동을 확인했다.
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC REQUIREMENT INPUT PROGRESS = USER LOCAL BEHAVIORAL PASS**이며 관련 Playwright E2E 회귀검증도 정상 작동한다.
+
+---
+
+## 25. Other Known Product Gaps
 
 ```text
 road-address support
@@ -866,7 +906,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 25. Immediate Next Step Status
+## 26. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -885,6 +925,7 @@ RESPONSIVE RESULT NAVIGATION             USER LOCAL BEHAVIORAL PASS
 PC ADDITIONAL INPUT WORKSPACE             USER LOCAL BEHAVIORAL PASS
 PC VERIFIED PARCEL RESULT SUMMARY          USER LOCAL BEHAVIORAL PASS
 PC RULE REANALYSIS DELTA PRESENTATION       USER LOCAL BEHAVIORAL PASS
+PC REQUIREMENT INPUT PROGRESS                USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -892,6 +933,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 26. Status Update Rule
+## 27. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
