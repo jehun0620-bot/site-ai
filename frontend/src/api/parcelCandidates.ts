@@ -11,6 +11,17 @@ export class ParcelCandidateApiError extends Error {
   }
 }
 
+async function readErrorDetail(response: Response): Promise<string | null> {
+  try {
+    const body: unknown = await response.json()
+    if (!body || typeof body !== 'object') return null
+    const detail = (body as Record<string, unknown>).detail
+    return typeof detail === 'string' && detail.trim() ? detail.trim() : null
+  } catch {
+    return null
+  }
+}
+
 export async function searchParcelCandidates(
   query: string,
   signal?: AbortSignal,
@@ -25,7 +36,8 @@ export async function searchParcelCandidates(
   })
 
   if (!response.ok) {
-    throw new ParcelCandidateApiError(`필지 후보 검색 요청에 실패했습니다. (${response.status})`)
+    const detail = await readErrorDetail(response)
+    throw new ParcelCandidateApiError(detail ? `필지 후보 검색에 실패했습니다. ${detail} (${response.status})` : `필지 후보 검색에 실패했습니다. (${response.status})`)
   }
 
   const body: unknown = await response.json()
@@ -54,7 +66,8 @@ export async function confirmParcelCandidate(
   })
 
   if (!response.ok) {
-    throw new ParcelCandidateApiError(`선택한 필지를 확인하지 못했습니다. (${response.status})`)
+    const detail = await readErrorDetail(response)
+    throw new ParcelCandidateApiError(detail ? `선택한 필지를 확인하지 못했습니다. ${detail} (${response.status})` : `선택한 필지를 확인하지 못했습니다. (${response.status})`)
   }
 
   const body: unknown = await response.json()
