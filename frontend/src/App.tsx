@@ -69,11 +69,11 @@ export default function App() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); const normalizedQuery = query.trim(); clearParcelVerification()
-    if (!normalizedQuery) { setCandidates([]); setState('SEARCH_ERROR'); setMessage('검색할 지번주소를 입력해 주세요.'); return }
+    if (!normalizedQuery) { setCandidates([]); setState('SEARCH_EMPTY'); setMessage('검색할 지번주소를 입력해 주세요.'); return }
     setState('SEARCHING'); setCandidates([]); setMessage('필지 후보를 찾고 있습니다.')
     try {
       const result = await searchParcelCandidates(normalizedQuery); setCandidates(result.candidates)
-      if (result.candidates.length === 0) { setState('SEARCH_EMPTY'); setMessage('일치하는 필지 후보를 찾지 못했습니다. 지번주소를 확인해 주세요.'); return }
+      if (result.candidates.length === 0) { setState('SEARCH_EMPTY'); setMessage('검색은 완료됐지만 일치하는 필지 후보가 없습니다. 지번주소를 확인하거나 검색어를 조금 넓혀 주세요.'); return }
       setState('SEARCH_RESULTS'); setMessage(`${result.count}개의 필지 후보를 찾았습니다.`)
     } catch (error) { setState('SEARCH_ERROR'); setMessage(error instanceof Error ? error.message : '필지 후보 검색 중 오류가 발생했습니다.') }
   }
@@ -85,7 +85,7 @@ export default function App() {
       const result = await confirmParcelCandidate(candidate)
       if (result.parcel.pnu !== candidate.candidate_pnu) throw new Error('검증된 필지와 선택한 필지의 PNU가 일치하지 않습니다.')
       setConfirmation(result); setVerificationState('PARCEL_VERIFIED'); setVerificationMessage('Backend가 선택한 필지와 실제 필지 경계의 일치를 확인했습니다.')
-    } catch (error) { setConfirmation(null); setVerificationState('PARCEL_VERIFICATION_FAILED'); setVerificationMessage(error instanceof Error ? error.message : '선택한 필지를 확인하지 못했습니다.') }
+    } catch (error) { setConfirmation(null); setVerificationState('PARCEL_VERIFICATION_FAILED'); setVerificationMessage(error instanceof Error ? error.message : '선택한 필지를 확인하지 못했습니다. 다른 필지를 선택하거나 다시 검색해 주세요.') }
   }
 
   async function runAnalysis(project: SiteAnalysisInputProfile = {}, procedure: SiteAnalysisInputProfile = {}, preserveCurrent = false) {
@@ -99,7 +99,7 @@ export default function App() {
     } catch (error) {
       if (!preserveCurrent) setAnalysis(null)
       setAnalysisState(preserveCurrent && analysis ? 'ANALYSIS_READY' : 'ANALYSIS_FAILED')
-      setAnalysisMessage(error instanceof Error ? error.message : 'SITE 분석을 완료하지 못했습니다.')
+      setAnalysisMessage(error instanceof Error ? error.message : 'SITE 분석을 완료하지 못했습니다. 잠시 후 다시 시도해 주세요.')
     }
   }
 
