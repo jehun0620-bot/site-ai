@@ -82,7 +82,7 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
             await requirementItems.nth(itemIndex).getByRole('button', { name: optionLabel, exact: true }).click()
           }
 
-          await expect(page.locator('.requirement-reanalysis')).toContainText(`${pickCount}개 항목을 선택했습니다.`)
+          await expect(page.locator('.requirement-reanalysis')).toContainText(`전체 ${requirementCount}개 중 ${pickCount}개 입력 · ${requirementCount - pickCount}개 미입력`)
           await page.getByRole('button', { name: '입력 내용으로 다시 분석' }).click()
 
           await expect(page.getByText('입력한 정보를 반영한 SITE 분석 결과를 받았습니다.', { exact: true })).toBeVisible({ timeout: 120_000 })
