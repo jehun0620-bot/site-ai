@@ -51,6 +51,8 @@ DETAILED SITE ANALYSIS RESULT UI       IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 RESULT UX / PRESENTATION               IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 RESULT-CENTERED LAYOUT                 IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 VERIFIED MAP RESIZE / REFIT            IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+ADDITIONAL INPUT UX / REANALYSIS        IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+PLAYWRIGHT MULTI-PARCEL E2E             IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -195,6 +197,8 @@ frontend/
 node_modules/   ignored
 dist/           ignored
 *.tsbuildinfo   ignored
+test-results/   ignored
+playwright-report/ ignored
 package-lock.json tracked
 ```
 
@@ -228,6 +232,8 @@ package-lock.json tracked
 | Result UX / presentation | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 사용자 친화적 상태, UNKNOWN 설명, requirements 요약, 정보 없음 설명 확인 |
 | Result-centered layout | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 분석 후 좌측 compact parcel flow + 우상단 지도 + 하단 전체폭 SITE 결과 확인 |
 | Verified map resize/refit | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 작은 지도에서도 VERIFIED parcel polygon 전체가 다시 viewport에 맞춰지는 것 확인 |
+| Additional input UX / reanalysis | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 사업/절차 requirement에 TRUE/FALSE/UNKNOWN 입력 후 selected-candidate 재분석 확인; 미응답 key는 profile에서 생략 |
+| Playwright multi-parcel E2E | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | 실제 Browser → Frontend → Backend 경로에서 일반지번 + 산지번, VERIFIED, 분석, 추가입력 재분석, PNU 보존, 필지 전환 상태 격리 검증 |
 | Error/empty/UNKNOWN UI | PARTIAL | UNKNOWN 의미 보존은 PASS; 전체 product error/empty semantics는 추가 개선 필요 |
 
 ---
@@ -567,7 +573,7 @@ Error/empty product semantics               PARTIAL
 
 ```text
 긴 SITE 결과의 섹션 탐색 구조
-추가 입력 필요사항의 실제 입력 UX
+Playwright E2E의 검증된 필지 seed 확대
 전체 product error / empty semantics
 모바일 결과/지도 순서와 반응형 가독성
 candidate/verified 상태 설명의 사용자 친화적 표현
@@ -579,7 +585,75 @@ Frontend는 계속 Backend 결과를 재판정하거나 임의 보정하지 않�
 
 ---
 
-## 18. Other Known Product Gaps
+## 18. Additional Input + Playwright Multi-Parcel E2E Validation
+
+### 2026-09-18 User Local Behavioral Validation
+
+추가 입력 UX는 Backend Rule Engine의 기존 profile contract를 그대로 사용한다.
+
+```text
+해당함         → TRUE
+해당하지 않음 → FALSE
+잘 모르겠음   → UNKNOWN
+미응답         → profile key 생략
+```
+
+Frontend는 UNSET을 사용자 선택값으로 전송하지 않으며, Backend가 반환한 requirements를 사용해 입력 UI를 구성한다. 입력 후 `POST /v1/site-analysis/selected-candidate`를 다시 호출하고, 재분석 결과의 PNU가 확인된 parcel PNU와 같은지 검증한다.
+
+Playwright 실제 브라우저 E2E도 사용자 로컬에서 PASS했다. 최종 검증 HEAD:
+
+```text
+bb062e150c9755b6fa9d42cd8bb9759b6e4c11fe
+```
+
+검증된 기본 address seed:
+
+```text
+서울특별시 강남구 개포동 12
+서울특별시 동작구 동작동 산 29-3
+```
+
+산지번은 현재 Desktop B에서 별도로 재검증했다.
+
+```text
+address       서울특별시 동작구 동작동 산 29-3
+candidate     1개
+verification  VERIFIED
+PNU           1159010600200290003
+geometry      MultiPolygon
+CRS           EPSG:4326
+SITE analysis 분석 완료
+```
+
+최종 multi-parcel Playwright 실행:
+
+```text
+Running 1 test using 1 worker
+1 passed (9.7s)
+```
+
+E2E는 실제 Backend를 사용하며 각 주소에서 최대 2개 candidate를 선택한다. 추가 입력은 고정 seed 기반 pseudo-random 방식으로 TRUE/FALSE/UNKNOWN을 선택해 실패를 재현 가능하게 유지한다. 환경변수 `SITE_AI_E2E_ADDRESSES`로 검증된 주소 seed를 추가할 수 있다.
+
+검증 범위:
+
+```text
+actual browser
+→ address candidate search
+→ candidate selection
+→ Backend parcel confirmation / VERIFIED
+→ selected-candidate SITE analysis
+→ additional input selection
+→ reanalysis
+→ analysis PNU == verified parcel PNU
+→ parcel switch
+→ previous additional-input state isolation
+```
+
+Candidate와 reference geometry는 계속 discovery-only이며, Playwright도 Frontend에서 parcel truth를 생성하거나 법규 적용 여부를 재판정하지 않는다.
+
+---
+
+## 19. Other Known Product Gaps
 
 ```text
 road-address support
@@ -594,7 +668,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 19. Immediate Next Step Status
+## 20. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -606,6 +680,8 @@ CANDIDATE REFERENCE GEOMETRY           USER LOCAL BEHAVIORAL PASS
 CANDIDATE PARCEL BOUNDARY RENDERING    USER LOCAL BEHAVIORAL PASS
 RESULT-CENTERED LAYOUT                 USER LOCAL BEHAVIORAL PASS
 VERIFIED PARCEL MAP RESIZE / REFIT     USER LOCAL BEHAVIORAL PASS
+ADDITIONAL INPUT UX / REANALYSIS       USER LOCAL BEHAVIORAL PASS
+PLAYWRIGHT MULTI-PARCEL E2E            USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -613,6 +689,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 20. Status Update Rule
+## 21. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
