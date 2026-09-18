@@ -37,6 +37,9 @@ h1 { margin: 0; font-size: clamp(30px, 4vw, 44px); line-height: 1.08; letter-spa
 .pre-analysis-controls-compact .status { grid-column: 1; min-height: 0; margin: 6px 0 0; }
 .pre-analysis-controls-compact .candidate-list { grid-column: 1; }
 .pre-analysis-controls-compact .candidate-card { padding: 11px 13px; }
+.candidate-list-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border: 1px solid #d8dfd8; border-radius: 10px; background: white; }
+.candidate-list-toggle span { color: #647067; font-size: 12px; }
+.candidate-list-toggle button { flex: 0 0 auto; padding: 7px 10px; border: 1px solid #cbd6cc; border-radius: 8px; background: #f8faf8; color: #365b43; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
 .pre-analysis-controls-compact .verification-panel { grid-column: 1; grid-row: auto; margin-top: 0; padding: 14px; }
 .pre-analysis-controls-compact .verification-panel > p { margin: 8px 0; }
 .pre-analysis-controls-compact .verified-details { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; margin: 12px 0 0; }
