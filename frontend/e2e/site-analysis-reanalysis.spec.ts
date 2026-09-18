@@ -67,7 +67,7 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
 
         await page.getByRole('button', { name: '이 필지 분석' }).click()
         await expect(page.getByText('SITE 분석 결과', { exact: true })).toBeVisible({ timeout: 120_000 })
-        await expect(page.getByText('분석 완료', { exact: true })).toBeVisible()
+        await expect(page.locator('.analysis-ready-badge')).toHaveText('분석 완료')
 
         const analysisPanel = page.locator('.analysis-panel')
         await expect(analysisPanel.locator('dt', { hasText: 'PNU' }).locator('..').locator('dd')).toHaveText(pnu)
