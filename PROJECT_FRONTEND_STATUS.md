@@ -1139,7 +1139,31 @@ aa14f69349dbd313e3bfff3beb532a1aefc3d865
 
 ---
 
-## 34. Other Known Product Gaps
+## 34. PC Rule Evaluation Information Hierarchy Validation
+
+### 2026-09-19 User Local Behavioral + Production Build Validation
+
+PC `법규 평가 집계`에서 전체 규칙 수를 보조 summary로 분리하고, 실제 Backend 판정 상태인 적용/비적용/조건부/확인 필요를 네 개의 주 평가 카드로 정리했다.
+
+`확인 필요`에는 현재 정보로 확정할 수 없다는 의미를 표시하지만 클릭 가능한 상세 기능으로 만들지 않았다. 공개 응답에 개별 규칙 상세가 없는 현재 계약을 유지하며 Frontend가 개별 규칙이나 적용 여부를 새로 추론하지 않는다.
+
+재분석 전 사용자 화면에서 전체 314개, 적용 57, 비적용 214, 조건부 41, 확인 필요 2가 확인되었다. 재분석 후 화면에서는 전체 314개, 적용 62, 비적용 214, 조건부 16, 확인 필요 22와 변화량 +5 / 0 / -25 / +20이 정상 표시되었다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+9e074bb461284c947e827c628fe2c7b4fb3d3875
+```
+
+해당 HEAD에서 working tree가 clean 상태였고 `npm run build`가 `tsc -b && vite build`까지 정상 PASS했다. Vite 8.3.0 기준 20 modules transformed 및 production bundle 생성이 완료되었다.
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC RULE EVALUATION INFORMATION HIERARCHY = USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS**이다.
+
+---
+
+## 35. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1154,7 +1178,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 35. Immediate Next Step Status
+## 36. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1183,6 +1207,7 @@ PC RESULT CANDIDATE LIST COLLAPSE                  USER LOCAL BEHAVIORAL PASS
 PC RULE / EXTERNAL RESULT PAIRING                   USER LOCAL BEHAVIORAL PASS
 PC PARCEL / DATA STATUS INFORMATION HIERARCHY        USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC REQUIREMENT GROUP DISCLOSURE / ADAPTIVE LAYOUT     USER LOCAL BEHAVIORAL PASS
+PC RULE EVALUATION INFORMATION HIERARCHY               USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1190,6 +1215,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 36. Status Update Rule
+## 37. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
