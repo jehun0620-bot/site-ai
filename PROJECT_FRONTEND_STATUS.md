@@ -1163,7 +1163,31 @@ PC `법규 평가 집계`에서 전체 규칙 수를 보조 summary로 분리하
 
 ---
 
-## 35. Other Known Product Gaps
+## 35. PC Requirement Item Completion State Validation
+
+### 2026-09-19 User Local Behavioral + Production Build Validation
+
+PC `추가 입력 필요사항`의 각 requirement 항목에서 기존 profile 선택값을 기준으로 `미입력` / `입력 완료` 상태를 직접 표시한다.
+
+새로운 판단 상태를 만들지 않는다. TRUE/FALSE/UNKNOWN 중 어느 값을 사용자가 선택하더라도 해당 requirement key에 응답한 상태이므로 `입력 완료`로 표시하며, 실제 선택값은 기존 세 개의 선택 버튼에서 계속 표현한다.
+
+Backend/API/Rule Engine, requirement 개수 계산, project/procedure profile 구조, 재분석 요청 의미는 변경하지 않았다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+a6f9f8a173103617761b14ae008639998d747983
+```
+
+사용자 PC 브라우저에서 항목별 `미입력 → 입력 완료` 전환과 기존 선택 동작이 정상임을 확인했다. 로컬 `git status --short`는 출력이 없어 working tree가 clean 상태였고, `npm run build`는 `tsc -b && vite build`까지 정상 PASS했다. Vite 8.3.0 기준 20 modules transformed 및 production bundle 생성이 완료되었고 build 시간은 118ms였다.
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC REQUIREMENT ITEM COMPLETION STATE = USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS**이다.
+
+---
+
+## 36. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1178,7 +1202,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 36. Immediate Next Step Status
+## 37. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1208,6 +1232,7 @@ PC RULE / EXTERNAL RESULT PAIRING                   USER LOCAL BEHAVIORAL PASS
 PC PARCEL / DATA STATUS INFORMATION HIERARCHY        USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC REQUIREMENT GROUP DISCLOSURE / ADAPTIVE LAYOUT     USER LOCAL BEHAVIORAL PASS
 PC RULE EVALUATION INFORMATION HIERARCHY               USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
+PC REQUIREMENT ITEM COMPLETION STATE                    USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1215,6 +1240,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 37. Status Update Rule
+## 38. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
