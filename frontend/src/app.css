@@ -96,6 +96,7 @@ dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 600; }
 .analysis-metric span, .rule-summary-grid span { display: block; color: #6e786f; font-size: 11px; }
 .analysis-metric strong, .rule-summary-grid strong { display: block; margin-top: 6px; font-size: 20px; overflow-wrap: anywhere; }
 .analysis-metric small { display: block; margin-top: 6px; color: #879087; font-size: 11px; line-height: 1.45; }
+.regulation-basis-note { margin: 10px 0 0; color: #78827a; font-size: 11px; line-height: 1.5; }
 .analysis-area-metric-grid { grid-template-columns: minmax(0, 1.35fr) repeat(2, minmax(0, 0.825fr)); }
 .analysis-metric-primary { background: #f7faf7; border-color: #cfdacf; }
 .analysis-metric-primary strong { font-size: 24px; }
