@@ -114,6 +114,10 @@ dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 600; }
 .requirement-progress strong { font-size: 12px; }
 .requirement-progress small { grid-column: 1 / -1; color: #879087; font-size: 10px; }
 .requirement-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.requirement-columns-project-open .requirement-group:first-child,
+.requirement-columns-procedure-open .requirement-group:last-child { grid-column: 1 / -1; }
+.requirement-columns-project-open .requirement-group:last-child,
+.requirement-columns-procedure-open .requirement-group:first-child { grid-column: 1 / -1; grid-row: 2; }
 .requirement-group { border: 1px solid #e4e9e4; border-radius: 10px; background: white; overflow: hidden; }
 .requirement-group summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; padding: 13px; cursor: pointer; list-style-position: inside; }
 .requirement-group summary span { font-size: 13px; font-weight: 700; }
