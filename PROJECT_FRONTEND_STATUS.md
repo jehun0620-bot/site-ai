@@ -1115,7 +1115,31 @@ PC `필지 기본정보`에서 parcel 자체의 핵심 정보와 Building HUB �
 
 ---
 
-## 33. Other Known Product Gaps
+## 33. PC Requirement Group Disclosure / Adaptive Layout Validation
+
+### 2026-09-19 User Local Behavioral Validation
+
+PC `추가 입력 필요사항`의 사업 정보/절차 정보 그룹을 사용자가 직접 접고 펼친 상태가 React re-render 이후에도 유지되도록 disclosure state를 명시적으로 관리한다.
+
+초기 결과에서는 기존과 동일하게 두 그룹이 모두 펼쳐진다. 둘 다 펼친 상태에서는 기존 50:50 배치를 유지하고, 한쪽만 펼치면 펼친 그룹이 전체 폭을 사용하며 접힌 그룹은 그 아래 compact 행으로 배치된다. 둘 다 접은 상태에서는 두 compact 그룹을 유지한다.
+
+이 변경은 Backend requirements, TRUE/FALSE/UNKNOWN 의미, 미응답 key 생략, 입력값, selected-candidate 재분석 로직을 변경하지 않는다. 자동으로 완료를 판단해 그룹을 숨기거나 접지 않는다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+aa14f69349dbd313e3bfff3beb532a1aefc3d865
+```
+
+사용자 PC 브라우저에서 접힘/펼침 상태 유지, 한쪽만 펼친 경우 전체 폭 확장, 둘 다 펼친 경우 50:50 유지, 둘 다 접은 경우 compact 표시, 입력 및 재분석 동작이 정상 작동함을 확인했다.
+
+이번 검증은 사용자 로컬 behavioral validation이며, 해당 HEAD에 대한 별도의 `npm run build` 결과는 아직 기록하지 않는다. PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC REQUIREMENT GROUP DISCLOSURE / ADAPTIVE LAYOUT = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 34. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1130,7 +1154,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 34. Immediate Next Step Status
+## 35. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1158,6 +1182,7 @@ PC VERIFIED RESULT CARD DEDUPLICATION             USER LOCAL BEHAVIORAL PASS
 PC RESULT CANDIDATE LIST COLLAPSE                  USER LOCAL BEHAVIORAL PASS
 PC RULE / EXTERNAL RESULT PAIRING                   USER LOCAL BEHAVIORAL PASS
 PC PARCEL / DATA STATUS INFORMATION HIERARCHY        USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
+PC REQUIREMENT GROUP DISCLOSURE / ADAPTIVE LAYOUT     USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1165,6 +1190,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 35. Status Update Rule
+## 36. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
