@@ -1187,7 +1187,31 @@ a6f9f8a173103617761b14ae008639998d747983
 
 ---
 
-## 36. Other Known Product Gaps
+## 36. PC Building Regulation Basis Clarification Validation
+
+### 2026-09-19 User Local Behavioral + Production Build Validation
+
+PC `건축 규모 기준`에서 `건폐율` / `용적률`을 각각 `건폐율 기준` / `용적률 기준`으로 명확히 표시하고, Backend에서 확인된 규제 기준이며 현재 건축물의 실제 건폐율·용적률을 뜻하지 않는다는 설명을 추가했다.
+
+Backend가 반환한 regulation 값과 CONFIRMED/PENDING 상태는 변경하지 않았으며, Frontend에서 건축 가능 면적이나 추가 규제 결과를 계산하거나 추론하지 않는다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+db75dddafa025752087b638715a26d4876bb8432
+```
+
+사용자 PC 화면에서 `건폐율 기준 50%`, `용적률 기준 250%`, 각 `확인된 기준` 상태와 설명 문구가 정상 표시되고 기존 결과 카드 배치가 유지되는 것을 확인했다.
+
+로컬 `git status --short`는 출력이 없어 working tree가 clean 상태였고, `npm run build`는 `tsc -b && vite build`까지 정상 PASS했다. Vite 8.3.0 기준 20 modules transformed 및 production bundle 생성이 완료되었고 build 시간은 131ms였다.
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC BUILDING REGULATION BASIS CLARIFICATION = USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS**이다.
+
+---
+
+## 37. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1202,7 +1226,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 37. Immediate Next Step Status
+## 38. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1233,6 +1257,7 @@ PC PARCEL / DATA STATUS INFORMATION HIERARCHY        USER LOCAL BEHAVIORAL PASS 
 PC REQUIREMENT GROUP DISCLOSURE / ADAPTIVE LAYOUT     USER LOCAL BEHAVIORAL PASS
 PC RULE EVALUATION INFORMATION HIERARCHY               USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC REQUIREMENT ITEM COMPLETION STATE                    USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
+PC BUILDING REGULATION BASIS CLARIFICATION              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1240,6 +1265,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 38. Status Update Rule
+## 39. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
