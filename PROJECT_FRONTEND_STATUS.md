@@ -1089,7 +1089,33 @@ DOM 내용과 Backend 데이터는 변경하지 않았으며 Rule Engine 집계,
 
 ---
 
-## 32. Other Known Product Gaps
+## 32. PC Parcel / Data Status Information Hierarchy Validation
+
+### 2026-09-19 User Local Behavioral Validation
+
+PC `필지 기본정보`에서 parcel 자체의 핵심 정보와 Building HUB 데이터 조회 상태를 시각적으로 분리했다.
+
+핵심 parcel 정보에는 지번주소, 도로명주소, PNU, 용도지역, 분석 상태, 추가 입력 여부를 유지하고, 그 아래 별도 `데이터 조회` 영역에 `건축물 조회 건수`와 `건축HUB 상태`를 보조정보로 표시한다.
+
+값의 의미는 변경하지 않았다. `building_total_count = 0`은 그대로 `0건`으로 표시하며 나대지나 다른 법적/물리적 상태로 추론하지 않는다. optional `service` 또는 값이 없을 때는 기존대로 `정보 없음`을 유지하고, Building HUB status `00`은 기존 presentation인 `정상 (00)`을 유지한다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+611cb0568c7fa971c3861bf0f2117735b0d67932
+```
+
+사용자 PC 화면에서 일반 건축물 존재 필지의 정보 위계와 Building HUB 값 유지가 확인되었고, 별도로 `서울특별시 강남구 개포동 12-6` 건축물 0건 케이스도 정상임을 확인했다.
+
+해당 HEAD에서 `npm run build`가 `tsc -b && vite build`까지 정상 PASS했다.
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC PARCEL / DATA STATUS INFORMATION HIERARCHY = USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS**이다.
+
+---
+
+## 33. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1104,7 +1130,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 33. Immediate Next Step Status
+## 34. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1131,6 +1157,7 @@ PC ANALYSIS RESULT HEADER COMPACTION             USER LOCAL BEHAVIORAL PASS
 PC VERIFIED RESULT CARD DEDUPLICATION             USER LOCAL BEHAVIORAL PASS
 PC RESULT CANDIDATE LIST COLLAPSE                  USER LOCAL BEHAVIORAL PASS
 PC RULE / EXTERNAL RESULT PAIRING                   USER LOCAL BEHAVIORAL PASS
+PC PARCEL / DATA STATUS INFORMATION HIERARCHY        USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1138,6 +1165,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 34. Status Update Rule
+## 35. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
