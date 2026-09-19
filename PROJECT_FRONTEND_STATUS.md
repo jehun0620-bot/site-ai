@@ -1067,7 +1067,29 @@ a26deccc999c1682421d5a5d3d688591a36f4759
 
 ---
 
-## 31. Other Known Product Gaps
+## 31. PC Rule / External Result Pairing Validation
+
+### 2026-09-19 User Local Behavioral Validation
+
+PC 결과 grid에서 비어 있던 공간을 활용하도록 `법규 평가 집계`와 `외부 확인 정보`를 같은 행의 6:6 카드로 배치하고, `추가 입력 필요사항`은 그 아래 전체 폭으로 유지했다.
+
+DOM 내용과 Backend 데이터는 변경하지 않았으며 Rule Engine 집계, external dependency의 `UNKNOWN`, `SITE_HISTORY`, `blocking_analysis`, 추가 입력 및 재분석 의미도 그대로 유지한다. 이번 변경은 PC result presentation의 CSS grid 배치만 조정했다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+779f671fd2a686efb64a492cf2810f2259ddf3b6
+```
+
+해당 HEAD에서 `npm run build`가 `tsc -b && vite build`까지 정상 PASS했고, 사용자 PC 화면에서도 `법규 평가 집계 / 외부 확인 정보`가 같은 행에 표시되고 그 아래 `추가 입력 필요사항`이 전체 폭으로 표시되는 것을 확인했다.
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC RULE / EXTERNAL RESULT PAIRING = USER LOCAL BEHAVIORAL PASS**이다.
+
+---
+
+## 32. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1082,7 +1104,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 32. Immediate Next Step Status
+## 33. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1108,6 +1130,7 @@ PC LAND AREA INFORMATION HIERARCHY              USER LOCAL BEHAVIORAL PASS
 PC ANALYSIS RESULT HEADER COMPACTION             USER LOCAL BEHAVIORAL PASS
 PC VERIFIED RESULT CARD DEDUPLICATION             USER LOCAL BEHAVIORAL PASS
 PC RESULT CANDIDATE LIST COLLAPSE                  USER LOCAL BEHAVIORAL PASS
+PC RULE / EXTERNAL RESULT PAIRING                   USER LOCAL BEHAVIORAL PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1115,6 +1138,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 33. Status Update Rule
+## 34. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
