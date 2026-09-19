@@ -1211,7 +1211,31 @@ db75dddafa025752087b638715a26d4876bb8432
 
 ---
 
-## 37. Other Known Product Gaps
+## 37. PC External Dependency Analysis Progression Validation
+
+### 2026-09-19 User Local Behavioral + Production Build Validation
+
+PC `외부 확인 정보`에서 Backend `blocking_analysis` boolean을 사용자 관점의 분석 진행 상태로 명확히 표시한다. `false`는 `계속 가능`, `true`는 `차단`, 값이 없으면 `정보 없음`으로 표시하고 각 상태의 의미를 짧은 설명으로 보완한다.
+
+`UNKNOWN`을 정상, 비적용 또는 문제 없음으로 변환하지 않는다. `SITE_HISTORY` 의미도 확대하지 않으며, 공개 타입에 존재하는 `confidence`와 `automation_state`는 의미 계약을 추가 확인하기 전까지 제품 UI에 노출하지 않는다.
+
+사용자 로컬 검증 HEAD:
+
+```text
+8e2a863b7418817f541444e4ef7541efe033da7b
+```
+
+사용자 PC 화면에서 `과거 이력 확인 → 현재 상태 UNKNOWN → 분석 진행 계속 가능`과 설명 문구가 정상 표시되는 것을 확인했다. `npm run build`는 `tsc -b && vite build`까지 정상 PASS했으며 Vite 8.3.0 기준 20 modules transformed, production bundle 생성 완료, build 시간은 125ms였다.
+
+동기화 중 remote-tracking ref lock 오류가 한 번 출력되었으나 이후 `git merge --ff-only`가 `db75ddd..8e2a863`로 정상 Fast-forward되었고 최종 로컬 HEAD가 위 검증 HEAD와 일치했다.
+
+이번 검증은 PC FHD/QHD 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC EXTERNAL DEPENDENCY ANALYSIS PROGRESSION = USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS**이다.
+
+---
+
+## 38. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1226,7 +1250,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 38. Immediate Next Step Status
+## 39. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1258,6 +1282,7 @@ PC REQUIREMENT GROUP DISCLOSURE / ADAPTIVE LAYOUT     USER LOCAL BEHAVIORAL PASS
 PC RULE EVALUATION INFORMATION HIERARCHY               USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC REQUIREMENT ITEM COMPLETION STATE                    USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC BUILDING REGULATION BASIS CLARIFICATION              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
+PC EXTERNAL DEPENDENCY ANALYSIS PROGRESSION             USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1265,6 +1290,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 39. Status Update Rule
+## 40. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
