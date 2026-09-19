@@ -86,6 +86,10 @@ dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 600; }
 .analysis-detail-section h2 { margin: 0 0 12px; font-size: 16px; }
 .analysis-detail-section h3 { margin: 0 0 8px; font-size: 13px; }
 .analysis-detail-section .analysis-summary { margin: 0; }
+.analysis-data-status { margin-top: 14px; padding-top: 12px; border-top: 1px solid #e4e9e4; }
+.analysis-data-status > strong { display: block; margin-bottom: 9px; color: #6e786f; font-size: 11px; }
+.analysis-data-status .analysis-summary { gap: 7px; }
+.analysis-data-status .analysis-summary div { color: #687269; font-size: 11px; }
 .analysis-metric-grid, .rule-summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .analysis-metric-grid-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .analysis-metric, .rule-summary-grid article { padding: 14px; border-radius: 10px; background: white; border: 1px solid #e4e9e4; }
