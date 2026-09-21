@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 """SITE Analysis Service Orchestrator."""
 from __future__ import annotations
-import copy, os
-from pathlib import Path
+import copy
 from typing import Any, Dict, Optional
-import requests
-from dotenv import load_dotenv
 from site_data.address_parcel_identity_resolver import resolve_address_parcel_identity
 from site_data.selected_parcel_candidate_verifier import verify_selected_parcel_candidate
 from site_data.site_builder import create_site
+from site_data.building_hub_provider import BuildingAPIError, fetch_building_items
 from site_data.site_data_model import Site
 from site_data.site_analysis_service import analyze_site_object, site_to_analysis_input
 from site_data.site_analysis_response import build_site_analysis_response
@@ -22,32 +20,8 @@ from law_data.historical_site_event_site_truth_promotion_rule_input_bridge impor
 from law_data.historical_trusted_internal_source_handoff_authorization import HistoricalTrustedInternalSourceHandoffAuthorization
 from law_data.historical_verified_rule_input_envelope import seal_verified_historical_rule_input
 from law_data.district_unit_plan_verified_registry_candidate_envelope import DistrictUnitPlanVerifiedRegistryCandidateEnvelope
-BASE_DIR=Path(__file__).resolve().parent.parent; load_dotenv(BASE_DIR/".env")
-BUILDING_API_URL="http://apis.data.go.kr/1613000/BldRgstHubService/getBrTitleInfo"
 class SiteAnalysisError(RuntimeError): pass
-class BuildingAPIError(SiteAnalysisError): pass
 class SiteBuildError(SiteAnalysisError): pass
-
-def fetch_building_items(*,sigungu_cd:str,bjdong_cd:str,bun:str,ji:str,plat_gb_cd:str="0",service_key:Optional[str]=None,timeout:int=30)->Dict[str,Any]:
-    key=service_key or os.getenv("DATA_API_KEY")
-    if not key: raise BuildingAPIError("DATA_API_KEY를 찾을 수 없습니다.")
-    params={"sigunguCd":str(sigungu_cd),"bjdongCd":str(bjdong_cd),"platGbCd":str(plat_gb_cd),"bun":str(bun),"ji":str(ji),"serviceKey":key,"numOfRows":"100","pageNo":"1","_type":"json"}
-    try: response=requests.get(BUILDING_API_URL,params=params,timeout=timeout)
-    except requests.RequestException as exc: raise BuildingAPIError(f"건축HUB 요청 실패: {exc}") from exc
-    if response.status_code!=200: raise BuildingAPIError(f"건축HUB HTTP 오류: {response.status_code}")
-    try: data=response.json()
-    except ValueError as exc: raise BuildingAPIError("건축HUB 응답 JSON 파싱 실패") from exc
-    api_response=data.get("response")
-    if not isinstance(api_response,dict): raise BuildingAPIError("건축HUB response 없음")
-    header=api_response.get("header",{})
-    if header.get("resultCode")!="00": raise BuildingAPIError(f"건축HUB API 오류: {header.get('resultCode')} / {header.get('resultMsg')}")
-    body=api_response.get("body",{}); items=(body.get("items") or {}).get("item",[])
-    if isinstance(items,dict): items=[items]
-    if not isinstance(items,list): items=[]
-    raw_total_count=body.get("totalCount")
-    try: total_count=int(raw_total_count) if raw_total_count is not None and str(raw_total_count).strip() else 0
-    except (TypeError,ValueError): raise BuildingAPIError(f"건축HUB totalCount 형식 오류: {raw_total_count}")
-    return {"items":items,"total_count":total_count,"result_code":header.get("resultCode"),"result_message":header.get("resultMsg")}
 
 def _actual_site_pnu(site:Any)->str:
     try: pnu=str(site_to_analysis_input(site).get("pnu") or "").strip()
