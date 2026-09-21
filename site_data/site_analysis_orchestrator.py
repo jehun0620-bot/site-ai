@@ -12,7 +12,7 @@ from site_data.site_builder import create_site
 from site_data.site_data_model import Site
 from site_data.site_analysis_service import analyze_site_object, site_to_analysis_input
 from site_data.site_analysis_response import build_site_analysis_response
-from site_data.vworld_api import get_land_characteristics
+from site_data.vworld_api import get_latest_land_characteristics
 from site_data.land_converter import select_latest_land_record, convert_land_record
 from law_data.historical_site_event_admitted_rule_input_adapter import adapt_admitted_historical_site_event_rule_input
 from law_data.historical_site_event_candidate_condition_binding_authorization import authorize_historical_site_event_candidate_condition_binding
@@ -72,7 +72,7 @@ def _parcel_only_site(*,sigungu_cd:str,bjdong_cd:str,plat_gb_cd:str,bun:str,ji:s
     pnu=_actual_site_pnu(site)
     if not pnu: raise SiteBuildError("유효한 필지 identity로 Site 객체를 생성할 수 없습니다.")
     try:
-        records=get_land_characteristics(pnu); record=select_latest_land_record(records)
+        _, records=get_latest_land_characteristics(pnu); record=select_latest_land_record(records)
         if record is not None:
             site.land=convert_land_record(record)
             site.address=_parcel_address_from_land_record(record,pnu)
