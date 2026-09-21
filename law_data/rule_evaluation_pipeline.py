@@ -93,13 +93,13 @@ from typing import Any, Dict, List, Optional
 
 try:
 
-    from .law_special_rule_clause_split_test import (
+    from .zone_relevance_classifier import (
         classify_zone_relevance,
     )
 
 except ImportError:
 
-    from law_special_rule_clause_split_test import (
+    from zone_relevance_classifier import (
         classify_zone_relevance,
     )
 
