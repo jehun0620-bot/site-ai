@@ -318,3 +318,10 @@ The architectural invariant is unchanged: external verified input is not trusted
 ### 16A. Validation status
 
 The verified SITE input admission extraction is user-local behavioral PASS at HEAD `6a55eab6eb51c8c1a76e4bb1d6d197fbc3c9caf6`. The pre-refactor fail-closed safety contract and historical promotion end-to-end path both remained green after responsibility extraction, confirming that canonical-PNU rebinding and verified-envelope admission semantics were preserved.
+
+
+## 17. Public SITE facts projection boundary — 2026-09-21
+
+The public projection of already-canonical land/building facts is isolated in `site_data/site_facts_response.py`. This boundary is presentation-only: it may map canonical `Site.land` / `Site.buildings` and their provenance into the existing public `site_facts` shape, but it must not call providers, verify PNU, resolve regulation, or make legal applicability decisions. `site_analysis_response.py` remains the owner of the overall `SITE_ANALYSIS_API_V1` response contract.
+
+This extraction is intentionally additive/structural and must preserve the existing public schema and real-data values. Behavioral completion requires focused projection, public response, real-data SITE FACT, and actual Backend-connected UI regression to remain green.
