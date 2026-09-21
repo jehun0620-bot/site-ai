@@ -72,6 +72,16 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
         const analysisPanel = page.locator('.analysis-panel')
         await expect(analysisPanel.locator('dt', { hasText: 'PNU' }).locator('..').locator('dd')).toHaveText(pnu)
 
+        const ruleDetails = analysisPanel.locator('.rule-detail-groups')
+        await expect(ruleDetails).toBeVisible()
+        const unknownRuleGroup = ruleDetails.locator('.rule-detail-group-unknown')
+        await expect(unknownRuleGroup).toBeVisible()
+        const unknownRuleCount = Number((await unknownRuleGroup.locator('summary strong').textContent())?.replace(/\D/g, '') ?? '0')
+        expect(unknownRuleCount).toBeGreaterThan(0)
+        await expect(unknownRuleGroup.locator('.rule-detail-item')).toHaveCount(unknownRuleCount)
+        await expect(unknownRuleGroup.locator('.rule-detail-item').first()).toContainText('판정 이유')
+        await expect(unknownRuleGroup.locator('.rule-detail-item').first()).toContainText('미확정 조건')
+
         const requirementItems = page.locator('.requirement-item')
         const requirementCount = await requirementItems.count()
 
