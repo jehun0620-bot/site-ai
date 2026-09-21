@@ -209,3 +209,22 @@ Expected:
 ```
 
 Never modify, restore, checkout, reset, delete, stage, commit, or clean this file. Never modify/commit `.env` or `law_data/output/*` without explicit scope. Never use broad staging. User-local execution PASS is final behavioral validation.
+
+
+## 9. Architecture / code-quality checkpoint — 2026-09-21
+
+SITE FACT land provenance is user-local behavioral PASS through the actual Backend-connected Playwright regression. The subsequent VWorld land-hydration deduplication is also user-local behavioral PASS at code HEAD `b12443228c4dee823e594eb8d6039c6110cc5d88`:
+
+```text
+PARCEL_ONLY_LAND_ENRICHMENT_CONTRACT_PASS
+VWORLD_LATEST_LAND_YEAR_SELECTION: all_pass True
+SITE FACT real-data regression: all_pass True
+SITE analysis public response: all_pass True
+actual Backend SITE-facts E2E: 1 passed
+```
+
+That refactor centralized latest-record conversion + land provenance preservation in `hydrate_land_from_records()` while preserving the existing VWorld latest-year policy and public behavior.
+
+Current in-progress architecture refactor extracts Building HUB transport from `site_analysis_orchestrator.py` into `site_data/building_hub_provider.py`. A focused provider contract test was added. This stage is **IMPLEMENTED / NOT YET USER-LOCAL BEHAVIORAL PASS** until focused and real-data regressions are run locally.
+
+No change is intended to public API schemas, canonical PNU semantics, Rule Engine, historical/district-unit admission, Frontend contracts, or the protected local output file.
