@@ -36,6 +36,8 @@ def main() -> int:
         "building identity": all(item.get("management_id") is not None for item in items),
         "building use": any(str(item.get("main_use") or "").strip() for item in items),
         "land source": sources.get("land") == "VWORLD_LAND_CHARACTERISTICS",
+        "land reference year": sources.get("land_reference_year") == "2026",
+        "land last updated": sources.get("land_last_updated_at") == "2026-05-12",
         "building source": sources.get("buildings") == "BUILDING_HUB_TITLE",
         "service count agrees": (response.get("service") or {}).get("building_count") == buildings.get("count"),
     }
