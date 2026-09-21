@@ -280,3 +280,24 @@ This direction is PROPOSED architecture for the next major product phase; it is 
 ## 15. Current transition
 
 Single Parcel v1 should be closed before the Integrated Development target model is implemented. The immediate architecture work is the public rule presentation boundary, followed by a machine-readable product error boundary and final Single Parcel regression. No new numbered architecture STEP is introduced for these product boundaries.
+
+
+## 15. Backend provider boundary checkpoint — 2026-09-21
+
+Architecture/code-quality checkpoint after Single Parcel v1 identified external provider I/O as a separate responsibility from SITE orchestration. Building HUB transport is therefore being isolated behind `site_data/building_hub_provider.py`.
+
+The intended boundary is:
+
+```text
+Building HUB HTTP / DATA_API_KEY / response normalization
+→ building_hub_provider.fetch_building_items()
+→ normalized building provider result
+→ site_analysis_orchestrator
+→ canonical Site construction
+→ verified legal-input admission
+→ existing analysis / public response
+```
+
+This extraction does not create a second SITE path and does not change canonical PNU, Building HUB semantics, Rule Engine, historical/district-unit admission, public API schema, or Frontend contracts. Provider failures remain product-mapped at the HTTP boundary through `BuildingAPIError`.
+
+The next backend architecture checkpoint should evaluate verified-input admission/rebinding separately from provider I/O; it must not weaken the existing fail-closed PNU/envelope contracts.
