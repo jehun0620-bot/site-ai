@@ -172,7 +172,7 @@ POST /v1/parcel-candidates/address
 POST /v1/site-analysis/selected-candidate
 ```
 
-A안의 pre-analysis polygon confirmation을 위해서는 full SITE analysis를 실행하지 않고 기존 verifier/geometry verification 경로를 재사용하는 lightweight parcel confirmation API가 목표 구조에 필요하다. 구체적인 endpoint, schema, 파일은 실제 Backend 조사와 별도 승인 전에는 Architecture에서 확정하지 않는다.
+Pre-analysis polygon confirmation is now provided by the validated lightweight `POST /v1/parcel-candidates/confirm` boundary. It reuses Backend verification semantics without treating confirmation as a substitute for the full selected-candidate analysis re-verification.
 
 ---
 
@@ -233,7 +233,7 @@ verification resolution
 basic parcel identity
 ```
 
-구체적인 lightweight confirmation response schema는 Backend 구현 시 기존 verifier와 geometry contract를 확인한 뒤 확정한다. 아직 존재하지 않는 schema를 실제 계약으로 선언하지 않는다.
+현재 lightweight confirmation response는 `PARCEL_CONFIRMATION_V1`이며 VERIFIED parcel identity와 Backend verification에 사용된 Polygon/MultiPolygon geometry를 제공한다. Frontend는 이 verified geometry만 실제 parcel boundary로 취급한다.
 
 ### 8.3 Analysis Spatial Layers
 
@@ -498,7 +498,7 @@ Directory Structure
 First Vertical Slice
 ```
 
-React, Vue, Next.js, Vite, 지도 provider 등은 실제 요구사항과 repository 상태를 확인하여 별도 결정한다. 선택된 기술은 이 문서의 trust boundary와 state model을 보존해야 한다.
+현재 구현 기술은 React + TypeScript + Vite이며 Kakao Maps를 MVP map provider로 사용한다. Map Adapter 경계를 유지하여 provider 선택이 canonical parcel/SITE trust boundary를 변경하지 않도록 한다.
 
 ---
 
@@ -547,3 +547,41 @@ Frontend 제품의 핵심은 다음과 같다.
 Frontend의 책임은 **선택, 확인, 표현**이다.
 
 Backend의 책임은 **검증, SITE truth, 법규 판정**이다.
+
+
+---
+
+## 23. Product Workspace Direction — Single Parcel / Integrated Development
+
+현재 구현된 workspace는 Single Parcel 분석이다. Single Parcel v1을 명확한 종료선까지 완성한 뒤, 향후 HOME에서 분석 목적을 선택하고 각 workspace로 진입하는 구조를 목표로 한다.
+
+```text
+HOME
+├─ Single Parcel Development
+│  └─ current verified-PNU SITE analysis workspace
+└─ Integrated Development
+   └─ future multi-PNU assembled-site workspace
+```
+
+Integrated Development는 단순한 "여러 개별 필지 동시 분석" UI가 아니다. 여러 VERIFIED parcel을 하나의 proposed development site로 구성하고, 합병 가능성·건축대지 구성·공동/통합개발 계획조건·혼재 규제·주변 context를 단계적으로 검토하는 별도 분석 흐름이다.
+
+Frontend가 여러 parcel을 선택했다는 사실은 합병 가능, 하나의 법적 대지, 또는 target-level applicability를 의미하지 않는다. 해당 판정은 향후 Backend Analysis Target contract가 제공해야 한다.
+
+## 24. Public Rule Detail Presentation Direction
+
+PC rule-detail UX는 Backend의 product-safe public rule presentation model만 소비한다. Frontend는 raw `debug.rule_engine`, branch/registry/repair internals 또는 raw conditions를 제품 계약으로 사용하지 않는다.
+
+정보 계층은 다음 방향을 따른다.
+
+```text
+Rule Summary
+→ status filter / disclosure
+→ law + rule title + paragraph/item/subitem
+→ Backend applicability + reason
+→ required / unresolved / blocking condition presentation
+→ rule text / supported numeric effect
+```
+
+Frontend는 법령 조문번호, 공식 URL, legal conclusion을 원 데이터에 없는 형태로 합성하지 않는다. `UNKNOWN`과 `CONDITIONAL`의 의미도 Backend 계약을 그대로 보존한다.
+
+모바일 전용 UX 개발/검증은 테스트 환경 준비 전까지 보류하며, 현재 제품 종료 검증은 PC FHD/QHD를 우선한다.
