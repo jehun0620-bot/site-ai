@@ -104,7 +104,7 @@ test.describe('SITE_API_ERROR_V1 Frontend focused validation', () => {
     await page.getByLabel('지번주소').fill('서울특별시 강남구 개포동 12')
     await page.getByRole('button', { name: '필지 찾기' }).click()
 
-    await expect(page.getByRole('status')).toHaveText(
+    await expect(page.locator('.status')).toHaveText(
       '외부 데이터 조회에 실패했습니다. 테스트용 후보 검색 제공자 오류입니다.',
     )
   })
