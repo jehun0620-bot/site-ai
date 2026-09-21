@@ -17,7 +17,7 @@ def _land_record():
 
 
 def main():
-    with patch.object(orchestrator, "get_land_characteristics", return_value=[_land_record()]) as land_api:
+    with patch.object(orchestrator, "get_latest_land_characteristics", return_value=("2026", [_land_record()])) as land_api:
         site = orchestrator._parcel_only_site(
             sigungu_cd="11590", bjdong_cd="10600", plat_gb_cd="1", bun="0029", ji="0003"
         )
@@ -27,14 +27,16 @@ def main():
         assert site.land.zoning == "제1종일반주거지역"
         assert site.land.land_category == "임야"
         assert site.land.land_area == 321.5
+        assert site.land.source_reference_year == "2026"
+        assert site.land.source_last_updated_at == "2026-09-01"
 
-    with patch.object(orchestrator, "get_land_characteristics", return_value=[]):
+    with patch.object(orchestrator, "get_latest_land_characteristics", return_value=("2026", [])):
         site = orchestrator._parcel_only_site(
             sigungu_cd="11590", bjdong_cd="10600", plat_gb_cd="1", bun="0029", ji="0003"
         )
         assert site.land is None
 
-    with patch.object(orchestrator, "get_land_characteristics", side_effect=RuntimeError("unavailable")):
+    with patch.object(orchestrator, "get_latest_land_characteristics", side_effect=RuntimeError("unavailable")):
         site = orchestrator._parcel_only_site(
             sigungu_cd="11590", bjdong_cd="10600", plat_gb_cd="1", bun="0029", ji="0003"
         )
