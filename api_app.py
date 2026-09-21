@@ -74,7 +74,7 @@ def site_analysis_by_address(request:AddressSiteAnalysisRequest):
     except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.") from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
-    except Exception as exc: raise HTTPException(status_code=500,detail="SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
+    except Exception as exc: raise product_http_error(500,"UNEXPECTED_ERROR","INTERNAL","SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
 
 @app.post("/v1/site-analysis/selected-candidate")
 def site_analysis_by_selected_candidate(request:SelectedParcelCandidateSiteAnalysisRequest):
