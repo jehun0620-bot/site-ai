@@ -72,9 +72,11 @@ def _parcel_only_site(*,sigungu_cd:str,bjdong_cd:str,plat_gb_cd:str,bun:str,ji:s
     pnu=_actual_site_pnu(site)
     if not pnu: raise SiteBuildError("유효한 필지 identity로 Site 객체를 생성할 수 없습니다.")
     try:
-        _, records=get_latest_land_characteristics(pnu); record=select_latest_land_record(records)
+        land_year, records=get_latest_land_characteristics(pnu); record=select_latest_land_record(records)
         if record is not None:
             site.land=convert_land_record(record)
+            site.land.source_reference_year=land_year
+            site.land.source_last_updated_at=str(record.get("lastUpdtDt") or "").strip() or None
             site.address=_parcel_address_from_land_record(record,pnu)
     except (RuntimeError,ValueError,TypeError): pass
     return site
