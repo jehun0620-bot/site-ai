@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -51,7 +52,7 @@ def create_pnu(
 
 def get_land_characteristics(
     pnu: str,
-    stdr_year: str = "2024",
+    stdr_year: str,
     num_of_rows: int = 10,
     page_no: int = 1,
 ) -> List[Dict[str, Any]]:
@@ -86,3 +87,36 @@ def get_land_characteristics(
     if not isinstance(records, list):
         raise RuntimeError("VWorld API의 field 데이터가 목록 형식이 아닙니다.")
     return records
+
+
+
+def get_latest_land_characteristics(
+    pnu: str,
+    *,
+    start_year: int | None = None,
+    lookback_years: int = 5,
+    num_of_rows: int = 10,
+    page_no: int = 1,
+) -> tuple[str, List[Dict[str, Any]]]:
+    """Return the newest available VWorld land-characteristics year.
+
+    The search starts at the current calendar year unless start_year is
+    explicitly supplied, then moves backward until records are found.
+    """
+    if lookback_years < 1:
+        raise ValueError("lookback_years는 1 이상이어야 합니다.")
+
+    first_year = start_year if start_year is not None else datetime.now().year
+    for year in range(first_year, first_year - lookback_years, -1):
+        records = get_land_characteristics(
+            pnu,
+            stdr_year=str(year),
+            num_of_rows=num_of_rows,
+            page_no=page_no,
+        )
+        if records:
+            return str(year), records
+
+    raise RuntimeError(
+        f"VWorld 토지특성정보를 최근 {lookback_years}개 기준연도에서 찾을 수 없습니다: {pnu}"
+    )
