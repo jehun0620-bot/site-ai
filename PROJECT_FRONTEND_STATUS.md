@@ -1421,7 +1421,18 @@ Actual Backend-connected Playwright regression:
 
 Therefore **PC PRODUCT ERROR MAPPING = IMPLEMENTED + PRODUCTION BUILD PASS + EXISTING ACTUAL BACKEND E2E REGRESSION PASS**.
 
-A dedicated deterministic Frontend test that forces and asserts the structured `SITE_API_ERROR_V1` error path has not yet been recorded as PASS. Do not promote that focused validation until it is actually executed successfully.
+Dedicated deterministic Frontend validation is now user-local PASS at baseline code HEAD `8d44834e98b4035b1da44fc8994ce1b9e1db17a2`.
+
+```text
+candidate search provider error: PASS
+parcel confirmation error: PASS
+SITE analysis provider error: PASS
+3 passed (2.4s)
+Production build: PASS (21 modules, 95ms)
+Actual Backend-connected reanalysis E2E: PASS (1 passed, 18.9s)
+```
+
+Therefore **PC PRODUCT ERROR MAPPING focused validation = USER-LOCAL BEHAVIORAL PASS**, and **Single Parcel v1 = BASELINE FROZEN / FINAL REGRESSION PASS**.
 
 ---
 
