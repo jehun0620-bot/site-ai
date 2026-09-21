@@ -1235,7 +1235,19 @@ PC `외부 확인 정보`에서 Backend `blocking_analysis` boolean을 사용자
 
 ---
 
-## 38. Other Known Product Gaps
+## 38. PC Reanalysis Failure / Preserved Result Validation
+
+재분석 요청이 실패하더라도 직전 성공 분석 결과를 제거하지 않고 유지하며, 결과 상단에 재분석 실패 사실과 실제 오류 메시지, 아래 결과가 직전 성공 결과라는 안내를 표시한다.
+
+사용자 로컬 검증에서 정상 SITE 분석 결과를 받은 뒤 Backend를 종료하고 추가 입력 재분석을 실행했다. 화면에 `입력 정보를 반영한 재분석을 완료하지 못했습니다.`, `SITE 분석을 완료하지 못했습니다. (502)`, `아래에는 직전 성공 분석 결과가 계속 표시됩니다.`가 표시됐고, 직전 성공 결과의 필지 기본정보·대지면적·건축 규모 기준·법규 평가 집계·외부 확인 정보가 그대로 유지되는 것을 확인했다.
+
+사용자 로컬 production build도 `tsc -b && vite build`까지 정상 PASS했으며 Vite 8.3.0 기준 20 modules transformed, build 시간은 87ms였다.
+
+따라서 **PC REANALYSIS FAILURE / PRESERVED RESULT UX = USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS**이다.
+
+---
+
+## 39. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1250,7 +1262,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 39. Immediate Next Step Status
+## 40. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1283,6 +1295,7 @@ PC RULE EVALUATION INFORMATION HIERARCHY               USER LOCAL BEHAVIORAL PAS
 PC REQUIREMENT ITEM COMPLETION STATE                    USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC BUILDING REGULATION BASIS CLARIFICATION              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC EXTERNAL DEPENDENCY ANALYSIS PROGRESSION             USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
+PC REANALYSIS FAILURE / PRESERVED RESULT UX              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1290,6 +1303,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 40. Status Update Rule
+## 41. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
