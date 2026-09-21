@@ -42,7 +42,13 @@ def main() -> None:
             json={"address": "검증되지 않은 주소"},
         )
         assert response.status_code == 404, response.text
-        assert "검증된 필지" in response.json()["detail"]
+        assert response.json()["detail"] == {
+            "schema_version": "SITE_API_ERROR_V1",
+            "code": "PARCEL_BUILD_FAILED",
+            "category": "PARCEL",
+            "message": "분석할 필지 정보를 구성하지 못했습니다.",
+            "retryable": False,
+        }
 
     with patch("api_app.analyze_site_by_address") as analyze:
         response = client.post("/v1/site-analysis/address", json={"address": ""})
