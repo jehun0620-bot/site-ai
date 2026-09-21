@@ -3,22 +3,12 @@ import type {
   ParcelCandidateSearchResponse,
   ParcelConfirmationResponse,
 } from '../types/parcel'
+import { ProductApiError, readApiError, type ProductErrorDetail } from './productError'
 
-export class ParcelCandidateApiError extends Error {
-  constructor(message: string) {
-    super(message)
+export class ParcelCandidateApiError extends ProductApiError {
+  constructor(message: string, httpStatus = 0, detail: ProductErrorDetail | null = null) {
+    super(message, httpStatus, detail)
     this.name = 'ParcelCandidateApiError'
-  }
-}
-
-async function readErrorDetail(response: Response): Promise<string | null> {
-  try {
-    const body: unknown = await response.json()
-    if (!body || typeof body !== 'object') return null
-    const detail = (body as Record<string, unknown>).detail
-    return typeof detail === 'string' && detail.trim() ? detail.trim() : null
-  } catch {
-    return null
   }
 }
 
@@ -36,8 +26,9 @@ export async function searchParcelCandidates(
   })
 
   if (!response.ok) {
-    const detail = await readErrorDetail(response)
-    throw new ParcelCandidateApiError(detail ? `필지 후보 검색에 실패했습니다. ${detail} (${response.status})` : `필지 후보 검색에 실패했습니다. (${response.status})`)
+    const error = await readApiError(response)
+    const message = error.detail?.message ?? error.legacyMessage ?? '필지 후보 검색에 실패했습니다.'
+    throw new ParcelCandidateApiError(message, response.status, error.detail)
   }
 
   const body: unknown = await response.json()
@@ -66,8 +57,9 @@ export async function confirmParcelCandidate(
   })
 
   if (!response.ok) {
-    const detail = await readErrorDetail(response)
-    throw new ParcelCandidateApiError(detail ? `선택한 필지를 확인하지 못했습니다. ${detail} (${response.status})` : `선택한 필지를 확인하지 못했습니다. (${response.status})`)
+    const error = await readApiError(response)
+    const message = error.detail?.message ?? error.legacyMessage ?? '선택한 필지를 확인하지 못했습니다.'
+    throw new ParcelCandidateApiError(message, response.status, error.detail)
   }
 
   const body: unknown = await response.json()
