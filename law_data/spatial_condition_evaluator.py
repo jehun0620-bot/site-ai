@@ -95,6 +95,12 @@ except ImportError:
     )
 
 
+DISTRICT_UNIT_PLAN_DATASET = "LT_C_UPISUQ161"
+DEVELOPMENT_PROMOTION_DISTRICT_DATASET = "LT_C_UQ129"
+SETTLEMENT_DISTRICT_DATASET = "LT_C_UQ128"
+DISASTER_PREVENTION_DISTRICT_DATASET = "LT_C_UQ125"
+
+
 # ============================================================
 # Spatial Condition Registry
 # ============================================================
