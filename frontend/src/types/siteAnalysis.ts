@@ -113,11 +113,44 @@ export interface SiteAnalysisExternalDependencies {
   items: SiteAnalysisExternalDependency[]
 }
 
+export interface SiteAnalysisBuildingFact {
+  management_id: string | number | null
+  dong_name: string
+  building_name: string
+  main_use: string
+  land_area: number | null
+  building_area: number | null
+  total_floor_area: number | null
+  building_coverage_ratio: number | null
+  floor_area_ratio: number | null
+  ground_floor_count: number | null
+  underground_floor_count: number | null
+  household_count: number | null
+  approval_date: string
+}
+
+export interface SiteAnalysisSiteFacts {
+  land: {
+    land_category: string
+    land_area: number | null
+    zoning: string
+  }
+  buildings: {
+    count: number
+    items: SiteAnalysisBuildingFact[]
+  }
+  sources: {
+    land: string | null
+    buildings: string | null
+  }
+}
+
 export interface SiteAnalysisResponse {
   schema_version: 'SITE_ANALYSIS_API_V1'
   status: unknown
   site: SiteAnalysisSite
   land_area: SiteAnalysisLandArea
+  site_facts: SiteAnalysisSiteFacts
   spatial: unknown
   regulation: SiteAnalysisRegulation
   rule_evaluation: SiteAnalysisRuleEvaluation
