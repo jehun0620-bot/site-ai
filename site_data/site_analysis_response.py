@@ -184,6 +184,13 @@ def build_site_analysis_response(
         )
     )
 
+    rule_details = (
+        analysis.get(
+            "rule_details",
+            {},
+        )
+    )
+
     requirements = (
         analysis.get(
             "input_requirements",
@@ -306,6 +313,10 @@ def build_site_analysis_response(
 
         "rule_evaluation": (
             rule_evaluation
+        ),
+
+        "rule_details": (
+            rule_details
         ),
 
         "requirements": {
