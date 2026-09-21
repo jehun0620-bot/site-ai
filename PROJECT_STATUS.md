@@ -2,7 +2,7 @@
 
 최종 업데이트: 2026-09-21
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `3f9ab844250dad962c4b9129d2f6a696f09811ad`
+기준 behavioral PASS HEAD: `3232dce8a02ac458a823ffc2fa02d048a9eec604`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
@@ -238,3 +238,24 @@ The pre-refactor fail-closed safety contract was user-local PASS at `499fe03d58f
 ### SITE facts response projection refactor — 2026-09-21
 
 Public `site_facts` projection has been extracted from `site_analysis_response.py` into `site_data/site_facts_response.py`. A focused projection contract test was added. This extraction is **USER-LOCAL BEHAVIORAL PASS** at HEAD `ecc2cd1952855939f375131cdd774e6d0d9127b0`: focused SITE facts projection, existing public response regression, real-data SITE FACT regression, and actual Backend-connected SITE-facts E2E all passed with the existing `SITE_ANALYSIS_API_V1` shape and values preserved.
+
+
+### Zone relevance classifier production boundary — 2026-09-21
+
+용도지역 관련 production 판정이 더 이상 `law_special_rule_clause_split_test.py`의 테스트 구현을 import하지 않도록 `law_data/zone_relevance_classifier.py`로 분리했다. `rule_evaluation_pipeline.py`와 기존 clause-split regression은 동일 production classifier를 공유한다.
+
+사용자 로컬 검증 결과:
+
+```text
+law_special_rule_clause_split_test: ALL PASS
+rule_evaluation_pipeline_module_test: all_pass True
+rule_evaluation_pipeline_stateless_test: all_pass True
+SITE_ANALYSIS_CURRENT_BASELINE_PASS
+SITE_ANALYSIS_RULE_DETAILS_CONTRACT_PASS
+SITE_ANALYSIS_RULE_DETAILS_REAL_DATA_REGRESSION_PASS
+final SITE rules: 314 = 62 / 214 / 36 / 2
+public UNKNOWN: clause 47, 48 / 도시지역편입해제구역
+site_analysis_final_snapshot_test: all_pass True
+```
+
+따라서 classifier production-boundary 정규화는 behavioral PASS다. 기존 `law_data/output/site_analysis_final_snapshot.json`은 현재 production 전체를 재직렬화할 때 이번 작업 범위를 넘어서는 누적 차이가 함께 발생하므로 이 refactor의 commit 대상에서 제외한다. snapshot baseline 전체 reconciliation은 별도 작업으로 분리한다. 보호 파일 `urban_area_conversion_history_final_resolution.json`은 계속 제외한다.
