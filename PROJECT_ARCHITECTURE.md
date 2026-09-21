@@ -1,6 +1,6 @@
 # AI 대지분석 자동화 시스템 — PROJECT ARCHITECTURE
 
-최종 reconciliation: 2026-09-17
+최종 reconciliation: 2026-09-21
 Architecture Baseline: v1.2
 
 ## 1. 프로젝트 목표
@@ -229,10 +229,54 @@ Legal delegation/version chains and provenance remain preserved. AI may explain 
 - explicit WRITE approval before repository mutation
 - user-local behavioral PASS is final validation
 
-## 13. Next design question
+## 13. Public result presentation boundary
 
-The public exact-address analysis path is validated. Next implementation should add candidate discovery without changing exact-address resolver semantics.
+The deterministic Rule Engine remains the sole legal applicability evaluator. Product-facing rule detail must be derived from the already-evaluated final rules through a presentation adapter:
 
-A minimal implementation should likely introduce a dedicated candidate-search module plus focused contract test before exposing a public candidate-search route. This keeps provider parsing/discovery logic outside `api_app.py` and prevents discovery results from being confused with VERIFIED identity.
+```text
+INTERNAL RULE ENGINE
+→ deterministic evaluated rules
+→ PRODUCT PRESENTATION ADAPTER
+→ public SITE analysis result
+→ Frontend presentation
+```
 
-Candidate selection/reverification should be a later, separately tested boundary after candidate discovery itself is validated.
+The adapter may expose stable, existing rule facts needed for explanation, including clause index, law name, rule title, paragraph/item/subitem, category, applicability, applicability reason, rule text, relevant unresolved/required/blocking conditions, and numeric effect where supported.
+
+It must not expose raw engine/debug implementation as the product contract. `baseline`, branch-overlay internals, registry raw payloads, repairs, dynamic injection internals, numeric guards, or `debug.rule_engine` remain internal unless a later architecture decision explicitly promotes a field. A product presentation model must not create a second legal conclusion or reinterpret `UNKNOWN`.
+
+## 14. Product analysis-target direction
+
+The current validated analysis target is one canonical PNU / parcel. Future Integrated Development must not weaken that atomic parcel authority.
+
+Proposed target hierarchy:
+
+```text
+PARCEL
+official atomic PNU unit
+    ↓ 1..N verified members
+ASSEMBLED_SITE
+one proposed development site composed by the user
+    ↓ surrounding context
+SITE CONTEXT
+roads / neighboring parcels / planning context / facilities
+```
+
+Multiple selected parcels are not intended as a core "independent parcels in parallel" product mode. They are intended to compose one proposed integrated development site.
+
+Important future invariants:
+
+```text
+verified member parcel truth != assembled-site truth
+assembled-site truth != cadastral merge eligibility
+cadastral merge ineligibility != automatically integrated-development ineligibility
+parcel applicability != target applicability
+```
+
+Integrated Development must separately evaluate cadastral merge conditions, building-site composition where legally relevant, planning/common-development constraints, geometry/adjacency, mixed regulation, target-level applicability, and surrounding context. User selection alone never proves legal merge or integrated-development eligibility.
+
+This direction is PROPOSED architecture for the next major product phase; it is not yet an implemented Backend target model and does not alter the current v1.2 Single Parcel pipeline.
+
+## 15. Current transition
+
+Single Parcel v1 should be closed before the Integrated Development target model is implemented. The immediate architecture work is the public rule presentation boundary, followed by a machine-readable product error boundary and final Single Parcel regression. No new numbered architecture STEP is introduced for these product boundaries.
