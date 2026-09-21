@@ -228,3 +228,8 @@ That refactor centralized latest-record conversion + land provenance preservatio
 The Building HUB provider extraction is now **USER-LOCAL BEHAVIORAL PASS** at HEAD `d46a3afbbead00341fa2a8f2a7581cbf26760009`. Validation passed for the focused provider contract, parcel-only land regression, real-data SITE FACT regression, public response regression, and actual Backend-connected SITE-facts Playwright E2E.
 
 No change is intended to public API schemas, canonical PNU semantics, Rule Engine, historical/district-unit admission, Frontend contracts, or the protected local output file.
+
+
+### Verified SITE input admission refactor — 2026-09-21
+
+The pre-refactor fail-closed safety contract was user-local PASS at `499fe03d58f322d9b0bc82c8caf36d703e795825`, together with the historical promotion end-to-end regression. The verified historical/district admission responsibility has now been extracted from `site_analysis_orchestrator.py` into `site_data/verified_site_input_admission.py` without intentionally changing admission rules or error semantics. This extraction is **IMPLEMENTED / NOT YET USER-LOCAL BEHAVIORAL PASS** until the same safety contract and end-to-end regressions pass after extraction.
