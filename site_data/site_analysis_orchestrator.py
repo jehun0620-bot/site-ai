@@ -44,7 +44,10 @@ def fetch_building_items(*,sigungu_cd:str,bjdong_cd:str,bun:str,ji:str,plat_gb_c
     body=api_response.get("body",{}); items=(body.get("items") or {}).get("item",[])
     if isinstance(items,dict): items=[items]
     if not isinstance(items,list): items=[]
-    return {"items":items,"total_count":body.get("totalCount",0),"result_code":header.get("resultCode"),"result_message":header.get("resultMsg")}
+    raw_total_count=body.get("totalCount")
+    try: total_count=int(raw_total_count) if raw_total_count is not None and str(raw_total_count).strip() else 0
+    except (TypeError,ValueError): raise BuildingAPIError(f"건축HUB totalCount 형식 오류: {raw_total_count}")
+    return {"items":items,"total_count":total_count,"result_code":header.get("resultCode"),"result_message":header.get("resultMsg")}
 
 def _actual_site_pnu(site:Any)->str:
     try: pnu=str(site_to_analysis_input(site).get("pnu") or "").strip()
