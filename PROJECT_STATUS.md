@@ -1,6 +1,6 @@
 # AI 대지분석 자동화 시스템 - PROJECT STATUS
 
-최종 업데이트: 2026-09-17
+최종 업데이트: 2026-09-21
 기준 branch: `cleanup/repository-organization-20260916`
 기준 behavioral PASS HEAD: `5538b95ab74eb674883420ea9267fd1d38ebf2ec`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
@@ -123,9 +123,24 @@ address search
 → public HTTP READY
 ```
 
-## 6. Next product boundary
+## 6. Current product boundary — Single Parcel v1 closure
 
-Backend candidate-selection safety and public analysis are validated. The next product work is candidate list/map UI integration. Before implementation, inspect the repository for any existing frontend/web foundation and reuse it if present; do not introduce a new frontend framework without explicit design/write approval.
+Candidate list/map, lightweight parcel confirmation, VERIFIED polygon display, selected-candidate full analysis, additional-input/reanalysis UX, PC result presentation, and actual Backend-connected Playwright regression have progressed beyond the 2026-09-17 candidate-UI boundary. Frontend implementation/validation details are tracked in `PROJECT_FRONTEND_STATUS.md`.
+
+The current product strategy is to finish **Single Parcel v1** at a deliberate boundary before starting Integrated Development.
+
+Single Parcel v1 closure priorities:
+
+```text
+1. Public Rule Presentation Model
+2. PC rule-detail UX consuming only the public product contract
+3. Machine-readable Product Error Model + PC error mapping
+4. Final Single Parcel regression baseline
+```
+
+Road-name-address input support and broader provider retry/cache/rate-limit/observability hardening are not currently required to block the Single Parcel v1 closure; they remain follow-up scope unless later evidence changes that decision. Mobile-specific refinement remains paused until a mobile test environment is available.
+
+The next implementation target is the Backend Public Rule Presentation Model. The existing Rule Engine already carries per-clause `law_name`, `rule_title`, `paragraph`, `item`, `subitem`, `category`, `applicability`, `applicability_reason`, condition groups, numeric effects, and rule text. Product exposure must be a deterministic presentation adapter; Frontend must not consume `debug.rule_engine` and no second Rule Engine path may be created.
 
 ## 7. Safety boundary
 
