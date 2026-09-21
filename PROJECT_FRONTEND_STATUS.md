@@ -1355,10 +1355,14 @@ COMPLETED IN CURRENT CLOSURE:
 1. Backend Public Rule Presentation Model             PASS
 2. PC rule-detail UX using that public model          PASS
 
+COMPLETED AFTER THE ABOVE BASELINE:
+1. Machine-readable Product Error Model                   PASS (Backend focused/user-local contracts)
+2. PC error mapping to the product error contract         IMPLEMENTED + BUILD + existing E2E regression PASS
+
 NEXT IMPLEMENTATION ORDER:
-1. Machine-readable Product Error Model
-2. PC error mapping to the product error contract
-3. Final Single Parcel regression baseline
+1. Focused deterministic Frontend product-error validation
+2. Final Single Parcel regression baseline
+3. Single Parcel v1 baseline freeze / handoff
 
 NOT A CURRENT BLOCKER FOR v1 CLOSURE:
 - road-name-address input support
@@ -1370,6 +1374,54 @@ NOT A CURRENT BLOCKER FOR v1 CLOSURE:
 The public response now exposes the product-safe per-rule `rule_details` model and the PC Frontend consumes that contract. Frontend continues not to consume `debug.rule_engine`. The next closure work is the machine-readable Product Error Model and its PC error mapping.
 
 The product direction after Single Parcel v1 is Integrated Development. That future workspace is not implemented yet and must not be represented as validated Frontend functionality.
+
+---
+
+## 41A. PC Product Error Mapping — IMPLEMENTED / REGRESSION PASS
+
+### 2026-09-21 Backend contract + Frontend mapping validation
+
+Backend public failures now expose the machine-readable `SITE_API_ERROR_V1` detail envelope. The Frontend consumes the same contract for candidate search, parcel confirmation, and selected-candidate SITE analysis through a shared parser and preserves `code`, `category`, `retryable`, and HTTP status. Legacy string `detail` remains a compatibility fallback.
+
+Backend user-local focused validation passed:
+
+```text
+PUBLIC_API_PRODUCT_ERROR_CONTRACT_PASS
+PUBLIC_API_SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_CONTRACT_PASS
+PUBLIC_API_SELECTED_PARCEL_CANDIDATE_CONFIRMATION_CONTRACT_PASS
+```
+
+Frontend implementation HEAD before E2E correction:
+
+```text
+e55f9d11f73b82599d32a95b7228e5f291c54235
+```
+
+The first existing actual-Backend E2E run exposed a test assumption rather than a verifier defect: address discovery returned a candidate that live same-PNU polygon verification rejected with `SELECTED_PNU_POLYGON_MISMATCH`. Candidate discovery is non-authoritative, so the E2E was corrected to accept a rejected discovery candidate and continue searching while still requiring at least one VERIFIED candidate for each default address before exercising SITE analysis/reanalysis. The explicit buildingless `개포동 12-6` verification remains strict.
+
+Final user-local regression HEAD:
+
+```text
+3f9ab844250dad962c4b9129d2f6a696f09811ad
+```
+
+Production build:
+
+```text
+vite v8.3.0 building client environment for production...
+✓ 21 modules transformed.
+✓ built in 91ms
+```
+
+Actual Backend-connected Playwright regression:
+
+```text
+1 passed (15.0s)
+```
+
+Therefore **PC PRODUCT ERROR MAPPING = IMPLEMENTED + PRODUCTION BUILD PASS + EXISTING ACTUAL BACKEND E2E REGRESSION PASS**.
+
+A dedicated deterministic Frontend test that forces and asserts the structured `SITE_API_ERROR_V1` error path has not yet been recorded as PASS. Do not promote that focused validation until it is actually executed successfully.
 
 ---
 
