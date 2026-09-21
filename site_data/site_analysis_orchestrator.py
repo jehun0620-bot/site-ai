@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """SITE Analysis Service Orchestrator."""
 from __future__ import annotations
-import copy
 from typing import Any, Dict, Optional
 from site_data.address_parcel_identity_resolver import resolve_address_parcel_identity
 from site_data.selected_parcel_candidate_verifier import verify_selected_parcel_candidate
@@ -12,14 +11,13 @@ from site_data.site_analysis_service import analyze_site_object, site_to_analysi
 from site_data.site_analysis_response import build_site_analysis_response
 from site_data.vworld_api import get_latest_land_characteristics
 from site_data.land_converter import hydrate_land_from_records
-from law_data.historical_site_event_admitted_rule_input_adapter import adapt_admitted_historical_site_event_rule_input
-from law_data.historical_site_event_candidate_condition_binding_authorization import authorize_historical_site_event_candidate_condition_binding
-from law_data.historical_site_event_candidate_repair_consistency_authorization import authorize_historical_site_event_candidate_repair_consistency
+from site_data.verified_site_input_admission import (
+    VerifiedSiteInputAdmissionError,
+    admit_verified_site_inputs,
+)
 from law_data.historical_site_event_site_applicability_admission import HistoricalSiteEventSiteApplicabilityAdmissionResult
 from law_data.historical_site_event_site_truth_promotion_rule_input_bridge import HistoricalSiteEventSiteTruthPromotionRuleInputBridge
 from law_data.historical_trusted_internal_source_handoff_authorization import HistoricalTrustedInternalSourceHandoffAuthorization
-from law_data.historical_verified_rule_input_envelope import seal_verified_historical_rule_input
-from law_data.district_unit_plan_verified_registry_candidate_envelope import DistrictUnitPlanVerifiedRegistryCandidateEnvelope
 class SiteAnalysisError(RuntimeError): pass
 class SiteBuildError(SiteAnalysisError): pass
 
@@ -27,10 +25,6 @@ def _actual_site_pnu(site:Any)->str:
     try: pnu=str(site_to_analysis_input(site).get("pnu") or "").strip()
     except (TypeError,ValueError,AttributeError): return ""
     return pnu if len(pnu)==19 and pnu.isdigit() else ""
-
-def _admitted_canonical_pnu(applicability):
-    if not isinstance(applicability,HistoricalSiteEventSiteApplicabilityAdmissionResult) or not applicability.admitted or applicability.site_admission is None:return ""
-    return str(applicability.site_admission.canonical_pnu or "").strip()
 
 def _parcel_address_from_land_record(record:Any,pnu:str)->str:
     if not isinstance(record,dict) or str(record.get("pnu") or "").strip()!=pnu: return ""
@@ -60,36 +54,17 @@ def analyze_site_by_parcel(*,sigungu_cd:str,bjdong_cd:str,bun:str,ji:str,plat_gb
         if site is None: raise SiteBuildError("Site 객체 생성 실패")
         if str(site.plat_gb_cd).strip()!=str(plat_gb_cd).strip(): raise SiteBuildError("건축HUB 대장구분과 요청 필지 identity가 일치하지 않습니다.")
     else: site=_parcel_only_site(sigungu_cd=sigungu_cd,bjdong_cd=bjdong_cd,plat_gb_cd=plat_gb_cd,bun=bun,ji=ji)
-    raw_historical_rule_input=None; verified_historical_input=None; verified_district_unit_plan_input=None; actual_site_pnu=""
-    legacy_requested=bool(historical_handoff_authorization is not None or historical_site_applicability_admission is not None); promotion_requested=historical_promotion_rule_input_bridge is not None; historical_requested=legacy_requested or promotion_requested; district_requested=district_unit_plan_registry_candidate is not None
-    if legacy_requested and promotion_requested: raise SiteAnalysisError("Historical SITE input is ambiguous: legacy and promotion paths cannot be used together")
-    if historical_requested and district_requested: raise SiteAnalysisError("Historical and district-unit verified SITE inputs cannot be combined")
-    if district_requested:
-        envelope=district_unit_plan_registry_candidate
-        if not isinstance(envelope,DistrictUnitPlanVerifiedRegistryCandidateEnvelope) or not envelope.ready: raise SiteAnalysisError("District-unit verified registry candidate envelope is not ready")
-        actual_site_pnu=_actual_site_pnu(site)
-        if not actual_site_pnu or actual_site_pnu!=envelope.canonical_pnu: raise SiteAnalysisError("District-unit verified registry candidate PNU rebinding failed")
-        verified_district_unit_plan_input=envelope
-    if promotion_requested:
-        bridge=historical_promotion_rule_input_bridge
-        if not isinstance(bridge,HistoricalSiteEventSiteTruthPromotionRuleInputBridge) or not bridge.ready: raise SiteAnalysisError("Historical SITE promotion rule-input bridge is not ready")
-        actual_site_pnu=_actual_site_pnu(site); repairs=bridge.historical_rule_input.get("repairs"); repair_pnus={str(r.get("pnu") or "").strip() for r in repairs or [] if isinstance(r,dict)}
-        if not actual_site_pnu or len(repair_pnus)!=1 or actual_site_pnu not in repair_pnus: raise SiteAnalysisError("Historical SITE promotion PNU rebinding failed")
-        raw_historical_rule_input=copy.deepcopy(dict(bridge.historical_rule_input))
-    elif legacy_requested:
-        actual_site_pnu=_actual_site_pnu(site); admitted_pnu=_admitted_canonical_pnu(historical_site_applicability_admission)
-        if not actual_site_pnu or not admitted_pnu or actual_site_pnu!=admitted_pnu: raise SiteAnalysisError("Historical SITE applicability PNU rebinding failed")
-        consistency=authorize_historical_site_event_candidate_repair_consistency(historical_site_applicability_admission,historical_handoff_authorization)
-        if not consistency.authorized: raise SiteAnalysisError(f"Historical SITE candidate/repair consistency failed: {consistency.status} / {','.join(consistency.missing_gates)}")
-        binding=authorize_historical_site_event_candidate_condition_binding(historical_site_applicability_admission,historical_handoff_authorization)
-        if not binding.authorized: raise SiteAnalysisError(f"Historical SITE candidate/condition binding failed: {binding.status} / {','.join(binding.missing_gates)}")
-        adapter=adapt_admitted_historical_site_event_rule_input(historical_site_applicability_admission,historical_handoff_authorization)
-        if not adapter.ready: raise SiteAnalysisError(f"Historical SITE applicability/handoff admission failed: {adapter.status} / {','.join(adapter.missing_gates)}")
-        raw_historical_rule_input=copy.deepcopy(dict(adapter.historical_rule_input))
-    if raw_historical_rule_input is not None:
-        verified_historical_input=seal_verified_historical_rule_input(canonical_pnu=actual_site_pnu,historical_rule_input=raw_historical_rule_input)
-        if not verified_historical_input.ready: raise SiteAnalysisError("Historical verified rule-input envelope is not ready")
-    analysis=analyze_site_object(site=site,project_profile=project_profile or {},procedure_profile=procedure_profile or {},production_condition_shadow_sources=production_condition_shadow_sources,historical_rule_input=verified_historical_input,district_unit_plan_registry_candidate=verified_district_unit_plan_input)
+    try:
+        verified_inputs=admit_verified_site_inputs(
+            site=site,
+            historical_handoff_authorization=historical_handoff_authorization,
+            historical_site_applicability_admission=historical_site_applicability_admission,
+            historical_promotion_rule_input_bridge=historical_promotion_rule_input_bridge,
+            district_unit_plan_registry_candidate=district_unit_plan_registry_candidate,
+        )
+    except VerifiedSiteInputAdmissionError as exc:
+        raise SiteAnalysisError(str(exc)) from exc
+    analysis=analyze_site_object(site=site,project_profile=project_profile or {},procedure_profile=procedure_profile or {},production_condition_shadow_sources=production_condition_shadow_sources,historical_rule_input=verified_inputs.historical_rule_input,district_unit_plan_registry_candidate=verified_inputs.district_unit_plan_registry_candidate)
     response=build_site_analysis_response(analysis,include_debug=include_debug,site_object=site); response["service"]={"building_count":len(items),"building_total_count":building_result.get("total_count"),"building_api_status":building_result.get("result_code")}; return response
 
 
