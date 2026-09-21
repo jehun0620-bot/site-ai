@@ -6,7 +6,7 @@ from .land_converter import (
 )
 from .vworld_api import (
     create_pnu,
-    get_land_characteristics,
+    get_latest_land_characteristics,
 )
 
 
@@ -43,7 +43,7 @@ def create_site(api_items):
             site.ji,
             site.plat_gb_cd,
         )
-        land_records = get_land_characteristics(pnu)
+        _, land_records = get_latest_land_characteristics(pnu)
         latest_land_record = select_latest_land_record(land_records)
         if latest_land_record:
             site.land = convert_land_record(latest_land_record)
