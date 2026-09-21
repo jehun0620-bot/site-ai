@@ -140,7 +140,23 @@ Single Parcel v1 closure priorities:
 
 Road-name-address input support and broader provider retry/cache/rate-limit/observability hardening are not currently required to block the Single Parcel v1 closure; they remain follow-up scope unless later evidence changes that decision. Mobile-specific refinement remains paused until a mobile test environment is available.
 
-The next implementation target is the Backend Public Rule Presentation Model. The existing Rule Engine already carries per-clause `law_name`, `rule_title`, `paragraph`, `item`, `subitem`, `category`, `applicability`, `applicability_reason`, condition groups, numeric effects, and rule text. Product exposure must be a deterministic presentation adapter; Frontend must not consume `debug.rule_engine` and no second Rule Engine path may be created.
+Backend Public Rule Presentation Model is now IMPLEMENTED and user-local validated.
+
+Validation:
+
+```text
+SITE_ANALYSIS_RULE_DETAILS_CONTRACT_PASS
+SITE_ANALYSIS_RULE_DETAILS_REAL_DATA_REGRESSION_PASS
+rule_details.count: 314
+APPLICABLE: 62
+NOT_APPLICABLE: 214
+CONDITIONAL: 36
+UNKNOWN: 2
+```
+
+The two real UNKNOWN rules were preserved as public product details with law name, rule title, Backend applicability reason, and unresolved condition `도시지역편입해제구역`. The public response keeps `debug.rule_engine` separate, and no second Rule Engine path was created.
+
+The PC Frontend consuming this public contract is also user-local behavioral/build/E2E validated. Therefore the next Single Parcel v1 Backend closure target is the **Machine-readable Product Error Model**.
 
 ## 7. Safety boundary
 
