@@ -249,6 +249,8 @@ def build_site_analysis_response(
         },
         "sources": {
             "land": "VWORLD_LAND_CHARACTERISTICS" if land_object is not None else None,
+            "land_reference_year": getattr(land_object, "source_reference_year", None) if land_object is not None else None,
+            "land_last_updated_at": getattr(land_object, "source_last_updated_at", None) if land_object is not None else None,
             "buildings": "BUILDING_HUB_TITLE" if building_objects else None,
         },
     }
