@@ -72,6 +72,18 @@ def main() -> None:
         assert_product_error(response, 500, "UNEXPECTED_ERROR", "INTERNAL")
         assert "unexpected internal detail" not in response.text
 
+    with patch.object(
+        api_app,
+        "analyze_site_by_address",
+        side_effect=RuntimeError("unexpected internal detail"),
+    ):
+        response = client.post(
+            "/v1/site-analysis/address",
+            json={"address": "서울특별시 강남구 개포동 12번지"},
+        )
+        assert_product_error(response, 500, "UNEXPECTED_ERROR", "INTERNAL")
+        assert "unexpected internal detail" not in response.text
+
     rejected = SelectedParcelCandidateVerification(
         status="REJECTED",
         resolution="SELECTED_PNU_POLYGON_MISMATCH",
