@@ -140,9 +140,7 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
       const optionLabel = INPUT_LABELS[Math.floor(random() * INPUT_LABELS.length)]
       await buildinglessRequirements.first().getByRole('button', { name: optionLabel, exact: true }).click()
       await page.getByRole('button', { name: '입력 내용으로 다시 분석' }).click()
-      await expect(
-        page.getByText('입력한 정보를 반영한 SITE 분석 결과를 받았습니다.', { exact: true }),
-      ).toBeVisible({ timeout: 120_000 })
+      await expect(page.locator('.analysis-ready-badge')).toHaveText('분석 완료', { timeout: 120_000 })
       await expect(
         buildinglessAnalysisPanel.locator('dt', { hasText: 'PNU' }).locator('..').locator('dd'),
       ).toHaveText(buildinglessPnu)
