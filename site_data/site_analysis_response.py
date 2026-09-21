@@ -154,6 +154,7 @@ def build_site_analysis_response(
     analysis: Dict[str, Any],
     *,
     include_debug: bool = False,
+    site_object: Any = None,
 ) -> Dict[str, Any]:
 
     site = (
@@ -211,6 +212,46 @@ def build_site_analysis_response(
             {},
         )
     )
+
+    # ========================================================
+    # verified SITE facts already held by the canonical Site object
+    # ========================================================
+
+    land_object = getattr(site_object, "land", None) if site_object is not None else None
+    building_objects = list(getattr(site_object, "buildings", []) or []) if site_object is not None else []
+
+    site_facts = {
+        "land": {
+            "land_category": getattr(land_object, "land_category", "") if land_object is not None else "",
+            "land_area": getattr(land_object, "land_area", None) if land_object is not None else None,
+            "zoning": getattr(land_object, "zoning", "") if land_object is not None else "",
+        },
+        "buildings": {
+            "count": len(building_objects),
+            "items": [
+                {
+                    "management_id": getattr(building, "management_id", None),
+                    "dong_name": getattr(building, "dong_name", ""),
+                    "building_name": getattr(building, "building_name", ""),
+                    "main_use": getattr(building, "main_use", ""),
+                    "land_area": getattr(building, "land_area", None),
+                    "building_area": getattr(building, "building_area", None),
+                    "total_floor_area": getattr(building, "total_floor_area", None),
+                    "building_coverage_ratio": getattr(building, "building_coverage_ratio", None),
+                    "floor_area_ratio": getattr(building, "floor_area_ratio", None),
+                    "ground_floor_count": getattr(building, "ground_floor_count", None),
+                    "underground_floor_count": getattr(building, "underground_floor_count", None),
+                    "household_count": getattr(building, "household_count", None),
+                    "approval_date": getattr(building, "approval_date", ""),
+                }
+                for building in building_objects
+            ],
+        },
+        "sources": {
+            "land": "VWORLD_LAND_CHARACTERISTICS" if land_object is not None else None,
+            "buildings": "BUILDING_HUB_TITLE" if building_objects else None,
+        },
+    }
 
     # ========================================================
     # public payload
@@ -298,6 +339,10 @@ def build_site_analysis_response(
 
         "land_area": (
             land_area
+        ),
+
+        "site_facts": (
+            site_facts
         ),
 
         "spatial": (
