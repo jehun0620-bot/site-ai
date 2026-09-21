@@ -87,6 +87,12 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
 
           await expect(page.getByText('입력한 정보를 반영한 SITE 분석 결과를 받았습니다.', { exact: true })).toBeVisible({ timeout: 120_000 })
           await expect(analysisPanel.locator('dt', { hasText: 'PNU' }).locator('..').locator('dd')).toHaveText(pnu)
+
+          const currentRequirementItems = page.locator('.requirement-item')
+          const currentRequirementCount = await currentRequirementItems.count()
+          const selectedRequirementCount = await page.locator('.requirement-option-selected').count()
+          expect(selectedRequirementCount).toBeLessThanOrEqual(currentRequirementCount)
+          await expect(page.locator('.requirement-reanalysis')).toContainText(`전체 ${currentRequirementCount}개`)
         }
 
         previousPnu = pnu
