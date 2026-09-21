@@ -306,3 +306,10 @@ The next backend architecture checkpoint should evaluate verified-input admissio
 ### 15A. Validation status
 
 The Building HUB provider extraction was user-local behavioral PASS at HEAD `d46a3afbbead00341fa2a8f2a7581cbf26760009`. Provider extraction therefore remains an architecture-only responsibility split with preserved runtime behavior.
+
+
+## 16. Verified SITE input admission boundary — 2026-09-21
+
+Historical and district-unit verified inputs now have a dedicated fail-closed admission boundary in `site_data/verified_site_input_admission.py`. The orchestrator remains responsible for sequencing, while the admission boundary owns mutual-exclusion checks, canonical-PNU rebinding, historical consistency/binding/adapter gates, and sealing of the verified historical envelope.
+
+The architectural invariant is unchanged: external verified input is not trusted merely because it is typed or previously verified; it must be rebound to the actual canonical Site PNU immediately before analysis. Historical and district-unit verified inputs remain mutually exclusive in this lane. The extraction is not considered behaviorally complete until the pre-existing focused admission contract and historical end-to-end regression pass unchanged after the move.
