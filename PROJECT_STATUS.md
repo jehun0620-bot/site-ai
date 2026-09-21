@@ -225,6 +225,6 @@ actual Backend SITE-facts E2E: 1 passed
 
 That refactor centralized latest-record conversion + land provenance preservation in `hydrate_land_from_records()` while preserving the existing VWorld latest-year policy and public behavior.
 
-Current in-progress architecture refactor extracts Building HUB transport from `site_analysis_orchestrator.py` into `site_data/building_hub_provider.py`. A focused provider contract test was added. This stage is **IMPLEMENTED / NOT YET USER-LOCAL BEHAVIORAL PASS** until focused and real-data regressions are run locally.
+The Building HUB provider extraction is now **USER-LOCAL BEHAVIORAL PASS** at HEAD `d46a3afbbead00341fa2a8f2a7581cbf26760009`. Validation passed for the focused provider contract, parcel-only land regression, real-data SITE FACT regression, public response regression, and actual Backend-connected SITE-facts Playwright E2E.
 
 No change is intended to public API schemas, canonical PNU semantics, Rule Engine, historical/district-unit admission, Frontend contracts, or the protected local output file.
