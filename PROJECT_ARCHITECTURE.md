@@ -301,3 +301,8 @@ Building HUB HTTP / DATA_API_KEY / response normalization
 This extraction does not create a second SITE path and does not change canonical PNU, Building HUB semantics, Rule Engine, historical/district-unit admission, public API schema, or Frontend contracts. Provider failures remain product-mapped at the HTTP boundary through `BuildingAPIError`.
 
 The next backend architecture checkpoint should evaluate verified-input admission/rebinding separately from provider I/O; it must not weaken the existing fail-closed PNU/envelope contracts.
+
+
+### 15A. Validation status
+
+The Building HUB provider extraction was user-local behavioral PASS at HEAD `d46a3afbbead00341fa2a8f2a7581cbf26760009`. Provider extraction therefore remains an architecture-only responsibility split with preserved runtime behavior.
