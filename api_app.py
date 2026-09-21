@@ -61,28 +61,28 @@ def health(): return {"status":"ok","service":"site-analysis"}
 def site_analysis(request:SiteAnalysisRequest):
     try:
         return analyze_site_by_parcel(sigungu_cd=request.sigungu_cd,bjdong_cd=request.bjdong_cd,plat_gb_cd=request.plat_gb_cd,bun=request.bun,ji=request.ji,project_profile=request.project_profile,procedure_profile=request.procedure_profile,include_debug=request.include_debug)
-    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","건축물 정보를 조회하지 못했습니다.") from exc
-    except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","분석할 필지 정보를 구성하지 못했습니다.") from exc
-    except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","SITE 분석을 완료하지 못했습니다.") from exc
-    except Exception as exc: raise product_http_error(500,"UNEXPECTED_ERROR","SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
+    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.") from exc
+    except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
+    except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
+    except Exception as exc: raise product_http_error(500,"UNEXPECTED_ERROR","INTERNAL","SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
 
 @app.post("/v1/site-analysis/address")
 def site_analysis_by_address(request:AddressSiteAnalysisRequest):
     try:
         return analyze_site_by_address(address=request.address,project_profile=request.project_profile,procedure_profile=request.procedure_profile,include_debug=request.include_debug)
-    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","건축물 정보를 조회하지 못했습니다.") from exc
-    except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","분석할 필지 정보를 구성하지 못했습니다.") from exc
-    except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","SITE 분석을 완료하지 못했습니다.") from exc
+    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.") from exc
+    except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
+    except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
     except Exception as exc: raise HTTPException(status_code=500,detail="SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
 
 @app.post("/v1/site-analysis/selected-candidate")
 def site_analysis_by_selected_candidate(request:SelectedParcelCandidateSiteAnalysisRequest):
     try:
         return analyze_site_by_selected_candidate(candidate_pnu=request.candidate_pnu,x=request.x,y=request.y,project_profile=request.project_profile,procedure_profile=request.procedure_profile,include_debug=request.include_debug)
-    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","건축물 정보를 조회하지 못했습니다.") from exc
-    except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","분석할 필지 정보를 구성하지 못했습니다.") from exc
-    except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","SITE 분석을 완료하지 못했습니다.") from exc
-    except Exception as exc: raise product_http_error(500,"UNEXPECTED_ERROR","선택 필지 SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
+    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.") from exc
+    except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
+    except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
+    except Exception as exc: raise product_http_error(500,"UNEXPECTED_ERROR","INTERNAL","선택 필지 SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
 
 @app.post("/v1/parcel-candidates/address")
 def parcel_candidates_by_address(request:AddressParcelCandidateSearchRequest):
@@ -96,16 +96,16 @@ def parcel_candidates_by_address(request:AddressParcelCandidateSearchRequest):
             "candidates":[candidate.to_dict() for candidate in candidates],
         }
     except Exception as exc:
-        raise product_http_error(500,"CANDIDATE_SEARCH_FAILED","필지 후보 검색을 완료하지 못했습니다.") from exc
+        raise product_http_error(500,"CANDIDATE_SEARCH_FAILED","PROVIDER","필지 후보 검색을 완료하지 못했습니다.") from exc
 
 @app.post("/v1/parcel-candidates/confirm")
 def confirm_selected_parcel_candidate(request:SelectedParcelCandidateRequest):
     try:
         verification=verify_selected_parcel_candidate(candidate_pnu=request.candidate_pnu,x=request.x,y=request.y)
         if not verification.verified:
-            raise product_http_error(404,"PARCEL_VERIFICATION_FAILED","선택한 필지를 검증할 수 없습니다.")
+            raise product_http_error(404,"PARCEL_VERIFICATION_FAILED","PARCEL","선택한 필지를 검증할 수 없습니다.")
         if not isinstance(verification.geometry,dict):
-            raise product_http_error(404,"PARCEL_GEOMETRY_UNRESOLVED","선택한 필지의 검증된 경계를 확인할 수 없습니다.")
+            raise product_http_error(404,"PARCEL_GEOMETRY_UNRESOLVED","PARCEL","선택한 필지의 검증된 경계를 확인할 수 없습니다.")
         return {
             "schema_version":"PARCEL_CONFIRMATION_V1",
             "status":"READY",
@@ -129,4 +129,4 @@ def confirm_selected_parcel_candidate(request:SelectedParcelCandidateRequest):
     except HTTPException:
         raise
     except Exception as exc:
-        raise product_http_error(500,"UNEXPECTED_ERROR","선택 필지 확인 중 예상하지 못한 오류가 발생했습니다.") from exc
+        raise product_http_error(500,"UNEXPECTED_ERROR","INTERNAL","선택 필지 확인 중 예상하지 못한 오류가 발생했습니다.") from exc
