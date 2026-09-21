@@ -332,18 +332,18 @@ def main() -> int:
             == 314
         ),
 
-        "applicable 63": (
+        "applicable 62": (
             rules[
                 "applicable"
             ]
-            == 63
+            == 62
         ),
 
-        "not applicable 213": (
+        "not applicable 214": (
             rules[
                 "not_applicable"
             ]
-            == 213
+            == 214
         ),
 
         "conditional 36": (
