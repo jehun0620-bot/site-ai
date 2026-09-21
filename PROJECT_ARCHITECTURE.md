@@ -313,3 +313,8 @@ The Building HUB provider extraction was user-local behavioral PASS at HEAD `d46
 Historical and district-unit verified inputs now have a dedicated fail-closed admission boundary in `site_data/verified_site_input_admission.py`. The orchestrator remains responsible for sequencing, while the admission boundary owns mutual-exclusion checks, canonical-PNU rebinding, historical consistency/binding/adapter gates, and sealing of the verified historical envelope.
 
 The architectural invariant is unchanged: external verified input is not trusted merely because it is typed or previously verified; it must be rebound to the actual canonical Site PNU immediately before analysis. Historical and district-unit verified inputs remain mutually exclusive in this lane. The extraction is not considered behaviorally complete until the pre-existing focused admission contract and historical end-to-end regression pass unchanged after the move.
+
+
+### 16A. Validation status
+
+The verified SITE input admission extraction is user-local behavioral PASS at HEAD `6a55eab6eb51c8c1a76e4bb1d6d197fbc3c9caf6`. The pre-refactor fail-closed safety contract and historical promotion end-to-end path both remained green after responsibility extraction, confirming that canonical-PNU rebinding and verified-envelope admission semantics were preserved.
