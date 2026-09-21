@@ -48,6 +48,9 @@ class Land:
 
     land_use_regulation: str = ""
 
+    source_reference_year: Optional[str] = None
+    source_last_updated_at: Optional[str] = None
+
 
 @dataclass
 class Site:
