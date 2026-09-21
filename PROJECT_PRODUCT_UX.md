@@ -1,6 +1,6 @@
 # AI 대지분석 자동화 시스템 — PRODUCT / UX DESIGN
 
-최종 업데이트: 2026-09-17
+최종 업데이트: 2026-09-21
 문서 역할: 웹·애플리케이션 제품 UX 아이디어와 구현 backlog 관리
 관련 문서: `PROJECT_ARCHITECTURE.md`, `PROJECT_STATUS.md`
 
@@ -159,3 +159,62 @@ UNKNOWN must be explained rather than hidden.
 - UI convenience never bypasses backend canonical PNU verification.
 - Architecture-changing UX requires architecture review first.
 - Implementation requires exact WRITE scope and focused validation.
+
+
+---
+
+## 13. 2026-09-21 Product Direction Reconciliation
+
+2026-09-17 backlog의 candidate list/map, verified parcel confirmation/polygon, list-map synchronization, analysis confirmation, detailed result presentation은 이후 실제 구현 및 사용자 로컬 검증까지 진행되었다. 최신 구현/PASS 상태의 authority는 `PROJECT_FRONTEND_STATUS.md`이며, 위의 과거 `NEXT / PROPOSED` 표기는 당시 시점의 기록으로 본다.
+
+현재 제품 전략은 Single Parcel v1을 명확한 종료선까지 마무리한 뒤 Integrated Development로 넘어가는 것이다.
+
+### Top-level analysis choice — PROPOSED
+
+```text
+HOME
+"어떤 개발 분석이 필요하신가요?"
+
+[단일 필지 개발]
+한 개의 공식 PNU를 기준으로 개발조건과 규제를 분석
+
+[통합 개발]
+여러 필지를 하나의 proposed development site로 구성하여
+통합 가능성, 개발조건, 혼재 규제와 주변 context를 검토
+```
+
+별도의 "블록 분석"을 top-level 상품으로 두는 방향은 현재 보류한다. 블록/주변 공간 검토는 Integrated Development 안의 surrounding context analysis로 포함하는 방향을 우선 검토한다.
+
+### Integrated Development is not just cadastral merge
+
+`통합 개발`을 `합필`과 동의어로 정의하지 않는다.
+
+```text
+verified member parcels
+→ cadastral merge eligibility
+→ building-site composition / development-site composition
+→ planning/common-development constraints
+→ assembled-site regulation
+→ surrounding context
+```
+
+지적 합병 가능 여부는 중요한 사전검토 항목이지만, 그 결과 하나만으로 통합개발 전체 가능/불가를 자동 판정하지 않는다. 여러 parcel 선택 자체도 합병 또는 통합개발 가능성을 증명하지 않는다.
+
+### Single Parcel v1 closure — CURRENT
+
+통합개발 구현 전에 현재 Single Parcel을 다음 종료선까지 마무리한다.
+
+```text
+1. Public Rule Presentation Model
+2. PC rule-detail UX
+3. Machine-readable Product Error Model
+4. PC product-error UX
+5. Final Single Parcel regression
+6. Single Parcel v1 baseline freeze
+```
+
+Road-name-address 입력, 광범위한 provider operational hardening, SaaS auth/project/history/billing/report 기능은 현재 Single Parcel v1 종료를 막는 필수조건으로 두지 않는다. 모바일 전용 refinement는 테스트 환경 준비 전까지 보류한다.
+
+### Future discovery
+
+Integrated Development 착수 전에는 실제 Backend의 PNU verification → SITE truth → Rule Engine 경계를 기준으로 Analysis Target을 설계한다. 독립적인 복수필지 병렬분석을 core mode로 만들지 않고, 1..N VERIFIED parcels가 하나의 assembled site를 구성하는 모델을 우선 검토한다.
