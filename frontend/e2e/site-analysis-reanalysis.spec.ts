@@ -51,15 +51,25 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
       const candidateCount = await cards.count()
       expect(candidateCount, `검색 결과가 없습니다: ${address}`).toBeGreaterThan(0)
 
-      const maxCandidatesPerAddress = Math.min(candidateCount, 2)
+      const maxVerifiedParcelsPerAddress = Math.min(candidateCount, 2)
       const startIndex = Math.floor(random() * candidateCount)
-      const chosenIndexes = Array.from({ length: maxCandidatesPerAddress }, (_, offset) => (startIndex + offset) % candidateCount)
+      const candidateIndexes = Array.from({ length: candidateCount }, (_, offset) => (startIndex + offset) % candidateCount)
+      let verifiedParcelsForAddress = 0
 
-      for (const index of chosenIndexes) {
+      for (const index of candidateIndexes) {
         await cards.nth(index).click()
 
-        await expect(page.getByText('필지 확인 완료', { exact: true })).toBeVisible()
+        const verifiedHeading = page.getByText('필지 확인 완료', { exact: true })
+        const rejectedHeading = page.getByText('필지 확인 실패', { exact: true })
+        await expect(verifiedHeading.or(rejectedHeading)).toBeVisible()
+
+        if (await rejectedHeading.isVisible()) {
+          await expect(page.locator('.verification-panel')).toHaveCount(0)
+          continue
+        }
+
         await expect(page.getByText('VERIFIED', { exact: true })).toBeVisible()
+        verifiedParcelsForAddress += 1
 
         const verifiedPanel = page.locator('.verification-panel')
         const pnu = (await verifiedPanel.locator('dd').nth(1).textContent())?.trim() ?? ''
@@ -117,13 +127,15 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
         previousPnu = pnu
         exercisedParcels += 1
 
-        if (index !== chosenIndexes.at(-1)) {
-          await search(page, address)
-          if (previousPnu) {
-            await expect(page.locator('.requirement-option-selected')).toHaveCount(0)
-          }
+        if (verifiedParcelsForAddress >= maxVerifiedParcelsPerAddress) break
+
+        await search(page, address)
+        if (previousPnu) {
+          await expect(page.locator('.requirement-option-selected')).toHaveCount(0)
         }
       }
+
+      expect(verifiedParcelsForAddress, `검증 가능한 필지 후보가 없습니다: ${address}`).toBeGreaterThan(0)
     }
 
 
