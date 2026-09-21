@@ -129,6 +129,8 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
     && Array.isArray(factBuildingItems)
     && factBuildingItems.every(isSiteAnalysisBuildingFact)
     && isNullableString(factSources.land)
+    && isNullableString(factSources.land_reference_year)
+    && isNullableString(factSources.land_last_updated_at)
     && isNullableString(factSources.buildings)
 
   if (!siteValid || !requirementsValid || !landAreaValid || !regulationValid || !ruleEvaluationValid || !externalDependenciesValid || !siteFactsValid) return false
