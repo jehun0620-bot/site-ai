@@ -68,6 +68,9 @@ dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 600; }
 
 .analysis-panel-result-ready { grid-column: 1 / -1; grid-row: 3; margin: 0; padding: clamp(18px, 1.2vw, 22px); border-color: #cfdacf; box-shadow: 0 12px 34px rgba(31, 49, 38, 0.06); }
 .analysis-panel-result-ready > .analysis-title-row strong { font-size: 18px; }
+.reanalysis-progress { display: grid; gap: 4px; margin-top: 14px; padding: 11px 13px; border: 1px solid #cfdacf; border-radius: 10px; background: #f6faf7; color: #365b43; }
+.reanalysis-progress strong { font-size: 12px; }
+.reanalysis-progress small { color: #6e786f; font-size: 10px; line-height: 1.4; }
 .reanalysis-error { display: grid; gap: 4px; margin-top: 14px; padding: 11px 13px; border: 1px solid #e4b1ab; border-radius: 10px; background: #fff8f7; color: #7d352f; }
 .reanalysis-error strong { font-size: 12px; }
 .reanalysis-error span { font-size: 11px; line-height: 1.45; }
