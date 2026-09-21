@@ -330,3 +330,21 @@ This extraction is intentionally additive/structural and must preserve the exist
 ### 17A. Validation status
 
 The public SITE facts projection extraction is user-local behavioral PASS at HEAD `ecc2cd1952855939f375131cdd774e6d0d9127b0`. Focused projection, public response, real-data SITE FACT, and actual Backend-connected UI regressions all remained green after extraction, confirming that this is a presentation-only responsibility split with preserved public schema and values.
+
+
+## 18. Zone relevance classifier production boundary — 2026-09-21
+
+용도지역 relevance 판정은 `law_data/zone_relevance_classifier.py`가 production 소유권을 가진다. Rule Evaluation Pipeline과 clause-split regression은 이 동일 classifier를 소비하며, production runtime이 `*_test.py` 구현에 의존하지 않는다.
+
+```text
+normalized legal clause
+→ production zone relevance classifier
+→ zone relevance result
+→ deterministic Rule Evaluation Pipeline
+→ final SITE composition
+→ public rule presentation
+```
+
+이 분리는 판정 알고리즘 변경이 아니라 dependency-direction 정규화다. 사용자 로컬 회귀에서 standalone pipeline의 현재 의미론 `62 / 213 / 36 / 3`과 spatial SITE composition 이후 최종 public 의미론 `62 / 214 / 36 / 2`가 각각 검증되었다. 최종 public UNKNOWN은 기존과 같이 도시지역편입해제구역 조건의 clause 47, 48 두 건이다.
+
+전체 실행 snapshot은 classifier 외 runtime spatial 상태와 누적 production 결과도 포함하므로 classifier refactor와 동일한 변경 단위로 취급하지 않는다. snapshot baseline reconciliation은 별도 검증 경계로 유지한다.
