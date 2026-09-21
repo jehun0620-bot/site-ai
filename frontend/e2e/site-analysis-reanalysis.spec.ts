@@ -90,9 +90,18 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
 
           const currentRequirementItems = page.locator('.requirement-item')
           const currentRequirementCount = await currentRequirementItems.count()
-          const selectedRequirementCount = await page.locator('.requirement-option-selected').count()
-          expect(selectedRequirementCount).toBeLessThanOrEqual(currentRequirementCount)
           await expect(page.locator('.requirement-reanalysis')).toContainText(`전체 ${currentRequirementCount}개`)
+
+          if (currentRequirementCount > 0) {
+            const firstCurrentItem = currentRequirementItems.first()
+            const firstCurrentSelected = firstCurrentItem.locator('.requirement-option-selected')
+            if (await firstCurrentSelected.count()) {
+              const selectedLabel = (await firstCurrentSelected.textContent())?.trim() ?? ''
+              await firstCurrentItem.getByRole('button', { name: selectedLabel, exact: true }).click()
+              await expect(firstCurrentItem.locator('.requirement-option-selected')).toHaveCount(0)
+              await expect(firstCurrentItem).toContainText('미입력')
+            }
+          }
         }
 
         previousPnu = pnu
