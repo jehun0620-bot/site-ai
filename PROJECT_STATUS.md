@@ -178,7 +178,17 @@ Remaining Single Parcel v1 closure work:
 3. Single Parcel v1 baseline freeze / handoff
 ```
 
-Frontend structured-error parsing is implemented, but its dedicated deterministic error-path validation is not yet recorded as PASS.
+Frontend structured-error parsing dedicated deterministic error-path validation is now user-local PASS.
+
+Single Parcel v1 final baseline at code HEAD `8d44834e98b4035b1da44fc8994ce1b9e1db17a2`:
+
+```text
+Production build: PASS (Vite 8.3.0, 21 modules, 95ms)
+Focused SITE_API_ERROR_V1 Frontend E2E: PASS (3 passed, 2.4s)
+Actual Backend-connected reanalysis E2E: PASS (1 passed, 18.9s)
+```
+
+Therefore Single Parcel v1 is baseline-frozen with user-local final regression PASS.
 
 ## 7. Safety boundary
 
