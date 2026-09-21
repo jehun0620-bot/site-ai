@@ -325,3 +325,8 @@ The verified SITE input admission extraction is user-local behavioral PASS at HE
 The public projection of already-canonical land/building facts is isolated in `site_data/site_facts_response.py`. This boundary is presentation-only: it may map canonical `Site.land` / `Site.buildings` and their provenance into the existing public `site_facts` shape, but it must not call providers, verify PNU, resolve regulation, or make legal applicability decisions. `site_analysis_response.py` remains the owner of the overall `SITE_ANALYSIS_API_V1` response contract.
 
 This extraction is intentionally additive/structural and must preserve the existing public schema and real-data values. Behavioral completion requires focused projection, public response, real-data SITE FACT, and actual Backend-connected UI regression to remain green.
+
+
+### 17A. Validation status
+
+The public SITE facts projection extraction is user-local behavioral PASS at HEAD `ecc2cd1952855939f375131cdd774e6d0d9127b0`. Focused projection, public response, real-data SITE FACT, and actual Backend-connected UI regressions all remained green after extraction, confirming that this is a presentation-only responsibility split with preserved public schema and values.
