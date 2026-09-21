@@ -1247,29 +1247,31 @@ PC `외부 확인 정보`에서 Backend `blocking_analysis` boolean을 사용자
 
 ---
 
-## 39. PC Requirement Input Reconciliation Validation
+## 39. PC Requirement Input Preservation / Toggle Validation
 
-### 2026-09-21 User Local Behavioral + Production Build + Actual Backend E2E Validation
+### 2026-09-21 Corrected Requirement State Model + User Local Validation
 
-추가 입력 재분석이 성공한 뒤 Frontend의 project/procedure profile에는 Backend가 새 분석 결과에서 현재 requirement로 다시 반환한 이름만 유지한다. 이전 분석에는 있었지만 새 결과에는 더 이상 없는 requirement 입력은 제거하며, Frontend가 법적 relevance를 자체 추론하거나 새로운 requirement를 만들지 않는다. 현재 requirement 목록의 authority는 Backend 응답이다.
+반복 재분석 사용자 검증에서 기존 reconciliation 설계의 전제가 잘못되었음이 확인되었다. Backend public `requirements.project` / `requirements.procedure`는 전체 사용자 입력 목록이 아니라 Rule Engine의 `remaining_inputs`, 즉 현재 분석에서 아직 추가로 필요한 입력이다. 따라서 새 requirements 목록에 없는 이름을 근거로 Frontend가 이미 입력한 project/procedure profile 값을 삭제해서는 안 된다.
 
-구현 커밋은 `624fc3ccd3d418fe730c96e1b4ff5da05daf556d`이고, requirement reconciliation 검증을 E2E에 추가한 커밋은 `2cdebd054f465831f5d2b0c328a0f59d70cb4711`이다. 현재 제품 UI와 맞지 않던 재분석 성공문구 assertion은 실제 `분석 완료` 상태 검증으로 정렬했으며, buildingless 재분석 구간에도 동일하게 적용했다.
+이전 `PC REQUIREMENT INPUT RECONCILIATION` PASS 기록은 당시 구현과 E2E가 통과했다는 역사적 사실이지만, 그 동작을 올바른 최종 제품 의미로 간주하지 않는다. 실제 반복 재분석에서 입력 리셋 문제가 발견되어 설계를 정정했다.
 
-사용자 로컬 production build는 `tsc -b && vite build`까지 정상 PASS했다.
+정정 구현은 사용자 입력 profile을 재분석 성공 후에도 보존하고, 새 필지로 전환할 때만 기존 PNU 격리 규칙에 따라 초기화한다. 같은 TRUE/FALSE/UNKNOWN 옵션을 다시 클릭하면 해당 key를 제거하여 `미입력`으로 되돌릴 수 있다. `UNKNOWN`은 사용자가 알 수 없다고 답한 상태이고, `미입력`은 아직 답하지 않은 상태이므로 서로 구분한다.
 
-최종 사용자 로컬 E2E 검증 HEAD:
+관련 구현/검증 커밋:
 
 ```text
-0c816fa146eddba866a3fe93b17d9c7841b5c435
+82f73078a6daddcd2fd66419bfe061e2d6fe94c9  fix: preserve requirement inputs across reanalysis
+25035756cdee939d2882d7285e2d3ea4a100e2c9  test: cover requirement input toggle semantics
+93f984954c7a38ddeff1c6f1deabfc1d0f64ef27  style: clarify disabled control cursor
 ```
 
-설치형 Google Chrome 채널과 실제 Backend/Frontend 서버를 사용한 Playwright 검증에서 `1 passed (14.2s)`를 확인했다. 검증 범위에는 일반 필지의 주소 검색·필지 선택/검증·최초 분석·추가 입력 재분석·PNU 유지·현재 requirement 개수와 선택 입력 상태 정합성, 필지 전환 시 입력 상태 격리, 그리고 buildingless parcel `1168010300100120006`의 선택/검증·최초 분석·추가 입력 재분석이 포함된다.
+사용자 로컬 검증에서 production build가 PASS했고, 설치형 Chrome + 실제 Backend/Frontend Playwright E2E가 `1 passed (12.1s)`로 PASS했다. 이어 같은 필지에서 입력과 재분석을 여러 차례 반복하는 수동 검증에서도 사업정보/절차정보가 임의로 초기화되지 않고, 같은 옵션 재클릭으로 `미입력` 복귀가 정상 실행됨을 확인했다.
 
-현재 개발 PC에서는 Windows Application Control 정책으로 Playwright 다운로드 Chromium이 차단되어 설치형 Chrome 채널을 사용했고, Vite가 `localhost -> ::1`에 바인딩되어 E2E base URL을 `http://localhost:5173`으로 지정했다. 이는 제품 기능 판정과 분리된 로컬 실행환경 조건이다.
+재분석 진행 중에는 직전 성공 결과를 유지하면서 실제 `ANALYZING` 상태에 근거한 안내를 표시한다. 별도의 가짜 진행률은 만들지 않는다. 일반 disabled 버튼의 cursor는 더 이상 전역 `wait`를 사용하지 않는다.
 
-이번 검증은 PC 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+이번 검증은 PC 중심이며 모바일 전용 추가 개발/검증은 계속 보류한다.
 
-따라서 **PC REQUIREMENT INPUT RECONCILIATION = USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS + ACTUAL BACKEND E2E PASS**이다.
+따라서 **PC REQUIREMENT INPUT PRESERVATION / TOGGLE UX = USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS + ACTUAL BACKEND E2E PASS**이다.
 
 ---
 
@@ -1322,7 +1324,7 @@ PC REQUIREMENT ITEM COMPLETION STATE                    USER LOCAL BEHAVIORAL PA
 PC BUILDING REGULATION BASIS CLARIFICATION              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC EXTERNAL DEPENDENCY ANALYSIS PROGRESSION             USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC REANALYSIS FAILURE / PRESERVED RESULT UX              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
-PC REQUIREMENT INPUT RECONCILIATION                       USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS + ACTUAL BACKEND E2E PASS
+PC REQUIREMENT INPUT PRESERVATION / TOGGLE UX              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS + ACTUAL BACKEND E2E PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
