@@ -1,8 +1,7 @@
 from .site_data_model import Site
 from .building_converter import convert_building
 from .land_converter import (
-    select_latest_land_record,
-    convert_land_record,
+    hydrate_land_from_records,
 )
 from .vworld_api import (
     create_pnu,
@@ -44,11 +43,10 @@ def create_site(api_items):
             site.plat_gb_cd,
         )
         land_year, land_records = get_latest_land_characteristics(pnu)
-        latest_land_record = select_latest_land_record(land_records)
-        if latest_land_record:
-            site.land = convert_land_record(latest_land_record)
-            site.land.source_reference_year = land_year
-            site.land.source_last_updated_at = str(latest_land_record.get("lastUpdtDt") or "").strip() or None
+        site.land, _ = hydrate_land_from_records(
+            land_records,
+            reference_year=land_year,
+        )
     except Exception as e:
         print()
         print("WARNING: 토지정보를 가져오지 못했습니다.")
