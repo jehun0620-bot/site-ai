@@ -54,6 +54,31 @@ def build_regulation_result(e):
 def build_rule_summary(e):
     s=e.get("rule_summary",{}); a=int(s.get("APPLICABLE",0) or 0); na=int(s.get("NOT_APPLICABLE",0) or 0); c=int(s.get("CONDITIONAL",0) or 0); u=int(s.get("UNKNOWN",0) or 0)
     return {"total":a+na+c+u,"applicable":a,"not_applicable":na,"conditional":c,"unknown":u}
+def build_rule_details(e):
+    items=[]
+    for rule in e.get("rules",[]) or []:
+        if not isinstance(rule,dict):continue
+        conditions=rule.get("conditions",[]) or []
+        def condition_names(state):
+            return [safe_string(condition.get("name")) for condition in conditions if isinstance(condition,dict) and condition.get("state")==state and safe_string(condition.get("name"))]
+        items.append({
+            "clause_index":copy.deepcopy(rule.get("clause_index")),
+            "law_name":safe_string(rule.get("law_name")),
+            "rule_title":safe_string(rule.get("rule_title")),
+            "paragraph":safe_string(rule.get("paragraph")),
+            "item":safe_string(rule.get("item")),
+            "subitem":safe_string(rule.get("subitem")),
+            "category":safe_string(rule.get("category")),
+            "applicability":safe_string(rule.get("applicability")),
+            "reason":safe_string(rule.get("applicability_reason")),
+            "text":safe_string(rule.get("text")),
+            "effect_targets":copy.deepcopy(rule.get("effect_targets",[]) or []),
+            "required_inputs":condition_names("UNSET"),
+            "unresolved_conditions":condition_names("UNKNOWN"),
+            "blocking_conditions":condition_names("FALSE"),
+            "numeric_effect":copy.deepcopy(rule.get("current_numeric_effect",rule.get("numeric_effect"))),
+        })
+    return {"count":len(items),"items":items}
 def build_input_requirements(e):
     r=e.get("remaining_inputs",{}); p=copy.deepcopy(r.get("project",[])); q=copy.deepcopy(r.get("procedure",[])); return {"project":p,"procedure":q,"project_count":len(p),"procedure_count":len(q),"requires_additional_input":bool(p or q)}
 def build_external_dependencies(e):
@@ -135,8 +160,8 @@ def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_p
             raise ValueError("common verified district-unit SITE registry unavailable")
         engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,common_verified_site_registry=common_registry)
 
-    land=build_land_area_result(site_input,site); regulation=build_regulation_result(engine); summary=build_rule_summary(engine); req=build_input_requirements(engine); ext=build_external_dependencies(engine); status=determine_analysis_status(engine,regulation)
+    land=build_land_area_result(site_input,site); regulation=build_regulation_result(engine); summary=build_rule_summary(engine); details=build_rule_details(engine); req=build_input_requirements(engine); ext=build_external_dependencies(engine); status=determine_analysis_status(engine,regulation)
     inp={"site":copy.deepcopy(site_input),"project":copy.deepcopy(project_profile),"procedure":copy.deepcopy(procedure_profile)}
     if historical_snapshot is not None:inp["historical"]=copy.deepcopy(historical_snapshot)
     if district_unit_plan_snapshot is not None:inp["district_unit_plan"]=copy.deepcopy(district_unit_plan_snapshot)
-    return {"analysis":{"status":status,"engine":"RULE_EVALUATION_PIPELINE","engine_version":engine.get("pipeline",{}).get("version")},"site":site,"input":inp,"land_area":land,"regulation":regulation,"rule_evaluation":summary,"input_requirements":req,"external_dependencies":ext,"rule_engine":{"baseline":engine.get("baseline"),"branch_overlay":engine.get("branch_overlay"),"dynamic_injection":engine.get("dynamic_injection"),"site_registry":engine.get("site_registry"),"site_repairs":engine.get("site_repairs"),"numeric":engine.get("numeric")}}
+    return {"analysis":{"status":status,"engine":"RULE_EVALUATION_PIPELINE","engine_version":engine.get("pipeline",{}).get("version")},"site":site,"input":inp,"land_area":land,"regulation":regulation,"rule_evaluation":summary,"rule_details":details,"input_requirements":req,"external_dependencies":ext,"rule_engine":{"baseline":engine.get("baseline"),"branch_overlay":engine.get("branch_overlay"),"dynamic_injection":engine.get("dynamic_injection"),"site_registry":engine.get("site_registry"),"site_repairs":engine.get("site_repairs"),"numeric":engine.get("numeric")}}
