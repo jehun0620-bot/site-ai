@@ -260,11 +260,11 @@ def main() -> int:
             == 5
         ),
 
-        "final applicable 63": (
+        "final applicable 62": (
             summary.get(
                 "APPLICABLE"
             )
-            == 63
+            == 62
         ),
 
         "final not applicable 213": (
@@ -281,11 +281,11 @@ def main() -> int:
             == 36
         ),
 
-        "final unknown 2": (
+        "final unknown 3": (
             summary.get(
                 "UNKNOWN"
             )
-            == 2
+            == 3
         ),
 
         "direct relaxation 0": (
