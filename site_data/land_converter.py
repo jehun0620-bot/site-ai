@@ -48,3 +48,18 @@ def convert_land_record(record: Dict[str, Any]) -> Land:
 
         land_use_regulation=""
     )
+
+def hydrate_land_from_records(
+    records: List[Dict[str, Any]],
+    *,
+    reference_year: str,
+) -> tuple[Optional[Land], Optional[Dict[str, Any]]]:
+    """Convert the newest VWorld record into Land and preserve provenance."""
+    record = select_latest_land_record(records)
+    if record is None:
+        return None, None
+
+    land = convert_land_record(record)
+    land.source_reference_year = str(reference_year).strip() or None
+    land.source_last_updated_at = str(record.get("lastUpdtDt") or "").strip() or None
+    return land, record
