@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useRef, useState } from 'react'
-import { confirmParcelCandidate, searchParcelCandidates } from './api/parcelCandidates'
-import { analyzeSelectedParcelCandidate } from './api/siteAnalysis'
+import { confirmParcelCandidate, ParcelCandidateApiError, searchParcelCandidates } from './api/parcelCandidates'
+import { analyzeSelectedParcelCandidate, SiteAnalysisApiError } from './api/siteAnalysis'
 import KakaoMap from './map/KakaoMap'
 import type { CandidateSearchState, ParcelCandidate, ParcelConfirmationResponse, ParcelVerificationState } from './types/parcel'
 import type { SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisRequirement, SiteAnalysisResponse, SiteAnalysisRuleApplicability, SiteAnalysisRuleDetail, SiteAnalysisState } from './types/siteAnalysis'
@@ -41,6 +41,19 @@ function displayRuleApplicability(value: SiteAnalysisRuleApplicability): string 
 }
 function displayRuleLocation(rule: SiteAnalysisRuleDetail): string {
   return [rule.paragraph, rule.item, rule.subitem].filter(Boolean).join(' · ') || '세부 위치 정보 없음'
+}
+function displayParcelApiError(error: unknown, fallback: string): string {
+  if (!(error instanceof ParcelCandidateApiError)) return error instanceof Error ? error.message : fallback
+  if (error.code === 'PARCEL_VERIFICATION_FAILED') return `${error.message} 다른 필지를 선택하거나 다시 검색해 주세요.`
+  if (error.code === 'PARCEL_GEOMETRY_UNRESOLVED') return `${error.message} 다른 필지를 선택하거나 다시 검색해 주세요.`
+  if (error.category === 'PROVIDER') return `외부 데이터 조회에 실패했습니다. ${error.message}`
+  return error.message || fallback
+}
+function displaySiteAnalysisApiError(error: unknown, fallback: string): string {
+  if (!(error instanceof SiteAnalysisApiError)) return error instanceof Error ? error.message : fallback
+  if (error.category === 'PROVIDER') return `외부 데이터 조회에 실패해 SITE 분석을 완료하지 못했습니다. ${error.message}`
+  if (error.category === 'PARCEL') return `${error.message} 필지를 다시 확인해 주세요.`
+  return error.message || fallback
 }
 
 export default function App() {
@@ -89,7 +102,7 @@ export default function App() {
       const result = await searchParcelCandidates(normalizedQuery); setCandidates(result.candidates)
       if (result.candidates.length === 0) { setState('SEARCH_EMPTY'); setMessage('검색은 완료됐지만 일치하는 필지 후보가 없습니다. 지번주소를 확인하거나 검색어를 조금 넓혀 주세요.'); return }
       setState('SEARCH_RESULTS'); setMessage(`${result.count}개의 필지 후보를 찾았습니다.`)
-    } catch (error) { setState('SEARCH_ERROR'); setMessage(error instanceof Error ? error.message : '필지 후보 검색 중 오류가 발생했습니다.') }
+    } catch (error) { setState('SEARCH_ERROR'); setMessage(displayParcelApiError(error, '필지 후보 검색 중 오류가 발생했습니다.')) }
   }
 
   async function handleCandidateSelection(candidate: ParcelCandidate) {
@@ -99,7 +112,7 @@ export default function App() {
       const result = await confirmParcelCandidate(candidate)
       if (result.parcel.pnu !== candidate.candidate_pnu) throw new Error('검증된 필지와 선택한 필지의 PNU가 일치하지 않습니다.')
       setConfirmation(result); setVerificationState('PARCEL_VERIFIED'); setVerificationMessage('Backend가 선택한 필지와 실제 필지 경계의 일치를 확인했습니다.')
-    } catch (error) { setConfirmation(null); setVerificationState('PARCEL_VERIFICATION_FAILED'); setVerificationMessage(error instanceof Error ? error.message : '선택한 필지를 확인하지 못했습니다. 다른 필지를 선택하거나 다시 검색해 주세요.') }
+    } catch (error) { setConfirmation(null); setVerificationState('PARCEL_VERIFICATION_FAILED'); setVerificationMessage(displayParcelApiError(error, '선택한 필지를 확인하지 못했습니다. 다른 필지를 선택하거나 다시 검색해 주세요.')) }
   }
 
   async function runAnalysis(project: SiteAnalysisInputProfile = {}, procedure: SiteAnalysisInputProfile = {}, preserveCurrent = false) {
@@ -113,7 +126,7 @@ export default function App() {
     } catch (error) {
       if (!preserveCurrent) setAnalysis(null)
       setAnalysisState(preserveCurrent && analysis ? 'ANALYSIS_READY' : 'ANALYSIS_FAILED')
-      const failureMessage = error instanceof Error ? error.message : 'SITE 분석을 완료하지 못했습니다. 잠시 후 다시 시도해 주세요.'
+      const failureMessage = displaySiteAnalysisApiError(error, 'SITE 분석을 완료하지 못했습니다.')
       setAnalysisMessage(failureMessage)
       if (preserveCurrent && analysis) setReanalysisError(failureMessage)
     }
