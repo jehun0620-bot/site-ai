@@ -17,17 +17,17 @@ class Building:
 
     main_use: str = ""
 
-    land_area: float = 0.0
-    building_area: float = 0.0
-    total_floor_area: float = 0.0
+    land_area: Optional[float] = None
+    building_area: Optional[float] = None
+    total_floor_area: Optional[float] = None
 
-    building_coverage_ratio: float = 0.0
-    floor_area_ratio: float = 0.0
+    building_coverage_ratio: Optional[float] = None
+    floor_area_ratio: Optional[float] = None
 
-    ground_floor_count: int = 0
-    underground_floor_count: int = 0
+    ground_floor_count: Optional[int] = None
+    underground_floor_count: Optional[int] = None
 
-    household_count: int = 0
+    household_count: Optional[int] = None
 
     approval_date: str = ""
 
