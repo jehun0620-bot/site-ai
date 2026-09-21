@@ -2,7 +2,7 @@
 
 최종 업데이트: 2026-09-21
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `3232dce8a02ac458a823ffc2fa02d048a9eec604`
+기준 behavioral PASS HEAD: `96155215700643eebec1e6136b88db3d1f7dd711`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
@@ -259,3 +259,19 @@ site_analysis_final_snapshot_test: all_pass True
 ```
 
 따라서 classifier production-boundary 정규화는 behavioral PASS다. 기존 `law_data/output/site_analysis_final_snapshot.json`은 현재 production 전체를 재직렬화할 때 이번 작업 범위를 넘어서는 누적 차이가 함께 발생하므로 이 refactor의 commit 대상에서 제외한다. snapshot baseline 전체 reconciliation은 별도 작업으로 분리한다. 보호 파일 `urban_area_conversion_history_final_resolution.json`은 계속 제외한다.
+
+
+### Public API Product Error normalization — 2026-09-21
+
+Public FastAPI error boundary를 재점검한 결과 `POST /v1/site-analysis/address`의 generic exception 한 경로만 기존 문자열 `detail`을 반환하고 있었다. 해당 경로를 기존 `SITE_API_ERROR_V1` product error envelope의 `UNEXPECTED_ERROR / INTERNAL`로 통일했고, 오래된 address contract assertion도 현재 공개 계약에 맞게 정렬했다.
+
+사용자 로컬 검증 결과:
+
+```text
+PUBLIC_API_PRODUCT_ERROR_CONTRACT_PASS
+PUBLIC_API_ADDRESS_SITE_ANALYSIS_CONTRACT_PASS
+PUBLIC_API_SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_CONTRACT_PASS
+PUBLIC_API_SELECTED_PARCEL_CANDIDATE_CONFIRMATION_CONTRACT_PASS
+```
+
+따라서 현재 검증 대상 public SITE/candidate HTTP 오류 경로는 machine-readable product error 계약으로 정규화되었다. production 분석 로직, PNU/geometry truth, Rule Engine, Historical/District, SITE FACT, Frontend 계약은 변경하지 않았다.
