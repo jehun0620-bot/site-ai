@@ -348,3 +348,20 @@ normalized legal clause
 이 분리는 판정 알고리즘 변경이 아니라 dependency-direction 정규화다. 사용자 로컬 회귀에서 standalone pipeline의 현재 의미론 `62 / 213 / 36 / 3`과 spatial SITE composition 이후 최종 public 의미론 `62 / 214 / 36 / 2`가 각각 검증되었다. 최종 public UNKNOWN은 기존과 같이 도시지역편입해제구역 조건의 clause 47, 48 두 건이다.
 
 전체 실행 snapshot은 classifier 외 runtime spatial 상태와 누적 production 결과도 포함하므로 classifier refactor와 동일한 변경 단위로 취급하지 않는다. snapshot baseline reconciliation은 별도 검증 경계로 유지한다.
+
+
+## 19. Public API product error boundary — 2026-09-21
+
+FastAPI public HTTP boundary는 내부 예외 문자열을 product contract로 직접 노출하지 않고, 검증된 공개 오류를 `SITE_API_ERROR_V1` envelope로 투영한다.
+
+```text
+provider / parcel / analysis / unexpected internal failure
+→ FastAPI HTTP boundary
+→ product_http_error()
+→ SITE_API_ERROR_V1
+→ Frontend product-error parser
+```
+
+현재 검증 대상 SITE analysis 및 parcel-candidate 경로는 stable `code`, `category`, product-safe `message`, `retryable`을 사용한다. 이 경계는 HTTP/presentation 책임이며 canonical PNU, geometry verification, SITE construction, deterministic legal evaluation의 의미를 변경하지 않는다. Request validation 자체의 FastAPI/Pydantic 422는 이 application product-error mapping과 별도 경계로 유지한다.
+
+사용자 로컬 contract regression에서 parcel SITE, address SITE, selected-candidate SITE, candidate confirmation 및 focused product-error contract가 모두 PASS했다.
