@@ -29,6 +29,10 @@ function displayRegulationStatus(value: unknown): string {
   if (value === 'PENDING') return '추가 확인 필요'
   return displayValue(value)
 }
+function retainCurrentRequirementInputs(profile: SiteAnalysisInputProfile, requirements: SiteAnalysisRequirement[]): SiteAnalysisInputProfile {
+  const currentNames = new Set(requirements.map((item) => item.name))
+  return Object.fromEntries(Object.entries(profile).filter(([name]) => currentNames.has(name)))
+}
 function displayExternalCategory(value: unknown): string {
   if (value === 'SITE_HISTORY') return '과거 이력 확인'
   return displayValue(value)
@@ -100,6 +104,10 @@ export default function App() {
     try {
       const result = await analyzeSelectedParcelCandidate(selectedCandidate, { project_profile: project, procedure_profile: procedure })
       if (result.site.pnu !== confirmation.parcel.pnu) throw new Error('분석 결과의 PNU가 확인된 필지와 일치하지 않습니다.')
+      if (preserveCurrent) {
+        setProjectProfile(retainCurrentRequirementInputs(project, result.requirements.project))
+        setProcedureProfile(retainCurrentRequirementInputs(procedure, result.requirements.procedure))
+      }
       setPreviousAnalysis(preserveCurrent ? analysis : null); setAnalysis(result); setAnalysisState('ANALYSIS_READY'); setAnalysisMessage(preserveCurrent ? '입력한 정보를 반영한 SITE 분석 결과를 받았습니다.' : '실제 SITE 분석 결과를 받았습니다.')
     } catch (error) {
       if (!preserveCurrent) setAnalysis(null)
