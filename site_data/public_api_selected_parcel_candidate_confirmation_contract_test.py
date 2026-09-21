@@ -102,7 +102,13 @@ def main() -> None:
             json={"candidate_pnu": "1168010300100120002", "x": 127.0, "y": 37.0},
         )
         assert response.status_code == 404, response.text
-        assert "SELECTED_PNU_POLYGON_MISMATCH" in response.json()["detail"]
+        assert response.json()["detail"] == {
+            "schema_version": "SITE_API_ERROR_V1",
+            "code": "PARCEL_VERIFICATION_FAILED",
+            "category": "PARCEL",
+            "message": "선택한 필지를 검증할 수 없습니다.",
+            "retryable": False,
+        }
         analyze.assert_not_called()
 
     missing_geometry = SelectedParcelCandidateVerification(
@@ -127,7 +133,13 @@ def main() -> None:
             json={"candidate_pnu": "1168010300100120002", "x": 127.0, "y": 37.0},
         )
         assert response.status_code == 404, response.text
-        assert "PARCEL_POLYGON_UNRESOLVED" in response.json()["detail"]
+        assert response.json()["detail"] == {
+            "schema_version": "SITE_API_ERROR_V1",
+            "code": "PARCEL_GEOMETRY_UNRESOLVED",
+            "category": "PARCEL",
+            "message": "선택한 필지의 검증된 경계를 확인할 수 없습니다.",
+            "retryable": False,
+        }
         analyze.assert_not_called()
 
     print("PUBLIC_API_SELECTED_PARCEL_CANDIDATE_CONFIRMATION_CONTRACT_PASS")
