@@ -1293,42 +1293,35 @@ Authentication, project/history, organization, billing, usage, report management
 ## 41. Immediate Next Step Status
 
 ```text
-CURRENT TASK:
-Frontend UX improvement READ-ONLY investigation
+CURRENT PRODUCT PHASE:
+Single Parcel v1 closure
 
-CURRENT FRONTEND STATUS:
-CANDIDATE LIST / MAP SYNC              USER LOCAL BEHAVIORAL PASS
-CANDIDATE REFERENCE GEOMETRY           USER LOCAL BEHAVIORAL PASS
-CANDIDATE PARCEL BOUNDARY RENDERING    USER LOCAL BEHAVIORAL PASS
-RESULT-CENTERED LAYOUT                 USER LOCAL BEHAVIORAL PASS
-VERIFIED PARCEL MAP RESIZE / REFIT     USER LOCAL BEHAVIORAL PASS
-ADDITIONAL INPUT UX / REANALYSIS       USER LOCAL BEHAVIORAL PASS
-PLAYWRIGHT MULTI-PARCEL E2E            USER LOCAL BEHAVIORAL PASS
-ERROR / EMPTY SEMANTICS                 USER LOCAL BEHAVIORAL PASS
-RESPONSIVE RESULT NAVIGATION             USER LOCAL BEHAVIORAL PASS
-PC ADDITIONAL INPUT WORKSPACE             USER LOCAL BEHAVIORAL PASS
-PC VERIFIED PARCEL RESULT SUMMARY          USER LOCAL BEHAVIORAL PASS
-PC RULE REANALYSIS DELTA PRESENTATION       USER LOCAL BEHAVIORAL PASS
-PC REQUIREMENT INPUT PROGRESS                USER LOCAL BEHAVIORAL PASS
-PC BUILDING HUB RESULT FACTS                  USER LOCAL BEHAVIORAL PASS
-PC EXTERNAL DEPENDENCY PRESENTATION            USER LOCAL BEHAVIORAL PASS
-PC LAND AREA INFORMATION HIERARCHY              USER LOCAL BEHAVIORAL PASS
-PC ANALYSIS RESULT HEADER COMPACTION             USER LOCAL BEHAVIORAL PASS
-PC VERIFIED RESULT CARD DEDUPLICATION             USER LOCAL BEHAVIORAL PASS
-PC RESULT CANDIDATE LIST COLLAPSE                  USER LOCAL BEHAVIORAL PASS
-PC RULE / EXTERNAL RESULT PAIRING                   USER LOCAL BEHAVIORAL PASS
-PC PARCEL / DATA STATUS INFORMATION HIERARCHY        USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
-PC REQUIREMENT GROUP DISCLOSURE / ADAPTIVE LAYOUT     USER LOCAL BEHAVIORAL PASS
-PC RULE EVALUATION INFORMATION HIERARCHY               USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
-PC REQUIREMENT ITEM COMPLETION STATE                    USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
-PC BUILDING REGULATION BASIS CLARIFICATION              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
-PC EXTERNAL DEPENDENCY ANALYSIS PROGRESSION             USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
-PC REANALYSIS FAILURE / PRESERVED RESULT UX              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
-PC REQUIREMENT INPUT PRESERVATION / TOGGLE UX              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS + ACTUAL BACKEND E2E PASS
+CURRENT FRONTEND BASELINE:
+Candidate discovery / selection / list-map sync        VALIDATED
+Backend parcel confirmation / VERIFIED polygon        VALIDATED
+Selected-candidate SITE analysis                       VALIDATED
+Additional input / repeated reanalysis                 VALIDATED
+PC FHD/QHD result UX                                   VALIDATED across recorded focused passes
+Actual Backend-connected Playwright E2E                PASS
+Mobile-specific refinement                             PAUSED
 
-NEXT WRITE:
-None until actual UX gaps are inspected and exact minimal scope is approved
+NEXT IMPLEMENTATION ORDER:
+1. Backend Public Rule Presentation Model
+2. PC rule-detail UX using that public model
+3. Machine-readable Product Error Model
+4. PC error mapping to the product error contract
+5. Final Single Parcel regression baseline
+
+NOT A CURRENT BLOCKER FOR v1 CLOSURE:
+- road-name-address input support
+- broad provider retry/cache/rate-limit/observability hardening
+- SaaS auth/project/history/billing/report features
+- mobile-specific refinement
 ```
+
+The current public response exposes rule summary counts but not a product-safe per-rule detail model. Frontend must not consume `debug.rule_engine`. The next Frontend rule-detail work starts only after the Backend public presentation contract is implemented and focused-tested.
+
+The product direction after Single Parcel v1 is Integrated Development. That future workspace is not implemented yet and must not be represented as validated Frontend functionality.
 
 ---
 
