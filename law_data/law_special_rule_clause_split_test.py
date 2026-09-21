@@ -57,9 +57,19 @@ TARGET_DEFAULT_ZONE = "제3종일반주거지역"
 # ============================================================
 
 try:
-    from .zone_relevance_classifier import classify_zone_relevance
+    from .zone_relevance_classifier import (
+        classify_zone_relevance,
+        extract_exact_zones,
+        extract_zone_groups,
+        target_belongs_to_group,
+    )
 except ImportError:
-    from zone_relevance_classifier import classify_zone_relevance
+    from zone_relevance_classifier import (
+        classify_zone_relevance,
+        extract_exact_zones,
+        extract_zone_groups,
+        target_belongs_to_group,
+    )
 
 
 # ============================================================
