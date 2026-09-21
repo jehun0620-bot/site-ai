@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 
 from site_data.site_data_model import (
+    Building,
     Land,
     Site,
 )
@@ -73,6 +74,24 @@ def main() -> int:
         ),
     )
 
+    site.buildings.append(
+        Building(
+            management_id="TEST-BUILDING-1",
+            dong_name="101동",
+            building_name="테스트 공동주택",
+            main_use="공동주택",
+            land_area=121040.4,
+            building_area=1234.5,
+            total_floor_area=9876.5,
+            building_coverage_ratio=12.3,
+            floor_area_ratio=210.5,
+            ground_floor_count=25,
+            underground_floor_count=2,
+            household_count=120,
+            approval_date="20200101",
+        )
+    )
+
     # ========================================================
     # internal analysis
     # ========================================================
@@ -97,6 +116,7 @@ def main() -> int:
         build_site_analysis_response(
             analysis,
             include_debug=False,
+            site_object=site,
         )
     )
 
@@ -353,6 +373,25 @@ def main() -> int:
                 "total"
             ]
             == 314
+        ),
+
+        "site facts land": (
+            response["site_facts"]["land"]["land_category"] == "대"
+            and response["site_facts"]["land"]["land_area"] == 121040.4
+            and response["site_facts"]["land"]["zoning"] == "제3종일반주거지역"
+        ),
+
+        "site facts building": (
+            response["site_facts"]["buildings"]["count"] == 1
+            and response["site_facts"]["buildings"]["items"][0]["management_id"] == "TEST-BUILDING-1"
+            and response["site_facts"]["buildings"]["items"][0]["main_use"] == "공동주택"
+            and response["site_facts"]["buildings"]["items"][0]["total_floor_area"] == 9876.5
+            and response["site_facts"]["buildings"]["items"][0]["floor_area_ratio"] == 210.5
+        ),
+
+        "site facts sources": (
+            response["site_facts"]["sources"]["land"] == "VWORLD_LAND_CHARACTERISTICS"
+            and response["site_facts"]["sources"]["buildings"] == "BUILDING_HUB_TITLE"
         ),
 
         "debug excluded": (
