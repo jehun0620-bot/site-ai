@@ -60,6 +60,31 @@ export interface SiteAnalysisRuleEvaluation {
   unknown: number
 }
 
+export type SiteAnalysisRuleApplicability = 'APPLICABLE' | 'NOT_APPLICABLE' | 'CONDITIONAL' | 'UNKNOWN'
+
+export interface SiteAnalysisRuleDetail {
+  clause_index: number | string | null
+  law_name: string | null
+  rule_title: string | null
+  paragraph: string | null
+  item: string | null
+  subitem: string | null
+  category: string | null
+  applicability: SiteAnalysisRuleApplicability
+  reason: string | null
+  text: string | null
+  effect_targets: unknown[]
+  required_inputs: string[]
+  unresolved_conditions: string[]
+  blocking_conditions: string[]
+  numeric_effect: unknown
+}
+
+export interface SiteAnalysisRuleDetails {
+  count: number
+  items: SiteAnalysisRuleDetail[]
+}
+
 export interface SiteAnalysisRequirement {
   name: string
   affected_clause_count: number
@@ -96,6 +121,7 @@ export interface SiteAnalysisResponse {
   spatial: unknown
   regulation: SiteAnalysisRegulation
   rule_evaluation: SiteAnalysisRuleEvaluation
+  rule_details: SiteAnalysisRuleDetails
   requirements: SiteAnalysisRequirements
   external_dependencies: SiteAnalysisExternalDependencies
   service?: {
