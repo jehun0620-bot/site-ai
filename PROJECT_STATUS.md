@@ -2,7 +2,7 @@
 
 최종 업데이트: 2026-09-21
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `5538b95ab74eb674883420ea9267fd1d38ebf2ec`
+기준 behavioral PASS HEAD: `3f9ab844250dad962c4b9129d2f6a696f09811ad`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
@@ -156,7 +156,29 @@ UNKNOWN: 2
 
 The two real UNKNOWN rules were preserved as public product details with law name, rule title, Backend applicability reason, and unresolved condition `도시지역편입해제구역`. The public response keeps `debug.rule_engine` separate, and no second Rule Engine path was created.
 
-The PC Frontend consuming this public contract is also user-local behavioral/build/E2E validated. Therefore the next Single Parcel v1 Backend closure target is the **Machine-readable Product Error Model**.
+The PC Frontend consuming this public contract is also user-local behavioral/build/E2E validated.
+
+The **Machine-readable Product Error Model** is now implemented and user-local contract validated. Public FastAPI failures use the product-safe `SITE_API_ERROR_V1` detail envelope with stable `code`, `category`, `message`, and `retryable` fields while preserving HTTP status. Focused and existing selected-candidate public API contracts passed locally:
+
+```text
+PUBLIC_API_PRODUCT_ERROR_CONTRACT_PASS
+PUBLIC_API_SELECTED_PARCEL_CANDIDATE_SITE_ANALYSIS_CONTRACT_PASS
+PUBLIC_API_SELECTED_PARCEL_CANDIDATE_CONFIRMATION_CONTRACT_PASS
+```
+
+The PC Frontend now parses that structured error contract across candidate search, parcel confirmation, and SITE analysis while retaining legacy string-detail fallback. User-local production build passed and the existing actual Backend-connected Playwright regression passed at HEAD `3f9ab844250dad962c4b9129d2f6a696f09811ad` with `1 passed (15.0s)`.
+
+During that regression a searched candidate was legitimately rejected by live same-PNU verification with `SELECTED_PNU_POLYGON_MISMATCH`. The E2E was corrected so discovery candidates are not assumed to be VERIFIED; rejected discovery candidates are allowed and the test still requires at least one VERIFIED candidate per default address before exercising analysis/reanalysis.
+
+Remaining Single Parcel v1 closure work:
+
+```text
+1. Focused deterministic Frontend validation of SITE_API_ERROR_V1 product-error UX
+2. Final Single Parcel regression baseline
+3. Single Parcel v1 baseline freeze / handoff
+```
+
+Frontend structured-error parsing is implemented, but its dedicated deterministic error-path validation is not yet recorded as PASS.
 
 ## 7. Safety boundary
 
