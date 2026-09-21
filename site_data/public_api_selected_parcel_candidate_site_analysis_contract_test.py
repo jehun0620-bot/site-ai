@@ -60,7 +60,14 @@ def main() -> None:
             json={"candidate_pnu": "1168010300100120002", "x": 127.0, "y": 37.0},
         )
         assert response.status_code == 404, response.text
-        assert "SELECTED_PNU_POLYGON_MISMATCH" in response.json()["detail"]
+        detail = response.json()["detail"]
+        assert detail == {
+            "schema_version": "SITE_API_ERROR_V1",
+            "code": "PARCEL_BUILD_FAILED",
+            "category": "PARCEL",
+            "message": "분석할 필지 정보를 구성하지 못했습니다.",
+            "retryable": False,
+        }
 
     with patch.object(api_app, "analyze_site_by_selected_candidate") as selected_analyze, patch.object(
         api_app, "search_address_parcel_candidates", return_value=[]
