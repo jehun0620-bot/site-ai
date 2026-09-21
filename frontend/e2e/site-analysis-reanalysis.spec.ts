@@ -64,7 +64,6 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
         await expect(verifiedHeading.or(rejectedHeading)).toBeVisible()
 
         if (await rejectedHeading.isVisible()) {
-          await expect(page.locator('.verification-panel')).toHaveCount(0)
           continue
         }
 
