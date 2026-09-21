@@ -6,7 +6,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from site_data.address_parcel_candidate_search import search_address_parcel_candidates
 from site_data.selected_parcel_candidate_verifier import verify_selected_parcel_candidate
-from site_data.site_analysis_orchestrator import BuildingAPIError, SiteAnalysisError, SiteBuildError, analyze_site_by_address, analyze_site_by_parcel, analyze_site_by_selected_candidate
+from site_data.building_hub_provider import BuildingAPIError
+from site_data.site_analysis_orchestrator import SiteAnalysisError, SiteBuildError, analyze_site_by_address, analyze_site_by_parcel, analyze_site_by_selected_candidate
 
 app=FastAPI(title="AI 대지분석 API",version="0.1.0",description="건축HUB / SITE / 공간정보 / 법규평가를 통합한 대지분석 API")
 
