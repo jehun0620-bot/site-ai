@@ -113,7 +113,7 @@ def analyze_site_by_parcel(*,sigungu_cd:str,bjdong_cd:str,bun:str,ji:str,plat_gb
         verified_historical_input=seal_verified_historical_rule_input(canonical_pnu=actual_site_pnu,historical_rule_input=raw_historical_rule_input)
         if not verified_historical_input.ready: raise SiteAnalysisError("Historical verified rule-input envelope is not ready")
     analysis=analyze_site_object(site=site,project_profile=project_profile or {},procedure_profile=procedure_profile or {},production_condition_shadow_sources=production_condition_shadow_sources,historical_rule_input=verified_historical_input,district_unit_plan_registry_candidate=verified_district_unit_plan_input)
-    response=build_site_analysis_response(analysis,include_debug=include_debug); response["service"]={"building_count":len(items),"building_total_count":building_result.get("total_count"),"building_api_status":building_result.get("result_code")}; return response
+    response=build_site_analysis_response(analysis,include_debug=include_debug,site_object=site); response["service"]={"building_count":len(items),"building_total_count":building_result.get("total_count"),"building_api_status":building_result.get("result_code")}; return response
 
 
 def analyze_site_by_address(*,address:str,project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,include_debug:bool=False,service_key:Optional[str]=None,vworld_api_key:Optional[str]=None)->Dict[str,Any]:
