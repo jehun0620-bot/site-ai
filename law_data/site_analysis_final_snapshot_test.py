@@ -523,18 +523,18 @@ def main() -> int:
             == 314
         ),
 
-        "rules applicable 63": (
+        "rules applicable 62": (
             rule_evaluation.get(
                 "applicable"
             )
-            == 63
+            == 62
         ),
 
-        "rules not applicable 213": (
+        "rules not applicable 214": (
             rule_evaluation.get(
                 "not_applicable"
             )
-            == 213
+            == 214
         ),
 
         "rules conditional 36": (
