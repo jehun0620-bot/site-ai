@@ -237,4 +237,4 @@ The pre-refactor fail-closed safety contract was user-local PASS at `499fe03d58f
 
 ### SITE facts response projection refactor — 2026-09-21
 
-Public `site_facts` projection has been extracted from `site_analysis_response.py` into `site_data/site_facts_response.py`. A focused projection contract test was added. The public `SITE_ANALYSIS_API_V1` shape is intended to remain unchanged. This stage is **IMPLEMENTED / NOT YET USER-LOCAL BEHAVIORAL PASS** until the focused contract, existing public response test, real-data SITE FACT regression, and Backend-connected SITE-facts E2E pass after extraction.
+Public `site_facts` projection has been extracted from `site_analysis_response.py` into `site_data/site_facts_response.py`. A focused projection contract test was added. This extraction is **USER-LOCAL BEHAVIORAL PASS** at HEAD `ecc2cd1952855939f375131cdd774e6d0d9127b0`: focused SITE facts projection, existing public response regression, real-data SITE FACT regression, and actual Backend-connected SITE-facts E2E all passed with the existing `SITE_ANALYSIS_API_V1` shape and values preserved.
