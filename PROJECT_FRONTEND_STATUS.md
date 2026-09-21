@@ -1290,6 +1290,52 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
+## 40A. PC Rule Detail UX Validation
+
+### 2026-09-21 User Local Behavioral + Production Build + Actual Backend E2E Validation
+
+Backend Public Rule Presentation Model을 소비하는 PC 법규 상세 UX를 구현하고 실제 사용자 로컬 환경에서 검증했다.
+
+구현은 기존 `법규 평가 집계`를 유지하면서 그 아래에 상태별 상세 disclosure를 추가한다. `확인 필요` 그룹은 기본 펼침, `조건부` / `적용` / `비적용` 그룹은 접힘 상태로 시작한다. 각 rule card는 public `rule_details`의 `law_name`, `rule_title`, `paragraph/item/subitem`, `category`, `applicability`, `reason`, `required_inputs`, `unresolved_conditions`, `blocking_conditions`, `text`만 사용한다. Frontend는 법적 적용 여부를 다시 계산하지 않고 `debug.rule_engine`을 소비하지 않는다.
+
+사용자 로컬 화면에서 실제 분석 결과의 `확인 필요 2개`가 기본 펼침 상태로 표시되고, 두 규정 모두 다음 의미가 정상 표시되는 것을 확인했다.
+
+```text
+국토의 계획 및 이용에 관한 법률 시행령
+도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용
+판정 이유: 필수조건 미확정: 도시지역편입해제구역
+미확정 조건: 도시지역편입해제구역
+```
+
+또한 `규정 내용 보기` disclosure와 상태별 그룹 접기/펼치기가 정상 동작하고, 비적용 214개가 초기 화면에서 전부 펼쳐지지 않는 것을 실제 PC 화면으로 확인했다.
+
+사용자 로컬 HEAD:
+
+```text
+0f67841d4e94026f5ff6dc2f8bade1d85cfdea7f
+```
+
+Production build:
+
+```text
+vite v8.3.0 building client environment for production...
+✓ 20 modules transformed.
+dist/index.html                   0.49 kB │ gzip:  0.33 kB
+dist/assets/index-DY6eL3yX.css   18.89 kB │ gzip:  4.11 kB
+dist/assets/index-CkcYTI1H.js   252.61 kB │ gzip: 77.46 kB
+✓ built in 94ms
+```
+
+Actual Backend-connected Playwright E2E:
+
+```text
+1 passed (17.6s)
+```
+
+따라서 **PC RULE DETAIL UX = USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS + ACTUAL BACKEND E2E PASS**이다.
+
+---
+
 ## 41. Immediate Next Step Status
 
 ```text
@@ -1305,12 +1351,14 @@ PC FHD/QHD result UX                                   VALIDATED across recorded
 Actual Backend-connected Playwright E2E                PASS
 Mobile-specific refinement                             PAUSED
 
+COMPLETED IN CURRENT CLOSURE:
+1. Backend Public Rule Presentation Model             PASS
+2. PC rule-detail UX using that public model          PASS
+
 NEXT IMPLEMENTATION ORDER:
-1. Backend Public Rule Presentation Model
-2. PC rule-detail UX using that public model
-3. Machine-readable Product Error Model
-4. PC error mapping to the product error contract
-5. Final Single Parcel regression baseline
+1. Machine-readable Product Error Model
+2. PC error mapping to the product error contract
+3. Final Single Parcel regression baseline
 
 NOT A CURRENT BLOCKER FOR v1 CLOSURE:
 - road-name-address input support
@@ -1319,7 +1367,7 @@ NOT A CURRENT BLOCKER FOR v1 CLOSURE:
 - mobile-specific refinement
 ```
 
-The current public response exposes rule summary counts but not a product-safe per-rule detail model. Frontend must not consume `debug.rule_engine`. The next Frontend rule-detail work starts only after the Backend public presentation contract is implemented and focused-tested.
+The public response now exposes the product-safe per-rule `rule_details` model and the PC Frontend consumes that contract. Frontend continues not to consume `debug.rule_engine`. The next closure work is the machine-readable Product Error Model and its PC error mapping.
 
 The product direction after Single Parcel v1 is Integrated Development. That future workspace is not implemented yet and must not be represented as validated Frontend functionality.
 
