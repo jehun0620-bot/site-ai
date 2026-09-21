@@ -1247,7 +1247,33 @@ PC `외부 확인 정보`에서 Backend `blocking_analysis` boolean을 사용자
 
 ---
 
-## 39. Other Known Product Gaps
+## 39. PC Requirement Input Reconciliation Validation
+
+### 2026-09-21 User Local Behavioral + Production Build + Actual Backend E2E Validation
+
+추가 입력 재분석이 성공한 뒤 Frontend의 project/procedure profile에는 Backend가 새 분석 결과에서 현재 requirement로 다시 반환한 이름만 유지한다. 이전 분석에는 있었지만 새 결과에는 더 이상 없는 requirement 입력은 제거하며, Frontend가 법적 relevance를 자체 추론하거나 새로운 requirement를 만들지 않는다. 현재 requirement 목록의 authority는 Backend 응답이다.
+
+구현 커밋은 `624fc3ccd3d418fe730c96e1b4ff5da05daf556d`이고, requirement reconciliation 검증을 E2E에 추가한 커밋은 `2cdebd054f465831f5d2b0c328a0f59d70cb4711`이다. 현재 제품 UI와 맞지 않던 재분석 성공문구 assertion은 실제 `분석 완료` 상태 검증으로 정렬했으며, buildingless 재분석 구간에도 동일하게 적용했다.
+
+사용자 로컬 production build는 `tsc -b && vite build`까지 정상 PASS했다.
+
+최종 사용자 로컬 E2E 검증 HEAD:
+
+```text
+0c816fa146eddba866a3fe93b17d9c7841b5c435
+```
+
+설치형 Google Chrome 채널과 실제 Backend/Frontend 서버를 사용한 Playwright 검증에서 `1 passed (14.2s)`를 확인했다. 검증 범위에는 일반 필지의 주소 검색·필지 선택/검증·최초 분석·추가 입력 재분석·PNU 유지·현재 requirement 개수와 선택 입력 상태 정합성, 필지 전환 시 입력 상태 격리, 그리고 buildingless parcel `1168010300100120006`의 선택/검증·최초 분석·추가 입력 재분석이 포함된다.
+
+현재 개발 PC에서는 Windows Application Control 정책으로 Playwright 다운로드 Chromium이 차단되어 설치형 Chrome 채널을 사용했고, Vite가 `localhost -> ::1`에 바인딩되어 E2E base URL을 `http://localhost:5173`으로 지정했다. 이는 제품 기능 판정과 분리된 로컬 실행환경 조건이다.
+
+이번 검증은 PC 중심이며 모바일 전용 추가 개발/검증은 보류 상태를 유지한다.
+
+따라서 **PC REQUIREMENT INPUT RECONCILIATION = USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS + ACTUAL BACKEND E2E PASS**이다.
+
+---
+
+## 40. Other Known Product Gaps
 
 ```text
 road-address support
@@ -1262,7 +1288,7 @@ Authentication, project/history, organization, billing, usage, report management
 
 ---
 
-## 40. Immediate Next Step Status
+## 41. Immediate Next Step Status
 
 ```text
 CURRENT TASK:
@@ -1296,6 +1322,7 @@ PC REQUIREMENT ITEM COMPLETION STATE                    USER LOCAL BEHAVIORAL PA
 PC BUILDING REGULATION BASIS CLARIFICATION              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC EXTERNAL DEPENDENCY ANALYSIS PROGRESSION             USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
 PC REANALYSIS FAILURE / PRESERVED RESULT UX              USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS
+PC REQUIREMENT INPUT RECONCILIATION                       USER LOCAL BEHAVIORAL PASS + PRODUCTION BUILD PASS + ACTUAL BACKEND E2E PASS
 
 NEXT WRITE:
 None until actual UX gaps are inspected and exact minimal scope is approved
@@ -1303,6 +1330,6 @@ None until actual UX gaps are inspected and exact minimal scope is approved
 
 ---
 
-## 41. Status Update Rule
+## 42. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
