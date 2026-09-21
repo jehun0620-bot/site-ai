@@ -71,8 +71,14 @@ test.describe('실제 Backend 연동 대상지 현황 E2E', () => {
       await expect(factsSection.getByText('현재 조회된 건축물대장 항목이 없습니다.', { exact: true })).toBeVisible()
     }
 
-    await expect(factsSection.locator('dt', { hasText: '토지' }).locator('..').locator('dd')).toHaveText(
+    await expect(factsSection.getByText('토지', { exact: true }).locator('..').locator('dd')).toHaveText(
       sources.land === 'VWORLD_LAND_CHARACTERISTICS' ? 'VWorld 토지특성정보' : String(sources.land ?? '정보 없음'),
+    )
+    await expect(factsSection.getByText('토지 기준연도', { exact: true }).locator('..').locator('dd')).toHaveText(
+      String(sources.land_reference_year ?? '정보 없음'),
+    )
+    await expect(factsSection.getByText('토지 최종 갱신일', { exact: true }).locator('..').locator('dd')).toHaveText(
+      String(sources.land_last_updated_at ?? '정보 없음'),
     )
     await expect(factsSection.locator('dt', { hasText: '건축물' }).last().locator('..').locator('dd')).toHaveText(
       sources.buildings === 'BUILDING_HUB_TITLE' ? '건축HUB 표제부' : String(sources.buildings ?? '정보 없음'),
