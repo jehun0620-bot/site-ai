@@ -1,21 +1,11 @@
 import type { ParcelCandidate } from '../types/parcel'
 import type { SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisResponse } from '../types/siteAnalysis'
+import { ProductApiError, readApiError, type ProductErrorDetail } from './productError'
 
-export class SiteAnalysisApiError extends Error {
-  constructor(message: string) {
-    super(message)
+export class SiteAnalysisApiError extends ProductApiError {
+  constructor(message: string, httpStatus = 0, detail: ProductErrorDetail | null = null) {
+    super(message, httpStatus, detail)
     this.name = 'SiteAnalysisApiError'
-  }
-}
-
-async function readErrorDetail(response: Response): Promise<string | null> {
-  try {
-    const body: unknown = await response.json()
-    if (!body || typeof body !== 'object') return null
-    const detail = (body as Record<string, unknown>).detail
-    return typeof detail === 'string' && detail.trim() ? detail.trim() : null
-  } catch {
-    return null
   }
 }
 
@@ -44,8 +34,9 @@ export async function analyzeSelectedParcelCandidate(
   })
 
   if (!response.ok) {
-    const detail = await readErrorDetail(response)
-    throw new SiteAnalysisApiError(detail ? `SITE 분석을 완료하지 못했습니다. ${detail} (${response.status})` : `SITE 분석을 완료하지 못했습니다. (${response.status})`)
+    const error = await readApiError(response)
+    const message = error.detail?.message ?? error.legacyMessage ?? 'SITE 분석을 완료하지 못했습니다.'
+    throw new SiteAnalysisApiError(message, response.status, error.detail)
   }
 
   const body: unknown = await response.json()
