@@ -307,4 +307,14 @@ SITE_IDENTITY_RESOLVER_CONTRACT_PASS
 
 새 snapshot baseline은 commit `1eddb0c98db32d815829fdb242485c42cb42e7c8`로 저장되었고 snapshot 1개 파일만 포함됨을 확인했다. 보호 파일 `law_data/output/urban_area_conversion_history_final_resolution.json`은 계속 local unstaged 상태로 보존한다.
 
-다음 backend closeout 단계는 현재 contracts와 실제 API/SITE FACT 경로를 묶은 최종 통합 regression이다.
+Backend 최종 통합 regression은 2026-09-22 사용자 로컬에서 **BEHAVIORAL PASS**했다. Provider/geometry/identity/zone-transition safety contracts, production/runtime spatial regressions, Building HUB numeric preservation, SITE service/public response, real API→SITE analysis, real-data SITE FACT, public product-error contract, multi-SITE state-leakage regression이 모두 PASS했다.
+
+대표 확인값:
+```text
+BASE: 314 = 62 / 214 / 36 / 2
+LIVE: 314 = 62 / 216 / 34 / 2
+개포동 12: READY / official area 121040.4 / buildings 34 / BCR 50 / FAR 250
+개포동 13: READY / verified different PNU / MultiPolygon / BCR 60 / FAR 150
+```
+
+다른 PNU에서 stale BASE snapshot geometry를 canonical truth로 재사용하지 않고 live same-PNU polygon을 재검증했으며, zone/numeric/rule state도 대상 SITE에 맞게 독립적으로 해석됐다. 따라서 현재 Backend final refactoring closeout은 **USER-LOCAL BEHAVIORAL PASS**다. 추가 대규모 Backend 구조 분해는 중단하고, 실제 결함 또는 새 기능 요구가 있을 때만 좁은 범위로 재개한다. 다음 주요 개발 단계는 Frontend responsibility refactor다.
