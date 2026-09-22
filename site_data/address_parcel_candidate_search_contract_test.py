@@ -10,7 +10,8 @@ from site_data.address_parcel_candidate_search import (
 
 
 class _Response:
-    status_code = 200
+    def __init__(self, status_code=200):
+        self.status_code = status_code
 
 
 def _ok(items):
@@ -19,6 +20,14 @@ def _ok(items):
 
 def _not_found():
     return _Response(), {"response": {"status": "NOT_FOUND"}}, None
+
+
+def _http_error(status_code):
+    return _Response(status_code), {"response": {"status": "ERROR"}}, None
+
+
+def _provider_error(status="ERROR"):
+    return _Response(), {"response": {"status": status}}, None
 
 
 def _item(pnu, parcel, *, road="", building="", x="127.075", y="37.494"):
@@ -108,11 +117,34 @@ def main() -> None:
     ) as request:
         try:
             search_address_parcel_candidates("개포동 12", api_key="test-key")
-        except AddressParcelCandidateSearchProviderError:
-            pass
+        except AddressParcelCandidateSearchProviderError as exc:
+            assert exc.retryable is True
         else:
             raise AssertionError("transport failure must not be returned as an empty candidate result")
         assert request.call_count == 1
+
+    for status_code, expected_retryable in ((503, True), (429, True), (404, False)):
+        with patch(
+            "site_data.address_parcel_candidate_search.request_json",
+            return_value=_http_error(status_code),
+        ):
+            try:
+                search_address_parcel_candidates("개포동 12", api_key="test-key")
+            except AddressParcelCandidateSearchProviderError as exc:
+                assert exc.retryable is expected_retryable
+            else:
+                raise AssertionError(f"HTTP {status_code} failure was admitted")
+
+    with patch(
+        "site_data.address_parcel_candidate_search.request_json",
+        return_value=_provider_error(),
+    ):
+        try:
+            search_address_parcel_candidates("개포동 12", api_key="test-key")
+        except AddressParcelCandidateSearchProviderError as exc:
+            assert exc.retryable is False
+        else:
+            raise AssertionError("provider status failure was admitted")
 
     with patch(
         "site_data.address_parcel_candidate_search.request_json",
@@ -120,8 +152,8 @@ def main() -> None:
     ) as request:
         try:
             search_address_parcel_candidates("개포로109길 21", api_key="test-key")
-        except AddressParcelCandidateSearchProviderError:
-            pass
+        except AddressParcelCandidateSearchProviderError as exc:
+            assert exc.retryable is True
         else:
             raise AssertionError("road fallback transport failure must not be returned as an empty candidate result")
         assert request.call_count == 2
