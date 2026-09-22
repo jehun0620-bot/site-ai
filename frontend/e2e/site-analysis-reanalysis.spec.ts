@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-const DEFAULT_ADDRESS_SEEDS = ['서울특별시 강남구 개포동 12', '서울특별시 동작구 동작동 산 29-3']
+const DEFAULT_ADDRESS_SEEDS = ['서울특별시 강남구 개포동 12', '서울특별시 강남구 개포로109길 21', '서울특별시 동작구 동작동 산 29-3']
 const INPUT_LABELS = ['해당함', '해당하지 않음', '잘 모르겠음'] as const
 
 function parseAddressSeeds(): string[] {
@@ -24,7 +24,7 @@ function createRandom(seed: number) {
 }
 
 async function search(page: Page, address: string) {
-  await page.getByLabel('지번주소').fill(address)
+  await page.getByLabel('주소', { exact: true }).fill(address)
   await page.getByRole('button', { name: /필지 찾기|다른 필지 찾기/ }).click()
   await expect(page.getByLabel('필지 후보 목록')).toBeVisible()
   await expect(page.getByRole('status')).toContainText('개의 필지 후보를 찾았습니다.')
