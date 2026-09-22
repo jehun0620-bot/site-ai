@@ -614,7 +614,27 @@ RuleDetails.tsx
 
 AnalysisRequirements.tsx
   → renders project/procedure requirements and input progress
+  → owns disclosure/local UI state
   → emits requirement-change and reanalysis callbacks
+
+SiteFactsSection.tsx
+  → renders Backend SITE facts, parcel identity display, building facts, and source status
+
+LandAreaSection.tsx
+  → renders Backend land-area values and comparison presentation
+  → does not calculate a missing spatial area or area difference
+
+BuildingScaleSection.tsx
+  → renders Backend building coverage / floor area regulation values
+
+ExternalDependenciesSection.tsx
+  → renders Backend external-dependency status and blocking presentation
 ```
 
-This separation is intentionally narrower than a general state-management refactor. Moving presentation markup out of `App.tsx` must not create a second API path, duplicate Backend-derived state, or move trust-sensitive decisions into child components. Workflow/state/API orchestration remains in `App.tsx` until a separately reviewed boundary is justified by actual responsibility concentration.
+This separation is intentionally narrower than a general state-management refactor. Moving presentation markup out of `App.tsx` must not create a second API path, duplicate Backend-derived state, or move trust-sensitive decisions into child components.
+
+After the second presentation extraction, `App.tsx` remains the workflow/orchestration owner for address search, candidate selection, Backend parcel confirmation, analysis/reanalysis, profile state, API invocation, and parcel-identity consistency checks. In particular, candidate PNU ↔ confirmation PNU and confirmation PNU ↔ analysis PNU checks remain in the orchestration path.
+
+Presentation components may translate Backend values into user-facing labels, grouping, disclosure, and empty-state text, but they must not independently verify a parcel, synthesize missing SITE facts, recalculate legal applicability, or convert missing/UNKNOWN information into a definitive result.
+
+Further extraction from `App.tsx` requires a responsibility-based reason rather than line-count reduction alone. Search/candidate/verification/analysis workflow should remain colocated unless a separately reviewed boundary preserves the current trust-sensitive sequence.
