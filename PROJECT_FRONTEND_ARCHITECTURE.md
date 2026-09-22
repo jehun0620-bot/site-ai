@@ -98,7 +98,7 @@ Regulation Details / Evidence
 
 제품의 첫 번째 성공 기준은 사용자가 PNU나 법정동코드 같은 내부 식별자를 직접 알지 않아도 `주소 입력 → 정확한 필지 선택 → 지도 확인 → 분석 → 결과 이해`를 완료하는 것이다.
 
-현재 검증된 Backend 범위를 고려하여 MVP 주소 입력은 지번주소 중심으로 한다. 도로명주소 지원이 완성된 것으로 표현하지 않는다.
+현재 검증된 Backend 범위에서 MVP 주소 입력은 지번주소와 도로명주소를 모두 지원한다. Backend candidate discovery는 지번주소 검색을 우선하고 provider 결과가 없을 때 도로명주소 검색으로 fallback하며, 결과는 PNU 기준으로 중복 제거한다. 이 discovery 확장은 canonical parcel truth를 만들지 않으며 기존 selected-candidate same-PNU polygon verification을 반드시 통과해야 한다.
 
 ---
 
@@ -432,7 +432,7 @@ Desktop 우선 구현이어도 responsive 확장을 막는 고정 구조를 만�
 첫 Frontend 구현은 실제 Backend contract와 연결된 작은 end-to-end vertical slice를 우선한다.
 
 ```text
-실제 지번주소 입력
+실제 지번주소 또는 도로명주소 입력
     ↓
 실제 candidate API
     ↓
@@ -643,3 +643,37 @@ After the presentation extractions, `App.tsx` remains the workflow/orchestration
 Presentation components may translate Backend values into user-facing labels, grouping, disclosure, and empty-state text, but they must not independently verify a parcel, synthesize missing SITE facts, recalculate legal applicability, or convert missing/UNKNOWN information into a definitive result.
 
 Current architecture classification: `App.tsx = KEEP as workflow/orchestration`. Further extraction from `App.tsx` requires a responsibility-based reason rather than line-count reduction alone. Search/candidate/verification/analysis workflow should remain colocated unless a separately reviewed boundary preserves the current trust-sensitive sequence.
+
+
+## 26. Address Discovery Mode Boundary
+
+Single Parcel address entry supports both parcel-address and road-address input without creating separate verification semantics.
+
+```text
+Address Input
+    ↓
+Backend candidate discovery
+    ├─ parcel-address provider mode (primary)
+    └─ road-address provider mode (fallback when primary returns no items)
+    ↓
+PNU-deduplicated discovery candidates
+    ↓
+existing candidate selection
+    ↓
+existing Backend same-PNU polygon verification
+    ↓
+VERIFIED parcel
+```
+
+Road-address provider results may contain multiple building-level points for one cadastral parcel. Frontend must not interpret those rows as multiple parcel truths. Backend discovery deduplicates by PNU before exposing candidates, while verification continues to use the selected candidate PNU and point against the parcel polygon boundary.
+
+Therefore:
+
+```text
+road-address provider row != verified parcel
+multiple road-address building rows != multiple cadastral parcels
+PNU deduplication != parcel verification
+road-address discovery != second truth path
+```
+
+Frontend address wording may present both address formats, but the trust boundary remains unchanged: selection and presentation are Frontend responsibilities; canonical parcel verification remains Backend responsibility.
