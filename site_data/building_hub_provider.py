@@ -11,7 +11,9 @@ BUILDING_API_URL = "http://apis.data.go.kr/1613000/BldRgstHubService/getBrTitleI
 
 
 class BuildingAPIError(RuntimeError):
-    pass
+    def __init__(self, message: str, *, retryable: bool = False):
+        super().__init__(message)
+        self.retryable = bool(retryable)
 
 
 def fetch_building_items(
@@ -42,9 +44,12 @@ def fetch_building_items(
     try:
         response = requests.get(BUILDING_API_URL, params=params, timeout=timeout)
     except requests.RequestException as exc:
-        raise BuildingAPIError(f"건축HUB 요청 실패: {exc}") from exc
+        raise BuildingAPIError(f"건축HUB 요청 실패: {exc}", retryable=True) from exc
     if response.status_code != 200:
-        raise BuildingAPIError(f"건축HUB HTTP 오류: {response.status_code}")
+        raise BuildingAPIError(
+            f"건축HUB HTTP 오류: {response.status_code}",
+            retryable=response.status_code in {408, 429} or 500 <= response.status_code <= 599,
+        )
 
     try:
         data = response.json()
