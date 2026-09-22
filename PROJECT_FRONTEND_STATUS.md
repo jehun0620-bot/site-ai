@@ -1532,3 +1532,40 @@ Therefore **FRONTEND RESULT PRESENTATION SECTION REFACTOR = USER-LOCAL BEHAVIORA
 Post-refactor read-only audit classifies `App.tsx` as the current workflow/orchestration owner. Further extraction is not justified merely to reduce line count. The remaining rule-evaluation summary/delta presentation is a possible presentation-only extraction candidate, while search/candidate/verification/analysis workflow remains intentionally colocated with the trust-sensitive PNU checks.
 
 No file deletion was performed in this refactor.
+
+
+---
+
+## 45. Frontend Rule Evaluation Presentation Refactor Checkpoint — 2026-09-22
+
+Final source HEAD:
+
+```text
+ec3881b Use extracted rule evaluation section
+```
+
+Scope:
+
+```text
+frontend/src/App.tsx
+frontend/src/components/RuleEvaluationSection.tsx
+```
+
+The third presentation refactor moved the Backend rule-evaluation summary, previous-Backend-result delta display, UNKNOWN explanation, and `RuleDetails` composition out of `App.tsx` into a presentation-only section.
+
+`App.tsx` continues to own `previousAnalysis`, address search, candidate selection, Backend parcel confirmation, analysis/reanalysis, profile state, API invocation, and both parcel-identity consistency checks. The new component receives the current/previous Backend rule-evaluation values and public rule-detail items as typed props; it does not recompute legal applicability or create a second Rule Engine path.
+
+User-local validation:
+
+```text
+Production build: PASS (28 modules transformed, 92ms)
+git diff --check: PASS
+Actual Backend-connected reanalysis E2E: 1 passed (17.6s)
+SITE_API_ERROR_V1 focused E2E: 3 passed (2.3s)
+```
+
+Therefore **FRONTEND RULE EVALUATION PRESENTATION REFACTOR = USER-LOCAL BEHAVIORAL PASS**.
+
+Post-refactor architecture review classifies `App.tsx` as **KEEP as workflow/orchestration**. Further extraction is not justified merely to reduce line count; the remaining search/candidate/verification/analysis flow is intentionally colocated with trust-sensitive state and PNU consistency checks.
+
+No file deletion was performed in this refactor.
