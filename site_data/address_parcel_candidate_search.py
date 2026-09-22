@@ -104,41 +104,26 @@ def _reference_geometry_for_candidate(
     return None
 
 
-def search_address_parcel_candidates(
+def _search_items(
     query: str,
+    api_key: str,
     *,
-    api_key: Optional[str] = None,
-    size: int = 10,
-) -> List[AddressParcelCandidate]:
-    """Return provider parcel candidates for discovery only.
-
-    Results are intentionally NOT VERIFIED canonical parcel identities. A
-    matching parcel polygon may be attached as reference_geometry solely to
-    improve candidate discovery on the map. Analysis admission still requires
-    the separate backend parcel verification boundary.
-    """
-    normalized = _normalize_search_query(query)
-    if not normalized:
-        return []
-
-    key = str(api_key or load_vworld_key() or "").strip()
-    if not key:
-        return []
-
-    safe_size = max(1, min(int(size), 100))
+    category: str,
+    size: int,
+) -> List[Dict[str, Any]]:
     params = {
         "service": "search",
         "request": "search",
         "version": "2.0",
         "crs": "EPSG:4326",
-        "size": safe_size,
+        "size": size,
         "page": 1,
-        "query": normalized,
+        "query": query,
         "type": "address",
-        "category": "parcel",
+        "category": category,
         "format": "json",
         "errorformat": "json",
-        "key": key,
+        "key": api_key,
     }
     response, data, transport_error = request_json(VWORLD_SEARCH_URL, params)
     if transport_error or response is None or response.status_code != 200:
@@ -150,8 +135,35 @@ def search_address_parcel_candidates(
 
     result = response_data.get("result", {})
     items = result.get("items", []) if isinstance(result, dict) else []
-    if not isinstance(items, list):
+    return [item for item in items if isinstance(item, dict)] if isinstance(items, list) else []
+
+
+def search_address_parcel_candidates(
+    query: str,
+    *,
+    api_key: Optional[str] = None,
+    size: int = 10,
+) -> List[AddressParcelCandidate]:
+    """Return provider parcel candidates for discovery only.
+
+    Parcel-address discovery remains the primary provider query. When that
+    returns no usable provider items, road-address discovery is attempted as a
+    fallback. Results from either mode are deduplicated by PNU and remain
+    discovery-only until the separate backend parcel verification boundary is
+    executed.
+    """
+    normalized = _normalize_search_query(query)
+    if not normalized:
         return []
+
+    key = str(api_key or load_vworld_key() or "").strip()
+    if not key:
+        return []
+
+    safe_size = max(1, min(int(size), 100))
+    items = _search_items(normalized, key, category="parcel", size=safe_size)
+    if not items:
+        items = _search_items(normalized, key, category="road", size=safe_size)
 
     candidates: List[AddressParcelCandidate] = []
     seen_pnus = set()
