@@ -189,6 +189,9 @@ frontend/
    ├─ api/
    │  ├─ parcelCandidates.ts
    │  └─ siteAnalysis.ts
+   ├─ components/
+   │  ├─ AnalysisRequirements.tsx
+   │  └─ RuleDetails.tsx
    ├─ map/
    │  ├─ MapAdapter.ts
    │  └─ KakaoMap.tsx
@@ -217,6 +220,7 @@ package-lock.json tracked
 | Frontend architecture baseline | DOCUMENTED | 지도 중심 탐색과 trust boundary 문서화 |
 | Frontend framework | IMPLEMENTED | React + TypeScript + Vite |
 | Frontend production build | USER LOCAL PASS | `tsc -b && vite build` 성공 |
+| Analysis presentation component split | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | `App.tsx`는 workflow/state/API orchestration을 유지하고 `RuleDetails`, `AnalysisRequirements`를 presentation component로 분리; build 및 기존 Backend-connected E2E 회귀검증 PASS |
 | Address search UI | IMPLEMENTED + USER LOCAL PASS | 실제 브라우저 렌더링 확인 |
 | Candidate API client | IMPLEMENTED + USER LOCAL PASS | 실제 FastAPI 호출 확인 |
 | Candidate cards | IMPLEMENTED + USER LOCAL PASS | 실제 candidate 렌더링 확인 |
@@ -266,7 +270,7 @@ Vite v8.3.0
 > tsc -b && vite build
 
 vite v8.3.0 building client environment for production...
-✓ 20 modules transformed.
+✓ 23 modules transformed.
 ✓ built in 90ms
 ```
 
@@ -1439,3 +1443,48 @@ Therefore **PC PRODUCT ERROR MAPPING focused validation = USER-LOCAL BEHAVIORAL 
 ## 42. Status Update Rule
 
 이 문서는 실제 이벤트가 발생했을 때만 갱신한다. 목표나 예상만으로 IMPLEMENTED/PASS 상태를 올리지 않는다.
+
+---
+
+## 43. Frontend Presentation Component Refactor Checkpoint — 2026-09-22
+
+Implementation commit:
+
+```text
+505b6a8 Extract frontend analysis presentation components
+```
+
+Scope:
+
+```text
+frontend/src/App.tsx
+frontend/src/components/RuleDetails.tsx
+frontend/src/components/AnalysisRequirements.tsx
+```
+
+Responsibility boundary after refactor:
+
+```text
+App.tsx
+  → search / selection / verification / analysis / reanalysis workflow
+  → API calls and analysis/profile state ownership
+
+components/RuleDetails.tsx
+  → public rule detail presentation only
+
+components/AnalysisRequirements.tsx
+  → requirement presentation, disclosure UI, input callback surface
+  → does not own Backend analysis authority or API calls
+```
+
+User-local validation:
+
+```text
+UTF-8 Korean string verification: PASS
+Production build: PASS (23 modules transformed)
+git diff --check: PASS
+Actual Backend-connected reanalysis E2E: 1 passed (19.4s)
+SITE_API_ERROR_V1 focused E2E: 3 passed (2.2s)
+```
+
+The refactor preserves the existing trust boundary: candidate selection remains non-authoritative, verified parcel truth remains Backend-owned, and rule applicability is still consumed from the public Backend product model rather than recomputed in Frontend presentation components.
