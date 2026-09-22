@@ -77,7 +77,7 @@ async function mockParcelConfirmationReady(page: Page) {
 
 async function searchAndSelect(page: Page) {
   await page.goto('/')
-  await page.getByLabel('지번주소').fill('서울특별시 강남구 개포동 12')
+  await page.getByLabel('주소', { exact: true }).fill('서울특별시 강남구 개포동 12')
   await page.getByRole('button', { name: '필지 찾기' }).click()
   await expect(page.getByLabel('필지 후보 목록')).toBeVisible()
   await page.locator('.candidate-card').first().click()
@@ -101,7 +101,7 @@ test.describe('SITE_API_ERROR_V1 Frontend focused validation', () => {
     })
 
     await page.goto('/')
-    await page.getByLabel('지번주소').fill('서울특별시 강남구 개포동 12')
+    await page.getByLabel('주소', { exact: true }).fill('서울특별시 강남구 개포동 12')
     await page.getByRole('button', { name: '필지 찾기' }).click()
 
     await expect(page.locator('.status')).toHaveText(
