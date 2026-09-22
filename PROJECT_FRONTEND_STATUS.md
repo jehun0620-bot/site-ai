@@ -59,6 +59,7 @@ PC ADDITIONAL INPUT WORKSPACE              IMPLEMENTED + USER LOCAL BEHAVIORAL P
 PC VERIFIED PARCEL RESULT SUMMARY           IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC RULE REANALYSIS DELTA PRESENTATION        IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 PC REQUIREMENT INPUT PROGRESS                 IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
+ROAD-ADDRESS CANDIDATE SEARCH                 IMPLEMENTED + USER LOCAL BEHAVIORAL PASS
 ```
 
 ---
@@ -1569,3 +1570,59 @@ Therefore **FRONTEND RULE EVALUATION PRESENTATION REFACTOR = USER-LOCAL BEHAVIOR
 Post-refactor architecture review classifies `App.tsx` as **KEEP as workflow/orchestration**. Further extraction is not justified merely to reduce line count; the remaining search/candidate/verification/analysis flow is intentionally colocated with trust-sensitive state and PNU consistency checks.
 
 No file deletion was performed in this refactor.
+
+
+---
+
+## Road-address Search Checkpoint — 2026-09-22
+
+Road-address candidate discovery is now part of the validated Single Parcel product flow.
+
+Production behavior:
+
+```text
+parcel-address query
+→ VWorld category=parcel primary discovery
+
+no provider items
+→ VWorld category=road fallback
+→ PNU deduplication
+→ existing AddressParcelCandidate contract
+→ existing Backend selected-candidate same-PNU polygon verification
+→ VERIFIED
+→ selected-candidate SITE analysis
+```
+
+The road-address fallback does not create a second parcel-truth path. Candidate results remain discovery-only, and canonical parcel admission still requires the existing Backend verification boundary.
+
+User-local live validation used:
+
+```text
+서울특별시 강남구 개포로109길 21
+→ candidate_count: 1 after PNU deduplication
+→ candidate PNU: 1168010300100120000
+→ reference geometry: MultiPolygon
+→ verification: VERIFIED / SELECTED_PARCEL_CANDIDATE_VERIFIED
+→ verified geometry: MultiPolygon
+```
+
+Frontend search guidance now accepts both parcel and road addresses. Backend-connected Playwright validation after the change:
+
+```text
+npm --prefix frontend run build
+→ 28 modules transformed
+→ PASS
+
+site-analysis-reanalysis.spec.ts
+→ includes road-address seed
+→ 1 passed (18.8s)
+
+site-api-product-error.spec.ts
+→ 3 passed (2.7s)
+```
+
+The three temporary road-address investigation probes were removed after their observations were absorbed by the production implementation, permanent contract coverage, and permanent live fallback regression. Post-deletion local regression passed, including SITE analysis and public product-error contracts.
+
+Kakao Maps note: one transient local SDK request failure was observed, the existing map error UI surfaced it, and map rendering recovered after the local servers were restarted. No persistent map-code defect was established, so no map production change was made for that observation.
+
+Current road-address checkpoint: **IMPLEMENTED + USER LOCAL BEHAVIORAL PASS**.
