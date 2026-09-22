@@ -191,7 +191,11 @@ frontend/
    │  └─ siteAnalysis.ts
    ├─ components/
    │  ├─ AnalysisRequirements.tsx
-   │  └─ RuleDetails.tsx
+   │  ├─ BuildingScaleSection.tsx
+   │  ├─ ExternalDependenciesSection.tsx
+   │  ├─ LandAreaSection.tsx
+   │  ├─ RuleDetails.tsx
+   │  └─ SiteFactsSection.tsx
    ├─ map/
    │  ├─ MapAdapter.ts
    │  └─ KakaoMap.tsx
@@ -220,7 +224,7 @@ package-lock.json tracked
 | Frontend architecture baseline | DOCUMENTED | 지도 중심 탐색과 trust boundary 문서화 |
 | Frontend framework | IMPLEMENTED | React + TypeScript + Vite |
 | Frontend production build | USER LOCAL PASS | `tsc -b && vite build` 성공 |
-| Analysis presentation component split | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | `App.tsx`는 workflow/state/API orchestration을 유지하고 `RuleDetails`, `AnalysisRequirements`를 presentation component로 분리; build 및 기존 Backend-connected E2E 회귀검증 PASS |
+| Analysis presentation component split | IMPLEMENTED + USER LOCAL BEHAVIORAL PASS | `App.tsx`는 workflow/state/API orchestration을 유지하고 rule details, requirements, site facts, land area, building scale, external dependencies를 presentation component로 분리; build 및 Backend-connected E2E 회귀검증 PASS |
 | Address search UI | IMPLEMENTED + USER LOCAL PASS | 실제 브라우저 렌더링 확인 |
 | Candidate API client | IMPLEMENTED + USER LOCAL PASS | 실제 FastAPI 호출 확인 |
 | Candidate cards | IMPLEMENTED + USER LOCAL PASS | 실제 candidate 렌더링 확인 |
@@ -270,8 +274,8 @@ Vite v8.3.0
 > tsc -b && vite build
 
 vite v8.3.0 building client environment for production...
-✓ 23 modules transformed.
-✓ built in 90ms
+✓ 27 modules transformed.
+✓ built in 91ms
 ```
 
 후보 reference geometry / map boundary 구현에서도 production build가 사용자 로컬에서 PASS했다. 최종 behavioral PASS는 실제 브라우저 화면 검증을 기준으로 기록한다.
@@ -1488,3 +1492,43 @@ SITE_API_ERROR_V1 focused E2E: 3 passed (2.2s)
 ```
 
 The refactor preserves the existing trust boundary: candidate selection remains non-authoritative, verified parcel truth remains Backend-owned, and rule applicability is still consumed from the public Backend product model rather than recomputed in Frontend presentation components.
+
+
+---
+
+## 44. Frontend Result Presentation Section Refactor Checkpoint — 2026-09-22
+
+Final source HEAD:
+
+```text
+7c15b21 Use extracted frontend result sections
+```
+
+Scope:
+
+```text
+frontend/src/App.tsx
+frontend/src/components/SiteFactsSection.tsx
+frontend/src/components/LandAreaSection.tsx
+frontend/src/components/BuildingScaleSection.tsx
+frontend/src/components/ExternalDependenciesSection.tsx
+```
+
+The second presentation refactor moved Backend-result rendering for site facts, land area, building-scale regulation, and external dependencies out of `App.tsx`. Search, candidate selection, Backend parcel verification, analysis/reanalysis, profile state, API invocation, and both PNU equality checks remain in `App.tsx`.
+
+User-local validation:
+
+```text
+Production build: PASS (27 modules transformed, 91ms)
+git diff --check: PASS
+Frontend port 5173: PASS
+Backend port 8000: PASS
+Actual Backend-connected reanalysis E2E: 1 passed (16.7s)
+SITE_API_ERROR_V1 focused E2E: 3 passed (2.3s)
+```
+
+Therefore **FRONTEND RESULT PRESENTATION SECTION REFACTOR = USER-LOCAL BEHAVIORAL PASS**.
+
+Post-refactor read-only audit classifies `App.tsx` as the current workflow/orchestration owner. Further extraction is not justified merely to reduce line count. The remaining rule-evaluation summary/delta presentation is a possible presentation-only extraction candidate, while search/candidate/verification/analysis workflow remains intentionally colocated with the trust-sensitive PNU checks.
+
+No file deletion was performed in this refactor.
