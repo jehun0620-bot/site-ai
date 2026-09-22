@@ -3,6 +3,7 @@ from __future__ import annotations
 from unittest.mock import patch
 
 from site_data.address_parcel_candidate_search import (
+    AddressParcelCandidateSearchProviderError,
     _normalize_search_query,
     search_address_parcel_candidates,
 )
@@ -103,9 +104,26 @@ def main() -> None:
 
     with patch(
         "site_data.address_parcel_candidate_search.request_json",
-        side_effect=[(None, {}, "network"), _not_found()],
+        return_value=(None, {}, "network"),
     ) as request:
-        assert search_address_parcel_candidates("개포동 12", api_key="test-key") == []
+        try:
+            search_address_parcel_candidates("개포동 12", api_key="test-key")
+        except AddressParcelCandidateSearchProviderError:
+            pass
+        else:
+            raise AssertionError("transport failure must not be returned as an empty candidate result")
+        assert request.call_count == 1
+
+    with patch(
+        "site_data.address_parcel_candidate_search.request_json",
+        side_effect=[_not_found(), (None, {}, "network")],
+    ) as request:
+        try:
+            search_address_parcel_candidates("개포로109길 21", api_key="test-key")
+        except AddressParcelCandidateSearchProviderError:
+            pass
+        else:
+            raise AssertionError("road fallback transport failure must not be returned as an empty candidate result")
         assert request.call_count == 2
 
     with patch("site_data.address_parcel_candidate_search.load_vworld_key", return_value=""):
