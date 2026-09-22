@@ -5,6 +5,7 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 
 import api_app
+from site_data.address_parcel_candidate_search import AddressParcelCandidateSearchProviderError
 from site_data.selected_parcel_candidate_verifier import SelectedParcelCandidateVerification
 
 
@@ -117,7 +118,7 @@ def main() -> None:
     with patch.object(
         api_app,
         "search_address_parcel_candidates",
-        side_effect=RuntimeError("candidate provider detail"),
+        side_effect=AddressParcelCandidateSearchProviderError("candidate provider detail"),
     ):
         response = client.post(
             "/v1/parcel-candidates/address",
