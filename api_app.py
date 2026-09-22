@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Dict, Literal
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-from site_data.address_parcel_candidate_search import search_address_parcel_candidates
+from site_data.address_parcel_candidate_search import AddressParcelCandidateSearchProviderError, search_address_parcel_candidates
 from site_data.selected_parcel_candidate_verifier import verify_selected_parcel_candidate
 from site_data.building_hub_provider import BuildingAPIError
 from site_data.site_analysis_orchestrator import SiteAnalysisError, SiteBuildError, analyze_site_by_address, analyze_site_by_parcel, analyze_site_by_selected_candidate
@@ -62,7 +62,7 @@ def health(): return {"status":"ok","service":"site-analysis"}
 def site_analysis(request:SiteAnalysisRequest):
     try:
         return analyze_site_by_parcel(sigungu_cd=request.sigungu_cd,bjdong_cd=request.bjdong_cd,plat_gb_cd=request.plat_gb_cd,bun=request.bun,ji=request.ji,project_profile=request.project_profile,procedure_profile=request.procedure_profile,include_debug=request.include_debug)
-    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.") from exc
+    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.",retryable=exc.retryable) from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
     except Exception as exc: raise product_http_error(500,"UNEXPECTED_ERROR","INTERNAL","SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
@@ -71,7 +71,7 @@ def site_analysis(request:SiteAnalysisRequest):
 def site_analysis_by_address(request:AddressSiteAnalysisRequest):
     try:
         return analyze_site_by_address(address=request.address,project_profile=request.project_profile,procedure_profile=request.procedure_profile,include_debug=request.include_debug)
-    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.") from exc
+    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.",retryable=exc.retryable) from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
     except Exception as exc: raise product_http_error(500,"UNEXPECTED_ERROR","INTERNAL","SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
@@ -80,7 +80,7 @@ def site_analysis_by_address(request:AddressSiteAnalysisRequest):
 def site_analysis_by_selected_candidate(request:SelectedParcelCandidateSiteAnalysisRequest):
     try:
         return analyze_site_by_selected_candidate(candidate_pnu=request.candidate_pnu,x=request.x,y=request.y,project_profile=request.project_profile,procedure_profile=request.procedure_profile,include_debug=request.include_debug)
-    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.") from exc
+    except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.",retryable=exc.retryable) from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
     except Exception as exc: raise product_http_error(500,"UNEXPECTED_ERROR","INTERNAL","선택 필지 SITE 분석 중 예상하지 못한 오류가 발생했습니다.") from exc
@@ -96,6 +96,8 @@ def parcel_candidates_by_address(request:AddressParcelCandidateSearchRequest):
             "count":len(candidates),
             "candidates":[candidate.to_dict() for candidate in candidates],
         }
+    except AddressParcelCandidateSearchProviderError as exc:
+        raise product_http_error(502,"CANDIDATE_SEARCH_FAILED","PROVIDER","필지 후보 검색을 완료하지 못했습니다.",retryable=exc.retryable) from exc
     except Exception as exc:
         raise product_http_error(500,"CANDIDATE_SEARCH_FAILED","PROVIDER","필지 후보 검색을 완료하지 못했습니다.") from exc
 
