@@ -11,6 +11,13 @@ X = 127.07662495509604
 Y = 37.49629354642009
 
 
+def _query(features, classification="QUERY_SUCCESS"):
+    return {
+        "classification": classification,
+        "features": features,
+    }
+
+
 def _feature(pnu: str):
     return {
         "type": "Feature",
@@ -25,7 +32,7 @@ def _feature(pnu: str):
 def main() -> None:
     with patch(
         "site_data.selected_parcel_candidate_verifier.query_dataset_by_point",
-        return_value={"features": [_feature(PNU)]},
+        return_value=_query([_feature(PNU)]),
     ) as query:
         result = verify_selected_parcel_candidate(PNU, X, Y, api_key="test-key")
         assert result.verified
@@ -40,7 +47,7 @@ def main() -> None:
 
     with patch(
         "site_data.selected_parcel_candidate_verifier.query_dataset_by_point",
-        return_value={"features": [_feature(OTHER_PNU)]},
+        return_value=_query([_feature(OTHER_PNU)]),
     ):
         result = verify_selected_parcel_candidate(PNU, X, Y, api_key="test-key")
         assert not result.verified
@@ -60,11 +67,28 @@ def main() -> None:
 
     with patch(
         "site_data.selected_parcel_candidate_verifier.query_dataset_by_point",
-        return_value={"features": []},
+        return_value=_query([]),
     ):
         result = verify_selected_parcel_candidate(PNU, X, Y, api_key="test-key")
         assert not result.verified
         assert result.resolution == "PARCEL_POLYGON_UNRESOLVED"
+
+    for classification in ("TRANSPORT_ERROR", "HTTP_ERROR", "QUERY_FAILED"):
+        with patch(
+            "site_data.selected_parcel_candidate_verifier.query_dataset_by_point",
+            return_value=_query([], classification=classification),
+        ):
+            result = verify_selected_parcel_candidate(PNU, X, Y, api_key="test-key")
+            assert not result.verified
+            assert result.resolution == "PARCEL_GEOMETRY_PROVIDER_FAILED"
+
+    with patch(
+        "site_data.selected_parcel_candidate_verifier.query_dataset_by_point",
+        return_value=None,
+    ):
+        result = verify_selected_parcel_candidate(PNU, X, Y, api_key="test-key")
+        assert not result.verified
+        assert result.resolution == "PARCEL_GEOMETRY_QUERY_FAILED"
 
     with patch("site_data.selected_parcel_candidate_verifier.load_vworld_key", return_value=""), patch(
         "site_data.selected_parcel_candidate_verifier.query_dataset_by_point"
