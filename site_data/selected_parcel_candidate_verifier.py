@@ -69,6 +69,12 @@ def verify_selected_parcel_candidate(
             "REJECTED", "PARCEL_GEOMETRY_QUERY_FAILED", pnu=pnu, x=point_x, y=point_y, crs="EPSG:4326"
         )
 
+    classification = str(result.get("classification") or "").strip().upper()
+    if classification and classification != "QUERY_SUCCESS":
+        return SelectedParcelCandidateVerification(
+            "REJECTED", "PARCEL_GEOMETRY_PROVIDER_FAILED", pnu=pnu, x=point_x, y=point_y, crs="EPSG:4326"
+        )
+
     features = result.get("features", [])
     if not isinstance(features, list):
         features = []
