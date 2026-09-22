@@ -37,7 +37,7 @@ from pathlib import Path
 from typing import Any, Dict
 
 
-from site_analysis_builder import (
+from law_data.site_analysis_builder import (
     build_site_analysis,
 )
 
