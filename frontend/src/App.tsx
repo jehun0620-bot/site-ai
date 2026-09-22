@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useRef, useState } from 'react'
 import { confirmParcelCandidate, ParcelCandidateApiError, searchParcelCandidates } from './api/parcelCandidates'
 import { analyzeSelectedParcelCandidate, SiteAnalysisApiError } from './api/siteAnalysis'
 import KakaoMap from './map/KakaoMap'
-import RuleDetails from './components/RuleDetails'
+import RuleEvaluationSection from './components/RuleEvaluationSection'
 import AnalysisRequirements from './components/AnalysisRequirements'
 import SiteFactsSection from './components/SiteFactsSection'
 import LandAreaSection from './components/LandAreaSection'
@@ -120,11 +120,6 @@ export default function App() {
 
   const resultReady = analysis !== null
   const reanalysisInProgress = analysisState === 'ANALYZING' && analysis !== null
-  function renderRuleDelta(current: number, previous: number | undefined) {
-    if (previous === undefined) return null
-    const delta = current - previous
-    return <small className={delta === 0 ? 'rule-delta rule-delta-zero' : 'rule-delta'}>{delta > 0 ? `+${delta}` : String(delta)}</small>
-  }
 
   return (
     <main className={`app-shell${resultReady ? ' app-shell-result-ready' : ''}`}>
@@ -141,7 +136,11 @@ export default function App() {
           <SiteFactsSection analysis={analysis} />
           <LandAreaSection landArea={analysis.land_area} />
           <BuildingScaleSection regulation={analysis.regulation} />
-          <section className="analysis-detail-section" id="analysis-rules"><div className="rule-summary-heading"><h2>법규 평가 집계</h2><span>전체 {analysis.rule_evaluation.total}개{renderRuleDelta(analysis.rule_evaluation.total, previousAnalysis?.rule_evaluation.total)}</span></div><p className="analysis-note">Backend Rule Engine의 집계 결과이며 Frontend에서 적용 여부를 다시 판단하지 않습니다.</p><div className="rule-summary-grid"><article><span>적용</span><strong>{analysis.rule_evaluation.applicable}</strong>{renderRuleDelta(analysis.rule_evaluation.applicable, previousAnalysis?.rule_evaluation.applicable)}</article><article><span>비적용</span><strong>{analysis.rule_evaluation.not_applicable}</strong>{renderRuleDelta(analysis.rule_evaluation.not_applicable, previousAnalysis?.rule_evaluation.not_applicable)}</article><article><span>조건부</span><strong>{analysis.rule_evaluation.conditional}</strong>{renderRuleDelta(analysis.rule_evaluation.conditional, previousAnalysis?.rule_evaluation.conditional)}</article><article className="rule-unknown"><span>확인 필요</span><strong>{analysis.rule_evaluation.unknown}</strong>{renderRuleDelta(analysis.rule_evaluation.unknown, previousAnalysis?.rule_evaluation.unknown)}<small>현재 정보로 확정 불가</small></article></div>{previousAnalysis && <p className="rule-delta-explanation">변화량은 직전 Backend 분석 결과와 비교한 조항 수 차이입니다.</p>}<p className="unknown-explanation">확인 필요는 오류나 비적용이 아닙니다. 현재 정보만으로 적용 여부를 확정할 수 없는 규칙입니다.</p><RuleDetails items={analysis.rule_details.items} /></section>
+          <RuleEvaluationSection
+            evaluation={analysis.rule_evaluation}
+            previousEvaluation={previousAnalysis?.rule_evaluation}
+            ruleDetails={analysis.rule_details.items}
+          />
           <AnalysisRequirements
             requirements={analysis.requirements}
             projectProfile={projectProfile}
