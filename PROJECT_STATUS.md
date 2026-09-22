@@ -2,7 +2,7 @@
 
 최종 업데이트: 2026-09-22
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `1eddb0c98db32d815829fdb242485c42cb42e7c8`
+기준 behavioral PASS HEAD: `268a87a7bd64237a311da6ee0b4c059a8936f6f4`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
@@ -138,7 +138,7 @@ Single Parcel v1 closure priorities:
 4. Final Single Parcel regression baseline
 ```
 
-Road-name-address input support and broader provider retry/cache/rate-limit/observability hardening are not currently required to block the Single Parcel v1 closure; they remain follow-up scope unless later evidence changes that decision. Mobile-specific refinement remains paused until a mobile test environment is available.
+Road-name-address candidate discovery is now implemented and user-local validated: candidate search tries parcel-address search first, falls back to road-address search only on a normal no-result, deduplicates provider rows by PNU, and preserves the existing live same-PNU polygon verification boundary before analysis. Provider transport/HTTP/provider-status failures are no longer collapsed into a normal no-result; they surface through the structured `SITE_API_ERROR_V1` product-error boundary. Broader provider retry/cache/rate-limit/observability hardening remains follow-up scope. Responsive CSS is implemented, while mobile-specific behavioral validation remains deferred.
 
 Backend Public Rule Presentation Model is now IMPLEMENTED and user-local validated.
 
@@ -189,6 +189,23 @@ Actual Backend-connected reanalysis E2E: PASS (1 passed, 18.9s)
 ```
 
 Therefore Single Parcel v1 is baseline-frozen with user-local final regression PASS.
+
+### Current Single Parcel regression checkpoint — 2026-09-22
+
+After the road-address discovery and candidate-provider error-semantics changes, the current Single Parcel baseline was revalidated from the user-local checkout at HEAD `268a87a7bd64237a311da6ee0b4c059a8936f6f4`.
+
+```text
+Backend SITE service: PASS
+SITE facts response contract: PASS
+Public rule-details contract: PASS
+Rule-details real-data regression: PASS
+Final SITE snapshot: PASS / READY / 314 = 62 / 214 / 36 / 2
+Frontend production build: PASS (Vite 8.3.0, 28 modules)
+Focused SITE_API_ERROR_V1 Frontend E2E: PASS (3 passed, 2.5s)
+Actual Backend-connected reanalysis E2E: PASS (1 passed, 19.4s; test body 18.8s)
+```
+
+The Backend-connected regression covers the current parcel/road-address discovery path, candidate confirmation and VERIFIED parcel boundary, selected-candidate analysis/reanalysis, rule-detail presentation, state isolation across parcel changes, and the buildingless case. This checkpoint supersedes the older Single Parcel regression timing/module-count record above without changing the architecture or truth boundaries.
 
 ## 7. Safety boundary
 
