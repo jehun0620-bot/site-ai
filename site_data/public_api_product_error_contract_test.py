@@ -18,7 +18,14 @@ EXPECTED_KEYS = {
 }
 
 
-def assert_product_error(response, status_code: int, code: str, category: str) -> None:
+def assert_product_error(
+    response,
+    status_code: int,
+    code: str,
+    category: str,
+    *,
+    retryable: bool = False,
+) -> None:
     assert response.status_code == status_code, response.text
     detail = response.json()["detail"]
     assert set(detail) == EXPECTED_KEYS, detail
@@ -26,7 +33,7 @@ def assert_product_error(response, status_code: int, code: str, category: str) -
     assert detail["code"] == code
     assert detail["category"] == category
     assert isinstance(detail["message"], str) and detail["message"]
-    assert detail["retryable"] is False
+    assert detail["retryable"] is retryable
 
 
 def main() -> None:
@@ -40,11 +47,26 @@ def main() -> None:
     with patch.object(
         api_app,
         "analyze_site_by_selected_candidate",
-        side_effect=api_app.BuildingAPIError("provider transport detail"),
+        side_effect=api_app.BuildingAPIError("provider transport detail", retryable=True),
+    ):
+        response = client.post("/v1/site-analysis/selected-candidate", json=payload)
+        assert_product_error(
+            response,
+            502,
+            "BUILDING_PROVIDER_FAILED",
+            "PROVIDER",
+            retryable=True,
+        )
+        assert "provider transport detail" not in response.text
+
+    with patch.object(
+        api_app,
+        "analyze_site_by_selected_candidate",
+        side_effect=api_app.BuildingAPIError("provider configuration detail"),
     ):
         response = client.post("/v1/site-analysis/selected-candidate", json=payload)
         assert_product_error(response, 502, "BUILDING_PROVIDER_FAILED", "PROVIDER")
-        assert "provider transport detail" not in response.text
+        assert "provider configuration detail" not in response.text
 
     with patch.object(
         api_app,
@@ -118,14 +140,46 @@ def main() -> None:
     with patch.object(
         api_app,
         "search_address_parcel_candidates",
+        side_effect=AddressParcelCandidateSearchProviderError(
+            "candidate provider detail",
+            retryable=True,
+        ),
+    ):
+        response = client.post(
+            "/v1/parcel-candidates/address",
+            json={"query": "서울특별시 강남구 개포동 12"},
+        )
+        assert_product_error(
+            response,
+            502,
+            "CANDIDATE_SEARCH_FAILED",
+            "PROVIDER",
+            retryable=True,
+        )
+        assert "candidate provider detail" not in response.text
+
+    with patch.object(
+        api_app,
+        "search_address_parcel_candidates",
         side_effect=AddressParcelCandidateSearchProviderError("candidate provider detail"),
     ):
         response = client.post(
             "/v1/parcel-candidates/address",
             json={"query": "서울특별시 강남구 개포동 12"},
         )
+        assert_product_error(response, 502, "CANDIDATE_SEARCH_FAILED", "PROVIDER")
+
+    with patch.object(
+        api_app,
+        "search_address_parcel_candidates",
+        side_effect=RuntimeError("unexpected candidate detail"),
+    ):
+        response = client.post(
+            "/v1/parcel-candidates/address",
+            json={"query": "서울특별시 강남구 개포동 12"},
+        )
         assert_product_error(response, 500, "CANDIDATE_SEARCH_FAILED", "PROVIDER")
-        assert "candidate provider detail" not in response.text
+        assert "unexpected candidate detail" not in response.text
 
     print("PUBLIC_API_PRODUCT_ERROR_CONTRACT_PASS")
 
