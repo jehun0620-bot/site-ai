@@ -585,3 +585,36 @@ Rule Summary
 Frontend는 법령 조문번호, 공식 URL, legal conclusion을 원 데이터에 없는 형태로 합성하지 않는다. `UNKNOWN`과 `CONDITIONAL`의 의미도 Backend 계약을 그대로 보존한다.
 
 모바일 전용 UX 개발/검증은 테스트 환경 준비 전까지 보류하며, 현재 제품 종료 검증은 PC FHD/QHD를 우선한다.
+
+---
+
+## 25. Frontend Component Responsibility Boundary
+
+Frontend application responsibilities are separated by role, not by visual size alone.
+
+```text
+App.tsx
+  → user-flow orchestration
+  → search / candidate selection / parcel verification / analysis / reanalysis state
+  → API call boundaries and Backend response ownership
+
+components/*
+  → presentation-focused rendering and local disclosure/UI state
+  → typed props and callbacks supplied by App
+  → no canonical parcel verification
+  → no SITE truth generation
+  → no legal applicability recomputation
+```
+
+Current presentation components:
+
+```text
+RuleDetails.tsx
+  → renders Backend public rule detail model
+
+AnalysisRequirements.tsx
+  → renders project/procedure requirements and input progress
+  → emits requirement-change and reanalysis callbacks
+```
+
+This separation is intentionally narrower than a general state-management refactor. Moving presentation markup out of `App.tsx` must not create a second API path, duplicate Backend-derived state, or move trust-sensitive decisions into child components. Workflow/state/API orchestration remains in `App.tsx` until a separately reviewed boundary is justified by actual responsibility concentration.
