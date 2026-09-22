@@ -1,6 +1,6 @@
 # AI 대지분석 자동화 시스템 — PROJECT ARCHITECTURE
 
-최종 reconciliation: 2026-09-21
+최종 reconciliation: 2026-09-22
 Architecture Baseline: v1.2
 
 ## 1. 프로젝트 목표
@@ -365,3 +365,68 @@ provider / parcel / analysis / unexpected internal failure
 현재 검증 대상 SITE analysis 및 parcel-candidate 경로는 stable `code`, `category`, product-safe `message`, `retryable`을 사용한다. 이 경계는 HTTP/presentation 책임이며 canonical PNU, geometry verification, SITE construction, deterministic legal evaluation의 의미를 변경하지 않는다. Request validation 자체의 FastAPI/Pydantic 422는 이 application product-error mapping과 별도 경계로 유지한다.
 
 사용자 로컬 contract regression에서 parcel SITE, address SITE, selected-candidate SITE, candidate confirmation 및 focused product-error contract가 모두 PASS했다.
+
+
+## 20. VWorld spatial provider boundary — 2026-09-22
+
+외부 VWorld spatial transport와 법적/공간 의미론을 분리한다.
+
+```text
+VWorld credential + HTTP + response classification
+→ law_data/vworld_spatial_provider.py
+→ raw spatial features
+→ spatial_condition_evaluator.py
+→ parcel/PNU compatibility + geometry intersection
+→ condition-specific TRUE / FALSE / UNKNOWN
+→ production spatial condition adapter
+→ Rule Evaluation Pipeline
+```
+
+Provider는 transport/query/response 상태를 소유하고 evaluator는 dataset identity registry와 법적·공간 판정 의미론을 소유한다. Dataset constants는 provider extraction 대상이 아니다. Spatial query failure는 계속 FALSE로 강등하지 않으며 fail-closed semantics를 유지한다.
+
+## 21. Runtime safety-contract boundary — 2026-09-22
+
+리팩터링 또는 legacy 삭제 전에 production 의미론을 직접 고정하는 focused contract를 둔다. 현재 핵심 추가 계약은 zone relevance transition, parcel geometry provider, SITE identity resolver다.
+
+Parcel geometry는 same-PNU polygon만 canonical spatial truth로 승인하며 mismatch/missing-key/invalid-PNU는 fail closed한다. SITE identity는 resolved PNU와 동일한 source identity만 재사용하고 다른 PNU의 identity/coordinate를 차단한다. Zone relevance transition은 OTHER_ZONE deactivation과 제한된 safe reactivation을 현재 production policy대로 고정한다.
+
+파일 삭제는 repository 정리 작업과 runtime 검증을 분리하지 않는다. 삭제 전 production import/caller/runtime path를 추적하고, 삭제 후 관련 사용자 로컬 regression PASS를 behavioral completion 조건으로 한다. Historical official-data/gazette forensic artifacts는 파일명이나 크기만으로 삭제 대상으로 간주하지 않는다.
+
+## 22. Rule Evaluation Pipeline ownership decision — 2026-09-22
+
+`law_data/rule_evaluation_pipeline.py`는 현재 분리하지 않는다. 파일 길이보다 deterministic evaluation ordering과 fail-closed coupling을 우선한다.
+
+```text
+clean rule baseline
+→ dynamic zone relevance
+→ transition policy
+→ base SITE registry
+→ runtime spatial overlay
+→ branch-local conditions
+→ verified upper-branch restoration
+→ authorized verified registry consumption
+→ SITE registry repair
+→ PROJECT / PROCEDURE injection
+→ numeric guards
+→ direct relaxation
+→ base/dynamic numeric resolution
+→ remaining inputs / external dependency
+→ final rules
+```
+
+이 순서는 safety-critical production orchestration이다. Zone relevance classifier 자체는 이미 별도 production module이지만 transition policy와 numeric/applicability refresh는 pipeline 내부 결합이 강하다. 현재 architecture decision은 **KEEP**이며, 단순 LOC 감소를 위한 extraction은 하지 않는다.
+
+## 23. Final SITE snapshot baseline — 2026-09-22
+
+Final snapshot은 public API 그 자체가 아니라 `build_site_analysis()`의 builder-level 전체 analysis object baseline이다. 현재 builder는 `land_area`, 314개 `rule_details`, runtime/production condition이 포함된 `site`, 내부 `rule_engine` metadata를 포함한다.
+
+```text
+build_site_analysis()
+→ final builder analysis object
+→ site_analysis_final_snapshot_test.py
+→ law_data/output/site_analysis_final_snapshot.json
+```
+
+현재 reconciled baseline은 READY, 314 rules, `62 APPLICABLE / 214 NOT_APPLICABLE / 36 CONDITIONAL / 2 UNKNOWN`이다. Snapshot scenario는 explicit `site_input.land_area`를 주입하지 않으므로 builder의 official land-area value가 `None`일 수 있다. 이는 실제 API/SITE FACT enrichment 경로에서 확인되는 official land value와 동일한 테스트 경로를 의미하지 않는다.
+
+Snapshot baseline 갱신은 production logic 변경과 분리해 검증하며, output 파일을 자동으로 정답으로 간주하지 않는다. 구조·counts·핵심 의미론을 이전 baseline 및 current production과 비교한 뒤 명시적으로 승인된 경우에만 갱신한다.
