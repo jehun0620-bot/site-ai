@@ -16,6 +16,11 @@ from law_data.parcel_geometry_provider import (
 VWORLD_SEARCH_URL = "https://api.vworld.kr/req/search"
 
 
+class AddressParcelCandidateSearchProviderError(RuntimeError):
+    """Raised when candidate discovery cannot distinguish results because the provider failed."""
+
+
+
 @dataclass(frozen=True)
 class AddressParcelCandidate:
     candidate_pnu: str
@@ -126,12 +131,23 @@ def _search_items(
         "key": api_key,
     }
     response, data, transport_error = request_json(VWORLD_SEARCH_URL, params)
-    if transport_error or response is None or response.status_code != 200:
-        return []
+    if transport_error or response is None:
+        raise AddressParcelCandidateSearchProviderError(
+            f"VWorld address search transport failure: {transport_error or 'missing response'}"
+        )
+    if response.status_code != 200:
+        raise AddressParcelCandidateSearchProviderError(
+            f"VWorld address search HTTP failure: {response.status_code}"
+        )
 
     response_data = data.get("response", {}) if isinstance(data, dict) else {}
-    if str(response_data.get("status") or "").strip().upper() != "OK":
+    status = str(response_data.get("status") or "").strip().upper()
+    if status == "NOT_FOUND":
         return []
+    if status != "OK":
+        raise AddressParcelCandidateSearchProviderError(
+            f"VWorld address search provider failure: {status or 'missing status'}"
+        )
 
     result = response_data.get("result", {})
     items = result.get("items", []) if isinstance(result, dict) else []
