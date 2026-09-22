@@ -42,7 +42,7 @@ class AddressSiteAnalysisRequest(BaseModel):
     include_debug:bool=False
 
 class AddressParcelCandidateSearchRequest(BaseModel):
-    query:str=Field(...,min_length=1,description="필지 후보를 찾을 지번주소 검색어")
+    query:str=Field(...,min_length=1,description="필지 후보를 찾을 지번주소 또는 도로명주소 검색어")
     size:int=Field(10,ge=1,le=100,description="반환할 최대 후보 수")
 
 class SelectedParcelCandidateRequest(BaseModel):
