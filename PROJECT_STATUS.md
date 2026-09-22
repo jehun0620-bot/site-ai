@@ -1,8 +1,8 @@
 # AI 대지분석 자동화 시스템 - PROJECT STATUS
 
-최종 업데이트: 2026-09-21
+최종 업데이트: 2026-09-22
 기준 branch: `cleanup/repository-organization-20260916`
-기준 behavioral PASS HEAD: `96155215700643eebec1e6136b88db3d1f7dd711`
+기준 behavioral PASS HEAD: `1eddb0c98db32d815829fdb242485c42cb42e7c8`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
 보존 STEP114 HEAD: `ad06db07cf22138e5324eb263ae666814520eb53`
 Architecture Baseline: v1.2
@@ -275,3 +275,36 @@ PUBLIC_API_SELECTED_PARCEL_CANDIDATE_CONFIRMATION_CONTRACT_PASS
 ```
 
 따라서 현재 검증 대상 public SITE/candidate HTTP 오류 경로는 machine-readable product error 계약으로 정규화되었다. production 분석 로직, PNU/geometry truth, Rule Engine, Historical/District, SITE FACT, Frontend 계약은 변경하지 않았다.
+
+
+## 10. Backend final refactoring / reconciliation checkpoint — 2026-09-22
+
+Single Parcel v1 이후 전체 repository를 production dependency 기준으로 재점검했다. 파일 크기나 `*_test.py` 이름만으로 삭제하지 않고, definition → production import/caller → runtime entrypoint → contract/regression을 추적한 뒤 KEEP / REFACTOR / LEGACY 후보를 판단한다. 삭제 작업은 GitHub 저장만으로 완료 처리하지 않고 사용자 로컬 회귀 PASS까지 확인한다.
+
+### Spatial provider boundary
+
+VWorld spatial HTTP/credential/response-classification 책임을 `law_data/vworld_spatial_provider.py`로 분리하고, `spatial_condition_evaluator.py`는 parcel compatibility, geometry intersection, condition-specific TRUE/FALSE/UNKNOWN 의미론을 유지한다. 분리 과정에서 evaluator 소유 dataset registry 상수 4개가 누락된 회귀를 발견해 즉시 복구했고, 이후 focused provider contract, production adapter regression, runtime spatial generalization regression이 사용자 로컬 PASS했다.
+
+### Safety contracts and legacy cleanup
+
+현재 production 경계를 직접 잠그는 focused contract를 추가했다.
+
+```text
+ZONE_RELEVANCE_TRANSITION_CONTRACT_PASS
+PARCEL_GEOMETRY_PROVIDER_CONTRACT_PASS
+SITE_IDENTITY_RESOLVER_CONTRACT_PASS
+```
+
+계약 확인 후 실제 production 실행에 기여하지 않던 placeholder/obsolete probe만 제한적으로 제거했다. `live_parcel_geometry_provider_test.py`와 `site_analysis_identity_probe_test.py` 삭제 후 관련 production regressions가 사용자 로컬 PASS했다. 과거 `regulation_model.py` 삭제 시 실제 `site_data_model.py`의 direct import를 놓친 사례가 있었고 즉시 원복했다. 따라서 `regulation_model.py`는 현재 KEEP이며, historical/official-data forensic 파일은 이름만으로 일괄 삭제하지 않는다.
+
+### Rule Evaluation Pipeline decision
+
+`law_data/rule_evaluation_pipeline.py`는 크지만 현재 deterministic evaluation의 safety-critical ordering을 한 곳에서 조정한다. numeric guards, zone relevance transition, runtime/site registry overlay, verified upper-branch restoration 등의 결합을 재검토한 결과 현재는 **KEEP**으로 결정했다. 단순 LOC 감소를 위한 분리는 하지 않는다. Zone relevance transition은 별도 contract로 현재 의미론을 고정했다.
+
+### Final snapshot reconciliation
+
+`law_data/output/site_analysis_final_snapshot.json`을 현재 production 결과와 구조적으로 비교했다. 신규/확장된 `rule_details`, `land_area`, `site`, `rule_engine`이 대규모 diff의 원인이었고, `rule_details.count == 314`, 실제 items 314, 최종 분포 `62 / 214 / 36 / 2`, analysis READY를 확인했다. Snapshot test는 `site_input.land_area`를 주입하지 않으므로 해당 builder-level snapshot의 official land area가 `None`인 것도 현재 코드 의미론과 일치한다.
+
+새 snapshot baseline은 commit `1eddb0c98db32d815829fdb242485c42cb42e7c8`로 저장되었고 snapshot 1개 파일만 포함됨을 확인했다. 보호 파일 `law_data/output/urban_area_conversion_history_final_resolution.json`은 계속 local unstaged 상태로 보존한다.
+
+다음 backend closeout 단계는 현재 contracts와 실제 API/SITE FACT 경로를 묶은 최종 통합 regression이다.
