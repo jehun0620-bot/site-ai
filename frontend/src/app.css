@@ -247,7 +247,15 @@ dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 600; }
   .search-intro-compact, .pre-analysis-controls-compact, .analysis-panel-result-ready, .app-shell-result-ready > .map-stage { grid-column: 1; grid-row: auto; }
   .app-shell-result-ready > .map-stage { height: 54vh; min-height: 420px; }
   .analysis-panel-result-ready .analysis-details { grid-template-columns: 1fr; }
-  .analysis-panel-result-ready .analysis-detail-section { grid-column: 1; }
+  .analysis-panel-result-ready #analysis-basic,
+  .analysis-panel-result-ready #analysis-area,
+  .analysis-panel-result-ready #analysis-scale,
+  .analysis-panel-result-ready #analysis-rules,
+  .analysis-panel-result-ready #analysis-requirements,
+  .analysis-panel-result-ready #analysis-external {
+    grid-column: 1;
+    grid-row: auto;
+  }
   .map-stage { position: relative; height: 54vh; min-height: 420px; }
   .candidate-list { max-height: none; overflow-y: visible; padding-right: 0; }
 }
