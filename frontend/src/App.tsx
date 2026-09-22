@@ -11,7 +11,7 @@ import ExternalDependenciesSection from './components/ExternalDependenciesSectio
 import type { CandidateSearchState, ParcelCandidate, ParcelConfirmationResponse, ParcelVerificationState } from './types/parcel'
 import type { SiteAnalysisInputProfile, SiteAnalysisResponse, SiteAnalysisState } from './types/siteAnalysis'
 
-const INITIAL_GUIDE = '현재 검증된 범위에서는 지번주소로 검색하는 것을 권장합니다.'
+const INITIAL_GUIDE = '지번주소 또는 도로명주소로 필지를 검색할 수 있습니다.'
 function displayParcelApiError(error: unknown, fallback: string): string {
   if (!(error instanceof ParcelCandidateApiError)) return error instanceof Error ? error.message : fallback
   if (error.code === 'PARCEL_VERIFICATION_FAILED') return `${error.message} 다른 필지를 선택하거나 다시 검색해 주세요.`
@@ -64,11 +64,11 @@ export default function App() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); const normalizedQuery = query.trim(); clearParcelVerification()
-    if (!normalizedQuery) { setCandidates([]); setState('SEARCH_EMPTY'); setMessage('검색할 지번주소를 입력해 주세요.'); return }
+    if (!normalizedQuery) { setCandidates([]); setState('SEARCH_EMPTY'); setMessage('검색할 주소를 입력해 주세요.'); return }
     setShowResultCandidates(false);     setState('SEARCHING'); setCandidates([]); setMessage('필지 후보를 찾고 있습니다.')
     try {
       const result = await searchParcelCandidates(normalizedQuery); setCandidates(result.candidates)
-      if (result.candidates.length === 0) { setState('SEARCH_EMPTY'); setMessage('검색은 완료됐지만 일치하는 필지 후보가 없습니다. 지번주소를 확인하거나 검색어를 조금 넓혀 주세요.'); return }
+      if (result.candidates.length === 0) { setState('SEARCH_EMPTY'); setMessage('검색은 완료됐지만 일치하는 필지 후보가 없습니다. 주소를 확인하거나 검색어를 조금 넓혀 주세요.'); return }
       setState('SEARCH_RESULTS'); setMessage(`${result.count}개의 필지 후보를 찾았습니다.`)
     } catch (error) { setState('SEARCH_ERROR'); setMessage(displayParcelApiError(error, '필지 후보 검색 중 오류가 발생했습니다.')) }
   }
@@ -126,7 +126,7 @@ export default function App() {
       <section className={`search-panel${resultReady ? ' search-panel-result-ready' : ''}`} aria-labelledby="page-title">
         <header className={`search-intro${resultReady ? ' search-intro-compact' : ''}`}><div className="brand">SITE AI</div><h1 id="page-title">{resultReady ? '대지 분석 결과' : '분석할 대지를 찾아보세요'}</h1><p className="lead">{resultReady ? '확인된 필지의 분석 결과입니다. 지도에서 검증된 필지 경계를 함께 확인할 수 있습니다.' : '주소를 입력하면 분석 가능한 필지 후보를 찾습니다.'}</p></header>
         <div className={`pre-analysis-controls${resultReady ? ' pre-analysis-controls-compact' : ''}`}>
-          <form className="search-form" onSubmit={handleSubmit}><label htmlFor="parcel-address">지번주소</label><div className="search-row"><input id="parcel-address" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="예: 서울특별시 강남구 개포동 12" autoComplete="street-address" /><button type="submit" disabled={state === 'SEARCHING'}>{state === 'SEARCHING' ? '검색 중' : resultReady ? '다른 필지 찾기' : '필지 찾기'}</button></div></form>
+          <form className="search-form" onSubmit={handleSubmit}><label htmlFor="parcel-address">주소</label><div className="search-row"><input id="parcel-address" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="예: 서울특별시 강남구 개포동 12 또는 개포로109길 21" autoComplete="street-address" /><button type="submit" disabled={state === 'SEARCHING'}>{state === 'SEARCHING' ? '검색 중' : resultReady ? '다른 필지 찾기' : '필지 찾기'}</button></div></form>
           <p className={`status status-${state.toLowerCase()}`} role="status">{message}</p>
           {state === 'SEARCH_RESULTS' && resultReady && <div className="candidate-list-toggle"><span>같은 검색의 후보 {candidates.length}개</span><button type="button" onClick={() => setShowResultCandidates((current) => !current)} aria-expanded={showResultCandidates}>{showResultCandidates ? '후보 접기' : '후보 다시 보기'}</button></div>}
           {state === 'SEARCH_RESULTS' && (!resultReady || showResultCandidates) && <div className="candidate-list" ref={candidateListRef} aria-label="필지 후보 목록">{candidates.map((candidate) => { const isSelected = selectedCandidate?.candidate_pnu === candidate.candidate_pnu; const isVerifying = isSelected && verificationState === 'VERIFYING_PARCEL'; return <button ref={isSelected ? selectedCandidateCardRef : null} className={`candidate-card${isSelected ? ' candidate-card-selected' : ''}`} key={`${candidate.candidate_pnu}-${candidate.x}-${candidate.y}`} type="button" onClick={() => handleCandidateSelection(candidate)} disabled={verificationState === 'VERIFYING_PARCEL' || analysisState === 'ANALYZING'} aria-pressed={isSelected}><span className="candidate-heading"><strong>{candidate.parcel_address || '지번주소 정보 없음'}</strong>{candidate.building_name && <span>{candidate.building_name}</span>}</span>{candidate.road_address && <span className="candidate-road-address">{candidate.road_address}</span>}<small>{isVerifying ? '필지 확인 중…' : `후보 위치 · ${candidate.crs}`}</small></button> })}</div>}
