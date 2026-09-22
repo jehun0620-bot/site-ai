@@ -19,6 +19,10 @@ VWORLD_SEARCH_URL = "https://api.vworld.kr/req/search"
 class AddressParcelCandidateSearchProviderError(RuntimeError):
     """Raised when candidate discovery cannot distinguish results because the provider failed."""
 
+    def __init__(self, message: str, *, retryable: bool = False):
+        super().__init__(message)
+        self.retryable = bool(retryable)
+
 
 
 @dataclass(frozen=True)
@@ -133,11 +137,13 @@ def _search_items(
     response, data, transport_error = request_json(VWORLD_SEARCH_URL, params)
     if transport_error or response is None:
         raise AddressParcelCandidateSearchProviderError(
-            f"VWorld address search transport failure: {transport_error or 'missing response'}"
+            f"VWorld address search transport failure: {transport_error or 'missing response'}",
+            retryable=True,
         )
     if response.status_code != 200:
         raise AddressParcelCandidateSearchProviderError(
-            f"VWorld address search HTTP failure: {response.status_code}"
+            f"VWorld address search HTTP failure: {response.status_code}",
+            retryable=response.status_code in {408, 429} or 500 <= response.status_code <= 599,
         )
 
     response_data = data.get("response", {}) if isinstance(data, dict) else {}
