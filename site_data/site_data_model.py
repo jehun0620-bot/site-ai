@@ -17,6 +17,7 @@ class Building:
 
     main_use: str = ""
     structure: str = ""
+    roof: str = ""
 
     land_area: Optional[float] = None
     building_area: Optional[float] = None
