@@ -35,13 +35,31 @@ def main():
         buildings=[building],
     )
 
-    facts = build_site_facts_response(site)
+    facts = build_site_facts_response(
+        site,
+        runtime_conditions={
+            "지구단위계획": {
+                "state": "TRUE",
+                "evidence": {"must_not_be_public": True},
+            },
+            "개발진흥지구": {"state": "FALSE"},
+            "취락지구": {"state": "UNKNOWN"},
+            "방재지구": {"state": "INVALID"},
+        },
+    )
 
     assert facts["land"] == {
         "land_category": "대",
         "land_area": 123.4,
         "zoning": "제3종일반주거지역",
     }
+    assert facts["spatial_conditions"] == {
+        "district_unit_plan": {"state": "TRUE"},
+        "development_promotion_district": {"state": "FALSE"},
+        "settlement_district": {"state": "UNKNOWN"},
+        "disaster_prevention_district": {"state": "UNKNOWN"},
+    }
+    assert "evidence" not in facts["spatial_conditions"]["district_unit_plan"]
     assert facts["buildings"]["count"] == 1
     assert facts["buildings"]["items"][0]["management_id"] == "TEST"
     assert facts["buildings"]["items"][0]["ground_floor_count"] == 5
@@ -71,6 +89,12 @@ def main():
         "zoning": "",
     }
     assert empty["buildings"] == {"count": 0, "items": []}
+    assert empty["spatial_conditions"] == {
+        "district_unit_plan": {"state": "UNKNOWN"},
+        "development_promotion_district": {"state": "UNKNOWN"},
+        "settlement_district": {"state": "UNKNOWN"},
+        "disaster_prevention_district": {"state": "UNKNOWN"},
+    }
     assert empty["sources"] == {
         "land": None,
         "land_status": None,
