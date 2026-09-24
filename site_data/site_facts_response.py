@@ -10,7 +10,33 @@ from __future__ import annotations
 from typing import Any, Dict
 
 
-def build_site_facts_response(site_object: Any = None) -> Dict[str, Any]:
+SPATIAL_CONDITION_PUBLIC_KEYS = {
+    "지구단위계획": "district_unit_plan",
+    "개발진흥지구": "development_promotion_district",
+    "취락지구": "settlement_district",
+    "방재지구": "disaster_prevention_district",
+}
+
+
+def _build_spatial_condition_facts(runtime_conditions: Any) -> Dict[str, Dict[str, str]]:
+    conditions = runtime_conditions if isinstance(runtime_conditions, dict) else {}
+    result: Dict[str, Dict[str, str]] = {}
+
+    for condition_name, public_key in SPATIAL_CONDITION_PUBLIC_KEYS.items():
+        condition = conditions.get(condition_name)
+        state = condition.get("state") if isinstance(condition, dict) else None
+        result[public_key] = {
+            "state": state if state in {"TRUE", "FALSE", "UNKNOWN"} else "UNKNOWN"
+        }
+
+    return result
+
+
+def build_site_facts_response(
+    site_object: Any = None,
+    *,
+    runtime_conditions: Any = None,
+) -> Dict[str, Any]:
     land_object = (
         getattr(site_object, "land", None)
         if site_object is not None
@@ -81,6 +107,7 @@ def build_site_facts_response(site_object: Any = None) -> Dict[str, Any]:
                 for building in building_objects
             ],
         },
+        "spatial_conditions": _build_spatial_condition_facts(runtime_conditions),
         "sources": {
             "land": (
                 "VWORLD_LAND_CHARACTERISTICS"
