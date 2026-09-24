@@ -78,6 +78,7 @@ def build_site_facts_response(
                         building, "building_name", ""
                     ),
                     "main_use": getattr(building, "main_use", ""),
+                    "structure": getattr(building, "structure", ""),
                     "land_area": getattr(building, "land_area", None),
                     "building_area": getattr(
                         building, "building_area", None
@@ -99,6 +100,9 @@ def build_site_facts_response(
                     ),
                     "household_count": getattr(
                         building, "household_count", None
+                    ),
+                    "permit_date": getattr(
+                        building, "permit_date", ""
                     ),
                     "approval_date": getattr(
                         building, "approval_date", ""
