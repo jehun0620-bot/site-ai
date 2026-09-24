@@ -79,6 +79,7 @@ def build_site_facts_response(
                     ),
                     "main_use": getattr(building, "main_use", ""),
                     "structure": getattr(building, "structure", ""),
+                    "roof": getattr(building, "roof", ""),
                     "land_area": getattr(building, "land_area", None),
                     "building_area": getattr(
                         building, "building_area", None
