@@ -96,6 +96,7 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
           const firstBuilding = buildingDisclosure.locator('.building-facts-list article').first()
           await expect(firstBuilding.locator('dt', { hasText: '관리번호' }).locator('..').locator('dd')).not.toHaveText('정보 없음')
           await expect(firstBuilding.locator('dt', { hasText: '구조' }).locator('..').locator('dd')).toBeVisible()
+          await expect(firstBuilding.locator('dt', { hasText: '지붕' }).locator('..').locator('dd')).toBeVisible()
           await expect(firstBuilding.locator('dt', { hasText: '허가일' }).locator('..').locator('dd')).toBeVisible()
         }
 
