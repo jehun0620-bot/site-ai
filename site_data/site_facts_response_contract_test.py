@@ -18,6 +18,7 @@ def main():
         dong_name="101동",
         building_name="테스트",
         main_use="공동주택",
+        structure="철근콘크리트구조",
         land_area=123.4,
         building_area=50.0,
         total_floor_area=200.0,
@@ -26,6 +27,7 @@ def main():
         ground_floor_count=5,
         underground_floor_count=1,
         household_count=10,
+        permit_date="20191201",
         approval_date="20200101",
     )
     site = Site(
@@ -62,6 +64,8 @@ def main():
     assert "evidence" not in facts["spatial_conditions"]["district_unit_plan"]
     assert facts["buildings"]["count"] == 1
     assert facts["buildings"]["items"][0]["management_id"] == "TEST"
+    assert facts["buildings"]["items"][0]["structure"] == "철근콘크리트구조"
+    assert facts["buildings"]["items"][0]["permit_date"] == "20191201"
     assert facts["buildings"]["items"][0]["ground_floor_count"] == 5
     assert facts["sources"] == {
         "land": "VWORLD_LAND_CHARACTERISTICS",
