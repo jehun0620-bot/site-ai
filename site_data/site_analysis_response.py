@@ -215,7 +215,10 @@ def build_site_analysis_response(
         )
     )
 
-    site_facts = build_site_facts_response(site_object)
+    site_facts = build_site_facts_response(
+        site_object,
+        runtime_conditions=site.get("runtime_conditions", {}),
+    )
 
     # ========================================================
     # public payload
