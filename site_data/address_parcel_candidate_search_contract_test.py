@@ -159,7 +159,12 @@ def main() -> None:
         assert request.call_count == 2
 
     with patch("site_data.address_parcel_candidate_search.load_vworld_key", return_value=""):
-        assert search_address_parcel_candidates("개포동 12") == []
+        try:
+            search_address_parcel_candidates("개포동 12")
+        except AddressParcelCandidateSearchProviderError as exc:
+            assert exc.retryable is False
+        else:
+            raise AssertionError("missing VWorld API key must not be returned as an empty candidate result")
 
     with patch("site_data.address_parcel_candidate_search.request_json") as request:
         assert search_address_parcel_candidates("   ", api_key="test-key") == []
