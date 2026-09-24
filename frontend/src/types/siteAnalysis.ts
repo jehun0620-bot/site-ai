@@ -129,6 +129,12 @@ export interface SiteAnalysisBuildingFact {
   approval_date: string
 }
 
+export type SiteAnalysisSpatialConditionState = 'TRUE' | 'FALSE' | 'UNKNOWN'
+
+export interface SiteAnalysisSpatialConditionFact {
+  state: SiteAnalysisSpatialConditionState
+}
+
 export interface SiteAnalysisSiteFacts {
   land: {
     land_category: string
@@ -138,6 +144,12 @@ export interface SiteAnalysisSiteFacts {
   buildings: {
     count: number
     items: SiteAnalysisBuildingFact[]
+  }
+  spatial_conditions: {
+    district_unit_plan: SiteAnalysisSpatialConditionFact
+    development_promotion_district: SiteAnalysisSpatialConditionFact
+    settlement_district: SiteAnalysisSpatialConditionFact
+    disaster_prevention_district: SiteAnalysisSpatialConditionFact
   }
   sources: {
     land: string | null
