@@ -85,7 +85,10 @@ def get_land_characteristics(
     except requests.RequestException as e:
         raise VWorldLandProviderError(f"VWorld API 요청 중 오류가 발생했습니다: {e}", retryable=True) from e
     if response.status_code != 200:
-        raise VWorldLandProviderError(\n            f"VWorld API HTTP 오류: {response.status_code}",\n            retryable=response.status_code in {408, 429} or 500 <= response.status_code <= 599,\n        )
+        raise VWorldLandProviderError(
+            f"VWorld API HTTP 오류: {response.status_code}",
+            retryable=response.status_code in {408, 429} or 500 <= response.status_code <= 599,
+        )
     try:
         data = response.json()
     except ValueError as e:
