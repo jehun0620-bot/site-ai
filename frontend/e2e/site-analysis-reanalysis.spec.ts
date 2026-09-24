@@ -87,6 +87,14 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
           await expect(value).toHaveText(/^(해당|비해당|확인 필요)$/)
         }
 
+        const buildingDisclosure = analysisPanel.locator('.building-facts-disclosure')
+        if (await buildingDisclosure.count()) {
+          await buildingDisclosure.locator('summary').click()
+          const firstBuilding = buildingDisclosure.locator('.building-facts-list article').first()
+          await expect(firstBuilding.locator('dt', { hasText: '관리번호' }).locator('..').locator('dd')).not.toHaveText('정보 없음')
+          await expect(firstBuilding.locator('dt', { hasText: '대지면적(건축물대장)' }).locator('..').locator('dd')).toHaveText(/^.+㎡$/)
+        }
+
         const ruleDetails = analysisPanel.locator('.rule-detail-groups')
         await expect(ruleDetails).toBeVisible()
         const unknownRuleGroup = ruleDetails.locator('.rule-detail-group-unknown')
