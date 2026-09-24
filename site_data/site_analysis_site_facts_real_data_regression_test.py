@@ -33,7 +33,20 @@ def main() -> int:
         "zoning": land.get("zoning") == "제3종일반주거지역",
         "building count": buildings.get("count") == 34,
         "building item count": len(items) == 34,
-        "building identity": all(item.get("management_id") is not None for item in items),
+        "building identity": all(
+            str(item.get("management_id") or "").strip()
+            for item in items
+        ),
+        "building identity unique": len({
+            str(item.get("management_id")).strip()
+            for item in items
+            if str(item.get("management_id") or "").strip()
+        }) == len(items),
+        "building land area": all(
+            isinstance(item.get("land_area"), (int, float))
+            and item.get("land_area") > 0
+            for item in items
+        ),
         "building use": any(str(item.get("main_use") or "").strip() for item in items),
         "land source": sources.get("land") == "VWORLD_LAND_CHARACTERISTICS",
         "land reference year": sources.get("land_reference_year") == "2026",
@@ -48,6 +61,14 @@ def main() -> int:
     print("Land:", land)
     print("Building count:", buildings.get("count"))
     print("Building item count:", len(items))
+    print(
+        "Building management IDs:",
+        [item.get("management_id") for item in items],
+    )
+    print(
+        "Building land areas:",
+        [item.get("land_area") for item in items],
+    )
     print("Sources:", sources)
     print("Service:", response.get("service"))
     print()
