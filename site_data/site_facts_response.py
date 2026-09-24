@@ -87,6 +87,16 @@ def build_site_facts_response(site_object: Any = None) -> Dict[str, Any]:
                 if land_object is not None
                 else None
             ),
+            "land_status": (
+                getattr(site, "land_provider_status", "") or None
+                if site is not None
+                else None
+            ),
+            "land_retryable": (
+                bool(getattr(site, "land_provider_retryable", False))
+                if site is not None
+                else False
+            ),
             "land_reference_year": (
                 getattr(
                     land_object,
