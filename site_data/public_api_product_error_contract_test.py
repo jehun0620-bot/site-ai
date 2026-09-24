@@ -119,6 +119,24 @@ def main() -> None:
         response = client.post("/v1/parcel-candidates/confirm", json=payload)
         assert_product_error(response, 404, "PARCEL_VERIFICATION_FAILED", "PARCEL")
 
+    provider_failed = SelectedParcelCandidateVerification(
+        status="REJECTED",
+        resolution="PARCEL_GEOMETRY_PROVIDER_FAILED",
+        pnu="1168010300100120002",
+        x=127.0,
+        y=37.0,
+        crs="EPSG:4326",
+    )
+    with patch.object(api_app, "verify_selected_parcel_candidate", return_value=provider_failed):
+        response = client.post("/v1/parcel-candidates/confirm", json=payload)
+        assert_product_error(
+            response,
+            502,
+            "PARCEL_GEOMETRY_PROVIDER_FAILED",
+            "PROVIDER",
+            retryable=False,
+        )
+
     missing_geometry = SelectedParcelCandidateVerification(
         status="VERIFIED",
         resolution="SELECTED_PARCEL_CANDIDATE_VERIFIED",
