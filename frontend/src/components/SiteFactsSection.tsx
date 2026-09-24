@@ -69,6 +69,7 @@ export default function SiteFactsSection({ analysis }: SiteFactsSectionProps) {
                       <div><dt>건물명</dt><dd>{displayValue(building.building_name)}</dd></div>
                       <div><dt>관리번호</dt><dd>{displayValue(building.management_id)}</dd></div>
                       <div><dt>구조</dt><dd>{displayValue(building.structure)}</dd></div>
+                      <div><dt>지붕</dt><dd>{displayValue(building.roof)}</dd></div>
                       <div><dt>건축면적</dt><dd>{displayNumber(building.building_area, '㎡')}</dd></div>
                       <div><dt>연면적</dt><dd>{displayNumber(building.total_floor_area, '㎡')}</dd></div>
                       <div><dt>건폐율</dt><dd>{displayNumber(building.building_coverage_ratio, '%')}</dd></div>
