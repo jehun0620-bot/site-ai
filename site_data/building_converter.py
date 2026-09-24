@@ -46,6 +46,11 @@ def convert_building(api_data):
             api_data.get("strctCdNm") or ""
         ).strip(),
 
+        # 지붕
+        roof=str(
+            api_data.get("roofCdNm") or ""
+        ).strip(),
+
         # 면적
         land_area=_optional_float(
             api_data.get("platArea")
