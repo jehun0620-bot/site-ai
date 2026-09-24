@@ -2,6 +2,7 @@
 """Contract test for parcel-only canonical-PNU land enrichment."""
 from unittest.mock import patch
 from site_data import site_analysis_orchestrator as orchestrator
+from site_data.vworld_api import VWorldLandNoDataError, VWorldLandProviderError
 
 PNU = "1159010600200290003"
 
@@ -29,18 +30,37 @@ def main():
         assert site.land.land_area == 321.5
         assert site.land.source_reference_year == "2026"
         assert site.land.source_last_updated_at == "2026-09-01"
+        assert site.land_provider_status == "AVAILABLE"
+        assert site.land_provider_retryable is False
 
     with patch.object(orchestrator, "get_latest_land_characteristics", return_value=("2026", [])):
         site = orchestrator._parcel_only_site(
             sigungu_cd="11590", bjdong_cd="10600", plat_gb_cd="1", bun="0029", ji="0003"
         )
         assert site.land is None
+        assert site.land_provider_status == "NO_DATA"
+        assert site.land_provider_retryable is False
 
-    with patch.object(orchestrator, "get_latest_land_characteristics", side_effect=RuntimeError("unavailable")):
+    with patch.object(orchestrator, "get_latest_land_characteristics", side_effect=VWorldLandNoDataError("no data")):
         site = orchestrator._parcel_only_site(
             sigungu_cd="11590", bjdong_cd="10600", plat_gb_cd="1", bun="0029", ji="0003"
         )
         assert site.land is None
+        assert site.land_provider_status == "NO_DATA"
+        assert site.land_provider_retryable is False
+
+    for retryable in (True, False):
+        with patch.object(
+            orchestrator,
+            "get_latest_land_characteristics",
+            side_effect=VWorldLandProviderError("unavailable", retryable=retryable),
+        ):
+            site = orchestrator._parcel_only_site(
+                sigungu_cd="11590", bjdong_cd="10600", plat_gb_cd="1", bun="0029", ji="0003"
+            )
+            assert site.land is None
+            assert site.land_provider_status == "PROVIDER_FAILED"
+            assert site.land_provider_retryable is retryable
 
     print("PARCEL_ONLY_LAND_ENRICHMENT_CONTRACT_PASS")
 
