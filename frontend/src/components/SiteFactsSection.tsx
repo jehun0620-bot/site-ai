@@ -68,12 +68,14 @@ export default function SiteFactsSection({ analysis }: SiteFactsSectionProps) {
                     <dl>
                       <div><dt>건물명</dt><dd>{displayValue(building.building_name)}</dd></div>
                       <div><dt>관리번호</dt><dd>{displayValue(building.management_id)}</dd></div>
+                      <div><dt>구조</dt><dd>{displayValue(building.structure)}</dd></div>
                       <div><dt>건축면적</dt><dd>{displayNumber(building.building_area, '㎡')}</dd></div>
                       <div><dt>연면적</dt><dd>{displayNumber(building.total_floor_area, '㎡')}</dd></div>
                       <div><dt>건폐율</dt><dd>{displayNumber(building.building_coverage_ratio, '%')}</dd></div>
                       <div><dt>용적률</dt><dd>{displayNumber(building.floor_area_ratio, '%')}</dd></div>
                       <div><dt>층수</dt><dd>지상 {displayNumber(building.ground_floor_count, '층')} · 지하 {displayNumber(building.underground_floor_count, '층')}</dd></div>
                       <div><dt>세대수</dt><dd>{displayNumber(building.household_count, '세대')}</dd></div>
+                      <div><dt>허가일</dt><dd>{displayValue(building.permit_date)}</dd></div>
                       <div><dt>사용승인일</dt><dd>{displayValue(building.approval_date)}</dd></div>
                     </dl>
                   </article>
