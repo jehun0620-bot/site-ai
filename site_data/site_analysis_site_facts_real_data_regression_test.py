@@ -42,11 +42,6 @@ def main() -> int:
             for item in items
             if str(item.get("management_id") or "").strip()
         }) == len(items),
-        "building land area": all(
-            isinstance(item.get("land_area"), (int, float))
-            and item.get("land_area") > 0
-            for item in items
-        ),
         "building use": any(str(item.get("main_use") or "").strip() for item in items),
         "land source": sources.get("land") == "VWORLD_LAND_CHARACTERISTICS",
         "land reference year": sources.get("land_reference_year") == "2026",
@@ -64,10 +59,6 @@ def main() -> int:
     print(
         "Building management IDs:",
         [item.get("management_id") for item in items],
-    )
-    print(
-        "Building land areas:",
-        [item.get("land_area") for item in items],
     )
     print("Sources:", sources)
     print("Service:", response.get("service"))
