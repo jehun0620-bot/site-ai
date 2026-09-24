@@ -41,6 +41,11 @@ def convert_building(api_data):
             api_data.get("mainPurpsCdNm") or ""
         ).strip(),
 
+        # 구조
+        structure=str(
+            api_data.get("strctCdNm") or ""
+        ).strip(),
+
         # 면적
         land_area=_optional_float(
             api_data.get("platArea")
@@ -77,7 +82,11 @@ def convert_building(api_data):
             api_data.get("hhldCnt")
         ),
 
-        # 사용승인일
+        # 허가일 / 사용승인일
+        permit_date=str(
+            api_data.get("pmsDay") or ""
+        ).strip(),
+
         approval_date=str(
             api_data.get("useAprDay") or ""
         ).strip()
