@@ -1674,3 +1674,22 @@ Backend public SITE FACT contract: PASS
 
 No Frontend/Backend trust boundary, map truth contract, state model, or API interaction architecture changed in E-3.
 
+## E-4 SITE FACT building roof presentation — 2026-09-24
+
+The Frontend now consumes the Backend public SITE FACT `roof` field and presents it as `지붕` in each existing-building detail. The TypeScript contract and runtime response validator require `roof` to be a string; the Frontend does not derive or reinterpret the Building HUB roof value.
+
+Backend evidence before implementation covered two real parcels and 43 Building HUB title records, with `roofCdNm` nonblank in all 43 records. The representative public regression for PNU `1168010300100120000` confirms 34 / 34 public building items contain a nonblank `roof`.
+
+User-local validation at code HEAD `c73985723852fdd8d8108da70028053abf1ba788`:
+
+```text
+Frontend production build: PASS
+Vite 8.3.0: 28 modules transformed, 118ms
+Actual Backend-connected reanalysis E2E: PASS
+1 passed (24.4s; test body 23.4s)
+Tracked working tree after validation: clean
+```
+
+No additional CSS change was required because the existing E-3 single-column building-detail layout accommodates the new row. No Frontend legal interpretation, parcel-truth logic, provider call, or analysis authority was added.
+
+Therefore **E-4 SITE FACT BUILDING ROOF PRESENTATION = USER-LOCAL BEHAVIORAL PASS / CLOSED**.
