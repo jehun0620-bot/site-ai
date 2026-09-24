@@ -9,7 +9,11 @@ from site_data.building_hub_provider import BuildingAPIError, fetch_building_ite
 from site_data.site_data_model import Site
 from site_data.site_analysis_service import analyze_site_object, site_to_analysis_input
 from site_data.site_analysis_response import build_site_analysis_response
-from site_data.vworld_api import get_latest_land_characteristics
+from site_data.vworld_api import (
+    VWorldLandNoDataError,
+    VWorldLandProviderError,
+    get_latest_land_characteristics,
+)
 from site_data.land_converter import hydrate_land_from_records
 from site_data.verified_site_input_admission import (
     VerifiedSiteInputAdmissionError,
@@ -42,9 +46,17 @@ def _parcel_only_site(*,sigungu_cd:str,bjdong_cd:str,plat_gb_cd:str,bun:str,ji:s
     try:
         land_year, records=get_latest_land_characteristics(pnu)
         site.land, record=hydrate_land_from_records(records,reference_year=land_year)
+        site.land_provider_status="AVAILABLE" if site.land is not None else "NO_DATA"
         if record is not None:
             site.address=_parcel_address_from_land_record(record,pnu)
-    except (RuntimeError,ValueError,TypeError): pass
+    except VWorldLandNoDataError:
+        site.land_provider_status="NO_DATA"
+    except VWorldLandProviderError as exc:
+        site.land_provider_status="PROVIDER_FAILED"
+        site.land_provider_retryable=exc.retryable
+    except (ValueError,TypeError):
+        site.land_provider_status="PROVIDER_FAILED"
+        site.land_provider_retryable=False
     return site
 
 def analyze_site_by_parcel(*,sigungu_cd:str,bjdong_cd:str,bun:str,ji:str,plat_gb_cd:str="0",project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,production_condition_shadow_sources:Optional[Any]=None,historical_handoff_authorization:Optional[HistoricalTrustedInternalSourceHandoffAuthorization]=None,historical_site_applicability_admission:Optional[HistoricalSiteEventSiteApplicabilityAdmissionResult]=None,historical_promotion_rule_input_bridge:Optional[HistoricalSiteEventSiteTruthPromotionRuleInputBridge]=None,district_unit_plan_registry_candidate:Optional[Any]=None,include_debug:bool=False,service_key:Optional[str]=None)->Dict[str,Any]:
