@@ -344,3 +344,18 @@ Building-HUB 건축물이 존재하는 SITE 경로에서도 기존 VWorld 토지
 사용자 로컬 검증에서 `BUILDING_SITE_LAND_ENRICHMENT_CONTRACT_PASS`, `VWORLD_LAND_PROVIDER_CONTRACT_PASS`, `PARCEL_ONLY_LAND_ENRICHMENT_CONTRACT_PASS`, `SITE_FACTS_RESPONSE_CONTRACT_PASS`가 PASS했다. 실제 대표 필지 `1168010300100120000`도 `READY`, `land_status=AVAILABLE`, `land_retryable=False`, official area `121040.4`, buildings `34`, BCR `50`, FAR `250`, rules `314 = 62 / 214 / 36 / 2`를 확인했다. Backend-connected reanalysis E2E와 mobile responsive E2E도 각각 `1 passed`로 사용자 로컬 PASS했다. 이 검증 시점의 HEAD는 `d7cd0ab6896dd70c7da1012560f1a623917de5d5`다.
 
 Provider resilience D의 마지막 presentation 정렬로 Frontend는 이미 전달받고 있던 `SITE_API_ERROR_V1.retryable`을 provider 오류 메시지에 반영한다. `retryable=true`만 사용자에게 다시 시도 가능함을 알리고, `false/null`에는 해당 문구를 붙이지 않는다. 이는 자동 retry, 자동 SITE 재분석, 임의 progress/timeout을 추가하지 않는다. 이 Frontend 변경의 behavioral completion은 focused product-error E2E와 production build의 사용자 로컬 PASS 후 확정한다.
+
+## 12. SITE FACT spatial-condition expansion (E-1) — 2026-09-24
+- Public SITE FACT now reuses the spatial-condition results already resolved for the current SITE and consumed by the Rule Engine.
+- User-facing spatial facts cover four registered conditions: 지구단위계획, 개발진흥지구, 취락지구, 방재지구.
+- Public projection preserves only the stable condition state: `TRUE`, `FALSE`, or `UNKNOWN`. Internal evidence/provider diagnostics are not exposed through this SITE FACT projection.
+- Frontend presentation maps `TRUE → 해당`, `FALSE → 비해당`, and `UNKNOWN → 확인 필요`; UNKNOWN is never presented as non-applicable.
+- No second VWorld/spatial-provider query path was added for SITE FACT. The same runtime condition result is shared with the Rule Engine.
+- User-local verification passed:
+  - `site_data.site_facts_response_contract_test` → `SITE_FACTS_RESPONSE_CONTRACT_PASS`
+  - `site_data.test_site_analysis_response` → `all_pass: True`
+  - `site_data.site_analysis_site_facts_real_data_regression_test` → `all_pass: True`
+  - frontend `npm run build` → PASS
+  - backend-connected `e2e/site-analysis-reanalysis.spec.ts` → `1 passed`
+- E-1 status: **USER-LOCAL BEHAVIORAL PASS / CLOSED**.
+
