@@ -118,6 +118,7 @@ export interface SiteAnalysisBuildingFact {
   dong_name: string
   building_name: string
   main_use: string
+  structure: string
   land_area: number | null
   building_area: number | null
   total_floor_area: number | null
@@ -126,6 +127,7 @@ export interface SiteAnalysisBuildingFact {
   ground_floor_count: number | null
   underground_floor_count: number | null
   household_count: number | null
+  permit_date: string
   approval_date: string
 }
 
