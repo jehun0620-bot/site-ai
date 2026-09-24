@@ -180,7 +180,10 @@ def search_address_parcel_candidates(
 
     key = str(api_key or load_vworld_key() or "").strip()
     if not key:
-        return []
+        raise AddressParcelCandidateSearchProviderError(
+            "VWorld API key is missing.",
+            retryable=False,
+        )
 
     safe_size = max(1, min(int(size), 100))
     items = _search_items(normalized, key, category="parcel", size=safe_size)
