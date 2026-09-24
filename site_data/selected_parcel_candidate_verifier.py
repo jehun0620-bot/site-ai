@@ -27,6 +27,7 @@ class SelectedParcelCandidateVerification:
     y: Optional[float] = None
     crs: str = ""
     geometry: Optional[Dict[str, Any]] = None
+    retryable: bool = False
 
     @property
     def verified(self) -> bool:
@@ -71,8 +72,18 @@ def verify_selected_parcel_candidate(
 
     classification = str(result.get("classification") or "").strip().upper()
     if classification and classification != "QUERY_SUCCESS":
+        http_status = result.get("http_status")
+        retryable = bool(result.get("transport_error"))
+        if isinstance(http_status, int):
+            retryable = retryable or http_status in {408, 429} or 500 <= http_status <= 599
         return SelectedParcelCandidateVerification(
-            "REJECTED", "PARCEL_GEOMETRY_PROVIDER_FAILED", pnu=pnu, x=point_x, y=point_y, crs="EPSG:4326"
+            "REJECTED",
+            "PARCEL_GEOMETRY_PROVIDER_FAILED",
+            pnu=pnu,
+            x=point_x,
+            y=point_y,
+            crs="EPSG:4326",
+            retryable=retryable,
         )
 
     features = result.get("features", [])
