@@ -1626,3 +1626,21 @@ The three temporary road-address investigation probes were removed after their o
 Kakao Maps note: one transient local SDK request failure was observed, the existing map error UI surfaced it, and map rendering recovered after the local servers were restarted. No persistent map-code defect was established, so no map production change was made for that observation.
 
 Current road-address checkpoint: **IMPLEMENTED + USER LOCAL BEHAVIORAL PASS**.
+
+## 41. SITE FACT Building Management ID Presentation (E-2) — 2026-09-24
+
+Backend public SITE FACT already exposes each Building HUB item's `management_id`. E-2 connects that existing verified value to `SiteFactsSection.tsx` as `관리번호`; Frontend does not generate or reinterpret the identifier.
+
+For representative parcel `1168010300100120000`, the user-local real-data regression observed 34 building items and confirmed all 34 management IDs are present and unique.
+
+The same representative response returned `Building.land_area = 0.0` for all 34 building items. Because those values were not established as meaningful product-facing building land areas, the Frontend does **not** display `대지면적(건축물대장)`. It also does not substitute the SITE official land area into individual building records or infer a nonzero value.
+
+User-local validation:
+
+```text
+SITE FACT real-data regression: all_pass True
+Frontend production build: PASS (Vite 8.3.0, 28 modules)
+Actual Backend-connected reanalysis E2E: 1 passed (24.1s)
+```
+
+Therefore **SITE FACT BUILDING MANAGEMENT ID PRESENTATION (E-2) = USER-LOCAL BEHAVIORAL PASS / CLOSED**.
