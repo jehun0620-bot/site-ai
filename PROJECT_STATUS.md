@@ -371,3 +371,28 @@ Provider resilience D의 마지막 presentation 정렬로 Frontend는 이미 전
   - Frontend production build → PASS (Vite 8.3.0, 28 modules)
   - actual Backend-connected `site-analysis-reanalysis.spec.ts` → `1 passed (24.1s)`
 - E-2 status: **USER-LOCAL BEHAVIORAL PASS / CLOSED**.
+
+## E-3 SITE FACT building expansion — 2026-09-24
+
+E-3 is **USER-LOCAL BEHAVIORAL PASS / CLOSED** at code HEAD `6c78fcc870c22459da4cf323ef2d07e5ca9f3e2d`.
+
+The expansion was limited to Building HUB fields whose representative raw-provider evidence and production mapping were verified:
+
+```text
+strctCdNm → Building.structure → public SITE FACT structure
+pmsDay    → Building.permit_date → public SITE FACT permit_date
+```
+
+Representative PNU `1168010300100120000` returned 34 Building HUB title records. Structure was populated for all 34 records; permit date was populated for 30 records and blank for 4, so blank permit dates remain valid rather than being invented or rejected. Roof, seismic, height, parking, elevator fields, Building.land_area changes, Land.district, and Land.land_use_regulation were not included in E-3.
+
+Validation completed user-locally:
+
+```text
+SITE FACT real-data regression: PASS
+Frontend production build: PASS (Vite 8.3.0, 28 modules)
+Actual Backend-connected reanalysis E2E: PASS (1 passed, 24.6s)
+SITE_FACTS_RESPONSE_CONTRACT_PASS
+```
+
+The public response contract now permanently asserts `structure` and `permit_date`. No second SITE truth path, provider path, spatial query, or Rule Engine path was introduced.
+
