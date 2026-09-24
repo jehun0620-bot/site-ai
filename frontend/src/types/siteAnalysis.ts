@@ -141,6 +141,8 @@ export interface SiteAnalysisSiteFacts {
   }
   sources: {
     land: string | null
+    land_status: 'AVAILABLE' | 'NO_DATA' | 'PROVIDER_FAILED' | null
+    land_retryable: boolean
     land_reference_year: string | null
     land_last_updated_at: string | null
     buildings: string | null
