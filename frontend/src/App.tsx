@@ -16,12 +16,12 @@ function displayParcelApiError(error: unknown, fallback: string): string {
   if (!(error instanceof ParcelCandidateApiError)) return error instanceof Error ? error.message : fallback
   if (error.code === 'PARCEL_VERIFICATION_FAILED') return `${error.message} 다른 필지를 선택하거나 다시 검색해 주세요.`
   if (error.code === 'PARCEL_GEOMETRY_UNRESOLVED') return `${error.message} 다른 필지를 선택하거나 다시 검색해 주세요.`
-  if (error.category === 'PROVIDER') return `외부 데이터 조회에 실패했습니다. ${error.message}`
+  if (error.category === 'PROVIDER') return `외부 데이터 조회에 실패했습니다. ${error.message}${error.retryable === true ? ' 다시 시도할 수 있습니다.' : ''}`
   return error.message || fallback
 }
 function displaySiteAnalysisApiError(error: unknown, fallback: string): string {
   if (!(error instanceof SiteAnalysisApiError)) return error instanceof Error ? error.message : fallback
-  if (error.category === 'PROVIDER') return `외부 데이터 조회에 실패해 SITE 분석을 완료하지 못했습니다. ${error.message}`
+  if (error.category === 'PROVIDER') return `외부 데이터 조회에 실패해 SITE 분석을 완료하지 못했습니다. ${error.message}${error.retryable === true ? ' 다시 시도할 수 있습니다.' : ''}`
   if (error.category === 'PARCEL') return `${error.message} 필지를 다시 확인해 주세요.`
   return error.message || fallback
 }
