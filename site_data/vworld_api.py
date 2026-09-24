@@ -96,8 +96,9 @@ def get_land_characteristics(
     try:
         records = data["landCharacteristicss"]["field"]
     except (KeyError, TypeError) as e:
-        raise RuntimeError(
-            "VWorld API 응답에서 landCharacteristicss.field를 찾을 수 없습니다."
+        raise VWorldLandProviderError(
+            "VWorld API 응답에서 landCharacteristicss.field를 찾을 수 없습니다.",
+            retryable=False,
         ) from e
     if not isinstance(records, list):
         raise VWorldLandProviderError("VWorld API의 field 데이터가 목록 형식이 아닙니다.", retryable=False)
