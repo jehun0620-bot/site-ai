@@ -119,6 +119,7 @@ export interface SiteAnalysisBuildingFact {
   building_name: string
   main_use: string
   structure: string
+  roof: string
   land_area: number | null
   building_area: number | null
   total_floor_area: number | null
