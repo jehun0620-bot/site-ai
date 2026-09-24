@@ -15,6 +15,13 @@ function displayAnalysisStatus(value: unknown): string {
   return value === 'READY' ? '분석 완료' : displayValue(value)
 }
 
+function displayLandStatus(status: SiteAnalysisResponse['site_facts']['sources']['land_status'], retryable: boolean): string {
+  if (status === 'AVAILABLE') return '정상 조회'
+  if (status === 'NO_DATA') return '조회 결과 없음'
+  if (status === 'PROVIDER_FAILED') return retryable ? '외부 데이터 조회 실패 · 다시 시도 가능' : '외부 데이터 조회 실패'
+  return '정보 없음'
+}
+
 interface SiteFactsSectionProps {
   analysis: SiteAnalysisResponse
 }
@@ -73,6 +80,7 @@ export default function SiteFactsSection({ analysis }: SiteFactsSectionProps) {
         <strong>공식 데이터 출처</strong>
         <dl className="analysis-summary">
           <div><dt>토지</dt><dd>{analysis.site_facts.sources.land === 'VWORLD_LAND_CHARACTERISTICS' ? 'VWorld 토지특성정보' : displayValue(analysis.site_facts.sources.land)}</dd></div>
+          <div><dt>토지 조회 상태</dt><dd>{displayLandStatus(analysis.site_facts.sources.land_status, analysis.site_facts.sources.land_retryable)}</dd></div>
           <div><dt>토지 기준연도</dt><dd>{displayValue(analysis.site_facts.sources.land_reference_year)}</dd></div>
           <div><dt>토지 최종 갱신일</dt><dd>{displayValue(analysis.site_facts.sources.land_last_updated_at)}</dd></div>
           <div><dt>건축물</dt><dd>{analysis.site_facts.sources.buildings === 'BUILDING_HUB_TITLE' ? '건축HUB 표제부' : displayValue(analysis.site_facts.sources.buildings)}</dd></div>
