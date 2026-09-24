@@ -133,6 +133,6 @@ def get_latest_land_characteristics(
         if records:
             return str(year), records
 
-    raise RuntimeError(
+    raise VWorldLandNoDataError(
         f"VWorld 토지특성정보를 최근 {lookback_years}개 기준연도에서 찾을 수 없습니다: {pnu}"
     )
