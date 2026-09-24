@@ -43,6 +43,22 @@ def main() -> int:
             if str(item.get("management_id") or "").strip()
         }) == len(items),
         "building use": any(str(item.get("main_use") or "").strip() for item in items),
+        "building structure": all(
+            str(item.get("structure") or "").strip()
+            for item in items
+        ),
+        "building permit date count": sum(
+            bool(str(item.get("permit_date") or "").strip())
+            for item in items
+        ) == 30,
+        "building permit date format": all(
+            not str(item.get("permit_date") or "").strip()
+            or (
+                len(str(item.get("permit_date")).strip()) == 8
+                and str(item.get("permit_date")).strip().isdigit()
+            )
+            for item in items
+        ),
         "land source": sources.get("land") == "VWORLD_LAND_CHARACTERISTICS",
         "land reference year": sources.get("land_reference_year") == "2026",
         "land last updated": sources.get("land_last_updated_at") == "2026-05-12",
@@ -59,6 +75,14 @@ def main() -> int:
     print(
         "Building management IDs:",
         [item.get("management_id") for item in items],
+    )
+    print(
+        "Building structures:",
+        [item.get("structure") for item in items],
+    )
+    print(
+        "Building permit dates:",
+        [item.get("permit_date") for item in items],
     )
     print("Sources:", sources)
     print("Service:", response.get("service"))
