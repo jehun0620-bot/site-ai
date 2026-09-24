@@ -12,6 +12,18 @@ VWORLD_API_KEY = os.getenv("VWORLD_API_KEY")
 API_URL = "https://api.vworld.kr/ned/data/getLandCharacteristics"
 
 
+class VWorldLandProviderError(RuntimeError):
+    """Raised when VWorld land-characteristics lookup fails at the provider boundary."""
+
+    def __init__(self, message: str, *, retryable: bool = False):
+        super().__init__(message)
+        self.retryable = bool(retryable)
+
+
+class VWorldLandNoDataError(RuntimeError):
+    """Raised after successful provider calls find no records in the requested year window."""
+
+
 def create_pnu(
     sigungu_cd: str,
     bjdong_cd: str,
@@ -58,7 +70,7 @@ def get_land_characteristics(
 ) -> List[Dict[str, Any]]:
     """PNU를 이용하여 VWorld 토지특성정보 API를 호출한다."""
     if not VWORLD_API_KEY:
-        raise RuntimeError("VWORLD_API_KEY를 찾을 수 없습니다.")
+        raise VWorldLandProviderError("VWORLD_API_KEY를 찾을 수 없습니다.", retryable=False)
 
     params = {
         "key": VWORLD_API_KEY,
@@ -71,13 +83,13 @@ def get_land_characteristics(
     try:
         response = requests.get(API_URL, params=params, timeout=30)
     except requests.RequestException as e:
-        raise RuntimeError(f"VWorld API 요청 중 오류가 발생했습니다: {e}") from e
+        raise VWorldLandProviderError(f"VWorld API 요청 중 오류가 발생했습니다: {e}", retryable=True) from e
     if response.status_code != 200:
-        raise RuntimeError(f"VWorld API HTTP 오류: {response.status_code}")
+        raise VWorldLandProviderError(\n            f"VWorld API HTTP 오류: {response.status_code}",\n            retryable=response.status_code in {408, 429} or 500 <= response.status_code <= 599,\n        )
     try:
         data = response.json()
     except ValueError as e:
-        raise RuntimeError("VWorld API 응답을 JSON으로 변환할 수 없습니다.") from e
+        raise VWorldLandProviderError("VWorld API 응답을 JSON으로 변환할 수 없습니다.", retryable=False) from e
     try:
         records = data["landCharacteristicss"]["field"]
     except (KeyError, TypeError) as e:
@@ -85,7 +97,7 @@ def get_land_characteristics(
             "VWorld API 응답에서 landCharacteristicss.field를 찾을 수 없습니다."
         ) from e
     if not isinstance(records, list):
-        raise RuntimeError("VWorld API의 field 데이터가 목록 형식이 아닙니다.")
+        raise VWorldLandProviderError("VWorld API의 field 데이터가 목록 형식이 아닙니다.", retryable=False)
     return records
 
 
