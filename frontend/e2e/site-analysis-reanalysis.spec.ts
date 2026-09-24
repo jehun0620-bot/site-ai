@@ -80,6 +80,7 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
 
         const analysisPanel = page.locator('.analysis-panel')
         await expect(analysisPanel.locator('dt', { hasText: 'PNU' }).locator('..').locator('dd')).toHaveText(pnu)
+        await expect(analysisPanel.locator('dt', { hasText: '토지 조회 상태' }).locator('..').locator('dd')).toHaveText('정상 조회')
 
         const ruleDetails = analysisPanel.locator('.rule-detail-groups')
         await expect(ruleDetails).toBeVisible()
