@@ -71,6 +71,10 @@ class Site:
 
     land: Optional[Land] = None
 
+    # Land-provider provenance is separate from canonical land facts.
+    land_provider_status: str = ""
+    land_provider_retryable: bool = False
+
     regulation: Optional[Regulation] = None
 
     buildings: List[Building] = field(default_factory=list)
