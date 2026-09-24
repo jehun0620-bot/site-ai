@@ -430,3 +430,21 @@ build_site_analysis()
 현재 reconciled baseline은 READY, 314 rules, `62 APPLICABLE / 214 NOT_APPLICABLE / 36 CONDITIONAL / 2 UNKNOWN`이다. Snapshot scenario는 explicit `site_input.land_area`를 주입하지 않으므로 builder의 official land-area value가 `None`일 수 있다. 이는 실제 API/SITE FACT enrichment 경로에서 확인되는 official land value와 동일한 테스트 경로를 의미하지 않는다.
 
 Snapshot baseline 갱신은 production logic 변경과 분리해 검증하며, output 파일을 자동으로 정답으로 간주하지 않는다. 구조·counts·핵심 의미론을 이전 baseline 및 current production과 비교한 뒤 명시적으로 승인된 경우에만 갱신한다.
+
+
+## 24. Land-provider provenance consistency — 2026-09-24
+
+Canonical SITE construction 경로가 Building-HUB-present인지 parcel-only인지에 따라 VWorld land-provider 의미가 달라지면 안 된다.
+
+```text
+VWorld land lookup
+→ AVAILABLE | NO_DATA | PROVIDER_FAILED
+→ provider retryable provenance
+→ canonical Site
+→ public SITE FACT land_status / land_retryable
+→ Frontend presentation
+```
+
+`AVAILABLE`은 정상 조회 후 canonical land가 존재함을, `NO_DATA`는 provider 호출은 정상이나 조회 가능한 land record가 없음을, `PROVIDER_FAILED`는 provider 조회 자체가 실패했음을 뜻한다. 이 provenance는 Building-HUB 건축물 존재 여부와 독립적으로 보존한다.
+
+Public product error의 `retryable=true`는 사용자가 다시 시도할 가치가 있을 수 있다는 presentation 정보다. 자동 retry 명령이 아니며 Frontend는 이 값만으로 provider를 자동 재호출하거나 SITE analysis를 자동 재실행하지 않는다. `retryable=false` 또는 legacy/null 상태를 재시도 가능으로 승격하지 않는다.
