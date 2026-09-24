@@ -359,3 +359,15 @@ Provider resilience D의 마지막 presentation 정렬로 Frontend는 이미 전
   - backend-connected `e2e/site-analysis-reanalysis.spec.ts` → `1 passed`
 - E-1 status: **USER-LOCAL BEHAVIORAL PASS / CLOSED**.
 
+## 13. SITE FACT building identity expansion (E-2) — 2026-09-24
+
+- Public SITE FACT already carried Building HUB `management_id`; E-2 validates and presents that existing fact without adding a second provider or SITE truth path.
+- Representative parcel `1168010300100120000` returned 34 building items. User-local real-data regression confirmed all 34 management IDs are present and unique.
+- The same live response returned `Building.land_area = 0.0` for all 34 items. E-2 therefore does not present building-ledger land area in the product UI; it does not reinterpret `0.0` as a verified physical/site land area.
+- `Building.land_area` and its existing converter mapping remain preserved for future source-data investigation; this closeout does not declare the field or mapping defective.
+- Frontend `SiteFactsSection` now displays the verified building management ID while keeping building-ledger land area hidden.
+- User-local validation:
+  - `site_data.site_analysis_site_facts_real_data_regression_test` → `all_pass: True`
+  - Frontend production build → PASS (Vite 8.3.0, 28 modules)
+  - actual Backend-connected `site-analysis-reanalysis.spec.ts` → `1 passed (24.1s)`
+- E-2 status: **USER-LOCAL BEHAVIORAL PASS / CLOSED**.
