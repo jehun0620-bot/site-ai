@@ -15,6 +15,12 @@ function displayAnalysisStatus(value: unknown): string {
   return value === 'READY' ? '분석 완료' : displayValue(value)
 }
 
+function displaySpatialConditionState(state: 'TRUE' | 'FALSE' | 'UNKNOWN'): string {
+  if (state === 'TRUE') return '해당'
+  if (state === 'FALSE') return '비해당'
+  return '확인 필요'
+}
+
 function displayLandStatus(status: SiteAnalysisResponse['site_facts']['sources']['land_status'], retryable: boolean): string {
   if (status === 'AVAILABLE') return '정상 조회'
   if (status === 'NO_DATA') return '조회 결과 없음'
@@ -75,6 +81,15 @@ export default function SiteFactsSection({ analysis }: SiteFactsSectionProps) {
             </details>
           ) : <p className="analysis-empty">현재 조회된 건축물대장 항목이 없습니다.</p>}
         </div>
+      </div>
+      <div className="analysis-data-status spatial-condition-status">
+        <strong>도시계획 공간정보</strong>
+        <dl className="analysis-summary">
+          <div><dt>지구단위계획</dt><dd>{displaySpatialConditionState(analysis.site_facts.spatial_conditions.district_unit_plan.state)}</dd></div>
+          <div><dt>개발진흥지구</dt><dd>{displaySpatialConditionState(analysis.site_facts.spatial_conditions.development_promotion_district.state)}</dd></div>
+          <div><dt>취락지구</dt><dd>{displaySpatialConditionState(analysis.site_facts.spatial_conditions.settlement_district.state)}</dd></div>
+          <div><dt>방재지구</dt><dd>{displaySpatialConditionState(analysis.site_facts.spatial_conditions.disaster_prevention_district.state)}</dd></div>
+        </dl>
       </div>
       <div className="analysis-data-status">
         <strong>공식 데이터 출처</strong>
