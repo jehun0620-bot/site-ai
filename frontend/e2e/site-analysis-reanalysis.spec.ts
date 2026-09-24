@@ -94,49 +94,8 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
           }
           await expect(buildingDisclosure).toHaveAttribute('open', '')
           const firstBuilding = buildingDisclosure.locator('.building-facts-list article').first()
-          const structureValue = firstBuilding.locator('dt', { hasText: '구조' }).locator('..').locator('dd')
-          console.log(
-            'E3_STRUCTURE_VISIBILITY_DIAGNOSTIC',
-            await structureValue.evaluate((element) => {
-              const details = element.closest('details')
-              const list = element.closest('.building-facts-list')
-              const article = element.closest('article')
-              const elementStyle = window.getComputedStyle(element)
-              const listStyle = list ? window.getComputedStyle(list) : null
-              const articleStyle = article ? window.getComputedStyle(article) : null
-              const rect = element.getBoundingClientRect()
-              const listRect = list?.getBoundingClientRect()
-              const articleRect = article?.getBoundingClientRect()
-
-              return {
-                text: element.textContent?.trim() ?? '',
-                detailsOpen: details instanceof HTMLDetailsElement ? details.open : null,
-                element: {
-                  display: elementStyle.display,
-                  visibility: elementStyle.visibility,
-                  opacity: elementStyle.opacity,
-                  rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
-                },
-                article: articleStyle && articleRect
-                  ? {
-                      display: articleStyle.display,
-                      visibility: articleStyle.visibility,
-                      rect: { x: articleRect.x, y: articleRect.y, width: articleRect.width, height: articleRect.height },
-                    }
-                  : null,
-                list: listStyle && listRect
-                  ? {
-                      display: listStyle.display,
-                      visibility: listStyle.visibility,
-                      overflowY: listStyle.overflowY,
-                      rect: { x: listRect.x, y: listRect.y, width: listRect.width, height: listRect.height },
-                    }
-                  : null,
-              }
-            }),
-          )
           await expect(firstBuilding.locator('dt', { hasText: '관리번호' }).locator('..').locator('dd')).not.toHaveText('정보 없음')
-          await expect(structureValue).toBeVisible()
+          await expect(firstBuilding.locator('dt', { hasText: '구조' }).locator('..').locator('dd')).toBeVisible()
           await expect(firstBuilding.locator('dt', { hasText: '허가일' }).locator('..').locator('dd')).toBeVisible()
         }
 
