@@ -16,6 +16,7 @@ class Building:
     building_name: str = ""
 
     main_use: str = ""
+    structure: str = ""
 
     land_area: Optional[float] = None
     building_area: Optional[float] = None
@@ -29,6 +30,7 @@ class Building:
 
     household_count: Optional[int] = None
 
+    permit_date: str = ""
     approval_date: str = ""
 
 
