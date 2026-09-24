@@ -82,6 +82,11 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
         await expect(analysisPanel.locator('dt', { hasText: 'PNU' }).locator('..').locator('dd')).toHaveText(pnu)
         await expect(analysisPanel.locator('dt', { hasText: '토지 조회 상태' }).locator('..').locator('dd')).toHaveText('정상 조회')
 
+        for (const label of ['지구단위계획', '개발진흥지구', '취락지구', '방재지구']) {
+          const value = analysisPanel.locator('dt', { hasText: label }).locator('..').locator('dd')
+          await expect(value).toHaveText(/^(해당|비해당|확인 필요)$/)
+        }
+
         const ruleDetails = analysisPanel.locator('.rule-detail-groups')
         await expect(ruleDetails).toBeVisible()
         const unknownRuleGroup = ruleDetails.locator('.rule-detail-group-unknown')
