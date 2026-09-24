@@ -71,6 +71,7 @@ function isSiteAnalysisBuildingFact(value: unknown): boolean {
     && typeof value.building_name === 'string'
     && typeof value.main_use === 'string'
     && typeof value.structure === 'string'
+    && typeof value.roof === 'string'
     && isNullableNumber(value.land_area)
     && isNullableNumber(value.building_area)
     && isNullableNumber(value.total_floor_area)
