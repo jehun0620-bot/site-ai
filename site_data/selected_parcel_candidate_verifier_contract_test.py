@@ -11,9 +11,11 @@ X = 127.07662495509604
 Y = 37.49629354642009
 
 
-def _query(features, classification="QUERY_SUCCESS"):
+def _query(features, classification="QUERY_SUCCESS", http_status=200, transport_error=None):
     return {
         "classification": classification,
+        "http_status": http_status,
+        "transport_error": transport_error,
         "features": features,
     }
 
@@ -73,14 +75,23 @@ def main() -> None:
         assert not result.verified
         assert result.resolution == "PARCEL_POLYGON_UNRESOLVED"
 
-    for classification in ("TRANSPORT_ERROR", "HTTP_ERROR", "QUERY_FAILED"):
+    provider_failures = (
+        (_query([], classification="QUERY_FAILED", http_status=None, transport_error="timeout"), True),
+        (_query([], classification="HTTP_ERROR", http_status=408), True),
+        (_query([], classification="HTTP_ERROR", http_status=429), True),
+        (_query([], classification="HTTP_ERROR", http_status=503), True),
+        (_query([], classification="HTTP_ERROR", http_status=404), False),
+        (_query([], classification="QUERY_FAILED", http_status=200), False),
+    )
+    for query_result, expected_retryable in provider_failures:
         with patch(
             "site_data.selected_parcel_candidate_verifier.query_dataset_by_point",
-            return_value=_query([], classification=classification),
+            return_value=query_result,
         ):
             result = verify_selected_parcel_candidate(PNU, X, Y, api_key="test-key")
             assert not result.verified
             assert result.resolution == "PARCEL_GEOMETRY_PROVIDER_FAILED"
+            assert result.retryable is expected_retryable
 
     with patch(
         "site_data.selected_parcel_candidate_verifier.query_dataset_by_point",
