@@ -70,6 +70,7 @@ function isSiteAnalysisBuildingFact(value: unknown): boolean {
     && typeof value.dong_name === 'string'
     && typeof value.building_name === 'string'
     && typeof value.main_use === 'string'
+    && typeof value.structure === 'string'
     && isNullableNumber(value.land_area)
     && isNullableNumber(value.building_area)
     && isNullableNumber(value.total_floor_area)
@@ -78,6 +79,7 @@ function isSiteAnalysisBuildingFact(value: unknown): boolean {
     && isNullableNumber(value.ground_floor_count)
     && isNullableNumber(value.underground_floor_count)
     && isNullableNumber(value.household_count)
+    && typeof value.permit_date === 'string'
     && typeof value.approval_date === 'string'
 }
 
