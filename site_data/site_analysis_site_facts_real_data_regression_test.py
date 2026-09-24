@@ -47,6 +47,10 @@ def main() -> int:
             str(item.get("structure") or "").strip()
             for item in items
         ),
+        "building roof": all(
+            str(item.get("roof") or "").strip()
+            for item in items
+        ),
         "building permit date count": sum(
             bool(str(item.get("permit_date") or "").strip())
             for item in items
@@ -79,6 +83,10 @@ def main() -> int:
     print(
         "Building structures:",
         [item.get("structure") for item in items],
+    )
+    print(
+        "Building roofs:",
+        [item.get("roof") for item in items],
     )
     print(
         "Building permit dates:",
