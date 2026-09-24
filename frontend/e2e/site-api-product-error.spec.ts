@@ -105,8 +105,34 @@ test.describe('SITE_API_ERROR_V1 Frontend focused validation', () => {
     await page.getByRole('button', { name: '필지 찾기' }).click()
 
     await expect(page.locator('.status')).toHaveText(
-      '외부 데이터 조회에 실패했습니다. 테스트용 후보 검색 제공자 오류입니다.',
+      '외부 데이터 조회에 실패했습니다. 테스트용 후보 검색 제공자 오류입니다. 다시 시도할 수 있습니다.',
     )
+  })
+
+  test('non-retryable provider error는 다시 시도 가능하다고 표시하지 않는다', async ({ page }) => {
+    await page.route('**/v1/parcel-candidates/address', async (route) => {
+      await route.fulfill({
+        status: 502,
+        contentType: 'application/json',
+        body: JSON.stringify(
+          productError(
+            'CANDIDATE_SEARCH_FAILED',
+            'PROVIDER',
+            '테스트용 재시도 불가 제공자 오류입니다.',
+            false,
+          ),
+        ),
+      })
+    })
+
+    await page.goto('/')
+    await page.getByLabel('주소', { exact: true }).fill('서울특별시 강남구 개포동 12')
+    await page.getByRole('button', { name: '필지 찾기' }).click()
+
+    await expect(page.locator('.status')).toHaveText(
+      '외부 데이터 조회에 실패했습니다. 테스트용 재시도 불가 제공자 오류입니다.',
+    )
+    await expect(page.locator('.status')).not.toContainText('다시 시도할 수 있습니다.')
   })
 
   test('parcel confirmation error의 code와 message를 PC 사용자 메시지에 반영한다', async ({ page }) => {
@@ -158,7 +184,7 @@ test.describe('SITE_API_ERROR_V1 Frontend focused validation', () => {
 
     await expect(page.getByText('SITE 분석 실패', { exact: true })).toBeVisible()
     await expect(page.locator('.analysis-panel')).toContainText(
-      '외부 데이터 조회에 실패해 SITE 분석을 완료하지 못했습니다. 테스트용 건축물 제공자 오류입니다.',
+      '외부 데이터 조회에 실패해 SITE 분석을 완료하지 못했습니다. 테스트용 건축물 제공자 오류입니다. 다시 시도할 수 있습니다.',
     )
   })
 })
