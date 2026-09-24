@@ -105,6 +105,8 @@ def parcel_candidates_by_address(request:AddressParcelCandidateSearchRequest):
 def confirm_selected_parcel_candidate(request:SelectedParcelCandidateRequest):
     try:
         verification=verify_selected_parcel_candidate(candidate_pnu=request.candidate_pnu,x=request.x,y=request.y)
+        if verification.resolution == "PARCEL_GEOMETRY_PROVIDER_FAILED":
+            raise product_http_error(502,"PARCEL_GEOMETRY_PROVIDER_FAILED","PROVIDER","필지 경계 제공자 조회를 완료하지 못했습니다.")
         if not verification.verified:
             raise product_http_error(404,"PARCEL_VERIFICATION_FAILED","PARCEL","선택한 필지를 검증할 수 없습니다.")
         if not isinstance(verification.geometry,dict):
