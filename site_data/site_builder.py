@@ -4,6 +4,8 @@ from .land_converter import (
     hydrate_land_from_records,
 )
 from .vworld_api import (
+    VWorldLandNoDataError,
+    VWorldLandProviderError,
     create_pnu,
     get_latest_land_characteristics,
 )
@@ -47,9 +49,16 @@ def create_site(api_items):
             land_records,
             reference_year=land_year,
         )
-    except Exception as e:
-        print()
-        print("WARNING: 토지정보를 가져오지 못했습니다.")
-        print(f"오류 내용: {e}")
+        site.land_provider_status = (
+            "AVAILABLE" if site.land is not None else "NO_DATA"
+        )
+    except VWorldLandNoDataError:
+        site.land_provider_status = "NO_DATA"
+    except VWorldLandProviderError as exc:
+        site.land_provider_status = "PROVIDER_FAILED"
+        site.land_provider_retryable = exc.retryable
+    except (ValueError, TypeError):
+        site.land_provider_status = "PROVIDER_FAILED"
+        site.land_provider_retryable = False
 
     return site
