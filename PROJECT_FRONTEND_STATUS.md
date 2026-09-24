@@ -1644,3 +1644,33 @@ Actual Backend-connected reanalysis E2E: 1 passed (24.1s)
 ```
 
 Therefore **SITE FACT BUILDING MANAGEMENT ID PRESENTATION (E-2) = USER-LOCAL BEHAVIORAL PASS / CLOSED**.
+
+## E-3 SITE FACT building presentation — 2026-09-24
+
+E-3 is **IMPLEMENTED + USER LOCAL BEHAVIORAL PASS / CLOSED** at code HEAD `6c78fcc870c22459da4cf323ef2d07e5ca9f3e2d`.
+
+The Frontend SITE FACT building presentation now consumes the Backend public contract fields `structure` and `permit_date`. The TypeScript contract and runtime response validator both require these fields as strings, while an empty permit date remains a valid provider-derived value and is rendered through the existing information-absence presentation.
+
+During Backend-connected E2E validation, the data path was confirmed healthy but the structure value had a zero-width rendered box in the desktop result layout:
+
+```text
+text: 철근콘크리트구조
+details open: true
+display: block
+visibility: visible
+opacity: 1
+rendered width: 0px
+```
+
+The root cause was the building-detail grid being split into two columns inside an already narrow building facts column. The production CSS was corrected to a single-column building-detail grid. The temporary visibility diagnostic was then removed; the permanent E2E assertions for management ID, structure, and permit date remain.
+
+User-local final validation:
+
+```text
+Production build: PASS (Vite 8.3.0, 28 modules, 122ms)
+Actual Backend-connected reanalysis E2E: PASS (1 passed, 24.6s)
+Backend public SITE FACT contract: PASS
+```
+
+No Frontend/Backend trust boundary, map truth contract, state model, or API interaction architecture changed in E-3.
+
