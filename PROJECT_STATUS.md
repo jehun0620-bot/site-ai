@@ -335,3 +335,12 @@ LIVE: 314 = 62 / 216 / 34 / 2
 ```
 
 다른 PNU에서 stale BASE snapshot geometry를 canonical truth로 재사용하지 않고 live same-PNU polygon을 재검증했으며, zone/numeric/rule state도 대상 SITE에 맞게 독립적으로 해석됐다. 따라서 현재 Backend final refactoring closeout은 **USER-LOCAL BEHAVIORAL PASS**다. 추가 대규모 Backend 구조 분해는 중단하고, 실제 결함 또는 새 기능 요구가 있을 때만 좁은 범위로 재개한다. 다음 주요 개발 단계는 Frontend responsibility refactor다.
+
+
+## 11. Land provider provenance / Provider resilience D closeout — 2026-09-24
+
+Building-HUB 건축물이 존재하는 SITE 경로에서도 기존 VWorld 토지 조회 결과의 provider provenance를 보존하도록 정렬했다. Building-HUB-present와 parcel-only 경로 모두 토지 조회를 `AVAILABLE / NO_DATA / PROVIDER_FAILED`로 구분하고, provider failure의 `retryable` 값을 public SITE FACT의 `land_status / land_retryable`까지 전달한다.
+
+사용자 로컬 검증에서 `BUILDING_SITE_LAND_ENRICHMENT_CONTRACT_PASS`, `VWORLD_LAND_PROVIDER_CONTRACT_PASS`, `PARCEL_ONLY_LAND_ENRICHMENT_CONTRACT_PASS`, `SITE_FACTS_RESPONSE_CONTRACT_PASS`가 PASS했다. 실제 대표 필지 `1168010300100120000`도 `READY`, `land_status=AVAILABLE`, `land_retryable=False`, official area `121040.4`, buildings `34`, BCR `50`, FAR `250`, rules `314 = 62 / 214 / 36 / 2`를 확인했다. Backend-connected reanalysis E2E와 mobile responsive E2E도 각각 `1 passed`로 사용자 로컬 PASS했다. 이 검증 시점의 HEAD는 `d7cd0ab6896dd70c7da1012560f1a623917de5d5`다.
+
+Provider resilience D의 마지막 presentation 정렬로 Frontend는 이미 전달받고 있던 `SITE_API_ERROR_V1.retryable`을 provider 오류 메시지에 반영한다. `retryable=true`만 사용자에게 다시 시도 가능함을 알리고, `false/null`에는 해당 문구를 붙이지 않는다. 이는 자동 retry, 자동 SITE 재분석, 임의 progress/timeout을 추가하지 않는다. 이 Frontend 변경의 behavioral completion은 focused product-error E2E와 production build의 사용자 로컬 PASS 후 확정한다.
