@@ -396,3 +396,35 @@ SITE_FACTS_RESPONSE_CONTRACT_PASS
 
 The public response contract now permanently asserts `structure` and `permit_date`. No second SITE truth path, provider path, spatial query, or Rule Engine path was introduced.
 
+## E-4 SITE FACT building roof — 2026-09-24
+
+E-4 adds the Building HUB title-field `roofCdNm` to the canonical/public SITE FACT building path as `Building.roof`. The provider-supplied roof-name string is preserved as-is apart from whitespace trimming; no numeric/code interpretation or inferred meaning is introduced.
+
+Read-only provider probes established the field before implementation:
+
+```text
+개포동 12   : 34 / 34 roofCdNm nonblank
+  (철근)콘크리트 32
+  기타지붕 2
+
+개포동 12-2 : 9 / 9 roofCdNm nonblank
+  (철근)콘크리트 8
+  슬레이트 1
+
+Observed total: 43 / 43 nonblank
+```
+
+The permanent representative real-provider regression for PNU `1168010300100120000` verifies all 34 public building items have a nonblank `roof` without hard-coding a particular roof type. The public SITE FACT projection contract also fixes the new field.
+
+User-local validation at code HEAD `c73985723852fdd8d8108da70028053abf1ba788`:
+
+```text
+SITE_FACTS_RESPONSE_CONTRACT_PASS
+SITE FACT real-data regression: all_pass True
+Building HUB: 34 / 34 / status 00
+Frontend production build: PASS (Vite 8.3.0, 28 modules, 118ms)
+Actual Backend-connected reanalysis E2E: PASS (1 passed, 24.4s; test body 23.4s)
+Tracked working tree after validation: clean
+```
+
+No provider boundary, Rule Engine, spatial/law-data truth boundary, Land fields, or protected output file changed. Therefore **E-4 SITE FACT BUILDING ROOF = USER-LOCAL BEHAVIORAL PASS / CLOSED**.
