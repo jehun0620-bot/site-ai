@@ -448,3 +448,26 @@ VWorld land lookup
 `AVAILABLE`은 정상 조회 후 canonical land가 존재함을, `NO_DATA`는 provider 호출은 정상이나 조회 가능한 land record가 없음을, `PROVIDER_FAILED`는 provider 조회 자체가 실패했음을 뜻한다. 이 provenance는 Building-HUB 건축물 존재 여부와 독립적으로 보존한다.
 
 Public product error의 `retryable=true`는 사용자가 다시 시도할 가치가 있을 수 있다는 presentation 정보다. 자동 retry 명령이 아니며 Frontend는 이 값만으로 provider를 자동 재호출하거나 SITE analysis를 자동 재실행하지 않는다. `retryable=false` 또는 legacy/null 상태를 재시도 가능으로 승격하지 않는다.
+
+## 25. Shared runtime spatial condition projection — 2026-09-24
+The current-SITE spatial condition result is resolved once and reused by both legal-rule evaluation and public SITE FACT presentation:
+
+```text
+current Site / PNU
+  ↓
+verified parcel geometry
+  ↓
+runtime spatial condition resolution
+  ├─→ Rule Engine
+  └─→ public SITE FACT → frontend
+```
+
+Architectural rules:
+- SITE FACT does not perform an independent VWorld/spatial query for these conditions.
+- The public SITE FACT projection is intentionally narrower than the internal runtime condition object. It exposes the stable tri-state result and does not copy internal `evidence`, query internals, or provider diagnostics.
+- The public tri-state contract is `TRUE | FALSE | UNKNOWN`.
+- Frontend wording is `해당 | 비해당 | 확인 필요`.
+- `UNKNOWN` must remain unresolved; it must not be converted to `FALSE` or displayed as `비해당`.
+- The initial shared set is 지구단위계획, 개발진흥지구, 취락지구, 방재지구.
+- This projection does not populate the separate canonical `Land.district` or `Land.land_use_regulation` fields.
+
