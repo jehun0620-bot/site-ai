@@ -815,6 +815,14 @@ def main() -> int:
                     ]
                 ),
 
+                "condition_expression": (
+                    copy.deepcopy(
+                        clause.get(
+                            "condition_expression"
+                        )
+                    )
+                ),
+
                 "required_inputs": (
                     condition_split[
                         "required_inputs"
