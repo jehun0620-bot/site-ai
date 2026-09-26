@@ -331,6 +331,158 @@ def refresh_condition_groups(
 
 
 # ============================================================
+# E-5 condition expression
+# ============================================================
+
+def _condition_state_by_identity(
+    rule: Dict[str, Any],
+    name: str,
+    condition_type: str,
+) -> str:
+
+    for condition in rule.get("conditions", []):
+        if not isinstance(condition, dict):
+            continue
+
+        if (
+            safe_string(condition.get("name")) == name
+            and safe_string(condition.get("type")) == condition_type
+        ):
+            state = safe_string(condition.get("state"))
+            return (
+                state
+                if state in {"TRUE", "FALSE", "UNKNOWN", "UNSET"}
+                else "UNKNOWN"
+            )
+
+    return "UNKNOWN"
+
+
+def evaluate_condition_expression(
+    rule: Dict[str, Any],
+    expression: Dict[str, Any],
+) -> Dict[str, Any]:
+    """
+    Evaluate an optional E-5 expression without changing legacy rules.
+
+    Four-state precedence:
+      AND: FALSE > UNKNOWN > UNSET > TRUE
+      OR:  TRUE > UNKNOWN > UNSET > FALSE
+    """
+
+    if not isinstance(expression, dict):
+        return {"state": "UNKNOWN"}
+
+    op = safe_string(expression.get("op"))
+
+    if op == "ATOM":
+        condition = expression.get("condition", {})
+
+        if not isinstance(condition, dict):
+            return {"state": "UNKNOWN"}
+
+        name = safe_string(condition.get("name"))
+        condition_type = safe_string(condition.get("type"))
+
+        if not name or not condition_type:
+            return {"state": "UNKNOWN"}
+
+        return {
+            "state": _condition_state_by_identity(
+                rule,
+                name,
+                condition_type,
+            )
+        }
+
+    if op not in {"AND", "OR"}:
+        return {"state": "UNKNOWN"}
+
+    children = expression.get("children", [])
+
+    if not isinstance(children, list) or len(children) < 2:
+        return {"state": "UNKNOWN"}
+
+    states = [
+        evaluate_condition_expression(
+            rule,
+            child,
+        ).get("state")
+        for child in children
+    ]
+
+    if op == "AND":
+        if "FALSE" in states:
+            state = "FALSE"
+        elif "UNKNOWN" in states:
+            state = "UNKNOWN"
+        elif "UNSET" in states:
+            state = "UNSET"
+        elif all(item == "TRUE" for item in states):
+            state = "TRUE"
+        else:
+            state = "UNKNOWN"
+
+    else:
+        if "TRUE" in states:
+            state = "TRUE"
+        elif "UNKNOWN" in states:
+            state = "UNKNOWN"
+        elif "UNSET" in states:
+            state = "UNSET"
+        elif all(item == "FALSE" for item in states):
+            state = "FALSE"
+        else:
+            state = "UNKNOWN"
+
+    return {"state": state}
+
+
+def _condition_expression_applicability(
+    rule: Dict[str, Any],
+) -> Optional[Dict[str, str]]:
+
+    expression = rule.get("condition_expression")
+
+    if expression is None:
+        return None
+
+    state = evaluate_condition_expression(
+        rule,
+        expression,
+    ).get("state")
+
+    if state == "FALSE":
+        return {
+            "applicability": "NOT_APPLICABLE",
+            "reason": "조건식 FALSE",
+        }
+
+    if state == "UNKNOWN":
+        return {
+            "applicability": "UNKNOWN",
+            "reason": "조건식 미확정",
+        }
+
+    if state == "UNSET":
+        return {
+            "applicability": "CONDITIONAL",
+            "reason": "조건식 추가 입력 필요",
+        }
+
+    if state == "TRUE":
+        return {
+            "applicability": "APPLICABLE",
+            "reason": "조건식 충족",
+        }
+
+    return {
+        "applicability": "UNKNOWN",
+        "reason": "조건식 판정 불가",
+    }
+
+
+# ============================================================
 # applicability
 # ============================================================
 
@@ -406,6 +558,22 @@ def recalculate_applicability(
                 "현재 SITE 용도지역 불일치"
             ),
         }
+
+    # --------------------------------------------------------
+    # E-5 explicit condition expression
+    #
+    # Rules without condition_expression continue through the
+    # existing flat-condition path below.
+    # --------------------------------------------------------
+
+    expression_applicability = (
+        _condition_expression_applicability(
+            rule
+        )
+    )
+
+    if expression_applicability is not None:
+        return expression_applicability
 
     # --------------------------------------------------------
     # UNKNOWN condition
