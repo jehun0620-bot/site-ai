@@ -268,6 +268,29 @@ def refresh_condition_groups(
     rule: Dict[str, Any],
 ) -> None:
 
+    expression = rule.get(
+        "condition_expression"
+    )
+
+    if isinstance(expression, dict):
+        groups = (
+            _condition_expression_groups(
+                rule,
+                expression,
+            )
+        )
+
+        rule["required_inputs"] = groups[
+            "required_inputs"
+        ]
+        rule["blocked_by"] = groups[
+            "blocked_by"
+        ]
+        rule["unknown_by"] = groups[
+            "unknown_by"
+        ]
+        return
+
     conditions = (
         rule.get(
             "conditions",
@@ -482,6 +505,149 @@ def _condition_expression_applicability(
     }
 
 
+def _condition_by_identity(
+    rule: Dict[str, Any],
+    name: str,
+    condition_type: str,
+) -> Optional[Dict[str, Any]]:
+
+    for condition in rule.get("conditions", []):
+        if not isinstance(condition, dict):
+            continue
+
+        if (
+            safe_string(condition.get("name")) == name
+            and safe_string(condition.get("type")) == condition_type
+        ):
+            return condition
+
+    return None
+
+
+def _condition_expression_groups(
+    rule: Dict[str, Any],
+    expression: Dict[str, Any],
+) -> Dict[str, List[Dict[str, Any]]]:
+    """
+    Return only condition groups that are decisive for the current
+    four-state expression result.
+
+    Examples:
+      TRUE OR UNSET   -> no remaining input
+      FALSE OR UNSET  -> UNSET is required
+      FALSE AND UNSET -> FALSE blocks; UNSET is not required
+    """
+
+    empty = {
+        "required_inputs": [],
+        "blocked_by": [],
+        "unknown_by": [],
+    }
+
+    if not isinstance(expression, dict):
+        return empty
+
+    op = safe_string(expression.get("op"))
+
+    if op == "ATOM":
+        atom = expression.get("condition", {})
+
+        if not isinstance(atom, dict):
+            return empty
+
+        condition = _condition_by_identity(
+            rule,
+            safe_string(atom.get("name")),
+            safe_string(atom.get("type")),
+        )
+
+        if condition is None:
+            return empty
+
+        state = safe_string(
+            condition.get("state")
+        )
+
+        if state == "UNSET":
+            return {
+                **empty,
+                "required_inputs": [condition],
+            }
+
+        if state == "FALSE":
+            return {
+                **empty,
+                "blocked_by": [condition],
+            }
+
+        if state == "UNKNOWN":
+            return {
+                **empty,
+                "unknown_by": [condition],
+            }
+
+        return empty
+
+    if op not in {"AND", "OR"}:
+        return empty
+
+    children = expression.get("children", [])
+
+    if not isinstance(children, list) or len(children) < 2:
+        return empty
+
+    child_states = [
+        evaluate_condition_expression(
+            rule,
+            child,
+        ).get("state")
+        for child in children
+    ]
+
+    expression_state = (
+        evaluate_condition_expression(
+            rule,
+            expression,
+        ).get("state")
+    )
+
+    decisive_state = {
+        "FALSE": "FALSE",
+        "UNKNOWN": "UNKNOWN",
+        "UNSET": "UNSET",
+    }.get(expression_state)
+
+    if decisive_state is None:
+        return empty
+
+    merged = {
+        "required_inputs": [],
+        "blocked_by": [],
+        "unknown_by": [],
+    }
+
+    for child, child_state in zip(
+        children,
+        child_states,
+    ):
+        if child_state != decisive_state:
+            continue
+
+        child_groups = (
+            _condition_expression_groups(
+                rule,
+                child,
+            )
+        )
+
+        for key in merged:
+            merged[key].extend(
+                child_groups[key]
+            )
+
+    return merged
+
+
 # ============================================================
 # applicability
 # ============================================================
@@ -510,32 +676,6 @@ def recalculate_applicability(
             [],
         )
     )
-
-    # --------------------------------------------------------
-    # FALSE condition
-    # --------------------------------------------------------
-
-    if blocked:
-
-        return {
-
-            "applicability": (
-                "NOT_APPLICABLE"
-            ),
-
-            "reason": (
-                "필수조건 FALSE: "
-                + ", ".join(
-                    safe_string(
-                        item.get(
-                            "name"
-                        )
-                    )
-                    for item
-                    in blocked
-                )
-            ),
-        }
 
     # --------------------------------------------------------
     # zone mismatch
@@ -574,6 +714,32 @@ def recalculate_applicability(
 
     if expression_applicability is not None:
         return expression_applicability
+
+    # --------------------------------------------------------
+    # FALSE condition (legacy flat-condition rules only)
+    # --------------------------------------------------------
+
+    if blocked:
+
+        return {
+
+            "applicability": (
+                "NOT_APPLICABLE"
+            ),
+
+            "reason": (
+                "필수조건 FALSE: "
+                + ", ".join(
+                    safe_string(
+                        item.get(
+                            "name"
+                        )
+                    )
+                    for item
+                    in blocked
+                )
+            ),
+        }
 
     # --------------------------------------------------------
     # UNKNOWN condition
