@@ -73,6 +73,105 @@ except ImportError:
 
 
 # ============================================================
+# E-5 condition expression schema
+# ============================================================
+
+def validate_condition_expression_schema(
+    expression: Any,
+) -> bool:
+    """
+    E-5-B-2 foundation only.
+
+    Supported nodes:
+      {"op": "ATOM", "condition": {"name": str, "type": str}}
+      {"op": "AND"|"OR", "children": [node, ...]}
+
+    No production clause is assigned an expression in this step.
+    """
+
+    if not isinstance(expression, dict):
+        return False
+
+    op = expression.get("op")
+
+    if op == "ATOM":
+        condition = expression.get("condition")
+        return (
+            isinstance(condition, dict)
+            and isinstance(condition.get("name"), str)
+            and bool(condition.get("name", "").strip())
+            and isinstance(condition.get("type"), str)
+            and bool(condition.get("type", "").strip())
+        )
+
+    if op not in {"AND", "OR"}:
+        return False
+
+    children = expression.get("children")
+
+    return (
+        isinstance(children, list)
+        and len(children) >= 2
+        and all(
+            validate_condition_expression_schema(child)
+            for child in children
+        )
+    )
+
+
+def validation_e5_condition_expression_schema() -> bool:
+    valid = {
+        "op": "OR",
+        "children": [
+            {
+                "op": "ATOM",
+                "condition": {
+                    "name": "공동주택",
+                    "type": "PROJECT",
+                },
+            },
+            {
+                "op": "AND",
+                "children": [
+                    {
+                        "op": "ATOM",
+                        "condition": {
+                            "name": "공공주택",
+                            "type": "PROJECT",
+                        },
+                    },
+                    {
+                        "op": "ATOM",
+                        "condition": {
+                            "name": "임대주택",
+                            "type": "PROJECT",
+                        },
+                    },
+                ],
+            },
+        ],
+    }
+
+    invalid = {
+        "op": "OR",
+        "children": [
+            {
+                "op": "ATOM",
+                "condition": {
+                    "name": "",
+                    "type": "PROJECT",
+                },
+            },
+        ],
+    }
+
+    return (
+        validate_condition_expression_schema(valid)
+        and not validate_condition_expression_schema(invalid)
+    )
+
+
+# ============================================================
 # 조건 정의
 # ============================================================
 
@@ -3447,6 +3546,9 @@ def run_validations(
             validation_e5_rule_247_and_counterexample_baseline(
                 clauses
             ),
+
+        "E-5 condition expression schema":
+            validation_e5_condition_expression_schema(),
     }
 
 
