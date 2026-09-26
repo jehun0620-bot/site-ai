@@ -3200,6 +3200,143 @@ def validation_compact_following_ho_split(
     return True
 
 
+
+def _condition_signature(
+    clause: Dict[str, Any],
+) -> set:
+    return {
+        (
+            condition.get("name"),
+            condition.get("type"),
+        )
+        for condition
+        in clause.get("conditions", [])
+        if isinstance(condition, dict)
+    }
+
+
+def _find_e5_clause(
+    clauses: List[Dict[str, Any]],
+    paragraph: Optional[str],
+    item: Optional[str],
+) -> Optional[Dict[str, Any]]:
+    for clause in clauses:
+        if (
+            clause.get("law_name")
+            == "서울특별시 도시계획 조례"
+            and clause.get("rule_title")
+            == "용적률의 완화"
+            and clause.get("paragraph")
+            == paragraph
+            and clause.get("item")
+            == item
+            and clause.get("subitem")
+            is None
+        ):
+            return clause
+
+    return None
+
+
+def validation_e5_rule_183_parent_condition_union(
+    clauses: List[Dict[str, Any]],
+) -> bool:
+    clause = _find_e5_clause(
+        clauses,
+        "①",
+        None,
+    )
+
+    if clause is None:
+        return False
+
+    return _condition_signature(clause) == {
+        ("공공시설제공", "PROJECT"),
+        ("공공주택", "PROJECT"),
+        ("사회복지시설", "PROJECT"),
+        ("임대주택", "PROJECT"),
+    }
+
+
+def validation_e5_rule_206_flat_branch_baseline(
+    clauses: List[Dict[str, Any]],
+) -> bool:
+    clause = _find_e5_clause(
+        clauses,
+        "②",
+        "2",
+    )
+
+    if clause is None:
+        return False
+
+    return (
+        "또는" in clause.get("text", "")
+        and _condition_signature(clause)
+        == {
+            ("공공주택", "PROJECT"),
+            ("공동주택", "PROJECT"),
+            ("임대주택", "PROJECT"),
+            ("주거복합", "PROJECT"),
+        }
+    )
+
+
+def validation_e5_rule_212_clause_baseline(
+    clauses: List[Dict[str, Any]],
+) -> bool:
+    clause = _find_e5_clause(
+        clauses,
+        "②",
+        "8",
+    )
+
+    if clause is None:
+        return False
+
+    return _condition_signature(clause) == {
+        ("지구단위계획", "SITE"),
+        ("대학", "PROJECT"),
+        ("종합의료시설", "PROJECT"),
+    }
+
+
+def validation_e5_rule_247_and_counterexample_baseline(
+    clauses: List[Dict[str, Any]],
+) -> bool:
+    target = None
+
+    for clause in clauses:
+        if (
+            clause.get("law_name")
+            == "국토의 계획 및 이용에 관한 법률"
+            and clause.get("rule_title")
+            == "용도지역에서의 용적률"
+            and clause.get("paragraph")
+            == "⑥"
+            and clause.get("item")
+            is None
+            and clause.get("subitem")
+            is None
+        ):
+            target = clause
+            break
+
+    if target is None:
+        return False
+
+    text = target.get("text", "")
+
+    return (
+        "사회복지시설" in text
+        and "기부채납" in text
+        and _condition_signature(target)
+        == {
+            ("기부채납", "PROJECT"),
+            ("사회복지시설", "PROJECT"),
+        }
+    )
+
 def run_validations(
     clauses: List[
         Dict[
@@ -3288,6 +3425,26 @@ def run_validations(
 
         "학교이적지 타 용도지역 목 제외":
             validation_school_other_zones_excluded(
+                clauses
+            ),
+
+        "E-5 183 부모 조건 합집합 기준선":
+            validation_e5_rule_183_parent_condition_union(
+                clauses
+            ),
+
+        "E-5 206 leaf 분기 평면화 기준선":
+            validation_e5_rule_206_flat_branch_baseline(
+                clauses
+            ),
+
+        "E-5 212 clause 조건 기준선":
+            validation_e5_rule_212_clause_baseline(
+                clauses
+            ),
+
+        "E-5 247 정상 다중조건 대조군 기준선":
+            validation_e5_rule_247_and_counterexample_baseline(
                 clauses
             ),
     }
