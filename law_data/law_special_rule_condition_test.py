@@ -836,6 +836,13 @@ def normalize_special_rule(
     )
 
     return {
+        "source_provenance": dict(
+            candidate.get(
+                "source_provenance",
+                {},
+            )
+        ),
+
         "category": (
             category
         ),
