@@ -3469,6 +3469,158 @@ def validation_e5_rule_247_and_counterexample_baseline(
         }
     )
 
+# ============================================================
+# E-5-B-4B structural risk regression baseline
+# ============================================================
+
+def _e5_clause_identity(
+    clause: Dict[str, Any],
+) -> Tuple[Any, ...]:
+    return (
+        clause.get("law_name"),
+        clause.get("rule_title"),
+        clause.get("paragraph"),
+        clause.get("item"),
+        clause.get("subitem"),
+    )
+
+
+def _e5_container_indexes(
+    clauses: List[Dict[str, Any]],
+) -> List[int]:
+    containers: List[int] = []
+
+    for index, clause in enumerate(
+        clauses,
+        start=1,
+    ):
+        law_name = clause.get("law_name")
+        rule_title = clause.get("rule_title")
+        paragraph = clause.get("paragraph")
+        item = clause.get("item")
+        subitem = clause.get("subitem")
+
+        for child in clauses:
+            if (
+                child.get("law_name") != law_name
+                or child.get("rule_title") != rule_title
+                or child.get("paragraph") != paragraph
+            ):
+                continue
+
+            paragraph_has_child = (
+                item is None
+                and child.get("item") is not None
+            )
+
+            item_has_child = (
+                item is not None
+                and child.get("item") == item
+                and subitem is None
+                and child.get("subitem") is not None
+            )
+
+            if paragraph_has_child or item_has_child:
+                containers.append(index)
+                break
+
+    return containers
+
+
+def validation_e5_structure_risk_baseline(
+    clauses: List[Dict[str, Any]],
+) -> bool:
+    """
+    E-5-B-4B diagnostic baseline only.
+
+    This does not change clause splitting, conditions, applicability,
+    or condition-expression status.  It permanently records two
+    observed structural risks before production behavior is changed:
+
+    1. 63 of the current 314 clauses are parent/container clauses.
+    2. Seoul ordinance building-coverage relaxation paragraph ② item 3
+       still contains the market-review branch without a split subitem.
+
+    The second case is intentionally a review signal, not an automatic
+    legal interpretation.
+    """
+
+    if len(clauses) != 314:
+        return False
+
+    container_indexes = _e5_container_indexes(
+        clauses
+    )
+
+    if len(container_indexes) != 63:
+        return False
+
+    parent_identity = (
+        "서울특별시 도시계획 조례",
+        "건폐율의 완화",
+        "②",
+        None,
+        None,
+    )
+
+    market_item_identity = (
+        "서울특별시 도시계획 조례",
+        "건폐율의 완화",
+        "②",
+        "3",
+        None,
+    )
+
+    parent_index = None
+    market_item = None
+
+    for index, clause in enumerate(
+        clauses,
+        start=1,
+    ):
+        identity = _e5_clause_identity(
+            clause
+        )
+
+        if identity == parent_identity:
+            parent_index = index
+
+        if identity == market_item_identity:
+            market_item = clause
+
+    if (
+        parent_index is None
+        or parent_index not in container_indexes
+        or market_item is None
+    ):
+        return False
+
+    market_text = market_item.get(
+        "text",
+        "",
+    )
+
+    market_has_split_subitem = any(
+        (
+            child.get("law_name")
+            == market_item_identity[0]
+            and child.get("rule_title")
+            == market_item_identity[1]
+            and child.get("paragraph")
+            == market_item_identity[2]
+            and child.get("item")
+            == market_item_identity[3]
+            and child.get("subitem") is not None
+        )
+        for child in clauses
+    )
+
+    return (
+        "시장정비사업심의위원회" in market_text
+        and not market_has_split_subitem
+    )
+
+
 def run_validations(
     clauses: List[
         Dict[
@@ -3582,6 +3734,11 @@ def run_validations(
 
         "E-5 condition expression schema":
             validation_e5_condition_expression_schema(),
+
+        "E-5-B-4B 구조 위험 기준선":
+            validation_e5_structure_risk_baseline(
+                clauses
+            ),
     }
 
 
