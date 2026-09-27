@@ -1831,6 +1831,13 @@ def make_clause(
     )
 
     return {
+        "source_provenance": dict(
+            candidate.get(
+                "source_provenance",
+                {},
+            )
+        ),
+
         "category":
             category,
 
