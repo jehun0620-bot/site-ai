@@ -1,5 +1,67 @@
 {
   "step": "STEP 17-21-C-10-2A-9 numeric semantic override finalize",
+  "verified_numeric_roles": {
+    "89": {
+      "status": "VERIFIED",
+      "roles": [
+        {
+          "value": 40.0,
+          "role": "RESULT",
+          "target": "building_coverage_ratio",
+          "semantic_type": "ABSOLUTE_MAX",
+          "unit": "percent"
+        },
+        {
+          "value": 50.0,
+          "role": "APPLICABILITY_THRESHOLD",
+          "target": "additional_site_area_ratio",
+          "operator": "LTE",
+          "unit": "percent_of_existing_site_area"
+        }
+      ],
+      "reason": "40퍼센트는 건폐율 결과값이고, 50퍼센트는 추가편입부지 면적의 적용요건"
+    },
+    "102": {
+      "status": "VERIFIED",
+      "roles": [
+        {
+          "value": 40.0,
+          "role": "RESULT",
+          "target": "building_coverage_ratio",
+          "semantic_type": "ABSOLUTE_MAX",
+          "unit": "percent"
+        },
+        {
+          "value": 50.0,
+          "role": "APPLICABILITY_THRESHOLD",
+          "target": "additional_site_area_ratio",
+          "operator": "LTE",
+          "unit": "percent_of_existing_site_area"
+        }
+      ],
+      "reason": "40퍼센트는 건폐율 결과값이고, 50퍼센트는 추가편입부지 면적의 적용요건"
+    },
+    "106": {
+      "status": "VERIFIED",
+      "roles": [
+        {
+          "value": 40.0,
+          "role": "RESULT",
+          "target": "building_coverage_ratio",
+          "semantic_type": "ABSOLUTE_MAX",
+          "unit": "percent"
+        },
+        {
+          "value": 50.0,
+          "role": "APPLICABILITY_THRESHOLD",
+          "target": "additional_site_area_ratio",
+          "operator": "LTE",
+          "unit": "percent_of_existing_site_area"
+        }
+      ],
+      "reason": "40퍼센트는 건폐율 결과값이고, 50퍼센트는 추가편입부지 면적의 적용요건"
+    }
+  },
   "summary": {
     "candidate_count": 28,
     "semantic_override_count": 8,
@@ -1798,6 +1860,7 @@
   "semantic_unresolved": [],
   "validations": {
     "dedup candidate 28개 유지": true,
+    "clause 89/102/106 numeric role VERIFIED": true,
     "explicit semantic override 8개 적용": true,
     "unresolved 8건 semantic 확정": true,
     "clause 251 NON_EFFECT 분류": true,
