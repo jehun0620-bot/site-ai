@@ -265,6 +265,38 @@ SEMANTIC_OVERRIDES = {
 
 
 # ============================================================
+# E-5-B-4C verified numeric roles
+# ============================================================
+
+VERIFIED_NUMERIC_ROLES = {
+    index: {
+        "status": "VERIFIED",
+        "roles": [
+            {
+                "value": 40.0,
+                "role": "RESULT",
+                "target": "building_coverage_ratio",
+                "semantic_type": ABSOLUTE_MAX,
+                "unit": "percent",
+            },
+            {
+                "value": 50.0,
+                "role": "APPLICABILITY_THRESHOLD",
+                "target": "additional_site_area_ratio",
+                "operator": "LTE",
+                "unit": "percent_of_existing_site_area",
+            },
+        ],
+        "reason": (
+            "40퍼센트는 건폐율 결과값이고, "
+            "50퍼센트는 추가편입부지 면적의 적용요건"
+        ),
+    }
+    for index in (89, 102, 106)
+}
+
+
+# ============================================================
 # 계산 가능한 semantic
 # ============================================================
 
@@ -715,12 +747,39 @@ def main() -> int:
         )
     )
 
+    numeric_role_89_102_106_verified = all(
+        VERIFIED_NUMERIC_ROLES.get(index, {}).get("status")
+        == "VERIFIED"
+        and VERIFIED_NUMERIC_ROLES.get(index, {}).get("roles")
+        == [
+            {
+                "value": 40.0,
+                "role": "RESULT",
+                "target": "building_coverage_ratio",
+                "semantic_type": ABSOLUTE_MAX,
+                "unit": "percent",
+            },
+            {
+                "value": 50.0,
+                "role": "APPLICABILITY_THRESHOLD",
+                "target": "additional_site_area_ratio",
+                "operator": "LTE",
+                "unit": "percent_of_existing_site_area",
+            },
+        ]
+        for index in (89, 102, 106)
+    )
+
     validations = {
         "dedup candidate 28개 유지": (
             len(
                 finalized
             )
             == 28
+        ),
+
+        "clause 89/102/106 numeric role VERIFIED": (
+            numeric_role_89_102_106_verified
         ),
 
         "explicit semantic override 8개 적용": (
@@ -767,6 +826,12 @@ def main() -> int:
 
     output = {
         "step": STEP_NAME,
+
+        "verified_numeric_roles": (
+            copy.deepcopy(
+                VERIFIED_NUMERIC_ROLES
+            )
+        ),
 
         "summary": {
             "candidate_count": (
