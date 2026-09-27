@@ -119,6 +119,19 @@ def validate_condition_expression_schema(
     )
 
 
+CONDITION_EXPRESSION_STATUSES = {
+    "NONE",
+    "REVIEW_REQUIRED",
+    "VERIFIED",
+}
+
+
+def validate_condition_expression_status(
+    status: Any,
+) -> bool:
+    return status in CONDITION_EXPRESSION_STATUSES
+
+
 def validation_e5_condition_expression_schema() -> bool:
     valid = {
         "op": "OR",
@@ -168,6 +181,11 @@ def validation_e5_condition_expression_schema() -> bool:
     return (
         validate_condition_expression_schema(valid)
         and not validate_condition_expression_schema(invalid)
+        and validate_condition_expression_status("NONE")
+        and validate_condition_expression_status("REVIEW_REQUIRED")
+        and validate_condition_expression_status("VERIFIED")
+        and not validate_condition_expression_status("")
+        and not validate_condition_expression_status("AUTO_PARSED")
     )
 
 
