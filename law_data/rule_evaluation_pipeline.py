@@ -271,8 +271,14 @@ def refresh_condition_groups(
     expression = rule.get(
         "condition_expression"
     )
+    expression_status = safe_string(
+        rule.get("condition_expression_status")
+    )
 
-    if isinstance(expression, dict):
+    if (
+        expression_status == "VERIFIED"
+        and isinstance(expression, dict)
+    ):
         groups = (
             _condition_expression_groups(
                 rule,
@@ -466,8 +472,14 @@ def _condition_expression_applicability(
 ) -> Optional[Dict[str, str]]:
 
     expression = rule.get("condition_expression")
+    expression_status = safe_string(
+        rule.get("condition_expression_status")
+    )
 
-    if expression is None:
+    if (
+        expression_status != "VERIFIED"
+        or not isinstance(expression, dict)
+    ):
         return None
 
     state = evaluate_condition_expression(
@@ -646,6 +658,70 @@ def _condition_expression_groups(
             )
 
     return merged
+
+
+def validation_e5_verified_condition_expression_gate() -> bool:
+    """Permanent regression for VERIFIED-only expression evaluation."""
+
+    def atom(name: str) -> Dict[str, Any]:
+        return {
+            "op": "ATOM",
+            "condition": {
+                "name": name,
+                "type": "PROJECT",
+            },
+        }
+
+    def rule_for(
+        status: Optional[str],
+        op: str,
+        left_state: str,
+        right_state: str,
+    ) -> Dict[str, Any]:
+        rule = {
+            "zone_relevance": "DIRECT",
+            "conditions": [
+                {"name": "A", "type": "PROJECT", "state": left_state},
+                {"name": "B", "type": "PROJECT", "state": right_state},
+            ],
+            "condition_expression": {
+                "op": op,
+                "children": [atom("A"), atom("B")],
+            },
+        }
+        if status is not None:
+            rule["condition_expression_status"] = status
+        refresh_condition_groups(rule)
+        return rule
+
+    cases = [
+        ("VERIFIED", "OR", "TRUE", "FALSE", "APPLICABLE", [], []),
+        ("VERIFIED", "OR", "FALSE", "UNSET", "CONDITIONAL", ["B"], []),
+        ("VERIFIED", "AND", "FALSE", "UNSET", "NOT_APPLICABLE", [], ["A"]),
+        ("VERIFIED", "AND", "TRUE", "UNSET", "CONDITIONAL", ["B"], []),
+        ("VERIFIED", "OR", "UNKNOWN", "TRUE", "APPLICABLE", [], []),
+        ("VERIFIED", "AND", "UNKNOWN", "FALSE", "NOT_APPLICABLE", [], ["B"]),
+    ]
+
+    for status, op, left, right, expected, required, blocked in cases:
+        rule = rule_for(status, op, left, right)
+        result = recalculate_applicability(rule)
+        if result.get("applicability") != expected:
+            return False
+        if [item.get("name") for item in rule["required_inputs"]] != required:
+            return False
+        if [item.get("name") for item in rule["blocked_by"]] != blocked:
+            return False
+
+    for status in ("REVIEW_REQUIRED", "NONE", None):
+        rule = rule_for(status, "OR", "TRUE", "FALSE")
+        result = recalculate_applicability(rule)
+        if result.get("applicability") != "NOT_APPLICABLE":
+            return False
+        if [item.get("name") for item in rule["blocked_by"]] != ["B"]:
+            return False
+
+    return True
 
 
 # ============================================================
