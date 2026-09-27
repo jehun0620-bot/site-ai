@@ -1079,6 +1079,44 @@ def main() -> int:
         == 250.0
     )
 
+    verified_numeric_roles = (
+        semantic_data.get(
+            "verified_numeric_roles",
+            {},
+        )
+    )
+
+    mixed_role_indexes = (
+        89,
+        102,
+        106,
+    )
+
+    mixed_numeric_roles_verified = all(
+        verified_numeric_roles.get(
+            str(index),
+            verified_numeric_roles.get(
+                index,
+                {},
+            ),
+        ).get(
+            "status"
+        )
+        == "VERIFIED"
+        for index in mixed_role_indexes
+    )
+
+    mixed_threshold_not_promoted = all(
+        semantic_index.get(
+            index,
+            {}
+        ).get(
+            "semantic"
+        )
+        is None
+        for index in mixed_role_indexes
+    )
+
     no_semantic_unresolved = (
         semantic_data.get(
             "summary",
@@ -1113,6 +1151,14 @@ def main() -> int:
 
         "numeric semantic unresolved 0": (
             no_semantic_unresolved
+        ),
+
+        "mixed numeric roles VERIFIED": (
+            mixed_numeric_roles_verified
+        ),
+
+        "threshold not promoted to numeric effect": (
+            mixed_threshold_not_promoted
         ),
 
         "PROJECT profile 로드": (
