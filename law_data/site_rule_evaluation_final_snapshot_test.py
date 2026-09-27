@@ -823,6 +823,13 @@ def main() -> int:
                     )
                 ),
 
+                "condition_expression_status": (
+                    clause.get(
+                        "condition_expression_status",
+                        "NONE",
+                    )
+                ),
+
                 "required_inputs": (
                     condition_split[
                         "required_inputs"
