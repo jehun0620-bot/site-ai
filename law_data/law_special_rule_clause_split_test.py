@@ -3534,15 +3534,16 @@ def validation_e5_structure_risk_baseline(
     E-5-B-4B diagnostic baseline only.
 
     This does not change clause splitting, conditions, applicability,
-    or condition-expression status.  It permanently records two
-    observed structural risks before production behavior is changed:
+    or condition-expression status. It records the observed structural
+    risk before production behavior is changed:
 
     1. 63 of the current 314 clauses are parent/container clauses.
     2. Seoul ordinance building-coverage relaxation paragraph ② item 3
-       still contains the market-review branch without a split subitem.
+       is itself a container with 가/나/다 children.
+    3. The market-review condition is detected both on that container
+       and on child 다, while 가/나 do not carry that condition.
 
-    The second case is intentionally a review signal, not an automatic
-    legal interpretation.
+    This is a review signal, not an automatic legal interpretation.
     """
 
     if len(clauses) != 314:
@@ -3555,7 +3556,7 @@ def validation_e5_structure_risk_baseline(
     if len(container_indexes) != 63:
         return False
 
-    parent_identity = (
+    paragraph_identity = (
         "서울특별시 도시계획 조례",
         "건폐율의 완화",
         "②",
@@ -3571,8 +3572,10 @@ def validation_e5_structure_risk_baseline(
         None,
     )
 
-    parent_index = None
+    paragraph_index = None
+    market_item_index = None
     market_item = None
+    children: Dict[str, Dict[str, Any]] = {}
 
     for index, clause in enumerate(
         clauses,
@@ -3582,42 +3585,46 @@ def validation_e5_structure_risk_baseline(
             clause
         )
 
-        if identity == parent_identity:
-            parent_index = index
+        if identity == paragraph_identity:
+            paragraph_index = index
 
         if identity == market_item_identity:
+            market_item_index = index
             market_item = clause
 
+        if (
+            clause.get("law_name")
+            == market_item_identity[0]
+            and clause.get("rule_title")
+            == market_item_identity[1]
+            and clause.get("paragraph")
+            == market_item_identity[2]
+            and clause.get("item")
+            == market_item_identity[3]
+            and clause.get("subitem") in {"가", "나", "다"}
+        ):
+            children[clause["subitem"]] = clause
+
     if (
-        parent_index is None
-        or parent_index not in container_indexes
+        paragraph_index is None
+        or paragraph_index not in container_indexes
+        or market_item_index is None
+        or market_item_index not in container_indexes
         or market_item is None
+        or set(children) != {"가", "나", "다"}
     ):
         return False
 
-    market_text = market_item.get(
-        "text",
-        "",
-    )
-
-    market_has_split_subitem = any(
-        (
-            child.get("law_name")
-            == market_item_identity[0]
-            and child.get("rule_title")
-            == market_item_identity[1]
-            and child.get("paragraph")
-            == market_item_identity[2]
-            and child.get("item")
-            == market_item_identity[3]
-            and child.get("subitem") is not None
-        )
-        for child in clauses
+    market_condition = (
+        "시장정비사업심의",
+        "PROCEDURE",
     )
 
     return (
-        "시장정비사업심의위원회" in market_text
-        and not market_has_split_subitem
+        market_condition in _condition_signature(market_item)
+        and market_condition not in _condition_signature(children["가"])
+        and market_condition not in _condition_signature(children["나"])
+        and market_condition in _condition_signature(children["다"])
     )
 
 
