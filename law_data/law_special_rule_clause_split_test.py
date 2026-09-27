@@ -618,6 +618,14 @@ def collect_rule_candidates(
                         TEXT_KEYS,
                     ),
 
+                "source_provenance":
+                    deepcopy(
+                        obj.get(
+                            "source_provenance",
+                            {},
+                        )
+                    ),
+
                 "source":
                     deepcopy(
                         obj
