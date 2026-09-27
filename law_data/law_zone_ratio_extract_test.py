@@ -773,6 +773,13 @@ def extract_zone_ratio(
                 "",
             )
         ),
+
+        "source_provenance": dict(
+            candidate.get(
+                "source_provenance",
+                {},
+            )
+        ),
     }
 
 
