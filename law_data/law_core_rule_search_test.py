@@ -236,6 +236,16 @@ def search_articles(
 
     matches = []
 
+    info = normalized_law["basic_info"]
+
+    source_provenance = {
+        "law_id": info.get("law_id", ""),
+        "mst": info.get("mst", ""),
+        "effective_date": info.get("effective_date", ""),
+        "publication_date": info.get("publication_date", ""),
+        "publication_number": info.get("publication_number", ""),
+    }
+
     for article in normalized_law[
         "articles"
     ]:
@@ -279,6 +289,8 @@ def search_articles(
         matches.append(
             {
                 "source_type": "article",
+
+                "source_provenance": dict(source_provenance),
 
                 "level": normalized_law[
                     "level"
@@ -359,6 +371,16 @@ def search_appendices(
 
     matches = []
 
+    info = normalized_law["basic_info"]
+
+    source_provenance = {
+        "law_id": info.get("law_id", ""),
+        "mst": info.get("mst", ""),
+        "effective_date": info.get("effective_date", ""),
+        "publication_date": info.get("publication_date", ""),
+        "publication_number": info.get("publication_number", ""),
+    }
+
     for appendix in normalized_law[
         "appendices"
     ]:
@@ -396,6 +418,8 @@ def search_appendices(
         matches.append(
             {
                 "source_type": "appendix",
+
+                "source_provenance": dict(source_provenance),
 
                 "level": normalized_law[
                     "level"
