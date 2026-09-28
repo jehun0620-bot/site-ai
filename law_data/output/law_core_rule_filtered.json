@@ -4,6 +4,13 @@
       "core": [
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -96,6 +103,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -158,6 +172,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -227,6 +248,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -285,6 +313,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -330,6 +365,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -392,6 +434,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -434,6 +483,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -470,6 +526,13 @@
       "reference": [
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -516,6 +579,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -556,6 +626,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -603,6 +680,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -647,6 +731,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -688,6 +779,13 @@
       "noise": [
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -722,6 +820,13 @@
         },
         {
           "source_type": "appendix",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -759,6 +864,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -792,6 +904,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -820,6 +939,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -851,6 +977,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -878,6 +1011,13 @@
         },
         {
           "source_type": "appendix",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -921,6 +1061,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -979,6 +1126,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1003,6 +1157,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1029,6 +1190,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1057,6 +1225,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -1082,6 +1257,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -1109,6 +1291,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1137,6 +1326,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1164,6 +1360,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1193,6 +1396,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1221,6 +1431,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1248,6 +1465,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -1279,6 +1503,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1309,6 +1540,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -1337,6 +1575,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1369,6 +1614,13 @@
       "core": [
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -1490,6 +1742,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -1580,6 +1839,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -1674,6 +1940,13 @@
         },
         {
           "source_type": "appendix",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -1725,6 +1998,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1793,6 +2073,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -1865,6 +2152,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -1915,6 +2209,13 @@
       "reference": [
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -1983,6 +2284,13 @@
         },
         {
           "source_type": "appendix",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -2056,6 +2364,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2096,6 +2411,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2157,6 +2479,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2204,6 +2533,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2237,6 +2573,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2271,6 +2614,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2316,6 +2666,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -2351,6 +2708,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -2395,6 +2759,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2428,6 +2799,13 @@
       "noise": [
         {
           "source_type": "appendix",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2465,6 +2843,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2503,6 +2888,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2535,6 +2927,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2562,6 +2961,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2590,6 +2996,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2623,6 +3036,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2682,6 +3102,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2707,6 +3134,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2734,6 +3168,13 @@
         },
         {
           "source_type": "appendix",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -2777,6 +3218,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2805,6 +3253,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          },
           "level": 4,
           "hierarchy_type": "국가 시행령",
           "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2832,6 +3287,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2860,6 +3322,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2887,6 +3356,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2916,6 +3392,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2944,6 +3427,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2974,6 +3464,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -3001,6 +3498,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -3032,6 +3536,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -3062,6 +3573,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          },
           "level": 2,
           "hierarchy_type": "서울특별시 조례",
           "law_name": "서울특별시 도시계획 조례",
@@ -3090,6 +3608,13 @@
         },
         {
           "source_type": "article",
+          "source_provenance": {
+            "law_id": "009294",
+            "mst": "284013",
+            "effective_date": "20260701",
+            "publication_date": "20260305",
+            "publication_number": "21447"
+          },
           "level": 3,
           "hierarchy_type": "국가 법률",
           "law_name": "국토의 계획 및 이용에 관한 법률",

@@ -35,6 +35,13 @@
   "rules": {
     "건폐율": [
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "건폐율",
         "rule_name": "건폐율의 완화",
         "law_name": "서울특별시 도시계획 조례",
@@ -184,6 +191,13 @@
         "priority_score": 141
       },
       {
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "category": "건폐율",
         "rule_name": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -354,6 +368,13 @@
         "priority_score": 88
       },
       {
+        "source_provenance": {
+          "law_id": "009294",
+          "mst": "284013",
+          "effective_date": "20260701",
+          "publication_date": "20260305",
+          "publication_number": "21447"
+        },
         "category": "건폐율",
         "rule_name": "용도지역의 건폐율",
         "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -458,6 +479,13 @@
         "priority_score": 79
       },
       {
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "category": "건폐율",
         "rule_name": "생산녹지지역 등에서 기존 공장의 건폐율",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -543,6 +571,13 @@
         "priority_score": 59
       },
       {
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "category": "건폐율",
         "rule_name": "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -627,6 +662,13 @@
         "priority_score": 57
       },
       {
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "category": "건폐율",
         "rule_name": "기존 공장에 대한 특례",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -708,6 +750,13 @@
         "priority_score": 54
       },
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "건폐율",
         "rule_name": "그 밖의 건폐율",
         "law_name": "서울특별시 도시계획 조례",
@@ -772,6 +821,13 @@
         "priority_score": 38
       },
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "건폐율",
         "rule_name": "건폐율의 강화",
         "law_name": "서울특별시 도시계획 조례",
@@ -813,6 +869,13 @@
         "priority_score": 38
       },
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "건폐율",
         "rule_name": "자연경관지구 안에서의 건축제한",
         "law_name": "서울특별시 도시계획 조례",
@@ -893,6 +956,13 @@
         "priority_score": 35
       },
       {
+        "source_provenance": {
+          "law_id": "009294",
+          "mst": "284013",
+          "effective_date": "20260701",
+          "publication_date": "20260305",
+          "publication_number": "21447"
+        },
         "category": "건폐율",
         "rule_name": "성장관리계획의 수립 등",
         "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -952,6 +1022,13 @@
     ],
     "용적률": [
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "용적률",
         "rule_name": "용적률의 완화",
         "law_name": "서울특별시 도시계획 조례",
@@ -1281,6 +1358,13 @@
         "priority_score": 141
       },
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "용적률",
         "rule_name": "그 밖의 용적률",
         "law_name": "서울특별시 도시계획 조례",
@@ -1392,6 +1476,13 @@
         "priority_score": 139
       },
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "용적률",
         "rule_name": "건폐율의 완화",
         "law_name": "서울특별시 도시계획 조례",
@@ -1541,6 +1632,13 @@
         "priority_score": 137
       },
       {
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "category": "용적률",
         "rule_name": "도시지역 내 지구단위계획구역에서의 건폐율 등의 완화적용",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -1711,6 +1809,13 @@
         "priority_score": 86
       },
       {
+        "source_provenance": {
+          "law_id": "009294",
+          "mst": "284013",
+          "effective_date": "20260701",
+          "publication_date": "20260305",
+          "publication_number": "21447"
+        },
         "category": "용적률",
         "rule_name": "용도지역에서의 용적률",
         "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -1841,6 +1946,13 @@
         "priority_score": 79
       },
       {
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "category": "용적률",
         "rule_name": "개발밀도관리구역의 지정기준 및 관리방법",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -1880,6 +1992,13 @@
         "priority_score": 55
       },
       {
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "category": "용적률",
         "rule_name": "도시지역 외 지구단위계획구역에서의 건폐율 등의 완화적용",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -1964,6 +2083,13 @@
         "priority_score": 54
       },
       {
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "category": "용적률",
         "rule_name": "개발밀도의 강화범위 등",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -1995,6 +2121,13 @@
         "priority_score": 54
       },
       {
+        "source_provenance": {
+          "law_id": "009294",
+          "mst": "284013",
+          "effective_date": "20260701",
+          "publication_date": "20260305",
+          "publication_number": "21447"
+        },
         "category": "용적률",
         "rule_name": "도시ㆍ군계획시설입체복합구역의 지정",
         "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2029,6 +2162,13 @@
         "priority_score": 44
       },
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "용적률",
         "rule_name": "상업지역 안에서 주거복합건물의 용도 비율 및 용적률(별표 8 제1호가목, 별표 9 제1호나목, 별표 10 제1호가목, 제50조제1호 관련)",
         "law_name": "서울특별시 도시계획 조례",
@@ -2105,6 +2245,13 @@
         "priority_score": 40
       },
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "용적률",
         "rule_name": "용적률의 강화",
         "law_name": "서울특별시 도시계획 조례",
@@ -2219,6 +2366,13 @@
         "priority_score": 38
       },
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "용적률",
         "rule_name": "준공업지역 내 공동주택 등 허용기준(제33조제11호, 제50조제2호, 별표 12 관련)",
         "law_name": "서울특별시 도시계획 조례",
@@ -2449,6 +2603,13 @@
         "priority_score": 36
       },
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "용적률",
         "rule_name": "역세권 복합개발 지구단위계획 수립",
         "law_name": "서울특별시 도시계획 조례",
@@ -2506,6 +2667,13 @@
         "priority_score": 34
       },
       {
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "category": "용적률",
         "rule_name": "자연경관지구 안에서의 건축제한",
         "law_name": "서울특별시 도시계획 조례",
@@ -2586,6 +2754,13 @@
         "priority_score": 34
       },
       {
+        "source_provenance": {
+          "law_id": "009294",
+          "mst": "284013",
+          "effective_date": "20260701",
+          "publication_date": "20260305",
+          "publication_number": "21447"
+        },
         "category": "용적률",
         "rule_name": "성장관리계획의 수립 등",
         "law_name": "국토의 계획 및 이용에 관한 법률",

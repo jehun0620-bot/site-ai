@@ -29,7 +29,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "제1종전용주거지역",
@@ -59,7 +66,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "제2종전용주거지역": {
@@ -89,7 +103,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "제2종전용주거지역",
@@ -119,7 +140,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "제1종일반주거지역": {
@@ -149,7 +177,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "제1종일반주거지역",
@@ -179,7 +214,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "제2종일반주거지역": {
@@ -209,7 +251,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "제2종일반주거지역",
@@ -239,7 +288,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "제3종일반주거지역": {
@@ -269,7 +325,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "제3종일반주거지역",
@@ -299,7 +362,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "준주거지역": {
@@ -329,7 +399,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "준주거지역",
@@ -359,7 +436,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "중심상업지역": {
@@ -389,7 +473,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "중심상업지역",
@@ -419,7 +510,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "일반상업지역": {
@@ -449,7 +547,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "일반상업지역",
@@ -479,7 +584,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "근린상업지역": {
@@ -509,7 +621,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "근린상업지역",
@@ -539,7 +658,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "유통상업지역": {
@@ -569,7 +695,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "유통상업지역",
@@ -599,7 +732,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "전용공업지역": {
@@ -629,7 +769,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "전용공업지역",
@@ -659,7 +806,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "일반공업지역": {
@@ -689,7 +843,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "일반공업지역",
@@ -719,7 +880,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "준공업지역": {
@@ -749,7 +917,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "준공업지역",
@@ -779,7 +954,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "보전녹지지역": {
@@ -809,7 +991,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "보전녹지지역",
@@ -839,7 +1028,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "생산녹지지역": {
@@ -869,7 +1065,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "생산녹지지역",
@@ -899,7 +1102,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "자연녹지지역": {
@@ -929,7 +1139,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "자연녹지지역",
@@ -959,7 +1176,14 @@
           "article_number": "004400",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "보전관리지역": {
@@ -989,7 +1213,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         }
       },
       "생산관리지역": {
@@ -1019,7 +1250,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         }
       },
       "계획관리지역": {
@@ -1049,7 +1287,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         }
       },
       "농림지역": {
@@ -1079,7 +1324,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         }
       },
       "자연환경보전지역": {
@@ -1109,7 +1361,14 @@
           "article_number": "84",
           "article_branch_number": "",
           "article_title": "용도지역안에서의 건폐율",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         }
       }
     },
@@ -1150,7 +1409,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "제1종전용주거지역",
@@ -1180,7 +1446,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "제2종전용주거지역": {
@@ -1219,7 +1492,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "제2종전용주거지역",
@@ -1249,7 +1529,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "제1종일반주거지역": {
@@ -1288,7 +1575,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "제1종일반주거지역",
@@ -1318,7 +1612,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "제2종일반주거지역": {
@@ -1357,7 +1658,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "제2종일반주거지역",
@@ -1387,7 +1695,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "제3종일반주거지역": {
@@ -1426,7 +1741,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "제3종일반주거지역",
@@ -1456,7 +1778,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "준주거지역": {
@@ -1495,7 +1824,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "준주거지역",
@@ -1525,7 +1861,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "중심상업지역": {
@@ -1564,7 +1907,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "중심상업지역",
@@ -1604,7 +1954,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "일반상업지역": {
@@ -1643,7 +2000,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "일반상업지역",
@@ -1683,7 +2047,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "근린상업지역": {
@@ -1722,7 +2093,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "근린상업지역",
@@ -1762,7 +2140,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "유통상업지역": {
@@ -1801,7 +2186,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "유통상업지역",
@@ -1841,7 +2233,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "전용공업지역": {
@@ -1880,7 +2279,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "전용공업지역",
@@ -1910,7 +2316,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "일반공업지역": {
@@ -1949,7 +2362,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "일반공업지역",
@@ -1979,7 +2399,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "준공업지역": {
@@ -2018,7 +2445,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "준공업지역",
@@ -2048,7 +2482,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "보전녹지지역": {
@@ -2087,7 +2528,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "보전녹지지역",
@@ -2117,7 +2565,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "생산녹지지역": {
@@ -2156,7 +2611,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "생산녹지지역",
@@ -2186,7 +2648,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "자연녹지지역": {
@@ -2225,7 +2694,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         },
         "2": {
           "zone": "자연녹지지역",
@@ -2255,7 +2731,14 @@
           "article_number": "004800",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "2000719",
+            "mst": "2149501",
+            "effective_date": "20260713",
+            "publication_date": "20260713",
+            "publication_number": "10139"
+          }
         }
       },
       "보전관리지역": {
@@ -2294,7 +2777,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         }
       },
       "생산관리지역": {
@@ -2333,7 +2823,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         }
       },
       "계획관리지역": {
@@ -2372,7 +2869,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         }
       },
       "농림지역": {
@@ -2411,7 +2915,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         }
       },
       "자연환경보전지역": {
@@ -2515,7 +3026,14 @@
           "article_number": "85",
           "article_branch_number": "",
           "article_title": "용도지역 안에서의 용적률",
-          "source_type": "article"
+          "source_type": "article",
+          "source_provenance": {
+            "law_id": "009419",
+            "mst": "287269",
+            "effective_date": "20260701",
+            "publication_date": "20260623",
+            "publication_number": "36424"
+          }
         }
       }
     }
@@ -2549,7 +3067,14 @@
         "article_number": "84",
         "article_branch_number": "",
         "article_title": "용도지역안에서의 건폐율",
-        "source_type": "article"
+        "source_type": "article",
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        }
       },
       "seoul_standard": {
         "zone": "제3종일반주거지역",
@@ -2579,7 +3104,14 @@
         "article_number": "004400",
         "article_branch_number": "",
         "article_title": "용도지역 안에서의 건폐율",
-        "source_type": "article"
+        "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        }
       },
       "selected_value": 50.0,
       "selected_source": "서울특별시 도시계획 조례",
@@ -2629,7 +3161,14 @@
         "article_number": "85",
         "article_branch_number": "",
         "article_title": "용도지역 안에서의 용적률",
-        "source_type": "article"
+        "source_type": "article",
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        }
       },
       "seoul_standard": {
         "zone": "제3종일반주거지역",
@@ -2659,7 +3198,14 @@
         "article_number": "004800",
         "article_branch_number": "",
         "article_title": "용도지역 안에서의 용적률",
-        "source_type": "article"
+        "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        }
       },
       "selected_value": 250.0,
       "selected_source": "서울특별시 도시계획 조례",
@@ -2677,6 +3223,13 @@
     "건폐율": [
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -2746,6 +3299,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009294",
+          "mst": "284013",
+          "effective_date": "20260701",
+          "publication_date": "20260305",
+          "publication_number": "21447"
+        },
         "level": 3,
         "hierarchy_type": "국가 법률",
         "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -2804,6 +3364,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "level": 4,
         "hierarchy_type": "국가 시행령",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2849,6 +3416,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "level": 4,
         "hierarchy_type": "국가 시행령",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -2911,6 +3485,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -2953,6 +3534,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -2987,6 +3575,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "level": 4,
         "hierarchy_type": "국가 시행령",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -3033,6 +3628,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009294",
+          "mst": "284013",
+          "effective_date": "20260701",
+          "publication_date": "20260305",
+          "publication_number": "21447"
+        },
         "level": 3,
         "hierarchy_type": "국가 법률",
         "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -3080,6 +3682,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -3124,6 +3733,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "level": 4,
         "hierarchy_type": "국가 시행령",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -3165,6 +3781,13 @@
     "용적률": [
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -3259,6 +3882,13 @@
       },
       {
         "source_type": "appendix",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -3310,6 +3940,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009294",
+          "mst": "284013",
+          "effective_date": "20260701",
+          "publication_date": "20260305",
+          "publication_number": "21447"
+        },
         "level": 3,
         "hierarchy_type": "국가 법률",
         "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -3378,6 +4015,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -3450,6 +4094,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -3498,6 +4149,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -3566,6 +4224,13 @@
       },
       {
         "source_type": "appendix",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -3639,6 +4304,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "level": 4,
         "hierarchy_type": "국가 시행령",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -3700,6 +4372,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009294",
+          "mst": "284013",
+          "effective_date": "20260701",
+          "publication_date": "20260305",
+          "publication_number": "21447"
+        },
         "level": 3,
         "hierarchy_type": "국가 법률",
         "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -3747,6 +4426,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "level": 4,
         "hierarchy_type": "국가 시행령",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -3780,6 +4466,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009294",
+          "mst": "284013",
+          "effective_date": "20260701",
+          "publication_date": "20260305",
+          "publication_number": "21447"
+        },
         "level": 3,
         "hierarchy_type": "국가 법률",
         "law_name": "국토의 계획 및 이용에 관한 법률",
@@ -3814,6 +4507,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "level": 4,
         "hierarchy_type": "국가 시행령",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
@@ -3859,6 +4559,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -3894,6 +4601,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "2000719",
+          "mst": "2149501",
+          "effective_date": "20260713",
+          "publication_date": "20260713",
+          "publication_number": "10139"
+        },
         "level": 2,
         "hierarchy_type": "서울특별시 조례",
         "law_name": "서울특별시 도시계획 조례",
@@ -3938,6 +4652,13 @@
       },
       {
         "source_type": "article",
+        "source_provenance": {
+          "law_id": "009419",
+          "mst": "287269",
+          "effective_date": "20260701",
+          "publication_date": "20260623",
+          "publication_number": "36424"
+        },
         "level": 4,
         "hierarchy_type": "국가 시행령",
         "law_name": "국토의 계획 및 이용에 관한 법률 시행령",
