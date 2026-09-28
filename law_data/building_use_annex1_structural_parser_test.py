@@ -79,16 +79,25 @@ def marker_kind(text: str) -> str | None:
 def starts_with_valid_marker(
     text: str,
     *,
-    current_major: int | None,
+    current_major: tuple[int, int] | None,
     last_subitem: str | None,
     last_detail: int | None,
 ) -> bool:
     major = MAJOR_RE.match(text)
     if major:
         number = int(major.group(1))
+        branch_number = int(major.group(2) or 0)
+        candidate = (number, branch_number)
+
         if current_major is None:
-            return number == 1
-        return number == current_major + 1
+            return candidate == (1, 0)
+
+        current_number, current_branch = current_major
+
+        if number == current_number:
+            return branch_number == current_branch + 1 and branch_number > 0
+
+        return number == current_number + 1 and branch_number == 0
 
     detail = DETAIL_RE.match(text)
     if detail:
@@ -128,7 +137,7 @@ def reconstruct_body_units(body_lines: list[str]) -> list[dict]:
     units: list[dict] = []
     current_text = ""
     current_raw_lines: list[str] = []
-    current_major: int | None = None
+    current_major: tuple[int, int] | None = None
     last_subitem: str | None = None
     last_detail: int | None = None
 
@@ -157,7 +166,10 @@ def reconstruct_body_units(body_lines: list[str]) -> list[dict]:
             detail = DETAIL_RE.match(text)
 
             if major:
-                current_major = int(major.group(1))
+                current_major = (
+                    int(major.group(1)),
+                    int(major.group(2) or 0),
+                )
                 last_subitem = None
                 last_detail = None
             elif subitem:
@@ -192,7 +204,13 @@ def parse_structure(units: list[dict]) -> list[dict]:
         if major:
             current_major = {
                 "number": int(major.group(1)),
-                "text": major.group(2).strip(),
+                "branch_number": int(major.group(2) or 0),
+                "source_label": (
+                    major.group(1)
+                    if major.group(2) is None
+                    else f"{major.group(1)}의{major.group(2)}"
+                ),
+                "text": major.group(3).strip(),
                 "raw_lines": raw_lines,
                 "subitems": [],
                 "direct_text": [],
@@ -237,11 +255,20 @@ def parse_structure(units: list[dict]) -> list[dict]:
     return majors
 
 
-def find_major(majors: list[dict], number: int) -> dict:
-    matches = [node for node in majors if node["number"] == number]
+def find_major(
+    majors: list[dict],
+    number: int,
+    branch_number: int = 0,
+) -> dict:
+    matches = [
+        node for node in majors
+        if node["number"] == number
+        and node["branch_number"] == branch_number
+    ]
     if len(matches) != 1:
         raise AssertionError(
-            f"Expected one major {number}; found {len(matches)}."
+            f"Expected one major {number} branch {branch_number}; "
+            f"found {len(matches)}."
         )
     return matches[0]
 
@@ -294,12 +321,38 @@ def main() -> None:
     units = reconstruct_body_units(body_lines)
     majors = parse_structure(units)
 
-    numbers = [node["number"] for node in majors]
-    if numbers != list(range(1, 30)):
+    source_labels = [node["source_label"] for node in majors]
+    expected_source_labels = (
+        [str(number) for number in range(1, 24)]
+        + ["23의2"]
+        + [str(number) for number in range(24, 30)]
+    )
+    if source_labels != expected_source_labels:
         raise AssertionError(
-            "Expected major numbers 1..29; "
-            f"got {numbers}."
+            "Expected major source labels 1..23, 23의2, 24..29; "
+            f"got {source_labels}."
         )
+
+    major23 = find_major(majors, 23)
+    deleted23ra = find_subitem(major23, "라")
+    if not deleted23ra["text"].startswith("삭제"):
+        raise AssertionError("23/라 is not the deleted source subitem.")
+
+    major23_2 = find_major(majors, 23, 2)
+    if not major23_2["text"].startswith("국방ㆍ군사시설("):
+        raise AssertionError("23의2 is not 국방ㆍ군사시설.")
+
+    if not any(
+        "국방ㆍ군사시설 사업에 관한 법률" in line
+        for line in major23_2["raw_lines"]
+    ):
+        raise AssertionError(
+            "23의2 raw_lines lost the following military-facility definition."
+        )
+
+    major24 = find_major(majors, 24)
+    if not major24["text"].startswith("방송통신시설("):
+        raise AssertionError("24 is not 방송통신시설.")
 
     major2 = find_major(majors, 2)
     dormitory = find_subitem(major2, "라")
@@ -372,6 +425,11 @@ def main() -> None:
     print("Note physical line count:", len(note_lines))
     print("Reconstructed structural unit count:", len(units))
     print("Major count:", len(majors))
+    print("Major source labels:", ", ".join(source_labels))
+    print("23/라:", deleted23ra["text"][:80])
+    print("23의2:", major23_2["text"][:80])
+    print("23의2 raw line count:", len(major23_2["raw_lines"]))
+    print("24:", major24["text"][:80])
     print("Major range:", f'{majors[0]["number"]}..{majors[-1]["number"]}')
     print("2/라/1:", general_dormitory["text"][:80])
     print("2/라/2:", rental_dormitory["text"][:80])
