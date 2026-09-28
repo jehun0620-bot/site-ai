@@ -471,3 +471,73 @@ Architectural rules:
 - The initial shared set is 지구단위계획, 개발진흥지구, 취락지구, 방재지구.
 - This projection does not populate the separate canonical `Land.district` or `Land.land_use_regulation` fields.
 
+
+## 26. Legal clause structural hierarchy — 2026-09-28
+
+Legal-text hierarchy and legal-rule evaluability are separate architectural dimensions.
+
+The normalized clause model may carry:
+
+- structural_role = CONTAINER
+- structural_role = LEAF
+
+The meaning is structural only:
+
+- CONTAINER = the normalized clause has structural child clauses
+- LEAF = the normalized clause has no structural child clauses
+
+The following equivalences are prohibited:
+
+- CONTAINER != NOT_APPLICABLE
+- CONTAINER != non-evaluable
+- CONTAINER != no numeric effect
+- CONTAINER != no independent legal meaning
+- LEAF != automatically sufficient semantic representation
+
+A structural parent can itself carry an independently meaningful base rule, ceiling, threshold, condition, or other legal effect while its children represent exceptions, formulas, sub-branches, or narrower cases.
+
+Therefore production evaluation must not globally discard or suppress all CONTAINER clauses.
+
+Conversely, conditions extracted from an aggregate parent must not be mechanically inherited into every child. A parent may contain branch-specific requirements belonging only to one child branch.
+
+The legal normalization architecture must preserve these dimensions separately:
+
+source legal hierarchy
+→ structural_role
+→ condition / predicate semantics
+→ applicability
+→ numeric semantics
+→ deterministic evaluation
+
+Condition-expression status remains a separate semantic gate:
+
+- NONE
+- REVIEW_REQUIRED
+- VERIFIED
+
+Only VERIFIED expressions may use the verified expression-evaluation path. Structural role does not authorize expression verification.
+
+The current verified expression grammar supports:
+
+- ATOM
+- AND
+- OR
+- NUMERIC
+
+The NUMERIC predicate foundation currently supports typed numeric comparison using the verified LTE operator and fact_context input. Typed/Derived Fact preparation can derive additional_site_area_ratio from existing_site_area and additional_site_area when both source facts are valid.
+
+This grammar must not be stretched to represent predicates it cannot encode. Branch-local zone predicates, spatial predicates, and other richer legal predicates still require explicit schema support or must remain unresolved/review-required.
+
+NUMERIC predicate support does not itself authorize production condition-expression verification. The production 314-clause corpus remains unconnected to VERIFIED production expressions unless separately verified.
+
+Architecture priority is legal-semantic preservation and fail-closed behavior, not maximizing the number of automatically evaluable clauses.
+
+### Canonical legal-condition normalization
+
+Equivalent source-law terminology may normalize to an existing canonical condition only when the legal and SITE-side meaning has been verified.
+
+Current verified example:
+
+농공단지 → 산업단지
+
+This normalization does not merge separate legal branches. Parent/child and branch-local qualifiers remain preserved by the clause structure.

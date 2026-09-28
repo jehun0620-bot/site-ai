@@ -428,3 +428,107 @@ Tracked working tree after validation: clean
 ```
 
 No provider boundary, Rule Engine, spatial/law-data truth boundary, Land fields, or protected output file changed. Therefore **E-4 SITE FACT BUILDING ROOF = USER-LOCAL BEHAVIORAL PASS / CLOSED**.
+
+## 14. E-5 legal-rule semantic checkpoint — 2026-09-28
+
+E-5 legal-rule semantic refinement has progressed through verified mixed-numeric semantics and structural parent/child investigation.
+
+### E-5-B-4C verified mixed numeric semantics
+
+Representative mixed clauses INDEX 89 / 102 / 106 preserve raw numeric values while assigning verified roles:
+
+- 40% = RESULT
+  - target: building_coverage_ratio
+  - semantic_type: ABSOLUTE_MAX
+  - unit: percent
+- 50% = APPLICABILITY_THRESHOLD
+  - target: additional_site_area_ratio
+  - operator: LTE
+  - unit: percent_of_existing_site_area
+
+The 50% applicability threshold is not promoted to a numeric effect. No Rule Engine calculation-path change was introduced.
+
+Current user-local behavioral baseline:
+
+- Rules: 314
+- APPLICABLE: 58
+- NOT_APPLICABLE: 192
+- CONDITIONAL: 43
+- UNKNOWN: 21
+- Numeric candidates: 28
+- Rules requiring input: 50
+- Rules with unknown condition: 22
+- PROJECT inputs: 14
+- PROCEDURE inputs: 2
+- Unresolved SITE conditions: 4
+- all_pass: True
+
+### Structural clause role
+
+The legal-clause parser now records structural hierarchy independently from evaluation semantics:
+
+- CONTAINER: 63
+- LEAF: 251
+
+Representative verified cases:
+
+- 71 = CONTAINER
+- 72 = LEAF
+- 76 = LEAF
+- 77 = LEAF
+- 115 = CONTAINER
+- 189 = CONTAINER
+- 250 = CONTAINER
+
+The 농공단지 legal-text alias is normalized to the existing canonical 산업단지 condition.
+
+CONTAINER means only that the clause has structural child clauses. It does not mean exclusion from applicability, condition, numeric-effect, or Rule Engine evaluation.
+
+Final snapshot regression:
+
+- RULES = 314
+- STRUCTURAL_ROLES = 251 LEAF / 63 CONTAINER
+- ROLE_COUNT_OK = True
+- STRUCTURAL_PROPAGATION_OK = True
+- APP_BASELINE_OK = True
+- all_pass = True
+
+No runtime-wide CONTAINER-to-evaluation-exclusion rule was introduced. law_data/rule_evaluation_pipeline.py remains unchanged by the structural-role correction.
+
+### Remaining E-5 work
+
+E-5 is not globally closed.
+
+Completed foundation work now also includes:
+
+- NUMERIC predicate schema and LTE evaluation;
+- typed numeric fact_context input;
+- derived additional_site_area_ratio from existing_site_area and additional_site_area;
+- TRUE / FALSE / UNSET / UNKNOWN numeric-predicate regression coverage.
+
+Remaining work includes:
+
+- verified production condition-expression population where source structure is sufficiently represented;
+- production connection for the verified mixed numeric clauses, including INDEX 89 / 102 / 106, without promoting applicability thresholds to numeric effects;
+- branch-local zone predicate semantics;
+- spatial predicate semantics where required by legal expressions;
+- branch-specific conditions that are over-extracted into aggregate parents or missing from their precise child branch;
+- user-facing required-input aggregation without treating every structural parent as an independent duplicate;
+- explicit parent base-rule / child exception relationships;
+- fail-closed REVIEW_REQUIRED / UNKNOWN behavior where source semantics cannot yet be represented safely.
+
+The current verified expression grammar supports ATOM / AND / OR / NUMERIC. NUMERIC foundation support does not mean that production expressions have been populated or VERIFIED.
+
+Automatic expression generation for all 314 clauses or all multi-condition clauses is not authorized.
+
+### Current local repository protection state
+
+The development checkout contains intentional local-only modified outputs transferred between the two active development environments.
+
+Specially protected local file:
+
+law_data/output/urban_area_conversion_history_final_resolution.json
+
+This file remains outside ordinary restore/reset/stage/commit operations unless separately and explicitly authorized.
+
+Desktop handoff is a recurring synchronization procedure between two active development environments, not a one-time PC replacement.

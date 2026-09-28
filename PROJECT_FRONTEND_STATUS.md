@@ -1693,3 +1693,43 @@ Tracked working tree after validation: clean
 No additional CSS change was required because the existing E-3 single-column building-detail layout accommodates the new row. No Frontend legal interpretation, parcel-truth logic, provider call, or analysis authority was added.
 
 Therefore **E-4 SITE FACT BUILDING ROOF PRESENTATION = USER-LOCAL BEHAVIORAL PASS / CLOSED**.
+
+## 42. Current-PC handoff regression checkpoint — 2026-09-28
+
+The recurring desktop handoff was reproduced on the current development environment after synchronizing the common Git baseline while preserving local-only outputs and the protected historical-resolution file.
+
+Current environment:
+
+- Python 3.14.7
+- pip 26.2.1
+- Node v24.21.0
+- npm 11.19.0
+- Vite 8.3.0
+
+Dependency validation:
+
+- python -m pip check: No broken requirements found
+- frontend node_modules: present
+
+Frontend production build:
+
+- Vite 8.3.0
+- 28 modules transformed
+- dist/index.html: 0.49 kB
+- dist/assets/index-Bx_rnWjl.css: 20.38 kB
+- dist/assets/index-BdJWzbBo.js: 260.96 kB
+- build completed in 173ms
+
+Actual Backend-connected regression:
+
+- e2e/site-analysis-reanalysis.spec.ts
+- 1 passed (20.0s)
+
+Responsive regression:
+
+- e2e/site-analysis-mobile-responsive.spec.ts
+- 1 passed (5.2s)
+
+This checkpoint confirms that the current Single Parcel Frontend remains buildable and that the existing Backend-connected reanalysis and mobile-responsive flows survive the recurring desktop handoff.
+
+No Frontend architecture, Backend trust boundary, parcel-truth authority, Rule Engine authority, or API interaction architecture changed in this checkpoint.
