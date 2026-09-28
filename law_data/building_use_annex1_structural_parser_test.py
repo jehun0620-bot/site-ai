@@ -124,9 +124,10 @@ def starts_with_valid_marker(
     return False
 
 
-def reconstruct_body_units(body_lines: list[str]) -> list[str]:
-    units: list[str] = []
-    current = ""
+def reconstruct_body_units(body_lines: list[str]) -> list[dict]:
+    units: list[dict] = []
+    current_text = ""
+    current_raw_lines: list[str] = []
     current_major: int | None = None
     last_subitem: str | None = None
     last_detail: int | None = None
@@ -142,10 +143,14 @@ def reconstruct_body_units(body_lines: list[str]) -> list[str]:
             last_subitem=last_subitem,
             last_detail=last_detail,
         ):
-            if current:
-                units.append(current)
+            if current_text:
+                units.append({
+                    "text": current_text,
+                    "raw_lines": current_raw_lines,
+                })
 
-            current = text
+            current_text = text
+            current_raw_lines = [raw_line]
 
             major = MAJOR_RE.match(text)
             subitem = SUBITEM_RE.match(text)
@@ -163,25 +168,32 @@ def reconstruct_body_units(body_lines: list[str]) -> list[str]:
         else:
             # The API may wrap inside a Korean word. Joining without an
             # inserted space restores cases such as "말한" + "다.".
-            current += text
+            current_text += text
+            current_raw_lines.append(raw_line)
 
-    if current:
-        units.append(current)
+    if current_text:
+        units.append({
+            "text": current_text,
+            "raw_lines": current_raw_lines,
+        })
 
     return units
 
 
-def parse_structure(units: list[str]) -> list[dict]:
+def parse_structure(units: list[dict]) -> list[dict]:
     majors: list[dict] = []
     current_major: dict | None = None
     current_subitem: dict | None = None
 
     for unit in units:
-        major = MAJOR_RE.match(unit)
+        text = unit["text"]
+        raw_lines = unit["raw_lines"]
+        major = MAJOR_RE.match(text)
         if major:
             current_major = {
                 "number": int(major.group(1)),
                 "text": major.group(2).strip(),
+                "raw_lines": raw_lines,
                 "subitems": [],
                 "direct_text": [],
             }
@@ -189,7 +201,7 @@ def parse_structure(units: list[str]) -> list[dict]:
             current_subitem = None
             continue
 
-        subitem = SUBITEM_RE.match(unit)
+        subitem = SUBITEM_RE.match(text)
         if subitem:
             if current_major is None:
                 raise AssertionError("Subitem appeared before a major node.")
@@ -197,12 +209,13 @@ def parse_structure(units: list[str]) -> list[dict]:
             current_subitem = {
                 "code": subitem.group(1),
                 "text": subitem.group(2).strip(),
+                "raw_lines": raw_lines,
                 "details": [],
             }
             current_major["subitems"].append(current_subitem)
             continue
 
-        detail = DETAIL_RE.match(unit)
+        detail = DETAIL_RE.match(text)
         if detail:
             if current_major is None:
                 raise AssertionError("Detail appeared before a major node.")
@@ -210,6 +223,7 @@ def parse_structure(units: list[str]) -> list[dict]:
             node = {
                 "number": int(detail.group(1)),
                 "text": detail.group(2).strip(),
+                "raw_lines": raw_lines,
             }
 
             if current_subitem is not None:
@@ -218,7 +232,7 @@ def parse_structure(units: list[str]) -> list[dict]:
                 current_major["direct_text"].append(node)
             continue
 
-        raise AssertionError(f"Unclassified reconstructed unit: {unit[:120]}")
+        raise AssertionError(f"Unclassified reconstructed unit: {text[:120]}")
 
     return majors
 
@@ -318,6 +332,39 @@ def main() -> None:
     if not note_lines:
         raise AssertionError("Note section is empty.")
 
+    if not any(
+        line.rstrip().endswith("사용하는")
+        for line in general_dormitory["raw_lines"]
+    ):
+        raise AssertionError(
+            "2/라/1 raw_lines lost the physical line ending with 사용하는."
+        )
+
+    if not any(
+        line.strip().startswith("것으로서")
+        for line in general_dormitory["raw_lines"]
+    ):
+        raise AssertionError(
+            "2/라/1 raw_lines lost the physical line starting with 것으로서."
+        )
+
+    multi_living = find_subitem(major4, "거")
+    if not any(
+        line.rstrip().endswith("말한")
+        for line in multi_living["raw_lines"]
+    ):
+        raise AssertionError(
+            "4/거 raw_lines lost the physical line ending with 말한."
+        )
+
+    if not any(
+        line.strip().startswith("다. 이하 같다)")
+        for line in multi_living["raw_lines"]
+    ):
+        raise AssertionError(
+            "4/거 raw_lines lost the wrapped continuation starting with 다."
+        )
+
     print("Resolved current MST:", target["mst"])
     print("Annex 1 content length:", len(content))
     print("Header line count:", len(header_lines))
@@ -330,6 +377,8 @@ def main() -> None:
     print("2/라/2:", rental_dormitory["text"][:80])
     print("14/나/2:", officetel["text"][:80])
     print('Major 4 "다" count:', codes4.count("다"))
+    print("2/라/1 raw line count:", len(general_dormitory["raw_lines"]))
+    print("4/거 raw line count:", len(multi_living["raw_lines"]))
     print("Note starts:", note_lines[0][:100])
     print("RESULT: PASS")
     print(
