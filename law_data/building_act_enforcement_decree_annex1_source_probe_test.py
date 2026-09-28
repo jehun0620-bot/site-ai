@@ -121,16 +121,30 @@ def search_current_target() -> dict:
     }
 
 
+def normalize_numeric_code(value) -> int | None:
+    text = text_value(value)
+
+    if not text:
+        return 0
+
+    if not text.isdigit():
+        return None
+
+    return int(text)
+
+
 def find_annex1(appendices: list[dict]) -> dict:
     matches = []
 
     for appendix in appendices:
-        number = text_value(appendix.get("number"))
-        branch_number = text_value(
+        number = normalize_numeric_code(
+            appendix.get("number")
+        )
+        branch_number = normalize_numeric_code(
             appendix.get("branch_number")
         )
 
-        if number == "1" and branch_number in ("", "0"):
+        if number == 1 and branch_number == 0:
             matches.append(appendix)
 
     if len(matches) != 1:
