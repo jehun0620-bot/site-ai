@@ -266,6 +266,7 @@ def validate_profile(
 
 def refresh_condition_groups(
     rule: Dict[str, Any],
+    fact_context: Optional[Dict[str, Any]] = None,
 ) -> None:
 
     expression = rule.get(
@@ -283,6 +284,7 @@ def refresh_condition_groups(
             _condition_expression_groups(
                 rule,
                 expression,
+                fact_context,
             )
         )
 
@@ -517,6 +519,7 @@ def evaluate_condition_expression(
 
 def _condition_expression_applicability(
     rule: Dict[str, Any],
+    fact_context: Optional[Dict[str, Any]] = None,
 ) -> Optional[Dict[str, str]]:
 
     expression = rule.get("condition_expression")
@@ -533,6 +536,7 @@ def _condition_expression_applicability(
     state = evaluate_condition_expression(
         rule,
         expression,
+        fact_context,
     ).get("state")
 
     if state == "FALSE":
@@ -587,6 +591,7 @@ def _condition_by_identity(
 def _condition_expression_groups(
     rule: Dict[str, Any],
     expression: Dict[str, Any],
+    fact_context: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, List[Dict[str, Any]]]:
     """
     Return only condition groups that are decisive for the current
@@ -660,6 +665,7 @@ def _condition_expression_groups(
         evaluate_condition_expression(
             rule,
             child,
+            fact_context,
         ).get("state")
         for child in children
     ]
@@ -668,6 +674,7 @@ def _condition_expression_groups(
         evaluate_condition_expression(
             rule,
             expression,
+            fact_context,
         ).get("state")
     )
 
@@ -697,6 +704,7 @@ def _condition_expression_groups(
             _condition_expression_groups(
                 rule,
                 child,
+                fact_context,
             )
         )
 
@@ -927,6 +935,7 @@ def validation_e5_numeric_predicate_foundation() -> bool:
 
 def recalculate_applicability(
     rule: Dict[str, Any],
+    fact_context: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, str]:
 
     blocked = (
@@ -981,7 +990,8 @@ def recalculate_applicability(
 
     expression_applicability = (
         _condition_expression_applicability(
-            rule
+            rule,
+            fact_context,
         )
     )
 
@@ -3673,6 +3683,71 @@ def evaluate_site_rules(
             ),
         )
     )
+
+    # ========================================================
+    # E-5 verified expression final refresh
+    #
+    # Apply prepared typed/derived facts only after SITE,
+    # PROJECT, and PROCEDURE condition overlays are complete,
+    # and before numeric guards consume final applicability.
+    # ========================================================
+
+    for rule in rules:
+
+        if not isinstance(
+            rule,
+            dict,
+        ):
+
+            continue
+
+        expression = rule.get(
+            "condition_expression"
+        )
+
+        expression_status = safe_string(
+            rule.get(
+                "condition_expression_status"
+            )
+        )
+
+        if (
+            expression_status != "VERIFIED"
+            or not isinstance(
+                expression,
+                dict,
+            )
+        ):
+
+            continue
+
+        refresh_condition_groups(
+            rule,
+            prepared_fact_context,
+        )
+
+        expression_result = (
+            recalculate_applicability(
+                rule,
+                prepared_fact_context,
+            )
+        )
+
+        rule[
+            "applicability"
+        ] = expression_result[
+            "applicability"
+        ]
+
+        rule[
+            "applicability_reason"
+        ] = expression_result[
+            "reason"
+        ]
+
+        refresh_numeric_effect(
+            rule
+        )
 
     final_summary = Counter(
         rule.get(
