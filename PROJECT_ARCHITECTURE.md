@@ -541,3 +541,46 @@ Current verified example:
 농공단지 → 산업단지
 
 This normalization does not merge separate legal branches. Parent/child and branch-local qualifiers remain preserved by the clause structure.
+
+## Building Use source-to-semantic boundary — 2026-09-28
+
+건축물 용도 자동화는 기존 공식 법령 source infrastructure를 재사용하며 다음 경계를 따른다.
+
+```text
+Official Building Act Enforcement Decree
+→ Official Annex 1
+→ Structural Parser
+→ Canonical Source Tree
+→ Semantic Classification
+   ├─ Building Use Identity
+   ├─ Qualification Predicate
+   ├─ Numeric Predicate
+   ├─ Exception
+   ├─ Cross-reference
+   └─ Ordinance / external dependency
+→ Canonical Building Use / PROJECT facts
+→ Predicate / Expression
+→ Deterministic Rule Engine
+```
+
+### Source / semantic separation invariant
+
+`official source retrieval != structural parsing != legal semantic approval`.
+
+Structural Parser의 책임은 공식 별표 1의 본문/비고 경계와 `호 → 목 → 세부항목` source hierarchy를 보존하는 것이다. 모든 detail node를 Building Use identity로 간주하지 않는다. 예를 들어 `2/라/2 임대형기숙사`는 use identity가 될 수 있지만, 단독주택 정의 내부의 면적·층수 같은 detail은 qualification predicate일 수 있다. 이 구분은 별도 Semantic Classification에서 검증한다.
+
+### Official raw-line provenance invariant
+
+국가법령정보 API의 별표 텍스트는 물리적 줄바꿈이 단어 사이뿐 아니라 단어 내부에서도 발생할 수 있다. 따라서 Structural Parser는 임의의 한국어 띄어쓰기 복원을 공식 원문으로 승격하지 않는다.
+
+각 structural node는:
+- 구조 탐색용 reconstructed text
+- API가 제공한 원래 physical `raw_lines`
+
+를 분리해 보존한다. 이후 semantic parsing 또는 법적 근거 확인이 필요한 경우 `raw_lines`를 source provenance로 사용할 수 있어야 한다.
+
+### Existing PROJECT architecture reuse
+
+새로운 Building Use 전용 조건 엔진을 만들지 않는다. Canonical Building Use가 검증되면 기존 PROJECT profile / predicate / expression 경계로 연결한다. 추가 numeric qualification은 기존 Numeric Predicate infrastructure의 재사용 가능성을 우선 검토하되, 지원되지 않는 측정값을 확인 없이 지원된 것으로 간주하지 않는다.
+
+현재 checkpoint는 official Annex 1 source retrieval 및 structural hierarchy extraction까지 사용자 로컬 Behavioral PASS다. Canonical semantic taxonomy와 Rule Engine production integration은 아직 완료되지 않았다.
