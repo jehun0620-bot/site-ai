@@ -1231,3 +1231,53 @@ SITE
 목표는 사용자에게 다음 정보를 신뢰성 있게 제공하는 것이다.
 
 "이 대지와 계획에 어떤 법규가 적용되고, 무엇을 얼마나 확보하거나 준수해야 하며, 어떤 허가·신고·협의·심의 또는 추가확인이 필요한가?"
+
+## 39. Building Use official-source / structural-parser reconciliation — 2026-09-28
+
+기존 Building Use 초기 inventory의 `IDENTIFIED / RESEARCH_REQUIRED` 기록 이후 공식 source/API 및 structural parser를 실제 검증했다. 아래 checkpoint는 Building Use에 관한 이전의 **API/Data = RESEARCH_REQUIRED** 상태를 현재 증거 범위에서 갱신한다.
+
+### Verified source / data status
+
+- 대상: `건축법 시행령 별표 1 용도별 건축물의 종류(제3조의5 관련)`
+- 공식 source existence: **SOURCE_VERIFIED**
+- API / Data dependency: **EXISTING**
+- 사용 경로: 기존 국가법령정보 `lawSearch.do` / `lawService.do` 및 기존 appendix normalization
+- current MST 자동 탐색: 사용자 로컬 PASS
+- Annex 1 non-empty official content 취득: 사용자 로컬 PASS
+- Annex 1 body / explicit `비고` 분리: 사용자 로컬 PASS
+- major building-use hierarchy `1..29` extraction: 사용자 로컬 PASS
+- selected detail paths `2/라/1`, `2/라/2`, `14/나/2`: 사용자 로컬 PASS
+- physical API `raw_lines` provenance 보존: 사용자 로컬 PASS
+
+Coverage maturity 관점에서 **공식 source는 SOURCE_VERIFIED이며 source hierarchy는 PARSED 수준까지 검증**됐다.
+
+### Not yet promoted
+
+다음은 아직 완료되지 않았으므로 Building Use 전체를 `SEMANTIC_READY` 또는 `ENGINE_READY`로 승격하지 않는다.
+
+- Canonical Building Use taxonomy
+- Building Use Identity / Qualification Predicate 의미 구분
+- 별표 1 전체 세부조건의 numeric / exception / cross-reference semantic mapping
+- current 314 normalized clauses와 canonical use mapping
+- PROJECT fact normalization
+- deterministic Rule Engine production integration
+
+따라서 현재 상태는 다음처럼 구분한다.
+
+```text
+Official Annex 1 source       SOURCE_VERIFIED
+Official API / data path      EXISTING
+Structural source hierarchy   PARSED / Behavioral PASS
+Canonical semantic taxonomy   RESEARCH / IMPLEMENTATION REQUIRED
+Rule Engine integration       NOT ENGINE_READY
+```
+
+### Source text integrity rule
+
+API physical line wrap은 띄어쓰기 위치와 일치하지 않는다. 단어 사이에서도 끊기고 단어 내부에서도 끊길 수 있음이 실제 Annex 1에서 확인됐다. Structural Parser의 reconstructed text는 구조 판정을 위한 보조 표현이며 공식 원문의 완전한 lexical 복원본으로 간주하지 않는다. 원래 physical `raw_lines`를 node provenance로 보존한다.
+
+### Coverage consequence
+
+Canonical Building Use는 주차, 피난/방화, 소방, 장애인 편의, 에너지, EV 충전 등 여러 Coverage 영역의 공통 PROJECT 기반이다. 따라서 이후 개발은 별표 1 source tree를 다시 수작업으로 만드는 대신, 현재 검증된 official source tree 위에서 semantic taxonomy를 구축한다.
+
+공식 source 자동 취득/구조 파싱 성공은 자동 법적 의미 승인과 동일하지 않다. 법령 개정 시에도 source diff → structural validation → semantic 영향 검토 → affected-rule regression → 승인/promotion 경계를 유지한다.
