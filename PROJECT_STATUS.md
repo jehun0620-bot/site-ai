@@ -1,6 +1,6 @@
 # AI 대지분석 자동화 시스템 - PROJECT STATUS
 
-최종 업데이트: 2026-09-22
+최종 업데이트: 2026-09-28
 기준 branch: `cleanup/repository-organization-20260916`
 기준 behavioral PASS HEAD: `268a87a7bd64237a311da6ee0b4c059a8936f6f4`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
@@ -532,3 +532,39 @@ law_data/output/urban_area_conversion_history_final_resolution.json
 This file remains outside ordinary restore/reset/stage/commit operations unless separately and explicitly authorized.
 
 Desktop handoff is a recurring synchronization procedure between two active development environments, not a one-time PC replacement.
+
+## Building Use official-source / structural-parser checkpoint — 2026-09-28
+
+건축물 용도 자동화의 공식 원문 경로를 기존 국가법령정보 API infrastructure 위에서 검증했다. 별도의 Building Use 전용 API client를 만들지 않고 기존 `lawService.do` + appendix normalization을 재사용한다.
+
+사용자 로컬 Behavioral PASS:
+
+```text
+건축법 시행령 current MST 자동 탐색: PASS (288849)
+별표 1 "용도별 건축물의 종류(제3조의5 관련)" 취득: PASS
+별표 1 content length: 10924
+본문 / 비고 분리: PASS
+건축물 용도 major 1..29 구조 추출: PASS
+2/라/1 일반기숙사: PASS
+2/라/2 임대형기숙사: PASS
+14/나/2 오피스텔: PASS
+wrapped "말한" + "다."의 가짜 다목 방지: PASS
+official API physical raw_lines provenance 보존: PASS
+Structural Parser RESULT: PASS
+```
+
+관련 code checkpoint:
+- source probe: `381a577d6d74324159ec4416ce890217aaebba7f`
+- structural parser 최초 PASS: `5a45dd3ab8fdaa618ce401f0dd93311cdfcd941a`
+- raw-lines provenance 보존 PASS: `13009e0297d09c359c692d8727005b181ca84b78`
+
+현재 완료 범위는 **official source retrieval + source hierarchy extraction**이다. API physical line wrap은 단어 사이와 단어 내부 모두에서 발생하므로 reconstructed `text`를 공식 원문의 완전한 띄어쓰기 복원본으로 취급하지 않는다. 각 structural node의 `raw_lines`를 source provenance로 보존한다.
+
+아직 완료되지 않은 범위:
+- Canonical Building Use semantic taxonomy
+- Building Use Identity / Qualification Predicate 분리
+- 별표 1 전체 세부조건의 Numeric / Exception / Cross-reference 의미분류
+- current 314-rule PROJECT condition mapping
+- Rule Engine production integration
+
+따라서 **source retrieval/parsing PASS는 semantic legal approval 또는 ENGINE_READY를 의미하지 않는다.**
