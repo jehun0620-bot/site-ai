@@ -29,7 +29,7 @@ from building_act_enforcement_decree_annex1_source_probe_test import (
 from law_detail_normalize_test import normalize_detail, request_detail
 
 
-MAJOR_RE = re.compile(r"^(\d+)\.\s*(.*)$")
+MAJOR_RE = re.compile(r"^(\d+)(?:의(\d+))?\.\s*(.*)$")
 SUBITEM_RE = re.compile(r"^([가-힣]+)\.\s*(.*)$")
 DETAIL_RE = re.compile(r"^(\d+)\)\s*(.*)$")
 NOTE_MARKER = "비고"
