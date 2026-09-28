@@ -27,6 +27,1065 @@
       "strict_pnu_verified": true,
       "geometry_loaded": false,
       "note": "Parcel dataset은 검증되었으나 geometry 자체는 이번 identity object에 아직 포함하지 않음"
+    },
+    "spatial": {
+      "parcel": {
+        "pnu": "1168010300100120000",
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                962201.02522,
+                1943841.80188
+              ],
+              [
+                962210.40147,
+                1943851.19867
+              ],
+              [
+                962310.38647,
+                1943957.41892
+              ],
+              [
+                962331.54959,
+                1943991.6039
+              ],
+              [
+                962351.13186,
+                1944023.62808
+              ],
+              [
+                962362.08086,
+                1944044.98202
+              ],
+              [
+                962379.28105,
+                1944083.99617
+              ],
+              [
+                962399.48705,
+                1944162.06966
+              ],
+              [
+                962404.05866,
+                1944187.23595
+              ],
+              [
+                962411.08353,
+                1944196.20534
+              ],
+              [
+                962471.71758,
+                1944220.16506
+              ],
+              [
+                962514.30746,
+                1944113.69962
+              ],
+              [
+                962534.49313,
+                1944121.86959
+              ],
+              [
+                962659.89314,
+                1944170.44689
+              ],
+              [
+                962710.155,
+                1944044.13832
+              ],
+              [
+                962710.80309,
+                1944041.93572
+              ],
+              [
+                962711.06096,
+                1944039.66521
+              ],
+              [
+                962710.94888,
+                1944037.37667
+              ],
+              [
+                962710.44722,
+                1944035.14017
+              ],
+              [
+                962709.59634,
+                1944033.02548
+              ],
+              [
+                962708.39645,
+                1944031.07257
+              ],
+              [
+                962706.8879,
+                1944029.35121
+              ],
+              [
+                962705.11094,
+                1944027.91117
+              ],
+              [
+                962703.11571,
+                1944026.78217
+              ],
+              [
+                962681.56753,
+                1944018.03963
+              ],
+              [
+                962677.93069,
+                1944016.48948
+              ],
+              [
+                962670.78548,
+                1944013.10861
+              ],
+              [
+                962663.82834,
+                1944009.37688
+              ],
+              [
+                962657.06921,
+                1944005.28423
+              ],
+              [
+                962650.52819,
+                1944000.85056
+              ],
+              [
+                962644.21538,
+                1943996.0958
+              ],
+              [
+                962638.16078,
+                1943991.01979
+              ],
+              [
+                962632.37442,
+                1943985.63248
+              ],
+              [
+                962626.87647,
+                1943979.96374
+              ],
+              [
+                962624.23192,
+                1943977.02886
+              ],
+              [
+                962597.46094,
+                1943946.62217
+              ],
+              [
+                962505.25578,
+                1943840.92054
+              ],
+              [
+                962510.26798,
+                1943828.47868
+              ],
+              [
+                962449.45109,
+                1943803.97011
+              ],
+              [
+                962405.16331,
+                1943786.13146
+              ],
+              [
+                962418.08919,
+                1943754.18504
+              ],
+              [
+                962339.82131,
+                1943722.58159
+              ],
+              [
+                962326.10299,
+                1943755.90169
+              ],
+              [
+                962278.75024,
+                1943736.9097
+              ],
+              [
+                962273.73889,
+                1943749.51149
+              ],
+              [
+                962273.33207,
+                1943750.08343
+              ],
+              [
+                962272.55551,
+                1943750.67732
+              ],
+              [
+                962271.64615,
+                1943750.73212
+              ],
+              [
+                962248.17652,
+                1943741.5799
+              ],
+              [
+                962245.14498,
+                1943739.18686
+              ],
+              [
+                962201.02522,
+                1943841.80188
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "geometry_type": "Polygon",
+        "geometry_loaded": true,
+        "area": {
+          "value": 120945.65223377591,
+          "unit": "native_crs_square_units",
+          "status": "RECOVERED"
+        },
+        "bounds": [
+          962201.02522,
+          1943722.58159,
+          962711.06096,
+          1944220.16506
+        ],
+        "crs": null,
+        "crs_status": "SOURCE_CRS_NOT_EXPLICIT",
+        "source": {
+          "provider": "MapPlan",
+          "dataset": "LP_PA_CBND_BUBUN",
+          "status": "VERIFIED",
+          "resolution": "SNAPSHOT_PNU_MATCH",
+          "verified": true,
+          "requested_pnu": "1168010300100120000",
+          "requested_address": "서울특별시 강남구 개포동 12번지",
+          "snapshot_pnu": "1168010300100120000",
+          "pnu_match": true,
+          "snapshot": "D:\\site-ai\\law_data\\output\\seoul_urban_innovation_zone_mapplan_intersection.json",
+          "recovery": {
+            "mode": "DIRECT_JSON",
+            "path": "$.parcel_geometry.request.json.features[0]"
+          },
+          "geojson_snapshot": "D:\\site-ai\\law_data\\output\\site_parcel_spatial_snapshot.geojson",
+          "live": {
+            "resolution": null,
+            "dataset": null,
+            "feature_id": null,
+            "feature_pnu": null,
+            "pnu_property_key": null,
+            "coordinate": null,
+            "query": null
+          }
+        }
+      }
+    },
+    "runtime_conditions": {
+      "지구단위계획": {
+        "name": "지구단위계획",
+        "type": "SITE",
+        "pnu": "1168010300100120000",
+        "source": {
+          "provider": "VWorld",
+          "dataset": "LT_C_UPISUQ161",
+          "crs": "EPSG:4326"
+        },
+        "state": "TRUE",
+        "confidence": "HIGH",
+        "resolution": "PARCEL_INTERSECTS_DISTRICT_UNIT_PLAN",
+        "geometry_verified": true,
+        "evaluation": {
+          "query_success": true,
+          "intersects": true,
+          "intersection_count": 1
+        },
+        "evidence": {
+          "coordinate": {
+            "x": 127.07539280356858,
+            "y": 37.494197498186885,
+            "crs": "EPSG:4326",
+            "evaluation_parcel": {
+              "resolved": true,
+              "crs": "EPSG:4326",
+              "source": {
+                "mode": "LIVE_COMPATIBLE_FALLBACK",
+                "provider": "VWorld",
+                "dataset": "LP_PA_CBND_BUBUN",
+                "pnu": "1168010300100120000",
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000"
+              },
+              "fallback_used": true,
+              "live_result": {
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000",
+                "strict_pnu_verified": true,
+                "query": {
+                  "http_status": 200,
+                  "vworld_status": "OK",
+                  "classification": "QUERY_SUCCESS",
+                  "feature_count": 1,
+                  "polygon_feature_count": 1
+                }
+              }
+            }
+          },
+          "evaluation_parcel": {
+            "resolved": true,
+            "crs": "EPSG:4326",
+            "source": {
+              "mode": "LIVE_COMPATIBLE_FALLBACK",
+              "provider": "VWorld",
+              "dataset": "LP_PA_CBND_BUBUN",
+              "pnu": "1168010300100120000",
+              "resolution": "PNU_POLYGON_VERIFIED",
+              "feature_pnu": "1168010300100120000"
+            },
+            "fallback_used": true,
+            "live_result": {
+              "resolution": "PNU_POLYGON_VERIFIED",
+              "feature_pnu": "1168010300100120000",
+              "strict_pnu_verified": true,
+              "query": {
+                "http_status": 200,
+                "vworld_status": "OK",
+                "classification": "QUERY_SUCCESS",
+                "feature_count": 1,
+                "polygon_feature_count": 1
+              }
+            }
+          },
+          "query": {
+            "http_status": 200,
+            "vworld_status": "OK",
+            "classification": "QUERY_SUCCESS",
+            "transport_error": null,
+            "error": {},
+            "feature_count": 1,
+            "request": {
+              "dataset": "LT_C_UPISUQ161",
+              "x": 127.07539280356858,
+              "y": 37.494197498186885,
+              "crs": "EPSG:4326"
+            },
+            "geometry_feature_count": 1
+          },
+          "intersections": [
+            {
+              "index": 1,
+              "feature_id": "LT_C_UPISUQ161.1150",
+              "district_name": "대치택지개발지구",
+              "geometry_type": "MultiPolygon",
+              "intersects": true
+            }
+          ]
+        }
+      },
+      "개발진흥지구": {
+        "name": "개발진흥지구",
+        "type": "SITE",
+        "pnu": "1168010300100120000",
+        "source": {
+          "provider": "VWorld",
+          "dataset": "LT_C_UQ129",
+          "crs": "EPSG:4326"
+        },
+        "state": "FALSE",
+        "confidence": "HIGH",
+        "resolution": "NO_DEVELOPMENT_PROMOTION_DISTRICT_FEATURE",
+        "geometry_verified": true,
+        "evaluation": {
+          "query_success": true,
+          "intersects": false,
+          "intersection_count": 0
+        },
+        "evidence": {
+          "coordinate": {
+            "x": 127.07539280356858,
+            "y": 37.494197498186885,
+            "crs": "EPSG:4326",
+            "evaluation_parcel": {
+              "resolved": true,
+              "crs": "EPSG:4326",
+              "source": {
+                "mode": "LIVE_COMPATIBLE_FALLBACK",
+                "provider": "VWorld",
+                "dataset": "LP_PA_CBND_BUBUN",
+                "pnu": "1168010300100120000",
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000"
+              },
+              "fallback_used": true,
+              "live_result": {
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000",
+                "strict_pnu_verified": true,
+                "query": {
+                  "http_status": 200,
+                  "vworld_status": "OK",
+                  "classification": "QUERY_SUCCESS",
+                  "feature_count": 1,
+                  "polygon_feature_count": 1
+                }
+              }
+            }
+          },
+          "evaluation_parcel": {
+            "resolved": true,
+            "crs": "EPSG:4326",
+            "source": {
+              "mode": "LIVE_COMPATIBLE_FALLBACK",
+              "provider": "VWorld",
+              "dataset": "LP_PA_CBND_BUBUN",
+              "pnu": "1168010300100120000",
+              "resolution": "PNU_POLYGON_VERIFIED",
+              "feature_pnu": "1168010300100120000"
+            },
+            "fallback_used": true,
+            "live_result": {
+              "resolution": "PNU_POLYGON_VERIFIED",
+              "feature_pnu": "1168010300100120000",
+              "strict_pnu_verified": true,
+              "query": {
+                "http_status": 200,
+                "vworld_status": "OK",
+                "classification": "QUERY_SUCCESS",
+                "feature_count": 1,
+                "polygon_feature_count": 1
+              }
+            }
+          },
+          "query": {
+            "http_status": 200,
+            "vworld_status": "NOT_FOUND",
+            "classification": "QUERY_EMPTY",
+            "transport_error": null,
+            "error": {},
+            "feature_count": 0,
+            "request": {
+              "dataset": "LT_C_UQ129",
+              "x": 127.07539280356858,
+              "y": 37.494197498186885,
+              "crs": "EPSG:4326"
+            },
+            "geometry_feature_count": 0
+          }
+        }
+      },
+      "취락지구": {
+        "name": "취락지구",
+        "type": "SITE",
+        "pnu": "1168010300100120000",
+        "source": {
+          "provider": "VWorld",
+          "dataset": "LT_C_UQ128",
+          "crs": "EPSG:4326"
+        },
+        "state": "FALSE",
+        "confidence": "HIGH",
+        "resolution": "NO_SETTLEMENT_DISTRICT_FEATURE",
+        "geometry_verified": true,
+        "evaluation": {
+          "query_success": true,
+          "intersects": false,
+          "intersection_count": 0
+        },
+        "evidence": {
+          "coordinate": {
+            "x": 127.07539280356858,
+            "y": 37.494197498186885,
+            "crs": "EPSG:4326",
+            "evaluation_parcel": {
+              "resolved": true,
+              "crs": "EPSG:4326",
+              "source": {
+                "mode": "LIVE_COMPATIBLE_FALLBACK",
+                "provider": "VWorld",
+                "dataset": "LP_PA_CBND_BUBUN",
+                "pnu": "1168010300100120000",
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000"
+              },
+              "fallback_used": true,
+              "live_result": {
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000",
+                "strict_pnu_verified": true,
+                "query": {
+                  "http_status": 200,
+                  "vworld_status": "OK",
+                  "classification": "QUERY_SUCCESS",
+                  "feature_count": 1,
+                  "polygon_feature_count": 1
+                }
+              }
+            }
+          },
+          "evaluation_parcel": {
+            "resolved": true,
+            "crs": "EPSG:4326",
+            "source": {
+              "mode": "LIVE_COMPATIBLE_FALLBACK",
+              "provider": "VWorld",
+              "dataset": "LP_PA_CBND_BUBUN",
+              "pnu": "1168010300100120000",
+              "resolution": "PNU_POLYGON_VERIFIED",
+              "feature_pnu": "1168010300100120000"
+            },
+            "fallback_used": true,
+            "live_result": {
+              "resolution": "PNU_POLYGON_VERIFIED",
+              "feature_pnu": "1168010300100120000",
+              "strict_pnu_verified": true,
+              "query": {
+                "http_status": 200,
+                "vworld_status": "OK",
+                "classification": "QUERY_SUCCESS",
+                "feature_count": 1,
+                "polygon_feature_count": 1
+              }
+            }
+          },
+          "query": {
+            "http_status": 200,
+            "vworld_status": "NOT_FOUND",
+            "classification": "QUERY_EMPTY",
+            "transport_error": null,
+            "error": {},
+            "feature_count": 0,
+            "request": {
+              "dataset": "LT_C_UQ128",
+              "x": 127.07539280356858,
+              "y": 37.494197498186885,
+              "crs": "EPSG:4326"
+            },
+            "geometry_feature_count": 0
+          }
+        }
+      },
+      "방재지구": {
+        "name": "방재지구",
+        "type": "SITE",
+        "pnu": "1168010300100120000",
+        "source": {
+          "provider": "VWorld",
+          "dataset": "LT_C_UQ125",
+          "crs": "EPSG:4326"
+        },
+        "state": "FALSE",
+        "confidence": "HIGH",
+        "resolution": "NO_DISASTER_PREVENTION_DISTRICT_FEATURE",
+        "geometry_verified": true,
+        "evaluation": {
+          "query_success": true,
+          "intersects": false,
+          "intersection_count": 0
+        },
+        "evidence": {
+          "coordinate": {
+            "x": 127.07539280356858,
+            "y": 37.494197498186885,
+            "crs": "EPSG:4326",
+            "evaluation_parcel": {
+              "resolved": true,
+              "crs": "EPSG:4326",
+              "source": {
+                "mode": "LIVE_COMPATIBLE_FALLBACK",
+                "provider": "VWorld",
+                "dataset": "LP_PA_CBND_BUBUN",
+                "pnu": "1168010300100120000",
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000"
+              },
+              "fallback_used": true,
+              "live_result": {
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000",
+                "strict_pnu_verified": true,
+                "query": {
+                  "http_status": 200,
+                  "vworld_status": "OK",
+                  "classification": "QUERY_SUCCESS",
+                  "feature_count": 1,
+                  "polygon_feature_count": 1
+                }
+              }
+            }
+          },
+          "evaluation_parcel": {
+            "resolved": true,
+            "crs": "EPSG:4326",
+            "source": {
+              "mode": "LIVE_COMPATIBLE_FALLBACK",
+              "provider": "VWorld",
+              "dataset": "LP_PA_CBND_BUBUN",
+              "pnu": "1168010300100120000",
+              "resolution": "PNU_POLYGON_VERIFIED",
+              "feature_pnu": "1168010300100120000"
+            },
+            "fallback_used": true,
+            "live_result": {
+              "resolution": "PNU_POLYGON_VERIFIED",
+              "feature_pnu": "1168010300100120000",
+              "strict_pnu_verified": true,
+              "query": {
+                "http_status": 200,
+                "vworld_status": "OK",
+                "classification": "QUERY_SUCCESS",
+                "feature_count": 1,
+                "polygon_feature_count": 1
+              }
+            }
+          },
+          "query": {
+            "http_status": 200,
+            "vworld_status": "NOT_FOUND",
+            "classification": "QUERY_EMPTY",
+            "transport_error": null,
+            "error": {},
+            "feature_count": 0,
+            "request": {
+              "dataset": "LT_C_UQ125",
+              "x": 127.07539280356858,
+              "y": 37.494197498186885,
+              "crs": "EPSG:4326"
+            },
+            "geometry_feature_count": 0
+          }
+        }
+      }
+    },
+    "production_condition_contracts": {
+      "지구단위계획": {
+        "contract": "PRODUCTION_SITE_CONDITION",
+        "name": "지구단위계획",
+        "condition_type": "SITE",
+        "resolution_type": "SPATIAL",
+        "state": "TRUE",
+        "confidence": "HIGH",
+        "source": "RUNTIME_SPATIAL_CONDITION",
+        "provenance": {
+          "adapter": "PRODUCTION_SPATIAL_CONDITION_ADAPTER",
+          "pnu": "1168010300100120000",
+          "geometry_verified": true,
+          "resolution": "PARCEL_INTERSECTS_DISTRICT_UNIT_PLAN",
+          "runtime_source": {
+            "provider": "VWorld",
+            "dataset": "LT_C_UPISUQ161",
+            "crs": "EPSG:4326"
+          }
+        },
+        "production_eligible": false,
+        "runtime_registered": false,
+        "negative_evidence_allowed": false,
+        "legal_absence_inference_allowed": false,
+        "site_promotion_allowed": false,
+        "diagnostics": {
+          "evaluation": {
+            "query_success": true,
+            "intersects": true,
+            "intersection_count": 1
+          },
+          "evidence": {
+            "coordinate": {
+              "x": 127.07539280356858,
+              "y": 37.494197498186885,
+              "crs": "EPSG:4326",
+              "evaluation_parcel": {
+                "resolved": true,
+                "crs": "EPSG:4326",
+                "source": {
+                  "mode": "LIVE_COMPATIBLE_FALLBACK",
+                  "provider": "VWorld",
+                  "dataset": "LP_PA_CBND_BUBUN",
+                  "pnu": "1168010300100120000",
+                  "resolution": "PNU_POLYGON_VERIFIED",
+                  "feature_pnu": "1168010300100120000"
+                },
+                "fallback_used": true,
+                "live_result": {
+                  "resolution": "PNU_POLYGON_VERIFIED",
+                  "feature_pnu": "1168010300100120000",
+                  "strict_pnu_verified": true,
+                  "query": {
+                    "http_status": 200,
+                    "vworld_status": "OK",
+                    "classification": "QUERY_SUCCESS",
+                    "feature_count": 1,
+                    "polygon_feature_count": 1
+                  }
+                }
+              }
+            },
+            "evaluation_parcel": {
+              "resolved": true,
+              "crs": "EPSG:4326",
+              "source": {
+                "mode": "LIVE_COMPATIBLE_FALLBACK",
+                "provider": "VWorld",
+                "dataset": "LP_PA_CBND_BUBUN",
+                "pnu": "1168010300100120000",
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000"
+              },
+              "fallback_used": true,
+              "live_result": {
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000",
+                "strict_pnu_verified": true,
+                "query": {
+                  "http_status": 200,
+                  "vworld_status": "OK",
+                  "classification": "QUERY_SUCCESS",
+                  "feature_count": 1,
+                  "polygon_feature_count": 1
+                }
+              }
+            },
+            "query": {
+              "http_status": 200,
+              "vworld_status": "OK",
+              "classification": "QUERY_SUCCESS",
+              "transport_error": null,
+              "error": {},
+              "feature_count": 1,
+              "request": {
+                "dataset": "LT_C_UPISUQ161",
+                "x": 127.07539280356858,
+                "y": 37.494197498186885,
+                "crs": "EPSG:4326"
+              },
+              "geometry_feature_count": 1
+            },
+            "intersections": [
+              {
+                "index": 1,
+                "feature_id": "LT_C_UPISUQ161.1150",
+                "district_name": "대치택지개발지구",
+                "geometry_type": "MultiPolygon",
+                "intersects": true
+              }
+            ]
+          }
+        }
+      },
+      "개발진흥지구": {
+        "contract": "PRODUCTION_SITE_CONDITION",
+        "name": "개발진흥지구",
+        "condition_type": "SITE",
+        "resolution_type": "SPATIAL",
+        "state": "FALSE",
+        "confidence": "HIGH",
+        "source": "RUNTIME_SPATIAL_CONDITION",
+        "provenance": {
+          "adapter": "PRODUCTION_SPATIAL_CONDITION_ADAPTER",
+          "pnu": "1168010300100120000",
+          "geometry_verified": true,
+          "resolution": "NO_DEVELOPMENT_PROMOTION_DISTRICT_FEATURE",
+          "runtime_source": {
+            "provider": "VWorld",
+            "dataset": "LT_C_UQ129",
+            "crs": "EPSG:4326"
+          }
+        },
+        "production_eligible": false,
+        "runtime_registered": false,
+        "negative_evidence_allowed": false,
+        "legal_absence_inference_allowed": false,
+        "site_promotion_allowed": false,
+        "diagnostics": {
+          "evaluation": {
+            "query_success": true,
+            "intersects": false,
+            "intersection_count": 0
+          },
+          "evidence": {
+            "coordinate": {
+              "x": 127.07539280356858,
+              "y": 37.494197498186885,
+              "crs": "EPSG:4326",
+              "evaluation_parcel": {
+                "resolved": true,
+                "crs": "EPSG:4326",
+                "source": {
+                  "mode": "LIVE_COMPATIBLE_FALLBACK",
+                  "provider": "VWorld",
+                  "dataset": "LP_PA_CBND_BUBUN",
+                  "pnu": "1168010300100120000",
+                  "resolution": "PNU_POLYGON_VERIFIED",
+                  "feature_pnu": "1168010300100120000"
+                },
+                "fallback_used": true,
+                "live_result": {
+                  "resolution": "PNU_POLYGON_VERIFIED",
+                  "feature_pnu": "1168010300100120000",
+                  "strict_pnu_verified": true,
+                  "query": {
+                    "http_status": 200,
+                    "vworld_status": "OK",
+                    "classification": "QUERY_SUCCESS",
+                    "feature_count": 1,
+                    "polygon_feature_count": 1
+                  }
+                }
+              }
+            },
+            "evaluation_parcel": {
+              "resolved": true,
+              "crs": "EPSG:4326",
+              "source": {
+                "mode": "LIVE_COMPATIBLE_FALLBACK",
+                "provider": "VWorld",
+                "dataset": "LP_PA_CBND_BUBUN",
+                "pnu": "1168010300100120000",
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000"
+              },
+              "fallback_used": true,
+              "live_result": {
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000",
+                "strict_pnu_verified": true,
+                "query": {
+                  "http_status": 200,
+                  "vworld_status": "OK",
+                  "classification": "QUERY_SUCCESS",
+                  "feature_count": 1,
+                  "polygon_feature_count": 1
+                }
+              }
+            },
+            "query": {
+              "http_status": 200,
+              "vworld_status": "NOT_FOUND",
+              "classification": "QUERY_EMPTY",
+              "transport_error": null,
+              "error": {},
+              "feature_count": 0,
+              "request": {
+                "dataset": "LT_C_UQ129",
+                "x": 127.07539280356858,
+                "y": 37.494197498186885,
+                "crs": "EPSG:4326"
+              },
+              "geometry_feature_count": 0
+            }
+          }
+        }
+      },
+      "취락지구": {
+        "contract": "PRODUCTION_SITE_CONDITION",
+        "name": "취락지구",
+        "condition_type": "SITE",
+        "resolution_type": "SPATIAL",
+        "state": "FALSE",
+        "confidence": "HIGH",
+        "source": "RUNTIME_SPATIAL_CONDITION",
+        "provenance": {
+          "adapter": "PRODUCTION_SPATIAL_CONDITION_ADAPTER",
+          "pnu": "1168010300100120000",
+          "geometry_verified": true,
+          "resolution": "NO_SETTLEMENT_DISTRICT_FEATURE",
+          "runtime_source": {
+            "provider": "VWorld",
+            "dataset": "LT_C_UQ128",
+            "crs": "EPSG:4326"
+          }
+        },
+        "production_eligible": false,
+        "runtime_registered": false,
+        "negative_evidence_allowed": false,
+        "legal_absence_inference_allowed": false,
+        "site_promotion_allowed": false,
+        "diagnostics": {
+          "evaluation": {
+            "query_success": true,
+            "intersects": false,
+            "intersection_count": 0
+          },
+          "evidence": {
+            "coordinate": {
+              "x": 127.07539280356858,
+              "y": 37.494197498186885,
+              "crs": "EPSG:4326",
+              "evaluation_parcel": {
+                "resolved": true,
+                "crs": "EPSG:4326",
+                "source": {
+                  "mode": "LIVE_COMPATIBLE_FALLBACK",
+                  "provider": "VWorld",
+                  "dataset": "LP_PA_CBND_BUBUN",
+                  "pnu": "1168010300100120000",
+                  "resolution": "PNU_POLYGON_VERIFIED",
+                  "feature_pnu": "1168010300100120000"
+                },
+                "fallback_used": true,
+                "live_result": {
+                  "resolution": "PNU_POLYGON_VERIFIED",
+                  "feature_pnu": "1168010300100120000",
+                  "strict_pnu_verified": true,
+                  "query": {
+                    "http_status": 200,
+                    "vworld_status": "OK",
+                    "classification": "QUERY_SUCCESS",
+                    "feature_count": 1,
+                    "polygon_feature_count": 1
+                  }
+                }
+              }
+            },
+            "evaluation_parcel": {
+              "resolved": true,
+              "crs": "EPSG:4326",
+              "source": {
+                "mode": "LIVE_COMPATIBLE_FALLBACK",
+                "provider": "VWorld",
+                "dataset": "LP_PA_CBND_BUBUN",
+                "pnu": "1168010300100120000",
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000"
+              },
+              "fallback_used": true,
+              "live_result": {
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000",
+                "strict_pnu_verified": true,
+                "query": {
+                  "http_status": 200,
+                  "vworld_status": "OK",
+                  "classification": "QUERY_SUCCESS",
+                  "feature_count": 1,
+                  "polygon_feature_count": 1
+                }
+              }
+            },
+            "query": {
+              "http_status": 200,
+              "vworld_status": "NOT_FOUND",
+              "classification": "QUERY_EMPTY",
+              "transport_error": null,
+              "error": {},
+              "feature_count": 0,
+              "request": {
+                "dataset": "LT_C_UQ128",
+                "x": 127.07539280356858,
+                "y": 37.494197498186885,
+                "crs": "EPSG:4326"
+              },
+              "geometry_feature_count": 0
+            }
+          }
+        }
+      },
+      "방재지구": {
+        "contract": "PRODUCTION_SITE_CONDITION",
+        "name": "방재지구",
+        "condition_type": "SITE",
+        "resolution_type": "SPATIAL",
+        "state": "FALSE",
+        "confidence": "HIGH",
+        "source": "RUNTIME_SPATIAL_CONDITION",
+        "provenance": {
+          "adapter": "PRODUCTION_SPATIAL_CONDITION_ADAPTER",
+          "pnu": "1168010300100120000",
+          "geometry_verified": true,
+          "resolution": "NO_DISASTER_PREVENTION_DISTRICT_FEATURE",
+          "runtime_source": {
+            "provider": "VWorld",
+            "dataset": "LT_C_UQ125",
+            "crs": "EPSG:4326"
+          }
+        },
+        "production_eligible": false,
+        "runtime_registered": false,
+        "negative_evidence_allowed": false,
+        "legal_absence_inference_allowed": false,
+        "site_promotion_allowed": false,
+        "diagnostics": {
+          "evaluation": {
+            "query_success": true,
+            "intersects": false,
+            "intersection_count": 0
+          },
+          "evidence": {
+            "coordinate": {
+              "x": 127.07539280356858,
+              "y": 37.494197498186885,
+              "crs": "EPSG:4326",
+              "evaluation_parcel": {
+                "resolved": true,
+                "crs": "EPSG:4326",
+                "source": {
+                  "mode": "LIVE_COMPATIBLE_FALLBACK",
+                  "provider": "VWorld",
+                  "dataset": "LP_PA_CBND_BUBUN",
+                  "pnu": "1168010300100120000",
+                  "resolution": "PNU_POLYGON_VERIFIED",
+                  "feature_pnu": "1168010300100120000"
+                },
+                "fallback_used": true,
+                "live_result": {
+                  "resolution": "PNU_POLYGON_VERIFIED",
+                  "feature_pnu": "1168010300100120000",
+                  "strict_pnu_verified": true,
+                  "query": {
+                    "http_status": 200,
+                    "vworld_status": "OK",
+                    "classification": "QUERY_SUCCESS",
+                    "feature_count": 1,
+                    "polygon_feature_count": 1
+                  }
+                }
+              }
+            },
+            "evaluation_parcel": {
+              "resolved": true,
+              "crs": "EPSG:4326",
+              "source": {
+                "mode": "LIVE_COMPATIBLE_FALLBACK",
+                "provider": "VWorld",
+                "dataset": "LP_PA_CBND_BUBUN",
+                "pnu": "1168010300100120000",
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000"
+              },
+              "fallback_used": true,
+              "live_result": {
+                "resolution": "PNU_POLYGON_VERIFIED",
+                "feature_pnu": "1168010300100120000",
+                "strict_pnu_verified": true,
+                "query": {
+                  "http_status": 200,
+                  "vworld_status": "OK",
+                  "classification": "QUERY_SUCCESS",
+                  "feature_count": 1,
+                  "polygon_feature_count": 1
+                }
+              }
+            },
+            "query": {
+              "http_status": 200,
+              "vworld_status": "NOT_FOUND",
+              "classification": "QUERY_EMPTY",
+              "transport_error": null,
+              "error": {},
+              "feature_count": 0,
+              "request": {
+                "dataset": "LT_C_UQ125",
+                "x": 127.07539280356858,
+                "y": 37.494197498186885,
+                "crs": "EPSG:4326"
+              },
+              "geometry_feature_count": 0
+            }
+          }
+        }
+      }
     }
   },
   "regulation": {
@@ -42,14 +1101,14 @@
     },
     "numeric_resolution": "BASE_VALUES_RETAINED",
     "direct_relaxation_count": 0,
-    "numeric_active_before_guard": 11,
-    "numeric_excluded_count": 3,
+    "numeric_active_before_guard": 10,
+    "numeric_excluded_count": 2,
     "numeric_retained_count": 8
   },
   "rule_evaluation": {
     "total": 314,
-    "applicable": 63,
-    "not_applicable": 213,
+    "applicable": 62,
+    "not_applicable": 214,
     "conditional": 36,
     "unknown": 2
   },
@@ -74,8 +1133,8 @@
     "BCR 50": true,
     "FAR 250": true,
     "rules 314": true,
-    "applicable 63": true,
-    "not applicable 213": true,
+    "applicable 62": true,
+    "not applicable 214": true,
     "conditional 36": true,
     "unknown 2": true
   },
