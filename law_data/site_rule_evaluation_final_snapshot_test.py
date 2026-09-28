@@ -787,6 +787,13 @@ def main() -> int:
                     )
                 ),
 
+                "structural_role": (
+                    clause.get(
+                        "structural_role",
+                        "LEAF",
+                    )
+                ),
+
                 "zone_relevance": (
                     clause.get(
                         "zone_relevance"

@@ -427,13 +427,7 @@ def main() -> int:
         OUTPUT_PATH,
     )
 
-    print(
-        "Analysis coordinate:",
-        analysis_site.get(
-        "coordinate"
-        ),
-    )
-    
+
     return (
         0
         if all_pass

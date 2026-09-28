@@ -89,7 +89,7 @@ def determine_analysis_status(e,r):
     ready=e.get("pipeline",{}).get("ready") is True; b=r.get("building_coverage_ratio",{}).get("status")=="CONFIRMED"; f=r.get("floor_area_ratio",{}).get("status")=="CONFIRMED"
     return "READY" if ready and b and f else ("PARTIAL" if ready else "NOT_READY")
 
-def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,site_input:Optional[Dict[str,Any]]=None,production_condition_shadow_sources:Optional[Any]=None,historical_rule_input:Optional[Any]=None,district_unit_plan_registry_candidate:Optional[Any]=None)->Dict[str,Any]:
+def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,site_input:Optional[Dict[str,Any]]=None,production_condition_shadow_sources:Optional[Any]=None,historical_rule_input:Optional[Any]=None,district_unit_plan_registry_candidate:Optional[Any]=None,fact_context:Optional[Dict[str,Any]]=None)->Dict[str,Any]:
     project_profile=project_profile or {}; procedure_profile=procedure_profile or {}; site_input=site_input or {}
     historical_snapshot=None
     district_unit_plan_snapshot=None
@@ -129,7 +129,7 @@ def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_p
     if not valid:
         lc=spatial.get("parcel",{}).get("source",{}).get("live",{}).get("coordinate",{})
         if isinstance(lc,dict) and lc.get("crs")=="EPSG:4326" and isinstance(lc.get("x"),(int,float)) and isinstance(lc.get("y"),(int,float)):site["coordinate"]={"x":lc.get("x"),"y":lc.get("y"),"crs":"EPSG:4326","source":lc.get("source") or "VWORLD_ADDRESS_SEARCH","status":"CONFIRMED"}
-    zone=resolve_zone_base_numeric(site.get("zone")); engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx)
+    zone=resolve_zone_base_numeric(site.get("zone")); engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,fact_context=fact_context)
     if historical_snapshot is not None:
         reg=adapt_historical_site_event_rule_engine_registry(historical_snapshot)
         if not reg.registry_ready:raise ValueError("historical rule input registry adaptation failed")
@@ -139,7 +139,7 @@ def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_p
         if not auth.live_consumption_authorized:raise ValueError("historical merged registry live consumption unauthorized")
         common_registry=normalize_verified_site_registry_live_consumption(auth)
         if not common_registry.ready:raise ValueError("common verified historical SITE registry unavailable")
-        engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,common_verified_site_registry=common_registry)
+        engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,fact_context=fact_context,common_verified_site_registry=common_registry)
 
     if district_unit_plan_snapshot is not None:
         collision=evaluate_district_unit_plan_spatial_registry_collision_policy(
@@ -158,7 +158,7 @@ def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_p
         common_registry=normalize_verified_site_registry_live_consumption(auth)
         if not common_registry.ready:
             raise ValueError("common verified district-unit SITE registry unavailable")
-        engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,common_verified_site_registry=common_registry)
+        engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,fact_context=fact_context,common_verified_site_registry=common_registry)
 
     land=build_land_area_result(site_input,site); regulation=build_regulation_result(engine); summary=build_rule_summary(engine); details=build_rule_details(engine); req=build_input_requirements(engine); ext=build_external_dependencies(engine); status=determine_analysis_status(engine,regulation)
     inp={"site":copy.deepcopy(site_input),"project":copy.deepcopy(project_profile),"procedure":copy.deepcopy(procedure_profile)}

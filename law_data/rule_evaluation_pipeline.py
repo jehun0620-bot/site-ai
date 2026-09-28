@@ -390,6 +390,7 @@ def _condition_state_by_identity(
 def evaluate_condition_expression(
     rule: Dict[str, Any],
     expression: Dict[str, Any],
+    fact_context: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """
     Evaluate an optional E-5 expression without changing legacy rules.
@@ -424,6 +425,52 @@ def evaluate_condition_expression(
             )
         }
 
+    if op == "NUMERIC":
+        target = safe_string(expression.get("target"))
+        operator = safe_string(expression.get("operator"))
+        expected_value = expression.get("value")
+        expected_unit = safe_string(expression.get("unit"))
+
+        if (
+            not target
+            or operator != "LTE"
+            or not isinstance(expected_value, (int, float))
+            or isinstance(expected_value, bool)
+            or not expected_unit
+        ):
+            return {"state": "UNKNOWN"}
+
+        if not isinstance(fact_context, dict):
+            return {"state": "UNSET"}
+
+        fact = fact_context.get(target)
+
+        if fact is None:
+            return {"state": "UNSET"}
+
+        if not isinstance(fact, dict):
+            return {"state": "UNKNOWN"}
+
+        if safe_string(fact.get("state")) == "UNKNOWN":
+            return {"state": "UNKNOWN"}
+
+        actual_value = fact.get("value")
+        actual_unit = safe_string(fact.get("unit"))
+
+        if (
+            not isinstance(actual_value, (int, float))
+            or isinstance(actual_value, bool)
+            or actual_unit != expected_unit
+        ):
+            return {"state": "UNKNOWN"}
+
+        return {
+            "state": (
+                "TRUE"
+                if actual_value <= expected_value
+                else "FALSE"
+            )
+        }
     if op not in {"AND", "OR"}:
         return {"state": "UNKNOWN"}
 
@@ -436,6 +483,7 @@ def evaluate_condition_expression(
         evaluate_condition_expression(
             rule,
             child,
+            fact_context,
         ).get("state")
         for child in children
     ]
@@ -723,6 +771,155 @@ def validation_e5_verified_condition_expression_gate() -> bool:
 
     return True
 
+
+def prepare_numeric_fact_context(
+    fact_context: Optional[Dict[str, Any]],
+) -> Dict[str, Any]:
+    """Prepare typed numeric facts and derived facts."""
+
+    if not isinstance(fact_context, dict):
+        return {}
+
+    prepared = copy.deepcopy(fact_context)
+
+    existing = prepared.get("existing_site_area")
+    additional = prepared.get("additional_site_area")
+
+    if existing is None or additional is None:
+        return prepared
+
+    if not isinstance(existing, dict) or not isinstance(additional, dict):
+        prepared["additional_site_area_ratio"] = {
+            "state": "UNKNOWN",
+            "unit": "percent_of_existing_site_area",
+        }
+        return prepared
+
+    existing_value = existing.get("value")
+    additional_value = additional.get("value")
+    existing_unit = safe_string(existing.get("unit"))
+    additional_unit = safe_string(additional.get("unit"))
+
+    valid_existing = (
+        isinstance(existing_value, (int, float))
+        and not isinstance(existing_value, bool)
+    )
+    valid_additional = (
+        isinstance(additional_value, (int, float))
+        and not isinstance(additional_value, bool)
+    )
+
+    if (
+        not valid_existing
+        or not valid_additional
+        or existing_unit != "square_meter"
+        or additional_unit != "square_meter"
+        or existing_value <= 0
+        or additional_value < 0
+    ):
+        prepared["additional_site_area_ratio"] = {
+            "state": "UNKNOWN",
+            "unit": "percent_of_existing_site_area",
+        }
+        return prepared
+
+    prepared["additional_site_area_ratio"] = {
+        "value": (
+            float(additional_value)
+            / float(existing_value)
+            * 100.0
+        ),
+        "unit": "percent_of_existing_site_area",
+    }
+
+    return prepared
+
+
+def validation_e5_numeric_predicate_foundation() -> bool:
+    """Synthetic regression for the E-5 NUMERIC predicate."""
+
+    expression = {
+        "op": "NUMERIC",
+        "target": "additional_site_area_ratio",
+        "operator": "LTE",
+        "value": 50.0,
+        "unit": "percent_of_existing_site_area",
+    }
+
+    cases = [
+        (
+            {
+                "additional_site_area_ratio": {
+                    "value": 40.0,
+                    "unit": "percent_of_existing_site_area",
+                }
+            },
+            "TRUE",
+        ),
+        (
+            {
+                "additional_site_area_ratio": {
+                    "value": 60.0,
+                    "unit": "percent_of_existing_site_area",
+                }
+            },
+            "FALSE",
+        ),
+        ({}, "UNSET"),
+        (
+            {
+                "additional_site_area_ratio": {
+                    "state": "UNKNOWN",
+                    "unit": "percent_of_existing_site_area",
+                }
+            },
+            "UNKNOWN",
+        ),
+    ]
+
+    for fact_context, expected in cases:
+        actual = evaluate_condition_expression(
+            {},
+            expression,
+            fact_context,
+        ).get("state")
+
+        if actual != expected:
+            return False
+
+    recursive_expression = {
+        "op": "AND",
+        "children": [
+            expression,
+            {
+                "op": "NUMERIC",
+                "target": "building_height",
+                "operator": "LTE",
+                "value": 20.0,
+                "unit": "meter",
+            },
+        ],
+    }
+
+    recursive_context = {
+        "additional_site_area_ratio": {
+            "value": 40.0,
+            "unit": "percent_of_existing_site_area",
+        },
+        "building_height": {
+            "value": 25.0,
+            "unit": "meter",
+        },
+    }
+
+    return (
+        evaluate_condition_expression(
+            {},
+            recursive_expression,
+            recursive_context,
+        ).get("state")
+        == "FALSE"
+    )
 
 # ============================================================
 # applicability
@@ -3026,6 +3223,9 @@ def evaluate_site_rules(
     ] = None,
     historical_registry_authorization: Optional[Any] = None,
     common_verified_site_registry: Optional[Any] = None,
+    fact_context: Optional[
+        Dict[str, Any]
+    ] = None,
 ) -> Dict[str, Any]:
 
     project_profile = (
@@ -3041,6 +3241,12 @@ def evaluate_site_rules(
     base_numeric_context = (
         base_numeric_context
         or {}
+    )
+
+    prepared_fact_context = (
+        prepare_numeric_fact_context(
+            fact_context
+        )
     )
 
     site_condition_context = (

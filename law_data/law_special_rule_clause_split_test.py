@@ -104,6 +104,22 @@ def validate_condition_expression_schema(
             and bool(condition.get("type", "").strip())
         )
 
+    if op == "NUMERIC":
+        target = expression.get("target")
+        operator = expression.get("operator")
+        value = expression.get("value")
+        unit = expression.get("unit")
+
+        return (
+            isinstance(target, str)
+            and bool(target.strip())
+            and operator == "LTE"
+            and isinstance(value, (int, float))
+            and not isinstance(value, bool)
+            and isinstance(unit, str)
+            and bool(unit.strip())
+        )
+
     if op not in {"AND", "OR"}:
         return False
 
@@ -215,6 +231,7 @@ SITE_CONDITIONS = {
         "일반산업단지",
         "도시첨단산업단지",
         "준산업단지",
+        "농공단지",
     ],
 
     "수산자원보호구역": [
@@ -3527,6 +3544,42 @@ def _e5_container_indexes(
     return containers
 
 
+def annotate_e5_structural_roles(
+    clauses: List[Dict[str, Any]],
+) -> None:
+    """
+    Persist the verified structural parent/child distinction only.
+
+    CONTAINER means that the clause has structural child clauses.
+    LEAF means that it has no structural child clauses.
+
+    This metadata does not determine whether a clause may carry
+    independent applicability, conditions, or numeric semantics.
+    """
+
+    container_indexes = set(
+        _e5_container_indexes(
+            clauses
+        )
+    )
+
+    for index, clause in enumerate(
+        clauses,
+        start=1,
+    ):
+        if not isinstance(
+            clause,
+            dict,
+        ):
+            continue
+
+        clause["structural_role"] = (
+            "CONTAINER"
+            if index in container_indexes
+            else "LEAF"
+        )
+
+
 def validation_e5_structure_risk_baseline(
     clauses: List[Dict[str, Any]],
 ) -> bool:
@@ -4177,6 +4230,10 @@ def main():
     )
 
     print()
+
+    annotate_e5_structural_roles(
+        clauses
+    )
 
     validations = run_validations(
         clauses

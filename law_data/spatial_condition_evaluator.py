@@ -245,7 +245,8 @@ SPATIAL_CONDITION_REGISTRY: Dict[
     #
     # positive:
     # PNU 1211015700105800006
-    # feature LT_C_UQ125.22
+    # historical feature observed during C-16-7: LT_C_UQ125.22
+    # VWorld feature IDs are not treated as stable legal/spatial identity.
     # uname 방재지구
     # Parcel Polygon intersection verified
     "not_found_is_empty":

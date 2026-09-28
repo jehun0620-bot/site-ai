@@ -1478,9 +1478,15 @@ validations = {
         > 0
     ),
 
-    "expected feature ID": (
-        EXPECTED_FEATURE_ID
-        in positive_feature_ids
+    "positive feature ID valid": (
+        bool(positive_feature_ids)
+        and all(
+            feature_id.startswith(
+                DATASET + "."
+            )
+            for feature_id
+            in positive_feature_ids
+        )
     ),
 
     "district name": (
