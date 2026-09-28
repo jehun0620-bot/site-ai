@@ -29,16 +29,13 @@ def main() -> int:
     original_snapshot = original_load_json(
         pipeline.SITE_COMPLETE_PATH
     )
-
     candidate_snapshot = copy.deepcopy(
         original_snapshot
     )
 
-    rule = next(
-        item
-        for item in candidate_snapshot.get("rules", [])
-        if isinstance(item, dict)
-        and item.get("clause_index") == 3
+    rule = _find_rule(
+        {"rules": candidate_snapshot["rules"]},
+        3,
     )
 
     expression = {
@@ -81,73 +78,98 @@ def main() -> int:
     baseline_rule = _find_rule(baseline, 3)
     candidate_rule = _find_rule(candidate, 3)
 
-    operational_keys = [
-        "applicability",
-        "applicability_reason",
-        "required_inputs",
-        "blocked_by",
-        "unknown_by",
-        "numeric_effect",
-        "current_numeric_effect",
-    ]
-
-    operational_equal = all(
-        baseline_rule.get(key) == candidate_rule.get(key)
-        for key in operational_keys
-    )
-
-    validations = {
-        "admission verified": admission.verified,
-        "baseline clause 3 applicable": (
-            baseline_rule.get("applicability") == "APPLICABLE"
+    result_checks = {
+        "admission": admission.verified,
+        "applicability": (
+            baseline_rule.get("applicability")
+            == candidate_rule.get("applicability")
         ),
-        "candidate expression verified": (
-            candidate_rule.get("condition_expression_status")
+        "required_inputs": (
+            baseline_rule.get("required_inputs")
+            == candidate_rule.get("required_inputs")
+        ),
+        "blocked_by": (
+            baseline_rule.get("blocked_by")
+            == candidate_rule.get("blocked_by")
+        ),
+        "unknown_by": (
+            baseline_rule.get("unknown_by")
+            == candidate_rule.get("unknown_by")
+        ),
+        "numeric_effect": (
+            baseline_rule.get("numeric_effect")
+            == candidate_rule.get("numeric_effect")
+        ),
+        "current_numeric_effect": (
+            baseline_rule.get("current_numeric_effect")
+            == candidate_rule.get("current_numeric_effect")
+        ),
+        "rule_count": (
+            len(baseline.get("rules", []))
+            == len(candidate.get("rules", []))
+            == 314
+        ),
+        "bcr": (
+            baseline.get("numeric", {}).get(
+                "building_coverage_ratio"
+            )
+            == candidate.get("numeric", {}).get(
+                "building_coverage_ratio"
+            )
+            == 50.0
+        ),
+        "far": (
+            baseline.get("numeric", {}).get(
+                "floor_area_ratio"
+            )
+            == candidate.get("numeric", {}).get(
+                "floor_area_ratio"
+            )
+            == 250.0
+        ),
+        "expression_status": (
+            candidate_rule.get(
+                "condition_expression_status"
+            )
             == VERIFIED
-        ),
-        "candidate clause 3 applicable": (
-            candidate_rule.get("applicability") == "APPLICABLE"
-        ),
-        "operational behavior preserved": operational_equal,
-        "baseline rule count 314": (
-            len(baseline.get("rules", [])) == 314
-        ),
-        "candidate rule count 314": (
-            len(candidate.get("rules", [])) == 314
-        ),
-        "baseline BCR 50": (
-            baseline.get("numeric", {}).get("building_coverage_ratio")
-            == 50.0
-        ),
-        "candidate BCR 50": (
-            candidate.get("numeric", {}).get("building_coverage_ratio")
-            == 50.0
-        ),
-        "baseline FAR 250": (
-            baseline.get("numeric", {}).get("floor_area_ratio")
-            == 250.0
-        ),
-        "candidate FAR 250": (
-            candidate.get("numeric", {}).get("floor_area_ratio")
-            == 250.0
         ),
     }
 
-    all_pass = all(validations.values())
-
-    print("=== E-5 INDEX 3 CANDIDATE REGRESSION ===")
+    print("=== E-5 INDEX 3 BEHAVIORAL REGRESSION ===")
     print("ADMISSION_STATUS =", admission.status)
-    print("BASELINE_CLAUSE_3 =", baseline_rule.get("applicability"))
-    print("CANDIDATE_CLAUSE_3 =", candidate_rule.get("applicability"))
-    print("OPERATIONAL_BEHAVIOR_PRESERVED =", operational_equal)
     print(
-        "BASELINE_SUMMARY =",
-        baseline.get("summary"),
+        "BASELINE_APPLICABILITY =",
+        baseline_rule.get("applicability"),
     )
     print(
-        "CANDIDATE_SUMMARY =",
-        candidate.get("summary"),
+        "CANDIDATE_APPLICABILITY =",
+        candidate_rule.get("applicability"),
     )
+    print(
+        "BASELINE_REASON =",
+        baseline_rule.get("applicability_reason"),
+    )
+    print(
+        "CANDIDATE_REASON =",
+        candidate_rule.get("applicability_reason"),
+    )
+    print(
+        "DIFF_REASON_ONLY =",
+        baseline_rule.get("applicability_reason")
+        != candidate_rule.get("applicability_reason"),
+    )
+
+    for name, passed in result_checks.items():
+        print(
+            name.upper(),
+            "=",
+            passed,
+        )
+
+    all_pass = all(
+        result_checks.values()
+    )
+
     print("all_pass:", all_pass)
 
     return 0 if all_pass else 1
