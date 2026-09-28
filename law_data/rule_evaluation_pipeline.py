@@ -473,6 +473,23 @@ def evaluate_condition_expression(
                 else "FALSE"
             )
         }
+
+    if op == "ZONE":
+        zone_relevance = safe_string(
+            rule.get("zone_relevance")
+        )
+
+        if zone_relevance in {"DIRECT", "GROUP"}:
+            return {"state": "TRUE"}
+
+        if zone_relevance == "OTHER_ZONE":
+            return {"state": "FALSE"}
+
+        if zone_relevance == "UNSPECIFIED":
+            return {"state": "UNSET"}
+
+        return {"state": "UNKNOWN"}
+
     if op not in {"AND", "OR"}:
         return {"state": "UNKNOWN"}
 
@@ -928,6 +945,37 @@ def validation_e5_numeric_predicate_foundation() -> bool:
         ).get("state")
         == "FALSE"
     )
+
+def validation_e5_zone_predicate_foundation() -> bool:
+    """Synthetic regression for the E-5 ZONE predicate."""
+
+    expression = {"op": "ZONE"}
+
+    cases = [
+        ("DIRECT", "TRUE"),
+        ("GROUP", "TRUE"),
+        ("OTHER_ZONE", "FALSE"),
+        ("UNSPECIFIED", "UNSET"),
+        ("INVALID_ZONE_STATE", "UNKNOWN"),
+        (None, "UNKNOWN"),
+    ]
+
+    for zone_relevance, expected in cases:
+        rule = {}
+
+        if zone_relevance is not None:
+            rule["zone_relevance"] = zone_relevance
+
+        actual = evaluate_condition_expression(
+            rule,
+            expression,
+        ).get("state")
+
+        if actual != expected:
+            return False
+
+    return True
+
 
 # ============================================================
 # applicability
