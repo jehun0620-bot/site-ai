@@ -977,6 +977,41 @@ def validation_e5_zone_predicate_foundation() -> bool:
     return True
 
 
+def validation_e5_runtime_spatial_atom_foundation() -> bool:
+    """Synthetic regression for runtime spatial SITE conditions consumed by ATOM."""
+
+    expression = {
+        "op": "ATOM",
+        "condition": {
+            "name": "방재지구",
+            "type": "SITE",
+        },
+    }
+
+    for state in ("TRUE", "FALSE", "UNKNOWN"):
+        rule = {
+            "conditions": [
+                {
+                    "name": "방재지구",
+                    "type": "SITE",
+                    "state": state,
+                    "source": "RUNTIME_SPATIAL_CONDITION",
+                    "runtime": True,
+                }
+            ]
+        }
+
+        actual = evaluate_condition_expression(
+            rule,
+            expression,
+        ).get("state")
+
+        if actual != state:
+            return False
+
+    return True
+
+
 # ============================================================
 # applicability
 # ============================================================
