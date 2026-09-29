@@ -7,7 +7,7 @@ structural-parser work. This test does not claim full 188-node semantics.
 
 from __future__ import annotations
 
-from building_use_annex1_semantic_model import (
+from law_data.building_use_annex1_semantic_model import (
     ACTIVE,
     DELETED,
     BuildingUseQualification,
