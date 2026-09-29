@@ -584,3 +584,32 @@ Structural Parser의 책임은 공식 별표 1의 본문/비고 경계와 `호(�
 새로운 Building Use 전용 조건 엔진을 만들지 않는다. Canonical Building Use가 검증되면 기존 PROJECT profile / predicate / expression 경계로 연결한다. 추가 numeric qualification은 기존 Numeric Predicate infrastructure의 재사용 가능성을 우선 검토하되, 지원되지 않는 측정값을 확인 없이 지원된 것으로 간주하지 않는다.
 
 현재 checkpoint는 official Annex 1 source retrieval 및 structural hierarchy extraction까지 사용자 로컬 Behavioral PASS다. 현재 검증값은 188 structural units, 30 source MAJOR nodes이며 기본번호 1..29 사이의 `23의2` 가지번호도 독립 MAJOR로 보존된다. Canonical semantic taxonomy와 Rule Engine production integration은 아직 완료되지 않았다.
+## Building Use Qualification automation boundary — 2026-09-29
+
+Building Use Qualification은 하나의 SourcePath-only registry로 모든 의미를 표현하지 않는다. 공식 source node 전체에 공통인 조건과 동일 source node 내부의 특정 canonical use에만 적용되는 조건을 분리한다.
+
+```text
+Official Annex 1 SourcePath
+├─ SourcePath-common Qualification
+└─ Canonical-specific Qualification
+        ↓
+candidate-level qualification lookup
+        ↓
+공통 + 개별 조건이 모두 있으면 AND
+        ↓
+four-state evaluation
+```
+
+SourcePath-common Qualification은 해당 source path의 모든 관련 canonical use에 실제로 공통 적용됨이 확인된 경우에만 등록한다. Canonical-specific Qualification은 같은 SourcePath 안에서도 특정 canonical use에만 적용되는 조건을 표현한다. 특정 canonical use의 조건을 SourcePath 전체 조건으로 승격하지 않는다.
+
+Building Use 자동화의 architecture 목표는 Annex 1의 모든 자연어 문장을 완전한 범용 법률추론 엔진으로 변환하는 것이 아니다. 우선 자동화 대상은 다음과 같다.
+
+- 공식 원문에서 의미와 경계가 명확한 numeric qualification
+- Canonical Building Use 분류를 실제로 바꾸는 명확한 building-use classification exclusion
+- 신뢰할 수 있는 입력 Fact 계약으로 표현 가능한 state qualification
+
+공식 문구는 확인되었지만 현재 시스템이 신뢰할 수 있는 Fact를 확보하지 못하거나 의미를 안전하게 표현하지 못하는 경우 TRUE/FALSE를 추정하지 않는다. REVIEW_REQUIRED / UNSET / UNKNOWN의 기존 fail-closed 경계를 사용한다.
+
+사용자 입력용 개념과 내부 predicate를 분리한다. Frontend 사용자가 법률 boolean을 다수 직접 입력하도록 강제하기보다 실제 계획의 용도·종류·규모 등 검증 가능한 입력을 받고, 별도의 Mapping Layer가 필요한 내부 Fact / Qualification 표현으로 변환하는 방향을 우선한다.
+
+Qualification 구현은 coverage checkpoint를 가진다. Canonical final classification에 필요한 핵심 Qualification이 충분히 확보되면 Annex 1 세부문구의 무제한 확장을 중단하고 기존 PROJECT profile / Rule Engine으로 연결한다. Building Use 자체가 독립적인 두 번째 Rule Engine이 되어서는 안 된다.
