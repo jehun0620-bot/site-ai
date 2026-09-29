@@ -10,7 +10,7 @@ from law_data.building_use_annex1_semantic_model import SourcePath
 from law_data.rule_evaluation_pipeline import evaluate_condition_expression
 
 
-EXPECTED_PATHS = ("3/가", "3/차", "4/다", "4/더", "4/버", "20/자", "25", "2/가", "2/나", "2/다", "3/마", "4/가", "3/카", "4/차", "3/자", "4/하", "14/나/1", "13/가", "13/나", "13/다", "5/가")
+EXPECTED_PATHS = ("3/가", "3/차", "4/다", "4/더", "4/버", "20/자", "25", "2/가", "2/나", "2/다", "2/라/1", "2/라/2", "3/마", "4/가", "3/카", "4/차", "3/자", "4/하", "14/나/1", "13/가", "13/나", "13/다", "5/가")
 
 
 def fact(value: float, unit: str) -> dict:
@@ -115,6 +115,60 @@ def main() -> None:
         "FALSE",
     )
 
+    general_dormitory_true = {
+        "dormitory_building_standard_compliant": {"state": "TRUE"},
+        "has_individually_owned_room": {"state": "FALSE"},
+        "general_dormitory_eligible_occupancy": {"state": "TRUE"},
+        "common_cooking_household_ratio": fact(50, "percent"),
+    }
+    assert_state("2/라/1", general_dormitory_true, "TRUE")
+    assert_state(
+        "2/라/1",
+        {**general_dormitory_true, "common_cooking_household_ratio": fact(49, "percent")},
+        "FALSE",
+    )
+    assert_state(
+        "2/라/1",
+        {**general_dormitory_true, "dormitory_building_standard_compliant": {"state": "FALSE"}},
+        "FALSE",
+    )
+    assert_state(
+        "2/라/1",
+        {**general_dormitory_true, "has_individually_owned_room": {"state": "TRUE"}},
+        "FALSE",
+    )
+    assert_state("2/라/1", {}, "UNSET")
+
+    rental_dormitory_true = {
+        "dormitory_building_standard_compliant": {"state": "TRUE"},
+        "has_individually_owned_room": {"state": "FALSE"},
+        "qualified_dormitory_rental_operator": {"state": "TRUE"},
+        "rental_room_count": fact(20, "room"),
+        "common_cooking_household_ratio": fact(50, "percent"),
+    }
+    assert_state("2/라/2", rental_dormitory_true, "TRUE")
+    assert_state(
+        "2/라/2",
+        {**rental_dormitory_true, "rental_room_count": fact(19, "room")},
+        "FALSE",
+    )
+    assert_state(
+        "2/라/2",
+        {**rental_dormitory_true, "common_cooking_household_ratio": fact(49, "percent")},
+        "FALSE",
+    )
+    assert_state(
+        "2/라/2",
+        {**rental_dormitory_true, "qualified_dormitory_rental_operator": {"state": "FALSE"}},
+        "FALSE",
+    )
+    assert_state(
+        "2/라/2",
+        {**rental_dormitory_true, "has_individually_owned_room": {"state": "TRUE"}},
+        "FALSE",
+    )
+    assert_state("2/라/2", {}, "UNSET")
+
     assert_state(
         "3/마",
         {"use_floor_area": fact(499, "square_meter")},
@@ -191,6 +245,8 @@ def main() -> None:
     print("2/가 apartment boundary + UNSET: PASS")
     print("2/나 row-house GT + LTE boundaries: PASS")
     print("2/다 multiplex-house LTE boundaries: PASS")
+    print("2/라/1 general-dormitory common/state/ratio qualification: PASS")
+    print("2/라/2 rental-dormitory common/operator/room/ratio qualification: PASS")
     print("3/마 table-tennis/dojo LT boundary: PASS")
     print("3/가, 3/차, 4/다, 4/더, 4/버 numeric boundaries: PASS")
     print("20/자, 25 first-neighborhood exclusions: PASS")
