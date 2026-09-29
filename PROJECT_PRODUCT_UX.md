@@ -218,3 +218,64 @@ Road-name-address 입력, 광범위한 provider operational hardening, SaaS auth
 ### Future discovery
 
 Integrated Development 착수 전에는 실제 Backend의 PNU verification → SITE truth → Rule Engine 경계를 기준으로 Analysis Target을 설계한다. 독립적인 복수필지 병렬분석을 core mode로 만들지 않고, 1..N VERIFIED parcels가 하나의 assembled site를 구성하는 모델을 우선 검토한다.
+
+## 14. Canonical Building Use selection UX — PROPOSED (2026-09-29)
+
+건축계획의 용도 입력은 사용자가 임의 문자열을 타이핑하는 방식보다, 현행 「건축법 시행령」 별표 1의 공식 용도 체계에서 선택하는 UX를 우선한다.
+
+기본 흐름:
+
+```text
+대분류 선택
+→ 선택 가능한 세부 건축물 용도 표시
+→ 실제 법정 용도 선택
+→ 해당 용도에 추가 법정 요건이 있는 경우 필요한 조건만 후속 입력
+→ Canonical Building Use 확정
+→ PROJECT mapping
+→ existing Rule Engine
+```
+
+제품 원칙:
+- UI의 용도 선택지는 Annex 1 Semantic Model에서 검증된 canonical use를 기준으로 생성한다.
+- 구조상 MAJOR/SUBITEM/DETAIL이라는 이유만으로 UI 선택 가능 여부를 자동 결정하지 않는다. Semantic role이 실제 선택 가능한 USE인지 확인한다.
+- CATEGORY는 탐색/그룹화에 사용하고, 그 자체가 법정 USE로 검증되지 않은 경우 최종 용도로 선택시키지 않는다.
+- 공장·발전시설처럼 MAJOR 자체가 USE인 경우에는 구조 깊이와 무관하게 실제 선택 가능한 용도로 취급할 수 있다.
+- 자유입력 문자열을 canonical legal use로 직접 승격하지 않는다.
+- 법령 source path와 사용자 선택용 canonical use를 분리한다. 하나의 공식 source node가 복수의 실제 선택용 용도를 포함할 수 있다.
+- 예: 교육연구시설의 동일 source node가 학원과 교습소를 함께 규정하면 UI에서는 각각 독립 선택지로 제공하되 동일 공식 source provenance에 연결할 수 있어야 한다.
+- 면적·층수·세대수 등 추가 법정 qualification이 필요한 용도는 용도 선택 이후 필요한 입력만 단계적으로 요청한다.
+- 원문, source path, qualification, exclusion 및 법령 provenance는 UI 편의를 위해 소실하거나 합성하지 않는다.
+- UNRESOLVED semantic node는 검증 전까지 canonical 선택지로 자동 노출하지 않는다.
+
+목표 UI 예시:
+
+```text
+건축물 용도
+└─ 교육연구시설
+   ├─ 학교
+   ├─ 교육원
+   ├─ 직업훈련소
+   ├─ 학원
+   ├─ 교습소
+   ├─ 연구소
+   └─ 도서관
+```
+
+필요한 Semantic Model 방향:
+
+```text
+Official Annex 1 Source Node
+        ↓ 1:N
+Canonical Building Use choices
+        ↓
+Product selection UI
+        ↓
+Project facts / qualifications
+        ↓
+existing PROJECT profile mapping
+        ↓
+existing Rule Engine
+```
+
+현재 상태는 제품/모델 방향 제안(PROPOSED)이며, 전체 Annex 1 canonical coverage, 1:N semantic contract, public API, frontend selection component 및 Rule Engine 연결이 구현·검증되었다는 의미가 아니다.
+
