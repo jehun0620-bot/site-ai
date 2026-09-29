@@ -89,9 +89,8 @@ def main() -> None:
     performance_hall = by_path(performance_hall_results)
     assert set(performance_hall) == {"4/가", "5/가"}
     assert {item.state for item in performance_hall.values()} == {"UNSET"}
-    assert {
-        item.qualification_status for item in performance_hall.values()
-    } == {"UNREGISTERED"}
+    assert performance_hall["4/가"].qualification_status == "UNREGISTERED"
+    assert performance_hall["5/가"].qualification_status == "VERIFIED"
 
     performance_hall_neighborhood = candidate_results_for_major_use(
         performance_hall_results,
@@ -264,7 +263,7 @@ def main() -> None:
     print("13/가 unregistered qualification remains UNSET: PASS")
     print("Table-tennis major-use lookup: PASS")
     print("Apartment single-path verified qualification: PASS")
-    print("Performance-hall candidates remain UNSET without inference: PASS")
+    print("Performance-hall 5/가 verified exclusion remains UNSET while 4/가 is unresolved: PASS")
     print("Performance-hall major-use lookup: PASS")
     print("Office three-path discovery: PASS")
     print("Unknown major use and canonical name fail-closed: PASS")
@@ -273,7 +272,7 @@ def main() -> None:
     print("Major-use classification state composition: PASS")
     print("Excluded major-use state composition: PASS")
     print(
-        "Not proven: non-numeric qualification evaluation, automatic exclusion "
+        "Not proven: full non-numeric qualification coverage, automatic final classification "
         "derivation, final source-path selection, frontend integration, PROJECT "
         "mapping, or Rule Engine end-to-end integration."
     )
