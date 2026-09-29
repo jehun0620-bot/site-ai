@@ -355,6 +355,66 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("3", "라"),
         major_use="제1종 근린생활시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="금융업소",
+        source_path=SourcePath("3", "자"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="금융업소",
+        source_path=SourcePath("4", "하"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="금융업소",
+        source_path=SourcePath("14", "나", 1),
+        major_use="업무시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="사무소",
+        source_path=SourcePath("3", "자"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="사무소",
+        source_path=SourcePath("4", "하"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="사무소",
+        source_path=SourcePath("14", "나", 1),
+        major_use="업무시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="부동산중개사무소",
+        source_path=SourcePath("3", "자"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="부동산중개사무소",
+        source_path=SourcePath("4", "하"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="부동산중개사무소",
+        source_path=SourcePath("14", "나", 1),
+        major_use="업무시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="출판사",
+        source_path=SourcePath("3", "자"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="출판사",
+        source_path=SourcePath("4", "하"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="출판사",
+        source_path=SourcePath("14", "나", 1),
+        major_use="업무시설",
+    ),
 )
 
 
