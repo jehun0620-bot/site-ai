@@ -66,6 +66,11 @@ VERIFIED_QUALIFICATION_RULES: dict[str, BuildingUseQualificationRule] = {
         source_text="자동차영업소로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 1천제곱미터 미만인 것",
         expression=numeric("use_floor_area", "LT", 1000, "square_meter"),
     ),
+    "4/카": BuildingUseQualificationRule(
+        source_path=SourcePath("4", "카"),
+        source_text="학원, 교습소, 직업훈련소로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 500제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 500, "square_meter"),
+    ),
     "4/더": BuildingUseQualificationRule(
         source_path=SourcePath("4", "더"),
         source_text="단란주점으로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 150제곱미터 미만인 것",
