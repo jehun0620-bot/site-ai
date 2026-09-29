@@ -2,7 +2,7 @@
 """Resolve candidate Annex 1 source paths for one canonical building use.
 
 This module is deliberately fail-closed. It does not infer missing legal
-qualifications. Candidates with no VERIFIED qualification rule remain UNSET.
+qualifications. Candidates with no VERIFIED qualification rule remain UNSET. Registered numeric and major-use exclusion qualifications are combined fail-closed.
 """
 
 from __future__ import annotations
