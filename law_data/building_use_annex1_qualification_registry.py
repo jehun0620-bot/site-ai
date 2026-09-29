@@ -163,6 +163,40 @@ VERIFIED_QUALIFICATION_RULES: dict[str, BuildingUseQualificationRule] = {
         source_text="탁구장, 체육도장, 테니스장 등으로서 제1종 근린생활시설 및 제2종 근린생활시설에 해당하지 아니하는 것",
         excluded_major_uses=("제1종 근린생활시설", "제2종 근린생활시설"),
     ),
+    "13/나": BuildingUseQualificationRule(
+        source_path=SourcePath("13", "나"),
+        source_text="체육관으로서 관람석이 없거나 관람석의 바닥면적이 1천제곱미터 미만인 것",
+        expression={
+            "op": "OR",
+            "children": [
+                {
+                    "op": "NOT",
+                    "child": {
+                        "op": "STATE",
+                        "target": "has_spectator_seating",
+                    },
+                },
+                numeric("spectator_seating_area", "LT", 1000, "square_meter"),
+            ],
+        },
+    ),
+    "13/다": BuildingUseQualificationRule(
+        source_path=SourcePath("13", "다"),
+        source_text="운동장으로서 관람석이 없거나 관람석의 바닥면적이 1천제곱미터 미만인 것",
+        expression={
+            "op": "OR",
+            "children": [
+                {
+                    "op": "NOT",
+                    "child": {
+                        "op": "STATE",
+                        "target": "has_spectator_seating",
+                    },
+                },
+                numeric("spectator_seating_area", "LT", 1000, "square_meter"),
+            ],
+        },
+    ),
     "5/가": BuildingUseQualificationRule(
         source_path=SourcePath("5", "가"),
         source_text=(
