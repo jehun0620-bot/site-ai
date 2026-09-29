@@ -161,6 +161,36 @@ VERIFIED_QUALIFICATION_RULES: dict[str, BuildingUseQualificationRule] = {
             ],
         },
     ),
+    "4/나": BuildingUseQualificationRule(
+        source_path=SourcePath("4", "나"),
+        source_text="종교집회장으로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 500제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 500, "square_meter"),
+    ),
+    "6/가": BuildingUseQualificationRule(
+        source_path=SourcePath("6", "가"),
+        source_text="종교집회장으로서 제2종 근린생활시설에 해당하지 아니하는 것",
+        excluded_major_uses=("제2종 근린생활시설",),
+    ),
+    "16/가": BuildingUseQualificationRule(
+        source_path=SourcePath("16", "가"),
+        source_text="단란주점으로서 제2종 근린생활시설에 해당하지 아니하는 것",
+        excluded_major_uses=("제2종 근린생활시설",),
+    ),
+    "3/바": BuildingUseQualificationRule(
+        source_path=SourcePath("3", "바"),
+        source_text="지역자치센터, 파출소, 지구대, 소방서, 우체국, 방송국, 보건소, 공공도서관, 건강보험공단 사무소 등 주민의 편의를 위하여 공공업무를 수행하는 시설로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 1천제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 1000, "square_meter"),
+    ),
+    "24/가": BuildingUseQualificationRule(
+        source_path=SourcePath("24", "가"),
+        source_text="방송국으로서 제1종 근린생활시설에 해당하는 것은 제외",
+        excluded_major_uses=("제1종 근린생활시설",),
+    ),
+    "24/라": BuildingUseQualificationRule(
+        source_path=SourcePath("24", "라"),
+        source_text="통신용 시설로서 제1종 근린생활시설에 해당하는 것은 제외",
+        excluded_major_uses=("제1종 근린생활시설",),
+    ),
     "3/마": BuildingUseQualificationRule(
         source_path=SourcePath("3", "마"),
         source_text=(
