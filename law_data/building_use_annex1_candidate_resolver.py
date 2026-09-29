@@ -15,7 +15,7 @@ from law_data.building_use_annex1_canonical_catalog import (
     catalog_entries_for_name,
 )
 from law_data.building_use_annex1_qualification_registry import (
-    qualification_rule_for_path,
+    qualification_rules_for_candidate,
 )
 from law_data.rule_evaluation_pipeline import evaluate_condition_expression
 
@@ -127,6 +127,24 @@ def _and_states(states: Iterable[str]) -> str:
     return "UNKNOWN"
 
 
+def _evaluate_qualification_rule(
+    qualification: Any,
+    fact_context: dict[str, Any] | None,
+) -> str:
+    if qualification.expression is None:
+        return "UNSET"
+
+    evaluated = evaluate_condition_expression(
+        {},
+        qualification.expression,
+        fact_context,
+    )
+    state = evaluated.get("state", "UNKNOWN")
+    if state not in VALID_STATES:
+        return "UNKNOWN"
+    return state
+
+
 def resolve_candidate_source_paths(
     canonical_name: str,
     fact_context: dict[str, Any] | None = None,
@@ -135,11 +153,16 @@ def resolve_candidate_source_paths(
 
     entries = catalog_entries_for_name(canonical_name)
     base_results: list[BuildingUseCandidateResult] = []
+    candidate_rules: dict[str, tuple[Any, ...]] = {}
 
     for entry in entries:
-        qualification = qualification_rule_for_path(entry.source_path)
+        qualifications = qualification_rules_for_candidate(
+            entry.source_path,
+            entry.canonical_name,
+        )
+        candidate_rules[entry.source_path.key] = qualifications
 
-        if qualification is None:
+        if not qualifications:
             base_results.append(
                 BuildingUseCandidateResult(
                     entry=entry,
@@ -149,40 +172,43 @@ def resolve_candidate_source_paths(
             )
             continue
 
-        if qualification.expression is None:
-            state = "UNSET"
-        else:
-            evaluated = evaluate_condition_expression(
-                {},
-                qualification.expression,
-                fact_context,
-            )
-            state = evaluated.get("state", "UNKNOWN")
-            if state not in VALID_STATES:
-                state = "UNKNOWN"
+        expression_states = tuple(
+            _evaluate_qualification_rule(qualification, fact_context)
+            for qualification in qualifications
+            if qualification.expression is not None
+        )
+        state = _and_states(expression_states) if expression_states else "UNSET"
 
         base_results.append(
             BuildingUseCandidateResult(
                 entry=entry,
                 state=state,
-                qualification_status=qualification.expression_status,
+                qualification_status="VERIFIED",
             )
         )
 
     final_results: list[BuildingUseCandidateResult] = []
     for result in base_results:
-        qualification = qualification_rule_for_path(result.entry.source_path)
-        if qualification is None or not qualification.excluded_major_uses:
+        qualifications = candidate_rules[result.entry.source_path.key]
+        excluded_major_uses = tuple(
+            major_use
+            for qualification in qualifications
+            for major_use in qualification.excluded_major_uses
+        )
+        if not excluded_major_uses:
             final_results.append(result)
             continue
 
         exclusion_states = tuple(
             excluded_major_use_state(base_results, major_use)
-            for major_use in qualification.excluded_major_uses
+            for major_use in excluded_major_uses
         )
-        states = exclusion_states
-        if qualification.expression is not None:
-            states = (result.state, *exclusion_states)
+        expression_states = tuple(
+            _evaluate_qualification_rule(qualification, fact_context)
+            for qualification in qualifications
+            if qualification.expression is not None
+        )
+        states = (*expression_states, *exclusion_states)
 
         final_results.append(
             BuildingUseCandidateResult(
