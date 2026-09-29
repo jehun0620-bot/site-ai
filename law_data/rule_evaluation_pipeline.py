@@ -427,6 +427,52 @@ def evaluate_condition_expression(
             )
         }
 
+    if op == "STATE":
+        target = safe_string(expression.get("target"))
+
+        if not target:
+            return {"state": "UNKNOWN"}
+
+        if not isinstance(fact_context, dict):
+            return {"state": "UNSET"}
+
+        fact = fact_context.get(target)
+
+        if fact is None:
+            return {"state": "UNSET"}
+
+        if not isinstance(fact, dict):
+            return {"state": "UNKNOWN"}
+
+        state = safe_string(fact.get("state"))
+        return {
+            "state": (
+                state
+                if state in VALID_STATES
+                else "UNKNOWN"
+            )
+        }
+
+    if op == "NOT":
+        child = expression.get("child")
+
+        if not isinstance(child, dict):
+            return {"state": "UNKNOWN"}
+
+        state = evaluate_condition_expression(
+            rule,
+            child,
+            fact_context,
+        ).get("state")
+
+        if state == "TRUE":
+            return {"state": "FALSE"}
+        if state == "FALSE":
+            return {"state": "TRUE"}
+        if state in {"UNKNOWN", "UNSET"}:
+            return {"state": state}
+        return {"state": "UNKNOWN"}
+
     if op == "NUMERIC":
         target = safe_string(expression.get("target"))
         operator = safe_string(expression.get("operator"))
