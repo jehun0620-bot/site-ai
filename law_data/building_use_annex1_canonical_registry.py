@@ -205,6 +205,75 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         canonical_name="동물위탁관리업 시설",
         source_path=SourcePath("4", "차"),
         major_use="제2종 근린생활시설",
+    ),    CanonicalBuildingUse(
+        canonical_name="체육도장",
+        source_path=SourcePath("3", "마"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="체육도장",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="테니스장",
+        source_path=SourcePath("4", "파"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="테니스장",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="체력단련장",
+        source_path=SourcePath("4", "파"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="체력단련장",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="에어로빅장",
+        source_path=SourcePath("4", "파"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="에어로빅장",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="당구장",
+        source_path=SourcePath("4", "파"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="당구장",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="실내낚시터",
+        source_path=SourcePath("4", "파"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="실내낚시터",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="골프연습장",
+        source_path=SourcePath("4", "파"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="골프연습장",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
     ),
 )
 
