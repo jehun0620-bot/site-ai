@@ -90,6 +90,28 @@ def negate_candidate_state(state: str) -> str:
         return "TRUE"
     return state
 
+
+def major_use_classification_state(
+    results: Iterable[BuildingUseCandidateResult],
+    major_use: str,
+) -> str:
+    """Return the aggregated state for one legal major-use classification."""
+
+    return aggregate_candidate_state(
+        candidate_results_for_major_use(results, major_use)
+    )
+
+
+def excluded_major_use_state(
+    results: Iterable[BuildingUseCandidateResult],
+    major_use: str,
+) -> str:
+    """Return the four-state meaning of 'not classified as this major use'."""
+
+    return negate_candidate_state(
+        major_use_classification_state(results, major_use)
+    )
+
 def resolve_candidate_source_paths(
     canonical_name: str,
     fact_context: dict[str, Any] | None = None,
