@@ -8,12 +8,21 @@ UNRESOLVED. No JSON or production rule data is written.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-
 from law_data.building_act_enforcement_decree_annex1_source_probe_test import (
     find_annex1,
     search_current_target,
     text_value,
+)
+from law_data.building_use_annex1_semantic_model import (
+    ACTIVE,
+    DELETED,
+    UNRESOLVED,
+    USE,
+    QUALIFICATION,
+    DELETED_ROLE,
+    UNRESOLVED_ROLE,
+    BuildingUseSemanticNode,
+    SourcePath,
 )
 from law_data.building_use_annex1_structural_parser_test import (
     parse_structure,
@@ -23,44 +32,27 @@ from law_data.building_use_annex1_structural_parser_test import (
 from law_data.law_detail_normalize_test import normalize_detail, request_detail
 
 
-ACTIVE = "ACTIVE"
-DELETED = "DELETED"
-UNRESOLVED = "UNRESOLVED"
-
-USE = "USE"
-QUALIFICATION = "QUALIFICATION"
-DELETED_ROLE = "DELETED"
-UNRESOLVED_ROLE = "UNRESOLVED"
-
 EXPECTED_STRUCTURAL_UNITS = 188
 EXPECTED_MAJOR_COUNT = 30
 
 
-@dataclass(frozen=True)
-class VerifiedSemantic:
-    status: str
-    role: str
-    canonical_name: str | None = None
-
-
 # Only paths whose semantic meaning has already been verified in preceding
 # tests are admitted here. Structural shape alone never creates semantics.
-VERIFIED_SEMANTICS: dict[str, VerifiedSemantic] = {
-    "1/나": VerifiedSemantic(ACTIVE, USE, "다중주택"),
-    "1/나/1": VerifiedSemantic(ACTIVE, QUALIFICATION),
-    "1/나/2": VerifiedSemantic(ACTIVE, QUALIFICATION),
-    "1/나/3": VerifiedSemantic(ACTIVE, QUALIFICATION),
-    "1/나/4": VerifiedSemantic(ACTIVE, QUALIFICATION),
-    "1/다": VerifiedSemantic(ACTIVE, USE, "다가구주택"),
-    "1/다/1": VerifiedSemantic(ACTIVE, QUALIFICATION),
-    "1/다/2": VerifiedSemantic(ACTIVE, QUALIFICATION),
-    "1/다/3": VerifiedSemantic(ACTIVE, QUALIFICATION),
-    "2/라/2": VerifiedSemantic(ACTIVE, USE, "임대형기숙사"),
-    "14/나/2": VerifiedSemantic(ACTIVE, USE, "오피스텔"),
-    "23/라": VerifiedSemantic(DELETED, DELETED_ROLE),
-    "23의2": VerifiedSemantic(ACTIVE, USE, "국방ㆍ군사시설"),
+VERIFIED_SEMANTICS: dict[str, BuildingUseSemanticNode] = {
+    "1/나": BuildingUseSemanticNode(SourcePath("1", "나"), ACTIVE, USE, "다중주택"),
+    "1/나/1": BuildingUseSemanticNode(SourcePath("1", "나", 1), ACTIVE, QUALIFICATION),
+    "1/나/2": BuildingUseSemanticNode(SourcePath("1", "나", 2), ACTIVE, QUALIFICATION),
+    "1/나/3": BuildingUseSemanticNode(SourcePath("1", "나", 3), ACTIVE, QUALIFICATION),
+    "1/나/4": BuildingUseSemanticNode(SourcePath("1", "나", 4), ACTIVE, QUALIFICATION),
+    "1/다": BuildingUseSemanticNode(SourcePath("1", "다"), ACTIVE, USE, "다가구주택"),
+    "1/다/1": BuildingUseSemanticNode(SourcePath("1", "다", 1), ACTIVE, QUALIFICATION),
+    "1/다/2": BuildingUseSemanticNode(SourcePath("1", "다", 2), ACTIVE, QUALIFICATION),
+    "1/다/3": BuildingUseSemanticNode(SourcePath("1", "다", 3), ACTIVE, QUALIFICATION),
+    "2/라/2": BuildingUseSemanticNode(SourcePath("2", "라", 2), ACTIVE, USE, "임대형기숙사"),
+    "14/나/2": BuildingUseSemanticNode(SourcePath("14", "나", 2), ACTIVE, USE, "오피스텔"),
+    "23/라": BuildingUseSemanticNode(SourcePath("23", "라"), DELETED, DELETED_ROLE),
+    "23의2": BuildingUseSemanticNode(SourcePath("23의2"), ACTIVE, USE, "국방ㆍ군사시설"),
 }
-
 
 def flatten_inventory(majors: list[dict]) -> list[dict]:
     rows: list[dict] = []
@@ -129,6 +121,11 @@ def make_row(
         role = UNRESOLVED_ROLE
         canonical_name = None
     else:
+        if semantic.source_path.key != source_path:
+            raise AssertionError(
+                f"Verified semantic key mismatch: {source_path} != "
+                f"{semantic.source_path.key}"
+            )
         status = semantic.status
         role = semantic.role
         canonical_name = semantic.canonical_name
