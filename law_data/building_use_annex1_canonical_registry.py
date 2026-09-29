@@ -415,6 +415,86 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("14", "나", 1),
         major_use="업무시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="지역자치센터",
+        source_path=SourcePath("3", "바"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="파출소",
+        source_path=SourcePath("3", "바"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="지구대",
+        source_path=SourcePath("3", "바"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="소방서",
+        source_path=SourcePath("3", "바"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="우체국",
+        source_path=SourcePath("3", "바"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="방송국",
+        source_path=SourcePath("3", "바"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="보건소",
+        source_path=SourcePath("3", "바"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="공공도서관",
+        source_path=SourcePath("3", "바"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="건강보험공단 사무소",
+        source_path=SourcePath("3", "바"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="변전소",
+        source_path=SourcePath("3", "아"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="도시가스배관시설",
+        source_path=SourcePath("3", "아"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="통신용 시설",
+        source_path=SourcePath("3", "아"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="정수장",
+        source_path=SourcePath("3", "아"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="양수장",
+        source_path=SourcePath("3", "아"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="방송국",
+        source_path=SourcePath("24", "가"),
+        major_use="방송통신시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="통신용 시설",
+        source_path=SourcePath("24", "라"),
+        major_use="방송통신시설",
+    ),
 )
 
 
