@@ -10,7 +10,7 @@ from law_data.building_use_annex1_semantic_model import SourcePath
 from law_data.rule_evaluation_pipeline import evaluate_condition_expression
 
 
-EXPECTED_PATHS = ("2/가", "2/나", "2/다", "3/마", "4/가", "3/카", "4/차", "3/자", "4/하", "14/나/1", "13/가", "5/가")
+EXPECTED_PATHS = ("3/가", "3/차", "4/다", "4/더", "4/버", "20/자", "25", "2/가", "2/나", "2/다", "3/마", "4/가", "3/카", "4/차", "3/자", "4/하", "14/나/1", "13/가", "5/가")
 
 
 def fact(value: float, unit: str) -> dict:
@@ -126,6 +126,19 @@ def main() -> None:
         "FALSE",
     )
 
+    for path, below, boundary in (
+        ("3/가", 999, 1000),
+        ("3/차", 999, 1000),
+        ("4/다", 999, 1000),
+        ("4/더", 149, 150),
+        ("4/버", 999, 1000),
+    ):
+        assert_state(path, {"use_floor_area": fact(below, "square_meter")}, "TRUE")
+        assert_state(path, {"use_floor_area": fact(boundary, "square_meter")}, "FALSE")
+
+    assert qualification_rule_for_path(SourcePath("20", "자")).excluded_major_uses == ("제1종 근린생활시설",)
+    assert qualification_rule_for_path(SourcePath("25")).excluded_major_uses == ("제1종 근린생활시설",)
+
     assert_state("4/가", {"use_floor_area": fact(499, "square_meter")}, "TRUE")
     assert_state("4/가", {"use_floor_area": fact(500, "square_meter")}, "FALSE")
     assert_state("3/카", {"use_floor_area": fact(299, "square_meter")}, "TRUE")
@@ -155,6 +168,8 @@ def main() -> None:
     print("2/나 row-house GT + LTE boundaries: PASS")
     print("2/다 multiplex-house LTE boundaries: PASS")
     print("3/마 table-tennis/dojo LT boundary: PASS")
+    print("3/가, 3/차, 4/다, 4/더, 4/버 numeric boundaries: PASS")
+    print("20/자, 25 first-neighborhood exclusions: PASS")
     print("4/가, 3/카, 3/자, 4/하 numeric boundaries: PASS")
     print("4/차, 4/하 single major-use exclusions: PASS")
     print("13/가, 14/나/1 dual major-use exclusions: PASS")
