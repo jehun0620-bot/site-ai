@@ -119,7 +119,7 @@ VERIFIED_QUALIFICATION_RULES: dict[str, BuildingUseQualificationRule] = {
         excluded_major_uses=("제1종 근린생활시설",),
     ),
     "14/나/1": BuildingUseQualificationRule(
-        source_path=SourcePath("14", "나", "1"),
+        source_path=SourcePath("14", "나", 1),
         source_text="금융업소, 사무소, 부동산중개사무소, 소개업소, 출판사 등으로서 제1종 근린생활시설 및 제2종 근린생활시설에 해당하지 않는 것",
         excluded_major_uses=("제1종 근린생활시설", "제2종 근린생활시설"),
     ),
