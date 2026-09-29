@@ -12,6 +12,7 @@ from law_data.building_use_annex1_semantic_model import (
     DELETED,
     UNRESOLVED,
     USE,
+    MULTI_USE,
     CATEGORY,
     QUALIFICATION,
     DELETED_ROLE,
@@ -104,6 +105,7 @@ def main() -> None:
     semantic_nodes = (
         BuildingUseSemanticNode(SourcePath("8"), ACTIVE, CATEGORY, "운수시설"),
         BuildingUseSemanticNode(SourcePath("23의2"), ACTIVE, USE, "국방ㆍ군사시설"),
+        BuildingUseSemanticNode(SourcePath("15", "가"), ACTIVE, MULTI_USE),
         BuildingUseSemanticNode(SourcePath("1", "나"), ACTIVE, USE, "다중주택"),
         BuildingUseSemanticNode(SourcePath("2", "라", 2), ACTIVE, USE, "임대형기숙사"),
         BuildingUseSemanticNode(SourcePath("1", "나", 1), ACTIVE, QUALIFICATION),
@@ -114,11 +116,13 @@ def main() -> None:
         "8", "23의2", "1/나", "2/라/2", "1/나/1", "23/라", "4/너/1"
     )
     assert tuple(node.role for node in semantic_nodes) == (
-        CATEGORY, USE, USE, USE, QUALIFICATION, DELETED_ROLE, UNRESOLVED_ROLE
+        CATEGORY, USE, MULTI_USE, USE, USE, QUALIFICATION, DELETED_ROLE, UNRESOLVED_ROLE
     )
 
     for invalid in (
         (ACTIVE, CATEGORY, None),
+        (UNRESOLVED, MULTI_USE, None),
+        (ACTIVE, MULTI_USE, "invalid canonical"),
         (ACTIVE, QUALIFICATION, "잘못된 이름"),
     ):
         try:
