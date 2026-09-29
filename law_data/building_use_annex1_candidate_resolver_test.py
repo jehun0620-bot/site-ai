@@ -36,8 +36,8 @@ def main() -> None:
     assert set(table_tennis) == {"3/마", "13/가"}
     assert table_tennis["3/마"].state == "TRUE"
     assert table_tennis["3/마"].qualification_status == "VERIFIED"
-    assert table_tennis["13/가"].state == "UNSET"
-    assert table_tennis["13/가"].qualification_status == "UNREGISTERED"
+    assert table_tennis["13/가"].state == "FALSE"
+    assert table_tennis["13/가"].qualification_status == "VERIFIED"
 
     table_tennis_neighborhood = candidate_results_for_major_use(
         table_tennis_results,
@@ -85,12 +85,23 @@ def main() -> None:
     assert apartment_unset["2/가"].state == "UNSET"
     assert apartment_unset["2/가"].qualification_status == "VERIFIED"
 
-    performance_hall_results = resolve_candidate_source_paths("공연장")
+    performance_hall_results = resolve_candidate_source_paths(
+        "공연장", {"use_floor_area": numeric_fact(499, "square_meter")}
+    )
     performance_hall = by_path(performance_hall_results)
     assert set(performance_hall) == {"4/가", "5/가"}
-    assert {item.state for item in performance_hall.values()} == {"UNSET"}
-    assert performance_hall["4/가"].qualification_status == "UNREGISTERED"
+    assert performance_hall["4/가"].state == "TRUE"
+    assert performance_hall["5/가"].state == "FALSE"
+    assert performance_hall["4/가"].qualification_status == "VERIFIED"
     assert performance_hall["5/가"].qualification_status == "VERIFIED"
+
+    performance_hall_boundary = by_path(
+        resolve_candidate_source_paths(
+            "공연장", {"use_floor_area": numeric_fact(500, "square_meter")}
+        )
+    )
+    assert performance_hall_boundary["4/가"].state == "FALSE"
+    assert performance_hall_boundary["5/가"].state == "TRUE"
 
     performance_hall_neighborhood = candidate_results_for_major_use(
         performance_hall_results,
@@ -108,10 +119,22 @@ def main() -> None:
     ) == ("5/가",)
 
     office = by_path(
-        resolve_candidate_source_paths("사무소")
+        resolve_candidate_source_paths(
+            "사무소", {"use_floor_area": numeric_fact(29, "square_meter")}
+        )
     )
     assert set(office) == {"3/자", "4/하", "14/나/1"}
-    assert {item.state for item in office.values()} == {"UNSET"}
+    assert office["3/자"].state == "TRUE"
+    assert office["4/하"].state == "FALSE"
+    assert office["14/나/1"].state == "FALSE"
+
+    animal_hospital = by_path(
+        resolve_candidate_source_paths(
+            "동물병원", {"use_floor_area": numeric_fact(299, "square_meter")}
+        )
+    )
+    assert animal_hospital["3/카"].state == "TRUE"
+    assert animal_hospital["4/차"].state == "FALSE"
 
     missing_major_use = candidate_results_for_major_use(
         performance_hall_results,
@@ -260,12 +283,13 @@ def main() -> None:
     print("RESULT: PASS")
     print("Table-tennis candidate paths: ('3/마', '13/가')")
     print("3/마 verified numeric evaluation: PASS")
-    print("13/가 unregistered qualification remains UNSET: PASS")
+    print("13/가 dual major-use exclusion evaluation: PASS")
     print("Table-tennis major-use lookup: PASS")
     print("Apartment single-path verified qualification: PASS")
-    print("Performance-hall 5/가 verified exclusion remains UNSET while 4/가 is unresolved: PASS")
+    print("Performance-hall 4/가 ↔ 5/가 chained classification: PASS")
     print("Performance-hall major-use lookup: PASS")
-    print("Office three-path discovery: PASS")
+    print("Animal-hospital 3/카 ↔ 4/차 chained classification: PASS")
+    print("Office numeric + exclusion chain: PASS")
     print("Unknown major use and canonical name fail-closed: PASS")
     print("Four-state major-use aggregation: PASS")
     print("Four-state safe negation: PASS")
