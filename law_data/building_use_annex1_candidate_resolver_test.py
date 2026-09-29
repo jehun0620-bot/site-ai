@@ -84,7 +84,7 @@ def main() -> None:
         )
     )
     assert golf_500["4/파"].state == "FALSE"
-    assert golf_500["13/가"].state == "TRUE"
+    assert golf_500["13/가"].state == "UNSET"
 
     apartment = by_path(
         resolve_candidate_source_paths(
@@ -497,7 +497,7 @@ def main() -> None:
     print("3/마 verified numeric evaluation: PASS")
     print("13/가 dual major-use exclusion evaluation: PASS")
     print("Table-tennis major-use lookup: PASS")
-    print("Golf-practice 4/파 ↔ 13/가 chained classification: PASS")
+    print("Golf-practice 4/파 boundary + 13/가 fail-closed exclusion: PASS")
     print("Apartment single-path verified qualification: PASS")
     print("General/rental dormitory complete qualification resolution: PASS")
     print("Religious-assembly 4/나 ↔ 6/가 chained classification: PASS")
