@@ -155,6 +155,16 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("19", "바"),
         major_use="위험물 저장 및 처리 시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="일반숙박시설",
+        source_path=SourcePath("15", "가"),
+        major_use="숙박시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="생활숙박시설",
+        source_path=SourcePath("15", "가"),
+        major_use="숙박시설",
+    ),
 )
 
 
