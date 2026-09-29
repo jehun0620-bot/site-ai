@@ -17,12 +17,13 @@ UNRESOLVED = "UNRESOLVED"
 VALID_STATUSES = frozenset({ACTIVE, DELETED, UNRESOLVED})
 
 USE = "USE"
+MULTI_USE = "MULTI_USE"
 CATEGORY = "CATEGORY"
 QUALIFICATION = "QUALIFICATION"
 DELETED_ROLE = "DELETED"
 UNRESOLVED_ROLE = "UNRESOLVED"
 VALID_SEMANTIC_ROLES = frozenset(
-    {USE, CATEGORY, QUALIFICATION, DELETED_ROLE, UNRESOLVED_ROLE}
+    {USE, MULTI_USE, CATEGORY, QUALIFICATION, DELETED_ROLE, UNRESOLVED_ROLE}
 )
 
 
@@ -84,6 +85,8 @@ class BuildingUseSemanticNode:
             object.__setattr__(self, "canonical_name", _required(self.canonical_name, "canonical_name"))
         if role in {USE, CATEGORY} and self.canonical_name is None:
             raise ValueError(f"{role.lower()} role requires canonical_name")
+        if role == MULTI_USE and status != ACTIVE:
+            raise ValueError("multi_use role requires active status")
         if role not in {USE, CATEGORY} and self.canonical_name is not None:
             raise ValueError("canonical_name is only valid for use or category role")
         object.__setattr__(self, "status", status)
