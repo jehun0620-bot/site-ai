@@ -10,7 +10,7 @@ from law_data.building_use_annex1_semantic_model import SourcePath
 from law_data.rule_evaluation_pipeline import evaluate_condition_expression
 
 
-EXPECTED_PATHS = ("2/가", "2/나", "2/다", "3/마")
+EXPECTED_PATHS = ("2/가", "2/나", "2/다", "3/마", "5/가")
 
 
 def fact(value: float, unit: str) -> dict:
@@ -21,6 +21,8 @@ def evaluate(path: str, facts: dict) -> str:
     rule = qualification_rule_for_path(SourcePath(*path.split("/")))
     if rule is None:
         raise AssertionError(f"qualification rule missing: {path}")
+    if rule.expression is None:
+        raise AssertionError(f"numeric expression missing: {path}")
     return evaluate_condition_expression({}, rule.expression, facts).get("state")
 
 
@@ -113,6 +115,14 @@ def main() -> None:
         "FALSE",
     )
 
+    performance_hall = qualification_rule_for_path(SourcePath("5", "가"))
+    if performance_hall is None:
+        raise AssertionError("Verified 5/가 qualification rule missing.")
+    if performance_hall.expression is not None:
+        raise AssertionError("5/가 must not invent a numeric/general expression.")
+    if performance_hall.excluded_major_uses != ("제2종 근린생활시설",):
+        raise AssertionError("5/가 excluded major-use mismatch.")
+
     if qualification_rule_for_path(SourcePath("13", "가")) is not None:
         raise AssertionError("Unverified 13/가 must not be admitted.")
 
@@ -123,6 +133,7 @@ def main() -> None:
     print("2/나 row-house GT + LTE boundaries: PASS")
     print("2/다 multiplex-house LTE boundaries: PASS")
     print("3/마 table-tennis/dojo LT boundary: PASS")
+    print("5/가 performance-hall major-use exclusion registration: PASS")
     print("Unverified source path fail-closed: PASS")
     print(
         "Not proven: full Annex 1 qualification coverage, non-numeric "
