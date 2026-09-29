@@ -45,6 +45,51 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("4", "러"),
         major_use="제2종 근린생활시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="독서실",
+        source_path=SourcePath("4", "타"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="기원",
+        source_path=SourcePath("4", "타"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="무도장",
+        source_path=SourcePath("16", "마"),
+        major_use="위락시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="무도학원",
+        source_path=SourcePath("16", "마"),
+        major_use="위락시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="소년원",
+        source_path=SourcePath("23", "다"),
+        major_use="교정시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="소년분류심사원",
+        source_path=SourcePath("23", "다"),
+        major_use="교정시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="동물화장시설",
+        source_path=SourcePath("26", "라"),
+        major_use="묘지 관련 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="동물건조장시설",
+        source_path=SourcePath("26", "라"),
+        major_use="묘지 관련 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="동물 전용의 납골시설",
+        source_path=SourcePath("26", "라"),
+        major_use="묘지 관련 시설",
+    ),
 )
 
 
