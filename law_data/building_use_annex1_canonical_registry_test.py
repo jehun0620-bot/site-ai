@@ -16,7 +16,7 @@ def names_for(source_path: SourcePath) -> tuple[str, ...]:
 
 
 def main() -> None:
-    assert len(CANONICAL_BUILDING_USES) == 38
+    assert len(CANONICAL_BUILDING_USES) == 52
 
     assert names_for(SourcePath("10", "라")) == ("학원", "교습소")
     assert names_for(SourcePath("4", "바")) == ("사진관", "표구점")
@@ -59,10 +59,39 @@ def main() -> None:
     assert tuple(
         use.source_path.key for use in canonical_uses_for_canonical_name("동물위탁관리업 시설")
     ) == ("3/카", "4/차")
+    assert names_for(SourcePath("3", "마")) == ("탁구장", "체육도장")
+    assert names_for(SourcePath("4", "파")) == (
+        "테니스장", "체력단련장", "에어로빅장", "당구장", "실내낚시터", "골프연습장"
+    )
+    assert names_for(SourcePath("13", "가")) == (
+        "탁구장", "체육도장", "테니스장", "체력단련장", "에어로빅장",
+        "당구장", "실내낚시터", "골프연습장"
+    )
+    assert tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("체육도장")
+    ) == ("3/마", "13/가")
+    assert tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("테니스장")
+    ) == ("4/파", "13/가")
+    assert tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("체력단련장")
+    ) == ("4/파", "13/가")
+    assert tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("에어로빅장")
+    ) == ("4/파", "13/가")
+    assert tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("당구장")
+    ) == ("4/파", "13/가")
+    assert tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("실내낚시터")
+    ) == ("4/파", "13/가")
+    assert tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("골프연습장")
+    ) == ("4/파", "13/가")
 
     assert names_for(SourcePath("99")) == ()
 
-    assert all(use.source_path.key in {"10/라", "4/바", "4/러", "4/타", "16/마", "23/다", "26/라", "19/가", "19/나", "19/다", "19/라", "19/바", "15/가", "3/마", "13/가", "3/카", "4/차"} for use in CANONICAL_BUILDING_USES)
+    assert all(use.source_path.key in {"10/라", "4/바", "4/러", "4/타", "16/마", "23/다", "26/라", "19/가", "19/나", "19/다", "19/라", "19/바", "15/가", "3/마", "13/가", "3/카", "4/차", "4/파"} for use in CANONICAL_BUILDING_USES)
     assert all(use.major_use for use in CANONICAL_BUILDING_USES)
 
     print("RESULT: PASS")
@@ -91,6 +120,27 @@ def main() -> None:
     ))
     print("동물위탁관리업 시설 source paths:", tuple(
         use.source_path.key for use in canonical_uses_for_canonical_name("동물위탁관리업 시설")
+    ))
+    print("체육도장 source paths:", tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("체육도장")
+    ))
+    print("테니스장 source paths:", tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("테니스장")
+    ))
+    print("체력단련장 source paths:", tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("체력단련장")
+    ))
+    print("에어로빅장 source paths:", tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("에어로빅장")
+    ))
+    print("당구장 source paths:", tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("당구장")
+    ))
+    print("실내낚시터 source paths:", tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("실내낚시터")
+    ))
+    print("골프연습장 source paths:", tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("골프연습장")
     ))
     print("Unknown path:", names_for(SourcePath("99")))
     print("Not proven: full canonical coverage, UI integration, PROJECT mapping, or Rule Engine integration.")
