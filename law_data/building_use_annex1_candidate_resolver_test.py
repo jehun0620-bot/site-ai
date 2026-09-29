@@ -6,6 +6,8 @@ from __future__ import annotations
 from law_data.building_use_annex1_candidate_resolver import (
     aggregate_candidate_state,
     candidate_results_for_major_use,
+    excluded_major_use_state,
+    major_use_classification_state,
     negate_candidate_state,
     resolve_candidate_source_paths,
 )
@@ -196,6 +198,63 @@ def main() -> None:
     assert negate_candidate_state("UNSET") == "UNSET"
     assert negate_candidate_state("UNKNOWN") == "UNKNOWN"
 
+    assert (
+        major_use_classification_state(
+            table_tennis_results,
+            "제1종 근린생활시설",
+        )
+        == "TRUE"
+    )
+    assert (
+        excluded_major_use_state(
+            table_tennis_results,
+            "제1종 근린생활시설",
+        )
+        == "FALSE"
+    )
+    assert (
+        major_use_classification_state(
+            table_tennis_results,
+            "제2종 근린생활시설",
+        )
+        == "UNSET"
+    )
+    assert (
+        excluded_major_use_state(
+            table_tennis_results,
+            "제2종 근린생활시설",
+        )
+        == "UNSET"
+    )
+    assert (
+        major_use_classification_state(
+            performance_hall_results,
+            "제2종 근린생활시설",
+        )
+        == "UNSET"
+    )
+    assert (
+        excluded_major_use_state(
+            performance_hall_results,
+            "제2종 근린생활시설",
+        )
+        == "UNSET"
+    )
+    assert (
+        major_use_classification_state(
+            performance_hall_results,
+            "존재하지 않는 대분류",
+        )
+        == "UNSET"
+    )
+    assert (
+        excluded_major_use_state(
+            performance_hall_results,
+            "존재하지 않는 대분류",
+        )
+        == "UNSET"
+    )
+
     unknown = resolve_candidate_source_paths("등록되지 않은 용도")
     assert unknown == ()
 
@@ -211,6 +270,8 @@ def main() -> None:
     print("Unknown major use and canonical name fail-closed: PASS")
     print("Four-state major-use aggregation: PASS")
     print("Four-state safe negation: PASS")
+    print("Major-use classification state composition: PASS")
+    print("Excluded major-use state composition: PASS")
     print(
         "Not proven: non-numeric qualification evaluation, automatic exclusion "
         "derivation, final source-path selection, frontend integration, PROJECT "
