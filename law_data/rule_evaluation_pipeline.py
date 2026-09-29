@@ -435,7 +435,7 @@ def evaluate_condition_expression(
 
         if (
             not target
-            or operator != "LTE"
+            or operator not in {"LT", "LTE", "GT", "GTE"}
             or not isinstance(expected_value, (int, float))
             or isinstance(expected_value, bool)
             or not expected_unit
@@ -466,10 +466,17 @@ def evaluate_condition_expression(
         ):
             return {"state": "UNKNOWN"}
 
+        comparisons = {
+            "LT": actual_value < expected_value,
+            "LTE": actual_value <= expected_value,
+            "GT": actual_value > expected_value,
+            "GTE": actual_value >= expected_value,
+        }
+
         return {
             "state": (
                 "TRUE"
-                if actual_value <= expected_value
+                if comparisons[operator]
                 else "FALSE"
             )
         }
