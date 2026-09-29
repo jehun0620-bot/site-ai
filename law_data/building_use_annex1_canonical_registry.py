@@ -525,6 +525,56 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("19", "마"),
         major_use="위험물 저장 및 처리 시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="마을회관",
+        source_path=SourcePath("3", "사"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="마을공동작업소",
+        source_path=SourcePath("3", "사"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="마을공동구판장",
+        source_path=SourcePath("3", "사"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="공중화장실",
+        source_path=SourcePath("3", "사"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="대피소",
+        source_path=SourcePath("3", "사"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="지역아동센터",
+        source_path=SourcePath("3", "사"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="청소년게임제공업소",
+        source_path=SourcePath("4", "사"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="복합유통게임제공업소",
+        source_path=SourcePath("4", "사"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="인터넷컴퓨터게임시설제공업소",
+        source_path=SourcePath("4", "사"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="가상현실체험 제공업소",
+        source_path=SourcePath("4", "사"),
+        major_use="제2종 근린생활시설",
+    ),
 )
 
 
