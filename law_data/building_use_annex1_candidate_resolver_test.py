@@ -128,6 +128,53 @@ def main() -> None:
     assert office["4/하"].state == "FALSE"
     assert office["14/나/1"].state == "FALSE"
 
+    ev_charger = by_path(
+        resolve_candidate_source_paths(
+            "전기자동차 충전소",
+            {"use_floor_area": numeric_fact(999, "square_meter")},
+        )
+    )
+    assert set(ev_charger) == {"3/차", "20/자"}
+    assert ev_charger["3/차"].state == "TRUE"
+    assert ev_charger["20/자"].state == "FALSE"
+    assert ev_charger["3/차"].qualification_status == "VERIFIED"
+    assert ev_charger["20/자"].qualification_status == "VERIFIED"
+
+    ev_charger_boundary = by_path(
+        resolve_candidate_source_paths(
+            "전기자동차 충전소",
+            {"use_floor_area": numeric_fact(1000, "square_meter")},
+        )
+    )
+    assert ev_charger_boundary["3/차"].state == "FALSE"
+    assert ev_charger_boundary["20/자"].state == "TRUE"
+
+    for canonical_name, path, below, boundary in (
+        ("소매점", "3/가", 999, 1000),
+        ("자동차영업소", "4/다", 999, 1000),
+        ("단란주점", "4/더", 149, 150),
+        ("공유보관시설", "4/버", 999, 1000),
+    ):
+        below_result = by_path(
+            resolve_candidate_source_paths(
+                canonical_name,
+                {"use_floor_area": numeric_fact(below, "square_meter")},
+            )
+        )
+        boundary_result = by_path(
+            resolve_candidate_source_paths(
+                canonical_name,
+                {"use_floor_area": numeric_fact(boundary, "square_meter")},
+            )
+        )
+        assert below_result[path].state == "TRUE"
+        assert boundary_result[path].state == "FALSE"
+
+    power = by_path(resolve_candidate_source_paths("발전시설"))
+    assert set(power) == {"25"}
+    assert power["25"].state == "UNSET"
+    assert power["25"].qualification_status == "VERIFIED"
+
     animal_hospital = by_path(
         resolve_candidate_source_paths(
             "동물병원", {"use_floor_area": numeric_fact(299, "square_meter")}
@@ -288,6 +335,9 @@ def main() -> None:
     print("Apartment single-path verified qualification: PASS")
     print("Performance-hall 4/가 ↔ 5/가 chained classification: PASS")
     print("Performance-hall major-use lookup: PASS")
+    print("EV-charger 3/차 ↔ 20/자 chained classification: PASS")
+    print("Retail, auto-sales, pub, shared-storage numeric boundaries: PASS")
+    print("Power-facility exclusion remains UNSET without first-neighborhood candidate: PASS")
     print("Animal-hospital 3/카 ↔ 4/차 chained classification: PASS")
     print("Office numeric + exclusion chain: PASS")
     print("Unknown major use and canonical name fail-closed: PASS")
