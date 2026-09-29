@@ -3,8 +3,10 @@
 
 from law_data.building_use_annex1_qualification_registry import (
     VERIFIED,
+    VERIFIED_CANONICAL_QUALIFICATION_RULES,
     VERIFIED_QUALIFICATION_RULES,
     qualification_rule_for_path,
+    qualification_rules_for_candidate,
 )
 from law_data.building_use_annex1_semantic_model import SourcePath
 from law_data.rule_evaluation_pipeline import evaluate_condition_expression
@@ -184,6 +186,25 @@ def main() -> None:
     if qualification_rule_for_path(SourcePath("3", "아")) is not None:
         raise AssertionError("3/아 must remain unregistered at SourcePath scope.")
 
+    telecom_rules = qualification_rules_for_candidate(
+        SourcePath("3", "아"), "통신용 시설"
+    )
+    assert len(telecom_rules) == 1
+    telecom_rule = telecom_rules[0]
+    assert telecom_rule.source_path == SourcePath("3", "아")
+    assert telecom_rule.expression == {
+        "op": "NUMERIC",
+        "target": "use_floor_area",
+        "operator": "LT",
+        "value": 1000,
+        "unit": "square_meter",
+    }
+    for other_name in ("변전소", "도시가스배관시설", "정수장", "양수장"):
+        assert qualification_rules_for_candidate(
+            SourcePath("3", "아"), other_name
+        ) == ()
+    assert len(VERIFIED_CANONICAL_QUALIFICATION_RULES) == 1
+
     assert_state(
         "3/마",
         {"use_floor_area": fact(499, "square_meter")},
@@ -265,6 +286,8 @@ def main() -> None:
     print("4/나, 3/바 numeric boundaries: PASS")
     print("6/가, 16/가, 24/가, 24/라 major-use exclusions: PASS")
     print("3/아 remains intentionally unregistered at SourcePath scope: PASS")
+    print("3/아 + 통신용 시설 canonical-specific qualification: PASS")
+    print("Canonical-specific qualification rule count:", len(VERIFIED_CANONICAL_QUALIFICATION_RULES))
     print("3/마 table-tennis/dojo LT boundary: PASS")
     print("3/가, 3/차, 4/다, 4/더, 4/버 numeric boundaries: PASS")
     print("20/자, 25 first-neighborhood exclusions: PASS")
