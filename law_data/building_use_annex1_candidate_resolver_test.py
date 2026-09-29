@@ -54,7 +54,7 @@ def main() -> None:
         "13/가",
     )
     assert table_tennis_neighborhood[0].state == "TRUE"
-    assert table_tennis_sports[0].state == "UNSET"
+    assert table_tennis_sports[0].state == "FALSE"
 
     table_tennis_boundary = by_path(
         resolve_candidate_source_paths(
@@ -144,7 +144,7 @@ def main() -> None:
 
     assert aggregate_candidate_state(()) == "UNSET"
     assert aggregate_candidate_state(table_tennis_neighborhood) == "TRUE"
-    assert aggregate_candidate_state(table_tennis_sports) == "UNSET"
+    assert aggregate_candidate_state(table_tennis_sports) == "FALSE"
 
     synthetic_states = [
         ("TRUE", "TRUE"),
