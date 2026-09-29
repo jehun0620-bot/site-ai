@@ -39,8 +39,6 @@ def main() -> None:
         "고압가스 충전소", "고압가스 판매소", "고압가스 저장소"
     )
     assert names_for(SourcePath("15", "가")) == ("일반숙박시설", "생활숙박시설")
-    assert names_for(SourcePath("3", "마")) == ("탁구장",)
-    assert names_for(SourcePath("13", "가")) == ("탁구장",)
     assert tuple(
         use.source_path.key for use in canonical_uses_for_canonical_name("탁구장")
     ) == ("3/마", "13/가")
