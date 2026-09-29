@@ -253,14 +253,14 @@ def main() -> None:
             performance_hall_results,
             "제2종 근린생활시설",
         )
-        == "UNSET"
+        == "TRUE"
     )
     assert (
         excluded_major_use_state(
             performance_hall_results,
             "제2종 근린생활시설",
         )
-        == "UNSET"
+        == "FALSE"
     )
     assert (
         major_use_classification_state(
