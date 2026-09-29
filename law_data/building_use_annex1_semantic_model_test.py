@@ -21,6 +21,7 @@ from law_data.building_use_annex1_semantic_model import (
     CanonicalBuildingUse,
     SourcePath,
     qualification_paths,
+    canonical_uses_for_source_path,
     unresolved_source_paths,
 )
 
@@ -82,6 +83,24 @@ def main() -> None:
     assert deleted_23_ra.status == DELETED
     assert military.source_path.key == "23의2"
 
+    academy = CanonicalBuildingUse(
+        canonical_name="학원",
+        source_path=SourcePath("10", "라"),
+        major_use="교육연구시설",
+    )
+    tutoring_school = CanonicalBuildingUse(
+        canonical_name="교습소",
+        source_path=SourcePath("10", "라"),
+        major_use="교육연구시설",
+    )
+    shared_source_uses = canonical_uses_for_source_path(
+        (academy, tutoring_school, officetel),
+        SourcePath("10", "라"),
+    )
+    assert tuple(use.canonical_name for use in shared_source_uses) == ("학원", "교습소")
+    assert tuple(use.source_path.key for use in shared_source_uses) == ("10/라", "10/라")
+
+
     semantic_nodes = (
         BuildingUseSemanticNode(SourcePath("8"), ACTIVE, CATEGORY, "운수시설"),
         BuildingUseSemanticNode(SourcePath("23의2"), ACTIVE, USE, "국방ㆍ군사시설"),
@@ -123,6 +142,7 @@ def main() -> None:
     print("1/다 qualifications:", qualification_paths(multi_family_house))
     print("23/라 status:", deleted_23_ra.status)
     print("23의2:", military.canonical_name)
+    print("10/라 canonical uses:", tuple(use.canonical_name for use in shared_source_uses))
     print("Semantic role examples:", tuple(
         (node.source_path.key, node.status, node.role)
         for node in semantic_nodes
