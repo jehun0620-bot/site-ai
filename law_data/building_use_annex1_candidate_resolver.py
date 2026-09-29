@@ -55,6 +55,41 @@ def candidate_results_for_major_use(
     )
 
 
+
+def aggregate_candidate_state(
+    results: Iterable[BuildingUseCandidateResult],
+) -> str:
+    """Aggregate candidate states with the existing four-state OR semantics.
+
+    No candidates means UNSET rather than FALSE because absence of a catalog
+    candidate is not proof that the legal classification is false.
+    """
+
+    states = tuple(result.state for result in results)
+    if not states:
+        return "UNSET"
+    if "TRUE" in states:
+        return "TRUE"
+    if "UNKNOWN" in states:
+        return "UNKNOWN"
+    if "UNSET" in states:
+        return "UNSET"
+    if all(state == "FALSE" for state in states):
+        return "FALSE"
+    return "UNKNOWN"
+
+
+def negate_candidate_state(state: str) -> str:
+    """Negate a verified four-state result without turning uncertainty true."""
+
+    if state not in VALID_STATES:
+        raise ValueError(f"invalid candidate state: {state}")
+    if state == "TRUE":
+        return "FALSE"
+    if state == "FALSE":
+        return "TRUE"
+    return state
+
 def resolve_candidate_source_paths(
     canonical_name: str,
     fact_context: dict[str, Any] | None = None,
