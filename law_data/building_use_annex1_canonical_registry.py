@@ -575,6 +575,36 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("4", "사"),
         major_use="제2종 근린생활시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="장의사",
+        source_path=SourcePath("4", "차"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="볼링장",
+        source_path=SourcePath("4", "파"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="볼링장",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="놀이형시설",
+        source_path=SourcePath("4", "파"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="놀이형시설",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="신문사",
+        source_path=SourcePath("14", "나", 1),
+        major_use="업무시설",
+    ),
 )
 
 
