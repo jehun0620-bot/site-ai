@@ -90,6 +90,71 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("26", "라"),
         major_use="묘지 관련 시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="주유소",
+        source_path=SourcePath("19", "가"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="석유 판매소",
+        source_path=SourcePath("19", "가"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="액화석유가스 충전소",
+        source_path=SourcePath("19", "나"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="액화석유가스 판매소",
+        source_path=SourcePath("19", "나"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="액화석유가스 저장소",
+        source_path=SourcePath("19", "나"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="위험물 제조소",
+        source_path=SourcePath("19", "다"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="위험물 저장소",
+        source_path=SourcePath("19", "다"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="위험물 취급소",
+        source_path=SourcePath("19", "다"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="액화가스 취급소",
+        source_path=SourcePath("19", "라"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="액화가스 판매소",
+        source_path=SourcePath("19", "라"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="고압가스 충전소",
+        source_path=SourcePath("19", "바"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="고압가스 판매소",
+        source_path=SourcePath("19", "바"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="고압가스 저장소",
+        source_path=SourcePath("19", "바"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
 )
 
 
