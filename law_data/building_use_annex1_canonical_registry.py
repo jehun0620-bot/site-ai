@@ -275,6 +275,86 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("13", "가"),
         major_use="운동시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="휴게음식점",
+        source_path=SourcePath("3", "나"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="제과점",
+        source_path=SourcePath("3", "나"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="휴게음식점",
+        source_path=SourcePath("4", "아"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="제과점",
+        source_path=SourcePath("4", "아"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="이용원",
+        source_path=SourcePath("3", "다"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="미용원",
+        source_path=SourcePath("3", "다"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="목욕장",
+        source_path=SourcePath("3", "다"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="세탁소",
+        source_path=SourcePath("3", "다"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="의원",
+        source_path=SourcePath("3", "라"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="치과의원",
+        source_path=SourcePath("3", "라"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="한의원",
+        source_path=SourcePath("3", "라"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="침술원",
+        source_path=SourcePath("3", "라"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="접골원",
+        source_path=SourcePath("3", "라"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="조산원",
+        source_path=SourcePath("3", "라"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="안마원",
+        source_path=SourcePath("3", "라"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="산후조리원",
+        source_path=SourcePath("3", "라"),
+        major_use="제1종 근린생활시설",
+    ),
 )
 
 
