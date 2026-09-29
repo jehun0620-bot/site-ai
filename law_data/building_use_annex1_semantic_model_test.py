@@ -15,6 +15,9 @@ from law_data.building_use_annex1_semantic_model import (
     MULTI_USE,
     CATEGORY,
     QUALIFICATION,
+    SIMILAR_USE,
+    OTHER_USE,
+    ANCILLARY_USE,
     DELETED_ROLE,
     UNRESOLVED_ROLE,
     BuildingUseQualification,
@@ -128,13 +131,16 @@ def main() -> None:
         BuildingUseSemanticNode(SourcePath("2", "라", 2), ACTIVE, USE, "임대형기숙사"),
         BuildingUseSemanticNode(SourcePath("1", "나", 1), ACTIVE, QUALIFICATION),
         BuildingUseSemanticNode(SourcePath("23", "라"), DELETED, DELETED_ROLE),
+        BuildingUseSemanticNode(SourcePath("8", "바"), ACTIVE, SIMILAR_USE),
+        BuildingUseSemanticNode(SourcePath("11", "다"), ACTIVE, OTHER_USE),
+        BuildingUseSemanticNode(SourcePath("26", "다"), ACTIVE, ANCILLARY_USE),
         BuildingUseSemanticNode(SourcePath("4", "너", 1), UNRESOLVED, UNRESOLVED_ROLE),
     )
     assert tuple(node.source_path.key for node in semantic_nodes) == (
-        "8", "23의2", "15/가", "1/나", "2/라/2", "1/나/1", "23/라", "4/너/1"
+        "8", "23의2", "15/가", "1/나", "2/라/2", "1/나/1", "23/라", "8/바", "11/다", "26/다", "4/너/1"
     )
     assert tuple(node.role for node in semantic_nodes) == (
-        CATEGORY, USE, MULTI_USE, USE, USE, QUALIFICATION, DELETED_ROLE, UNRESOLVED_ROLE
+        CATEGORY, USE, MULTI_USE, USE, USE, QUALIFICATION, DELETED_ROLE, SIMILAR_USE, OTHER_USE, ANCILLARY_USE, UNRESOLVED_ROLE
     )
 
     for invalid in (
@@ -142,6 +148,10 @@ def main() -> None:
         (UNRESOLVED, MULTI_USE, None),
         (ACTIVE, MULTI_USE, "invalid canonical"),
         (ACTIVE, QUALIFICATION, "잘못된 이름"),
+        (UNRESOLVED, SIMILAR_USE, None),
+        (DELETED, OTHER_USE, None),
+        (UNRESOLVED, ANCILLARY_USE, None),
+        (ACTIVE, SIMILAR_USE, "invalid canonical"),
     ):
         try:
             BuildingUseSemanticNode(SourcePath("99"), *invalid)
