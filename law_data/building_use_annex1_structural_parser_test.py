@@ -21,12 +21,12 @@ from __future__ import annotations
 
 import re
 
-from building_act_enforcement_decree_annex1_source_probe_test import (
+from law_data.building_act_enforcement_decree_annex1_source_probe_test import (
     find_annex1,
     search_current_target,
     text_value,
 )
-from law_detail_normalize_test import normalize_detail, request_detail
+from law_data.law_detail_normalize_test import normalize_detail, request_detail
 
 
 MAJOR_RE = re.compile(r"^(\d+)(?:의(\d+))?\.\s*(.*)$")
