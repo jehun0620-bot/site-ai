@@ -579,3 +579,24 @@ Building Use Qualification은 현재 사용자 로컬 검증 기준으로 Source
 다음 전환 체크포인트는 Qualification coverage를 다시 측정한 뒤 Canonical final classification에 필요한 핵심 조건이 충분한지 판단하는 것이다. 충분하면 Annex 1 세부조건 확장을 계속하는 대신 Canonical final classification → PROJECT Mapping → API → Frontend 순서로 전진한다.
 
 개발 속도 원칙: 동일 구조이고 READ-ONLY 검증으로 의미가 확인된 항목은 안전한 범위에서 batch 처리한다. 단, 법적 의미·데이터 계약·평가 구조가 다른 항목을 속도를 이유로 한 묶음에 넣어 오류 가능성을 높이지 않는다.
+
+## Building Use qualification re-audit checkpoint — 2026-09-29
+
+앞서 구현된 Building Use source/parser/semantic/canonical/qualification/resolver 계층을 현재의 자동화 범위 원칙으로 재검토했다. 현재 확인된 구조를 대규모로 되돌리거나 제거할 근거는 없다. 특히 numeric boundary, major-use classification exclusion, four-state fail-closed resolver, SourcePath-common + Canonical-specific qualification은 실제 법정 용도분류 결과를 바꾸는 기반으로 유지한다.
+
+일반기숙사·임대형기숙사처럼 복수 STATE와 numeric fact를 결합한 기존 검증 사례도 유지한다. 다만 이를 Annex 1 전체에 동일한 깊이로 확대하여 세부 STATE를 무제한 추가하는 것을 후속 목표로 삼지 않는다.
+
+현재 진행 우선순위는 Qualification rule 개수 자체를 늘리는 것이 아니다. `4/카 ↔ 10/다 ↔ 10/라`처럼 Canonical final classification을 실제로 바꾸는 대표 공백을 우선 검토·보완한 뒤 Qualification Coverage Audit으로 이동한다.
+
+향후 진행축:
+```text
+representative classification gaps
+→ Qualification Coverage Audit
+→ Canonical Final Classification
+→ PROJECT Mapping
+→ existing Rule Engine
+→ API
+→ Frontend
+```
+
+Coverage Audit에서는 자동판정 가능한 항목과 REVIEW_REQUIRED / UNSET으로 남는 항목을 명시적으로 구분한다. 핵심 분류에 필요한 coverage가 충분하면 Annex 1 qualification 숫자를 계속 늘리는 대신 PROJECT Mapping으로 전환한다.
