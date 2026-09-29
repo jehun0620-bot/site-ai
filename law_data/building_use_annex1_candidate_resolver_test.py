@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 from law_data.building_use_annex1_candidate_resolver import (
+    aggregate_candidate_state,
     candidate_results_for_major_use,
+    negate_candidate_state,
     resolve_candidate_source_paths,
 )
 
@@ -116,6 +118,84 @@ def main() -> None:
     )
     assert missing_major_use == ()
 
+    assert aggregate_candidate_state(()) == "UNSET"
+    assert aggregate_candidate_state(table_tennis_neighborhood) == "TRUE"
+    assert aggregate_candidate_state(table_tennis_sports) == "UNSET"
+
+    synthetic_states = [
+        ("TRUE", "TRUE"),
+        ("UNKNOWN", "UNKNOWN"),
+        ("UNSET", "UNSET"),
+        ("FALSE", "FALSE"),
+    ]
+    for input_state, expected_state in synthetic_states:
+        synthetic = (
+            type(table_tennis_neighborhood[0])(
+                entry=table_tennis_neighborhood[0].entry,
+                state=input_state,
+                qualification_status="VERIFIED",
+            ),
+        )
+        assert aggregate_candidate_state(synthetic) == expected_state
+
+    mixed_true = (
+        type(table_tennis_neighborhood[0])(
+            entry=table_tennis_neighborhood[0].entry,
+            state="FALSE",
+            qualification_status="VERIFIED",
+        ),
+        type(table_tennis_neighborhood[0])(
+            entry=table_tennis_neighborhood[0].entry,
+            state="TRUE",
+            qualification_status="VERIFIED",
+        ),
+    )
+    mixed_unknown = (
+        type(table_tennis_neighborhood[0])(
+            entry=table_tennis_neighborhood[0].entry,
+            state="FALSE",
+            qualification_status="VERIFIED",
+        ),
+        type(table_tennis_neighborhood[0])(
+            entry=table_tennis_neighborhood[0].entry,
+            state="UNKNOWN",
+            qualification_status="VERIFIED",
+        ),
+    )
+    mixed_unset = (
+        type(table_tennis_neighborhood[0])(
+            entry=table_tennis_neighborhood[0].entry,
+            state="FALSE",
+            qualification_status="VERIFIED",
+        ),
+        type(table_tennis_neighborhood[0])(
+            entry=table_tennis_neighborhood[0].entry,
+            state="UNSET",
+            qualification_status="VERIFIED",
+        ),
+    )
+    all_false = (
+        type(table_tennis_neighborhood[0])(
+            entry=table_tennis_neighborhood[0].entry,
+            state="FALSE",
+            qualification_status="VERIFIED",
+        ),
+        type(table_tennis_neighborhood[0])(
+            entry=table_tennis_neighborhood[0].entry,
+            state="FALSE",
+            qualification_status="VERIFIED",
+        ),
+    )
+    assert aggregate_candidate_state(mixed_true) == "TRUE"
+    assert aggregate_candidate_state(mixed_unknown) == "UNKNOWN"
+    assert aggregate_candidate_state(mixed_unset) == "UNSET"
+    assert aggregate_candidate_state(all_false) == "FALSE"
+
+    assert negate_candidate_state("TRUE") == "FALSE"
+    assert negate_candidate_state("FALSE") == "TRUE"
+    assert negate_candidate_state("UNSET") == "UNSET"
+    assert negate_candidate_state("UNKNOWN") == "UNKNOWN"
+
     unknown = resolve_candidate_source_paths("등록되지 않은 용도")
     assert unknown == ()
 
@@ -129,6 +209,8 @@ def main() -> None:
     print("Performance-hall major-use lookup: PASS")
     print("Office three-path discovery: PASS")
     print("Unknown major use and canonical name fail-closed: PASS")
+    print("Four-state major-use aggregation: PASS")
+    print("Four-state safe negation: PASS")
     print(
         "Not proven: non-numeric qualification evaluation, automatic exclusion "
         "derivation, final source-path selection, frontend integration, PROJECT "
