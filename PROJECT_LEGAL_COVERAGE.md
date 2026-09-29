@@ -1305,3 +1305,25 @@ Building Use의 official source 또는 qualification 문구가 존재한다는 �
 현재 검증된 Qualification 구조는 SourcePath-common 29건 + Canonical-specific 1건이다. 이 수치는 Annex 1 전체 qualification coverage 비율을 의미하지 않는다. Canonical-specific 첫 사례인 `3/아 + 통신용 시설`은 같은 source path의 다른 canonical use에 조건이 전파되지 않도록 분리한 검증 사례다.
 
 향후 Building Use coverage는 '모든 문구 구현'을 완료조건으로 사용하지 않는다. Canonical final classification과 후속 PROJECT 기반 법규검토에 필요한 핵심 Qualification의 coverage를 점검하고, 충분한 시점에는 PROJECT Mapping 및 다른 고가치 법규영역으로 개발 우선순위를 이동한다.
+
+## Building Use implemented-qualification re-audit — 2026-09-29
+
+현재 구현된 SourcePath-common Qualification 29건과 Canonical-specific Qualification 1건을 자동화 깊이 정책에 따라 재검토했다. 현재 증거 범위에서는 이 구조를 대규모로 철회할 사유가 확인되지 않았다.
+
+유지 가치가 확인된 대표 유형:
+- 면적·층수·세대/실 수·비율 등 명확한 numeric boundary
+- 제1종/제2종 근린생활시설 등 다른 major-use classification 여부가 결과를 바꾸는 exclusion chain
+- 객석 유무 + 객석면적처럼 제한된 STATE와 numeric 조건의 결합
+- 동일 SourcePath 안에서 특정 canonical use에만 조건이 적용되는 canonical-specific qualification
+- 입력이 없거나 의미가 확정되지 않은 경우 TRUE/FALSE로 추정하지 않는 four-state fail-closed evaluation
+
+일반기숙사·임대형기숙사의 복합 STATE qualification은 이미 검증된 구현 사례로 유지한다. 그러나 이 수준의 세분화를 Annex 1 모든 조건의 기본 구현 깊이로 간주하지 않는다. 새로운 STATE fact는 실제 Canonical classification 또는 후속 법규검토 결과에 필요한지, 신뢰할 입력 계약을 확보할 수 있는지를 먼저 확인한다.
+
+향후 Building Use coverage 확장은 전체 qualification 개수 증가가 아니라 representative classification gap을 기준으로 우선순위를 정한다. `4/카 ↔ 10/다 ↔ 10/라`처럼 실제 대분류 선택을 바꾸는 공백은 우선 검토 대상이다. 반대로 현재 제품 입력으로 안전하게 판정하기 어려운 세부 법률조건은 REVIEW_REQUIRED / UNSET으로 남길 수 있다.
+
+다음 coverage checkpoint에서는 최소한 다음을 분리해 기록한다.
+- AUTO-EVALUABLE: 현재 Fact와 VERIFIED expression으로 평가 가능한 qualification
+- CLASSIFICATION-GAP: final canonical classification에 필요하지만 아직 표현/입력이 부족한 qualification
+- REVIEW-REQUIRED: 현재 단계에서 자동 TRUE/FALSE 승격을 하지 않는 qualification
+
+이 checkpoint의 목적은 Annex 1의 모든 문구 구현률을 최대화하는 것이 아니라, Canonical Final Classification → PROJECT Mapping으로 안전하게 전환할 수 있는지를 판단하는 것이다.
