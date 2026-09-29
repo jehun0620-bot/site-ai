@@ -1,6 +1,6 @@
 # AI 대지분석 자동화 시스템 - PROJECT STATUS
 
-최종 업데이트: 2026-09-28
+최종 업데이트: 2026-09-29
 기준 branch: `cleanup/repository-organization-20260916`
 기준 behavioral PASS HEAD: `268a87a7bd64237a311da6ee0b4c059a8936f6f4`
 보존 checkpoint branch: `checkpoint/c12-fastapi-20260821`
@@ -544,13 +544,13 @@ Desktop handoff is a recurring synchronization procedure between two active deve
 별표 1 "용도별 건축물의 종류(제3조의5 관련)" 취득: PASS
 별표 1 content length: 10924
 본문 / 비고 분리: PASS
-건축물 용도 major 1..29 구조 추출: PASS
+건축물 용도 source MAJOR 30개 구조 추출(기본번호 1..29 + 가지번호 23의2): PASS
 2/라/1 일반기숙사: PASS
 2/라/2 임대형기숙사: PASS
 14/나/2 오피스텔: PASS
 wrapped "말한" + "다."의 가짜 다목 방지: PASS
 official API physical raw_lines provenance 보존: PASS
-Structural Parser RESULT: PASS
+Structural Parser RESULT: PASS (188 structural units / 30 source MAJOR nodes / 23의2 독립 가지번호 보존)
 ```
 
 관련 code checkpoint:
