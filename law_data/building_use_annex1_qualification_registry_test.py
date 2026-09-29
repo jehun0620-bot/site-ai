@@ -10,7 +10,7 @@ from law_data.building_use_annex1_semantic_model import SourcePath
 from law_data.rule_evaluation_pipeline import evaluate_condition_expression
 
 
-EXPECTED_PATHS = ("2/가", "2/나", "2/다", "3/마", "5/가")
+EXPECTED_PATHS = ("2/가", "2/나", "2/다", "3/마", "4/가", "3/카", "4/차", "3/자", "4/하", "14/나/1", "13/가", "5/가")
 
 
 def fact(value: float, unit: str) -> dict:
@@ -115,6 +115,20 @@ def main() -> None:
         "FALSE",
     )
 
+    assert_state("4/가", {"use_floor_area": fact(499, "square_meter")}, "TRUE")
+    assert_state("4/가", {"use_floor_area": fact(500, "square_meter")}, "FALSE")
+    assert_state("3/카", {"use_floor_area": fact(299, "square_meter")}, "TRUE")
+    assert_state("3/카", {"use_floor_area": fact(300, "square_meter")}, "FALSE")
+    assert_state("3/자", {"use_floor_area": fact(29, "square_meter")}, "TRUE")
+    assert_state("3/자", {"use_floor_area": fact(30, "square_meter")}, "FALSE")
+    assert_state("4/하", {"use_floor_area": fact(499, "square_meter")}, "TRUE")
+    assert_state("4/하", {"use_floor_area": fact(500, "square_meter")}, "FALSE")
+
+    assert qualification_rule_for_path(SourcePath("4", "차")).excluded_major_uses == ("제1종 근린생활시설",)
+    assert qualification_rule_for_path(SourcePath("4", "하")).excluded_major_uses == ("제1종 근린생활시설",)
+    assert qualification_rule_for_path(SourcePath("14", "나", "1")).excluded_major_uses == ("제1종 근린생활시설", "제2종 근린생활시설")
+    assert qualification_rule_for_path(SourcePath("13", "가")).excluded_major_uses == ("제1종 근린생활시설", "제2종 근린생활시설")
+
     performance_hall = qualification_rule_for_path(SourcePath("5", "가"))
     if performance_hall is None:
         raise AssertionError("Verified 5/가 qualification rule missing.")
@@ -123,9 +137,6 @@ def main() -> None:
     if performance_hall.excluded_major_uses != ("제2종 근린생활시설",):
         raise AssertionError("5/가 excluded major-use mismatch.")
 
-    if qualification_rule_for_path(SourcePath("13", "가")) is not None:
-        raise AssertionError("Unverified 13/가 must not be admitted.")
-
     print("RESULT: PASS")
     print("Verified qualification rule count:", len(VERIFIED_QUALIFICATION_RULES))
     print("Verified source paths:", tuple(VERIFIED_QUALIFICATION_RULES))
@@ -133,6 +144,9 @@ def main() -> None:
     print("2/나 row-house GT + LTE boundaries: PASS")
     print("2/다 multiplex-house LTE boundaries: PASS")
     print("3/마 table-tennis/dojo LT boundary: PASS")
+    print("4/가, 3/카, 3/자, 4/하 numeric boundaries: PASS")
+    print("4/차, 4/하 single major-use exclusions: PASS")
+    print("13/가, 14/나/1 dual major-use exclusions: PASS")
     print("5/가 performance-hall major-use exclusion registration: PASS")
     print("Unverified source path fail-closed: PASS")
     print(
