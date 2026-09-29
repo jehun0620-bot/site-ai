@@ -92,6 +92,42 @@ VERIFIED_QUALIFICATION_RULES: dict[str, BuildingUseQualificationRule] = {
         ),
         expression=numeric("use_floor_area", "LT", 500, "square_meter"),
     ),
+    "4/가": BuildingUseQualificationRule(
+        source_path=SourcePath("4", "가"),
+        source_text="공연장으로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 500제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 500, "square_meter"),
+    ),
+    "3/카": BuildingUseQualificationRule(
+        source_path=SourcePath("3", "카"),
+        source_text="동물병원, 동물미용실, 동물위탁관리업을 위한 시설로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 300제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 300, "square_meter"),
+    ),
+    "4/차": BuildingUseQualificationRule(
+        source_path=SourcePath("4", "차"),
+        source_text="장의사, 동물병원, 동물미용실, 동물위탁관리업을 위한 시설로서 제1종 근린생활시설에 해당하는 것은 제외",
+        excluded_major_uses=("제1종 근린생활시설",),
+    ),
+    "3/자": BuildingUseQualificationRule(
+        source_path=SourcePath("3", "자"),
+        source_text="금융업소, 사무소, 부동산중개사무소, 소개업소, 출판사 등 일반업무시설로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 30제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 30, "square_meter"),
+    ),
+    "4/하": BuildingUseQualificationRule(
+        source_path=SourcePath("4", "하"),
+        source_text="금융업소, 사무소, 부동산중개사무소, 소개업소, 출판사 등 일반업무시설로서 제1종 근린생활시설에 해당하는 것을 제외하고 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 500제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 500, "square_meter"),
+        excluded_major_uses=("제1종 근린생활시설",),
+    ),
+    "14/나/1": BuildingUseQualificationRule(
+        source_path=SourcePath("14", "나", "1"),
+        source_text="금융업소, 사무소, 부동산중개사무소, 소개업소, 출판사 등으로서 제1종 근린생활시설 및 제2종 근린생활시설에 해당하지 않는 것",
+        excluded_major_uses=("제1종 근린생활시설", "제2종 근린생활시설"),
+    ),
+    "13/가": BuildingUseQualificationRule(
+        source_path=SourcePath("13", "가"),
+        source_text="탁구장, 체육도장, 테니스장 등으로서 제1종 근린생활시설 및 제2종 근린생활시설에 해당하지 아니하는 것",
+        excluded_major_uses=("제1종 근린생활시설", "제2종 근린생활시설"),
+    ),
     "5/가": BuildingUseQualificationRule(
         source_path=SourcePath("5", "가"),
         source_text=(
