@@ -12,7 +12,7 @@ from law_data.building_use_annex1_semantic_model import SourcePath
 from law_data.rule_evaluation_pipeline import evaluate_condition_expression
 
 
-EXPECTED_PATHS = ("3/가", "3/차", "4/다", "4/카", "4/더", "4/버", "20/자", "25", "2/가", "2/나", "2/다", "2/라/1", "2/라/2", "4/나", "6/가", "16/가", "3/바", "24/가", "24/라", "3/마", "4/가", "3/카", "4/차", "3/자", "4/하", "14/나/1", "13/가", "13/나", "13/다", "5/가")
+EXPECTED_PATHS = ("3/가", "3/차", "4/다", "4/파", "4/카", "4/더", "4/버", "20/자", "25", "2/가", "2/나", "2/다", "2/라/1", "2/라/2", "4/나", "6/가", "16/가", "3/바", "24/가", "24/라", "3/마", "4/가", "3/카", "4/차", "3/자", "4/하", "14/나/1", "13/가", "13/나", "13/다", "5/가")
 
 
 def fact(value: float, unit: str) -> dict:
@@ -220,6 +220,7 @@ def main() -> None:
         ("3/가", 999, 1000),
         ("3/차", 999, 1000),
         ("4/다", 999, 1000),
+        ("4/파", 499, 500),
         ("4/카", 499, 500),
         ("4/더", 149, 150),
         ("4/버", 999, 1000),
@@ -227,6 +228,7 @@ def main() -> None:
         assert_state(path, {"use_floor_area": fact(below, "square_meter")}, "TRUE")
         assert_state(path, {"use_floor_area": fact(boundary, "square_meter")}, "FALSE")
 
+    assert_state("4/파", {}, "UNSET")
     assert_state("4/카", {}, "UNSET")
 
     assert qualification_rule_for_path(SourcePath("20", "자")).excluded_major_uses == ("제1종 근린생활시설",)
@@ -292,7 +294,7 @@ def main() -> None:
     print("3/아 + 통신용 시설 canonical-specific qualification: PASS")
     print("Canonical-specific qualification rule count:", len(VERIFIED_CANONICAL_QUALIFICATION_RULES))
     print("3/마 table-tennis/dojo LT boundary: PASS")
-    print("3/가, 3/차, 4/다, 4/카, 4/더, 4/버 numeric boundaries: PASS")
+    print("3/가, 3/차, 4/다, 4/파, 4/카, 4/더, 4/버 numeric boundaries: PASS")
     print("4/카 missing fact remains UNSET through shared numeric semantics: PASS")
     print("20/자, 25 first-neighborhood exclusions: PASS")
     print("4/가, 3/카, 3/자, 4/하 numeric boundaries: PASS")
