@@ -17,8 +17,19 @@ def fact(value: float, unit: str) -> dict:
     return {"value": value, "unit": unit}
 
 
+def source_path_from_key(path: str) -> SourcePath:
+    parts = path.split("/")
+    if len(parts) == 1:
+        return SourcePath(parts[0])
+    if len(parts) == 2:
+        return SourcePath(parts[0], parts[1])
+    if len(parts) == 3:
+        return SourcePath(parts[0], parts[1], int(parts[2]))
+    raise ValueError(f"unsupported source path: {path}")
+
+
 def evaluate(path: str, facts: dict) -> str:
-    rule = qualification_rule_for_path(SourcePath(*path.split("/")))
+    rule = qualification_rule_for_path(source_path_from_key(path))
     if rule is None:
         raise AssertionError(f"qualification rule missing: {path}")
     if rule.expression is None:
@@ -126,7 +137,7 @@ def main() -> None:
 
     assert qualification_rule_for_path(SourcePath("4", "차")).excluded_major_uses == ("제1종 근린생활시설",)
     assert qualification_rule_for_path(SourcePath("4", "하")).excluded_major_uses == ("제1종 근린생활시설",)
-    assert qualification_rule_for_path(SourcePath("14", "나", "1")).excluded_major_uses == ("제1종 근린생활시설", "제2종 근린생활시설")
+    assert qualification_rule_for_path(SourcePath("14", "나", 1)).excluded_major_uses == ("제1종 근린생활시설", "제2종 근린생활시설")
     assert qualification_rule_for_path(SourcePath("13", "가")).excluded_major_uses == ("제1종 근린생활시설", "제2종 근린생활시설")
 
     performance_hall = qualification_rule_for_path(SourcePath("5", "가"))
