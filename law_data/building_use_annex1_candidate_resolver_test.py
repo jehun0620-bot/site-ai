@@ -175,6 +175,40 @@ def main() -> None:
     assert power["25"].state == "UNSET"
     assert power["25"].qualification_status == "VERIFIED"
 
+    for canonical_name, path in (("체육관", "13/나"), ("운동장", "13/다")):
+        no_seats = by_path(
+            resolve_candidate_source_paths(
+                canonical_name,
+                {"has_spectator_seating": {"state": "FALSE"}},
+            )
+        )
+        assert path in no_seats
+        assert no_seats[path].state == "TRUE"
+        assert no_seats[path].qualification_status == "VERIFIED"
+
+        below = by_path(
+            resolve_candidate_source_paths(
+                canonical_name,
+                {
+                    "has_spectator_seating": {"state": "TRUE"},
+                    "spectator_seating_area": numeric_fact(999, "square_meter"),
+                },
+            )
+        )
+        boundary = by_path(
+            resolve_candidate_source_paths(
+                canonical_name,
+                {
+                    "has_spectator_seating": {"state": "TRUE"},
+                    "spectator_seating_area": numeric_fact(1000, "square_meter"),
+                },
+            )
+        )
+        missing = by_path(resolve_candidate_source_paths(canonical_name))
+        assert below[path].state == "TRUE"
+        assert boundary[path].state == "FALSE"
+        assert missing[path].state == "UNSET"
+
     animal_hospital = by_path(
         resolve_candidate_source_paths(
             "동물병원", {"use_floor_area": numeric_fact(299, "square_meter")}
@@ -338,6 +372,7 @@ def main() -> None:
     print("EV-charger 3/차 ↔ 20/자 chained classification: PASS")
     print("Retail, auto-sales, pub, shared-storage numeric boundaries: PASS")
     print("Power-facility exclusion remains UNSET without first-neighborhood candidate: PASS")
+    print("Gymnasium 13/나 and playground 13/다 spectator-seat qualification: PASS")
     print("Animal-hospital 3/카 ↔ 4/차 chained classification: PASS")
     print("Office numeric + exclusion chain: PASS")
     print("Unknown major use and canonical name fail-closed: PASS")
