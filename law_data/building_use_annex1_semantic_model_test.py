@@ -23,6 +23,7 @@ from law_data.building_use_annex1_semantic_model import (
     SourcePath,
     qualification_paths,
     canonical_uses_for_source_path,
+    canonical_uses_for_name,
     unresolved_source_paths,
 )
 
@@ -101,6 +102,23 @@ def main() -> None:
     assert tuple(use.canonical_name for use in shared_source_uses) == ("학원", "교습소")
     assert tuple(use.source_path.key for use in shared_source_uses) == ("10/라", "10/라")
 
+    table_tennis_neighborhood = CanonicalBuildingUse(
+        canonical_name="탁구장",
+        source_path=SourcePath("3", "마"),
+        major_use="제1종 근린생활시설",
+    )
+    table_tennis_sports = CanonicalBuildingUse(
+        canonical_name="탁구장",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
+    )
+    shared_name_uses = canonical_uses_for_name(
+        (table_tennis_neighborhood, table_tennis_sports, officetel),
+        "탁구장",
+    )
+    assert tuple(use.canonical_name for use in shared_name_uses) == ("탁구장", "탁구장")
+    assert tuple(use.source_path.key for use in shared_name_uses) == ("3/마", "13/가")
+
 
     semantic_nodes = (
         BuildingUseSemanticNode(SourcePath("8"), ACTIVE, CATEGORY, "운수시설"),
@@ -147,6 +165,7 @@ def main() -> None:
     print("23/라 status:", deleted_23_ra.status)
     print("23의2:", military.canonical_name)
     print("10/라 canonical uses:", tuple(use.canonical_name for use in shared_source_uses))
+    print("탁구장 source paths:", tuple(use.source_path.key for use in shared_name_uses))
     print("Semantic role examples:", tuple(
         (node.source_path.key, node.status, node.role)
         for node in semantic_nodes
