@@ -1245,7 +1245,9 @@ SITE
 - current MST 자동 탐색: 사용자 로컬 PASS
 - Annex 1 non-empty official content 취득: 사용자 로컬 PASS
 - Annex 1 body / explicit `비고` 분리: 사용자 로컬 PASS
-- major building-use hierarchy `1..29` extraction: 사용자 로컬 PASS
+- source MAJOR hierarchy 30개 extraction(기본번호 `1..29` + 가지번호 `23의2`): 사용자 로컬 PASS
+- reconstructed structural units: `188`
+- `23/라 삭제 <2023. 5. 15.>`와 `23의2 국방ㆍ군사시설` 독립 source node 분리: 사용자 로컬 PASS
 - selected detail paths `2/라/1`, `2/라/2`, `14/나/2`: 사용자 로컬 PASS
 - physical API `raw_lines` provenance 보존: 사용자 로컬 PASS
 
