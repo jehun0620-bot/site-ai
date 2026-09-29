@@ -113,7 +113,7 @@ def main() -> None:
         BuildingUseSemanticNode(SourcePath("4", "너", 1), UNRESOLVED, UNRESOLVED_ROLE),
     )
     assert tuple(node.source_path.key for node in semantic_nodes) == (
-        "8", "23의2", "1/나", "2/라/2", "1/나/1", "23/라", "4/너/1"
+        "8", "23의2", "15/가", "1/나", "2/라/2", "1/나/1", "23/라", "4/너/1"
     )
     assert tuple(node.role for node in semantic_nodes) == (
         CATEGORY, USE, MULTI_USE, USE, USE, QUALIFICATION, DELETED_ROLE, UNRESOLVED_ROLE
