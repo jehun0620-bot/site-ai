@@ -51,6 +51,41 @@ def numeric(target: str, operator: str, value: float, unit: str) -> dict[str, An
 
 
 VERIFIED_QUALIFICATION_RULES: dict[str, BuildingUseQualificationRule] = {
+    "3/가": BuildingUseQualificationRule(
+        source_path=SourcePath("3", "가"),
+        source_text="소매점으로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 1천제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 1000, "square_meter"),
+    ),
+    "3/차": BuildingUseQualificationRule(
+        source_path=SourcePath("3", "차"),
+        source_text="전기자동차 충전소로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 1천제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 1000, "square_meter"),
+    ),
+    "4/다": BuildingUseQualificationRule(
+        source_path=SourcePath("4", "다"),
+        source_text="자동차영업소로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 1천제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 1000, "square_meter"),
+    ),
+    "4/더": BuildingUseQualificationRule(
+        source_path=SourcePath("4", "더"),
+        source_text="단란주점으로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 150제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 150, "square_meter"),
+    ),
+    "4/버": BuildingUseQualificationRule(
+        source_path=SourcePath("4", "버"),
+        source_text="공유보관시설로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 1천제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 1000, "square_meter"),
+    ),
+    "20/자": BuildingUseQualificationRule(
+        source_path=SourcePath("20", "자"),
+        source_text="전기자동차 충전소로서 제1종 근린생활시설에 해당하지 않는 것",
+        excluded_major_uses=("제1종 근린생활시설",),
+    ),
+    "25": BuildingUseQualificationRule(
+        source_path=SourcePath("25"),
+        source_text="발전시설로서 제1종 근린생활시설에 해당하지 아니하는 것",
+        excluded_major_uses=("제1종 근린생활시설",),
+    ),
     "2/가": BuildingUseQualificationRule(
         source_path=SourcePath("2", "가"),
         source_text="주택으로 쓰는 층수가 5개 층 이상인 주택",
