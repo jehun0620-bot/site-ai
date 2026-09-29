@@ -147,6 +147,16 @@ def canonical_uses_for_source_path(
     return tuple(use for use in uses if use.source_path.key == key)
 
 
+def canonical_uses_for_name(
+    uses: Iterable[CanonicalBuildingUse],
+    canonical_name: str,
+) -> tuple[CanonicalBuildingUse, ...]:
+    """Return explicitly supplied canonical uses matching one canonical name."""
+
+    name = _required(canonical_name, "canonical_name")
+    return tuple(use for use in uses if use.canonical_name == name)
+
+
 def unresolved_source_paths(
     known_paths: Iterable[SourcePath],
     resolved_uses: Iterable[CanonicalBuildingUse],
