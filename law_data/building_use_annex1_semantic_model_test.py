@@ -12,6 +12,7 @@ from law_data.building_use_annex1_semantic_model import (
     DELETED,
     UNRESOLVED,
     USE,
+    CATEGORY,
     QUALIFICATION,
     DELETED_ROLE,
     UNRESOLVED_ROLE,
@@ -82,6 +83,7 @@ def main() -> None:
     assert military.source_path.key == "23의2"
 
     semantic_nodes = (
+        BuildingUseSemanticNode(SourcePath("8"), ACTIVE, CATEGORY, "운수시설"),
         BuildingUseSemanticNode(SourcePath("23의2"), ACTIVE, USE, "국방ㆍ군사시설"),
         BuildingUseSemanticNode(SourcePath("1", "나"), ACTIVE, USE, "다중주택"),
         BuildingUseSemanticNode(SourcePath("2", "라", 2), ACTIVE, USE, "임대형기숙사"),
@@ -90,11 +92,22 @@ def main() -> None:
         BuildingUseSemanticNode(SourcePath("4", "너", 1), UNRESOLVED, UNRESOLVED_ROLE),
     )
     assert tuple(node.source_path.key for node in semantic_nodes) == (
-        "23의2", "1/나", "2/라/2", "1/나/1", "23/라", "4/너/1"
+        "8", "23의2", "1/나", "2/라/2", "1/나/1", "23/라", "4/너/1"
     )
     assert tuple(node.role for node in semantic_nodes) == (
-        USE, USE, USE, QUALIFICATION, DELETED_ROLE, UNRESOLVED_ROLE
+        CATEGORY, USE, USE, USE, QUALIFICATION, DELETED_ROLE, UNRESOLVED_ROLE
     )
+
+    for invalid in (
+        (ACTIVE, CATEGORY, None),
+        (ACTIVE, QUALIFICATION, "잘못된 이름"),
+    ):
+        try:
+            BuildingUseSemanticNode(SourcePath("99"), *invalid)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"Expected fail-closed rejection: {invalid}")
 
     # Fail closed: an unregistered structural path stays unresolved.
     unresolved = unresolved_source_paths(
