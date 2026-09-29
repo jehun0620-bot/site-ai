@@ -281,7 +281,42 @@ VERIFIED_QUALIFICATION_RULES: dict[str, BuildingUseQualificationRule] = {
 }
 
 
+VERIFIED_CANONICAL_QUALIFICATION_RULES: dict[
+    tuple[str, str], BuildingUseQualificationRule
+] = {
+    ("3/아", "통신용 시설"): BuildingUseQualificationRule(
+        source_path=SourcePath("3", "아"),
+        source_text="통신용 시설로서 같은 건축물에 해당 용도로 쓰는 바닥면적의 합계가 1천제곱미터 미만인 것",
+        expression=numeric("use_floor_area", "LT", 1000, "square_meter"),
+    ),
+}
+
+
 def qualification_rule_for_path(
     source_path: SourcePath,
 ) -> BuildingUseQualificationRule | None:
     return VERIFIED_QUALIFICATION_RULES.get(source_path.key)
+
+
+def qualification_rules_for_candidate(
+    source_path: SourcePath,
+    canonical_name: str,
+) -> tuple[BuildingUseQualificationRule, ...]:
+    """Return verified common and canonical-specific rules for one candidate."""
+
+    name = canonical_name.strip()
+    if not name:
+        raise ValueError("canonical_name is required")
+
+    rules: list[BuildingUseQualificationRule] = []
+    common_rule = qualification_rule_for_path(source_path)
+    if common_rule is not None:
+        rules.append(common_rule)
+
+    canonical_rule = VERIFIED_CANONICAL_QUALIFICATION_RULES.get(
+        (source_path.key, name)
+    )
+    if canonical_rule is not None:
+        rules.append(canonical_rule)
+
+    return tuple(rules)
