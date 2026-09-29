@@ -40,6 +40,21 @@ EXPECTED_MAJOR_COUNT = 30
 # Only paths whose semantic meaning has already been verified in preceding
 # tests are admitted here. Structural shape alone never creates semantics.
 VERIFIED_SEMANTICS: dict[str, BuildingUseSemanticNode] = {
+    "1": BuildingUseSemanticNode(SourcePath("1"), ACTIVE, CATEGORY, "단독주택"),
+    "2": BuildingUseSemanticNode(SourcePath("2"), ACTIVE, CATEGORY, "공동주택"),
+    "3": BuildingUseSemanticNode(SourcePath("3"), ACTIVE, CATEGORY, "제1종 근린생활시설"),
+    "4": BuildingUseSemanticNode(SourcePath("4"), ACTIVE, CATEGORY, "제2종 근린생활시설"),
+    "5": BuildingUseSemanticNode(SourcePath("5"), ACTIVE, CATEGORY, "문화 및 집회시설"),
+    "6": BuildingUseSemanticNode(SourcePath("6"), ACTIVE, CATEGORY, "종교시설"),
+    "7": BuildingUseSemanticNode(SourcePath("7"), ACTIVE, CATEGORY, "판매시설"),
+    "11": BuildingUseSemanticNode(SourcePath("11"), ACTIVE, CATEGORY, "노유자시설"),
+    "12": BuildingUseSemanticNode(SourcePath("12"), ACTIVE, CATEGORY, "수련시설"),
+    "13": BuildingUseSemanticNode(SourcePath("13"), ACTIVE, CATEGORY, "운동시설"),
+    "14": BuildingUseSemanticNode(SourcePath("14"), ACTIVE, CATEGORY, "업무시설"),
+    "15": BuildingUseSemanticNode(SourcePath("15"), ACTIVE, CATEGORY, "숙박시설"),
+    "16": BuildingUseSemanticNode(SourcePath("16"), ACTIVE, CATEGORY, "위락시설"),
+    "19": BuildingUseSemanticNode(SourcePath("19"), ACTIVE, CATEGORY, "위험물 저장 및 처리 시설"),
+    "23": BuildingUseSemanticNode(SourcePath("23"), ACTIVE, CATEGORY, "교정시설"),
     "1/나": BuildingUseSemanticNode(SourcePath("1", "나"), ACTIVE, USE, "다중주택"),
     "1/나/1": BuildingUseSemanticNode(SourcePath("1", "나", 1), ACTIVE, QUALIFICATION),
     "1/나/2": BuildingUseSemanticNode(SourcePath("1", "나", 2), ACTIVE, QUALIFICATION),
