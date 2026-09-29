@@ -567,7 +567,7 @@ Official Building Act Enforcement Decree
 
 `official source retrieval != structural parsing != legal semantic approval`.
 
-Structural Parser의 책임은 공식 별표 1의 본문/비고 경계와 `호 → 목 → 세부항목` source hierarchy를 보존하는 것이다. 모든 detail node를 Building Use identity로 간주하지 않는다. 예를 들어 `2/라/2 임대형기숙사`는 use identity가 될 수 있지만, 단독주택 정의 내부의 면적·층수 같은 detail은 qualification predicate일 수 있다. 이 구분은 별도 Semantic Classification에서 검증한다.
+Structural Parser의 책임은 공식 별표 1의 본문/비고 경계와 `호(가지번호 포함) → 목 → 세부항목` source hierarchy를 보존하는 것이다. MAJOR source identity는 `number + branch_number + source_label`로 보존하여 `23`과 `23의2`를 서로 다른 source node로 구분한다. 모든 detail node를 Building Use identity로 간주하지 않는다. 예를 들어 `2/라/2 임대형기숙사`는 use identity가 될 수 있지만, 단독주택 정의 내부의 면적·층수 같은 detail은 qualification predicate일 수 있다. 이 구분은 별도 Semantic Classification에서 검증한다.
 
 ### Official raw-line provenance invariant
 
@@ -583,4 +583,4 @@ Structural Parser의 책임은 공식 별표 1의 본문/비고 경계와 `호 �
 
 새로운 Building Use 전용 조건 엔진을 만들지 않는다. Canonical Building Use가 검증되면 기존 PROJECT profile / predicate / expression 경계로 연결한다. 추가 numeric qualification은 기존 Numeric Predicate infrastructure의 재사용 가능성을 우선 검토하되, 지원되지 않는 측정값을 확인 없이 지원된 것으로 간주하지 않는다.
 
-현재 checkpoint는 official Annex 1 source retrieval 및 structural hierarchy extraction까지 사용자 로컬 Behavioral PASS다. Canonical semantic taxonomy와 Rule Engine production integration은 아직 완료되지 않았다.
+현재 checkpoint는 official Annex 1 source retrieval 및 structural hierarchy extraction까지 사용자 로컬 Behavioral PASS다. 현재 검증값은 188 structural units, 30 source MAJOR nodes이며 기본번호 1..29 사이의 `23의2` 가지번호도 독립 MAJOR로 보존된다. Canonical semantic taxonomy와 Rule Engine production integration은 아직 완료되지 않았다.
