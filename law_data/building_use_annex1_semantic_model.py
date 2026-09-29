@@ -134,6 +134,16 @@ def qualification_paths(use: CanonicalBuildingUse) -> tuple[str, ...]:
     return tuple(item.source_path.key for item in use.qualifications)
 
 
+def canonical_uses_for_source_path(
+    uses: Iterable[CanonicalBuildingUse],
+    source_path: SourcePath,
+) -> tuple[CanonicalBuildingUse, ...]:
+    """Return explicitly supplied canonical uses bound to one source path."""
+
+    key = source_path.key
+    return tuple(use for use in uses if use.source_path.key == key)
+
+
 def unresolved_source_paths(
     known_paths: Iterable[SourcePath],
     resolved_uses: Iterable[CanonicalBuildingUse],
