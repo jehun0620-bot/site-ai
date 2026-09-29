@@ -10,7 +10,7 @@ from law_data.building_use_annex1_semantic_model import SourcePath
 from law_data.rule_evaluation_pipeline import evaluate_condition_expression
 
 
-EXPECTED_PATHS = ("3/가", "3/차", "4/다", "4/더", "4/버", "20/자", "25", "2/가", "2/나", "2/다", "3/마", "4/가", "3/카", "4/차", "3/자", "4/하", "14/나/1", "13/가", "5/가")
+EXPECTED_PATHS = ("3/가", "3/차", "4/다", "4/더", "4/버", "20/자", "25", "2/가", "2/나", "2/다", "3/마", "4/가", "3/카", "4/차", "3/자", "4/하", "14/나/1", "13/가", "13/나", "13/다", "5/가")
 
 
 def fact(value: float, unit: str) -> dict:
@@ -153,6 +153,30 @@ def main() -> None:
     assert qualification_rule_for_path(SourcePath("14", "나", 1)).excluded_major_uses == ("제1종 근린생활시설", "제2종 근린생활시설")
     assert qualification_rule_for_path(SourcePath("13", "가")).excluded_major_uses == ("제1종 근린생활시설", "제2종 근린생활시설")
 
+    for path in ("13/나", "13/다"):
+        assert_state(
+            path,
+            {"has_spectator_seating": {"state": "FALSE"}},
+            "TRUE",
+        )
+        assert_state(
+            path,
+            {
+                "has_spectator_seating": {"state": "TRUE"},
+                "spectator_seating_area": fact(999, "square_meter"),
+            },
+            "TRUE",
+        )
+        assert_state(
+            path,
+            {
+                "has_spectator_seating": {"state": "TRUE"},
+                "spectator_seating_area": fact(1000, "square_meter"),
+            },
+            "FALSE",
+        )
+        assert_state(path, {}, "UNSET")
+
     performance_hall = qualification_rule_for_path(SourcePath("5", "가"))
     if performance_hall is None:
         raise AssertionError("Verified 5/가 qualification rule missing.")
@@ -173,6 +197,7 @@ def main() -> None:
     print("4/가, 3/카, 3/자, 4/하 numeric boundaries: PASS")
     print("4/차, 4/하 single major-use exclusions: PASS")
     print("13/가, 14/나/1 dual major-use exclusions: PASS")
+    print("13/나, 13/다 spectator-seat STATE/NOT/NUMERIC boundaries: PASS")
     print("5/가 performance-hall major-use exclusion registration: PASS")
     print("Unverified source path fail-closed: PASS")
     print(
