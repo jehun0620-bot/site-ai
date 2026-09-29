@@ -110,6 +110,8 @@ VERIFIED_SEMANTICS: dict[str, BuildingUseSemanticNode] = {
     "3/자": BuildingUseSemanticNode(SourcePath("3", "자"), ACTIVE, MULTI_USE),
     "4/하": BuildingUseSemanticNode(SourcePath("4", "하"), ACTIVE, MULTI_USE),
     "14/나/1": BuildingUseSemanticNode(SourcePath("14", "나", 1), ACTIVE, MULTI_USE),
+    "3/바": BuildingUseSemanticNode(SourcePath("3", "바"), ACTIVE, MULTI_USE),
+    "3/아": BuildingUseSemanticNode(SourcePath("3", "아"), ACTIVE, MULTI_USE),
     "3/다": BuildingUseSemanticNode(SourcePath("3", "다"), ACTIVE, MULTI_USE),
     "3/라": BuildingUseSemanticNode(SourcePath("3", "라"), ACTIVE, MULTI_USE),
     "11/가": BuildingUseSemanticNode(SourcePath("11", "가"), ACTIVE, USE, "아동 관련 시설"),
