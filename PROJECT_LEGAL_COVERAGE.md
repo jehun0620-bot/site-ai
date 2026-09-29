@@ -1283,3 +1283,25 @@ API physical line wrap은 띄어쓰기 위치와 일치하지 않는다. 단어 
 Canonical Building Use는 주차, 피난/방화, 소방, 장애인 편의, 에너지, EV 충전 등 여러 Coverage 영역의 공통 PROJECT 기반이다. 따라서 이후 개발은 별표 1 source tree를 다시 수작업으로 만드는 대신, 현재 검증된 official source tree 위에서 semantic taxonomy를 구축한다.
 
 공식 source 자동 취득/구조 파싱 성공은 자동 법적 의미 승인과 동일하지 않다. 법령 개정 시에도 source diff → structural validation → semantic 영향 검토 → affected-rule regression → 승인/promotion 경계를 유지한다.
+## Building Use Qualification coverage depth policy — 2026-09-29
+
+Building Use의 official source 또는 qualification 문구가 존재한다는 사실만으로 해당 조건을 자동판정 대상으로 승격하지 않는다. Building Use coverage는 source 확보, semantic 표현 가능성, 실제 evaluation 가능성을 계속 분리해서 관리한다.
+
+자동판정 우선순위가 높은 Qualification은 다음과 같다.
+
+- 면적·층수·세대수·객석·비율·개수처럼 입력 Fact와 법적 경계가 명확한 정량조건
+- 다른 Annex 1 용도에 해당하는지 여부처럼 Canonical Building Use 결과를 실제로 바꾸는 명확한 분류 제외조건
+- 출처와 입력 의미가 명확한 검증 가능한 상태조건
+
+반대로 다음 조건은 공식 원문이 존재하더라도 현재 Fact/Data/semantic contract가 충분하지 않으면 자동 TRUE/FALSE 판정으로 승격하지 않는다.
+
+- 별도 전문판단 또는 복잡한 타법 자격판단이 필요한 조건
+- '이와 유사한 것'처럼 추가 semantic 판단이 필요한 조건
+- 현재 제품 입력이나 공식 데이터에서 안정적으로 확보할 수 없는 사실
+- 자동화 이득보다 잘못된 분류 위험이 큰 세부조건
+
+이 경우 REVIEW_REQUIRED / UNSET 등 fail-closed 상태와 공식 근거를 유지한다. 이는 미구현을 숨기는 것이 아니라 현재 자동판정 coverage의 한계를 명시적으로 표현하는 것이다.
+
+현재 검증된 Qualification 구조는 SourcePath-common 29건 + Canonical-specific 1건이다. 이 수치는 Annex 1 전체 qualification coverage 비율을 의미하지 않는다. Canonical-specific 첫 사례인 `3/아 + 통신용 시설`은 같은 source path의 다른 canonical use에 조건이 전파되지 않도록 분리한 검증 사례다.
+
+향후 Building Use coverage는 '모든 문구 구현'을 완료조건으로 사용하지 않는다. Canonical final classification과 후속 PROJECT 기반 법규검토에 필요한 핵심 Qualification의 coverage를 점검하고, 충분한 시점에는 PROJECT Mapping 및 다른 고가치 법규영역으로 개발 우선순위를 이동한다.
