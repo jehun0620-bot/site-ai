@@ -21,7 +21,8 @@ VERIFIED = "VERIFIED"
 class BuildingUseQualificationRule:
     source_path: SourcePath
     source_text: str
-    expression: dict[str, Any]
+    expression: dict[str, Any] | None = None
+    excluded_major_uses: tuple[str, ...] = ()
     expression_status: str = VERIFIED
 
     def __post_init__(self) -> None:
@@ -29,8 +30,14 @@ class BuildingUseQualificationRule:
             raise ValueError("source_text is required")
         if self.expression_status != VERIFIED:
             raise ValueError("qualification registry admits VERIFIED expressions only")
-        if not isinstance(self.expression, dict) or not self.expression:
-            raise ValueError("expression is required")
+        if self.expression is not None and (
+            not isinstance(self.expression, dict) or not self.expression
+        ):
+            raise ValueError("expression must be a non-empty dict when provided")
+        if any(not item.strip() for item in self.excluded_major_uses):
+            raise ValueError("excluded_major_uses must contain non-empty names")
+        if self.expression is None and not self.excluded_major_uses:
+            raise ValueError("at least one qualification condition is required")
 
 
 def numeric(target: str, operator: str, value: float, unit: str) -> dict[str, Any]:
@@ -84,6 +91,15 @@ VERIFIED_QUALIFICATION_RULES: dict[str, BuildingUseQualificationRule] = {
             "합계가 500제곱미터 미만인 것"
         ),
         expression=numeric("use_floor_area", "LT", 500, "square_meter"),
+    ),
+    "5/가": BuildingUseQualificationRule(
+        source_path=SourcePath("5", "가"),
+        source_text=(
+            "공연장[극장, 영화관, 연예장, 음악당, 서커스장, 비디오물감상실, "
+            "비디오물소극장, 그 밖에 이와 비슷한 것을 말한다]으로서 "
+            "제2종 근린생활시설에 해당하지 아니하는 것"
+        ),
+        excluded_major_uses=("제2종 근린생활시설",),
     ),
 }
 
