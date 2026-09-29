@@ -119,6 +119,48 @@ VERIFIED_QUALIFICATION_RULES: dict[str, BuildingUseQualificationRule] = {
             ],
         },
     ),
+    "2/라/1": BuildingUseQualificationRule(
+        source_path=SourcePath("2", "라", 1),
+        source_text=(
+            "일반기숙사로서 기숙사 건축기준에 적합하고 구분소유된 개별 실이 아니며, "
+            "학생 또는 종업원 등을 위한 용도로서 공동취사시설을 이용하는 세대 수가 "
+            "전체 세대 수의 50퍼센트 이상인 것"
+        ),
+        expression={
+            "op": "AND",
+            "children": [
+                {"op": "STATE", "target": "dormitory_building_standard_compliant"},
+                {
+                    "op": "NOT",
+                    "child": {"op": "STATE", "target": "has_individually_owned_room"},
+                },
+                {"op": "STATE", "target": "general_dormitory_eligible_occupancy"},
+                numeric("common_cooking_household_ratio", "GTE", 50, "percent"),
+            ],
+        },
+    ),
+    "2/라/2": BuildingUseQualificationRule(
+        source_path=SourcePath("2", "라", 2),
+        source_text=(
+            "임대형기숙사로서 기숙사 건축기준에 적합하고 구분소유된 개별 실이 아니며, "
+            "법정 임대사업 주체가 임대사업에 사용하는 시설로서 임대 목적으로 제공하는 "
+            "실이 20실 이상이고 공동취사시설을 이용하는 세대 수가 전체 세대 수의 "
+            "50퍼센트 이상인 것"
+        ),
+        expression={
+            "op": "AND",
+            "children": [
+                {"op": "STATE", "target": "dormitory_building_standard_compliant"},
+                {
+                    "op": "NOT",
+                    "child": {"op": "STATE", "target": "has_individually_owned_room"},
+                },
+                {"op": "STATE", "target": "qualified_dormitory_rental_operator"},
+                numeric("rental_room_count", "GTE", 20, "room"),
+                numeric("common_cooking_household_ratio", "GTE", 50, "percent"),
+            ],
+        },
+    ),
     "3/마": BuildingUseQualificationRule(
         source_path=SourcePath("3", "마"),
         source_text=(
