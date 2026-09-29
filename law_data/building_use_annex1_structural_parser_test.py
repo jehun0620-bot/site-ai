@@ -95,7 +95,7 @@ def starts_with_valid_marker(
         current_number, current_branch = current_major
 
         if number == current_number:
-            return branch_number == current_branch + 1 and branch_number > 0
+            return branch_number > current_branch and branch_number > 0
 
         return number == current_number + 1 and branch_number == 0
 
