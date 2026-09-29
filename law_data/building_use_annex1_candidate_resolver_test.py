@@ -176,16 +176,26 @@ def main() -> None:
     assert broadcast_1000["3/바"].state == "FALSE"
     assert broadcast_1000["24/가"].state == "TRUE"
 
-    telecom = by_path(
+    telecom_999 = by_path(
         resolve_candidate_source_paths(
             "통신용 시설", {"use_floor_area": numeric_fact(999, "square_meter")}
         )
     )
-    assert set(telecom) == {"3/아", "24/라"}
-    assert telecom["3/아"].state == "UNSET"
-    assert telecom["3/아"].qualification_status == "UNREGISTERED"
-    assert telecom["24/라"].state == "UNSET"
-    assert telecom["24/라"].qualification_status == "VERIFIED"
+    assert set(telecom_999) == {"3/아", "24/라"}
+    assert telecom_999["3/아"].state == "TRUE"
+    assert telecom_999["3/아"].qualification_status == "VERIFIED"
+    assert telecom_999["24/라"].state == "FALSE"
+    assert telecom_999["24/라"].qualification_status == "VERIFIED"
+
+    telecom_1000 = by_path(
+        resolve_candidate_source_paths(
+            "통신용 시설", {"use_floor_area": numeric_fact(1000, "square_meter")}
+        )
+    )
+    assert telecom_1000["3/아"].state == "FALSE"
+    assert telecom_1000["3/아"].qualification_status == "VERIFIED"
+    assert telecom_1000["24/라"].state == "TRUE"
+    assert telecom_1000["24/라"].qualification_status == "VERIFIED"
 
     performance_hall_results = resolve_candidate_source_paths(
         "공연장", {"use_floor_area": numeric_fact(499, "square_meter")}
@@ -473,7 +483,7 @@ def main() -> None:
     print("Religious-assembly 4/나 ↔ 6/가 chained classification: PASS")
     print("Pub 4/더 ↔ 16/가 chained classification: PASS")
     print("Broadcast-station 3/바 ↔ 24/가 chained classification: PASS")
-    print("Telecom 3/아 remains UNREGISTERED and 24/라 stays fail-closed: PASS")
+    print("Telecom 3/아 ↔ 24/라 canonical-specific chained classification: PASS")
     print("Performance-hall 4/가 ↔ 5/가 chained classification: PASS")
     print("Performance-hall major-use lookup: PASS")
     print("EV-charger 3/차 ↔ 20/자 chained classification: PASS")
