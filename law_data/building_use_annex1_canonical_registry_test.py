@@ -16,7 +16,7 @@ def names_for(source_path: SourcePath) -> tuple[str, ...]:
 
 
 def main() -> None:
-    assert len(CANONICAL_BUILDING_USES) == 32
+    assert len(CANONICAL_BUILDING_USES) == 38
 
     assert names_for(SourcePath("10", "라")) == ("학원", "교습소")
     assert names_for(SourcePath("4", "바")) == ("사진관", "표구점")
@@ -44,10 +44,25 @@ def main() -> None:
     assert tuple(
         use.source_path.key for use in canonical_uses_for_canonical_name("탁구장")
     ) == ("3/마", "13/가")
+    assert names_for(SourcePath("3", "카")) == (
+        "동물병원", "동물미용실", "동물위탁관리업 시설"
+    )
+    assert names_for(SourcePath("4", "차")) == (
+        "동물병원", "동물미용실", "동물위탁관리업 시설"
+    )
+    assert tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("동물병원")
+    ) == ("3/카", "4/차")
+    assert tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("동물미용실")
+    ) == ("3/카", "4/차")
+    assert tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("동물위탁관리업 시설")
+    ) == ("3/카", "4/차")
 
     assert names_for(SourcePath("99")) == ()
 
-    assert all(use.source_path.key in {"10/라", "4/바", "4/러", "4/타", "16/마", "23/다", "26/라", "19/가", "19/나", "19/다", "19/라", "19/바", "15/가", "3/마", "13/가"} for use in CANONICAL_BUILDING_USES)
+    assert all(use.source_path.key in {"10/라", "4/바", "4/러", "4/타", "16/마", "23/다", "26/라", "19/가", "19/나", "19/다", "19/라", "19/바", "15/가", "3/마", "13/가", "3/카", "4/차"} for use in CANONICAL_BUILDING_USES)
     assert all(use.major_use for use in CANONICAL_BUILDING_USES)
 
     print("RESULT: PASS")
@@ -67,6 +82,15 @@ def main() -> None:
     print("15/가:", names_for(SourcePath("15", "가")))
     print("탁구장 source paths:", tuple(
         use.source_path.key for use in canonical_uses_for_canonical_name("탁구장")
+    ))
+    print("동물병원 source paths:", tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("동물병원")
+    ))
+    print("동물미용실 source paths:", tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("동물미용실")
+    ))
+    print("동물위탁관리업 시설 source paths:", tuple(
+        use.source_path.key for use in canonical_uses_for_canonical_name("동물위탁관리업 시설")
     ))
     print("Unknown path:", names_for(SourcePath("99")))
     print("Not proven: full canonical coverage, UI integration, PROJECT mapping, or Rule Engine integration.")
