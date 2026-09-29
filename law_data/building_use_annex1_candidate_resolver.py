@@ -8,7 +8,7 @@ qualifications. Candidates with no VERIFIED qualification rule remain UNSET.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Iterable
 
 from law_data.building_use_annex1_canonical_catalog import (
     BuildingUseCatalogEntry,
@@ -36,6 +36,23 @@ class BuildingUseCandidateResult:
             raise ValueError(
                 f"invalid qualification_status: {self.qualification_status}"
             )
+
+
+def candidate_results_for_major_use(
+    results: Iterable[BuildingUseCandidateResult],
+    major_use: str,
+) -> tuple[BuildingUseCandidateResult, ...]:
+    """Return already-evaluated candidates belonging to one legal major use."""
+
+    name = major_use.strip()
+    if not name:
+        raise ValueError("major_use is required")
+
+    return tuple(
+        result
+        for result in results
+        if result.entry.major_use == name
+    )
 
 
 def resolve_candidate_source_paths(
