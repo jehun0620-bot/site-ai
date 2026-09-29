@@ -85,6 +85,49 @@ def main() -> None:
     assert apartment_unset["2/가"].state == "UNSET"
     assert apartment_unset["2/가"].qualification_status == "VERIFIED"
 
+    general_dormitory_facts = {
+        "dormitory_building_standard_compliant": {"state": "TRUE"},
+        "has_individually_owned_room": {"state": "FALSE"},
+        "general_dormitory_eligible_occupancy": {"state": "TRUE"},
+        "common_cooking_household_ratio": numeric_fact(50, "percent"),
+    }
+    general_dormitory = by_path(
+        resolve_candidate_source_paths("일반기숙사", general_dormitory_facts)
+    )
+    assert set(general_dormitory) == {"2/라/1"}
+    assert general_dormitory["2/라/1"].state == "TRUE"
+    assert general_dormitory["2/라/1"].qualification_status == "VERIFIED"
+    general_dormitory_below = by_path(
+        resolve_candidate_source_paths(
+            "일반기숙사",
+            {**general_dormitory_facts, "common_cooking_household_ratio": numeric_fact(49, "percent")},
+        )
+    )
+    assert general_dormitory_below["2/라/1"].state == "FALSE"
+    assert by_path(resolve_candidate_source_paths("일반기숙사"))["2/라/1"].state == "UNSET"
+
+    rental_dormitory_facts = {
+        "dormitory_building_standard_compliant": {"state": "TRUE"},
+        "has_individually_owned_room": {"state": "FALSE"},
+        "qualified_dormitory_rental_operator": {"state": "TRUE"},
+        "rental_room_count": numeric_fact(20, "room"),
+        "common_cooking_household_ratio": numeric_fact(50, "percent"),
+    }
+    rental_dormitory = by_path(
+        resolve_candidate_source_paths("임대형기숙사", rental_dormitory_facts)
+    )
+    assert set(rental_dormitory) == {"2/라/2"}
+    assert rental_dormitory["2/라/2"].state == "TRUE"
+    assert rental_dormitory["2/라/2"].qualification_status == "VERIFIED"
+    rental_dormitory_below = by_path(
+        resolve_candidate_source_paths(
+            "임대형기숙사",
+            {**rental_dormitory_facts, "rental_room_count": numeric_fact(19, "room")},
+        )
+    )
+    assert rental_dormitory_below["2/라/2"].state == "FALSE"
+    assert by_path(resolve_candidate_source_paths("임대형기숙사"))["2/라/2"].state == "UNSET"
+
     performance_hall_results = resolve_candidate_source_paths(
         "공연장", {"use_floor_area": numeric_fact(499, "square_meter")}
     )
@@ -367,6 +410,7 @@ def main() -> None:
     print("13/가 dual major-use exclusion evaluation: PASS")
     print("Table-tennis major-use lookup: PASS")
     print("Apartment single-path verified qualification: PASS")
+    print("General/rental dormitory complete qualification resolution: PASS")
     print("Performance-hall 4/가 ↔ 5/가 chained classification: PASS")
     print("Performance-hall major-use lookup: PASS")
     print("EV-charger 3/차 ↔ 20/자 chained classification: PASS")
