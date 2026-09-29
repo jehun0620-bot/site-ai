@@ -96,7 +96,7 @@ def main() -> None:
     assert tuple(use.source_path.key for use in canonical_uses_for_canonical_name("제과점")) == ("3/나", "4/아")
     assert names_for(SourcePath("3", "자")) == ("금융업소", "사무소", "부동산중개사무소", "출판사")
     assert names_for(SourcePath("4", "하")) == ("금융업소", "사무소", "부동산중개사무소", "출판사")
-    assert names_for(SourcePath("14", "나", 1)) == ("금융업소", "사무소", "부동산중개사무소", "출판사")
+    assert names_for(SourcePath("14", "나", 1)) == ("금융업소", "사무소", "부동산중개사무소", "출판사", "신문사")
     assert tuple(use.source_path.key for use in canonical_uses_for_canonical_name("금융업소")) == ("3/자", "4/하", "14/나/1")
     assert tuple(use.source_path.key for use in canonical_uses_for_canonical_name("사무소")) == ("3/자", "4/하", "14/나/1")
     assert tuple(use.source_path.key for use in canonical_uses_for_canonical_name("부동산중개사무소")) == ("3/자", "4/하", "14/나/1")
