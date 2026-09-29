@@ -102,7 +102,7 @@ def main() -> None:
     assert tuple(use.source_path.key for use in canonical_uses_for_canonical_name("출판사")) == ("3/자", "4/하", "14/나/1")
     assert names_for(SourcePath("99")) == ()
 
-    assert all(use.source_path.key in {"10/라", "4/바", "4/러", "4/타", "16/마", "23/다", "26/라", "19/가", "19/나", "19/다", "19/라", "19/바", "15/가", "3/마", "13/가", "3/카", "4/차", "4/파", "3/나", "4/아", "3/다", "3/라"} for use in CANONICAL_BUILDING_USES)
+    assert all(use.source_path.key in {"10/라", "4/바", "4/러", "4/타", "16/마", "23/다", "26/라", "19/가", "19/나", "19/다", "19/라", "19/바", "15/가", "3/마", "13/가", "3/카", "4/차", "4/파", "3/나", "4/아", "3/다", "3/라", "3/자", "4/하", "14/나/1"} for use in CANONICAL_BUILDING_USES)
     assert all(use.major_use for use in CANONICAL_BUILDING_USES)
 
     print("RESULT: PASS")
