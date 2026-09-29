@@ -11,6 +11,7 @@ from law_data.building_use_annex1_semantic_model import (
     CanonicalBuildingUse,
     SourcePath,
     canonical_uses_for_source_path,
+    canonical_uses_for_name,
 )
 
 
@@ -165,6 +166,16 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("15", "가"),
         major_use="숙박시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="탁구장",
+        source_path=SourcePath("3", "마"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="탁구장",
+        source_path=SourcePath("13", "가"),
+        major_use="운동시설",
+    ),
 )
 
 
@@ -172,3 +183,11 @@ def canonical_uses_for_path(source_path: SourcePath) -> tuple[CanonicalBuildingU
     """Return registered canonical uses for one official Annex 1 source path."""
 
     return canonical_uses_for_source_path(CANONICAL_BUILDING_USES, source_path)
+
+
+def canonical_uses_for_canonical_name(
+    canonical_name: str,
+) -> tuple[CanonicalBuildingUse, ...]:
+    """Return registered canonical uses matching one canonical name."""
+
+    return canonical_uses_for_name(CANONICAL_BUILDING_USES, canonical_name)
