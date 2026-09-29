@@ -568,3 +568,14 @@ Structural Parser RESULT: PASS (188 structural units / 30 source MAJOR nodes / 2
 - Rule Engine production integration
 
 따라서 **source retrieval/parsing PASS는 semantic legal approval 또는 ENGINE_READY를 의미하지 않는다.**
+## Building Use qualification automation scope checkpoint — 2026-09-29
+
+Building Use Qualification은 현재 사용자 로컬 검증 기준으로 SourcePath 공통 Qualification 29건과 Canonical-specific Qualification 1건까지 Behavioral PASS다. Canonical-specific 첫 검증 사례는 `3/아 + 통신용 시설`이며, `3/아` SourcePath 자체는 의도적으로 미등록 상태를 유지한다. 이 경계는 동일 SourcePath의 변전소·도시가스배관시설·정수장·양수장에 통신용 시설의 1,000㎡ 조건이 잘못 전파되는 것을 방지한다.
+
+현재 개발 단계는 `4/카 ↔ 10/다 ↔ 10/라`처럼 공통 Qualification과 canonical-use별 Qualification이 함께 필요한 사례를 검토하는 단계다.
+
+이 단계부터 Annex 1의 모든 문구를 완전 자동판정하는 것 자체를 목표로 삼지 않는다. 실제 Canonical Building Use 선택 또는 후속 법규검토 결과를 바꾸는 명확한 numeric / classification exclusion / 검증 가능한 state 조건을 우선 자동화한다. 현재 확보 가능한 Fact만으로 안전하게 판정할 수 없는 복잡한 조건은 억지로 TRUE/FALSE로 만들지 않고 REVIEW_REQUIRED 또는 UNSET 경계를 유지한다.
+
+다음 전환 체크포인트는 Qualification coverage를 다시 측정한 뒤 Canonical final classification에 필요한 핵심 조건이 충분한지 판단하는 것이다. 충분하면 Annex 1 세부조건 확장을 계속하는 대신 Canonical final classification → PROJECT Mapping → API → Frontend 순서로 전진한다.
+
+개발 속도 원칙: 동일 구조이고 READ-ONLY 검증으로 의미가 확인된 항목은 안전한 범위에서 batch 처리한다. 단, 법적 의미·데이터 계약·평가 구조가 다른 항목을 속도를 이유로 한 묶음에 넣어 오류 가능성을 높이지 않는다.
