@@ -100,7 +100,7 @@ def main() -> None:
         )
 
     print("HTTP status: 200")
-    print("Resolved current MST:", target.get("MST"))
+    print("Resolved current MST:", target.get("mst"))
     print("Structural units:", len(units))
     print("Inventory rows:", len(rows))
     print("Explicit QUALIFICATION node count:", len(explicit_qualification_paths))
