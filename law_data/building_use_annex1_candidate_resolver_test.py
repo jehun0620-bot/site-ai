@@ -128,6 +128,65 @@ def main() -> None:
     assert rental_dormitory_below["2/라/2"].state == "FALSE"
     assert by_path(resolve_candidate_source_paths("임대형기숙사"))["2/라/2"].state == "UNSET"
 
+    religious_499 = by_path(
+        resolve_candidate_source_paths(
+            "종교집회장", {"use_floor_area": numeric_fact(499, "square_meter")}
+        )
+    )
+    assert set(religious_499) == {"4/나", "6/가"}
+    assert religious_499["4/나"].state == "TRUE"
+    assert religious_499["6/가"].state == "FALSE"
+    religious_500 = by_path(
+        resolve_candidate_source_paths(
+            "종교집회장", {"use_floor_area": numeric_fact(500, "square_meter")}
+        )
+    )
+    assert religious_500["4/나"].state == "FALSE"
+    assert religious_500["6/가"].state == "TRUE"
+
+    pub_149 = by_path(
+        resolve_candidate_source_paths(
+            "단란주점", {"use_floor_area": numeric_fact(149, "square_meter")}
+        )
+    )
+    assert set(pub_149) == {"4/더", "16/가"}
+    assert pub_149["4/더"].state == "TRUE"
+    assert pub_149["16/가"].state == "FALSE"
+    pub_150 = by_path(
+        resolve_candidate_source_paths(
+            "단란주점", {"use_floor_area": numeric_fact(150, "square_meter")}
+        )
+    )
+    assert pub_150["4/더"].state == "FALSE"
+    assert pub_150["16/가"].state == "TRUE"
+
+    broadcast_999 = by_path(
+        resolve_candidate_source_paths(
+            "방송국", {"use_floor_area": numeric_fact(999, "square_meter")}
+        )
+    )
+    assert set(broadcast_999) == {"3/바", "24/가"}
+    assert broadcast_999["3/바"].state == "TRUE"
+    assert broadcast_999["24/가"].state == "FALSE"
+    broadcast_1000 = by_path(
+        resolve_candidate_source_paths(
+            "방송국", {"use_floor_area": numeric_fact(1000, "square_meter")}
+        )
+    )
+    assert broadcast_1000["3/바"].state == "FALSE"
+    assert broadcast_1000["24/가"].state == "TRUE"
+
+    telecom = by_path(
+        resolve_candidate_source_paths(
+            "통신용 시설", {"use_floor_area": numeric_fact(999, "square_meter")}
+        )
+    )
+    assert set(telecom) == {"3/아", "24/라"}
+    assert telecom["3/아"].state == "UNSET"
+    assert telecom["3/아"].qualification_status == "UNREGISTERED"
+    assert telecom["24/라"].state == "UNSET"
+    assert telecom["24/라"].qualification_status == "VERIFIED"
+
     performance_hall_results = resolve_candidate_source_paths(
         "공연장", {"use_floor_area": numeric_fact(499, "square_meter")}
     )
@@ -411,6 +470,10 @@ def main() -> None:
     print("Table-tennis major-use lookup: PASS")
     print("Apartment single-path verified qualification: PASS")
     print("General/rental dormitory complete qualification resolution: PASS")
+    print("Religious-assembly 4/나 ↔ 6/가 chained classification: PASS")
+    print("Pub 4/더 ↔ 16/가 chained classification: PASS")
+    print("Broadcast-station 3/바 ↔ 24/가 chained classification: PASS")
+    print("Telecom 3/아 remains UNREGISTERED and 24/라 stays fail-closed: PASS")
     print("Performance-hall 4/가 ↔ 5/가 chained classification: PASS")
     print("Performance-hall major-use lookup: PASS")
     print("EV-charger 3/차 ↔ 20/자 chained classification: PASS")
