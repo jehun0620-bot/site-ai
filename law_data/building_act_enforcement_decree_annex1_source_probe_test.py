@@ -23,7 +23,7 @@ from __future__ import annotations
 
 import requests
 
-from law_detail_normalize_test import (
+from law_data.law_detail_normalize_test import (
     API_URL,
     HEADERS,
     SERVICE_KEY,
