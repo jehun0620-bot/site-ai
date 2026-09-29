@@ -278,4 +278,27 @@ existing Rule Engine
 ```
 
 현재 상태는 제품/모델 방향 제안(PROPOSED)이며, 전체 Annex 1 canonical coverage, 1:N semantic contract, public API, frontend selection component 및 Rule Engine 연결이 구현·검증되었다는 의미가 아니다.
+## Building Use qualification input UX boundary — 2026-09-29
 
+Canonical Building Use 선택 과정에서 법령 내부의 모든 qualification predicate를 그대로 사용자 입력항목으로 노출하지 않는다.
+
+기본 UX 원칙은 다음과 같다.
+
+```text
+사용자가 이해할 수 있는 실제 계획정보
+(용도 / 종류 / 면적 / 층수 / 객석 / 세대·실 수 등)
+        ↓
+validated input
+        ↓
+Building Use Mapping Layer
+        ↓
+내부 STATE / NUMERIC / classification facts
+        ↓
+Canonical Building Use 후보 판정
+```
+
+명확한 숫자 입력은 필요한 시점에 단계적으로 요청한다. 법률상 제외유형처럼 내부적으로 boolean/state 판정이 필요한 경우에도 가능한 한 사용자가 법률 predicate 이름 자체를 TRUE/FALSE로 입력하게 하지 않는다. 실제 계획 종류를 선택하거나 이해 가능한 질문에 답하게 하고 Mapping Layer가 내부 Fact로 변환하는 방식을 우선한다.
+
+현재 제품 입력만으로 신뢰성 있게 판단할 수 없는 qualification은 사용자의 임의 체크 하나로 자동 확정하지 않는다. 필요한 경우 추가 확인이 필요함을 표시하고 REVIEW_REQUIRED / UNSET 상태를 유지한다.
+
+이 UX 원칙의 목적은 Annex 1의 복잡성을 사용자에게 그대로 전가하지 않으면서도, 자동판정할 수 없는 조건을 숨기거나 임의 추정하지 않는 것이다.
