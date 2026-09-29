@@ -10,7 +10,13 @@ from __future__ import annotations
 from law_data.building_use_annex1_semantic_model import (
     ACTIVE,
     DELETED,
+    UNRESOLVED,
+    USE,
+    QUALIFICATION,
+    DELETED_ROLE,
+    UNRESOLVED_ROLE,
     BuildingUseQualification,
+    BuildingUseSemanticNode,
     CanonicalBuildingUse,
     SourcePath,
     qualification_paths,
@@ -75,6 +81,21 @@ def main() -> None:
     assert deleted_23_ra.status == DELETED
     assert military.source_path.key == "23의2"
 
+    semantic_nodes = (
+        BuildingUseSemanticNode(SourcePath("23의2"), ACTIVE, USE, "국방ㆍ군사시설"),
+        BuildingUseSemanticNode(SourcePath("1", "나"), ACTIVE, USE, "다중주택"),
+        BuildingUseSemanticNode(SourcePath("2", "라", 2), ACTIVE, USE, "임대형기숙사"),
+        BuildingUseSemanticNode(SourcePath("1", "나", 1), ACTIVE, QUALIFICATION),
+        BuildingUseSemanticNode(SourcePath("23", "라"), DELETED, DELETED_ROLE),
+        BuildingUseSemanticNode(SourcePath("4", "너", 1), UNRESOLVED, UNRESOLVED_ROLE),
+    )
+    assert tuple(node.source_path.key for node in semantic_nodes) == (
+        "23의2", "1/나", "2/라/2", "1/나/1", "23/라", "4/너/1"
+    )
+    assert tuple(node.role for node in semantic_nodes) == (
+        USE, USE, USE, QUALIFICATION, DELETED_ROLE, UNRESOLVED_ROLE
+    )
+
     # Fail closed: an unregistered structural path stays unresolved.
     unresolved = unresolved_source_paths(
         [SourcePath("2", "라", 2), SourcePath("4", "너", 1)],
@@ -89,6 +110,10 @@ def main() -> None:
     print("1/다 qualifications:", qualification_paths(multi_family_house))
     print("23/라 status:", deleted_23_ra.status)
     print("23의2:", military.canonical_name)
+    print("Semantic role examples:", tuple(
+        (node.source_path.key, node.status, node.role)
+        for node in semantic_nodes
+    ))
     print("Unresolved example:", unresolved)
     print("Not proven: full Annex 1 semantic coverage or Rule Engine integration.")
 
