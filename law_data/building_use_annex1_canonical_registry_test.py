@@ -15,7 +15,7 @@ def names_for(source_path: SourcePath) -> tuple[str, ...]:
 
 
 def main() -> None:
-    assert len(CANONICAL_BUILDING_USES) == 15
+    assert len(CANONICAL_BUILDING_USES) == 28
 
     assert names_for(SourcePath("10", "라")) == ("학원", "교습소")
     assert names_for(SourcePath("4", "바")) == ("사진관", "표구점")
@@ -26,10 +26,21 @@ def main() -> None:
     assert names_for(SourcePath("26", "라")) == (
         "동물화장시설", "동물건조장시설", "동물 전용의 납골시설"
     )
+    assert names_for(SourcePath("19", "가")) == ("주유소", "석유 판매소")
+    assert names_for(SourcePath("19", "나")) == (
+        "액화석유가스 충전소", "액화석유가스 판매소", "액화석유가스 저장소"
+    )
+    assert names_for(SourcePath("19", "다")) == (
+        "위험물 제조소", "위험물 저장소", "위험물 취급소"
+    )
+    assert names_for(SourcePath("19", "라")) == ("액화가스 취급소", "액화가스 판매소")
+    assert names_for(SourcePath("19", "바")) == (
+        "고압가스 충전소", "고압가스 판매소", "고압가스 저장소"
+    )
 
     assert names_for(SourcePath("99")) == ()
 
-    assert all(use.source_path.key in {"10/라", "4/바", "4/러", "4/타", "16/마", "23/다", "26/라"} for use in CANONICAL_BUILDING_USES)
+    assert all(use.source_path.key in {"10/라", "4/바", "4/러", "4/타", "16/마", "23/다", "26/라", "19/가", "19/나", "19/다", "19/라", "19/바"} for use in CANONICAL_BUILDING_USES)
     assert all(use.major_use for use in CANONICAL_BUILDING_USES)
 
     print("RESULT: PASS")
@@ -41,6 +52,11 @@ def main() -> None:
     print("16/마:", names_for(SourcePath("16", "마")))
     print("23/다:", names_for(SourcePath("23", "다")))
     print("26/라:", names_for(SourcePath("26", "라")))
+    print("19/가:", names_for(SourcePath("19", "가")))
+    print("19/나:", names_for(SourcePath("19", "나")))
+    print("19/다:", names_for(SourcePath("19", "다")))
+    print("19/라:", names_for(SourcePath("19", "라")))
+    print("19/바:", names_for(SourcePath("19", "바")))
     print("Unknown path:", names_for(SourcePath("99")))
     print("Not proven: full canonical coverage, UI integration, PROJECT mapping, or Rule Engine integration.")
 
