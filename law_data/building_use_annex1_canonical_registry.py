@@ -176,6 +176,36 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("13", "가"),
         major_use="운동시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="동물병원",
+        source_path=SourcePath("3", "카"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="동물병원",
+        source_path=SourcePath("4", "차"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="동물미용실",
+        source_path=SourcePath("3", "카"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="동물미용실",
+        source_path=SourcePath("4", "차"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="동물위탁관리업 시설",
+        source_path=SourcePath("3", "카"),
+        major_use="제1종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="동물위탁관리업 시설",
+        source_path=SourcePath("4", "차"),
+        major_use="제2종 근린생활시설",
+    ),
 )
 
 
