@@ -495,6 +495,36 @@ CANONICAL_BUILDING_USES: tuple[CanonicalBuildingUse, ...] = (
         source_path=SourcePath("24", "라"),
         major_use="방송통신시설",
     ),
+    CanonicalBuildingUse(
+        canonical_name="학원",
+        source_path=SourcePath("4", "카"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="교습소",
+        source_path=SourcePath("4", "카"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="직업훈련소",
+        source_path=SourcePath("4", "카"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="제조업소",
+        source_path=SourcePath("4", "너"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="수리점",
+        source_path=SourcePath("4", "너"),
+        major_use="제2종 근린생활시설",
+    ),
+    CanonicalBuildingUse(
+        canonical_name="유독물 보관·저장·판매시설",
+        source_path=SourcePath("19", "마"),
+        major_use="위험물 저장 및 처리 시설",
+    ),
 )
 
 
