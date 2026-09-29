@@ -46,7 +46,7 @@ def main() -> None:
         "동물병원", "동물미용실", "동물위탁관리업 시설"
     )
     assert names_for(SourcePath("4", "차")) == (
-        "동물병원", "동물미용실", "동물위탁관리업 시설"
+        "동물병원", "동물미용실", "동물위탁관리업 시설", "장의사"
     )
     assert tuple(
         use.source_path.key for use in canonical_uses_for_canonical_name("동물병원")
@@ -59,11 +59,12 @@ def main() -> None:
     ) == ("3/카", "4/차")
     assert names_for(SourcePath("3", "마")) == ("탁구장", "체육도장")
     assert names_for(SourcePath("4", "파")) == (
-        "테니스장", "체력단련장", "에어로빅장", "당구장", "실내낚시터", "골프연습장"
+        "테니스장", "체력단련장", "에어로빅장", "당구장", "실내낚시터", "골프연습장",
+        "볼링장", "놀이형시설"
     )
     assert names_for(SourcePath("13", "가")) == (
         "탁구장", "체육도장", "테니스장", "체력단련장", "에어로빅장",
-        "당구장", "실내낚시터", "골프연습장"
+        "당구장", "실내낚시터", "골프연습장", "볼링장", "놀이형시설"
     )
     assert tuple(
         use.source_path.key for use in canonical_uses_for_canonical_name("체육도장")
