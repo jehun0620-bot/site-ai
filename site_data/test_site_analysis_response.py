@@ -375,6 +375,56 @@ def main() -> int:
             == 314
         ),
 
+        "building use requirements exposed": (
+            response[
+                "requirements"
+            ][
+                "building_use"
+            ]
+            == analysis[
+                "input_requirements"
+            ].get(
+                "building_use",
+                []
+            )
+            and response[
+                "requirements"
+            ][
+                "building_use_count"
+            ]
+            == analysis[
+                "input_requirements"
+            ].get(
+                "building_use_count",
+                0,
+            )
+        ),
+
+        "numeric fact requirements exposed": (
+            response[
+                "requirements"
+            ][
+                "numeric_facts"
+            ]
+            == analysis[
+                "input_requirements"
+            ].get(
+                "numeric_facts",
+                []
+            )
+            and response[
+                "requirements"
+            ][
+                "numeric_fact_count"
+            ]
+            == analysis[
+                "input_requirements"
+            ].get(
+                "numeric_fact_count",
+                0,
+            )
+        ),
+
         "site facts land": (
             response["site_facts"]["land"]["land_category"] == "대"
             and response["site_facts"]["land"]["land_area"] == 121040.4
