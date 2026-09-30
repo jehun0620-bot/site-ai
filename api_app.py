@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """FastAPI thin HTTP layer for SITE analysis."""
 from __future__ import annotations
-from typing import Dict, Literal
+from typing import Dict, Literal, Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from site_data.address_parcel_candidate_search import AddressParcelCandidateSearchProviderError, search_address_parcel_candidates
@@ -24,6 +24,10 @@ def product_error(code:str,category:str,message:str,retryable:bool=False):
 
 def product_http_error(status_code:int,code:str,category:str,message:str,retryable:bool=False):
     return HTTPException(status_code=status_code,detail=product_error(code,category,message,retryable))
+
+class NumericFactRequest(BaseModel):
+    value:float
+    unit:str=Field(...,min_length=1)
 
 class SiteAnalysisRequest(BaseModel):
     sigungu_cd:str=Field(...,min_length=5,max_length=5,description="시군구코드")
@@ -61,7 +65,7 @@ def health(): return {"status":"ok","service":"site-analysis"}
 @app.post("/v1/site-analysis")
 def site_analysis(request:SiteAnalysisRequest):
     try:
-        return analyze_site_by_parcel(sigungu_cd=request.sigungu_cd,bjdong_cd=request.bjdong_cd,plat_gb_cd=request.plat_gb_cd,bun=request.bun,ji=request.ji,project_profile=request.project_profile,procedure_profile=request.procedure_profile,include_debug=request.include_debug)
+        return analyze_site_by_parcel(sigungu_cd=request.sigungu_cd,bjdong_cd=request.bjdong_cd,plat_gb_cd=request.plat_gb_cd,bun=request.bun,ji=request.ji,project_profile=request.project_profile,procedure_profile=request.procedure_profile,building_use_name=request.building_use_name,numeric_facts={name: fact.model_dump() for name, fact in request.numeric_facts.items()},include_debug=request.include_debug)
     except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.",retryable=exc.retryable) from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
