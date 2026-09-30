@@ -302,3 +302,35 @@ Canonical Building Use 후보 판정
 현재 제품 입력만으로 신뢰성 있게 판단할 수 없는 qualification은 사용자의 임의 체크 하나로 자동 확정하지 않는다. 필요한 경우 추가 확인이 필요함을 표시하고 REVIEW_REQUIRED / UNSET 상태를 유지한다.
 
 이 UX 원칙의 목적은 Annex 1의 복잡성을 사용자에게 그대로 전가하지 않으면서도, 자동판정할 수 없는 조건을 숨기거나 임의 추정하지 않는 것이다.
+
+
+## Progressive Building Use qualification / undecided-value UX — 2026-09-30
+
+Building Use qualification questions should follow the user's actual project decisions and expose only currently necessary information. For the verified 체육관 / 운동장 cross-classification example:
+
+```text
+체육관 또는 운동장
+→ "관람석이 있습니까?"
+   ├─ 아니오 → 관람석 면적을 묻지 않음
+   └─ 예
+       → "관람석 바닥면적의 합계는 얼마입니까?"
+          ├─ 구체값 입력
+          └─ 아직 미정
+```
+
+The product meaning of "아직 미정" must be different from leaving the question unanswered.
+
+```text
+미입력 / UNSET
+= 사용자가 아직 답하지 않음
+= 필요한 경우 계속 입력 대상으로 표시
+
+아직 미정 / UNKNOWN
+= 사용자가 답했지만 현재 설계·사업계획에서 값이 아직 결정되지 않음
+= 같은 질문을 단순 미입력으로 반복하지 않음
+= 관련 법적 분류/판정은 확정하지 않고 fail-closed 상태로 유지
+```
+
+This is a UX/contract direction, not a claim that the current public API or Frontend already supports a numeric "아직 미정" control. Current implementation support is limited to the Backend four-state evaluation semantics and the Building Use classification requirement bridge. Public API and Frontend controls require separate implementation and user-local validation.
+
+The UI should prefer understandable project questions such as 관람석 유무 and 관람석 면적 rather than exposing internal names such as `has_spectator_seating` or asking the user to choose Rule Engine states directly.
