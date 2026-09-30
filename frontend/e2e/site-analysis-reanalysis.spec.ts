@@ -110,7 +110,7 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
         await expect(unknownRuleGroup.locator('.rule-detail-item').first()).toContainText('판정 이유')
         await expect(unknownRuleGroup.locator('.rule-detail-item').first()).toContainText('미확정 조건')
 
-        const requirementItems = page.locator('.requirement-item')
+        const requirementItems = page.locator('.requirement-group').filter({ has: page.getByRole('button', { name: '해당함', exact: true }) }).locator('.requirement-item')
         const requirementCount = await requirementItems.count()
 
         if (requirementCount > 0) {
@@ -126,7 +126,7 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
           await expect(page.locator('.analysis-ready-badge')).toHaveText('분석 완료', { timeout: 120_000 })
           await expect(analysisPanel.locator('dt', { hasText: 'PNU' }).locator('..').locator('dd')).toHaveText(pnu)
 
-          const currentRequirementItems = page.locator('.requirement-item')
+          const currentRequirementItems = page.locator('.requirement-group').filter({ has: page.getByRole('button', { name: '해당함', exact: true }) }).locator('.requirement-item')
           const currentRequirementCount = await currentRequirementItems.count()
           await expect(page.locator('.requirement-reanalysis')).toContainText(`전체 ${currentRequirementCount}개`)
 
@@ -183,7 +183,7 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
       buildinglessAnalysisPanel.locator('dt', { hasText: 'PNU' }).locator('..').locator('dd'),
     ).toHaveText(buildinglessPnu)
 
-    const buildinglessRequirements = page.locator('.requirement-item')
+    const buildinglessRequirements = page.locator('.requirement-group').filter({ has: page.getByRole('button', { name: '해당함', exact: true }) }).locator('.requirement-item')
     const buildinglessRequirementCount = await buildinglessRequirements.count()
     if (buildinglessRequirementCount > 0) {
       const optionLabel = INPUT_LABELS[Math.floor(random() * INPUT_LABELS.length)]
