@@ -1,5 +1,5 @@
 import type { ParcelCandidate } from '../types/parcel'
-import type { SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisResponse } from '../types/siteAnalysis'
+import type { SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisNumericFactProfile, SiteAnalysisResponse } from '../types/siteAnalysis'
 import { ProductApiError, readApiError, type ProductErrorDetail } from './productError'
 
 export class SiteAnalysisApiError extends ProductApiError {
@@ -12,6 +12,8 @@ export class SiteAnalysisApiError extends ProductApiError {
 export interface SiteAnalysisInputProfiles {
   project_profile?: SiteAnalysisInputProfile
   procedure_profile?: SiteAnalysisInputProfile
+  building_use_name?: string
+  numeric_facts?: SiteAnalysisNumericFactProfile
 }
 
 export async function analyzeSelectedParcelCandidate(
@@ -28,6 +30,8 @@ export async function analyzeSelectedParcelCandidate(
       y: candidate.y,
       project_profile: profiles.project_profile ?? {},
       procedure_profile: profiles.procedure_profile ?? {},
+      building_use_name: profiles.building_use_name,
+      numeric_facts: profiles.numeric_facts ?? {},
       include_debug: false,
     }),
     signal,
@@ -58,6 +62,15 @@ function isSiteAnalysisInputState(value: unknown): value is SiteAnalysisInputSta
 
 function isSiteAnalysisRequirement(value: unknown): boolean {
   return isRecord(value) && typeof value.name === 'string' && typeof value.affected_clause_count === 'number' && isSiteAnalysisInputState(value.state)
+}
+
+function isBuildingUseRequirement(value: unknown): boolean {
+  return isSiteAnalysisRequirement(value) && isRecord(value)
+    && (value.identity === 'canonical' || value.identity === 'source_path' || value.identity === 'major')
+}
+
+function isNumericFactRequirement(value: unknown): boolean {
+  return isSiteAnalysisRequirement(value) && isRecord(value) && typeof value.unit === 'string'
 }
 
 function isNullableString(value: unknown): boolean {
@@ -104,6 +117,8 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
 
   const projectRequirements = requirements.project
   const procedureRequirements = requirements.procedure
+  const buildingUseRequirements = requirements.building_use
+  const numericFactRequirements = requirements.numeric_facts
   const externalDependencyItems = externalDependencies.items
   if (!isRecord(siteFacts.land) || !isRecord(siteFacts.buildings) || !isRecord(siteFacts.sources)) return false
   const factLand = siteFacts.land
@@ -112,7 +127,13 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
   const factBuildingItems = factBuildings.items
 
   const siteValid = nullableString(site.site_id) && nullableString(site.address) && nullableString(site.road_address) && nullableString(site.pnu) && nullableString(site.sigungu_code) && nullableString(site.bjdong_code) && nullableString(site.main_no) && nullableString(site.sub_no)
-  const requirementsValid = Array.isArray(projectRequirements) && projectRequirements.every(isSiteAnalysisRequirement) && Array.isArray(procedureRequirements) && procedureRequirements.every(isSiteAnalysisRequirement) && typeof requirements.project_count === 'number' && typeof requirements.procedure_count === 'number' && typeof requirements.requires_additional_input === 'boolean'
+  const requirementsValid = Array.isArray(projectRequirements) && projectRequirements.every(isSiteAnalysisRequirement)
+    && Array.isArray(procedureRequirements) && procedureRequirements.every(isSiteAnalysisRequirement)
+    && Array.isArray(buildingUseRequirements) && buildingUseRequirements.every(isBuildingUseRequirement)
+    && Array.isArray(numericFactRequirements) && numericFactRequirements.every(isNumericFactRequirement)
+    && typeof requirements.project_count === 'number' && typeof requirements.procedure_count === 'number'
+    && typeof requirements.building_use_count === 'number' && typeof requirements.numeric_fact_count === 'number'
+    && typeof requirements.requires_additional_input === 'boolean'
 
   const official = landArea.official
   const spatial = landArea.spatial
@@ -144,6 +165,8 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
   if (Number(ruleEvaluation.total) !== expectedRuleTotal) return false
   if (Number(requirements.project_count) !== projectRequirements.length) return false
   if (Number(requirements.procedure_count) !== procedureRequirements.length) return false
+  if (Number(requirements.building_use_count) !== buildingUseRequirements.length) return false
+  if (Number(requirements.numeric_fact_count) !== numericFactRequirements.length) return false
   if (Number(externalDependencies.count) !== externalDependencyItems.length) return false
   if (Number(factBuildings.count) !== factBuildingItems.length) return false
 
