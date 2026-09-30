@@ -28,6 +28,31 @@ def main() -> int:
         building_use_name="공연장",
     )
 
+    spectator_true = build_public_fact_context(
+        has_spectator_seating=True,
+    )
+    spectator_false = build_public_fact_context(
+        has_spectator_seating=False,
+    )
+    undecided_numeric = build_public_fact_context(
+        numeric_facts={
+            "spectator_seating_area": {
+                "value": None,
+                "unit": "square_meter",
+                "undecided": True,
+            }
+        }
+    )
+    contradictory_numeric = build_public_fact_context(
+        numeric_facts={
+            "spectator_seating_area": {
+                "value": 1000,
+                "unit": "square_meter",
+                "undecided": True,
+            }
+        }
+    )
+
     validations = {
         "numeric fact preserved": (
             numeric_only["use_floor_area"]
@@ -40,6 +65,18 @@ def main() -> int:
         ),
         "unresolved building use not invented": (
             "building_use" not in unresolved
+        ),
+        "spectator true maps to internal TRUE": (
+            spectator_true.get("has_spectator_seating") == {"state": "TRUE"}
+        ),
+        "spectator false maps to internal FALSE": (
+            spectator_false.get("has_spectator_seating") == {"state": "FALSE"}
+        ),
+        "undecided numeric maps to internal UNKNOWN": (
+            undecided_numeric.get("spectator_seating_area") == {"state": "UNKNOWN"}
+        ),
+        "contradictory numeric is ignored fail closed": (
+            "spectator_seating_area" not in contradictory_numeric
         ),
         "invalid numeric fact ignored": (
             build_public_fact_context(
