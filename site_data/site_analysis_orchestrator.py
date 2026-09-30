@@ -93,12 +93,14 @@ def analyze_site_by_address(*,address:str,project_profile:Optional[Dict[str,str]
         ji=identity.ji,
         project_profile=project_profile,
         procedure_profile=procedure_profile,
+        building_use_name=building_use_name,
+        numeric_facts=numeric_facts,
         include_debug=include_debug,
         service_key=service_key,
     )
 
 
-def analyze_site_by_selected_candidate(*,candidate_pnu:str,x:float,y:float,project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,include_debug:bool=False,service_key:Optional[str]=None,vworld_api_key:Optional[str]=None)->Dict[str,Any]:
+def analyze_site_by_selected_candidate(*,candidate_pnu:str,x:float,y:float,project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,building_use_name:Optional[str]=None,numeric_facts:Optional[Dict[str,Dict[str,Any]]]=None,include_debug:bool=False,service_key:Optional[str]=None,vworld_api_key:Optional[str]=None)->Dict[str,Any]:
     """Re-verify a user-selected discovery candidate, then reuse parcel analysis."""
     identity=verify_selected_parcel_candidate(candidate_pnu,x,y,api_key=vworld_api_key)
     if not identity.verified:
@@ -111,6 +113,8 @@ def analyze_site_by_selected_candidate(*,candidate_pnu:str,x:float,y:float,proje
         ji=identity.ji,
         project_profile=project_profile,
         procedure_profile=procedure_profile,
+        building_use_name=building_use_name,
+        numeric_facts=numeric_facts,
         include_debug=include_debug,
         service_key=service_key,
     )
