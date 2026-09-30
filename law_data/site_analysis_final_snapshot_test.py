@@ -701,8 +701,12 @@ def main() -> int:
         "input_requirements": [
             "project",
             "procedure",
+            "building_use",
+            "numeric_facts",
             "project_count",
             "procedure_count",
+            "building_use_count",
+            "numeric_fact_count",
             "requires_additional_input",
         ],
 
