@@ -91,6 +91,8 @@ def analyze_site_object(
     production_condition_shadow_sources: Optional[Any] = None,
     historical_rule_input: Optional[Any] = None,
     district_unit_plan_registry_candidate: Optional[Any] = None,
+    building_use_name: Optional[str] = None,
+    numeric_facts: Optional[Dict[str, Dict[str, Any]]] = None,
 ) -> Dict[str, Any]:
     """Convert a Site object into the final SITE Analysis Object.
 
@@ -130,10 +132,16 @@ def analyze_site_object(
         if historical_rule_input.canonical_pnu != site_input.get("pnu"):
             raise ValueError("historical rule input envelope PNU mismatch")
 
+    fact_context = build_public_fact_context(
+        building_use_name=building_use_name,
+        numeric_facts=numeric_facts,
+    )
+
     return build_site_analysis(
         site_input=site_input,
         project_profile=project_profile or {},
         procedure_profile=procedure_profile or {},
+        fact_context=fact_context,
         production_condition_shadow_sources=production_condition_shadow_sources,
         historical_rule_input=historical_rule_input,
         district_unit_plan_registry_candidate=district_unit_plan_registry_candidate,
