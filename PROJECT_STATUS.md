@@ -614,3 +614,23 @@ representative classification gaps
 ```
 
 Coverage Audit에서는 자동판정 가능한 항목과 REVIEW_REQUIRED / UNSET으로 남는 항목을 명시적으로 구분한다. 핵심 분류에 필요한 coverage가 충분하면 Annex 1 qualification 숫자를 계속 늘리는 대신 PROJECT Mapping으로 전환한다.
+
+
+## Building Use cross-classification / progressive requirement checkpoint — 2026-09-30
+
+User-local Behavioral PASS now covers the verified Annex 1 cross-classification path for 체육관 / 운동장:
+
+```text
+체육관 또는 운동장
+→ has_spectator_seating
+→ spectator_seating_area >= 1000 square_meter
+→ 관람장
+→ SourcePath 5/다
+→ 문화 및 집회시설
+```
+
+The cross-classification candidate layer, narrow Final Classifier promotion, and Building Use classification requirement bridge are separately implemented. The requirement bridge does not duplicate the 1,000㎡ legal threshold; it reads the already-verified cross-classification expression and requests only the currently decisive missing fact. With no spectator facts it requests `has_spectator_seating`; after TRUE it requests `spectator_seating_area`; after FALSE it does not request the area.
+
+This checkpoint does not expand the general Final Classifier whitelist. 집회장 remains outside this cross-classification registry. Public API / Frontend support for `has_spectator_seating` and user-declared numeric UNKNOWN is not yet implemented, and the Rule 125 관람장 production branch is not proven by this checkpoint.
+
+The existing four-state boundary is retained for project-stage facts: UNSET means no answer/fact has been supplied; UNKNOWN means a fact has been supplied but cannot currently support a definitive result. The Rule Engine already evaluates a numeric fact shaped as `{"state": "UNKNOWN"}` as UNKNOWN, and the Building Use requirement bridge does not re-request that fact as an unanswered requirement. A focused contract test locks this existing behavior; public product input for declaring a numeric value "아직 미정" remains future work.
