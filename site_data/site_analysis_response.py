@@ -353,6 +353,13 @@ def build_site_analysis_response(
                 )
             ),
 
+            "state_facts": (
+                requirements.get(
+                    "state_facts",
+                    []
+                )
+            ),
+
             "numeric_facts": (
                 requirements.get(
                     "numeric_facts",
@@ -377,6 +384,13 @@ def build_site_analysis_response(
             "building_use_count": (
                 requirements.get(
                     "building_use_count",
+                    0,
+                )
+            ),
+
+            "state_fact_count": (
+                requirements.get(
+                    "state_fact_count",
                     0,
                 )
             ),
