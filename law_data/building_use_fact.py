@@ -55,6 +55,6 @@ def building_use_fact_from_final(
 
     return BuildingUseFact(
         canonical_name=result.canonical_name,
-        major_use=entry.major_title,
+        major_use=entry.major_use,
         source_path=_source_path_text(result),
     )
