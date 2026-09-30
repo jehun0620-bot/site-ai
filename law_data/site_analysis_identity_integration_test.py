@@ -30,7 +30,7 @@ import json
 from pathlib import Path
 
 
-from site_analysis_builder import (
+from law_data.site_analysis_builder import (
     build_site_analysis,
 )
 
