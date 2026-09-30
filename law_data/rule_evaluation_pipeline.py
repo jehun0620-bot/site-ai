@@ -427,6 +427,45 @@ def evaluate_condition_expression(
             )
         }
 
+    if op == "BUILDING_USE":
+        identity = safe_string(expression.get("identity"))
+        expected_value = safe_string(expression.get("value"))
+
+        if identity not in {"canonical", "source_path", "major"} or not expected_value:
+            return {"state": "UNKNOWN"}
+
+        if not isinstance(fact_context, dict):
+            return {"state": "UNSET"}
+
+        fact = fact_context.get("building_use")
+
+        if fact is None:
+            return {"state": "UNSET"}
+
+        if not isinstance(fact, dict):
+            return {"state": "UNKNOWN"}
+
+        actual_value = safe_string(
+            fact.get(
+                {
+                    "canonical": "canonical_name",
+                    "source_path": "source_path",
+                    "major": "major_use",
+                }[identity]
+            )
+        )
+
+        if not actual_value:
+            return {"state": "UNKNOWN"}
+
+        return {
+            "state": (
+                "TRUE"
+                if actual_value == expected_value
+                else "FALSE"
+            )
+        }
+
     if op == "STATE":
         target = safe_string(expression.get("target"))
 
