@@ -513,11 +513,25 @@ Remaining work includes:
 - branch-local zone predicate semantics;
 - spatial predicate semantics where required by legal expressions;
 - branch-specific conditions that are over-extracted into aggregate parents or missing from their precise child branch;
-- user-facing required-input aggregation without treating every structural parent as an independent duplicate;
 - explicit parent base-rule / child exception relationships;
 - fail-closed REVIEW_REQUIRED / UNKNOWN behavior where source semantics cannot yet be represented safely.
 
-The current verified expression grammar supports ATOM / AND / OR / NUMERIC. NUMERIC foundation support does not mean that production expressions have been populated or VERIFIED.
+The current verified expression grammar supports ATOM / AND / OR / NUMERIC / BUILDING_USE. NUMERIC and BUILDING_USE foundation support does not mean that production expressions have been populated or VERIFIED across the 314-clause corpus.
+
+### Building Use / Numeric Fact Rule Engine → API → Frontend checkpoint — 2026-09-30
+
+User-local Behavioral PASS now covers the controlled path from verified Building Use classification into the existing Rule Engine and public product flow:
+
+- `BUILDING_USE` expression evaluation using trusted `fact_context["building_use"]`;
+- controlled Rule 125 공연장 branch integration with `applicable_use_floor_area > 1000 square_meter`;
+- expression-derived `BUILDING_USE` / `NUMERIC_FACT` requirements;
+- remaining-input aggregation for project / procedure / building_use / numeric_facts;
+- Site Analysis internal requirement projection and public API requirement output;
+- public canonical `building_use_name` and validated `numeric_facts` input through `site_analysis_fact_input`;
+- Frontend canonical Building Use / Numeric Fact additional-input UI and selected-candidate reanalysis;
+- Frontend production build PASS and actual Backend-connected reanalysis/mobile-responsive E2E PASS.
+
+This closes the previously listed user-facing required-input aggregation item for the verified controlled scope. It does **not** close E-5 globally. Actual production 314-clause expression population/verification remains separate work. Rule 125 validation is limited to the controlled 공연장 branch; 집회장/관람장 are not proven by this checkpoint. Annex 1 Building Use coverage is not claimed complete, and unresolved facts continue to use the existing fail-closed UNSET / UNKNOWN / REVIEW_REQUIRED boundaries.
 
 Automatic expression generation for all 314 clauses or all multi-condition clauses is not authorized.
 
