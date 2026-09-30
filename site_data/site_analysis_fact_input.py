@@ -13,10 +13,16 @@ def build_public_fact_context(
     *,
     building_use_name: str | None = None,
     numeric_facts: Mapping[str, Mapping[str, Any]] | None = None,
+    has_spectator_seating: bool | None = None,
 ) -> dict[str, Any]:
     """Build fail-closed Rule Engine facts from public API inputs."""
 
     context: dict[str, Any] = {}
+
+    if isinstance(has_spectator_seating, bool):
+        context["has_spectator_seating"] = {
+            "state": "TRUE" if has_spectator_seating else "FALSE",
+        }
 
     for raw_name, raw_fact in (numeric_facts or {}).items():
         name = str(raw_name or "").strip()
@@ -25,10 +31,16 @@ def build_public_fact_context(
 
         value = raw_fact.get("value")
         unit = str(raw_fact.get("unit") or "").strip()
+        undecided = raw_fact.get("undecided") is True
 
-        if isinstance(value, bool) or not isinstance(value, (int, float)):
-            continue
         if not unit:
+            continue
+        if undecided:
+            if value is not None:
+                continue
+            context[name] = {"state": "UNKNOWN"}
+            continue
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
             continue
 
         context[name] = {
