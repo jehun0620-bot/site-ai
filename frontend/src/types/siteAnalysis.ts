@@ -1,6 +1,8 @@
 export type SiteAnalysisState = 'IDLE' | 'ANALYZING' | 'ANALYSIS_READY' | 'ANALYSIS_FAILED'
 export type SiteAnalysisInputState = 'TRUE' | 'FALSE' | 'UNKNOWN' | 'UNSET'
 export type SiteAnalysisInputProfile = Record<string, SiteAnalysisInputState>
+export interface SiteAnalysisNumericFactInput { value: number; unit: string }
+export type SiteAnalysisNumericFactProfile = Record<string, SiteAnalysisNumericFactInput>
 
 export interface SiteAnalysisSite {
   site_id: string | null
@@ -91,11 +93,18 @@ export interface SiteAnalysisRequirement {
   state: SiteAnalysisInputState
 }
 
+export interface SiteAnalysisBuildingUseRequirement extends SiteAnalysisRequirement { identity: 'canonical' | 'source_path' | 'major' }
+export interface SiteAnalysisNumericFactRequirement extends SiteAnalysisRequirement { unit: string }
+
 export interface SiteAnalysisRequirements {
   project: SiteAnalysisRequirement[]
   procedure: SiteAnalysisRequirement[]
+  building_use: SiteAnalysisBuildingUseRequirement[]
+  numeric_facts: SiteAnalysisNumericFactRequirement[]
   project_count: number
   procedure_count: number
+  building_use_count: number
+  numeric_fact_count: number
   requires_additional_input: boolean
 }
 
