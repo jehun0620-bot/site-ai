@@ -634,3 +634,12 @@ The cross-classification candidate layer, narrow Final Classifier promotion, and
 This checkpoint does not expand the general Final Classifier whitelist. 집회장 remains outside this cross-classification registry. Public API / Frontend support for `has_spectator_seating` and user-declared numeric UNKNOWN is not yet implemented, and the Rule 125 관람장 production branch is not proven by this checkpoint.
 
 The existing four-state boundary is retained for project-stage facts: UNSET means no answer/fact has been supplied; UNKNOWN means a fact has been supplied but cannot currently support a definitive result. The Rule Engine already evaluates a numeric fact shaped as `{"state": "UNKNOWN"}` as UNKNOWN, and the Building Use requirement bridge does not re-request that fact as an unanswered requirement. A focused contract test locks this existing behavior; public product input for declaring a numeric value "아직 미정" remains future work.
+
+
+## Building Use public qualification input / SITE requirement integration — 2026-09-30
+
+Backend public input now has a narrow contract for the verified 체육관 / 운동장 → 관람장 classification path. `has_spectator_seating` is accepted only as a dedicated optional boolean and converted internally to STATE TRUE/FALSE. Numeric facts retain the existing `value + unit` contract and additionally allow an explicit `undecided: true` form with no value; the Backend converts that form to internal numeric UNKNOWN. A request that marks a numeric fact undecided while also supplying a value is rejected by the API model and ignored fail-closed by the lower public-fact boundary.
+
+SITE Analysis input requirements now include Building Use classification prerequisites. The verified progressive sequence is intended to be: first request `has_spectator_seating`; only after TRUE request `spectator_seating_area`; after FALSE request no area; a concrete area resolves the verified cross-classification boundary; explicit undecided remains UNKNOWN and is not re-requested as missing.
+
+This checkpoint changes Backend/public contract only. Frontend controls for these fields are not yet implemented. Rule 125 관람장 production applicability is still not proven or persisted by this work. User-local Behavioral PASS is required before this checkpoint is treated as validated integration.
