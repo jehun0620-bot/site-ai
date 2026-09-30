@@ -2914,6 +2914,10 @@ def aggregate_remaining_inputs(
 
     procedure = Counter()
 
+    building_use = Counter()
+
+    numeric_facts = Counter()
+
     for rule in rules:
 
         if not isinstance(
@@ -2951,6 +2955,10 @@ def aggregate_remaining_inputs(
                 )
             )
 
+            if not name:
+
+                continue
+
             if (
                 condition_type
                 == "PROJECT"
@@ -2968,6 +2976,50 @@ def aggregate_remaining_inputs(
                 procedure[
                     name
                 ] += 1
+
+            elif (
+                condition_type
+                == "BUILDING_USE"
+            ):
+
+                identity = safe_string(
+                    condition.get(
+                        "identity"
+                    )
+                )
+
+                if identity in {
+                    "canonical",
+                    "source_path",
+                    "major",
+                }:
+
+                    building_use[
+                        (
+                            identity,
+                            name,
+                        )
+                    ] += 1
+
+            elif (
+                condition_type
+                == "NUMERIC_FACT"
+            ):
+
+                unit = safe_string(
+                    condition.get(
+                        "unit"
+                    )
+                )
+
+                if unit:
+
+                    numeric_facts[
+                        (
+                            name,
+                            unit,
+                        )
+                    ] += 1
 
     return {
 
@@ -3011,6 +3063,62 @@ def aggregate_remaining_inputs(
 
             for name, count
             in procedure.most_common()
+        ],
+
+        "building_use": [
+
+            {
+
+                "name": (
+                    name
+                ),
+
+                "identity": (
+                    identity
+                ),
+
+                "affected_clause_count": (
+                    count
+                ),
+
+                "state": (
+                    "UNSET"
+                ),
+            }
+
+            for (
+                identity,
+                name,
+            ), count
+            in building_use.most_common()
+        ],
+
+        "numeric_facts": [
+
+            {
+
+                "name": (
+                    name
+                ),
+
+                "unit": (
+                    unit
+                ),
+
+                "affected_clause_count": (
+                    count
+                ),
+
+                "state": (
+                    "UNSET"
+                ),
+            }
+
+            for (
+                name,
+                unit,
+            ), count
+            in numeric_facts.most_common()
         ],
     }
 
