@@ -660,3 +660,14 @@ UNKNOWN = the fact has been addressed but its value cannot currently support a d
 For a numeric predicate, a fact explicitly represented as `{"state": "UNKNOWN"}` remains UNKNOWN and fail-closed. It is not converted to FALSE, and the requirement bridge does not treat it as an unanswered UNSET fact. This architecture supports project-stage values that are genuinely undecided without inventing a numeric value.
 
 This does not yet authorize arbitrary public STATE injection or public numeric UNKNOWN input. Public inputs require a separately verified allowlisted contract; Frontend wording and controls remain a product-layer responsibility. The classification bridge also does not prove Rule 125 관람장 production applicability.
+
+
+## Public Building Use qualification input contract — 2026-09-30
+
+Public qualification input remains allowlisted rather than exposing arbitrary Rule Engine STATE injection. The first verified public state input is the dedicated optional boolean `has_spectator_seating`, converted by the public-fact boundary to internal TRUE/FALSE.
+
+Numeric input keeps backward-compatible known values as `value + unit`. Project-stage undecided numeric input is represented publicly by `undecided: true` with a unit and without a value, then converted internally to `{"state": "UNKNOWN"}`. Public callers do not submit internal UNKNOWN directly.
+
+Building Use classification requirements are merged into SITE Analysis requirements separately from Rule Engine clause requirements. STATE prerequisites use a `state_facts` requirement group with source `BUILDING_USE_CLASSIFICATION`. Numeric classification prerequisites reuse the numeric requirement group but retain the same source marker. They must not fabricate an affected legal-clause count; classification-only numeric requirements therefore use zero until a separately proven Rule Engine clause relation exists.
+
+This layer does not alter Annex 1 classification thresholds, Final Classifier legal logic, or Rule 125 production expressions. It transports already-verified classification prerequisites through the public SITE analysis boundary.
