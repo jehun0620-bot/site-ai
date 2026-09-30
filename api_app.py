@@ -3,7 +3,7 @@
 from __future__ import annotations
 from typing import Dict, Literal, Optional
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from site_data.address_parcel_candidate_search import AddressParcelCandidateSearchProviderError, search_address_parcel_candidates
 from site_data.selected_parcel_candidate_verifier import verify_selected_parcel_candidate
 from site_data.building_hub_provider import BuildingAPIError
@@ -26,8 +26,19 @@ def product_http_error(status_code:int,code:str,category:str,message:str,retryab
     return HTTPException(status_code=status_code,detail=product_error(code,category,message,retryable))
 
 class NumericFactRequest(BaseModel):
-    value:float
+    value:Optional[float]=None
     unit:str=Field(...,min_length=1)
+    undecided:bool=False
+
+    @model_validator(mode="after")
+    def validate_value_or_undecided(self):
+        if self.undecided:
+            if self.value is not None:
+                raise ValueError("undecided numeric fact cannot include value")
+            return self
+        if self.value is None:
+            raise ValueError("numeric fact requires value unless undecided")
+        return self
 
 class SiteAnalysisRequest(BaseModel):
     sigungu_cd:str=Field(...,min_length=5,max_length=5,description="시군구코드")
@@ -39,6 +50,7 @@ class SiteAnalysisRequest(BaseModel):
     procedure_profile:Dict[str,str]=Field(default_factory=dict)
     building_use_name:Optional[str]=Field(None,min_length=1)
     numeric_facts:Dict[str,NumericFactRequest]=Field(default_factory=dict)
+    has_spectator_seating:Optional[bool]=None
     include_debug:bool=False
 
 class AddressSiteAnalysisRequest(BaseModel):
@@ -47,6 +59,7 @@ class AddressSiteAnalysisRequest(BaseModel):
     procedure_profile:Dict[str,str]=Field(default_factory=dict)
     building_use_name:Optional[str]=Field(None,min_length=1)
     numeric_facts:Dict[str,NumericFactRequest]=Field(default_factory=dict)
+    has_spectator_seating:Optional[bool]=None
     include_debug:bool=False
 
 class AddressParcelCandidateSearchRequest(BaseModel):
@@ -63,6 +76,7 @@ class SelectedParcelCandidateSiteAnalysisRequest(SelectedParcelCandidateRequest)
     procedure_profile:Dict[str,str]=Field(default_factory=dict)
     building_use_name:Optional[str]=Field(None,min_length=1)
     numeric_facts:Dict[str,NumericFactRequest]=Field(default_factory=dict)
+    has_spectator_seating:Optional[bool]=None
     include_debug:bool=False
 
 @app.get("/health")
@@ -71,7 +85,7 @@ def health(): return {"status":"ok","service":"site-analysis"}
 @app.post("/v1/site-analysis")
 def site_analysis(request:SiteAnalysisRequest):
     try:
-        return analyze_site_by_parcel(sigungu_cd=request.sigungu_cd,bjdong_cd=request.bjdong_cd,plat_gb_cd=request.plat_gb_cd,bun=request.bun,ji=request.ji,project_profile=request.project_profile,procedure_profile=request.procedure_profile,building_use_name=request.building_use_name,numeric_facts={name: fact.model_dump() for name, fact in request.numeric_facts.items()},include_debug=request.include_debug)
+        return analyze_site_by_parcel(sigungu_cd=request.sigungu_cd,bjdong_cd=request.bjdong_cd,plat_gb_cd=request.plat_gb_cd,bun=request.bun,ji=request.ji,project_profile=request.project_profile,procedure_profile=request.procedure_profile,building_use_name=request.building_use_name,numeric_facts={name: fact.model_dump() for name, fact in request.numeric_facts.items()},has_spectator_seating=request.has_spectator_seating,include_debug=request.include_debug)
     except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.",retryable=exc.retryable) from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
@@ -80,7 +94,7 @@ def site_analysis(request:SiteAnalysisRequest):
 @app.post("/v1/site-analysis/address")
 def site_analysis_by_address(request:AddressSiteAnalysisRequest):
     try:
-        return analyze_site_by_address(address=request.address,project_profile=request.project_profile,procedure_profile=request.procedure_profile,building_use_name=request.building_use_name,numeric_facts={name: fact.model_dump() for name, fact in request.numeric_facts.items()},include_debug=request.include_debug)
+        return analyze_site_by_address(address=request.address,project_profile=request.project_profile,procedure_profile=request.procedure_profile,building_use_name=request.building_use_name,numeric_facts={name: fact.model_dump() for name, fact in request.numeric_facts.items()},has_spectator_seating=request.has_spectator_seating,include_debug=request.include_debug)
     except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.",retryable=exc.retryable) from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
@@ -89,7 +103,7 @@ def site_analysis_by_address(request:AddressSiteAnalysisRequest):
 @app.post("/v1/site-analysis/selected-candidate")
 def site_analysis_by_selected_candidate(request:SelectedParcelCandidateSiteAnalysisRequest):
     try:
-        return analyze_site_by_selected_candidate(candidate_pnu=request.candidate_pnu,x=request.x,y=request.y,project_profile=request.project_profile,procedure_profile=request.procedure_profile,building_use_name=request.building_use_name,numeric_facts={name: fact.model_dump() for name, fact in request.numeric_facts.items()},include_debug=request.include_debug)
+        return analyze_site_by_selected_candidate(candidate_pnu=request.candidate_pnu,x=request.x,y=request.y,project_profile=request.project_profile,procedure_profile=request.procedure_profile,building_use_name=request.building_use_name,numeric_facts={name: fact.model_dump() for name, fact in request.numeric_facts.items()},has_spectator_seating=request.has_spectator_seating,include_debug=request.include_debug)
     except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.",retryable=exc.retryable) from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
