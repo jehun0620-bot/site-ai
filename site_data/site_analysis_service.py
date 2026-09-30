@@ -14,6 +14,7 @@ from law_data.district_unit_plan_verified_registry_candidate_envelope import (
 )
 from law_data.site_analysis_builder import build_site_analysis
 from site_data.vworld_api import create_pnu
+from site_data.site_analysis_fact_input import build_public_fact_context
 
 
 def safe_string(value: Any) -> str:
