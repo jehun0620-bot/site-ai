@@ -1733,3 +1733,12 @@ Responsive regression:
 This checkpoint confirms that the current Single Parcel Frontend remains buildable and that the existing Backend-connected reanalysis and mobile-responsive flows survive the recurring desktop handoff.
 
 No Frontend architecture, Backend trust boundary, parcel-truth authority, Rule Engine authority, or API interaction architecture changed in this checkpoint.
+
+
+## Building Use / Numeric Fact additional-input expansion — 2026-09-30
+
+- Backend public requirements now expose `building_use` and `numeric_facts` in addition to project/procedure requirements.
+- Frontend implementation accepts canonical Building Use selection and numeric fact values, then sends them through the existing selected-candidate reanalysis path.
+- Frontend does not construct `major_use` or `source_path`; non-canonical Building Use identities remain unsupported in the current input UI.
+- Existing project/procedure TRUE/FALSE/UNKNOWN reanalysis remains a separate input type and is preserved.
+- Status: **IMPLEMENTED / USER-LOCAL BUILD + E2E VALIDATION PENDING**.
