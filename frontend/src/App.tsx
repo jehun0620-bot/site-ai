@@ -9,7 +9,7 @@ import LandAreaSection from './components/LandAreaSection'
 import BuildingScaleSection from './components/BuildingScaleSection'
 import ExternalDependenciesSection from './components/ExternalDependenciesSection'
 import type { CandidateSearchState, ParcelCandidate, ParcelConfirmationResponse, ParcelVerificationState } from './types/parcel'
-import type { SiteAnalysisInputProfile, SiteAnalysisResponse, SiteAnalysisState } from './types/siteAnalysis'
+import type { SiteAnalysisInputProfile, SiteAnalysisNumericFactProfile, SiteAnalysisResponse, SiteAnalysisState } from './types/siteAnalysis'
 
 const INITIAL_GUIDE = '지번주소 또는 도로명주소로 필지를 검색할 수 있습니다.'
 function displayParcelApiError(error: unknown, fallback: string): string {
@@ -43,6 +43,8 @@ export default function App() {
   const [reanalysisError, setReanalysisError] = useState('')
   const [projectProfile, setProjectProfile] = useState<SiteAnalysisInputProfile>({})
   const [procedureProfile, setProcedureProfile] = useState<SiteAnalysisInputProfile>({})
+  const [buildingUseName, setBuildingUseName] = useState('')
+  const [numericFacts, setNumericFacts] = useState<SiteAnalysisNumericFactProfile>({})
   const candidateListRef = useRef<HTMLDivElement | null>(null)
   const selectedCandidateCardRef = useRef<HTMLButtonElement | null>(null)
 
@@ -58,7 +60,7 @@ export default function App() {
     else if (cardBottom > visibleBottom) list.scrollTo({ top: cardBottom - list.clientHeight, behavior: 'smooth' })
   }, [selectedCandidate, candidates])
 
-  function clearInputProfiles() { setProjectProfile({}); setProcedureProfile({}) }
+  function clearInputProfiles() { setProjectProfile({}); setProcedureProfile({}); setBuildingUseName(''); setNumericFacts({}) }
   function clearAnalysis() { setAnalysisState('IDLE'); setAnalysis(null); setPreviousAnalysis(null); setAnalysisMessage(''); setReanalysisError('') }
   function clearParcelVerification() { setSelectedCandidate(null); setVerificationState('IDLE'); setConfirmation(null); setVerificationMessage(''); clearInputProfiles(); clearAnalysis() }
 
@@ -83,12 +85,12 @@ export default function App() {
     } catch (error) { setConfirmation(null); setVerificationState('PARCEL_VERIFICATION_FAILED'); setVerificationMessage(displayParcelApiError(error, '선택한 필지를 확인하지 못했습니다. 다른 필지를 선택하거나 다시 검색해 주세요.')) }
   }
 
-  async function runAnalysis(project: SiteAnalysisInputProfile = {}, procedure: SiteAnalysisInputProfile = {}, preserveCurrent = false) {
+  async function runAnalysis(project: SiteAnalysisInputProfile = {}, procedure: SiteAnalysisInputProfile = {}, buildingUse = '', numeric: SiteAnalysisNumericFactProfile = {}, preserveCurrent = false) {
     if (!selectedCandidate || !confirmation || verificationState !== 'PARCEL_VERIFIED') return
     if (!preserveCurrent) clearAnalysis()
     setReanalysisError(''); setAnalysisState('ANALYZING'); setAnalysisMessage(preserveCurrent ? '입력한 정보를 반영해 SITE 분석을 다시 실행하고 있습니다.' : 'Backend가 필지를 다시 검증한 뒤 SITE 분석을 실행하고 있습니다.')
     try {
-      const result = await analyzeSelectedParcelCandidate(selectedCandidate, { project_profile: project, procedure_profile: procedure })
+      const result = await analyzeSelectedParcelCandidate(selectedCandidate, { project_profile: project, procedure_profile: procedure, building_use_name: buildingUse || undefined, numeric_facts: numeric })
       if (result.site.pnu !== confirmation.parcel.pnu) throw new Error('분석 결과의 PNU가 확인된 필지와 일치하지 않습니다.')
       setPreviousAnalysis(preserveCurrent ? analysis : null); setAnalysis(result); setAnalysisState('ANALYSIS_READY'); setAnalysisMessage(preserveCurrent ? '입력한 정보를 반영한 SITE 분석 결과를 받았습니다.' : '실제 SITE 분석 결과를 받았습니다.')
     } catch (error) {
@@ -101,7 +103,7 @@ export default function App() {
   }
 
   async function handleAnalysis() { await runAnalysis() }
-  async function handleReanalysis() { await runAnalysis(projectProfile, procedureProfile, true) }
+  async function handleReanalysis() { await runAnalysis(projectProfile, procedureProfile, buildingUseName, numericFacts, true) }
 
   function updateRequirement(
     profileType: 'project' | 'procedure',
@@ -114,6 +116,17 @@ export default function App() {
       if (current[name] !== nextState) return { ...current, [name]: nextState }
       const next = { ...current }
       delete next[name]
+      return next
+    })
+  }
+
+  function updateNumericFact(name: string, rawValue: string, unit: string) {
+    setNumericFacts((current) => {
+      const next = { ...current }
+      if (rawValue.trim() === '') { delete next[name]; return next }
+      const value = Number(rawValue)
+      if (!Number.isFinite(value)) return current
+      next[name] = { value, unit }
       return next
     })
   }
@@ -145,8 +158,12 @@ export default function App() {
             requirements={analysis.requirements}
             projectProfile={projectProfile}
             procedureProfile={procedureProfile}
+            buildingUseName={buildingUseName}
+            numericFacts={numericFacts}
             analysisState={analysisState}
             onRequirementChange={updateRequirement}
+            onBuildingUseChange={setBuildingUseName}
+            onNumericFactChange={updateNumericFact}
             onReanalysis={handleReanalysis}
           />
           <ExternalDependenciesSection dependencies={analysis.external_dependencies} />
