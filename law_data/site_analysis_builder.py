@@ -16,6 +16,11 @@ from law_data.historical_verified_rule_input_envelope import HistoricalVerifiedR
 from law_data.district_unit_plan_verified_registry_candidate_envelope import DistrictUnitPlanVerifiedRegistryCandidateEnvelope
 from law_data.district_unit_plan_spatial_registry_collision_policy import evaluate_district_unit_plan_spatial_registry_collision_policy
 from law_data.district_unit_plan_merged_registry_live_consumption_authorization import authorize_district_unit_plan_merged_registry_live_consumption
+from law_data.building_use_classification_requirements import (
+    NUMERIC_FACT as BUILDING_USE_NUMERIC_FACT,
+    STATE_FACT as BUILDING_USE_STATE_FACT,
+    building_use_classification_requirements,
+)
 try:
     from .rule_evaluation_pipeline import evaluate_site_rules
     from .site_identity_resolver import resolve_site_identity
@@ -85,22 +90,50 @@ def build_rule_details(e):
             "numeric_effect":copy.deepcopy(rule.get("current_numeric_effect",rule.get("numeric_effect"))),
         })
     return {"count":len(items),"items":items}
-def build_input_requirements(e):
+def build_input_requirements(e,building_use_name=None,fact_context=None):
     r=e.get("remaining_inputs",{})
     p=copy.deepcopy(r.get("project",[]))
     q=copy.deepcopy(r.get("procedure",[]))
     b=copy.deepcopy(r.get("building_use",[]))
     n=copy.deepcopy(r.get("numeric_facts",[]))
+    s=[]
+    canonical_name=safe_string(building_use_name)
+    if canonical_name:
+        for requirement in building_use_classification_requirements(
+            canonical_name,
+            fact_context or {},
+        ):
+            if requirement.kind == BUILDING_USE_STATE_FACT:
+                s.append({
+                    "name":requirement.name,
+                    "state":"UNSET",
+                    "source":"BUILDING_USE_CLASSIFICATION",
+                })
+            elif requirement.kind == BUILDING_USE_NUMERIC_FACT:
+                if not any(
+                    item.get("name") == requirement.name
+                    and item.get("unit") == requirement.unit
+                    for item in n
+                ):
+                    n.append({
+                        "name":requirement.name,
+                        "unit":requirement.unit,
+                        "state":"UNSET",
+                        "affected_clause_count":0,
+                        "source":"BUILDING_USE_CLASSIFICATION",
+                    })
     return {
         "project":p,
         "procedure":q,
         "building_use":b,
+        "state_facts":s,
         "numeric_facts":n,
         "project_count":len(p),
         "procedure_count":len(q),
         "building_use_count":len(b),
+        "state_fact_count":len(s),
         "numeric_fact_count":len(n),
-        "requires_additional_input":bool(p or q or b or n),
+        "requires_additional_input":bool(p or q or b or s or n),
     }
 def build_external_dependencies(e):
     h=copy.deepcopy(e.get("external_dependencies",{})).get("historical",{}); active=[]
@@ -110,7 +143,7 @@ def determine_analysis_status(e,r):
     ready=e.get("pipeline",{}).get("ready") is True; b=r.get("building_coverage_ratio",{}).get("status")=="CONFIRMED"; f=r.get("floor_area_ratio",{}).get("status")=="CONFIRMED"
     return "READY" if ready and b and f else ("PARTIAL" if ready else "NOT_READY")
 
-def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,site_input:Optional[Dict[str,Any]]=None,production_condition_shadow_sources:Optional[Any]=None,historical_rule_input:Optional[Any]=None,district_unit_plan_registry_candidate:Optional[Any]=None,fact_context:Optional[Dict[str,Any]]=None)->Dict[str,Any]:
+def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,site_input:Optional[Dict[str,Any]]=None,production_condition_shadow_sources:Optional[Any]=None,historical_rule_input:Optional[Any]=None,district_unit_plan_registry_candidate:Optional[Any]=None,fact_context:Optional[Dict[str,Any]]=None,building_use_name:Optional[str]=None)->Dict[str,Any]:
     project_profile=project_profile or {}; procedure_profile=procedure_profile or {}; site_input=site_input or {}
     historical_snapshot=None
     district_unit_plan_snapshot=None
@@ -181,7 +214,7 @@ def build_site_analysis(project_profile:Optional[Dict[str,str]]=None,procedure_p
             raise ValueError("common verified district-unit SITE registry unavailable")
         engine=evaluate_site_rules(project_profile=project_profile,procedure_profile=procedure_profile,base_numeric_context=zone,site_zone_context=site.get("zone"),site_condition_context=ctx,fact_context=fact_context,common_verified_site_registry=common_registry)
 
-    land=build_land_area_result(site_input,site); regulation=build_regulation_result(engine); summary=build_rule_summary(engine); details=build_rule_details(engine); req=build_input_requirements(engine); ext=build_external_dependencies(engine); status=determine_analysis_status(engine,regulation)
+    land=build_land_area_result(site_input,site); regulation=build_regulation_result(engine); summary=build_rule_summary(engine); details=build_rule_details(engine); req=build_input_requirements(engine,building_use_name,fact_context); ext=build_external_dependencies(engine); status=determine_analysis_status(engine,regulation)
     inp={"site":copy.deepcopy(site_input),"project":copy.deepcopy(project_profile),"procedure":copy.deepcopy(procedure_profile)}
     if historical_snapshot is not None:inp["historical"]=copy.deepcopy(historical_snapshot)
     if district_unit_plan_snapshot is not None:inp["district_unit_plan"]=copy.deepcopy(district_unit_plan_snapshot)
