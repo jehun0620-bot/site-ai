@@ -334,3 +334,12 @@ The product meaning of "아직 미정" must be different from leaving the questi
 This is a UX/contract direction, not a claim that the current public API or Frontend already supports a numeric "아직 미정" control. Current implementation support is limited to the Backend four-state evaluation semantics and the Building Use classification requirement bridge. Public API and Frontend controls require separate implementation and user-local validation.
 
 The UI should prefer understandable project questions such as 관람석 유무 and 관람석 면적 rather than exposing internal names such as `has_spectator_seating` or asking the user to choose Rule Engine states directly.
+
+
+## Backend support for progressive qualification answers — 2026-09-30
+
+The Backend contract now distinguishes the user-facing concepts needed for progressive Building Use questions: a dedicated yes/no spectator-seating answer and a numeric answer that can be either a concrete value or explicitly undecided. Internal Rule Engine words such as TRUE/FALSE/UNKNOWN are not intended as user-facing choices.
+
+The public requirement response can now distinguish Building Use classification STATE questions from direct Rule Engine clause requirements. This enables a later Frontend to render understandable prompts such as "관람석이 있습니까?" and, only when needed, "관람석 바닥면적의 합계는 얼마입니까?".
+
+Frontend controls are still not implemented by this checkpoint. The existing UI must not be described as already supporting these answers until the Frontend request/response types, controls, reanalysis transport, and E2E tests are separately updated and validated.
