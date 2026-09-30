@@ -24,6 +24,8 @@ def main() -> None:
                 "y": 37.49629354642009,
                 "project_profile": {"use": "residential"},
                 "procedure_profile": {"stage": "review"},
+                "building_use_name": "공연장",
+                "numeric_facts": {"use_floor_area": {"value": 500, "unit": "square_meter"}},
                 "include_debug": True,
             },
         )
@@ -35,6 +37,8 @@ def main() -> None:
             y=37.49629354642009,
             project_profile={"use": "residential"},
             procedure_profile={"stage": "review"},
+            building_use_name="공연장",
+            numeric_facts={"use_floor_area": {"value": 500.0, "unit": "square_meter"}},
             include_debug=True,
         )
 
