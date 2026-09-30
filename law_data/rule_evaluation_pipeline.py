@@ -762,6 +762,51 @@ def _condition_expression_groups(
 
         return empty
 
+    if op in {"BUILDING_USE", "NUMERIC"}:
+        state = safe_string(
+            evaluate_condition_expression(
+                rule,
+                expression,
+                fact_context,
+            ).get("state")
+        )
+
+        if state != "UNSET":
+            return empty
+
+        if op == "BUILDING_USE":
+            identity = safe_string(expression.get("identity"))
+            value = safe_string(expression.get("value"))
+
+            if identity not in {"canonical", "source_path", "major"} or not value:
+                return empty
+
+            requirement = {
+                "type": "BUILDING_USE",
+                "name": value,
+                "identity": identity,
+                "state": "UNSET",
+            }
+
+        else:
+            target = safe_string(expression.get("target"))
+            unit = safe_string(expression.get("unit"))
+
+            if not target or not unit:
+                return empty
+
+            requirement = {
+                "type": "NUMERIC_FACT",
+                "name": target,
+                "state": "UNSET",
+                "unit": unit,
+            }
+
+        return {
+            **empty,
+            "required_inputs": [requirement],
+        }
+
     if op not in {"AND", "OR"}:
         return empty
 
