@@ -1741,4 +1741,7 @@ No Frontend architecture, Backend trust boundary, parcel-truth authority, Rule E
 - Frontend implementation accepts canonical Building Use selection and numeric fact values, then sends them through the existing selected-candidate reanalysis path.
 - Frontend does not construct `major_use` or `source_path`; non-canonical Building Use identities remain unsupported in the current input UI.
 - Existing project/procedure TRUE/FALSE/UNKNOWN reanalysis remains a separate input type and is preserved.
-- Status: **IMPLEMENTED / USER-LOCAL BUILD + E2E VALIDATION PENDING**.
+- User-local production build: **PASS** (`tsc -b && vite build`, Vite 8.3.0).
+- Actual Backend-connected reanalysis E2E: **PASS** (`e2e/site-analysis-reanalysis.spec.ts`, `1 passed (52.9s)`).
+- Actual Backend-connected mobile-responsive E2E: **PASS** (`e2e/site-analysis-mobile-responsive.spec.ts`, `1 passed (5.7s)`).
+- Status: **IMPLEMENTED + USER LOCAL BEHAVIORAL PASS**.
