@@ -59,7 +59,7 @@ def _parcel_only_site(*,sigungu_cd:str,bjdong_cd:str,plat_gb_cd:str,bun:str,ji:s
         site.land_provider_retryable=False
     return site
 
-def analyze_site_by_parcel(*,sigungu_cd:str,bjdong_cd:str,bun:str,ji:str,plat_gb_cd:str="0",project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,building_use_name:Optional[str]=None,numeric_facts:Optional[Dict[str,Dict[str,Any]]]=None,production_condition_shadow_sources:Optional[Any]=None,historical_handoff_authorization:Optional[HistoricalTrustedInternalSourceHandoffAuthorization]=None,historical_site_applicability_admission:Optional[HistoricalSiteEventSiteApplicabilityAdmissionResult]=None,historical_promotion_rule_input_bridge:Optional[HistoricalSiteEventSiteTruthPromotionRuleInputBridge]=None,district_unit_plan_registry_candidate:Optional[Any]=None,include_debug:bool=False,service_key:Optional[str]=None)->Dict[str,Any]:
+def analyze_site_by_parcel(*,sigungu_cd:str,bjdong_cd:str,bun:str,ji:str,plat_gb_cd:str="0",project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,building_use_name:Optional[str]=None,numeric_facts:Optional[Dict[str,Dict[str,Any]]]=None,has_spectator_seating:Optional[bool]=None,production_condition_shadow_sources:Optional[Any]=None,historical_handoff_authorization:Optional[HistoricalTrustedInternalSourceHandoffAuthorization]=None,historical_site_applicability_admission:Optional[HistoricalSiteEventSiteApplicabilityAdmissionResult]=None,historical_promotion_rule_input_bridge:Optional[HistoricalSiteEventSiteTruthPromotionRuleInputBridge]=None,district_unit_plan_registry_candidate:Optional[Any]=None,include_debug:bool=False,service_key:Optional[str]=None)->Dict[str,Any]:
     building_result=fetch_building_items(sigungu_cd=sigungu_cd,bjdong_cd=bjdong_cd,plat_gb_cd=plat_gb_cd,bun=bun,ji=ji,service_key=service_key); items=building_result["items"]
     if items:
         site=create_site(items)
@@ -76,11 +76,11 @@ def analyze_site_by_parcel(*,sigungu_cd:str,bjdong_cd:str,bun:str,ji:str,plat_gb
         )
     except VerifiedSiteInputAdmissionError as exc:
         raise SiteAnalysisError(str(exc)) from exc
-    analysis=analyze_site_object(site=site,project_profile=project_profile or {},procedure_profile=procedure_profile or {},building_use_name=building_use_name,numeric_facts=numeric_facts,production_condition_shadow_sources=production_condition_shadow_sources,historical_rule_input=verified_inputs.historical_rule_input,district_unit_plan_registry_candidate=verified_inputs.district_unit_plan_registry_candidate)
+    analysis=analyze_site_object(site=site,project_profile=project_profile or {},procedure_profile=procedure_profile or {},building_use_name=building_use_name,numeric_facts=numeric_facts,has_spectator_seating=has_spectator_seating,production_condition_shadow_sources=production_condition_shadow_sources,historical_rule_input=verified_inputs.historical_rule_input,district_unit_plan_registry_candidate=verified_inputs.district_unit_plan_registry_candidate)
     response=build_site_analysis_response(analysis,include_debug=include_debug,site_object=site); response["service"]={"building_count":len(items),"building_total_count":building_result.get("total_count"),"building_api_status":building_result.get("result_code")}; return response
 
 
-def analyze_site_by_address(*,address:str,project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,building_use_name:Optional[str]=None,numeric_facts:Optional[Dict[str,Dict[str,Any]]]=None,include_debug:bool=False,service_key:Optional[str]=None,vworld_api_key:Optional[str]=None)->Dict[str,Any]:
+def analyze_site_by_address(*,address:str,project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,building_use_name:Optional[str]=None,numeric_facts:Optional[Dict[str,Dict[str,Any]]]=None,has_spectator_seating:Optional[bool]=None,include_debug:bool=False,service_key:Optional[str]=None,vworld_api_key:Optional[str]=None)->Dict[str,Any]:
     """Resolve a parcel address to verified canonical identity, then reuse parcel analysis."""
     identity=resolve_address_parcel_identity(address,api_key=vworld_api_key)
     if not identity.verified:
@@ -95,12 +95,13 @@ def analyze_site_by_address(*,address:str,project_profile:Optional[Dict[str,str]
         procedure_profile=procedure_profile,
         building_use_name=building_use_name,
         numeric_facts=numeric_facts,
+        has_spectator_seating=has_spectator_seating,
         include_debug=include_debug,
         service_key=service_key,
     )
 
 
-def analyze_site_by_selected_candidate(*,candidate_pnu:str,x:float,y:float,project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,building_use_name:Optional[str]=None,numeric_facts:Optional[Dict[str,Dict[str,Any]]]=None,include_debug:bool=False,service_key:Optional[str]=None,vworld_api_key:Optional[str]=None)->Dict[str,Any]:
+def analyze_site_by_selected_candidate(*,candidate_pnu:str,x:float,y:float,project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,building_use_name:Optional[str]=None,numeric_facts:Optional[Dict[str,Dict[str,Any]]]=None,has_spectator_seating:Optional[bool]=None,include_debug:bool=False,service_key:Optional[str]=None,vworld_api_key:Optional[str]=None)->Dict[str,Any]:
     """Re-verify a user-selected discovery candidate, then reuse parcel analysis."""
     identity=verify_selected_parcel_candidate(candidate_pnu,x,y,api_key=vworld_api_key)
     if not identity.verified:
@@ -115,6 +116,7 @@ def analyze_site_by_selected_candidate(*,candidate_pnu:str,x:float,y:float,proje
         procedure_profile=procedure_profile,
         building_use_name=building_use_name,
         numeric_facts=numeric_facts,
+        has_spectator_seating=has_spectator_seating,
         include_debug=include_debug,
         service_key=service_key,
     )
