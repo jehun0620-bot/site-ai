@@ -93,6 +93,7 @@ def analyze_site_object(
     district_unit_plan_registry_candidate: Optional[Any] = None,
     building_use_name: Optional[str] = None,
     numeric_facts: Optional[Dict[str, Dict[str, Any]]] = None,
+    has_spectator_seating: Optional[bool] = None,
 ) -> Dict[str, Any]:
     """Convert a Site object into the final SITE Analysis Object.
 
@@ -135,6 +136,7 @@ def analyze_site_object(
     fact_context = build_public_fact_context(
         building_use_name=building_use_name,
         numeric_facts=numeric_facts,
+        has_spectator_seating=has_spectator_seating,
     )
 
     return build_site_analysis(
@@ -142,6 +144,7 @@ def analyze_site_object(
         project_profile=project_profile or {},
         procedure_profile=procedure_profile or {},
         fact_context=fact_context,
+        building_use_name=building_use_name,
         production_condition_shadow_sources=production_condition_shadow_sources,
         historical_rule_input=historical_rule_input,
         district_unit_plan_registry_candidate=district_unit_plan_registry_candidate,
