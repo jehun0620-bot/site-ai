@@ -72,7 +72,7 @@ test.describe('Mobile responsive Backend-connected validation', () => {
     await page.locator('.analysis-section-nav a[href="#analysis-requirements"]').click()
     await expect(page.locator('#analysis-requirements')).toBeInViewport()
 
-    const requirementItems = page.locator('.requirement-item')
+    const requirementItems = page.locator('.requirement-group').filter({ has: page.getByRole('button', { name: '해당함', exact: true }) }).locator('.requirement-item')
     const requirementCount = await requirementItems.count()
     expect(requirementCount).toBeGreaterThan(0)
 
