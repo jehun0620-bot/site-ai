@@ -618,8 +618,10 @@ RuleEvaluationSection.tsx
   → does not recompute legal applicability or own previous-analysis workflow state
 
 AnalysisRequirements.tsx
-  → renders project/procedure requirements and input progress
-  → owns disclosure/local UI state
+  → renders project/procedure plus Backend-required BUILDING_USE / NUMERIC_FACT inputs and progress
+  → owns disclosure/local UI state only; it does not classify building use or invent legal identity
+  → canonical BUILDING_USE selection and typed numeric values are emitted to App for Backend reanalysis
+  → non-canonical building-use identities remain unsupported/fail-closed in the current public input UI
   → emits requirement-change and reanalysis callbacks
 
 SiteFactsSection.tsx
