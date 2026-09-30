@@ -631,3 +631,32 @@ Public API building_use_name / numeric_facts
 Public API는 내부 신뢰 identity인 `source_path` 또는 `major_use`를 사용자 입력으로 직접 신뢰하지 않는다. Building Use는 canonical name 입력을 기존 Final Classifier로 다시 검증하며, RESOLVED 결과만 BuildingUseFact로 승격한다. 분류가 UNRESOLVED 또는 REVIEW_REQUIRED이면 확인된 Building Use fact를 발명하지 않는다. Numeric Fact도 유효한 name/value/unit 계약을 통과한 값만 fact_context에 전달한다.
 
 `BUILDING_USE` expression operator와 requirement extraction/aggregation의 검증은 기존 Rule Engine 경계를 확장한 것이며 별도의 Building Use Rule Engine을 만들지 않는다. 이 지원 자체는 production 314-clause corpus 전체의 Building Use expression 연결이나 검증을 의미하지 않는다. 현재 Rule 125 공연장 분기는 controlled integration 범위이며, 집회장/관람장 또는 전체 production mapping 완료로 확대 해석하지 않는다.
+
+
+## Building Use cross-classification requirement boundary — 2026-09-30
+
+Verified cross-classification is a narrow mapping layer, not a general Building Use inference engine.
+
+```text
+user-selected canonical use (체육관 / 운동장)
+→ verified cross-classification expression
+   STATE has_spectator_seating
+   AND
+   NUMERIC spectator_seating_area GTE 1000 square_meter
+→ verified target canonical use 관람장 / 5/다
+→ Final Classifier
+→ BuildingUseFact only when RESOLVED
+```
+
+A separate classification-requirement bridge may inspect the verified expression to determine which user fact is currently missing. It must not copy or redefine the legal threshold. For an AND expression it asks progressively: an earlier missing fact is requested first because a FALSE answer can make later facts unnecessary.
+
+Fact-state semantics remain distinct:
+
+```text
+UNSET   = no answer/fact has been supplied
+UNKNOWN = the fact has been addressed but its value cannot currently support a definitive determination
+```
+
+For a numeric predicate, a fact explicitly represented as `{"state": "UNKNOWN"}` remains UNKNOWN and fail-closed. It is not converted to FALSE, and the requirement bridge does not treat it as an unanswered UNSET fact. This architecture supports project-stage values that are genuinely undecided without inventing a numeric value.
+
+This does not yet authorize arbitrary public STATE injection or public numeric UNKNOWN input. Public inputs require a separately verified allowlisted contract; Frontend wording and controls remain a product-layer responsibility. The classification bridge also does not prove Rule 125 관람장 production applicability.
