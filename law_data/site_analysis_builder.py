@@ -61,6 +61,12 @@ def build_rule_details(e):
         conditions=rule.get("conditions",[]) or []
         def condition_names(state):
             return [safe_string(condition.get("name")) for condition in conditions if isinstance(condition,dict) and condition.get("state")==state and safe_string(condition.get("name"))]
+        expression_required_names=[
+            safe_string(requirement.get("name"))
+            for requirement in rule.get("required_inputs",[]) or []
+            if isinstance(requirement,dict) and safe_string(requirement.get("name"))
+        ]
+        required_names=list(dict.fromkeys(condition_names("UNSET")+expression_required_names))
         items.append({
             "clause_index":copy.deepcopy(rule.get("clause_index")),
             "law_name":safe_string(rule.get("law_name")),
@@ -73,14 +79,29 @@ def build_rule_details(e):
             "reason":safe_string(rule.get("applicability_reason")),
             "text":safe_string(rule.get("text")),
             "effect_targets":copy.deepcopy(rule.get("effect_targets",[]) or []),
-            "required_inputs":condition_names("UNSET"),
+            "required_inputs":required_names,
             "unresolved_conditions":condition_names("UNKNOWN"),
             "blocking_conditions":condition_names("FALSE"),
             "numeric_effect":copy.deepcopy(rule.get("current_numeric_effect",rule.get("numeric_effect"))),
         })
     return {"count":len(items),"items":items}
 def build_input_requirements(e):
-    r=e.get("remaining_inputs",{}); p=copy.deepcopy(r.get("project",[])); q=copy.deepcopy(r.get("procedure",[])); return {"project":p,"procedure":q,"project_count":len(p),"procedure_count":len(q),"requires_additional_input":bool(p or q)}
+    r=e.get("remaining_inputs",{})
+    p=copy.deepcopy(r.get("project",[]))
+    q=copy.deepcopy(r.get("procedure",[]))
+    b=copy.deepcopy(r.get("building_use",[]))
+    n=copy.deepcopy(r.get("numeric_facts",[]))
+    return {
+        "project":p,
+        "procedure":q,
+        "building_use":b,
+        "numeric_facts":n,
+        "project_count":len(p),
+        "procedure_count":len(q),
+        "building_use_count":len(b),
+        "numeric_fact_count":len(n),
+        "requires_additional_input":bool(p or q or b or n),
+    }
 def build_external_dependencies(e):
     h=copy.deepcopy(e.get("external_dependencies",{})).get("historical",{}); active=[]
     if h:active.append({"category":"SITE_HISTORY","condition":h.get("condition"),"status":h.get("status"),"confidence":h.get("confidence"),"automation_state":h.get("automation_state"),"blocking_analysis":h.get("blocking_site_stage",False)})
