@@ -346,6 +346,20 @@ def build_site_analysis_response(
                 )
             ),
 
+            "building_use": (
+                requirements.get(
+                    "building_use",
+                    []
+                )
+            ),
+
+            "numeric_facts": (
+                requirements.get(
+                    "numeric_facts",
+                    []
+                )
+            ),
+
             "project_count": (
                 requirements.get(
                     "project_count",
@@ -356,6 +370,20 @@ def build_site_analysis_response(
             "procedure_count": (
                 requirements.get(
                     "procedure_count",
+                    0,
+                )
+            ),
+
+            "building_use_count": (
+                requirements.get(
+                    "building_use_count",
+                    0,
+                )
+            ),
+
+            "numeric_fact_count": (
+                requirements.get(
+                    "numeric_fact_count",
                     0,
                 )
             ),
