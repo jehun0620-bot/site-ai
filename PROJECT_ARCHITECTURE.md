@@ -523,6 +523,7 @@ The current verified expression grammar supports:
 - AND
 - OR
 - NUMERIC
+- BUILDING_USE
 
 The NUMERIC predicate foundation currently supports typed numeric comparison using the verified LTE operator and fact_context input. Typed/Derived Fact preparation can derive additional_site_area_ratio from existing_site_area and additional_site_area when both source facts are valid.
 
@@ -613,3 +614,20 @@ Building Use 자동화의 architecture 목표는 Annex 1의 모든 자연어 문
 사용자 입력용 개념과 내부 predicate를 분리한다. Frontend 사용자가 법률 boolean을 다수 직접 입력하도록 강제하기보다 실제 계획의 용도·종류·규모 등 검증 가능한 입력을 받고, 별도의 Mapping Layer가 필요한 내부 Fact / Qualification 표현으로 변환하는 방향을 우선한다.
 
 Qualification 구현은 coverage checkpoint를 가진다. Canonical final classification에 필요한 핵심 Qualification이 충분히 확보되면 Annex 1 세부문구의 무제한 확장을 중단하고 기존 PROJECT profile / Rule Engine으로 연결한다. Building Use 자체가 독립적인 두 번째 Rule Engine이 되어서는 안 된다.
+
+### Public Building Use / Numeric Fact input trust boundary — 2026-09-30
+
+현재 검증된 공개 입력 경로는 다음과 같다.
+
+```text
+Public API building_use_name / numeric_facts
+→ site_data/site_analysis_fact_input.py
+→ Building Use Final Classifier
+→ BuildingUseFact (RESOLVED only)
+→ trusted fact_context
+→ Site Analysis / existing Rule Engine
+```
+
+Public API는 내부 신뢰 identity인 `source_path` 또는 `major_use`를 사용자 입력으로 직접 신뢰하지 않는다. Building Use는 canonical name 입력을 기존 Final Classifier로 다시 검증하며, RESOLVED 결과만 BuildingUseFact로 승격한다. 분류가 UNRESOLVED 또는 REVIEW_REQUIRED이면 확인된 Building Use fact를 발명하지 않는다. Numeric Fact도 유효한 name/value/unit 계약을 통과한 값만 fact_context에 전달한다.
+
+`BUILDING_USE` expression operator와 requirement extraction/aggregation의 검증은 기존 Rule Engine 경계를 확장한 것이며 별도의 Building Use Rule Engine을 만들지 않는다. 이 지원 자체는 production 314-clause corpus 전체의 Building Use expression 연결이나 검증을 의미하지 않는다. 현재 Rule 125 공연장 분기는 controlled integration 범위이며, 집회장/관람장 또는 전체 production mapping 완료로 확대 해석하지 않는다.
