@@ -2962,6 +2962,8 @@ def aggregate_remaining_inputs(
 
     building_use = Counter()
 
+    building_use_allowed_values = {}
+
     numeric_facts = Counter()
 
     for rule in rules:
@@ -3040,12 +3042,59 @@ def aggregate_remaining_inputs(
                     "major",
                 }:
 
+                    key = (
+                        identity,
+                        name,
+                    )
+
                     building_use[
-                        (
-                            identity,
-                            name,
-                        )
+                        key
                     ] += 1
+
+                    allowed_values = (
+                        condition.get(
+                            "allowed_values"
+                        )
+                    )
+
+                    if (
+                        isinstance(
+                            allowed_values,
+                            list,
+                        )
+                        and allowed_values
+                        and all(
+                            safe_string(value)
+                            for value
+                            in allowed_values
+                        )
+                    ):
+
+                        normalized_values = (
+                            tuple(
+                                dict.fromkeys(
+                                    safe_string(value)
+                                    for value
+                                    in allowed_values
+                                )
+                            )
+                        )
+
+                        existing_values = (
+                            building_use_allowed_values.get(
+                                key
+                            )
+                        )
+
+                        if (
+                            existing_values is None
+                            or existing_values
+                            == normalized_values
+                        ):
+
+                            building_use_allowed_values[
+                                key
+                            ] = normalized_values
 
             elif (
                 condition_type
@@ -3129,6 +3178,27 @@ def aggregate_remaining_inputs(
 
                 "state": (
                     "UNSET"
+                ),
+
+                **(
+                    {
+                        "allowed_values": list(
+                            building_use_allowed_values[
+                                (
+                                    identity,
+                                    name,
+                                )
+                            ]
+                        )
+                    }
+                    if (
+                        (
+                            identity,
+                            name,
+                        )
+                        in building_use_allowed_values
+                    )
+                    else {}
                 ),
             }
 
