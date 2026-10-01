@@ -204,3 +204,16 @@ export interface SiteAnalysisResponse {
     building_api_status?: string | null
   }
 }
+
+
+export interface BuildingUseCatalogOption {
+  canonical_name: string
+  input_scope: string
+}
+
+export interface BuildingUseCatalogResponse {
+  schema_version: 'BUILDING_USE_CATALOG_V1'
+  status: 'READY'
+  count: number
+  building_uses: BuildingUseCatalogOption[]
+}
