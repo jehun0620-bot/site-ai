@@ -1,5 +1,5 @@
 import type { ParcelCandidate } from '../types/parcel'
-import type { SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisNumericFactProfile, SiteAnalysisResponse } from '../types/siteAnalysis'
+import type { SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisNumericFactProfile, SiteAnalysisResponse, SiteAnalysisStateFactProfile } from '../types/siteAnalysis'
 import { ProductApiError, readApiError, type ProductErrorDetail } from './productError'
 
 export class SiteAnalysisApiError extends ProductApiError {
@@ -14,6 +14,7 @@ export interface SiteAnalysisInputProfiles {
   procedure_profile?: SiteAnalysisInputProfile
   building_use_name?: string
   numeric_facts?: SiteAnalysisNumericFactProfile
+  state_facts?: SiteAnalysisStateFactProfile
 }
 
 export async function analyzeSelectedParcelCandidate(
@@ -32,6 +33,7 @@ export async function analyzeSelectedParcelCandidate(
       procedure_profile: profiles.procedure_profile ?? {},
       building_use_name: profiles.building_use_name,
       numeric_facts: profiles.numeric_facts ?? {},
+      has_spectator_seating: profiles.state_facts?.has_spectator_seating,
       include_debug: false,
     }),
     signal,
@@ -67,6 +69,13 @@ function isSiteAnalysisRequirement(value: unknown): boolean {
 function isBuildingUseRequirement(value: unknown): boolean {
   return isSiteAnalysisRequirement(value) && isRecord(value)
     && (value.identity === 'canonical' || value.identity === 'source_path' || value.identity === 'major')
+}
+
+function isStateFactRequirement(value: unknown): boolean {
+  return isRecord(value)
+    && typeof value.name === 'string'
+    && isSiteAnalysisInputState(value.state)
+    && value.source === 'BUILDING_USE_CLASSIFICATION'
 }
 
 function isNumericFactRequirement(value: unknown): boolean {
@@ -118,6 +127,7 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
   const projectRequirements = requirements.project
   const procedureRequirements = requirements.procedure
   const buildingUseRequirements = requirements.building_use
+  const stateFactRequirements = requirements.state_facts
   const numericFactRequirements = requirements.numeric_facts
   const externalDependencyItems = externalDependencies.items
   if (!isRecord(siteFacts.land) || !isRecord(siteFacts.buildings) || !isRecord(siteFacts.sources)) return false
@@ -130,9 +140,10 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
   const requirementsValid = Array.isArray(projectRequirements) && projectRequirements.every(isSiteAnalysisRequirement)
     && Array.isArray(procedureRequirements) && procedureRequirements.every(isSiteAnalysisRequirement)
     && Array.isArray(buildingUseRequirements) && buildingUseRequirements.every(isBuildingUseRequirement)
+    && Array.isArray(stateFactRequirements) && stateFactRequirements.every(isStateFactRequirement)
     && Array.isArray(numericFactRequirements) && numericFactRequirements.every(isNumericFactRequirement)
     && typeof requirements.project_count === 'number' && typeof requirements.procedure_count === 'number'
-    && typeof requirements.building_use_count === 'number' && typeof requirements.numeric_fact_count === 'number'
+    && typeof requirements.building_use_count === 'number' && typeof requirements.state_fact_count === 'number' && typeof requirements.numeric_fact_count === 'number'
     && typeof requirements.requires_additional_input === 'boolean'
 
   const official = landArea.official
@@ -166,6 +177,7 @@ function isSiteAnalysisResponse(value: unknown): value is SiteAnalysisResponse {
   if (Number(requirements.project_count) !== projectRequirements.length) return false
   if (Number(requirements.procedure_count) !== procedureRequirements.length) return false
   if (Number(requirements.building_use_count) !== buildingUseRequirements.length) return false
+  if (Number(requirements.state_fact_count) !== stateFactRequirements.length) return false
   if (Number(requirements.numeric_fact_count) !== numericFactRequirements.length) return false
   if (Number(externalDependencies.count) !== externalDependencyItems.length) return false
   if (Number(factBuildings.count) !== factBuildingItems.length) return false
