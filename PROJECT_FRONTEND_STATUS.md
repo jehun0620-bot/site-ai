@@ -1788,3 +1788,50 @@ The first E2E retains the existing multi-address/multi-parcel additional-input a
 ```
 
 No Frontend legal classifier was introduced. Full Annex 1 coverage and full Rule 125 production behavior are not claimed.
+
+
+---
+
+## 2026-10-01 Building Use choice-set Frontend checkpoint
+
+The Frontend now accepts the Backend BUILDING_USE choice-set contract without widening the public Building Use catalog.
+
+Backend choice-set shape:
+
+```json
+{
+  "name": "building_use",
+  "identity": "canonical",
+  "allowed_values": ["공연장", "집회장", "관람장"],
+  "state": "UNSET"
+}
+```
+
+Frontend behavior:
+
+```text
+choice-set requirement received
+→ do not render internal name "building_use" as a selectable use
+→ do not render allowed_values as new public buttons
+→ show "건축물 용도 확인 필요" guidance
+→ direct the user to the existing "계획 건축물 용도" selector
+→ selector remains limited to the verified public catalog
+```
+
+The public selector remains 16 HTML options total: one "선택하지 않음" option plus 15 verified Building Use options. Direct `집회장` and direct `관람장` options remain absent. `종교집회장` remains a separate verified public option.
+
+User-local validation:
+
+```text
+Production build: PASS (Vite 8.3.0, 28 modules)
+Backend-connected reanalysis E2E: PASS, 2 passed (27.9s)
+```
+
+The Backend-connected E2E retains the existing multi-address/parcel reanalysis and state-isolation regression and validates the progressive `체육관 → 관람석 여부 → 관람석 바닥면적 → 아직 미정` flow.
+
+Current boundary:
+
+- Frontend consumes `allowed_values` as requirement metadata only.
+- Frontend does not create legal applicability logic.
+- Frontend does not widen the public Building Use catalog from Rule125 metadata.
+- Rule125 production activation remains separate Backend/legal-admission work.
