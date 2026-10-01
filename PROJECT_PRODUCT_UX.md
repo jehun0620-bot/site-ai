@@ -343,3 +343,34 @@ The Backend contract now distinguishes the user-facing concepts needed for progr
 The public requirement response can now distinguish Building Use classification STATE questions from direct Rule Engine clause requirements. This enables a later Frontend to render understandable prompts such as "관람석이 있습니까?" and, only when needed, "관람석 바닥면적의 합계는 얼마입니까?".
 
 Frontend controls are still not implemented by this checkpoint. The existing UI must not be described as already supporting these answers until the Frontend request/response types, controls, reanalysis transport, and E2E tests are separately updated and validated.
+
+## 15. Verified public Building Use progressive-input UX — 2026-10-01
+
+The earlier canonical Building Use direction now has a deliberately narrow verified product path.
+
+Current user flow:
+```text
+verified parcel analysis
+→ Backend public Building Use catalog
+→ user selects planned canonical use
+→ selected-candidate reanalysis
+→ Backend returns only currently required classification facts
+→ user answers those facts
+→ reanalysis
+```
+
+For the verified 체육관 / 운동장 cross-classification path:
+```text
+체육관 or 운동장
+→ 관람석 유무
+→ if 아니오: no spectator-area question
+→ if 예: 관람석 바닥면적의 합계
+→ numeric value or "아직 미정"
+→ Backend reanalysis
+```
+
+The Frontend must not encode the legal rule that a particular use requires a particular follow-up question. It displays the public catalog and the requirements returned by Backend. The current public catalog contains 15 verified input-discovery names and must not be presented as complete Annex 1 coverage.
+
+`아직 미정` is an explicit user answer, not an omitted answer. For supported numeric facts it maps to Backend UNKNOWN and must not be repeatedly presented as an unanswered requirement.
+
+This flow is **IMPLEMENTED + USER-LOCAL BEHAVIORAL PASS** as of 2026-10-01. The verified E2E includes the 체육관 → 관람석 → 면적 → 아직 미정 sequence. 집회장 and full Rule 125 production behavior are outside this UX checkpoint.
