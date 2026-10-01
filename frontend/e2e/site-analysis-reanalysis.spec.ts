@@ -197,4 +197,44 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
 
     expect(exercisedParcels).toBeGreaterThan(0)
   })
+  test('계획용도 체육관의 관람석 질문과 미정 수치 입력을 Backend requirements로 진행한다', async ({ page }) => {
+    await page.goto('/')
+    await search(page, '서울특별시 강남구 개포동 12')
+
+    const targetCard = page.getByLabel('필지 후보 목록')
+      .locator('.candidate-card')
+      .filter({ hasText: '서울특별시 강남구 개포동 12-6' })
+      .first()
+    await expect(targetCard).toBeVisible()
+    await targetCard.click()
+    await expect(page.getByText('필지 확인 완료', { exact: true })).toBeVisible()
+    await expect(page.getByText('VERIFIED', { exact: true })).toBeVisible()
+
+    await page.getByRole('button', { name: '이 필지 분석' }).click()
+    await expect(page.getByText('SITE 분석 결과', { exact: true })).toBeVisible({ timeout: 120_000 })
+    await expect(page.locator('.analysis-ready-badge')).toHaveText('분석 완료')
+
+    const plannedUse = page.getByLabel('계획 건축물 용도')
+    await expect(plannedUse.locator('option')).toHaveCount(16)
+    await plannedUse.selectOption({ label: '체육관' })
+    await page.getByRole('button', { name: /계획 용도로 다시 분석|입력 내용으로 다시 분석/ }).click()
+    await expect(page.locator('.analysis-ready-badge')).toHaveText('분석 완료', { timeout: 120_000 })
+
+    const seatingQuestion = page.getByRole('group', { name: '관람석이 있습니까? 선택' })
+    await expect(seatingQuestion).toBeVisible()
+    await seatingQuestion.getByRole('button', { name: '예', exact: true }).click()
+    await page.getByRole('button', { name: '입력 내용으로 다시 분석' }).click()
+    await expect(page.locator('.analysis-ready-badge')).toHaveText('분석 완료', { timeout: 120_000 })
+
+    const spectatorArea = page.getByLabel('관람석 바닥면적의 합계')
+    await expect(spectatorArea).toBeVisible()
+    const numericItem = spectatorArea.locator('..').locator('..')
+    await numericItem.getByRole('button', { name: '아직 미정', exact: true }).click()
+    await page.getByRole('button', { name: '입력 내용으로 다시 분석' }).click()
+    await expect(page.locator('.analysis-ready-badge')).toHaveText('분석 완료', { timeout: 120_000 })
+    await expect(page.getByLabel('계획 건축물 용도')).toHaveValue('체육관')
+    await expect(page.getByRole('group', { name: '관람석이 있습니까? 선택' })).toHaveCount(0)
+    await expect(page.getByLabel('관람석 바닥면적의 합계')).toHaveCount(0)
+  })
+
 })
