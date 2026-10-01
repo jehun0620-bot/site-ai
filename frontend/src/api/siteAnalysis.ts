@@ -1,5 +1,5 @@
 import type { ParcelCandidate } from '../types/parcel'
-import type { SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisNumericFactProfile, SiteAnalysisResponse, SiteAnalysisStateFactProfile } from '../types/siteAnalysis'
+import type { BuildingUseCatalogResponse, SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisNumericFactProfile, SiteAnalysisResponse, SiteAnalysisStateFactProfile } from '../types/siteAnalysis'
 import { ProductApiError, readApiError, type ProductErrorDetail } from './productError'
 
 export class SiteAnalysisApiError extends ProductApiError {
@@ -7,6 +7,15 @@ export class SiteAnalysisApiError extends ProductApiError {
     super(message, httpStatus, detail)
     this.name = 'SiteAnalysisApiError'
   }
+}
+
+export async function fetchBuildingUseCatalog(signal?: AbortSignal): Promise<BuildingUseCatalogResponse> {
+  const response = await fetch('/v1/building-uses', { signal })
+  if (!response.ok) throw new SiteAnalysisApiError('계획 건축물 용도 목록을 불러오지 못했습니다.', response.status)
+
+  const body: unknown = await response.json()
+  if (!isBuildingUseCatalogResponse(body)) throw new SiteAnalysisApiError('계획 건축물 용도 목록 응답 형식이 올바르지 않습니다.')
+  return body
 }
 
 export interface SiteAnalysisInputProfiles {
@@ -52,6 +61,13 @@ export async function analyzeSelectedParcelCandidate(
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === 'object' && !Array.isArray(value)
+}
+
+function isBuildingUseCatalogResponse(value: unknown): value is BuildingUseCatalogResponse {
+  if (!isRecord(value) || value.schema_version !== 'BUILDING_USE_CATALOG_V1' || value.status !== 'READY') return false
+  if (typeof value.count !== 'number' || !Array.isArray(value.building_uses)) return false
+  if (value.count !== value.building_uses.length) return false
+  return value.building_uses.every((item) => isRecord(item) && typeof item.canonical_name === 'string' && typeof item.input_scope === 'string')
 }
 
 function isNullableNumber(value: unknown): boolean {
