@@ -643,3 +643,42 @@ Backend public input now has a narrow contract for the verified 체육관 / 운�
 SITE Analysis input requirements now include Building Use classification prerequisites. The verified progressive sequence is intended to be: first request `has_spectator_seating`; only after TRUE request `spectator_seating_area`; after FALSE request no area; a concrete area resolves the verified cross-classification boundary; explicit undecided remains UNKNOWN and is not re-requested as missing.
 
 This checkpoint changes Backend/public contract only. Frontend controls for these fields are not yet implemented. Rule 125 관람장 production applicability is still not proven or persisted by this work. User-local Behavioral PASS is required before this checkpoint is treated as validated integration.
+
+## Building Use public catalog → Frontend progressive-input checkpoint — 2026-10-01
+
+The verified public Building Use discovery boundary is now connected to the Single Parcel Frontend.
+
+Backend public discovery:
+- `GET /v1/building-uses`
+- schema: `BUILDING_USE_CATALOG_V1`
+- verified public option count: 15
+- the catalog is the union of the existing Final Classifier whitelist and verified cross-classification input names; it is not the full Annex 1 catalog.
+
+Frontend behavior:
+- the planned-building-use selector consumes the Backend catalog instead of maintaining an independent legal-use list;
+- the selected canonical name is sent through the existing `building_use_name` reanalysis input;
+- classification follow-up questions are rendered only from Backend `requirements`;
+- for the verified 체육관 path, Backend first requests `has_spectator_seating`; after TRUE it requests `spectator_seating_area`;
+- public numeric `undecided: true` is preserved as internal UNKNOWN and is treated as answered rather than re-requested as missing.
+
+User-local validation:
+```text
+Frontend production build:
+tsc -b && vite build
+Vite 8.3.0 / 28 modules transformed
+PASS
+
+Actual Backend-connected reanalysis E2E:
+e2e/site-analysis-reanalysis.spec.ts
+2 passed (31.4s)
+- existing multi-parcel/reanalysis/state-isolation regression PASS
+- 체육관 → 관람석 → spectator area → 아직 미정 progressive flow PASS
+
+Actual Backend-connected mobile responsive regression:
+e2e/site-analysis-mobile-responsive.spec.ts
+1 passed (5.4s)
+```
+
+Status: **IMPLEMENTED + USER-LOCAL BEHAVIORAL PASS** for this verified public/progressive scope.
+
+This checkpoint does not prove full Annex 1 public coverage, direct 집회장 support, full Rule 125 production applicability, or Rule 125 관람장 production integration. Those remain separate work.
