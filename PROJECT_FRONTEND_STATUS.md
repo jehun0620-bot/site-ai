@@ -1745,3 +1745,46 @@ No Frontend architecture, Backend trust boundary, parcel-truth authority, Rule E
 - Actual Backend-connected reanalysis E2E: **PASS** (`e2e/site-analysis-reanalysis.spec.ts`, `1 passed (52.9s)`).
 - Actual Backend-connected mobile-responsive E2E: **PASS** (`e2e/site-analysis-mobile-responsive.spec.ts`, `1 passed (5.7s)`).
 - Status: **IMPLEMENTED + USER LOCAL BEHAVIORAL PASS**.
+
+## Building Use public catalog / progressive reanalysis — 2026-10-01
+
+Status: **IMPLEMENTED + USER-LOCAL BEHAVIORAL PASS**.
+
+Current Frontend now:
+- loads `BUILDING_USE_CATALOG_V1` from `GET /v1/building-uses`;
+- exposes the Backend-verified planned-use choices rather than a Frontend-maintained legal-use list;
+- sends the selected canonical use through the existing selected-candidate reanalysis request;
+- renders Backend-provided `state_facts` and `numeric_facts` classification requirements;
+- supports `has_spectator_seating` as 예/아니오;
+- supports `spectator_seating_area` as a numeric input or explicit `아직 미정`;
+- preserves existing project/procedure reanalysis and parcel-state isolation.
+
+User-local final validation:
+```text
+npm run build
+→ tsc -b && vite build
+→ Vite 8.3.0
+→ 28 modules transformed
+→ PASS
+
+npx playwright test e2e/site-analysis-reanalysis.spec.ts
+→ 2 passed (31.4s)
+
+npx playwright test e2e/site-analysis-mobile-responsive.spec.ts
+→ 1 passed (5.4s)
+```
+
+The first E2E retains the existing multi-address/multi-parcel additional-input and state-isolation regression. The second test in that file verifies the actual Backend-connected progressive path:
+```text
+체육관
+→ Backend reanalysis
+→ 관람석 질문
+→ 예
+→ Backend reanalysis
+→ 관람석 바닥면적
+→ 아직 미정
+→ Backend reanalysis
+→ answered UNKNOWN is not re-requested as missing
+```
+
+No Frontend legal classifier was introduced. Full Annex 1 coverage and full Rule 125 production behavior are not claimed.
