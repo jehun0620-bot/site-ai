@@ -96,7 +96,10 @@ export interface SiteAnalysisRequirement {
   state: SiteAnalysisInputState
 }
 
-export interface SiteAnalysisBuildingUseRequirement extends SiteAnalysisRequirement { identity: 'canonical' | 'source_path' | 'major' }
+export interface SiteAnalysisBuildingUseRequirement extends SiteAnalysisRequirement {
+  identity: 'canonical' | 'source_path' | 'major'
+  allowed_values?: string[]
+}
 export interface SiteAnalysisStateFactRequirement {
   name: string
   state: SiteAnalysisInputState
