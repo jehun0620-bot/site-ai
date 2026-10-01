@@ -108,6 +108,18 @@ def main() -> int:
         },
     )
 
+    analysis.setdefault("input_requirements", {})["building_use"] = [
+        {
+            "name": "building_use",
+            "identity": "canonical",
+            "affected_clause_count": 1,
+            "state": "UNSET",
+            "allowed_values": ["공연장", "집회장", "관람장"],
+        }
+    ]
+    analysis["input_requirements"]["building_use_count"] = 1
+    analysis["input_requirements"]["requires_additional_input"] = True
+
     # ========================================================
     # public API response
     # ========================================================
@@ -398,6 +410,11 @@ def main() -> int:
                 "building_use_count",
                 0,
             )
+        ),
+
+        "building use allowed values preserved": (
+            response["requirements"]["building_use"][0].get("allowed_values")
+            == ["공연장", "집회장", "관람장"]
         ),
 
         "numeric fact requirements exposed": (
