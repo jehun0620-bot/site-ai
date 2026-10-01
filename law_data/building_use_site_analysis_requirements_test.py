@@ -27,10 +27,11 @@ def main() -> int:
             ],
             "building_use": [
                 {
-                    "name": "공연장",
+                    "name": "building_use",
                     "identity": "canonical",
                     "affected_clause_count": 1,
                     "state": "UNSET",
+                    "allowed_values": ["공연장", "집회장", "관람장"],
                 }
             ],
             "numeric_facts": [
@@ -85,8 +86,14 @@ def main() -> int:
         ),
         "BUILDING_USE requirements exposed": (
             requirements["building_use_count"] == 1
-            and requirements["building_use"][0]["name"] == "공연장"
+            and requirements["building_use"][0]["name"] == "building_use"
             and requirements["building_use"][0]["identity"] == "canonical"
+            and requirements["building_use"][0]["allowed_values"]
+            == ["공연장", "집회장", "관람장"]
+        ),
+        "BUILDING_USE choice set preserved by Site Analysis": (
+            requirements["building_use"][0].get("allowed_values")
+            == ["공연장", "집회장", "관람장"]
         ),
         "NUMERIC_FACT requirements exposed": (
             requirements["numeric_fact_count"] == 1
