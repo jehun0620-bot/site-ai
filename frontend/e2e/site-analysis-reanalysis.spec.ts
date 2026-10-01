@@ -216,8 +216,8 @@ test.describe('실제 Backend 연동 필지 재분석 E2E', () => {
 
     const plannedUse = page.getByLabel('계획 건축물 용도')
     await expect(plannedUse.locator('option')).toHaveCount(16)
-    await expect(plannedUse.locator('option', { hasText: '집회장' })).toHaveCount(0)
-    await expect(plannedUse.locator('option', { hasText: '관람장' })).toHaveCount(0)
+    await expect(plannedUse.locator('option[value="집회장"]')).toHaveCount(0)
+    await expect(plannedUse.locator('option[value="관람장"]')).toHaveCount(0)
     await plannedUse.selectOption({ label: '체육관' })
     await page.getByRole('button', { name: /계획 용도로 다시 분석|입력 내용으로 다시 분석/ }).click()
     await expect(page.locator('.analysis-ready-badge')).toHaveText('분석 완료', { timeout: 120_000 })
