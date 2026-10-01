@@ -80,6 +80,53 @@ def main() -> int:
         ],
     }
 
+    building_use_set_or = {
+        "op": "OR",
+        "children": [
+            building_use("공연장"),
+            building_use("집회장"),
+            building_use("관람장"),
+        ],
+    }
+
+    building_use_set_missing = groups("TRUE", building_use_set_or, {})
+    building_use_set_performance = groups(
+        "TRUE",
+        building_use_set_or,
+        {
+            "building_use": {
+                "canonical_name": "공연장",
+                "major_use": "문화 및 집회시설",
+                "source_path": "5/가",
+                "classification_status": "RESOLVED",
+            }
+        },
+    )
+    building_use_set_spectator = groups(
+        "TRUE",
+        building_use_set_or,
+        {
+            "building_use": {
+                "canonical_name": "관람장",
+                "major_use": "문화 및 집회시설",
+                "source_path": "5/다",
+                "classification_status": "RESOLVED",
+            }
+        },
+    )
+    building_use_set_office = groups(
+        "TRUE",
+        building_use_set_or,
+        {
+            "building_use": {
+                "canonical_name": "사무소",
+                "major_use": "업무시설",
+                "source_path": "TEST",
+                "classification_status": "RESOLVED",
+            }
+        },
+    )
+
     validations = {
         "TRUE AND numeric UNSET requires NUMERIC_FACT": (
             required_types(groups("TRUE", numeric_unset, {}))
@@ -133,6 +180,27 @@ def main() -> int:
                 )
             )
             == []
+        ),
+        "OR building-use set becomes one canonical requirement": (
+            building_use_set_missing["required_inputs"]
+            == [
+                {
+                    "type": "BUILDING_USE",
+                    "name": "building_use",
+                    "identity": "canonical",
+                    "state": "UNSET",
+                    "allowed_values": ["공연장", "집회장", "관람장"],
+                }
+            ]
+        ),
+        "OR building-use set performance fact removes requirement": (
+            building_use_set_performance["required_inputs"] == []
+        ),
+        "OR building-use set spectator fact removes requirement": (
+            building_use_set_spectator["required_inputs"] == []
+        ),
+        "OR building-use set confirmed mismatch does not request another use": (
+            building_use_set_office["required_inputs"] == []
         ),
         "available building use fact removes building use requirement": (
             required_types(
