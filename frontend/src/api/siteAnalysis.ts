@@ -83,8 +83,12 @@ function isSiteAnalysisRequirement(value: unknown): boolean {
 }
 
 function isBuildingUseRequirement(value: unknown): boolean {
-  return isSiteAnalysisRequirement(value) && isRecord(value)
-    && (value.identity === 'canonical' || value.identity === 'source_path' || value.identity === 'major')
+  if (!isSiteAnalysisRequirement(value) || !isRecord(value)) return false
+  if (value.identity !== 'canonical' && value.identity !== 'source_path' && value.identity !== 'major') return false
+  if (value.allowed_values === undefined) return true
+  return Array.isArray(value.allowed_values)
+    && value.allowed_values.length > 0
+    && value.allowed_values.every((item) => typeof item === 'string' && item.trim().length > 0)
 }
 
 function isStateFactRequirement(value: unknown): boolean {
