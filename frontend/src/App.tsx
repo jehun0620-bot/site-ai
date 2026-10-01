@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { confirmParcelCandidate, ParcelCandidateApiError, searchParcelCandidates } from './api/parcelCandidates'
-import { analyzeSelectedParcelCandidate, SiteAnalysisApiError } from './api/siteAnalysis'
+import { analyzeSelectedParcelCandidate, fetchBuildingUseCatalog, SiteAnalysisApiError } from './api/siteAnalysis'
 import KakaoMap from './map/KakaoMap'
 import RuleEvaluationSection from './components/RuleEvaluationSection'
 import AnalysisRequirements from './components/AnalysisRequirements'
@@ -9,7 +9,7 @@ import LandAreaSection from './components/LandAreaSection'
 import BuildingScaleSection from './components/BuildingScaleSection'
 import ExternalDependenciesSection from './components/ExternalDependenciesSection'
 import type { CandidateSearchState, ParcelCandidate, ParcelConfirmationResponse, ParcelVerificationState } from './types/parcel'
-import type { SiteAnalysisInputProfile, SiteAnalysisNumericFactProfile, SiteAnalysisResponse, SiteAnalysisState, SiteAnalysisStateFactProfile } from './types/siteAnalysis'
+import type { BuildingUseCatalogOption, SiteAnalysisInputProfile, SiteAnalysisNumericFactProfile, SiteAnalysisResponse, SiteAnalysisState, SiteAnalysisStateFactProfile } from './types/siteAnalysis'
 
 const INITIAL_GUIDE = '지번주소 또는 도로명주소로 필지를 검색할 수 있습니다.'
 function displayParcelApiError(error: unknown, fallback: string): string {
@@ -46,8 +46,22 @@ export default function App() {
   const [buildingUseName, setBuildingUseName] = useState('')
   const [numericFacts, setNumericFacts] = useState<SiteAnalysisNumericFactProfile>({})
   const [stateFacts, setStateFacts] = useState<SiteAnalysisStateFactProfile>({})
+  const [buildingUseCatalog, setBuildingUseCatalog] = useState<BuildingUseCatalogOption[]>([])
+  const [buildingUseCatalogError, setBuildingUseCatalogError] = useState('')
   const candidateListRef = useRef<HTMLDivElement | null>(null)
   const selectedCandidateCardRef = useRef<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    const controller = new AbortController()
+    fetchBuildingUseCatalog(controller.signal)
+      .then((result) => { setBuildingUseCatalog(result.building_uses); setBuildingUseCatalogError('') })
+      .catch((error) => {
+        if (controller.signal.aborted) return
+        setBuildingUseCatalog([])
+        setBuildingUseCatalogError(error instanceof Error ? error.message : '계획 건축물 용도 목록을 불러오지 못했습니다.')
+      })
+    return () => controller.abort()
+  }, [])
 
   useEffect(() => {
     const list = candidateListRef.current
