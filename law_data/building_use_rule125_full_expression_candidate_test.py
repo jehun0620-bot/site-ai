@@ -152,6 +152,13 @@ def main() -> int:
     target = {name: find_rule(result, RULE_INDEX) for name, result in cases.items()}
     parent = {name: find_rule(result, PARENT_INDEX) for name, result in cases.items()}
 
+    missing_use_requirements = target["missing use"].get("required_inputs", [])
+    missing_use_building_use = [
+        item
+        for item in missing_use_requirements
+        if isinstance(item, dict) and item.get("type") == "BUILDING_USE"
+    ]
+
     validations = {
         "all runs keep 314 rules": all(len(r.get("rules", [])) == 314 for r in cases.values()),
         "performance 1001 applicable": target["performance 1001"].get("applicability") == "APPLICABLE",
@@ -161,6 +168,18 @@ def main() -> int:
         "office not applicable": target["office 1001"].get("applicability") == "NOT_APPLICABLE",
         "missing use conditional": target["missing use"].get("applicability") == "CONDITIONAL",
         "missing use requested": "BUILDING_USE" in required_types(target["missing use"]),
+        "missing use is one canonical choice-set requirement": (
+            missing_use_building_use
+            == [
+                {
+                    "type": "BUILDING_USE",
+                    "name": "building_use",
+                    "identity": "canonical",
+                    "state": "UNSET",
+                    "allowed_values": ["공연장", "집회장", "관람장"],
+                }
+            ]
+        ),
         "missing area conditional": target["missing area"].get("applicability") == "CONDITIONAL",
         "missing area requested": "NUMERIC_FACT" in required_types(target["missing area"]),
         "unknown area unknown": target["unknown area"].get("applicability") == "UNKNOWN",
