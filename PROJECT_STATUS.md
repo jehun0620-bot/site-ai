@@ -682,3 +682,64 @@ e2e/site-analysis-mobile-responsive.spec.ts
 Status: **IMPLEMENTED + USER-LOCAL BEHAVIORAL PASS** for this verified public/progressive scope.
 
 This checkpoint does not prove full Annex 1 public coverage, direct 집회장 support, full Rule 125 production applicability, or Rule 125 관람장 production integration. Those remain separate work.
+
+
+---
+
+## 2026-10-01 Building Use / Rule125 choice-set checkpoint
+
+User-local behavioral validation completed for the current Building Use progressive-input and Rule125 candidate path.
+
+Validated boundaries:
+
+```text
+Rule125 full-use-set memory candidate
+→ 공연장 / 집회장 / 관람장 BUILDING_USE OR
+→ one canonical BUILDING_USE choice-set requirement
+→ allowed_values preserved by remaining-input aggregation
+→ Site Analysis input_requirements
+→ SITE_ANALYSIS_API_V1 requirements
+→ Frontend contract validation
+→ safe guidance to the existing verified public Building Use selector
+```
+
+The choice-set requirement preserves:
+
+```json
+{
+  "name": "building_use",
+  "identity": "canonical",
+  "allowed_values": ["공연장", "집회장", "관람장"],
+  "state": "UNSET"
+}
+```
+
+Important public-input safety boundary:
+
+- The public Building Use catalog remains the previously verified 15-option catalog.
+- `집회장` is not exposed as a direct public input.
+- `관람장` is not exposed as a direct public input.
+- Verified `체육관` / `운동장` input can still resolve to `관람장` through the existing spectator-seating cross-classification path.
+- Frontend does not turn Rule125 `allowed_values` into new public options. It directs the user to the existing verified catalog selector.
+
+Latest user-local validation:
+
+```text
+Frontend production build: PASS
+Backend-connected site-analysis-reanalysis E2E: 2 passed (27.9s)
+- multi-address / parcel reanalysis and state isolation: PASS
+- 체육관 → 관람석 질문 → spectator area undecided flow: PASS
+- direct 집회장 public option absent: PASS
+- direct 관람장 public option absent: PASS
+```
+
+Still NOT production-proven:
+
+```text
+Rule125 production condition_expression activation
+집회장 public classification
+관람장 direct public input
+full Rule125 production behavioral PASS
+```
+
+The Rule125 full-use-set expression remains a verified memory/candidate path, not production authority.
