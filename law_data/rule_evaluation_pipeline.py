@@ -867,6 +867,52 @@ def _condition_expression_groups(
                 child_groups[key]
             )
 
+    if op == "OR" and decisive_state == "UNSET":
+        building_use_requirements = [
+            item
+            for item in merged["required_inputs"]
+            if (
+                isinstance(item, dict)
+                and item.get("type") == "BUILDING_USE"
+            )
+        ]
+        non_building_use_requirements = [
+            item
+            for item in merged["required_inputs"]
+            if not (
+                isinstance(item, dict)
+                and item.get("type") == "BUILDING_USE"
+            )
+        ]
+
+        identities = {
+            safe_string(item.get("identity"))
+            for item in building_use_requirements
+        }
+        values = [
+            safe_string(item.get("name"))
+            for item in building_use_requirements
+        ]
+
+        if (
+            len(building_use_requirements) >= 2
+            and len(identities) == 1
+            and "" not in identities
+            and all(values)
+        ):
+            identity = next(iter(identities))
+            if identity in {"canonical", "source_path", "major"}:
+                merged["required_inputs"] = [
+                    *non_building_use_requirements,
+                    {
+                        "type": "BUILDING_USE",
+                        "name": "building_use",
+                        "identity": identity,
+                        "state": "UNSET",
+                        "allowed_values": list(dict.fromkeys(values)),
+                    },
+                ]
+
     return merged
 
 
