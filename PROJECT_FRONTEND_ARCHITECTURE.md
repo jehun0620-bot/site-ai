@@ -679,3 +679,33 @@ road-address discovery != second truth path
 ```
 
 Frontend address wording may present both address formats, but the trust boundary remains unchanged: selection and presentation are Frontend responsibilities; canonical parcel verification remains Backend responsibility.
+
+## 27. Planned Building Use discovery / progressive requirement boundary
+
+Planned Building Use input follows a Backend-owned discovery and requirement boundary.
+
+```text
+Frontend
+GET /v1/building-uses
+→ present verified public canonical choices
+→ user selects planned use
+→ POST selected-candidate reanalysis with building_use_name
+
+Backend
+→ classify using existing Building Use layers
+→ return currently decisive state_facts / numeric_facts requirements
+→ Frontend presents those requirements
+→ user answer
+→ reanalysis
+```
+
+Architectural rules:
+- the Frontend does not maintain a second legal Building Use catalog;
+- `BUILDING_USE_CATALOG_V1` is an input-discovery contract, not proof of complete Annex 1 coverage;
+- the Frontend does not infer which qualification question follows from a selected use;
+- `AnalysisRequirements.tsx` may label and render Backend requirements but does not reproduce classification thresholds;
+- state and numeric answers remain workflow state owned by `App.tsx` and are sent through the existing selected-candidate reanalysis boundary;
+- explicit numeric `undecided` is preserved as an answered UNKNOWN state and is not converted into a missing value;
+- Backend remains the authority for Building Use classification and legal applicability.
+
+The verified 체육관 / 운동장 → 관람장 cross-classification flow is one consumer of this architecture. Its spectator-area threshold remains Backend logic and must not be duplicated in Frontend code.
