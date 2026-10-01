@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type {
   SiteAnalysisInputProfile, SiteAnalysisInputState, SiteAnalysisNumericFactProfile,
-  SiteAnalysisRequirement, SiteAnalysisRequirements, SiteAnalysisState, SiteAnalysisStateFactProfile,
+  BuildingUseCatalogOption, SiteAnalysisRequirement, SiteAnalysisRequirements, SiteAnalysisState, SiteAnalysisStateFactProfile,
 } from '../types/siteAnalysis'
 
 const INPUT_OPTIONS: Array<{ state: Exclude<SiteAnalysisInputState, 'UNSET'>; label: string }> = [
@@ -10,6 +10,8 @@ const INPUT_OPTIONS: Array<{ state: Exclude<SiteAnalysisInputState, 'UNSET'>; la
 type ProfileType = 'project' | 'procedure'
 type Props = {
   requirements: SiteAnalysisRequirements
+  buildingUseCatalog: BuildingUseCatalogOption[]
+  buildingUseCatalogError: string
   projectProfile: SiteAnalysisInputProfile
   procedureProfile: SiteAnalysisInputProfile
   buildingUseName: string
@@ -42,7 +44,7 @@ function numericFactLabel(name: string) {
 }
 
 export default function AnalysisRequirements(props: Props) {
-  const { requirements, projectProfile, procedureProfile, buildingUseName, numericFacts, stateFacts, analysisState, onRequirementChange, onBuildingUseChange, onStateFactChange, onNumericFactChange, onNumericFactUndecided, onReanalysis } = props
+  const { requirements, buildingUseCatalog, buildingUseCatalogError, projectProfile, procedureProfile, buildingUseName, numericFacts, stateFacts, analysisState, onRequirementChange, onBuildingUseChange, onStateFactChange, onNumericFactChange, onNumericFactUndecided, onReanalysis } = props
   const [projectOpen, setProjectOpen] = useState(true)
   const [procedureOpen, setProcedureOpen] = useState(true)
   const selectedProjectCount = Object.keys(projectProfile).length
@@ -54,8 +56,19 @@ export default function AnalysisRequirements(props: Props) {
   const totalCount = requirements.project_count + requirements.procedure_count + requirements.building_use_count + requirements.state_fact_count + requirements.numeric_fact_count
   const remainingCount = Math.max(totalCount - selectedCount, 0)
 
-  return <section className="analysis-detail-section" id="analysis-requirements"><h2>추가 입력 필요사항</h2>
-    {!requirements.requires_additional_input ? <p className="analysis-empty">현재 응답 기준 추가 입력 항목이 없습니다.</p> : <>
+  return <section className="analysis-detail-section" id="analysis-requirements"><h2>계획 및 추가 입력</h2>
+    <div className="requirement-group requirement-direct-group">
+      <div className="requirement-direct-heading"><span>계획 건축물 용도</span><strong>{buildingUseName || '미선택'}</strong></div>
+      <div className="requirement-item">
+        <label htmlFor="planned-building-use"><strong>분석할 계획 용도</strong><small>Backend가 현재 검증한 입력 가능 용도만 표시합니다.</small></label>
+        <select id="planned-building-use" aria-label="계획 건축물 용도" value={buildingUseName} onChange={(event) => onBuildingUseChange(event.target.value)} disabled={analysisState === 'ANALYZING' || buildingUseCatalog.length === 0}>
+          <option value="">선택하지 않음</option>
+          {buildingUseCatalog.map((option) => <option key={option.canonical_name} value={option.canonical_name}>{option.canonical_name}</option>)}
+        </select>
+        {buildingUseCatalogError && <small role="alert">{buildingUseCatalogError}</small>}
+      </div>
+    </div>
+    {!requirements.requires_additional_input ? <div className="requirement-reanalysis"><span>{buildingUseName ? '선택한 계획 용도를 분석에 반영할 수 있습니다.' : '현재 응답 기준 추가 입력 항목이 없습니다.'}</span><button type="button" onClick={onReanalysis} disabled={!buildingUseName || analysisState === 'ANALYZING'}>{analysisState === 'ANALYZING' ? '다시 분석 중…' : '계획 용도로 다시 분석'}</button></div> : <>
       <div className="requirement-progress" aria-label="추가 입력 진행상태">
         <div><span>사업 정보</span><strong>{requirements.project_count}개 중 {selectedProjectCount}개 입력</strong></div>
         <div><span>절차 정보</span><strong>{requirements.procedure_count}개 중 {selectedProcedureCount}개 입력</strong></div>
