@@ -1,6 +1,6 @@
 # AI 대지분석 자동화 시스템 — 두 데스크탑 개발 인계 운영 절차
 
-최종 업데이트: 2026-09-18
+최종 업데이트: 2026-10-01
 기준 branch: `cleanup/repository-organization-20260916`
 문서 목적: 두 데스크탑을 번갈아 사용하면서 Git 상태, 로컬 환경, 검증 결과와 미완료 작업을 안전하게 인계한다.
 
@@ -291,3 +291,143 @@ git pull --ff-only origin cleanup/repository-organization-20260916
 - Desktop A historical JSON 보존본을 자동 동기화하지 않음
 - GitHub commit을 behavioral PASS로 간주하지 않음
 - 한 PC의 미커밋 프로젝트 코드를 다른 PC에서 추측하여 재작성하지 않음
+
+
+## 14. 2026-10-01 최신 인계 checkpoint
+
+이 절은 2026-09-18 이후 진행된 작업을 다른 데스크탑이 안전하게 이어받기 위한 최신 checkpoint다. 기존 1~13절의 두-PC 운영 원칙과 금지사항은 그대로 유지한다.
+
+### GitHub 최신 검증 상태
+
+현재 working branch:
+
+```text
+cleanup/repository-organization-20260916
+```
+
+2026-10-01 사용자 로컬에서 최신 Building Use / Frontend progressive-input 회귀검증을 완료했다.
+
+```text
+Frontend production build: PASS
+Vite 8.3.0
+28 modules transformed
+
+Backend-connected site-analysis-reanalysis E2E:
+2 passed (27.9s)
+
+1. multi-address / parcel reanalysis + state isolation: PASS
+2. 체육관 → 관람석 여부 → spectator_seating_area → 아직 미정: PASS
+```
+
+Rule125 관련 현재 검증 경계:
+
+```text
+Rule125 full-use-set memory candidate
+→ 공연장 / 집회장 / 관람장 BUILDING_USE OR
+→ one canonical BUILDING_USE choice-set requirement
+→ allowed_values preservation
+→ Site Analysis
+→ SITE_ANALYSIS_API_V1
+→ Frontend safe choice-set handling
+```
+
+Frontend public Building Use selector는 기존 검증된 15개 catalog만 유지한다. HTML option은 "선택하지 않음"을 포함해 총 16개다. 직접 `집회장`과 직접 `관람장`은 public option으로 노출하지 않는다. `종교집회장`은 별개의 기존 검증 public option이다.
+
+아직 production 완료로 취급하지 않는 범위:
+
+```text
+Rule125 production condition_expression activation
+집회장 public classification
+관람장 direct public input
+full Rule125 production behavioral PASS
+```
+
+다음 개발의 우선 시작점은 위 미완료 범위를 WRITE하는 것이 아니라, Rule125 production 연결이 현재 fail-closed 경계를 유지하는지 GitHub READ-ONLY로 검토하는 것이다.
+
+### 관련 최신 status 문서
+
+2026-10-01 checkpoint는 다음 문서에 반영되어 있다.
+
+```text
+PROJECT_STATUS.md
+PROJECT_FRONTEND_STATUS.md
+```
+
+다른 데스크탑에서 pull 후 두 문서의 최신 Building Use / Rule125 choice-set checkpoint를 먼저 읽는다.
+
+### 다른 데스크탑에서의 첫 실행
+
+다른 데스크탑은 과거 이 프로젝트를 작업한 기존 로컬 checkout이다. 뒤처져 있다는 이유만으로 바로 pull/reset/restore하지 않는다.
+
+먼저 반드시:
+
+```powershell
+cd D:\site-ai
+git status --short
+git branch --show-current
+git rev-parse HEAD
+```
+
+결과를 확인한다.
+
+특히 다음 중 하나라도 있으면 pull을 실행하지 않고 READ-ONLY 조사부터 한다.
+
+```text
+예상하지 못한 modified 파일
+untracked 파일
+UU / AA / DD 등 unmerged 상태
+현재 branch 불일치
+진행 중인 Git operation
+보존 목적의 로컬 변경
+```
+
+working tree와 branch가 안전하다고 확인된 경우에만:
+
+```powershell
+git pull --ff-only origin cleanup/repository-organization-20260916
+git rev-parse HEAD
+git status --short
+```
+
+를 실행한다.
+
+### 보호 파일 재확인
+
+특별 관리 파일:
+
+```text
+law_data/output/urban_area_conversion_history_final_resolution.json
+```
+
+다른 데스크탑의 로컬 상태가 GitHub와 다르더라도 자동으로 restore/reset/checkout/overwrite/stage/commit하지 않는다. 실제 상태를 먼저 확인하고 기존 9절의 historical JSON 특별 예외를 따른다.
+
+### GitHub 비동기화 로컬 환경 재확인
+
+다른 데스크탑에서 다음 항목은 Git pull로 갱신되지 않는다.
+
+```text
+D:\site-ai\.env
+D:\site-ai\frontend\.env.local
+API keys / secrets
+.venv
+frontend/node_modules
+```
+
+기존 환경이 있으면 재설치부터 하지 말고 존재 여부와 실제 동작을 먼저 확인한다. secret 값은 채팅, GitHub 문서 또는 tracked 파일에 복사하지 않는다.
+
+### pull 후 권장 첫 확인
+
+GitHub 동기화가 안전하게 끝난 뒤에는 최신 status 문서를 읽고, 개발을 시작하기 전에 필요한 범위에서 focused validation을 수행한다.
+
+현재 Frontend/Building Use 연결 상태 확인이 필요하면 대표적으로:
+
+```powershell
+cd D:\site-ai\frontend
+npm run build
+
+$env:SITE_AI_E2E_BROWSER_CHANNEL = "chrome"
+$env:SITE_AI_E2E_BASE_URL = "http://127.0.0.1:5173"
+npx playwright test e2e/site-analysis-reanalysis.spec.ts
+```
+
+를 사용할 수 있다. 외부 데이터가 개입하는 E2E의 과거 실행 시간이나 외부 응답 숫자가 다르다는 이유만으로 자동 실패 판정을 하지 않는다.
