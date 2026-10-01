@@ -195,6 +195,8 @@ export default function App() {
           />
           <AnalysisRequirements
             requirements={analysis.requirements}
+            buildingUseCatalog={buildingUseCatalog}
+            buildingUseCatalogError={buildingUseCatalogError}
             projectProfile={projectProfile}
             procedureProfile={procedureProfile}
             buildingUseName={buildingUseName}
