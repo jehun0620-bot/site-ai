@@ -1327,3 +1327,31 @@ Building Use의 official source 또는 qualification 문구가 존재한다는 �
 - REVIEW-REQUIRED: 현재 단계에서 자동 TRUE/FALSE 승격을 하지 않는 qualification
 
 이 checkpoint의 목적은 Annex 1의 모든 문구 구현률을 최대화하는 것이 아니라, Canonical Final Classification → PROJECT Mapping으로 안전하게 전환할 수 있는지를 판단하는 것이다.
+
+---
+
+## Nationwide local-ordinance jurisdiction foundation — 2026-10-12
+
+### Scope and evidence
+
+- 2026-10-12 user-local real browser validation: Seoul Gaepo-dong 12-2, PNU `1168010300100120002`, existing `READY` analysis route PASS; Busan U-dong 524-2, PNU `2635010500105240002`, selected-parcel analysis returned `LEGAL_JURISDICTION_UNSUPPORTED` (HTTP 422), no regulation/rule results, no stale Seoul result. The existing P0 guard is a temporary admission boundary for the current Seoul-based corpus; it does **not** certify every Seoul rule's legal correctness.
+- Baseline: `site_data/production_legal_scope_guard.py` admits only PNU SIDO prefix `11` to the current production engine. `law_data/zone_base_numeric_resolver.py` currently reads Seoul ordinance-specific values; `law_data/rule_evaluation_pipeline.py` evaluates a fixed 314-rule corpus. This checkpoint does not change those runtime paths.
+- The first nationwide-compatible foundation is `law_data/legal_jurisdiction_context.py`: read-only, deterministic structural extraction from a 19-digit PNU into SIDO (2 digits), SIGUNGU (5 digits), BJDONG (5 digits), land-division (1 digit), main number (4 digits), and sub-number (4 digits). Explicit expected-code disagreement or malformed input fails closed.
+
+### Strict trust boundaries
+
+1. **PNU structure is not official parcel verification.** A syntactically valid PNU can be parsed without asserting that the parcel exists, that its boundary was checked, or that an administrative code is current.
+2. **Administrative-code identity is not legal jurisdiction authorization.** Neither a SIDO prefix nor an exact code match verifies a particular ordinance, delegated authority, amendment, effective date, parcel applicability, or numeric ceiling. This model emits `PNU_STRUCTURE_ONLY`, `legal_authority_decision=NOT_EVALUATED`, and `legal_applicability_decision=NOT_EVALUATED`.
+3. **Source qualification stays independent.** `law_data/authority_source_scope.py` retains its independently verified source/region/role/authority/target-regulation gates. A `LegalJurisdictionContext` must never self-promote any `AuthoritySourceScope` verification flag or bypass the production guard.
+4. **No implicit runtime promotion.** No change is made to current API output, the 314 production rules, numeric fallback, Rule Engine, `READY` decision, or the temporary Seoul-only jurisdiction gate. This module is not a nationwide Local Ordinance Resolver.
+
+### Nationwide expansion / duplicate-work prevention policy
+
+- At this checkpoint, **do not collect any additional local-ordinance bodies** for Busan or any other non-Seoul local government. Implement reusable identity, source/version provenance, law-delegation mapping, rule selection, and numeric-resolution contracts before collection.
+- If the development stage genuinely requires expanding the local-ordinance corpus, first define **one common, nationwide acquisition and verification scope covering all non-Seoul local governments**, rather than creating a Busan-only ingestion path. Reuse an idempotent collection/deduplication process with source identifiers, jurisdiction level, official source URL, validity/effective dates, revision metadata, delegation links, and explicit review/admission states. A record found is not automatically an applicable or current regulation.
+- Preserve national-law rules as separate shared sources. Distinguish metropolitan/provincial ordinances, basic local-government ordinances, administrative codes, and geographically bounded notices; do not treat a PNU prefix as sufficient for all these layers.
+- Keep the source `SOURCE_VERIFIED`, structure `PARSED`, facts `FACT_READY`, semantics `SEMANTIC_READY`, engine `ENGINE_READY`, and live behavior `BEHAVIORAL_PASS` evidence gates separate. Unverified coverage remains unresolved rather than `FALSE`, `NOT_APPLICABLE`, `CONFIRMED`, or `READY`.
+
+### Focused test boundary
+
+`python -m law_data.legal_jurisdiction_context_contract_test` covers Seoul, Busan, synthetic other-area PNU structure, explicit SIDO/SIGUNGU/BJDONG identity mismatches, malformed or non-ASCII identifiers, immutability, and no implicit legal-authority promotion. It does not collect ordinances, call network providers, or write snapshot outputs.
