@@ -187,4 +187,35 @@ test.describe('SITE_API_ERROR_V1 Frontend focused validation', () => {
       '외부 데이터 조회에 실패해 SITE 분석을 완료하지 못했습니다. 테스트용 건축물 제공자 오류입니다. 다시 시도할 수 있습니다.',
     )
   })
+
+  test('unsupported legal jurisdiction is shown as an analysis error without law results', async ({ page }) => {
+    // This is a mock HTTP error presentation test, not a live Busan parcel test.
+    await mockCandidateSearchReady(page)
+    await mockParcelConfirmationReady(page)
+    await page.route('**/v1/site-analysis/selected-candidate', async (route) => {
+      await route.fulfill({
+        status: 422,
+        contentType: 'application/json',
+        body: JSON.stringify(
+          productError(
+            'LEGAL_JURISDICTION_UNSUPPORTED',
+            'ANALYSIS',
+            '현재 이 지역의 법규 분석을 지원하지 않습니다. 해당 관할의 조례 검증이 필요합니다.',
+            false,
+          ),
+        ),
+      })
+    })
+
+    await searchAndSelect(page)
+    await expect(page.getByText('필지 확인 완료', { exact: true })).toBeVisible()
+    await page.getByRole('button', { name: '이 필지 분석' }).click()
+
+    await expect(page.getByText('SITE 분석 실패', { exact: true })).toBeVisible()
+    await expect(page.locator('.analysis-panel')).toContainText(
+      '현재 이 지역의 법규 분석을 지원하지 않습니다. 해당 관할의 조례 검증이 필요합니다.',
+    )
+    await expect(page.locator('.rule-detail-groups')).toHaveCount(0)
+  })
+
 })

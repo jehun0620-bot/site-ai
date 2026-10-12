@@ -9,6 +9,7 @@ from site_data.selected_parcel_candidate_verifier import verify_selected_parcel_
 from site_data.building_hub_provider import BuildingAPIError
 from site_data.building_use_public_catalog import public_building_use_options
 from site_data.site_analysis_orchestrator import SiteAnalysisError, SiteBuildError, analyze_site_by_address, analyze_site_by_parcel, analyze_site_by_selected_candidate
+from site_data.production_legal_scope_guard import UnsupportedLegalJurisdictionError
 
 app=FastAPI(title="AI 대지분석 API",version="0.1.0",description="건축HUB / SITE / 공간정보 / 법규평가를 통합한 대지분석 API")
 
@@ -103,6 +104,8 @@ def building_uses():
 def site_analysis(request:SiteAnalysisRequest):
     try:
         return analyze_site_by_parcel(sigungu_cd=request.sigungu_cd,bjdong_cd=request.bjdong_cd,plat_gb_cd=request.plat_gb_cd,bun=request.bun,ji=request.ji,project_profile=request.project_profile,procedure_profile=request.procedure_profile,building_use_name=request.building_use_name,numeric_facts={name: fact.model_dump() for name, fact in request.numeric_facts.items()},has_spectator_seating=request.has_spectator_seating,include_debug=request.include_debug)
+    except UnsupportedLegalJurisdictionError as exc:
+        raise product_http_error(422,"LEGAL_JURISDICTION_UNSUPPORTED","ANALYSIS","현재 이 지역의 법규 분석을 지원하지 않습니다. 해당 관할의 조례 검증이 필요합니다.") from exc
     except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.",retryable=exc.retryable) from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
@@ -112,6 +115,8 @@ def site_analysis(request:SiteAnalysisRequest):
 def site_analysis_by_address(request:AddressSiteAnalysisRequest):
     try:
         return analyze_site_by_address(address=request.address,project_profile=request.project_profile,procedure_profile=request.procedure_profile,building_use_name=request.building_use_name,numeric_facts={name: fact.model_dump() for name, fact in request.numeric_facts.items()},has_spectator_seating=request.has_spectator_seating,include_debug=request.include_debug)
+    except UnsupportedLegalJurisdictionError as exc:
+        raise product_http_error(422,"LEGAL_JURISDICTION_UNSUPPORTED","ANALYSIS","현재 이 지역의 법규 분석을 지원하지 않습니다. 해당 관할의 조례 검증이 필요합니다.") from exc
     except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.",retryable=exc.retryable) from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc
@@ -121,6 +126,8 @@ def site_analysis_by_address(request:AddressSiteAnalysisRequest):
 def site_analysis_by_selected_candidate(request:SelectedParcelCandidateSiteAnalysisRequest):
     try:
         return analyze_site_by_selected_candidate(candidate_pnu=request.candidate_pnu,x=request.x,y=request.y,project_profile=request.project_profile,procedure_profile=request.procedure_profile,building_use_name=request.building_use_name,numeric_facts={name: fact.model_dump() for name, fact in request.numeric_facts.items()},has_spectator_seating=request.has_spectator_seating,include_debug=request.include_debug)
+    except UnsupportedLegalJurisdictionError as exc:
+        raise product_http_error(422,"LEGAL_JURISDICTION_UNSUPPORTED","ANALYSIS","현재 이 지역의 법규 분석을 지원하지 않습니다. 해당 관할의 조례 검증이 필요합니다.") from exc
     except BuildingAPIError as exc: raise product_http_error(502,"BUILDING_PROVIDER_FAILED","PROVIDER","건축물 정보를 조회하지 못했습니다.",retryable=exc.retryable) from exc
     except SiteBuildError as exc: raise product_http_error(404,"PARCEL_BUILD_FAILED","PARCEL","분석할 필지 정보를 구성하지 못했습니다.") from exc
     except SiteAnalysisError as exc: raise product_http_error(500,"SITE_ANALYSIS_FAILED","ANALYSIS","SITE 분석을 완료하지 못했습니다.") from exc

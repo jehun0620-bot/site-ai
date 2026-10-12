@@ -3,6 +3,7 @@
 from __future__ import annotations
 from typing import Any, Dict, Optional
 from site_data.address_parcel_identity_resolver import resolve_address_parcel_identity
+from site_data.production_legal_scope_guard import require_supported_legal_jurisdiction
 from site_data.selected_parcel_candidate_verifier import verify_selected_parcel_candidate
 from site_data.site_builder import create_site
 from site_data.building_hub_provider import BuildingAPIError, fetch_building_items
@@ -10,6 +11,7 @@ from site_data.site_data_model import Site
 from site_data.site_analysis_service import analyze_site_object, site_to_analysis_input
 from site_data.site_analysis_response import build_site_analysis_response
 from site_data.vworld_api import (
+    create_pnu,
     VWorldLandNoDataError,
     VWorldLandProviderError,
     get_latest_land_characteristics,
@@ -60,6 +62,14 @@ def _parcel_only_site(*,sigungu_cd:str,bjdong_cd:str,plat_gb_cd:str,bun:str,ji:s
     return site
 
 def analyze_site_by_parcel(*,sigungu_cd:str,bjdong_cd:str,bun:str,ji:str,plat_gb_cd:str="0",project_profile:Optional[Dict[str,str]]=None,procedure_profile:Optional[Dict[str,str]]=None,building_use_name:Optional[str]=None,numeric_facts:Optional[Dict[str,Dict[str,Any]]]=None,has_spectator_seating:Optional[bool]=None,production_condition_shadow_sources:Optional[Any]=None,historical_handoff_authorization:Optional[HistoricalTrustedInternalSourceHandoffAuthorization]=None,historical_site_applicability_admission:Optional[HistoricalSiteEventSiteApplicabilityAdmissionResult]=None,historical_promotion_rule_input_bridge:Optional[HistoricalSiteEventSiteTruthPromotionRuleInputBridge]=None,district_unit_plan_registry_candidate:Optional[Any]=None,include_debug:bool=False,service_key:Optional[str]=None)->Dict[str,Any]:
+    try:
+        requested_pnu = create_pnu(
+            sigungu_cd=sigungu_cd, bjdong_cd=bjdong_cd,
+            plat_gb_cd=plat_gb_cd, bun=bun, ji=ji,
+        )
+    except ValueError as exc:
+        raise SiteBuildError("유효한 필지 PNU를 구성할 수 없습니다.") from exc
+    require_supported_legal_jurisdiction(requested_pnu)
     building_result=fetch_building_items(sigungu_cd=sigungu_cd,bjdong_cd=bjdong_cd,plat_gb_cd=plat_gb_cd,bun=bun,ji=ji,service_key=service_key); items=building_result["items"]
     if items:
         site=create_site(items)
