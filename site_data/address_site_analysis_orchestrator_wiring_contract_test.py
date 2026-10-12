@@ -57,6 +57,9 @@ def run_contract() -> None:
         ji="0000",
         project_profile={"use":"office"},
         procedure_profile={"review":"required"},
+        building_use_name=None,
+        numeric_facts=None,
+        has_spectator_seating=None,
         include_debug=True,
         service_key="building-test",
     )

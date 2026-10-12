@@ -36,7 +36,8 @@ def main() -> None:
             project_profile={"use": "residential"},
             procedure_profile={"stage": "review"},
             building_use_name="공연장",
-            numeric_facts={"use_floor_area": {"value": 500.0, "unit": "square_meter"}},
+            numeric_facts={"use_floor_area": {"value": 500.0, "unit": "square_meter", "undecided": False}},
+            has_spectator_seating=None,
             include_debug=True,
         )
 

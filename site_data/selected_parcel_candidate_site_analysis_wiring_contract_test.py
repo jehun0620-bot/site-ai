@@ -60,6 +60,9 @@ def main() -> None:
             ji="0002",
             project_profile={"use": "test"},
             procedure_profile={"mode": "test"},
+            building_use_name=None,
+            numeric_facts=None,
+            has_spectator_seating=None,
             include_debug=True,
             service_key=None,
         )
