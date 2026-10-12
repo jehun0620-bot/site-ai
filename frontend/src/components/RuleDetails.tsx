@@ -2,6 +2,7 @@
   SiteAnalysisRuleApplicability,
   SiteAnalysisRuleDetail,
 } from '../types/siteAnalysis'
+import { displayLegalProvisionText, displayLegalReviewText } from '../utils/legalDisplayPolicy'
 
 type Props = {
   items: SiteAnalysisRuleDetail[]
@@ -14,7 +15,7 @@ function displayValue(value: unknown): string {
     typeof value === 'number' ||
     typeof value === 'boolean'
   ) {
-    return String(value)
+    return displayLegalReviewText(String(value))
   }
   return '상세 확인 필요'
 }
@@ -30,7 +31,7 @@ function displayRuleApplicability(
 
 function displayRuleLocation(rule: SiteAnalysisRuleDetail): string {
   return (
-    [rule.paragraph, rule.item, rule.subitem].filter(Boolean).join(' · ') ||
+    [rule.paragraph, rule.item, rule.subitem].filter(Boolean).map((part) => displayLegalReviewText(String(part))).join(' · ') ||
     '세부 위치 정보 없음'
   )
 }
@@ -54,7 +55,7 @@ function RuleDetailItem({ rule }: { rule: SiteAnalysisRuleDetail }) {
 
       <div className="rule-detail-meta">
         <span>{displayRuleLocation(rule)}</span>
-        {rule.category && <span>{rule.category}</span>}
+        {rule.category && <span>{displayLegalReviewText(rule.category)}</span>}
       </div>
 
       <dl className="rule-detail-facts">
@@ -66,21 +67,21 @@ function RuleDetailItem({ rule }: { rule: SiteAnalysisRuleDetail }) {
         {rule.required_inputs.length > 0 && (
           <div>
             <dt>추가 입력</dt>
-            <dd>{rule.required_inputs.join(', ')}</dd>
+            <dd>{rule.required_inputs.map(displayLegalReviewText).join(', ')}</dd>
           </div>
         )}
 
         {rule.unresolved_conditions.length > 0 && (
           <div>
             <dt>미확정 조건</dt>
-            <dd>{rule.unresolved_conditions.join(', ')}</dd>
+            <dd>{rule.unresolved_conditions.map(displayLegalReviewText).join(', ')}</dd>
           </div>
         )}
 
         {rule.blocking_conditions.length > 0 && (
           <div>
             <dt>비적용 조건</dt>
-            <dd>{rule.blocking_conditions.join(', ')}</dd>
+            <dd>{rule.blocking_conditions.map(displayLegalReviewText).join(', ')}</dd>
           </div>
         )}
       </dl>
@@ -88,7 +89,7 @@ function RuleDetailItem({ rule }: { rule: SiteAnalysisRuleDetail }) {
       {rule.text && (
         <details className="rule-text-disclosure">
           <summary>규정 내용 보기</summary>
-          <p>{rule.text}</p>
+          <p>{displayLegalProvisionText(rule.text)}</p>
         </details>
       )}
     </li>
