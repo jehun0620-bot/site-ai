@@ -1355,3 +1355,30 @@ Building Use의 official source 또는 qualification 문구가 존재한다는 �
 ### Focused test boundary
 
 `python -m law_data.legal_jurisdiction_context_contract_test` covers Seoul, Busan, synthetic other-area PNU structure, explicit SIDO/SIGUNGU/BJDONG identity mismatches, malformed or non-ASCII identifiers, immutability, and no implicit legal-authority promotion. It does not collect ordinances, call network providers, or write snapshot outputs.
+
+---
+
+## Nationwide legal-source version inventory foundation — 2026-10-12
+
+### Verified implementation scope
+
+- GitHub baseline: `9da4e2e` includes the read-only PNU structural jurisdiction model, and P0's Seoul-only production admission continues unchanged. The present Source Registry is an additional **read-only inventory**, not an ordinance resolver, authority verifier, or production rule selector.
+- `law_data/legal_source_registry.py` stores explicit `(source_system, source_namespace, source_id)` identity and optional `version_id` per source. Namespace separation matters because the existing national-law and self-governing ordinance search routes use distinct `law` / `ordin` collections. The registry never invents IDs, versions, dates, or jurisdictions.
+- Supported first-stage source types: national law, national subordinate legislation, and local ordinance. Supported structural jurisdiction levels: NATIONAL (no local code), SIDO (2 ASCII digits), SIGUNGU (5 ASCII digits). Geographic notices, historical code changes, legal delegation mapping, and official administrative-code currency verification remain outside this model.
+- `promulgation_date` and `effective_date` are optional, calendar-validated ISO `YYYY-MM-DD` **descriptions**, not proof of current validity or applicability. The registry has no `latest`, `current`, `effective_on`, or numeric-limit selection algorithm. Missing values stay missing; an unknown `version_id` remains a separate unversioned candidate.
+
+### Identity, version, and trust boundaries
+
+1. Two *exactly equal* source-version records deduplicate without adding a second version. Contradictory metadata for the same explicit provider source-version key fails closed; the same provider source identity cannot silently switch source type or jurisdiction across versions. Versions may retain different titles and dates without silently selecting which is effective.
+2. `source_state` is limited to `NOT_VERIFIED` or `REVIEW_REQUIRED` in this phase. `SOURCE_VERIFIED` is **not** accepted through registry input; that promotion requires a separately reviewed official-source evidence/admission process. An official-looking URI or complete date fields do not establish evidence.
+3. Registry output explicitly reports `current_validity_decision`, `legal_authority_decision`, `legal_applicability_decision`, and `production_admission_decision` as `NOT_EVALUATED`. Existing `AuthoritySourceScope` independent positive verification gates are not changed or inferred from the registry. A matching PNU SIDO code is not authorization to apply a local ordinance.
+4. No existing national law, Seoul ordinance, or non-Seoul ordinance bodies are fetched or changed at this checkpoint. Existing fixed 314-rule production corpus, numeric baseline, API, Frontend, and protected local snapshots remain untouched.
+
+### National rollout without duplicate collection
+
+- Continue **not** collecting Busan-only or any other non-Seoul ordinances during the schema phase. If collection becomes necessary later, define one common acquisition and version-verification protocol for **all non-Seoul local governments** before starting ingestion; keep national sources shared and avoid duplicating them per municipality.
+- Plan later stages separately: verified provider source ID/official URI evidence, exact version and temporal validity, official jurisdiction binding, delegation and parcel applicability, deterministic rule selection, numeric decision admission, and focused live regressions. Each has a separate approval gate.
+
+### Focused regression
+
+`python -m law_data.legal_source_registry_contract_test` checks version identity, namespace separation, duplicate idempotence, conflicting version/scope rejection, national/SIDO/SIGUNGU structural checks, invalid/missing dates, explicit unresolved state, no fake SOURCE_VERIFIED promotion, immutability, and independence from existing PNU/AuthoritySourceScope boundaries. The test uses synthetic IDs and source metadata, without network access, official ordinance retrieval, or writing outputs.
