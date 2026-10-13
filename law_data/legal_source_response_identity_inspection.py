@@ -70,6 +70,66 @@ class LegalSourceResponseIdentityInspection:
         if type(self.response_mst_check) is not str or self.response_mst_check not in _MST_STATES:
             raise ValueError("INVALID_RESPONSE_MST_STATUS")
 
+        # A result is a diagnostic, not a caller-selected success flag. Reject
+        # contradictory upstream/identity status combinations before publishing.
+        fields = (
+            self.source_id_check, self.name_check,
+            self.effective_date_check, self.response_mst_check,
+        )
+        if self.status == UPSTREAM_UNRESOLVED:
+            if self.bridge.status == "CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN":
+                raise ValueError("INCONSISTENT_UPSTREAM_STATE")
+            if any(value != NOT_EVALUATED for value in fields):
+                raise ValueError("INCONSISTENT_IDENTITY_FIELD_STATES")
+            return
+
+        report = self.bridge.inspection
+        http = self.bridge.http_outcome
+        if (
+            self.bridge.status != "CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN"
+            or report is None
+            or report.status != "CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN"
+            or report.digest_matches is not True
+            or http.status != "HTTP_200_RECEIVED_UNVERIFIED_ORIGIN"
+            or http.http_status != 200
+            or type(http.payload) is not bytes
+        ):
+            raise ValueError("INCONSISTENT_UPSTREAM_STATE")
+
+        # JSON and structural failures do not evaluate any identity field.
+        if self.status in (JSON_INVALID, SHAPE_UNKNOWN):
+            if any(value != NOT_EVALUATED for value in fields):
+                raise ValueError("INCONSISTENT_IDENTITY_FIELD_STATES")
+            return
+
+        # Parsed-identity statuses must agree exactly with the field checks.
+        checked_fields = (
+            self.source_id_check, self.name_check, self.effective_date_check,
+        )
+        if any(value not in ("MATCH", "MISSING", "MISMATCH") for value in checked_fields):
+            raise ValueError("INCONSISTENT_IDENTITY_FIELD_STATES")
+
+        target = http.descriptor.target
+        if target == "eflaw":
+            if self.response_mst_check != "NOT_PRESENT_IN_CONFIRMED_NATIONAL_SCHEMA":
+                raise ValueError("INCONSISTENT_IDENTITY_FIELD_STATES")
+        elif target == "ordin":
+            if self.response_mst_check not in ("MATCH", "MISSING", "MISMATCH"):
+                raise ValueError("INCONSISTENT_IDENTITY_FIELD_STATES")
+        else:
+            raise ValueError("INCONSISTENT_IDENTITY_FIELD_STATES")
+
+        if "MISMATCH" in fields:
+            expected = FIELDS_MISMATCH
+        elif "MISSING" in fields:
+            expected = FIELDS_MISSING
+        elif target == "eflaw":
+            expected = NATIONAL_LIMITED
+        else:
+            expected = ORDIN_ALIGNED
+        if self.status != expected:
+            raise ValueError("INCONSISTENT_RESPONSE_IDENTITY_STATUS")
+
     def public_record(self) -> dict[str, object]:
         """No raw metadata, response body, source title, URL or exception."""
         return {

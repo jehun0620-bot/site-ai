@@ -216,6 +216,100 @@ def main():
             total += 1
 
         # Direct construction cannot mint arbitrary status text into public records.
+        # Direct construction must not mint mutually contradictory PUBLIC states.
+        # All cases are synthetic, offline, and keep the production decision unset.
+        for case in SAMPLES:
+            http, record, reference = make_input(case)
+            checked = inspect_legal_source_response_identity(http, record, reference)
+            target = http.descriptor.target
+            aligned = NATIONAL_LIMITED if target == "eflaw" else ORDIN_ALIGNED
+            mst = (
+                "NOT_PRESENT_IN_CONFIRMED_NATIONAL_SCHEMA"
+                if target == "eflaw" else "MATCH"
+            )
+            matched_fields = dict(
+                source_id_check="MATCH", name_check="MATCH",
+                effective_date_check="MATCH", response_mst_check=mst,
+            )
+            failed_http = LegalSourceHttpFetchOutcome(
+                http.descriptor, HTTP_REJECTED, 403, None,
+            )
+            failed_bridge = inspect_legal_source_http_integrity_bridge(
+                failed_http, record, reference,
+            )
+            assert failed_bridge.status == "HTTP_UNRESOLVED"
+            assert checked.bridge.status == "CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN"
+
+            attempts = (
+                (dict(status=aligned, bridge=failed_bridge, **matched_fields),
+                 "INCONSISTENT_UPSTREAM_STATE"),
+                (dict(status=FIELDS_MISMATCH, bridge=failed_bridge,
+                      source_id_check="MISMATCH", name_check="MATCH",
+                      effective_date_check="MATCH", response_mst_check=mst),
+                 "INCONSISTENT_UPSTREAM_STATE"),
+                (dict(status=UPSTREAM_UNRESOLVED, bridge=checked.bridge),
+                 "INCONSISTENT_UPSTREAM_STATE"),
+                (dict(status=UPSTREAM_UNRESOLVED, bridge=failed_bridge,
+                      source_id_check="MATCH"),
+                 "INCONSISTENT_IDENTITY_FIELD_STATES"),
+                (dict(status=JSON_INVALID, bridge=failed_bridge),
+                 "INCONSISTENT_UPSTREAM_STATE"),
+                (dict(status=JSON_INVALID, bridge=checked.bridge, **matched_fields),
+                 "INCONSISTENT_IDENTITY_FIELD_STATES"),
+                (dict(status=SHAPE_UNKNOWN, bridge=checked.bridge, **matched_fields),
+                 "INCONSISTENT_IDENTITY_FIELD_STATES"),
+                (dict(status=FIELDS_MISSING, bridge=checked.bridge, **matched_fields),
+                 "INCONSISTENT_RESPONSE_IDENTITY_STATUS"),
+                (dict(status=FIELDS_MISMATCH, bridge=checked.bridge, **matched_fields),
+                 "INCONSISTENT_RESPONSE_IDENTITY_STATUS"),
+                (dict(status=aligned, bridge=checked.bridge,
+                      source_id_check="MISSING", name_check="MATCH",
+                      effective_date_check="MATCH", response_mst_check=mst),
+                 "INCONSISTENT_RESPONSE_IDENTITY_STATUS"),
+                (dict(status=aligned, bridge=checked.bridge,
+                      source_id_check="MATCH", name_check="MATCH",
+                      effective_date_check="MATCH",
+                      response_mst_check=("MATCH" if target == "eflaw" else
+                                          "NOT_PRESENT_IN_CONFIRMED_NATIONAL_SCHEMA")),
+                 "INCONSISTENT_IDENTITY_FIELD_STATES"),
+                (dict(status=(ORDIN_ALIGNED if target == "eflaw" else NATIONAL_LIMITED),
+                      bridge=checked.bridge, **matched_fields),
+                 "INCONSISTENT_RESPONSE_IDENTITY_STATUS"),
+            )
+            for arguments, code in attempts:
+                try:
+                    LegalSourceResponseIdentityInspection(**arguments)
+                except ValueError as exc:
+                    assert str(exc) == code, (str(exc), code)
+                    assert SECRET not in str(exc)
+                else:
+                    raise AssertionError("CONTRADICTORY_DIRECT_RESULT_ACCEPTED")
+                total += 1
+
+            # A secondary defect in the bridge constructor cannot be used to
+            # propagate an HTTP failure as a successful identity diagnostic.
+            from law_data.legal_source_http_integrity_bridge import (
+                LegalSourceHttpIntegrityBridgeResult,
+            )
+            inconsistent_bridge = LegalSourceHttpIntegrityBridgeResult(
+                status="CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN",
+                http_outcome=failed_http, inspection=checked.bridge.inspection,
+            )
+            try:
+                LegalSourceResponseIdentityInspection(
+                    status=aligned, bridge=inconsistent_bridge, **matched_fields,
+                )
+            except ValueError as exc:
+                assert str(exc) == "INCONSISTENT_UPSTREAM_STATE"
+            else:
+                raise AssertionError("FAILED_HTTP_WITH_FORGED_BRIDGE_ACCEPTED")
+            total += 1
+
+            # Real constructor use through the inspector remains unchanged.
+            assert checked.status == aligned
+            assert checked.public_record()["status"] == aligned
+            total += 1
+
         try:
             LegalSourceResponseIdentityInspection(SECRET, matched.bridge)
         except ValueError as exc:
