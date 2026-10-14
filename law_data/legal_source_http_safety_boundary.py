@@ -80,6 +80,11 @@ class LegalSourceHttpFetchOutcome:
             and not 100 <= self.http_status <= 599
         ):
             raise ValueError("INCONSISTENT_REDIRECT_OUTCOME")
+        # Transport failures do not report an HTTP response code. In contrast,
+        # an already-followed redirect can be blocked with final HTTP 200.
+        if self.status in (TIMEOUT, CONNECTION_FAILED, TLS_FAILED, TRANSPORT_FAILED):
+            if self.http_status is not None:
+                raise ValueError("INCONSISTENT_TRANSPORT_OUTCOME")
 
     def public_record(self) -> dict[str, object]:
         """Allowlisted diagnostic record; excludes raw body, URLs and errors."""

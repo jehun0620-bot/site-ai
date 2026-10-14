@@ -166,6 +166,26 @@ def main():
                 check_rejected_call(lambda: fetch_legal_source_http(descriptor, SECRET, timeout_seconds=121), "INVALID_TIMEOUT")
                 check_rejected_call(lambda: fetch_legal_source_http("http://unsafe/?OC=" + SECRET, SECRET), "INVALID_DESCRIPTOR")
                 assert getter.call_count == 0
+            # Directly constructed outcomes must obey the same transport-failure
+            # status contract as fetch_legal_source_http(). None is required.
+            for failure in (TIMEOUT, CONNECTION_FAILED, TLS_FAILED, TRANSPORT_FAILED):
+                for incorrect_code in (200, 302, 403):
+                    check_rejected_call(
+                        lambda status=failure, code=incorrect_code:
+                            LegalSourceHttpFetchOutcome(descriptor, status, code),
+                        "INCONSISTENT_TRANSPORT_OUTCOME",
+                    )
+                    tested += 1
+                check_public(LegalSourceHttpFetchOutcome(descriptor, failure), failure)
+                tested += 1
+            # A blocked redirect may hold the final 200 after a redirect history;
+            # HTTP rejection with a concrete non-200 status also remains valid.
+            check_public(LegalSourceHttpFetchOutcome(descriptor, REDIRECT_BLOCKED, 200), REDIRECT_BLOCKED, 200)
+            tested += 1
+            check_public(LegalSourceHttpFetchOutcome(descriptor, REDIRECT_BLOCKED, 302), REDIRECT_BLOCKED, 302)
+            tested += 1
+            check_public(LegalSourceHttpFetchOutcome(descriptor, HTTP_REJECTED, 403), HTTP_REJECTED, 403)
+            tested += 1
         print("TARGETS_TESTED: 2")
         print("SYNTHETIC_HTTP_CASES:", tested)
         print("REAL_API_KEY_USED: False")
