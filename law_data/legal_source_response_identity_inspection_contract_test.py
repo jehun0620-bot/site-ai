@@ -291,16 +291,13 @@ def main():
             from law_data.legal_source_http_integrity_bridge import (
                 LegalSourceHttpIntegrityBridgeResult,
             )
-            inconsistent_bridge = LegalSourceHttpIntegrityBridgeResult(
-                status="CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN",
-                http_outcome=failed_http, inspection=checked.bridge.inspection,
-            )
             try:
-                LegalSourceResponseIdentityInspection(
-                    status=aligned, bridge=inconsistent_bridge, **matched_fields,
+                LegalSourceHttpIntegrityBridgeResult(
+                    status="CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN",
+                    http_outcome=failed_http, inspection=checked.bridge.inspection,
                 )
             except ValueError as exc:
-                assert str(exc) == "INCONSISTENT_UPSTREAM_STATE"
+                assert str(exc) == "INCONSISTENT_HTTP_BRIDGE_STATE"
             else:
                 raise AssertionError("FAILED_HTTP_WITH_FORGED_BRIDGE_ACCEPTED")
             total += 1

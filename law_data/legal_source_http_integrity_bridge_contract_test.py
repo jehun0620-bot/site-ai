@@ -108,6 +108,17 @@ def assert_safe(result, expected_status, *, has_inspection=False):
         raise AssertionError("MUTABLE_BRIDGE_RESULT")
 
 
+def reject_inconsistent_bridge(arguments, expected_code):
+    """Direct constructor must reject contradictory claimed states."""
+    try:
+        LegalSourceHttpIntegrityBridgeResult(**arguments)
+    except ValueError as exc:
+        assert str(exc) == expected_code
+        assert SECRET not in repr(exc)
+    else:
+        raise AssertionError("INCONSISTENT_BRIDGE_ACCEPTED")
+
+
 def main():
     scenario_count = 0
     # The inspector uses only caller-provided bytes. No real HTTP, .env or disk.
@@ -232,6 +243,105 @@ def main():
                     received, record, reference
                 )
             assert_safe(result, INSPECTION_FAILED)
+            scenario_count += 1
+
+            # A valid HTTP failure and a separate valid SHA256 report must
+            # NOT combine into a positive public integrity diagnostic.
+            report = matched.inspection
+            assert report is not None
+            failed_http = outcome(desc, status=HTTP_REJECTED, payload=None, http_status=403)
+            redirect_http = outcome(desc, status=REDIRECT_BLOCKED, payload=None, http_status=302)
+            for bad_http in (failed_http, redirect_http):
+                reject_inconsistent_bridge(
+                    {"status": "CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN",
+                     "http_outcome": bad_http, "inspection": report},
+                    "INCONSISTENT_HTTP_BRIDGE_STATE",
+                )
+                scenario_count += 1
+
+            # An HTTP 200 is never an HTTP_UNRESOLVED result; conversely, an
+            # inspection exception can arise only after the successful fetch.
+            reject_inconsistent_bridge(
+                {"status": HTTP_UNRESOLVED, "http_outcome": received},
+                "INCONSISTENT_HTTP_BRIDGE_STATE",
+            )
+            scenario_count += 1
+            reject_inconsistent_bridge(
+                {"status": INSPECTION_FAILED, "http_outcome": failed_http},
+                "INCONSISTENT_HTTP_BRIDGE_STATE",
+            )
+            scenario_count += 1
+            valid_inspection_error = LegalSourceHttpIntegrityBridgeResult(
+                status=INSPECTION_FAILED, http_outcome=received,
+            )
+            assert_safe(valid_inspection_error, INSPECTION_FAILED)
+            scenario_count += 1
+
+            # Exact raw-byte digest, declared hash and reported match flag
+            # must agree for both MATCH and MISMATCH statuses.
+            bad_reports = (
+                replace(report, digest_matches=False),
+                replace(report, computed_sha256="f" * 64),
+                replace(report, declared_sha256="f" * 64),
+                replace(report, payload_byte_count=len(PAYLOAD) + 1),
+                replace(report, binding_status="VERSION_MISMATCH"),
+                replace(report, declared_sha256="INVALID_DIGEST"),
+            )
+            for bad_report in bad_reports:
+                reject_inconsistent_bridge(
+                    {"status": "CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN",
+                     "http_outcome": received, "inspection": bad_report},
+                    "INCONSISTENT_INTEGRITY_REPORT",
+                )
+                scenario_count += 1
+
+            different_bytes = outcome(desc, payload=PAYLOAD + b"x")
+            reject_inconsistent_bridge(
+                {"status": "CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN",
+                 "http_outcome": different_bytes, "inspection": report},
+                "INCONSISTENT_INTEGRITY_REPORT",
+            )
+            scenario_count += 1
+
+            mismatch_result = inspect_legal_source_http_integrity_bridge(
+                outcome(desc, payload=PAYLOAD + b"x"), record, reference,
+            )
+            assert mismatch_result.inspection is not None
+            reject_inconsistent_bridge(
+                {"status": "CONTENT_DIGEST_MISMATCH", "http_outcome": different_bytes,
+                 "inspection": replace(mismatch_result.inspection, digest_matches=True)},
+                "INCONSISTENT_INTEGRITY_REPORT",
+            )
+            scenario_count += 1
+
+            empty_result = inspect_legal_source_http_integrity_bridge(
+                outcome(desc, payload=b""), record, reference,
+            )
+            assert empty_result.inspection is not None
+            reject_inconsistent_bridge(
+                {"status": "PAYLOAD_MISSING", "http_outcome": received,
+                 "inspection": empty_result.inspection},
+                "INCONSISTENT_INTEGRITY_REPORT",
+            )
+            scenario_count += 1
+
+            unbound_result = inspect_legal_source_http_integrity_bridge(
+                received, record, newref(ef, evidence_uri=None),
+            )
+            assert unbound_result.inspection is not None
+            reject_inconsistent_bridge(
+                {"status": "EVIDENCE_BINDING_REJECTED", "http_outcome": received,
+                 "inspection": replace(unbound_result.inspection, binding_status="IDENTITY_ALIGNED_UNVERIFIED")},
+                "INCONSISTENT_INTEGRITY_REPORT",
+            )
+            scenario_count += 1
+
+            # The inspector checks request source/version/scope first; do not
+            # incorrectly ban REQUEST_* failures with a failed HTTP outcome.
+            valid_source_mismatch = LegalSourceHttpIntegrityBridgeResult(
+                status=REQUEST_SOURCE_MISMATCH, http_outcome=failed_http,
+            )
+            assert_safe(valid_source_mismatch, REQUEST_SOURCE_MISMATCH)
             scenario_count += 1
 
             # Direct callers cannot create a forged public diagnostic status.

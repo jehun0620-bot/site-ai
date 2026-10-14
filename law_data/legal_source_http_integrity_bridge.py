@@ -11,6 +11,7 @@ Never serialize an entire result object: use public_record() explicitly.
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass, field
 
 from law_data.legal_source_http_safety_boundary import (
@@ -92,6 +93,60 @@ class LegalSourceHttpIntegrityBridgeResult:
             if (self.inspection.digest_matches is not None
                     and type(self.inspection.digest_matches) is not bool):
                 raise ValueError("INVALID_INSPECTION_DIGEST_RESULT")
+
+        # A diagnostic result must never claim digest success after an HTTP
+        # failure. These checks enforce internally consistent *claims*, not
+        # external proof of HTTP origin or independent source verification.
+        http = self.http_outcome
+        http_success = (
+            http.status == SUCCESS
+            and http.http_status == 200
+            and type(http.payload) is bytes
+        )
+        if self.inspection is None:
+            # The live inspector checks source/version/scope before HTTP status.
+            # REQUEST_* therefore may legitimately precede an HTTP failure.
+            if self.status == HTTP_UNRESOLVED and http_success:
+                raise ValueError("INCONSISTENT_HTTP_BRIDGE_STATE")
+            if self.status == INSPECTION_FAILED and not http_success:
+                raise ValueError("INCONSISTENT_HTTP_BRIDGE_STATE")
+            return
+        if not http_success:
+            raise ValueError("INCONSISTENT_HTTP_BRIDGE_STATE")
+
+        report = self.inspection
+        aligned = report.binding_status == "IDENTITY_ALIGNED_UNVERIFIED"
+        if self.status == "EVIDENCE_BINDING_REJECTED":
+            if (aligned or report.payload_byte_count is not None
+                    or report.computed_sha256 is not None
+                    or report.digest_matches is not None):
+                raise ValueError("INCONSISTENT_INTEGRITY_REPORT")
+            return
+        if not aligned:
+            raise ValueError("INCONSISTENT_INTEGRITY_REPORT")
+        if self.status == "PAYLOAD_MISSING":
+            if (http.payload != b"" or report.payload_byte_count != 0
+                    or report.computed_sha256 is not None
+                    or report.digest_matches is not None):
+                raise ValueError("INCONSISTENT_INTEGRITY_REPORT")
+            return
+
+        # Digest status must correspond to the exact internal response bytes.
+        # The declared expected digest is caller-provided, never attested.
+        actual_sha256 = hashlib.sha256(http.payload).hexdigest()
+        claimed = report.declared_sha256
+        if (not http.payload
+                or report.payload_byte_count != len(http.payload)
+                or report.computed_sha256 != actual_sha256
+                or type(claimed) is not str or len(claimed) != 64
+                or any(char not in "0123456789abcdef" for char in claimed)):
+            raise ValueError("INCONSISTENT_INTEGRITY_REPORT")
+        if self.status == "CONTENT_DIGEST_MATCH_UNVERIFIED_ORIGIN":
+            if report.digest_matches is not True or claimed != actual_sha256:
+                raise ValueError("INCONSISTENT_INTEGRITY_REPORT")
+        elif self.status == "CONTENT_DIGEST_MISMATCH":
+            if report.digest_matches is not False or claimed == actual_sha256:
+                raise ValueError("INCONSISTENT_INTEGRITY_REPORT")
 
     def public_record(self) -> dict[str, object]:
         """Strict allowlist: no source-id, evidence URI, raw bytes or exception."""
